@@ -1,0 +1,1638 @@
+Co-doping studies to enhance the life and electro-chemo-mechanical properties of the LiMn 2 O 4 cathode using multi-scale modeling and neuro-computing ...  - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/D2CP02304K View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2CP02304K
+(Paper)
+Phys. Chem. Chem. Phys., 2022, 24, 18645-18666Co-doping studies to enhance the life and electro-chemo-mechanical properties of the LiMn2O4 cathode using multi-scale modeling and neuro-computing techniques
+
+        
+          
+            Ramavtar 
+            Tyagi
+          
+        
+      a and 
+
+        
+          
+            Seshasai 
+            Srinivasan
+          
+        
+      *ab
+aMechanical Engineering, McMaster University, Hamilton, Canada. E-mail: ssriniv@mcmaster.ca
+bW Booth School of Engineering Practice and Technology, McMaster University, Hamilton, ON, Canada
+Received 
+      21st May 2022
+    , Accepted 14th July 2022First published on 14th July 2022AbstractA number of engineered cathode materials with longer life cycles and better electro-chemo-mechanical properties can be obtained by partially replacing some of the elements with other relevant ones without compromising much with the structure. To design such superior cathode materials, in this work, we replace a small number (5% or 10%) of Mn3+, with one of the following elements: aluminium, nickel, magnesium, gallium, chromium, and yttrium. Additionally, S2− and F− were used to replace some (∼1%) of the O2− ions (anion) in the crystal. In this work, we have used a combination of Quantum Mechanics (QM), Classical Molecular Dynamics (CMD), Neural Network (NN) and Computational Fluid Dynamics (CFD) modeling. QM has been used to validate the Classical Molecular Dynamics (CMD) simulation results for engineered structures where experimental data are not available. CMD simulations are used to obtain material properties such as lattice expansion, Young's modulus, and diffusion coefficients for un-doped, doped and co-doped structures. NN modeling was used to reduce the computational time to evaluate millions of possible crystal configurations. Finally, the impact of co-doping strategies at the macroscale has been studied using CFD simulations. As a first step, we employed neuro-computing techniques to identify the optimum ionic configuration for all crystal structures, saving ∼88% of the computational time. Next, molecular scale simulations were performed to study the material properties. Molecular dynamics (MD) modeling findings suggest that the relative volume expansion between the fully charged and discharged states of the battery can be reduced by ∼1.9% to ∼2.25%, indicating an improvement in the life of the cathode material by several hundreds of cycles. Findings from both QM and CMD simulations suggest that for these novel engineered materials, electro-chemo-mechanical properties, such as ionic mobility, chemical diffusion coefficient and elasticity, improved. Furthermore, CMD simulations showed that the inter-ionic space between doped metal ions and oxygen is smaller compared to the spacing between Mn3+–O2− in the original LMO spinel, indicating an improvement in the material's structural strength along with the total number of the discharge cycle. Finally, macro scale computational modelling results show that chances of thermal runaway can be reduced significantly for some of the co-doped structures since the intercalation induced maximum stress is lower.
+1 Introduction
+Climate change and the continuously deteriorating environment are reminding us to move towards sustainable energy technologies. A major problem with most of the renewable energy technologies such as wind and solar is that unlike conventional power generation methods, they are inconsistent. Therefore, the need for highly efficient, environment friendly, and economical energy storage technologies has increased exponentially in the last few decades. Lithium ion batteries (LIBs) are a very promising technological solution for the exponentially growing energy storage demand, especially in the consumer electronics and automotive sectors. This has only been possible due to the improved energy densities of LIBs1 in the last few years. In any LIB, electrodes are the important components as they dictate the energy storage capacity of the battery. Ideally, the anode's electric potential should be significantly lower than that of the cathode, providing a high potential difference. This limits the possible materials that can be used as an anode. Currently, graphite and silicon are widely used anode materials.2 While cathode materials have been explored more,3–5 more recently, there has been a lot of focus on the Li-metal, lithium alloyed metals, carbon nano-tubes, graphene, and lithium titanate oxide (LTO) based anode materials.6–8
+With respect to cathodes, lithium cobalt oxide (LiCoO2) and its derivatives are widely used especially in long range electric vehicles.9 However, cobalt is expensive and toxic, prompting researchers to explore the doped variants such as nickel cobalt aluminium (LiNixCo1−x−yAlyO2) and nickel manganese cobalt (LiNixMnyCo1−x−yO2) that are more popular these days.4,7 It must be noted though that the addition of Ni introduces the risk of hazards such as thermal runaway.10 Lithium manganese oxide (LiMn2O4) spinel or LMO spinel has been explored in the past and mostly used in the low energy density applications.11–15 Its advantages over other cathode materials like lithium cobalt oxide (LiCoO2), lithium nickel oxide (LiNiO2) and lithium-titanate (Li2TiO3) include lower cost, abundant availability of manganese, and no toxicity. Furthermore, lithium iron phosphate (LiFePO4) is also another material which is gaining popularity due to its longer life. However, compared to an LMO spinel, it suffers from low values of operating potential, ionic conductivity and energy density.16,17
+While it has its advantages, a LiMn2O4 spinel suffers from a relatively higher mechanical stress induced by a higher volume change during the charge and discharge cycles.18 It also experiences cycling capacity fade due to the structural changes induced by the dissolution of manganese.19 In fact, this is one of the key degradation mechanisms, impacting the battery life.20–26 Christensen et al.27 have developed a model which can estimate the stress generated due to lithium ion intercalation inside the cathode material. Specifically, as the lithium content in the anode increases, the number of Mn3+ replacing Mn4+ increases. The former has a larger ionic radius, resulting in the expansion of the crystal.
+Additionally, Mn3+ tends to dissolve in the electrolyte and converts into Mn2O3, aggravating the degradation of the cathode material.28 To avoid such problems, thin surface coatings over LiMn2O4 have been tried to reduce or inhibit manganese dissolution.29,30 However, coating layers cannot ameliorate the effect of Jahn–Teller instability.31 Recent investigations have focused on partial substitution of Mn3+ by elements with similar properties (Al, Ni, Co, Mg, etc.) to enhance the life cycle of an LMO spinel.32–40 Researchers have shown that by resolving some of the above issues, the overall life of the cathode material LMO spinel could be enhanced by as much as 2000 cycles at room temperature.41 However, these doped structures suffer from irreversible capacity fading at elevated temperatures (>318 K). Recently, there has been a focus on introducing partial substitutions with anions such as S2− and F− in the place of O2−, to improve the efficiency of energy storage at elevated temperatures.42 In this work, we focus on studying co-doping with cations instead of Mn3+ and anions such as S2− and F− to partially replace O2−.
+Computational investigations have made it possible to design, develop and test several engineered microstructures and novel chemistries, and to study the performance analysis of the batteries under various operating conditions.22 One of the issues with these simulations is the inconsistency in the parameter values that are deduced by different experimental researchers, especially for the intermediate charging states.22,23,26,43 Multi-scale modeling techniques can overcome this challenge by accounting for a multitude of phenomena at varying time and length scales in a cathode material. Hence, such formulations can be used for a quicker and accurate evaluation of various lithiated structures.
+In a recent study,44 we have successfully demonstrated how molecular dynamics simulations can be used to accurately predict the input properties such as elastic modulus, diffusion coefficient, and activation energy. We showed that, investigating the ionic movements at the atomic level and extracting the material properties such as electrical, chemical and mechanical from there for all engineered structures will help us obtain accurate input parameters for macro scale modeling.44,45 In this article, we investigate the influence of six cation dopants, namely, Al, Ni, Mg, Ga, Cr and Y, on the properties and performance of the battery. Additionally, we also study the influence of co-dopants such as S2− and F−. These co-doping strategies were evaluated by studying the key material properties such as Young's modulus, diffusion coefficient, stress and heat generation inside the structure.
+In another study,45 we found that the major challenge in employing CMD simulations for engineered structures would be the lack of computational feasibility to process the innumerable possible configurations and determine the optimal configurations that have ionic arrangements that result in minimum potential energy. This could be overcome using the principles of artificial neural networks (ANNs) in which using the CMD data from a subset of crystal configurations one could deduce the potential energy of the other configurations with a minimal computational effort. The feasibility of this approach has been successfully demonstrated by Sandhu et al.46 in a different study. Another challenge is the validation of the CMD results in the absence of the experimental data. This can be addressed using quantum mechanics (QM) simulations. QM simulations, though computationally expensive, provide accurate ionic interaction properties, and are ideal to validate the crystal structure obtained from CMD simulations when experimental data are not available. In this work, we have employed a previously validated QM setup that has an accuracy of over 99%.45 Furthermore, to evaluate the effect of co-doping on the macroscale behaviour of the battery, single particle model (SPM) based CFD modeling technique for charge and discharge cycles has been widely used.47–49 Hence, in this work, we have implemented such a model but with improved and accurate input properties obtained from CMD simulations. Thus, in summary, this work utilizes a suite of multi-scale modeling techniques as follows:
+(1) CMD simulations are used to obtain material properties such as lattice expansion, Young's modulus, and diffusion coefficients for un-doped, doped and co-doped structures.
+(2) QM simulations are used to validate the results from CMD simulations of engineered structures for which experimental data are not available.
+(3) CFD simulations are used to evaluate the impact of co-doping strategies on the macroscale behaviour of the battery.
+(4) NN models have been developed to reduce the computational time to evaluate millions of possible crystal configurations, making the entire study computationally feasible.
+In Section 2, the guidelines for dopants along with important properties which qualify them to be potential doping candidates are described in detail. Furthermore, numerical modeling methodologies for molecular dynamics, quantum mechanics, neural network and macro scale simulations are described in Sections 3–6, respectively. In Section 7, findings from different modeling techniques are presented and validated with the experimental results wherever possible. In Section 8, we present the conclusions and identify the optimal co-doping structures for a longer battery life.
+2 Guidelines for doping ions
+In the last three decades, immense amount of research has been concentrated towards finding the right cathode materials which can offer a decent energy storage capacity along with a stable structure, especially for higher charging or discharging rates.50,51 Since the electronic structure of the crystal and constituent atomic elements determine the overall electro-chemo-mechanical properties of a battery, there has been a large amount of work focused on studying materials at the atomic scale.52–56 Since the difference between the electrochemical potential of the electrode materials determines the open circuit voltage at which a battery can perform, it plays a key role in the design of new and novel engineered electrode materials. Furthermore, the selection of the cathode and anode materials is limited by the electrolyte that can oxidize or reduce if the electrochemical difference between the electrodes is too high. In particular, the electrochemical potential of the anode (μA) material must be lower than the LUMO (lowest unoccupied molecular orbital) value of the electrolyte being used, and similarly the electrochemical potential of the cathode (μC) structure should be higher than the HOMO (highest occupied molecular orbital) value of the used electrolyte. Failing to fulfill any of these conditions, either the oxidation of the electrolyte material will start at the cathode or reduction will take place at the anode. Additionally, an unnecessary SEI (solid electrolyte interphase) layer will also start forming, eventually degrading the battery performance.57
+As highlighted in our previous work,45 apart from the cell voltage gap between the HOMO and the LUMO, the electronegativity difference between the anions and cations also determines the stability of the crystal structure. Furthermore, a change in the Gibbs free energy, and the possible electropotential value of a cathode or anode material, depends upon the radius of ions of the elements in the crystal structure, and the oxidizing power of the anion.
+Generally, the electro-chemo-mechanical properties of any material are mostly governed by the quantum chemistry and microstructures which are determined by the elements used to form a particular crystal. However, it is entirely possible for the same elements to form a different molecular structure based on the synthesis process and the surrounding conditions. For instance, if the same ions are inserted into the host material from a different side of the crystal, it can open up the crystal structure and make the migration of the ions easy.58 Although the microstructures of any crystal are its natural properties, it is possible to alter them by inserting appropriate elements. For instance, insertion of Ni2+ into the cathode host material V2O5 improves the performance of the material crystal, makes the material more stable, especially during the partially charged states, and also helps hold a more specific energy. Thus, insertion of one or more types of elements can change the dimensions of the crystal significantly, enabling the refinement of quantum and microstructures of some of the materials.59
+On considering some of these important parameters to develop novel materials with enhanced properties, there are several design guidelines suggested in the literature to select potential materials as a cathode. These include the impact of the elements on the society, economic affordability, and ease of use. Apart from these, one should also consider their availability in the nature, ability to support environment friendly manufacturing processes, and re-usability and re-cycling ability. A critical requirement of the cathode material is its ability to hold a large amount of reversible energy within the electrochemical potential gap. This is defined by the maximum energy storage limit of any electrode material which is basically the maximum re-usable energy it can offer when the battery starts discharging, and is given by the following equation: (1)where ne− is the number of electrons that can be released per mole, F is the Faraday constant and M is the molecular mass of the crystal.60 The factor 3.6 is used to convert the energy capacity from Coulomb per s to mA h g−1. Generally, the number of electrons in a cathode material is decided by the change in the ionic charge of the transition metal as it dictates the number of lithium ions it can accommodate per formula unit. For instance, in the LMO spinel, Mn4+ converts into Mn3+ upon discharge and so it can accommodate only one lithium ion. Furthermore, as per eqn (1), structures with a smaller molar mass and more number of active electrons will offer higher energy storage capacity. For instance, the LMO spinel with Mn2O4 as an initial structure has a maximum energy storage capacity of 148 mA h g−1 since a single electron is released with each lithium ion insertion. On the other hand, the cathode material V2O5 can release 3 electrons upon discharge and so can accommodate three lithium ions. Therefore, the overall discharge capacity it can offer is higher (∼440 mA h g−1).50 Hence, elements with a lower molar mass, and that which are small in size will offer higher gravimetric and volumetric specific energy capacities, and should therefore be preferred as potential candidates for doping. It can be concluded that most of the elements in the first four periods in the periodic table are good candidates once they satisfy other doping guidelines. Recently, numerous rare earth elements, such as Nb, Zr, La, Ru, and Mo, have been tested as doping elements.54,55 Since we want to avoid expensive, environment unfriendly, toxic and rare earth materials, we have explored metal ions. The major advantage of some of the metal oxides is that they can change their valance states, offering more electrons if that is the requirement.
+With these criteria and guidelines, numerous positive bivalent and mostly trivalent elements are identified as a good replacement for substituting some fraction of the Mn3+ ions. Particularly, the elements of interest include aluminium, nickel, magnesium, yttrium, chromium, and gallium. As shown in Table 3, among all selected elements, Al3+ is the smallest with an ionic radius of 0.53 Å. Therefore, the bond length with anions will be smaller, making it much stronger. This is in addition to its abundant availability.61 Mg and Ni are bivalent elements that can change the charge valence and hence can increase the voltage of the battery. Since ionic radius (0.72 Å) and electronegativity are low, it is expected to form a stronger Mg–O bond with anions.62 Both Ga and Cr offer almost similar ionic radius (0.62 Å and 0.63 Å, respectively) and electronegativity values; both elements should be good candidates to replace Mn3+. Although yttrium is a comparatively large and heavy element, it offers low oxidizing power and electronegativity, and hence forms a stronger bond with anions, helping the improvement of structural strength.
+In addition to these, to enhance the ionic diffusivity and structural strength at elevated temperatures, co-doping with anions such as sulfur and fluorine has been used.63–65 Since doping with the transition metal ions with smaller ionic radius can reduce the overall size of the crystal structure, it can also effect the lithium-ion diffusivity. Recent studies also suggest that the impact can be reduced by trace doping of sulfur ions, replacing oxygen in the crystal structure.66,67 Therefore, based on the parametric values shown in Table 1, in addition to metal ion doping, 1% of O2− positions are either filled by S2− or F−, which results in LixMyMn2−x−yO4−zSz or LixMyMn2−x−yO4−zFz structures.
+Table 1 Properties of the doping elements
+
+
+
+
+Element
+Oxidizing power
+Ionic radius (Å)
+Electronegativity
+
+
+
+
+Al3+
+−1.66
+0.530
+1.5
+
+
+Ni2+
+−0.26
+0.700
+1.9
+
+
+Mg2+
+−2.36
+0.720
+1.2
+
+
+Y3+
+−0.22
+0.900
+1.22
+
+
+Ga3+
+−0.55
+0.620
+1.6
+
+
+Cr3+
+−0.74
+0.630
+1.6
+
+
+S2−
++1.20
+1.840
+2.5
+
+
+F−
++2.87
+1.330
+4.0
+
+
+
+
+To study the effect of individual doped ions, the following sets of simulations are carried out: (1) simulation for the undoped LMO spinel is the baseline model, (2) simulation with an individual doping element (Al, Ni, Mg, Ga, Cr, Y, S and F), (3) simulations containing a cation element in combination with sulfur, (4) and Simulations containing a cation element (Al, Ni, Mg, Ga, Cr and Y) in combination with fluorine. Furthermore, in order to simplify the naming convention, the first letter of the element's name is added after LMO, for example, the Al doped structure is named as LMO-A, similarly for Ni, Mg, Ga, Cr, Y, A and F the structures are name LMO-N, LMO-M, LMO-G, LMO-C, LMO-Y, LMO-S and LMO-F, respectively. For co-doped structures, the first letter of the doped anion is added prior to the doped cation. For example, Al and S co-doped structure is named LMO-SA. Similarly, we have LMO-SN, LMO-SM, LMO-SG, LMO-SC, and LMO-SY for Ni, Mg, Ga, Cr, and Y co-doped with sulfur, respectively. Finally, co-doped structures with fluorine are called LMO-FA, LMO-FN, LMO-FM, LMO-FG, LMO-FC, and LMO-FY, respectively. As summarized in Table 2, by replacing 5% of the Mn3+, the initial discharge capacity of the structure remains close to the undoped LMO spinel. However, there is a drastic drop in the theoretical discharge capacity with 10% doping of metal ions. This is due to the fact that with increased doping, the number of Mn4+ available for conversion into Mn3+ decreases since some of the Mn3+ positions are already filled with the doped metal ions.
+Table 2 Maximum energy storage limit for various co-doped structures
+
+
+
+
+Structure
+Maximum energy storage limit (mA h g−1)
+
+
+
+
+LMO
+148
+
+
+
+
+
+
+Structure
+5% Mn3+ replaced
+10% Mn3+ replaced
+
+
+
+
+LMO-SA
+149
+120
+
+
+LMO-SN
+147
+117
+
+
+LMO-SM
+149
+121
+
+
+LMO-SY
+146
+116
+
+
+LMO-SG
+145
+117
+
+
+LMO-SC
+139
+118
+
+
+LMO-FA
+148
+118
+
+
+LMO-FN
+147
+116
+
+
+LMO-FM
+148
+117
+
+
+LMO-FY
+146
+114
+
+
+LMO-FG
+147
+115
+
+
+LMO-FC
+148
+116
+
+
+
+
+Table 3 The parametric input values for various doping ions
+
+
+
+
+Doping ion
+
+Z
+
+
+a (Å)
+
+b (Å)
+Ref.
+
+
+
+
+Al3+
++1.4
+0.530
+0.050
+
+68 and 70
+
+
+
+Ni2+
++1.4
+0.700
+0.059
+
+71
+
+
+
+Mg2+
++1.4
+0.720
+0.060
+
+70
+
+
+
+Y3+
++1.4
+0.900
+0.068
+
+69
+
+
+
+Ga3+
++1.4
+0.620
+0.055
+
+73
+
+
+
+Cr3+
++1.4
+0.630
+0.056
+
+71
+
+
+
+S2−
+−1.2
+1.840
+0.075
+
+72
+
+
+
+F−
+−1.2
+1.330
+0.072
+
+72
+
+
+
+
+
+3 Classical molecular dynamics modeling
+In CMD simulations, we have used the Gilbert–Ida-type pair interaction potential function as represented below. (2)where the first term represents the potential contribution due to the coulombic force between ions k and l, and the second component of the equation accounts for the inter-ionic pair interaction, including the repulsive forces. Zk and Zl represent the partial charge values for ions, rkl is the distance between the respective ions k and l. rcutoff and e are the cut off lengths to terminate energy calculation and elementary electric charge, respectively. σkl is an interaction-dependent length parameter that is the sum of the ionic radius of ions k and l. Similarly ρkl is an ionic-pair dependent length parameter that is calculated by summing the compressibility values, bk and bl, for the respective ions. Akl is the activation energy component which is calculated as Akl = A0 × ρkl = A0 × (bk + bl),(3)where A0 is a constant (4.184 kJ Å−1 mol−1).
+For CMD simulations, the appropriate potential parameters to be employed with eqn (2) were either obtained from the literature or deduced, if it was not directly available in the literature.68–72Table 3 presents the parametric input values used for calculating the potential energy in this work.
+CMD calculations are performed with LAMMPS (Large-scale Atomic/Molecular Massively Parallel Simulator), an open source C++-based software.74
+As described in eqn (2), to calculate the inter-ionic potential between two ionic pairs, Gilbert–Ida-type pair interaction utilising the Buckingham potential parameter format which is available in LAMMPS,75,76 was used. The Ewald method was used to compute the long-range coulombic forces.77 Furthermore, the isothermal isobaric (NPT) ensemble was performed for equilibration and production processes, and canonical ensemble (NVT) was utilised for the stress–strain computation. With the NPT ensemble, the total number of ions, pressure and system temperature remain the same throughout the simulation. On the other hand, with the NVT ensemble, the system volume, temperature and the total number of ions are kept constant. Furthermore, in order to regulate the system at a particular temperature, a Nose–Hoover thermostat has been implemented.78
+At equilibirum the ionic configuration will have the least potential energy. However, evaluating innumerable ionic configurations through CMD to determine the configurations with the least potential energy is not computationally feasible. Hence, all CMD calculations were implemented in two steps: in the first step, a one time step simulation was performed for all possible ionic arrangements. Four of these configurations with the least potential energy were selected to perform system equilibrium simulation, and lattice constant values were averaged for all four cases. Once the system is equilibrated, production simulations were performed on all these four cases and final results were averaged in order to improve the accuracy. This methodology is consistent with our earlier studies44–46 and also the studies of Lee et al.79 and Asadi et al.80
+A single cell of the LMO spinel has 56 locations in the cubical structure, occupied by certain types of elements.44,45 For example, 8 lithium ions can be placed at the 8a tetrahedral sites, manganese (Mn3+ or Mn4+) or other doped metal ions can take 16d octahedral positions, and O2− or doped anions (S2− or F−) can be located at 32e sites. The positions taken by these ions determine the potential energy of the crystal structure. The first step of the CMD simulations is to equilibrate the setup. The crystal structures with the least potential energy have the highest probability to achieve equilibrium quickly. In order to find out the total number of potential configurations, we calculated the possible permutations of all scenarios. For example, when one Li+ ion is inserted into the cathode, there are 16 possible Mn3+ positions that a doping metal ion can take while there are 8 positions that Li+ ions could occupy, resulting in a total of 128 potential configurations. This has also been discussed in more detail in our previous publications.44–46Table 4 summarizes the total number of initial configurations that we need to equilibrate when just one Mn3+ is replaced by a metal doping element.
+Table 4 Possible LixM0.05Mn1.95O4 configurations for different SOC values
+
+
+
+
+State of charge
+# of Li+ inserted
+Potential configurations
+
+
+
+
+0.125
+1
+128
+
+
+0.250
+2
+6720
+
+
+0.375
+3
+94080
+
+
+0.500
+4
+509600
+
+
+0.625
+5
+1223040
+
+
+0.750
+6
+1345344
+
+
+0.875
+7
+640640
+
+
+1.000
+8
+102960
+
+
+
+
+As seen in Table 4, the number of potential configurations increases to millions with co-doping, when a doped anion can take any of the 56 positions. Therefore, evaluating the innumerable co-doped crystal structures and selecting the one with the least potential energy becomes computationally infeasible. This is particularly true for the intermediate charging states (SOCs between 0.500 and 0.875). Therefore, in order to reduce the computational time, neuro-computing techniques were used to identify the most feasible crystal structures that will have the least energy when equilibrated. To design such a neural network model, we evaluated 100000 crystal structures, each with a random initial configuration, using LAMMPS for 1 time-step. Using the data from these configurations, a neural network model was created that can explore millions of possible crystal configurations and identify four configurations with the lowest potential energy, which were subsequently equilibrated. After equilibration, the CMD production simulations for stress and diffusion calculations were performed as highlighted in our previous studies.44,45 In the ensuing section, the neuro-computing model is described in detail.
+4 Neural network modelling
+Neural network (NN) modeling is gaining popularity in almost every field. The NN model reads the input and output parameters from the sample or training data and deduces mathematical relationships between the input and output data for unknown cases. A typical NN architecture has several neurons as an input, neuron layers in the middle also known as the “hidden layer”, and output neurons. The number of neurons in the input, hidden, and the output layers need not be the same. In order to develop effective NN algorithms, the weight (w) factors or weightage and biases (B) are assigned to each neuron layer. The values of these weights (w) and biases (B) are optimized using an appropriate algorithm and the performance of the optimized NN is tested on a subset of the data. Generally, as input data propagate along the neural network, a profile is being generated which is amended based on the values assigned for biases and weights. These profiles are used to estimate the output values. The following equation shows the output generated for the neuron j in the hidden layer k: (4)where zk−1i represents the output for the ith neuron in the layer (k − 1), which has a maximum of n neurons. w(k)ij is the weight factor of the jth neuron using the ith input neuron in the (k − 1) hidden layer. Similarly, B(k)j is the bias value of the jth neuron in layer (k). fk represents the activation function, which receives the algebraic combination of z, w and B as an argument. Fig. 1 shows the schematic of the output from a neuron, based on the above equation.
+ Fig. 1  Schematic of a neuron in layer k with input from n neurons of the previous layer k − 1. 
+The transfer functions that are widely used comprise the functions such as rectified linear unit (ReLU), tanh, sigmoid, and softmax.81 Compared to the other transfer functions, ReLU is easy to implement, offers quicker simulations and provides a consistent accuracy. Therefore, to avoid a longer training duration and yet retain better accuracy, we have used the ReLU transfer function in this study.82,83 Specifically, the ReLU transfer function can be described by f (x) = max(0, x),(5)where x represents the input argument as per eqn (4). Thus, as per the ReLU transfer function, only positive input values can pass to the next layer.82
+4.1 Database preparation
+Database for all the input parameters is prepared based on the results from the LAMMPS simulations. As shown in Table 4, there are over 3 million possible crystal configurations when a single metal is used for doping. The possible cases increase to over 8 million with additional doping.
+In order to prepare the data, results from LAMMPS are arranged in the matrix form with ionic positions, and ionic properties such as radius, partial charge and compressibilty as the input parameters, with the corresponding potential energy as the output values. As shown in Table 5, we generated 100000 random cases for SOC ∈ [0.500, 0.875] and trained the ANN model using 75% of these data, using the rest for testing. In this, we used all possible configurations and ran CMD simulations for 1 timestep and selected 4 minimum potential energy structures for further molecular dynamics study. For the other SOC values, the number of potential configurations is not too high and so a brute force evaluation is possible without the need for an NN approach.
+Table 5 The total possible ionic arrangements for various SOCs, and the number of randomized arrangements selected for NN training and testing in this study
+
+
+
+
+Single metal doped configurations for different SOCs
+
+
+State of charge
+# of possible ionic arrangements
+# selected for NN model training and testing
+
+
+
+
+0.500
+509600
+100000
+
+
+0.625
+1223040
+100000
+
+
+0.750
+1345344
+100000
+
+
+0.875
+640640
+100000
+
+
+
+
+As part of model training, the values of weight and bias factors in the NN were determined by performing a grid search optimization (cf.Table 6). For NN training, we employed the adaptive moment (Adam) algorithm84 that offers a high level of accuracy and completes the training in a short time.
+Table 6 Parametric values of inputs used during grid search optimization
+
+
+
+
+
+
+ANN grid search parameters
+
+
+
+
+Learning rate (η)
+10k, k = −1, −2, …, 6
+
+
+Batch size
+2k, k = 1, 2, …,8
+
+
+Optimization algorithm
+Batch gradient descent, Adam, RMSProp
+
+
+Activation function
+ReLU, Tanh, SoftMAX, Sigmoid
+
+
+
+
+For any input data-set, the batch gradient descent optimization method uses the slope of the grid search parameter values such as the learning rate to obtain the optimum weights and bias values.
+The Adam optimization algorithm is an extension to the batch gradient descent algorithm that is appropriate in handling large data-sets.84 In this algorithm, the learning rate is maintained for each network weight, and adapted separately as the learning progresses. Furthermore, this algorithm utilizes the first (mt) and second (vt) order moments of the predicted cost gradient in order to update the weights and biases. Adam optimization algorithm was applied to train our ANN models, with the values of the parameters employed being determined using a grid search (cf.Table 7). As suggested by Kingma et al.,84 the values for the first (β1) and second (β2) order moment bias were fixed at 0.9 and 0.999, respectively.
+Table 7 Optimum values for the NN models derived using grid search simulations
+
+
+
+
+NN model for SOC value
+0.500–0.875
+
+
+
+
+Parameters
+
+
+Learning rate (η)
+1 × 10−3
+
+
+Batch size
+8
+
+
+Optimizer
+Adam
+
+
+Activation function
+ReLU
+
+
+
+
+As expected, the Adam algorithm was able to train the models accurately while using a higher learning rate which enhances the convergence rate.84 The initial learning rate for the Adam algorithm was set to 1 × 10−3 (cf.Table 7), which was automatically optimized through the iterations.
+In order to avoid any pre-biases, all the values were initialized to zero before training any NN model. Also, prior to model training, the weights (w) were initialized using the Glorot Uniform Initializer.85 In this, to initialize the weights of neurons within each neuron layer, a uniform distribution, U[a, b], was used, where a and b are the boundaries of the distribution function. Furthermore, the boundaries of the uniform distribution function for each neuron in the current layer were dependent on the previous layer, for example, with nk−1 number of neurons in the (k − 1) hidden layer. Furthermore, the initial parametric value of the weight factor for any neuron in the kth hidden layer is obtained using the following equation: (6)In order to find optimum parameters to train the NN, the (R2) value86 is the major determining factor. Combinations of parametric values that offer a higher (R2) score were given the preference. The value of (R2)86 was calculated for the NN using (7)in which (8)where N is the total data points or crystal arrangements utilized to validate the model. Additionally, the potential energy value for a specific crystal arrangement estimated by the NN is represented by Êi. Furthermore, Ei and Ē represent the potential energy and its average over all used crystal arrangements obtained through CMD simulations, respectively.
+5 Quantum mechanics calculations
+To get the input parameters for CMD simulations and validate the structural results for engineered crystals for which experimental references are not available, QM simulations are performed. Fig. 2, shows the LiMn2O4 single cell structure which consists of 8 Li, 16 Mn and 32 oxygen atoms.
+ Fig. 2  LiMn2O4 single cell used in quantum mechanics modeling. 
+In a doped crystal, some of the Mn3+ ions are replaced with metal ions in the input crystal structure. Similarly, in a co-doped crystal, in addition to Mn3+, some of the O2− ions are also replaced either by S2− or F−. For the QM simulations, in order to account for structural, vibrational, electronic and thermodynamic properties, density functional theory (DFT) combined with the Hubbard+U model is implemented. To perform QM simulations, Quantum-Espresso,87 which is an open source software, has been utilized. Furthermore, for the input files, it was assumed that the structure upholds the cubic symmetry through all points, including space groups for all calculations. Ultrasoft pseudopotential (USPP) type was used for input parameters such as lithium, manganese, and oxygen which uses the Vanderbilt code.88 On the other hand, for the doping elements (cations and anions), projector augmented wave (PAW) pseudopotential type was used.89 For metal doping, in order to account for spin-density, the Perdew–Burke–Ernzerhof (PBE) form of the generalized gradient approximation (σ-GGA)90,91 scheme was utilized. Additionally, for higher accuracy, wave functions were extended with an increased potential energy cut-off value of ∼ 700eV, and the cut-off value for the electronic charge density was set to 6000 eV. To optimize the crystal dimensions, the Brillouin zone integration method was used with the 4 × 4 × 4 Monkhorst–Pack k-point grid.92 The crystal was relaxed until the difference in the peak force inside each atom does not exceed 50 MPa, and the change in the stress is also minimum. The convergence criteria for the energy term in the QM simulations was set to 10−5 eV atom−1. In other words, as soon as the difference in the total energy reaches 10−5 eV atom−1, the convergence is complete and the simulation will stop. Furthermore, in order to implement the Brillouin zone integration, Gaussian broadening was extended up until 0.005 Ry or ∼0.068 eV. Following the crystal dimension optimization, quantum chemistry and quantum density of states are obtained using a 12 × 12 × 12 Monkhorst–Pack k-point mesh.92
+6 Macroscale computational modeling
+To evaluate the material properties at the macroscale, intercalation of lithium ions within the AMs could be modeled using mass transport equations inside the host material. The boundary conditions of the governing equations include the diffusion flux at the boundary which uses the electrochemical reaction rate. In this case, the major force which moves lithium ions within the cathode structure is the electrochemical potential difference between the two electrodes.
+The movement of lithium ions
+The mass transport equation for lithium ions can help us calculate their diffusivity within the host material. Assuming that the cathode material is made of solid spherical particles of the active material along with some binder, it would be safe to assume the cathode as a porous solid phase, and the mass conservation equation for the lithium ions could be written as21 (9)In the above equation JLi+ and cLi+ represent the diffusion flux of lithium ions and the concentration of lithium ions at a particular state of charge, respectively. As the battery discharges, the concentration of lithium ion within the cathode material will start increasing, which will increase the overall stress. In other words, the diffusion flux and the stress generated are directly related. Zhang et al.25 suggested the following equation for this relationship: (10)This equation takes the intercalation induced stress into consideration while calculating the diffusion flux. In the above equation,  and v represent the effective lithium ion diffusion coefficient and their partial molar volume, respectively. Furthermore, σhs, R and T represent the hydrostatic stress, gas constant, and ambient temperature, respectively. In eqn (10), the hydrostatic stress is derived from the radial and tangential stresses inside a solid particle.49 The diffusion flux inside a spherical particle can be expressed as (11)The partial differential equation term for the hydrostatic stress with respect to radius, , can be expressed using the chain rule as . The hydrostatic stress distribution across the radius of the spherical particle can be calculated as (12)From the above equations, it is evident that the hydrostatic stress, σhs, is dependent on the lithium ion concentrations, and the transport of lithium ions is governed by the induced stress. In other words, both are interdependent on each other. Therefore, the concentration equation for the coupled problem can be derived as suggested by Chu and Lee.49 The partial differentiation of the above eqn (12) with respect to lithium concentration can be written as (13)Using the above three equations, an expression for the lithium ion diffusion flux can be written as (14)
+Boundary conditions
+Since diffusion flux of the lithium ions on the active particle's surface will be equivalent to the electronic charge and discharge density, it can be written as (15)where in represents the electronic charge or discharge density on the outer surface of the active particle. Since current density is a function of the electrochemical reaction rate, using Butler–Volmer equation,93 it can be written as (16)In this equation, i0 represents the current density, and β and η are the symmetry factor and surface overpotential, respectively. The surface over potential, η, can be calculated by subtracting the Open Circuit Voltage (OCV), U, from the potential difference between electrodes, V. In order to acquire the data for OCV as a function of the state of charge, Thackeray's94 fit on the experimental data from Doyle et al.95 has been utilized. With the uniformity in the particle size of the active material, it can be assumed that the applied voltage, V, will be equivalent to the difference between the cathode and anode materials. Using the lithium ion concentration difference, the current density, i0, due to ionic exchange is calculated as i0 = Fkc1−βl(cmax − csurface)1−βcβsurface.(17)In this equation, k represents the chemical reaction rate constant, cl stands for the concentration of the lithium ions in the electrolyte (or the liquid environment), and csurface is the lithium ion concentration at the surface of the cathode material.
+Initial values and input variables
+
+Table 8 summarizes the parametric values used for the CFD modeling, and the values are from the work done by Zhang's group.96 The parametric values for the lithium ion diffusion coefficient, the Young's modulus of the material, and the partial molar volume for the doped and co-doped materials will vary based on their compositions and SOC values. Inputs for all three parameters are acquired from the molecular dynamics simulation performed in this work. During the battery discharging cycle, the initial lithium ion concentration at the active material's surface is maximum, and assuming some minor losses, the initial concentration, c0, is approximated as 0.996cmax.
+Table 8 Parametric values for CFD simulations. All values are adapted from the work of Zhang et al.96
+
+
+
+
+Notation
+Parametric value
+Units
+
+
+
+
+
+β
+
+0.5
+—
+
+
+
+c
+l
+
+1000
+mol m−3
+
+
+
+c
+max
+
+23700
+mol m−3
+
+
+
+k
+
+1.9 × 10−9
+m5/2 s−1 mol−1/2
+
+
+
+
+
+2.2 × 10−13
+m2 s−1
+
+
+
+Y
+
+10 × 103
+MPa
+
+
+
+v
+
+3.497 × 10−6
+mol m−3
+
+
+
+V
+
+4 × 10−4
+V s−1
+
+
+
+r
+0
+
+5 × 10−6
+m
+
+
+
+
+Diffusion induced stress production
+To calculate the stress due to intercalation induced strain, we use:25 (18)where εkl is the strain component caused by the stress, σkl, that is generated due to ionic intercalation. The deviation in the lithium concentration from the fully charged state is represented by, c − c0. According to eqn (18), the intercalation induced strain in the structure is a direct function of the properties such as Young's modulus, the component of the applied stress, the partial molar volume, and the deviation in the lithium ion concentration with respect to the initial stage. Therefore, estimating these properties as a function of the state of charge of the batteries is important, and has been taken into account in our work.
+Diffusion induced heat production
+The thermal runway is a major problem in lithium ion batteries, especially when the quest for a higher energy density cathode material is at its peak. There are several components or parameters that contribute towards the heat generation in the battery during each charge and discharge cycle. Heat generation inside the battery can be quantified as (19)In this equation, the first term on the right hand side is the contribution due to the irreversible resistance component which is mostly caused by the deviation in the cell potential from its equilibrium voltage. The second term is the cell heating caused by the reversible entropy as the temperature increases. The third term represents the heating component due to internal side chemical reactions inside the cell, where  represents the average enthalpy of the internal side reactions, and rk is the reaction rate for the kth reaction. However, in order to simplify the equation and knowing that in a healthy cell the contribution from the side reaction is minimal, in this work, it has been neglected. Finally, the fourth term in eqn (19) represents the accumulation of heat as a result of local variation in the concentration. For example, the local concentration of species i in phase j, cij, can vary with time. dv represents the differential volume of the local species, and ij and avgij are the partial molar enthalpy and average partial molar enthalpy of species i in phase j, respectively. In order to simplify the fourth term, Thomas et al.97 presented a revision as (20)where the term  accounts for the variation of the enthalpy with respect to the lithium ion concentration in the solid.26 In eqn (19) and (20), the data points for the curves  and  are from the experimental findings of Thomas et al.98
+7 Results and discussion
+Findings from the multi scale modeling such as QM, CMD, and macro scale CFD along with the NN modeling are described and discussed in detail in this section.
+7.1 NN simulations
+NN models were used to simultaneously minimize the computational cost and maximize the accuracy. The NN models’ results, their accuracy, and the required simulation time are presented in this subsection.
+
+Prediction performance. 
+A total of 4 NN models were developed in this study, one for each SOC value between 0.5 till 0.875. As mentioned in Section 4, these models were developed using 100000 data points. While 75% of these data were used for training, the remaining was used for testing. To check each model's performance, the coefficient of determination (R2) score is calculated as described in eqn (7). While a high R2 indicates high accuracy, a score equal to or almost 1 is also not desirable as it could lead to over-fitting99 and therefore loss of generalization.100 The R2 score for both training and testing data is presented in Table 9.
+Table 9 
+R
+2 score for training and testing data for all 4 neural network models. The model number corresponds to the respective SOC dataset
+
+
+
+
+Model number
+SOC
+Training R2
+Testing R2
+
+
+
+
+1
+0.500
+0.986
+0.984
+
+
+2
+0.625
+0.976
+0.971
+
+
+3
+0.750
+0.962
+0.961
+
+
+4
+0.875
+0.982
+0.978
+
+
+
+
+As seen in Table 9, for all 4 NN models, the R2 scores for the training and testing data are in the ranges of [0.962, 0.986] and [0.961, 0.984], respectively. This validates the accuracy of the developed models and also in consistent with our previous publication.46Fig. 3 shows the comparison between the potential energies estimated by CMD simulations and predictions from these NN models. In each plot in this figure, the solid line represents the ideal match between the NN models and the results from the CMD simulations. With a strong confidence on the accuracy of the NN model emanating from these results, the NN model can be employed to rapidly evaluate all possible crystal configurations to identify the configurations with the least potential energy.
+ Fig. 3  Model performance for SOC values of (a) 0.500; (b) 0.625; (c) 0.750; and (d) 0.875. Left: potential energy values predicted by the NN model compared with the values obtained from LAMMPS; right: potential energy values from the NN model for each crystal configuration for this SOC. 
+Pristine LMO spinel and some of the single ion doped structures can be validated with the experimental results, which was done by comparing the lattice constant values.101 However, it becomes harder to get experimental data or perform tests for engineered co-doped structures. Therefore, we performed quantum mechanics simulations on these configurations under similar environmental conditions and the results were used to verify the calculations from CMD simulations.
+
+7.2 QM simulations
+Before using QM data for validation, it is essential to establish QM as a reliable tool to generate these data. For this, lattice constant values calculated through QM simulations for the pristine LMO spinel were compared with the available experimental data. Table 10 shows that the lattice constant values calculated from QM simulation have an accuracy of ∼99.92% with respect to the experimental data. Specifically, the lattice constant value for the pristine LMO spinel observed from experiments is 8.247 Å101,102 which is ∼0.08% lower than the value from the QM simulations (8.254 Å). With this confidence in the accuracy of the QM simulations, since we do not have measurements for the lattice constant values for the new engineered materials, especially when doped with more than one element, we have employed QM calculations to validate the lattice cell length results predicted by the CMD simulations for different materials.
+Table 10 Lattice constant values from CMD, QM simulations, and experiments for pristine and doped LMO spinel
+
+
+
+
+Structure
+CMD (Å)
+QM (Å)
+Experiment (Å)
+% offset of CMD results w.r.t.
+
+
+Experiment (%)
+QM (%)
+
+
+
+
+LMO
+8.235
+8.254
+8.247101,102
+0.15
+−0.23
+
+
+LMO-A
+8.217
+8.22261
+
+
+
+
+−0.06
+
+
+LMO-N
+8.220
+8.238105
+
+
+
+
+−0.22
+
+
+LMO-M
+8.208
+8.23135,106,107
+
+
+
+
+−0.28
+
+
+LMO-Y
+8.216
+8.220
+
+
+
+
+−0.05
+
+
+LMO-G
+8.219
+8.227
+—
+—
+−0.10
+
+
+LMO-C
+8.220
+8.229
+—
+—
+−0.11
+
+
+LMO-F
+8.223
+8.231
+—
+—
+−0.10
+
+
+LMO-S
+8.237
+8.239
+
+
+
+
+−0.02
+
+
+LMO-SA
+8.222
+8.146
+
+
+
+
++0.93
+
+
+LMO-SN
+8.223
+8.209
+
+
+
+
++0.17
+
+
+LMO-SM
+8.212
+8.216
+
+
+
+
+−0.05
+
+
+LMO-SY
+8.219
+8.325
+
+
+
+
+−1.27
+
+
+LMO-SG
+8.224
+8.229
+—
+—
+−0.06
+
+
+LMO-SC
+8.225
+8.228
+—
+—
+−0.04
+
+
+LMO-FA
+8.218
+8.138
+—
+—
++0.98
+
+
+LMO-FN
+8.219
+8.200
+—
+—
++0.23
+
+
+LMO-FM
+8.211
+8.215
+—
+—
+−0.05
+
+
+LMO-FY
+8.216
+8.234
+—
+—
+−0.22
+
+
+LMO-FG
+8.220
+8.227
+—
+—
+−0.09
+
+
+LMO-FC
+8.223
+8.227
+—
+—
+−0.05
+
+
+
+
+7.3 The CMD simulation
+A detailed validation of the CMD simulation framework used in this work has been presented in ref. 44 and 45 where we have compared the predicted diffusion coefficient as a function of temperature with the experimental data from Takai et al.103 and Kuwata et al.104 For additional validation, we present the consistency of the lattice constant values for the undoped LixMn2O4 obtained from CMD simulation, the experimental data as well as the QM simulation results. The first row in Table 10 shows the comparison. It is clear from the results that lattice constant values from the CMD simulations are fairly accurate and hence reliable. More precisely, the deviation is 0.23% with respect to QM results. Similarly, the CMD simulation under-predicts the lattice constant by a mere 0.15% with respect to the experimental data from the literature.101,102 With these validations, we can confidently use CMD simulations to investigate the doped and co-doped cases.
+
+Table 10 presents a summary of the lattice cell length for each co-doped material investigated in this research using CMD and QM simulations. As seen in this table, every doping element has a distinct effect on the lattice length that is dictated by its ionic radius and other parameters such as electronegativity, ionic compressibility, and oxidizing power. Barring sulfur, most elements tend to reduce the overall lattice expansion. The anomalous behaviour of sulfur is due to the fact that it has a relatively larger size which increases the size of the crystal. For each engineered structure, doped or co-doped, the lattice constant values obtained from both CMD and QM simulations are in excellent agreement (cf.Table 10). In fact, the largest disagreement of 1.3% is for LMO-SY. Also, in general, as highlighted in the previous section, the CMD simulation tends to under-predict the lattice constant values. The only exceptions are LMO-SA and LMO-SN structures. Nevertheless, these variations are very small and could be attributed to the mathematical deviations that arise from the CMD simulation's equilibrium state termination time, and for all practical purposes, these variations are negligible.
+7.4 Effect of doping and co-doping
+In this subsection, we present the findings on the effect of doping and co-doping on the different crystals.
+
+7.4.1 Volume expansion. 
+The expansion of the cathode material upon lithium ion intercalation when a battery is discharging is a well known phenomenon and is directly reflected in the lattice constant. One of the major objectives behind co-doping was to reduce this volume expansion. It is evident from Fig. 4 that for all engineered structures, the lattice constant is directly proportional to the state of charge of the battery. At a given SOC value, the lattice constant of the pristine LMO spinel is higher than all engineered structures except when sulfur is introduced.
+ Fig. 4  Lattice length expansion for each doping element cases. 
+More precisely, from Fig. 4–6, we can conclude that for all doped as well as co-doped LixMn2O4, the overall lattice length of the structure increases from 8.038 Å to 8.237 Å during lithium intercalation. Table 11 summarizes the relative lattice length and volume expansion for all the structures which include pristine LMO spinel and single and double element doping. As seen in this table, all cathode crystals go through a volume change as high as 7% through a complete charge–discharge cycle. Furthermore, with the exception of the LMO-S crystal, relative to the LMO spinel, the volume expansion of doped and co-doped crystals decreases by 1.7−20%. As suggested by Nishijima et al.,41 these reductions in the volume expansion of the doped and co-doped crystals with respect to the LMO spinel can translate to an increase in the battery's life by several thousands of cycles.
+ Fig. 5  Change in the lattice length at various SOCs for undoped structures, and structures co-doped with S or F, and (a) Al, (b) Mg and (c) Ni. 
+ Fig. 6  Change in the lattice length at various SOCs for undoped structures, and structures co-doped with S or F, and (a) Ga, (b) Cr and (c) Y. 
+Table 11 Impact of dopants on the volume expansion and the cycle life of the battery
+
+
+
+
+Structure
+Change in length (%)
+Change in volume (%)
+Change in volume w.r.t. LMO (%)
+Young's modulus (GPa)
+Potential increase in # of cycles
+
+
+
+
+LMO
++2.350
++6.87
+—
+132 ‘
+—
+
+
+LMO-A
++2.072
++6.09
+−11.32
+118
++4134
+
+
+LMO-N
++2.016
++5.93
+−13.71
+123
++5007
+
+
+LMO-M
++1.870
++5.50
+−19.95
+117
++7283
+
+
+LMO-G
++2.275
++6.69
+−2.65
+119
++968
+
+
+LMO-C
++2.275
++6.69
+−2.65
+125
++972
+
+
+LMO-Y
++1.966
++5.78
+−15.85
+122
++5788
+
+
+LMO-S
++2.354
++6.92
++0.72
+128
+−262
+
+
+LMO-F
++2.249
++6.61
+−3.75
+117
++1371
+
+
+LMO-SA
++2.071
++6.08
+−11.50
+118
++4570
+
+
+LMO-SN
++2.015
++5.92
+−13.82
+125
++5353
+
+
+LMO-SM
++1.869
++5.50
+−19.94
+128
++7718
+
+
+LMO-SG
++2.288
++6.72
+−2.16
+113
++787
+
+
+LMO-SC
++2.288
++6.73
+−2.17
+127
++790
+
+
+LMO-SY
++1.965
++5.78
+−15.86
+128
++6093
+
+
+LMO-FA
++2.092
++6.15
+−10.48
+117
++4878
+
+
+LMO-FN
++2.054
++6.04
+−12.10
+122
++3999
+
+
+LMO-FM
++1.904
++5.60
+−18.53
+121
++7170
+
+
+LMO-FG
++2.296
++6.75
+−1.73
+114
++631
+
+
+LMO-FC
++2.298
++6.76
+−1.67
+122
++608
+
+
+LMO-FY
++1.998
++5.88
+−14.48
+123
++5560
+
+
+
+
+Young's modulus values at room temperature for the fully lithiated structures show that for some of the co-doped cases such as LMO-SM and LMO-SY, the compromise in the structural strength is marginal (cf.Table 11). As highlighted in the Introduction section, it must be noted that the S and F co-doped structures tend to perform better in terms of relative volume expansion and manganese dissolution during charge and discharge cycles at elevated temperatures.
+
+
+7.4.2 Yield and ultimate stress. 
+In our previous work on the LiMn2O4 spinel, we observed that the state of charge and temperature are the key parameters to test the material properties.44 We investigated the effect of these parameters for different strain rates.44 We also found out44 that the crystal structure of the cathode material is a direct function of the charged or discharged state of the battery, which is in agreement with the work of Vakarin et al.108 Based on these observations, we have investigated the stress–strain relationship for a strain rate of 0.5C (0.01 p s−1) for fully and partially lithiated structures co-doped with sulfur or fluorine.
+Lee et al.79 found that ionic interactions contribute immensely to stress generation in the crystal structure, especially during intercalation. The introduction of Li+ into the host material during charging and discharging is responsible for changing the number of ions in the crystal (Li+, Mn3+, Mn4+, and ions of other dopants). As per eqn (2), this eventually impacts the overall interactions between the ions and thereby the mechanical properties of the electrode material.79 It also means that the SOC values not only influence the elastic properties of the undoped LMO spinel but also impact the doped and co-doped structures. To understand the fracture behaviour of each material, we applied a uniaxial strain which is equivalent of the C/2 charge/discharge rate, on two sides of the crystal boundaries. Fig. 7 and 8 present the results for stress and strain values for the various structures co-doped with sulfur and fluorine. As seen in this figure, LMO spinels doped with Ga, Ni or Mg tend to miss the ultimate stress part of the curve. However, based on Young's modulus values summarized in Table 11, we can conclude that the yield stress values for most of the cases will overlap with each other.
+ Fig. 7  Stress–strain curves for an undoped structure and structures co-doped with sulfur or fluorine at SOC = 1: and doped with (a) Al, (b) Mg and (c) Ni. 
+ Fig. 8  Stress–strain curves for an undoped structure and structures co-doped with sulfur or fluorine at SOC = 1: and doped with (a) Ga, (b) Cr and (c) Y. 
+Intermediate stage elastic properties. 
+It is possible that the co-doped material shows promising results when fully charged.44,45 However, the material may not be stable in the partially charged states. At lower SOCs, the LMO spinel could be more unstable. To investigate this, we have compared the results for both sulfur and fluorine co-doped structures with undoped LMO spinel at SCO = 0.125. The results are shown in Fig. 9–12.
+ Fig. 9  Elastic behaviour of various co-doped structures at SOC = 0.125 with respect to the original LMO structure; doping elements are (a) S and Al, (b) S and Ni (c) S and Mg. 
+ Fig. 10  Elastic behaviour of various co-doped structures at SOC = 0.125 with respect to the original LMO structure; doping elements are (a) S and Ga, (b) S and Cr, and (c) S and Y. 
+ Fig. 11  Elastic behaviour of various co-doped structures at SOC = 0.125 with respect to the original LMO spinel structure; doping elements are (a) F and Al, (b) F and Ni (c) F and Mg. 
+ Fig. 12  Elastic behaviour of various co-doped structures at SOC = 0.125 with respect to the original LMO spinel structure; doping elements are (a) F and Ga, (b) F and Cr, and (c) F and Y. 
+As shown in Fig. 9(b and c), compared to the undoped LMO spinel, structures doped with Ni and Mg tend to have a lower yield stress. Specifically, LMO-SN, LMO-SM and LMO have yield stress values of 4.9 GPa, 7.4 GPa and 8.1 GPa, respectively. In the case of Ni co-doped structures, the material fractures quite early at a strain of around 0.03. On the other hand, materials doped with chromium (LMO-SC, LMO-FC) and yttrium (LMO-SY and LMO-FY) outperform the pristine LMO spinel's crystal structure (cf.Fig. 10(b, c) and 12(b, c)).
+It must also be noted that doping with either sulfur or fluorine produces almost the same results. This is expected because: (i) the input parameters corresponding to these two dopants are very close, and (ii) only 1% of the oxygen ions are replaced, resulting in a very small contribution from the corresponding ionic interactions.
+
+
+7.4.3 Diffusion coefficient. 
+It is well known that with an increase in the ambient temperature, the enhanced kinetic energy (KE) increases the total energy of the system. This results in an increased ionic mobility within the crystal structure, eventually increasing the diffusivity of the lithium ions inside the crystal structure. Furthermore, as evident in the following equation, contribution from the chemical diffusion coefficient, dictated by the battery's charging state, operating temperature, and the doping elements, is also equally important: (21)where D0 is the initial diffusion coefficient, and cLi+ is the concentration of the lithium ions. Furthermore, z is the ionic charge of lithium, and V is the voltage or potential at a particular lithium concentration. v, and cmax are the partial molar volume and maximum concentration of the lithium ions, and Y and ν represent Young's modulus and Poisson's ratio of the material, respectively. Eqn (21) accounts for the intercalation induced diffusion for lithium ions, and can be used to validate the results from our simulations.25,26,79,80
+CMD simulations were undertaken to investigate the impact of doping and co-doping on the diffusivity of the lithium ions at different temperatures. To estimate the diffusion coefficient, Mean Square Displacement (MSD) values of the lithium ions were calculated using eqn (22). MSD of the lithium ions was evaluated based on the average change in the positions of the lithium ions with time with respect to its original position. (22)where x(time) and x(timeinitial) represent the ionic positions of the lithium ions at two different times. Furthermore, the bar on top of the square displacement value in eqn (22) suggests that we have averaged the values for one ion type, particularly lithium ion in this work. Using this averaged mean square displacement data, we have employed the following Einstein equation to calculate the diffusion coefficient: (23)In this equation, as time approaches infinity, the slope of the MSD with time represents the diffusion coefficient.
+In the high temperature zone (T > 1000 K), the MSD slopes can be accurately determined after a short simulation duration.44,45 However, at lower temperatures, this becomes harder since the ions require more time to diffuse. Therefore, at lower temperatures, we create an impurity by removing an ion and run the simulation for 5 ns. Since vacancy was already created, the results from these simulations provide us the energy required to move an ion when there is a vacant site available. The activation energy from this calculation is added to the vacancy formation activation energy from higher temperature zones. Kuwata et al.104 have used this approach in their experimental work and we have used their data to validate this process.45 Our simulation results for LMO spinel are in excellent agreement with their experimental data, and, in agreement with Chung et al.,109 outperform Kuwata et al.'s104 extrapolation for room temperature diffusion coefficient.
+Continuing this computational investigation on diffusion in coped and co-doped crystals, we found that almost all co-doped structures outperform the undoped LMO spinel, especially at lower temperatures (cf.Fig. 13(a and b)). However, an improvement in diffusivity is better for materials doped with sulfur instead of fluorine. This is because doping with sulfur results in a larger lattice size, facilitating the easy movement of lithium ions, especially at lower temperatures. In the high temperature zone there is hardly any difference because a small change in the lattice size does not have any additional effect since the structure has already gone through a phase change.
+ Fig. 13  Diffusion coefficient vs. temperature for various engineered structures in a fully discharged state. (a) Structures co-doped with sulfur, and (b) structures co-doped with fluorine. 
+
+7.5 Inter-ionic distance
+Ionic interactions can be studied to understand the strength of the crystal structure. In general, ions with a smaller distance have a stronger bond, providing a better structural strength. To investigate this, average inter-ionic distances between different ions were calculated using CMD simulations. For this, the radial distribution function (RDF), G(r), and production simulations were performed on the equilibrated structures of the doped as well as undoped LMO spinels. The output of the CMD simulations provides us the x, y and z coordinates for the requested ionic pair within a defined cutoff radius. G(r) is calculated as (24)In this equation, Nk and Nl are the total ionic sample size in a crystal structure for k and l type ions, respectively. Volume is the volume of each unit cell of the particular crystal, and nkl is the overall number of ions in the spherical volume which surrounds the ion k and falls between the radii r and r + Δr.
+
+Fig. 14 shows the radial distribution function of the undoped LMO spinel along with sulfur co-doped structures, at room temperature. In each plot, the first peak represents the distance between the metal dopant and the nearest oxygen ion, i.e., the bond length. As shown in Fig. 14, compared to the undoped LMO spinel where Mn3+ forms a bond with O2− (a bond length of about 2 Å), almost all co-doped structures have a smaller inter-ionic distance. Doping with Al and Ga results in the smallest ionic distances of ∼1.55 Å and ∼1.65 Å, respectively. Though Al3+–O2− has the smallest bond length, the yield strength values for all the Al doped and co-doped structures, especially at the intermediate charging states, were slightly lower than the yield strength values of materials with other dopants such as Y, Cr (cf.Fig. 14(a and b)).
+ Fig. 14  Inter-ionic distances between O2− and other doped metal ions for various structures at SOC = 1 for (a) sulfur and (b) fluorine, co-doped structures. 
+This is because, with Al, the contribution towards a smaller ionic distance is attributed to the smaller radii of the Al ion (0.53 Å). Fig. 9(a and b) are almost identical because both figures represent the ionic distance between a doped metal ion and oxygen, with just a variation in the co-dopant (sulfur or fluorine). Furthermore, Table 12 shows the average bond length between metal and oxygen ions for structures co-doped with sulfur or fluorine. Fluorine co-doped structures show a minor reduction on the overall bond length which is probably due to the smaller lattice structure and higher electronegativity of the fluorine ion as compared to those of sulfur.
+Table 12 Average bond length between O2− and other doped metal ions (in Å)
+
+
+
+
+Bond name
+Sulfur co-doped
+Fluorine co-doped
+
+
+
+
+Ni–O
+1.75
+1.65
+
+
+Mg–O
+1.75
+1.65
+
+
+Al–O
+1.55
+1.45
+
+
+Y–O
+1.95
+1.85
+
+
+Mn–O
+2.05
+2.00
+
+
+Ga–O
+1.65
+1.55
+
+
+Cr–O
+1.85
+1.75
+
+
+
+
+7.6 Multi-scale simulation results
+The QM and CMD simulations have established that trace co-doping with appropriate ions can enhance the structural properties as well as the charge/discharge cycles of LixMn2O4. Furthermore, removing a small amount of Mn3+ can help retard material degradation which occurs after the charge and discharge processes, especially when the ambient temperature is high. With these promising results at the atomic and molecular scale, in order to verify these findings at a larger scale, spherical particle model (SPM) simulations were performed. To improve the quality of the employed input parameters, important inputs such as diffusion coefficient and Young's modulus are acquired from our QM and CMD simulations. These values along with the right boundary conditions are used for macro-scale simulations to investigate the possibility of the thermal runway due to large internal stress generation in the co-doped materials. Specifically, we looked at the development of the stress or heat generation in all the novel cathode structures.
+
+Fig. 15 presents the development of the radial stress inside the spherical particle of the novel cathode material structure during the normal charging and discharging processes. As expected, for trace amounts of co-doping with metal ions, the peaks in the radial stress generation are almost identical. However, as seen in Table 13, there is only a small variation in the peak stress value. In some cases, co-doped LMO spinels offer less internal stress as compared to the LMO spinel without any doping. Some of the peaks with LMO-FA are slightly taller due to smaller crystal volume. LMO spinels doped with yttrium or chromium, and co-doped with either sulfur or fluorine, show a much smaller radial stress since these crystals’ volume undergoes a balanced expansion during the lithiation and de-lithiation processes.
+ Fig. 15  Radial stress generated during a charge–discharge cycle for structures co-doped with: (a) sulfur, and (b) fluorine. 
+Table 13 Peak radial stress ranges for sulfur and fluorine co-doped structures
+
+
+
+
+
+
+Peak stresses (MPa)
+
+
+Min
+Max
+Min
+Max
+
+
+
+
+Undoped
+−195.08
+169.43
+—
+—
+
+
+
+
+
+
+Doped element
+Sulfur co-doped
+Fluorine co-doped
+
+
+
+
+Al
+−174.86
++160.07
+−192.34
++176.07
+
+
+Ni
+−167.98
++153.11
+−176.38
++160.77
+
+
+Mg
+−160.44
++147.20
+−168.46
++154.55
+
+
+Ga
+−144.40
++132.48
+−158.84
++145.72
+
+
+Cr
+−173.76
++162.67
+−191.14
++178.94
+
+
+Y
+−157.97
++147.88
+−173.76
++162.67
+
+
+
+
+Depending upon the SOC values, a diffusion induced radial stress could result in a variety of heat generation profiles within the crystal during intercalation process. As shown in Fig. 16, during the cell charging cycle, there are a few peaks and most of them are at the same charging time or SOC. Peak values for both sulfur and fluorine co-doped structures are shown in Table 14. It can be seen that compared to other metal ions, crystals co-doped with yttrium generate slightly less heat. Also, most of the sulfur co-doped structures generate marginally less heat than fluorine co-doped structures. Thus, the multi-scale modeling results show that co-doping with metals such as yttrium will improve the material's structural strength while keeping the electrochemical properties unchanged. Additionally, co-doping with these metals helps in marginally reducing the chances of a thermal runway.
+ Fig. 16  Heat generated during a charging cycle for structures co-doped with: (a) sulfur, and (b) fluorine. 
+Table 14 Peak heat generation ranges for sulfur and fluorine co-doped structures
+
+
+
+
+
+
+Peak heat generation (pW)
+
+
+
+
+Undoped
+73.1
+—
+
+
+
+
+
+
+Doped element
+Sulfur co-doped
+Fluorine co-doped
+
+
+
+
+Al
+73.4
+74.8
+
+
+Ni
+71.7
+73.1
+
+
+Mg
+76.3
+77.8
+
+
+Ga
+74.8
+76.3
+
+
+Cr
+76.3
+77.8
+
+
+Y
+59.8
+61.0
+
+
+
+
+8 Summary and conclusions
+To address the issue of fast degradation of the LixMn2O4 (LMO) spinel cathode material and improve its performance, in this research, we used multi-scale computational investigation coupled with neurocomputing techniques to explore several cations and anions to replace ∼5% and 10% of the Mn3+ ions and ∼1% of O2− ions, respectively, in the LMO crystal. Cations or metal ions investigated in this research are Al, Ni, Mg, Ga, Cr, and Y, and anions are S and F.
+Since performing QM simulations on all possible crystal configurations of the doped and co-doped structures is not computationally feasible, QM was mainly used to validate the crystal structure obtained from the CMD simulations that were used to undertake co-doping investigations. Specifically, in establishing CMD simulations as a feasible tool to undertake doping investigations, crystal lattice length obtained from the CMD simulations was compared with the QM results, and we found them to be within ∼1% of each other.
+In investigating co-doped structures, CMD simulations were performed to study the material properties such as Young's modulus, the diffusion coefficient of lithium ions, and ionic interactions. To identify the optimal potential crystal configurations that will have the least potential energy, we used a combination of CMD simulations and NN techniques. The need for NN techniques is due to the fact that with the addition of dopants, the number of potential configurations increases exponentially, making an exhaustive CMD evaluation of each possible crystal structure computationally infeasible. To overcome this, four NN models were developed for the intermediate SOCs between 0.5 and 0.875, using a database of CMD simulation results on a subset of possible configurations. The NN models were used to select the configurations with the least potential energy for CMD simulations, and provided the initial lattice structure values for these simulations. With these NN models, the computational time to evaluate all possible crystal configurations was reduced by nearly 88%. The effect of co-doping on material properties was then investigated on these optimal crystals using CMD simulations.
+In the CMD simulations, output parameters such as variation in the lattice constant, stress and strain generation, and the mobility of Li+ ions within the cathode structure were studied in detail. Numerical simulation results on the lattice constant values from the CMD simulations were validated with the experimental data from the literature as well as QM results. Additionally, the diffusion coefficient at different temperatures was also in good agreement with the experimental results from the literature for pristine LMO spinel.
+A major issue with high energy density cathode materials is thermal runaway which is mainly caused by the heat generation due to intercalation induced stress. Therefore, to verify the improved performance predicted by CMD simulations, CFD simulations using an SPM model were undertaken to understand the impact of co-doping on internal stress and heat generation. The SPM model was equipped with input properties generated from the QM and CMD simulations. CFD results suggest that engineered structures using the co-doped strategy can help in minimizing the peak lithium ion intercalation induced stress and unwanted heat generation.
+The main conclusions from this investigation are as follows:
+(1) Molecular dynamics is an excellent tool to investigate new and novel cathode materials, and can be ably supported using quantum mechanics simulations.
+(2) By combining neural computing techniques with CMD and QM simulations, we can develop a computationally feasible and efficient tool that can be used to evaluate millions of cathode materials in a short time.
+(3) Finally, the macroscopic properties of a potentially feasible material can be easily investigated using CFD simulations to understand the macroscale behaviour of the material.
+(4) From the specific investigation undertaken in this study we conclude that with trace doping or co-doping, relative volume expansion of the LMO spinel can be reduced anywhere between 1 and 20%. The corresponding stress and strain study shows that the yield strength for the co-doped stress might not change much for the fully discharged state. However, structures co-doped with Y and Cr tend to outperform LMO spinel.
+(5) CFD simulation results suggest that by replacing mere ∼5% of the Mn3+ ions with metal ions such as Al, Mg, Ni, Ga, Cr or Y, and ∼1% of the O2− either by S2− or F−, the life of the batteries using the LMO spinel as a cathode material can be enhanced by ∼600–7200 charge and discharge cycles without compromising on the energy storage capacity. For most of the selected elements, the maximum stress is below that of the LMO spinel. Yttrium doped structures, co-doped with either sulfur or fluorine, generate less heat during the discharge process.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+The authors would like to thank NSERC Canada for funding this research through the Discovery Grants program. RT acknowledges the funding from the Department of Mechanical Engineering. The authors are also grateful to the reviewers for their time and suggestions that have helped improve the quality of this manuscript.
+References
+A. Manthiram, J. Phys. Chem. Lett., 2011, 2(3), 176–184 CrossRef CAS .
+Y. Yang, L. Li, H. Fei, Z. Peng, G. Ruan and J. M. Tour, ACS Appl. Mater. Interfaces, 2014, 6, 9590–9594 CrossRef CAS PubMed .
+Y. Yang, D. Shu, H. Yu, X. Xia and Z. Lin, J. Power Sources, 1997, 65, 227–230 CrossRef CAS .
+J. Shu, M. Shui, F. Huang, Y. Ren, Q. Wang, D. Xu and L. Hou, J. Phys. Chem. C, 2010, 114, 3323–3328 CrossRef CAS .
+L. H. Hu, F. Y. Wu, C. T. Lin, A. N. Khlobystov and L. J. Li, Nat. Commun., 2013, 4, 1687 CrossRef PubMed .
+K. C. Kam and M. M. Doeff, Mater. Matters, 2012, 7, 55–82 Search PubMed .
+Y. Kim, ACS Appl. Mater. Interfaces, 2012, 4, 2329–2333 CrossRef CAS PubMed .
+B. V. Merinov, S. Naserifar, S. V. Zybin, S. Morozov, W. A. Goddard, J. Lee, J. H. Lee, H. E. Han, Y. C. Choi and S. H. Kim, J. Chem. Phys., 2020, 152, 031101 CrossRef CAS PubMed .
+M. N. Ates, S. Mukerjee and K. M. Abraham, RSC Adv., 2015, 5, 27375–27386 RSC .
+H. J. Noh, S. Youn, C. S. Yoon and Y. K. Sun, J. Power Sources, 2013, 233, 121–130 CrossRef CAS .
+X. Hui, L. Zhentao and X. Jianping, Prog. Nat. Sci.: Mater. Int., 2012, 22, 572–584 CrossRef .
+E. Iguchi, Y. Tokuda, H. Nakatsugawa and F. Munakata, J. Appl. Phys., 2002, 91, 2149 CrossRef CAS .
+S. Y. Luchkin, K. Romanyuk, M. Ivanov and A. L. Kholkin, J. Appl. Phys., 2015, 118, 072016 CrossRef .
+R. Sharma, N. Sharma and M. Sharma, AIP Conf. Proc., 2019, 2142, 040024 CrossRef .
+H. Y. Amanieu, M. Aramfard, D. Rosato, L. Batista, U. Rabe and D. C. Lupascu, Acta Mater., 2015, 89, 153–162 CrossRef CAS .
+J. Tarascon and M. Armand, Nature, 2001, 414, 359–367 CrossRef CAS PubMed .
+J. Cabana, T. Valdés-Solís, M. Palacín, J. Oró-Solé, A. Fuertes, G. Marbán and A. Fuertes, J. Power Sources, 2007, 166, 492–498 CrossRef CAS .
+Y. Xia, Y. Zhou and M. Yoshio, J. Electrochem. Soc., 1997, 144, 2593 CrossRef CAS .
+G. G. Amatucci, N. Pereira, T. Zheng, I. Plitz and J. Tarascon, J. Power Sources, 1999, 81-82, 39–43 CrossRef CAS .
+
+          C. Julien, A. Mauger, A. Vijh and K. Zaghib, Lithium Batteries: Science and Technology, Springer International Publishing,  2016 Search PubMed .
+J. Newman, K. E. Thomas, H. Hafezi and D. R. Wheeler, J. Power Sources, 2003, 119, 838–843 CrossRef .
+J. Christensen and J. Newman, J. Electrochem. Soc., 2006, 153, A1019 CrossRef CAS .
+W. Woodford, Y. Chiang and W. Carter, J. Electrochem. Soc., 2010, 157, A1052–A1059 CrossRef CAS .
+Y. Hu, X. Zhao and Z. Suo, J. Mater. Res., 2010, 25, 1007–1010 CrossRef CAS .
+X. Zhang, W. Shyy and A. M. Sastry, J. Electrochem. Soc., 2007, 154, A910 CrossRef CAS .
+X. Zhang, A. M. Sastry and W. Shyy, J. Electrochem. Soc., 2008, 155, A542 CrossRef CAS .
+J. Christensen, J. Electrochem. Soc., 2010, 157, A366 CrossRef CAS .
+Y. Tesfamhret, H. Liu, Z. Chai, E. Berg and R. Younesei, ChemElectroChem, 2021, 8, 1516–1523 CrossRef CAS .
+S. W. Lee, K. S. Kima, H. S. Moona, H. J. Kimb, B. W. Chob, W. Chob, J. B. Ju and J. W. Park, J. Power Sources, 2004, 126, 150 CrossRef CAS .
+D. Arumugam and G. P. Kalaignan, J. Electroanal. Chem., 2008, 624, 197 CrossRef CAS .
+K. Y. Chung, C. W. Ryu and K. B. Kim, J. Electrochem. Soc., 2005, 152, A791 CrossRef CAS .
+C. Sigala, D. Guyomard, A. Verbaere, Y. Piffard and M. Tournoux, Solid State Ionics, 1995, 81, 167 CrossRef CAS .
+P. Arora, B. N. Popov and R. E. White, J. Electrchem. Soc., 1998, 145, 807 CrossRef CAS .
+P. Angelopoulou, S. Kassavetis, J. Papavasiliou, D. Karfaridis, G. Słowik, P. Patsalas and G. Avgouropoulos, Energies, 2021, 14, 825 CrossRef CAS .
+Z. Yang, Y. Wang, X. Chen, H. Wu and Y. Zhang, ChemistrySelect, 2019, 4, 9583–9589 CrossRef CAS .
+Y. Deng, J. Mou, H. Wu, L. Zhou, Q. Zheng, K. H. Lam, C. Xu and D. Lin, ChemElectroChem, 2017, 4, 1362–1371 CrossRef CAS .
+M. Michalska, D. Ziółkowska, J. Jasiński, P.-H. Lee, P. Awniczak, B. Andrzejewski, A. Ostrowski, W. Bednarski, S.-H. Wu and J.-Y. Lin, Electrochim. Acta, 2018, 276, 37–46 CrossRef CAS .
+R. Thirunakaran, A. Sivashanmugam, S. Gopukumar and R. Rajalakshmi, J. Power Sources, 2009, 187, 565–574 CrossRef CAS .
+D. Zhang, B. Popov and R. White, J. Power Sources, 2009, 76, 81–90 CrossRef .
+D.-L. Fang, J. C. Li, X. Liu, P. F. Huang, T. R. Xu, M. C. Ming-Chuan Qian and C. H. Zheng, J. Alloys Compd., 2015, 640, 82–89 CrossRef CAS .
+M. Nishijima, T. Ootani, Y. Kamimura, T. Sueki, S. Esaki, S. Murai, K. Fujita, K. Tanaka, K. Ohira, I. Koyama and Y. Tanaka, Nat. Commun., 2014, 5, 4553 CrossRef CAS PubMed .
+G. G. Amatucci, A. Blyr, C. Sigala, P. Alfonse and J. M. Tarascon, Solid State Ionics, 1997, 104, 13–25 CrossRef CAS .
+J. Park, W. Lu and A. M. Sastry, J. Electrochem. Soc., 2011, 158, A201–A206 CrossRef CAS .
+R. Tyagi and S. Srinivasan, J. Chem. Phys., 2020, 153, 164712 CrossRef CAS PubMed .
+R. Tyagi, A. Lanjan and S. Srinivasan, ChemElectroChem, 2021, 24, 101–125 Search PubMed .
+S. Sandhu, R. Tyagi, E. Talaei and S. Srinivasan, Neural Comput. Appl., 2022, 34, 9983–9999 CrossRef .
+M. Doyle, T. Fuller and J. Newman, J. Electrochem. Soc., 1993, 140, A1526–A1533 CrossRef .
+J. Newman and W. Tiedemann, J. Electrochem. Soc., 1995, 142, 1054–1057 CrossRef CAS .
+J. Chu and S. Lee, J. Appl. Phys., 1994, 75, 2823–2829 CrossRef CAS .
+M. S. Whittingham, Chem. Rev., 2014, 114, 11414–11443 CrossRef CAS PubMed .
+L. Mai, X. Tian, X. Xu, L. Chang and L. Xu, Chem. Rev., 2014, 114, 11828–11862 CrossRef CAS PubMed .
+M. S. Islam and C. A. J. Fisher, Chem. Soc. Rev., 2014, 43, 185–204 RSC .
+T. Hofmann, D. Westhoff, J. Feinauer, H. Andrä, J. Zausch, V. Schmidt and R. Müller, Int. J. Solids Struct., 2020, 184, 24–39 CrossRef CAS .
+Z. Moradi, A. Lanjan and S. Srinivasan, J. Electrochem. Soc., 2020, 167, 110537 CrossRef CAS .
+Z. Moradi, A. Lanjan and S. Srinivasan, ChemElectroChem, 2021, 8, 112–124 CrossRef CAS .
+A. Lanjan, Z. Moradi and S. Srinivasan, ChemElectroChem, 2021, 8, 112–124 CrossRef .
+J. B. Goodenough and Y. Kim, Chem. Mater., 2010, 22, 587–603 CrossRef CAS .
+L. Zhang, N. Li, B. Wu, H. Xu, L. Wang, X. Q. Yang and F. Wu, Nano Lett., 2015, 15, 656–661 CrossRef CAS PubMed .
+Y. Z. Zheng, H. Ding, E. Uchaker, X. Tao, J. F. Chen, Q. Zhang and G. Cao, J. Mater. Chem. A, 2015, 3, 1979–1985 RSC .
+M. Zhi, C. Xiang, J. Li, M. Lia and N. Wu, Nanoscale, 2013, 5, 72–88 RSC .
+L. Xiao, Y. Zhao, Y. Yang, Y. Cao, X. Ai and H. Yang, Electrochim. Acta, 2008, 54, 545–550 CrossRef CAS .
+H. Zhang, Y. Xu, D. Liu, X. Zhang and C. Zhao, Electrochim. Acta, 2014, 125, 225–231 CrossRef CAS .
+M. Swietoslawski, M. Bakierska and M. Molenda, ECS Meet. Abstr., 2016, MA2016-03, 582 CrossRef .
+M. Kubicka, M. Bakierska, S. Swietoslawski, K. Chudzik and M. Molenda, Nanomaterials, 2019, 9, 1722 CrossRef CAS PubMed .
+F. Qian, B. Zhao, M. Guo, Z. Qian, Z. Wu and Z. Liu, Mater. Des., 2020, 194, 108867 CrossRef CAS .
+M. Molenda, R. Dziembaj, D. Majda and M. Dudek, Solid State Ionics, 2005, 176, 1702–1709 Search PubMed .
+M. Bakierska, M. Molenda and R. Dziembaj, Procedia Eng., 2014, 98, 20–27 CrossRef CAS .
+M. Nakayama, M. Kanekoa and M. Wakiharaa, Phys. Chem. Chem. Phys., 2012, 14, 13963–13970 RSC .
+K. Okhotnikov, B. Stevensson and M. Eden, Phys. Chem. Chem. Phys., 2013, 15, 15041–15055 RSC .
+P. Shukla, A. Chernatynskiy, J. C. Nino, S. B. Sinnott and S. R. Phillpot, J. Mater. Sci., 2011, 46, 55–62 CrossRef CAS .
+P. D. Battle, T. S. Bush and C. A. Catlow, J. Am. Chem. Soc., 1995, 117, 6292–6296 CrossRef CAS .
+K. Wright and J. D. D. Gale, Phys. Rev. B, 2004, 70, 035211 CrossRef .
+X. Xueli Wang, T. Liu, Y. Lu, Q. Li, R. Guo, X. Jiao and X. Xu, J. Phys. Chem. Solids, 2019, 132, 104–109 CrossRef .
+S. Plimpton, J. Comp. Phys., 1995, 117, 1 CrossRef CAS .
+R. Cygan, H. Westrich and D. Doughty, Mater. Res. Soc. Proc., 1995, 393, 113 CrossRef CAS .
+G. V. Lewis and C. R. A. Catlow, J. Phys. C: Solid State Phys., 1985, 18, 1149 CrossRef CAS .
+P. P. Ewald, Ann. Phys., 1921, 64, 253–287 CrossRef .
+S. Nose, J. Chem. Phys., 1984, 81, 511–519 CrossRef CAS .
+S. Lee, J. Park, A. M. Sastry and W. Lu, J. Electrochem. Soc., 2013, 160, A968–A972 CrossRef CAS .
+A. Asadi, S. Aghamiri and M. Talaie, RSC Adv., 2016, 6, 115354 RSC .
+
+          T. Szandala, Bio-inspired Neurocomputing. Studies in Computational Intelligence,  2021, vol. 903, pp. 203–224 Search PubMed .
+
+          C. Bircanoğlu and N. Arca, 2018 26th Signal Processing and Communications Applications Conf. (SIU),  2018, pp. 1–4 Search PubMed .
+
+          G. E. Dahl, T. N. Sainath and G. E. Hinton, IEEE Int. Conference on Acoustics, Speech and Signal Processing,  2013, pp. 8609–8613 Search PubMed .
+
+          D. Kingma and J. Ba, International Conference on Learning Representations, 2014.
+
+          X. Glorot and Y. Bengio, Proc. of the Thirteenth Int. Conference on Artificial Intelligence and Statistics, Chia Laguna Resort, Sardinia, Italy, 2010, pp. 249-256.
+C.-L. Cheng, S. Shalabh and G. Garg, J. Multivariate Anal., 2014, 126, 137–152 CrossRef .
+P. Giannozzi, S. Baroni, N. Bonini, M. Calandra, R. Car, C. Cavazzoni, D. Ceresoli, G. L. Chiarotti, M. Cococcioni and I. Dabo, J. Phys.: Condens. Matter, 2009, 21, 5502 CrossRef PubMed .
+D. Vanderbilt, Phys. Rev. B, 1990, 41, 7892 CrossRef PubMed .
+A. D. Corso, Comput. Mater. Sci., 2014, 95, 337–350 CrossRef .
+R. Jones and O. Gunnarsson, Rev. Mod. Phys., 1989, 61, 689–746 CrossRef CAS .
+J. P. Perdew, K. Burke and M. Ernzerhof, Phys. Rev. Lett., 1997, 78, 1396 CrossRef CAS .
+H. J. Monkhorst and J. D. Pack, Phys. Rev. B, 1976, 13, 5188 CrossRef .
+T. F. Fuller, M. Doyle and J. Newman, J. Electrochem. Soc., 1994, 141, 1–10 CrossRef CAS .
+M. M. Thackeray, Prog. Solid State Chem., 1997, 25, 1–71 CrossRef CAS .
+M. Doyle and J. Newman, J. Power Sources, 1995, 54, 46–51 CrossRef CAS .
+D. Zhang, B. Popov and R. White, J. Electrochem. Soc., 2000, 147, 831–838 CrossRef CAS .
+K. E. Thomas and J. Newman, J. Electrochem. Soc., 2003, 150, A176–A192 CrossRef CAS .
+K. E. Thomas, C. Bogatu and J. Newman, J.
+Electrochem. Soc., 2001, 148, A570 CrossRef CAS .
+I. V. Tetko, D. J. Livingstone and A. I. Luik, Adv. Neural Inform. Process. Syst., 1995, 35, 826–833 CAS .
+O. Bousquet and A. Elisseeff, J. Mach. Learn. Res., 2002, 2, 499–526 Search PubMed .
+N. Ishizawa, D. d Boulay, M. Hayatsu, S. Kuze, Y. Matsushima, H. Ikuta, M. Wakihara, Y. Tabira and J. R. Hester, J. Solid State Chem., 2003, 174, 167–174 CrossRef CAS .
+Y. Xia and M. Yoshio, J. Electrochem. Soc., 1996, 143, 825–833 CrossRef CAS .
+S. Takai, K. Yoshioka, H. Iikura, M. Matsubayashi, T. Yao and T. Esaka, Solid State Ionics, 2014, 256, 93 CrossRef CAS .
+N. Kuwata, M. Nakane, T. Miyazaki and K. Mitsuishi, Solid State Ionics, 2018, 320, 266–271 CrossRef CAS .
+J. H. Lee, J. K. Hong, D. H. Jang, Y. K. Sun and S. M. Oh, J. Power Sources, 2000, 89, 7–14 CrossRef CAS .
+A. Llusco, M. Grageda and S. Ushak, Nanomaterials, 2020, 10, 1409 CrossRef CAS PubMed .
+Y. Yu, J. Guo, M. Xiang, C. Su, X. Liu, H. Bai, W. Bai and K. Duan, Nature, 2019, 9, 16864 Search PubMed .
+E. V. Vakarin, G. G. Belmonte and J. P. Badiali, J. Chem. Phys., 2007, 126, 234709 CrossRef CAS PubMed .
+M. Chung, J. Seo, X. Zhang and A. Sastry, J. Electrochem. Soc., 2011, 158, A371 CrossRef CAS .
+
+This journal is © the Owner Societies 2022
+Table Content:
+	(1)
+
+Al3+	−1.66	0.530	1.5
+Ni2+	−0.26	0.700	1.9
+Mg2+	−2.36	0.720	1.2
+Y3+	−0.22	0.900	1.22
+Ga3+	−0.55	0.620	1.6
+Cr3+	−0.74	0.630	1.6
+S2−	+1.20	1.840	2.5
+F−	+2.87	1.330	4.0
+
+LMO	148
+
+LMO-SA	149	120
+LMO-SN	147	117
+LMO-SM	149	121
+LMO-SY	146	116
+LMO-SG	145	117
+LMO-SC	139	118
+LMO-FA	148	118
+LMO-FN	147	116
+LMO-FM	148	117
+LMO-FY	146	114
+LMO-FG	147	115
+LMO-FC	148	116
+
+Al3+	+1.4	0.530	0.050	
+68 and 70
+
+Ni2+	+1.4	0.700	0.059	
+71
+
+Mg2+	+1.4	0.720	0.060	
+70
+
+Y3+	+1.4	0.900	0.068	
+69
+
+Ga3+	+1.4	0.620	0.055	
+73
+
+Cr3+	+1.4	0.630	0.056	
+71
+
+S2−	−1.2	1.840	0.075	
+72
+
+F−	−1.2	1.330	0.072	
+72
+
+	(2)
+Akl = A0 × ρkl = A0 × (bk + bl),	(3)
+
+0.125	1	128
+0.250	2	6720
+0.375	3	94080
+0.500	4	509600
+0.625	5	1223040
+0.750	6	1345344
+0.875	7	640640
+1.000	8	102960
+	(4)
+
+ 	Fig. 1  Schematic of a neuron in layer k with input from n neurons of the previous layer k − 1.	 
+f (x) = max(0, x),	(5)
+
+
+0.500	509600	100000
+0.625	1223040	100000
+0.750	1345344	100000
+0.875	640640	100000
+
+Learning rate (η)	10k, k = −1, −2, …, 6
+Batch size	2k, k = 1, 2, …,8
+Optimization algorithm	Batch gradient descent, Adam, RMSProp
+Activation function	ReLU, Tanh, SoftMAX, Sigmoid
+
+Parameters
+Learning rate (η)	1 × 10−3
+Batch size	8
+Optimizer	Adam
+Activation function	ReLU
+	(6)
+	(7)
+	(8)
+
+ 	Fig. 2  LiMn2O4 single cell used in quantum mechanics modeling.	 
+	(9)
+	(10)
+	(11)
+	(12)
+	(13)
+	(14)
+	(15)
+	(16)
+i0 = Fkc1−βl(cmax − csurface)1−βcβsurface.	(17)
+
+
+β
+	0.5	—
+
+c
+l
+	1000	mol m−3
+
+c
+max
+	23700	mol m−3
+
+k
+	1.9 × 10−9	m5/2 s−1 mol−1/2
+
+
+	2.2 × 10−13	m2 s−1
+
+Y
+	10 × 103	MPa
+
+v
+	3.497 × 10−6	mol m−3
+
+V
+	4 × 10−4	V s−1
+
+r
+0
+	5 × 10−6	m
+	(18)
+	(19)
+	(20)
+
+1	0.500	0.986	0.984
+2	0.625	0.976	0.971
+3	0.750	0.962	0.961
+4	0.875	0.982	0.978
+
+ 	Fig. 3  Model performance for SOC values of (a) 0.500; (b) 0.625; (c) 0.750; and (d) 0.875. Left: potential energy values predicted by the NN model compared with the values obtained from LAMMPS; right: potential energy values from the NN model for each crystal configuration for this SOC.	 
+
+
+LMO	8.235	8.254	8.247101,102	0.15	−0.23
+LMO-A	8.217	8.22261	
+	
+	−0.06
+LMO-N	8.220	8.238105	
+	
+	−0.22
+LMO-M	8.208	8.23135,106,107	
+	
+	−0.28
+LMO-Y	8.216	8.220	
+	
+	−0.05
+LMO-G	8.219	8.227	—	—	−0.10
+LMO-C	8.220	8.229	—	—	−0.11
+LMO-F	8.223	8.231	—	—	−0.10
+LMO-S	8.237	8.239	
+	
+	−0.02
+LMO-SA	8.222	8.146	
+	
+	+0.93
+LMO-SN	8.223	8.209	
+	
+	+0.17
+LMO-SM	8.212	8.216	
+	
+	−0.05
+LMO-SY	8.219	8.325	
+	
+	−1.27
+LMO-SG	8.224	8.229	—	—	−0.06
+LMO-SC	8.225	8.228	—	—	−0.04
+LMO-FA	8.218	8.138	—	—	+0.98
+LMO-FN	8.219	8.200	—	—	+0.23
+LMO-FM	8.211	8.215	—	—	−0.05
+LMO-FY	8.216	8.234	—	—	−0.22
+LMO-FG	8.220	8.227	—	—	−0.09
+LMO-FC	8.223	8.227	—	—	−0.05
+
+ 	Fig. 4  Lattice length expansion for each doping element cases.	 
+
+ 	Fig. 5  Change in the lattice length at various SOCs for undoped structures, and structures co-doped with S or F, and (a) Al, (b) Mg and (c) Ni.	 
+
+ 	Fig. 6  Change in the lattice length at various SOCs for undoped structures, and structures co-doped with S or F, and (a) Ga, (b) Cr and (c) Y.	 
+
+LMO	+2.350	+6.87	—	132 ‘	—
+LMO-A	+2.072	+6.09	−11.32	118	+4134
+LMO-N	+2.016	+5.93	−13.71	123	+5007
+LMO-M	+1.870	+5.50	−19.95	117	+7283
+LMO-G	+2.275	+6.69	−2.65	119	+968
+LMO-C	+2.275	+6.69	−2.65	125	+972
+LMO-Y	+1.966	+5.78	−15.85	122	+5788
+LMO-S	+2.354	+6.92	+0.72	128	−262
+LMO-F	+2.249	+6.61	−3.75	117	+1371
+LMO-SA	+2.071	+6.08	−11.50	118	+4570
+LMO-SN	+2.015	+5.92	−13.82	125	+5353
+LMO-SM	+1.869	+5.50	−19.94	128	+7718
+LMO-SG	+2.288	+6.72	−2.16	113	+787
+LMO-SC	+2.288	+6.73	−2.17	127	+790
+LMO-SY	+1.965	+5.78	−15.86	128	+6093
+LMO-FA	+2.092	+6.15	−10.48	117	+4878
+LMO-FN	+2.054	+6.04	−12.10	122	+3999
+LMO-FM	+1.904	+5.60	−18.53	121	+7170
+LMO-FG	+2.296	+6.75	−1.73	114	+631
+LMO-FC	+2.298	+6.76	−1.67	122	+608
+LMO-FY	+1.998	+5.88	−14.48	123	+5560
+
+ 	Fig. 7  Stress–strain curves for an undoped structure and structures co-doped with sulfur or fluorine at SOC = 1: and doped with (a) Al, (b) Mg and (c) Ni.	 
+
+ 	Fig. 8  Stress–strain curves for an undoped structure and structures co-doped with sulfur or fluorine at SOC = 1: and doped with (a) Ga, (b) Cr and (c) Y.	 
+
+ 	Fig. 9  Elastic behaviour of various co-doped structures at SOC = 0.125 with respect to the original LMO structure; doping elements are (a) S and Al, (b) S and Ni (c) S and Mg.	 
+
+ 	Fig. 10  Elastic behaviour of various co-doped structures at SOC = 0.125 with respect to the original LMO structure; doping elements are (a) S and Ga, (b) S and Cr, and (c) S and Y.	 
+
+ 	Fig. 11  Elastic behaviour of various co-doped structures at SOC = 0.125 with respect to the original LMO spinel structure; doping elements are (a) F and Al, (b) F and Ni (c) F and Mg.	 
+
+ 	Fig. 12  Elastic behaviour of various co-doped structures at SOC = 0.125 with respect to the original LMO spinel structure; doping elements are (a) F and Ga, (b) F and Cr, and (c) F and Y.	 
+	(21)
+	(22)
+	(23)
+
+ 	Fig. 13  Diffusion coefficient vs. temperature for various engineered structures in a fully discharged state. (a) Structures co-doped with sulfur, and (b) structures co-doped with fluorine.	 
+	(24)
+
+ 	Fig. 14  Inter-ionic distances between O2− and other doped metal ions for various structures at SOC = 1 for (a) sulfur and (b) fluorine, co-doped structures.	 
+
+Ni–O	1.75	1.65
+Mg–O	1.75	1.65
+Al–O	1.55	1.45
+Y–O	1.95	1.85
+Mn–O	2.05	2.00
+Ga–O	1.65	1.55
+Cr–O	1.85	1.75
+
+ 	Fig. 15  Radial stress generated during a charge–discharge cycle for structures co-doped with: (a) sulfur, and (b) fluorine.	 
+
+
+Undoped	−195.08	169.43	—	—
+
+Al	−174.86	+160.07	−192.34	+176.07
+Ni	−167.98	+153.11	−176.38	+160.77
+Mg	−160.44	+147.20	−168.46	+154.55
+Ga	−144.40	+132.48	−158.84	+145.72
+Cr	−173.76	+162.67	−191.14	+178.94
+Y	−157.97	+147.88	−173.76	+162.67
+
+ 	Fig. 16  Heat generated during a charging cycle for structures co-doped with: (a) sulfur, and (b) fluorine.	 
+
+Undoped	73.1	—
+
+Al	73.4	74.8
+Ni	71.7	73.1
+Mg	76.3	77.8
+Ga	74.8	76.3
+Cr	76.3	77.8
+Y	59.8	61.0
+
+This journal is © the Owner Societies 2022

@@ -1,0 +1,636 @@
+An efficient method-of-lines simulation procedure for organic semiconductor devices  - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/B813810A View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/B813810A
+(Paper)
+Phys. Chem. Chem. Phys., 2009, 11, 1636-1646Show CompoundsShow Chemical TermsAn efficient method-of-lines simulation procedure for organic semiconductor devices
+
+        
+          
+            J. 
+            Rogel-Salazar
+          
+        
+      ab, 
+      
+        
+          
+            D. D. C. 
+            Bradley
+          
+        
+      c, 
+      
+        
+          
+            J. R. 
+            Cash
+          
+        
+      b and 
+
+        
+          
+            J. C. 
+            deMello
+          
+        
+      *a
+aElectronic Materials Group, Department of Chemistry, Imperial College London, London, UK SW7 2AY. E-mail: j.demello@imperial.ac.uk
+bApplied Analysis and Computation Group, Department of Mathematics, Imperial College London, London, UK SW7 2AZ
+cExperimental Solid State Group, Department of Physics, Imperial College London, London, UK SW7 2BW
+Received 
+      8th August 2008
+    , Accepted 23rd October 2008First published on 26th January 2009AbstractWe describe an adaptive grid method-of-lines (MOL) solution procedure for modelling charge transport and recombination in organic semiconductor devices. The procedure we describe offers an efficient, robust and versatile means of simulating semiconductor devices that allows for much simpler coding of the underlying equations than alternative simulation procedures. The MOL technique is especially well-suited to modelling the extremely stiff (and hence difficult to solve) equations that arise during the simulation of organic—and some inorganic—semiconductor devices. It also has wider applications in other areas, including reaction kinetics, combustion and aero- and fluid dynamics, where its ease of implementation also makes it an attractive choice. The MOL procedure we use converts the underlying semiconductor equations into a series of coupled ordinary differential equations (ODEs) that can be integrated forward in time using an appropriate ODE solver. The time integration is periodically interrupted, the numerical solution is interpolated onto a new grid that is better matched to the solution profile, and the time integration is then resumed on the new grid. The efficacy of the simulation procedure is assessed by considering a single layer device structure, for which exact analytical solutions are available for the electric potential, the charge distributions and the current–voltage characteristics. Two separate state-of-the-art ODE solvers are tested: the single-step Runge–Kutta solver Radau5 and the multi-step solver ODE15s, which is included as part of the Matlab ODE suite. In both cases, the numerical solutions show excellent agreement with the exact analytical solutions, yielding results that are accurate to one part in 1 × 104. The single-step Radau5 solver, however, is found to provide faster convergence since its efficiency is not compromised by the periodic interruption of the time integration when the grid is updated.
+1. Introduction
+Molecular semiconductors are of scientific and commercial interest owing to their potential applications in a wide range of electronic devices, including light-emitting diodes, solar cells, and thin-film transistors.1 There has been considerable progress in the development of molecular devices over the past ten years with, for example, displays based on organic light-emitting diodes (OLEDs) now entering the market place as viable contenders to existing liquid crystal displays.1 To some extent, however, attempts to optimise the efficiencies and performance of molecular devices have been hindered by the relative absence of detailed theoretical models describing device behaviour. As with inorganic devices, the injection, transport, and recombination dynamics of charge carriers in organic devices are governed by series of highly non-linear coupled partial differential equations (PDEs). In general these equations are found to be algebraically intractable, and consequently there is considerable interest in the development of effective numerical algorithms for their solution. Unfortunately, conventional algorithms tend to demand a high level of mathematical sophistication from the user, which restricts their use to specialists only. In this manuscript we describe a simple methodology for modelling organic devices that compares favourably (in terms of efficiency, power and versatility) with other approaches, but has the virtue of being both simple to implement and easy to adapt to new device configurations.
+Although a number of commercial software packages are available for simulating transport processes, these have generally been developed for inorganic device materials such as Si and GaAs. Organic semiconductors differ considerably from their inorganic counterparts, exhibiting for example very low carrier mobilities (∼10−10 m2 V−1 s−1), low static dielectric constants (∼3.5), and long recombination times (rate constants for electron-hole recombination ∼10−18 m3 s−1). An important consequence is that space-charge effects are typically more pronounced in organic devices (since it is easier to accumulate regions of excess electronic space-charge in the semiconductor bulk) and hence the concentrations of the charge carriers vary more rapidly with position. These features can create difficulties for some commercial packages, and as a result many researchers have elected to develop their own algorithms for modelling organic devices. Notable work in this area has for example been reported by Torpey,2 Tessler,3 and the groups of Bassler,4 Friend,5 and Malliaras and Scott.6 Details of the methodologies used by these researchers are somewhat scarce but most have used a Scharfetter–Gummel (SG) approach. The SG method is a special form of finite-difference method, in which the physical variables (electron density, hole density and electric potential) are evaluated at discrete locations (nodes) along the device axis, and the continuous derivatives in the semiconductor equations are replaced by finite-difference approximations. The physical variables frequently change rapidly with position—with for example the carrier densities typically spanning many orders of magnitude over the computational domain—and to obtain reliable solutions robust numerical procedures are required. The SG method uses a special discretisation of the semiconductor equations that allows stable and accurate solutions to be obtained with standard numerical procedures. The SG method works well in most situations, although it is occasionally found to yield inaccurate answers when there are significant mismatches in the drift and diffusion contributions to the electron and hole currents7 or when the potential ϕ changes abruptly between nodes (Δϕ≥kBT/e).8 A variety of alternative methods have been implemented to handle these situations (see e.g.ref. 7–9), although the improved accuracy comes at the expense of increased complexity in the formulation of the numerical problem.
+In this paper, we describe an alternative method-of-lines (MOL) based procedure which provides a particularly simple means of coding the underlying equations. Importantly, the MOL approach removes from the user the need to worry about stability and accuracy issues since these are handled automatically by the ODE solver. The specific numerical procedure we describe additionally addresses a number of key requirements of organic device simulations: high spatial resolution for accurately modelling steep solution fronts; good numerical stability for handling high carrier concentrations and low or rapidly changing electron and hole mobilities; and faithful replication of temporal dynamics. The procedure serves well as a general purpose technique for simulating organic devices, including LEDs operating under steady-state or pulsed conditions and light-emitting electrochemical cells.10
+2. The adaptive method-of-lines
+In this paper, we are concerned with one dimensional partial differential equations of the general form ∂tu(x,t) = g(x,t,u,∂xu,∂2xu,…), [xL < x < xR, t > 0],(1)where t is time, x is position, ∂xu, ∂2xu,… are spatial derivatives of the function u with respect to x, g(x,t,u,∂xu,∂2xu,…) is a non-linear function and xL and xR are the left and right boundaries of the system. Equations of this form may be efficiently solved using the method-of-lines, a numerical procedure that converts the initial PDE into a series of coupled ordinary differential equations (ODEs) that can subsequently be integrated forward in time using an appropriate ODE solver.11 The MOL proceeds in two steps. In the first step, the continuous function u is evaluated at N discrete locations x = [x1, x2,…,xN]T where x1 and xN are equal to the boundary coordinates xL and xR, respectively and the intermediate points satisfy xL < xi < xR. This yields a vector u of N discrete function values: u = [u1,u2,…,uN]T(2)The spatial derivatives ∂xu, ∂2xu… at x are then approximated using an appropriate technique. This may be done in a variety of ways, but a convenient option is to use a finite difference approach12,13 in which the derivatives at a grid point xi are determined from weighted sums of the function values at nearby data points (or nodes). In the case of a three-point central scheme, for example, the derivatives at an intermediate node xi are determined from a weighted sum of ui−1, ui and ui+1. The derivatives at the boundary nodes by contrast are most conveniently determined using u1, u2 and u3 in the case of x1, and uN−2, uN−1 and uN in the case of xN. If the grid has a uniform node-spacing of h then the value of the first spatial derivative at a (non-boundary) point xi is calculated using the well-known central difference formula12,13 (3)It follows from (3) that one can define a differentiation matrix D1 such that premultiplication of u by D1 returns ∂xu, i.e. ∂xu = D1·u,(4)where for the above case (5)All rows in D1 satisfy eqn (3), except the first and final boundary rows which are instead evaluated using ‘downwind’ and ‘upwind’ difference schemes, respectively. The specific weights that appear in the differentiation matrices depend on the grid point locations x1, x2,…,xN and may, for example, be determined using polynomial interpolation to approximate the function in the vicinity of the data point.12,13 Fornberg has reported an efficient recursive algorithm for the generation of the weights in D1,14 which is fast and, importantly, can be used for arbitrarily spaced grids. Fornberg’s algorithm can also be used to evaluate higher order differentiation matrices D2, D3,… that yield progressively higher spatial derivatives ∂2xu, ∂3xu… when post-multiplied by u. The choice of an appropriate finite-difference scheme for evaluating the differentiation matrices is somewhat problem dependent with higher order schemes offering greater accuracy at the expense of additional computational overhead for each step in the subsequent time integration. For many situations a simple three-point scheme like the one used in eqn (5) is adequate although, for very steep moving fronts, convergence may sometimes be obtained more rapidly using higher order schemes. In this paper, we use a five-point central difference scheme, which we have found to work well for a wide variety of test problems.
+The net effect of applying the finite difference approximations is that the initial partial differential eqn (1) is transformed to a vector of coupled ODEs: ∂tu(t) = g(t,u,D1·u,D2·u).(6)The MOL therefore produces a discretised version of the original PDE in the form of coupled ODEs that are dependent—viau, D1 and D2—on the choice of spatial grid. The ODEs may then be integrated forward in time using an appropriate ODE solver. The quality of the resultant numerical solution is strongly dependent on the accuracy of the finite difference approximations, which in turn depends on the resolution of the grid. The use of an excessively coarse grid may prevent steep features in the numerical solution from being adequately resolved, and so adversely affect the accuracy and general behaviour of the computed solution. These problems may be avoided by using a finer grid, but blindly increasing the number of data points is potentially wasteful since some data points are liable to be added in regions where additional resolution is not required (thereby increasing computational overhead without significantly improving the solution quality in that region). In this respect, a preferable approach is to use an adaptive grid that places grid points preferentially in those locations where the solution changes most rapidly with position and where higher resolution is therefore needed.15
+There are two basic types of grid adaptation—dynamic and static. In the dynamic case, the movement of the grid points is controlled by a differential equation that tracks the moving solution profile continuously in time.16 In the static case, the grid is updated at discrete times tk, e.g. at regular time intervals or after a set number of integration steps.16 In practice, static remeshing is considerably easier to implement and it has been shown to be effective for a broad range of numerical test problems;16 it is therefore the approach we use here. In brief, the static grid adaptation proceeds as follows: (i) the solution profile at tk is analysed and a new grid is then calculated using appropriate criteria (see below); (ii) the solution is interpolated from the old grid to the new grid, using for instance polynomial interpolation; (iii) the differentiation matrices are updated for the new grid; and (iv) the integration is then resumed on the new grid and continued until the next remeshing step.
+There are two distinct parts to a static remeshing MOL algorithm: (i) the ODE solver that is used to integrate the solution forward in time; and (ii) the grid adaptation algorithm that is used to update the position of the grid points. In order to achieve efficient and robust time integration, it is important that both are selected with care. In the case of the ODE solver, it is well known that the spatial discretisation of PDEs usually produces a stiff system of ODEs.17 The notion of stiffness is notoriously ill-defined but, for our purposes, we note simply that this means that the ODEs can only be integrated efficiently using a class of ODE solvers known as implicit solvers.17 In addition, it is important to choose a solver whose efficiency is not compromised by the need to repeatedly stop and restart the time integration every time the grid is updated. Broadly speaking there are two kinds of ODE solver: single-step methods (which use only the data from the current time step to advance the solution) and multistep methods (which make use of both current data and historical data from previous time steps).18 In many situations multistep methods are found to be more efficient than single-step methods since they typically require fewer function evaluations per integration step.18 In the case of static remeshing, however, multistep methods must revert to (lower-order) single-step integration directly after each grid adaptation and then build up progressively to the preferred (higher-order) multistep method over successive time-steps. Hence, if remeshing occurs frequently (due for instance to a rapidly changing solution profile), the ODE solver may spend a substantial fraction of its time operating at low order, which results in reduced accuracy and necessitates the use of smaller time-steps, thus slowing convergence.† This problem is avoided, however, when using single-step methods since the only information required to advance the solution after re-gridding is the newly interpolated solution data. The solver efficiency is therefore not compromised by the need to stop and restart the time integration repeatedly. In addition, single-step methods can be A-stable for arbitrarily high-order (see footnote‡ for a working definition of A-stability), which is not the case for multistep methods of order greater than two.17 In this paper, we show that the A-stable Runge–Kutta solver Radau517 is an excellent choice for adaptive MOL integration, especially in the context of organic device simulations. The interested reader is referred to ref. 17 for a formal definition of A-stability and a detailed description of the Radau5 algorithm.
+The choice of the remeshing algorithm is almost as important as the choice of solver. The remeshing algorithm is intended to place nodes preferentially in regions where the solution changes most rapidly at the expense of coverage in quieter areas; one simple way of achieving this is by equidistribution of an appropriate ‘monitor function’.15,16 The idea behind equidistribution is straightforward and is illustrated in Fig. 1a to c. In essence, the locations of the nodes are selected so that a chosen figure of merit changes by equal amounts in stepping between adjacent nodes. The simplest example is equidistribution by arc-length (Fig. 1b), in which the nodes are placed at equal intervals along the solution arc19 (and the distance along the solution arc from a given origin therefore changes by equal amounts when moving between adjacent data points). This contrasts with a conventional uniform grid, in which (in one dimension) the nodes are placed at equal distances along the x-axis (Fig. 1a). The superior nature of the arc-length-equidistributed grid is clear from a comparison of the piecewise linear approximations of the test function in Fig. 1a and b. The piecewise linear approximation may be further improved by selecting an equidistribution criterion that additionally takes into account the curvature of the solution profile as shown in Fig. 1c, and this is the approach we use here. The specific equidistribution criterion we use is stated in eqn (7) and is discussed more completely in ref. 20.
+ Fig. 1  Piecewise linear approximations of an illustrative function using: (a) a uniform grid; (b) a grid that is equidistributed by arc length; and (c) a grid that is equidistributed by arc length and curvature. The original exact function is shown as a dotted line in each case. The arrows indicate regions in which a significant mismatch exists between the exact function and the piecewise linear approximation. It is clear that the approximation in (c) results in the closest match to the original function. The locations of the nodes are shown in the boxes directly above each plot. 
+
+ 
+
+(7)where u is the function to be equi-distributed and α is a user-defined parameter that modifies the relative importance of the dependent and independent variables in controlling the grid spacing.
+The direct application of (7) leads in some circumstances to excessive clustering of grid points, causing errors in the finite-difference approximations and eventual failure of the time integration. This may be avoided by employing two modifications. First, another user-defined parameter β is introduced in order to prevent excessive clustering of nodes at regions of high curvature by placing a ceiling on overly high values of the second derivative. If the value of ∂2xu(x,t) exceeds β anywhere along the solution arc, then ∂2xu(x,t) at that location is reduced to a value of β before performing the equidistribution. Second, the following constraint recommended by Kautsky et al.21 is imposed on the grid points: (8)where xj is the position of the j-th node, N is the number of nodes and K is a user-defined parameter that controls the degree of permitted grid-distortion. In simple terms if, say, K = 1.05 then the grid spacing can at most increase or decrease by a factor of 1.05 in moving from one node to the next.
+Clearly, a large number of modifications can be made to the MOL approach described above, e.g. different grid adaptation criteria can be used or the spatial derivatives can be determined using alternative approximation methods such as finite elements. In practice, however, we have found that the above prescription provides a robust and efficient means of solving the equations that govern charge transport in semiconductor devices. More generally, Schiesser and co-workers—who have used a similar approach to investigate a range of standard test problems in applied mathematics – have found it to be competitive with many alternative methodologies for solving PDEs.20
+3. Defining the numerical problem
+In this section, we apply the procedure described above to the specific case of charge transport in semiconductor devices. We consider for convenience a model single layer organic LED since, in certain regimes, exact analytical solutions are available against which the quality of the corresponding numerical solutions can be directly assessed. Importantly, the technique we describe is applicable to charge transport in many organic and inorganic semiconductor devices (as well as convection–diffusion problems in other fields such as aerodynamics and fluid dynamics) through simple modifications to the underlying transport equations.22–24 In the specific context of organic semiconductors, we have successfully applied the technique to single- and multi-layer LEDs, solar cells and light-emitting electrochemical cells (LECs).10
+Charge transport in semiconductors—both organic and inorganic—can be described as a drift-diffusion problem coupled to Poisson’s equation in one spatial dimension. The time-evolution of the charge distributions is governed by Poisson’s eqn (9) and the transport equations for electrons and holes, (10) and (11). (9) (10) (11)where ϕ is the electric potential, n(x,t) and p(x,t) refer to the electron and hole densities, e is the electron charge, ε is the static dielectric constant, R is the rate of electron-hole recombination, Jn and Jp are the electron and hole current densities and the total current density is defined as J = Jn + Jp. The two current densities are given by eqns (12) and (13) (12) (13)where T is the temperature, kB is Boltzmann’s constant, μn and μp are the electron and hole mobilities, respectively, and we have used the Einstein relation D= (kBT/e)μ to express the diffusivities in terms of the mobilities (see Appendix 2 for a treatment of situations where the Einstein relation does not apply). The recombination of electrons and holes is frequently modelled using a Langevin approach, in which the recombination rate per unit length is given by R(x,t) = κehn(x,t)p(x,t),(14)where (15)(The interested reader is referred to ref. 25 for a detailed explanation of the above equations). In order to facilitate the computational solution of eqns (9) to (15) it is convenient to introduce the following dimensionless quantities: (16) (17)where d is the width of the device. The transport equations and Poisson’s equation, expressed in these dimensionless quantities, therefore become: (18) (19) (20)On applying the MOL discretisation described in section 2 these equations are immediately transformed to the following series of coupled equations: (21) (22) (23)where A·b represents the premultiplication of vector b by matrix A, and a∘b = [a1b1,a2b2,…,aNbN]T represents the element-by-element multiplication of vectors a and b. We stress that eqns (21) to (23) can be obtained directly from Eqs. (18) to (20) by simply replacing the continuous functions p, n and V by their vector equivalents p, n and V and by replacing the differential operators ∂x and ∂2x by their matrix equivalents D1 and D2. The simplicity with which this conversion is achieved is a key advantage of the MOL methodology.
+The majority of ODE solvers are designed to solve explicit first-order ordinary differential equations with respect to time. Eqns (22) and (23) are already in the appropriate form, but eqn (21) must be modified before use. This may be straightforwardly achieved by differentiating eqn (21) with respect to time and then premultiplying both sides of the resultant equation by the inverse matrix D2−1 (where D2·D2−1 = I) to obtain eqn (24).§ (24)Although D2−1 may be determined explicitly, evaluating ∂V/∂t in this manner is computationally inefficient because D2 is a band-diagonal sparse matrix whereas D2−1 is full. It is therefore preferable to evaluate the right-hand side of (24) in a manner that takes advantage of the sparsity of D2. (This may be achieved for example by performing an LU decomposition—expressing the matrix as a product of lower and upper triangular matrices—of D2 preceded by a minimum-degree pre-ordering26). Finally, in order to put the equations into the required explicit form for the ODE solver, i.e.∂tu(t) = g(t,u), the individual column vectors n, p and V are concatenated into a single column vector u such that (25)and (26)The equations may now be integrated directly by Radau5 or another appropriate ODE solver. In passing, we note that we chose to implement our adaptive MOL procedure in Matlab27 since its vector-based programming language enables equations of the kind shown in eqn (26) to be entered almost exactly as written. This greatly simplifies the coding process, and allows the underlying systems of equations to be modified with ease.
+In order to determine the numerical solution to a given problem, it is necessary to specify both the boundary conditions p1(t), n1(t), V1(t), pN(t), nN(t) and VN(t), and the initial conditions u(t = 0). In the present case, in order to enable comparisons to be made with exact analytical solutions, we assumed fixed voltage-independent carrier densities at the injecting electrodes. The (fixed) carrier densities at the counter electrodes were then determined from Boltzmann’s equation Ñ = N0 exp(−eϕ/kBT), where Ñ is the particle density at a potential ϕ and N0 is the particle density at ϕ = 0. Boltzmann’s equations applies specifically to the particle distributions at equilibrium, i.e. under an applied bias of 0 V. The potential drop across the semiconductor at 0 V is by definition equal to the built-in potential VBI, so we obtain (27) and (28)where the subscripts 1 and N refer to the anode and the cathode, respectively. Finally, the boundary conditions for the electric potential at the anode and cathode are ϕ1 = +(V−VBI)/2 and ϕN = −(V−VBI)/2, respectively which, expressed in dimensionless units, yields V1 = −e(V−VBI)/2kBT and VN = +e(V−VBI)/2kBT.
+In the simulations reported below, we first solved the equations for an applied bias of 0 V, assuming an arbitrary starting point in which the electric field was constant throughout the device and no electrons or holes were present in the bulk of the device,¶i.e. (29)The equations were then integrated forward in time until a steady-state solution was obtained. Having obtained the steady-state solution at 0 V, the applied bias was then incremented in regular steps and, for each new bias, the corresponding steady-state solution was obtained using the steady-state solution to the previous voltage step as the starting point for the time integration.
+The current at each applied bias was determined numerically by substituting the electron, hole and potential distributions so-derived into eqns (12) and (13) yielding, for each applied bias, a plot of the form shown in Fig. 2. In steady-state, the (total) current should be constant throughout the bulk of the device, so the current in the external circuit can be obtained by a simple average of the current in the bulk of the device. In Appendix 1, we show that the same stratagem can also be used to determine the external current during the transient phase (providing the device is subject to a constant applied bias).
+ Fig. 2  Typical graph showing how the numerically determined (total) current density varies with position through the device. The steady-state current density must be constant throughout the device but the numerically determined current density shows a small variation with position due to slight numerical errors. The external current is obtained by spatially averaging the current through the bulk of the device. 
+4. Performance of the numerical algorithm
+Malliaras and co-workers have previously reported analytical solutions for the specific case of a single layer device operating at low applied biases,28 under which conditions the internal electric field E is constant throughout the device and the rate of electron-hole recombination is negligible. The hole density, electron density and total current under these conditions are given by eqns (30), (31) and (32), respectively. (30) (31) (32)where the subscripts a and c refer to the anode and cathode, respectively and γ = eE/kBT. These analytical solutions provide a useful test for assessing the accuracy of the numerical simulator. In the following section we compare the numerical and analytical solutions for a single layer OLED device in a regime where these exact analytical solutions are known to be valid. In particular, we use the following device parameters: width d = 100 nm, carrier mobilities μn,p = 1 × 10−5 cm2V−1 s−1, temperature T = 300 K, a relative permittivity εr = 3.4, equal (voltage-independent) carrier densities at the injecting electrodes of 1015 m−3, and a built-in potential of 1 V.
+We carried out simulations with these parameter values using the adaptive MOL procedure described in section 2 with two different implicit ODE solvers: the single-step solver Radau5 and the multi-step solver ODE15s—a state-of-the-art general purpose implicit solver which is included within the suite of ODE solvers in MATLAB.29 The simulations were carried out using 300 grid points and three different values for the absolute and relative tolerances—10−9, 10−6 and 10−3 (which control the permitted errors in each time step). There are three possible solution curves we could consider for controlling the grid adaptation: p(x), n(x) and ϕ(x). The electric potential—or its dimensionless equivalent V(ξ)—is the obvious choice here as its curvature depends directly on the changing concentrations of electrons and holes. Moreover, given the integral relationship between the potential and the charge densities, ϕ(x) is typically the smoothest of the three functions and is therefore best suited to the equidistribution process. The following parameters were used for the regridding algorithm: α = 1, β = 1000, K = 1.073, and regridding every 5 time steps to ensure a frequently updated grid.
+
+Fig. 3a shows the spatial profile of the electric potential at a variety of applied biases in the range 0 < V < 2 V, determined both analytically (crosses) and numerically using Radau5 with a tolerance of 10−9 (dotted-lines). The numerical solution shows excellent agreement with the analytical solution, indicating that the electric field is indeed constant throughout the bulk of the device (as is required for the analytical solutions to be valid). Fig. 3b and c show the spatial distribution of the electrons and holes respectively, determined both analytically (crosses) and numerically with Radau5 (dotted-lines). Again there is excellent agreement between the numerical and analytical solutions. The solutions in Fig. 3a–c were obtained using Radau5 but essentially identical results were obtained using ODE15s when the absolute and relative tolerances were set to the same value of 10−9.
+ Fig. 3  The numerical (dotted lines) and analytical (crosses) solutions in a model single layer device at a range of applied biases for: (a) the electric potential; (b) the electron density; and (c) the hole density. There is an extremely close correspondence between the numerical solutions and the (exact) analytical solutions at all biases. The numerical solutions were obtained using a grid of 300 data points. 
+The accuracy of the numerical solutions can be quantified using the 2-norm error (33)which measures the deviation of the numerical solutions from the exact analytical solution in the range −d/2 < x < d/2. Table 1 shows the 2-norm of the errors incurred using the two solvers at three different tolerance values (10−3, 10−6 and 10−9), and it is clear that the accuracy of the solutions obtained using the two solvers are virtually identical in all cases.
+Table 1 
+          2-Norm of the error
+
+
+
+
+Electric potential
+Solver
+Abs. and rel. tol. 1 × 10−3
+Abs.and rel. tol. 1 × 10−6
+Abs. and rel. tol. 1 × 10−9
+
+
+
+n
+
+
+p
+
+
+ϕ
+
+
+n
+
+
+p
+
+
+ϕ
+
+
+n
+
+
+p
+
+
+ϕ
+
+
+
+
+
+0 V
+Radau5
+8.47 × 10−4
+8.47 × 10−4
+1.53 × 10−10
+8.47 × 10−4
+8.47 × 10−4
+1.5 × 10−
+8.47 × 10−4
+8.47 × 10−4
+1.49 × 10−10
+
+
+ 
+ODE15s
+8.47 × 10−4
+8.47 × 10−4
+1.51 × 10−10
+8.47 × 10−4
+8.47 × 10−4
+1.52 × 10−11
+8.47 × 10−4
+8.47 × 10−4
+1.27 × 10−10
+
+
+0.7 V
+Radau5
+9.64 × 10−4
+9.64 × 10−4
+8.94 × 10−8
+9.64 × 10−4
+9.64 × 10−4
+8.1 × 10−8
+9.64 × 10−4
+9.64 × 10−4
+8.09 × 10−8
+
+
+ 
+ODE15s
+9.64 × 10−4
+9.64 × 10−4
+8.09 × 10−8
+9.64 × 10−4
+9.64 × 10−4
+7.91 × 10−8
+9.64 × 10−4
+9.64 × 10−4
+8.09 × 10−8
+
+
+1 V
+Radau5
+3.54 × 10−7
+3.76 × 10−7
+9.57 × 10−8
+3.76 × 10−7
+3.76 × 10−7
+9.68 × 10−8
+3.76 × 10−7
+3.76 × 10−7
+9.68 × 10−8
+
+
+ 
+ODE15s
+3.76 × 10−7
+3.76 × 10−7
+9.7 × 10−8
+3.76 × 10−7
+3.76 × 10−7
+9.68 × 10−8
+3.76 × 10−7
+3.76 × 10−7
+9.68 × 10−8
+
+
+1.3 V
+Radau5
+5.36 × 10−4
+5.36 × 10−4
+2.49 × 10−7
+5.36 × 10−4
+5.36 × 10−4
+8.20 × 10−8
+5.36 × 10−4
+5.36 × 10−4
+8.09 × 10−8
+
+
+ 
+ODE15s
+5.36 × 10−4
+5.36 × 10−4
+8.12 × 10−8
+5.36 × 10−4
+5.36 × 10−4
+8.08 × 10−8
+5.36 × 10−4
+5.36 × 10−4
+8.08 × 10−8
+
+
+2 V
+Radau5
+3.75 × 10−4
+3.75 × 10−4
+4.34 × 10−8
+3.75 × 10−4
+3.75 × 10−4
+6.50 × 10−10
+3.75 × 10−4
+3.75 × 10−4
+7.19 × 10−11
+
+
+ 
+ODE15s
+3.75 × 10−4
+3.75 × 10−4
+8.76 × 10−12
+3.75 × 10−4
+3.75 × 10−4
+2.08 × 10−11
+3.75 × 10−4
+3.75 × 10−4
+1.03 × 10−10
+
+
+
+
+
+Fig. 4 shows the steady-state current-density versus voltage characteristics for the device, determined both analytically (dotted line) and numerically (crosses) from the data in Fig. 3a–c using the procedure described at the end of section 3. The agreement between the numerical and analytical solutions is excellent for drive voltages above 0.6 V. However, significant deviations are apparent at lower voltages despite the high accuracy of the numerical data from which the currents are derived. It is clear that calculating the current at low voltages represents a significantly greater numerical challenge than calculating the charge and potential distributions.
+ Fig. 4  The bias dependence of the current density for the model single layer device of Fig. 3. The dotted line indicates the exact analytical solution, the crosses indicate the numerical solution obtained using a grid of 300 data points and the circles indicate the numerical solution obtained using a grid of 1000 data points. The 300 node numerical solution shows excellent agreement with the exact solution above 0.6 V but deviates from the exact solution at lower biases due to numerical errors (see main text). The accuracy of the numerical solution is improved by increasing the number of nodes to 1000, resulting in good agreement for all biases above 0.4 V. 
+The reason for the discrepancy between the numerical and analytical currents is readily understood by decomposing, for example, the hole current into its drift and diffusive components: (34) (35)The numerical drift and diffusive currents, Jdriftp and Jdiffp at the node locations x can be determined by applying eqns (34) and (35) to the numerical solutions from Fig. 3a–c (36) (37)The analytical drift and diffusive currents, meanwhile, can be determined by substituting eqn (30) into eqns (34) and (35): (38) (39)where γ = eE/kBT and E = (V−VBI)/d.
+In Fig. 5a and b, we show analytical and numerical solutions for the drift and diffusive hole currents as a function of applied bias in the range 0 < V < 2 V, evaluated at an arbitrary position in the bulk of the device (x = 0). The total analytical and numerical hole currents are also shown for comparison. The analytical and numerical solutions for the drift and diffusive currents show excellent agreement over the full bias range whereas clear differences between the analytical and numerical solutions for the total hole current are evident below 0.6 V with the numerical solution plateauing at approximately 10−15 A m−2. It should be noted that the drift and diffusive currents are of opposite sign and virtually identical magnitude in the range 0 < V < 0.6 V. The total hole current in this range is therefore determined numerically by calculating the difference between two large and nearly identical numbers leading to significant relative accuracy errors in the precision of the calculation. For applied biases above 0.6 V, the difference between the drift and diffusive components becomes relatively large (>70%) so it is no longer necessary to have extremely high accuracy in the individual currents in order to achieve a close match with the exact analytical solution.
+ Fig. 5  The constituent drift and diffusive contributions to the total hole current for the model single layer device of Fig. 3. The upper plot shows the analytical data and the lower plot shows the numerical data for a grid of 300 data points. The analytical data shows the reason for discrepancy between the numerical and analytical solutions in Fig. 4. In the range 0 < V < 0.6 V the drift and diffusive currents are of almost identical magnitude but opposite sign. (The drift current is negative below the built-in potential of 1 V due to the negative field.) The total hole current is many orders of magnitude smaller than the individual drift and diffusive currents. Hence, minute errors in the numerically determined drift and diffusive currents lead to substantial errors in the numerically determined total hole current. The same considerations apply to the electron currents as well. 
+The accuracy of the calculated numerical current could in principle be improved in two ways—either by switching to higher precision floating point arithmetic or by substantially increasing the number of grid points. The first of these strategies is problematic since we have implemented our code in Matlab, which employs fixed double precision for all calculations.||Fig. 4 shows that the calculation of the current density does indeed improve when the number of points is changed from 300 to 1000 albeit at an obvious computational price.
+We reported above that for the same prescribed tolerances the two solvers Radau5 and ODE15s give essentially identical results. In section 2, however, we noted that using a single-step solver (such as Radau5) is preferable to using a multistep solver (such as ODE15s) for adaptive MOL because the efficiencies of single-step solvers are not compromised by the regular interruption of the time-integration by the regridding algorithm. (In the simulations reported here we recalculate the grid every five time steps). It is therefore instructive to compare some illustrative computational statistics for the two solvers. Table 2 compares the computational statistics for three different values of the absolute and relative tolerances, 10−3, 10−6 and 10−9. Steps is the number of time steps needed to complete the solution, Func. eval. and Jac. eval. are the number of function and Jacobian evaluations, respectively. LU corresponds to the number of LU-decompositions and Linear syst. is the number of linear systems solved. In virtually all cases (except LU-decompositions) the computational statistics are lower for Radau5, indicating significantly reduced computational overhead; the reduction in function evaluations is particularly marked.
+Table 2 Computational statistics
+
+
+
+
+Electric potential
+Solver
+Abs and rel. tol. 1 × 10−3
+Abs. and rel. tol. 1 × 10−6
+Abs. and rel. tol. 1 × 10−9
+
+
+Steps
+
+                  Func. eval.
+Jac. eval.
+
+                  LU
+                
+Linear syst.
+Steps
+
+                  Func. eval.
+Jac. eval.
+
+                  LU
+                
+Linear syst.
+Steps
+
+                  Func. eval.
+Jac. eval.
+
+                  LU
+                
+Linear syst.
+
+
+
+
+0 V
+Radau5
+151
+640
+20
+151
+163
+200
+987
+22
+198
+260
+363
+2182
+52
+314
+602
+
+
+ 
+ODE15s
+474
+8298
+32
+177
+692
+958
+8080
+28
+292
+1420
+2434
+13266
+37
+505
+4487
+
+
+0.7 V
+Radau5
+149
+618
+20
+149
+156
+171
+747
+20
+169
+191
+243
+1194
+20
+195
+316
+
+
+ 
+ODE15s
+312
+3513
+20
+69
+389
+550
+3846
+20
+136
+722
+1121
+5075
+20
+226
+1951
+
+
+1 V
+Radau5
+153
+625
+20
+153
+157
+181
+775
+20
+172
+197
+272
+1316
+20
+191
+347
+
+
+ 
+ODE15s
+279
+1226
+20
+50
+325
+460
+1476
+20
+81
+575
+878
+2337
+20
+157
+1436
+
+
+1.3 V
+Radau5
+154
+638
+20
+155
+161
+191
+842
+20
+178
+216
+296
+1490
+20
+211
+397
+
+
+ 
+ODE15s
+336
+3552
+21
+71
+428
+617
+3945
+20
+144
+821
+1266
+5576
+21
+253
+2216
+
+
+2 V
+Radau5
+155
+637
+20
+153
+160
+193
+841
+20
+170
+215
+301
+1478
+20
+197
+391
+
+
+ 
+ODE15s
+384
+5219
+20
+95
+499
+656
+5670
+20
+157
+950
+1257
+7194
+21
+262
+2239
+
+
+
+
+5. Conclusions and discussion
+In this paper, we have shown that the adaptive MOL offers an effective approach for solving the non-linear coupled differential equations that govern charge transport in semiconductor devices. We have considered the relative performance of two ODE solvers—a single-step Runge–Kutta solver Radau5 and a variable order multistep solver ODE15s—in solving a specific drift-diffusion problem for which exact analytical solutions are available.** For equal specified tolerances, the two solvers offer essentially identical numerical accuracy. However, due to its single step nature, Radau5 incurs a significantly lower computational overhead since its efficiency is not compromised by the need to halt the integration each time the grid is updated. In this paper, we have focused on a single specific problem for which an analytical solution is available. In general use, however, we have found that the procedure offers a robust and numerically efficient means of simulating semiconductor devices. A key advantage of the MOL procedure is the straightforward transformation of the fundamental PDEs into coupled ODEs. This feature—combined with Matlab’s vector-based programming language—allows for extremely straightforward coding of all such PDE problems.
+Although Radau5 is better suited to adaptive MOL integration, we are currently developing a modified MOL routine that can switch dynamically between ODE solvers during run-time. Radau5 is A-stable but is expensive (i.e. it requires a large number of function evaluations each time step) whereas ODE15s is somewhat less stable but significantly less expensive per integration step. The use of multiple solvers may provide a means of circumventing bottlenecks in the time integration when, for whatever reason, one or other ODE solver becomes inefficient. This is likely to be of particular use when investigating the transport characteristics in complicated device structures and will be addressed in a future publication.
+Finally, it is useful to say a few words about how the adaptive MOL approach we describe here compares with alternative procedures for simulating semiconductor devices. The primary advantage of the method-of-lines is that it removes—at least from the user’s perspective—the need to worry about the stability and accuracy issues that inevitably arise during the time integration of coupled ODEs. The ODEs can be coded in a simple explicit format that follows immediately from the initial PDE, and the ODE solver then takes automatic care of accuracy and stability control of the step size. A great deal of experience has been gained over the past twenty years with respect to the integration of ordinary differential equations (see for example the pioneering work of ref. 11); and, accordingly, state-of-the-art ODE solvers such as Radau5 and ODE15s are now highly optimised codes that handle the underlying linear algebra in an extremely efficient manner. The MOL therefore tends to be extremely competitive with alternative integration procedures. A further advantage is that MOL integration is inherently transient and hence—provided the initial conditions are correctly specified—it naturally mimics the time evolution of the system under study. Finally, in the case of static remeshing, the time integration and grid adaptation are fully decoupled, which greatly simplifies the implementation of the grid adaptation and enables alternative grid adaptation criteria to be implemented and evaluated with ease. For these reasons, we have found the method-of-lines to be an extremely versatile and effective procedure for simulating transport in semiconductor devices.
+Appendix 1. Determining the transient current
+In the transient stage before steady-state is obtained, the current in the external circuit is related to the local current at a position x inside the device by Maxwell’s equation (A1)where the third term on the right-hand side of the equation is the displacement current density due to the time-varying electric field. If we take a spatial average of all terms on the right-hand side of the equation, we obtain (A2)However, for a constant applied bias V, the average electric field inside the device is constant so the average displacement current density is zero. It follows that Jext = 〈Jp(x)〉−〈Jn(x)〉 = 〈J(x)〉,(A3)and so the transient external current may be determined by spatially averaging the transient local current inside the device.
+Appendix 2. Incorporating deviations from the Einstein relation
+In many organic devices, the density of carriers inside the device can (at certain locations) approach the density of states,30,31 in which case the Einstein relation (A4)breaks down. In these circumstances, the relationship between mobility and diffusivity can be written in the modified form (A5)where α is a function that depends on the density of the relevant charge carrier (plus potentially other device parameters such as the density of the opposite charge carrier). The functional form of α is discussed for a number of frequently encountered physical situations in ref. 32. α is readily incorporated into the MOL simulation procedure by a simple modification of the transport equations. This, for instance, involves rewriting eqn (12) in the generalized form (A6)which, after substituting into Eq. (10), yields (A7)Using eqns (16) and (17), ξ = x/d and V = −eϕ/kBT, this further simplifies to (A8)which, on final conversion to vector notation, yields (A9)A similar derivation yields (A10)Eqns (A9) and (A10) replace eqns (22) and (23), and lead to a suitably modified version of eqn (26) that can then be integrated directly using the MOL procedure. (Note, for the purposes of maximum generality, we have here allowed for the fact that the mobilities μp and μn and the bimolecular recombination rate constant κeh may also be spatially variant parameters).
+Acknowledgements
+The authors acknowledge support from the UK Engineering and Physical Sciences Research Council (Grant Nos. GR/S79220/01 and GR/T26559/01).
+References
+R. H. Friend, R. W. Gymer, A. B. Holmes, J. H. Burroughes, C. Taliani, D. D. C. Bradley, D. A. Dos Santos, J. L. Bredas, M. Logdlund and W. R. Salaneck, Nature, 1999, 397, 121 CrossRef CAS .
+P. A. Torpey, J. Appl. Phys., 1984, 56, 2284 CrossRef CAS .
+N. Tessler, Appl. Phys. Lett., 2000, 77, 1987 .
+H. Bassler, Polym. Adv. Technol., 1998, 9, 402 CrossRef CAS .
+D. J. Pinner, R. H. Friend and N. Tessler, Synth. Met., 2000, 111, 257 CrossRef .
+G. G. Malliaras and J. C. Scott, J. Appl. Phys., 1999, 85, 7426 CrossRef CAS .
+Y. He and G. Cao, IEEE Trans. CAD, 1991, 10, 1579 Search PubMed .
+A. A. Kulikovsky, J. Comput. Phys., 1995, 119, 149 CrossRef .
+C. M. Snowden, Rep. Prog. Phys., 1985, 48, 223 CrossRef CAS .
+J. C. deMello, Phys. Rev. B, 2002, 66, 235210 CrossRef .
+
+          W. E. Schiesser, The numerical method-of-lines, Academic Press, San Diego,  1991 Search PubMed .
+
+          R. L. Burden and J. D. Faires, Numerical Analysis, PWS-Kent, Boston,  1993, 5th edn Search PubMed .
+
+          C. H. Richardson, An introduction to the calculus of finite differences, D. Van Nostrand Company, Inc., New York,  1954 Search PubMed .
+
+          B. Fornberg, A practical guide to pseudospectral methods, Cambridge University Press, New York,  1996 Search PubMed .
+J. C. deMello, J. Comp. Phys., 2002, 181, 564 Search PubMed .
+M. A. Revilla, Int. J. Numer. Meth. Eng., 1986, 23, 2263 Search PubMed .
+
+          E. Hairer and G. Wanner, Solving Ordinary Differential Equations II: Stiff and Differential-Algebraic Problems, Springer Verlag, Berlin,  1996, 2nd edn Search PubMed .
+G. K. Gupta, R. Sacks-Davis and P. E. Tischera, Comput. Surv., 1986, 17, 5 .
+J. M. Sanz-Serna and I. Christie, J. Comput. Phys., 1986, 67, 348 CrossRef .
+P. Saucez, A. Vande Wouwer and W. E. Schiesser, J. Comput. Phys., 1996, 128, 274 CrossRef .
+J. Kautsky and N. K. Nichols, SIAM J. Sci. Stat. Comput., 1980, 1, 499 CrossRef .
+P. S. Davids, I. H. Campbell and D. L. Smith, J. Appl. Phys., 1997, 82, 6319 CrossRef CAS .
+C. G. J. Blades and A. B. Walker, Synth. Met., 2000, 111–112, 335 CrossRef CAS .
+S. J. Martin, G. L. B. Verschoor, A. M. Webster and A. B. Walker, Org. Electron., 2002, 3, 129 CrossRef CAS .
+
+          S. Sze, Physics of Semiconductor Devices, John Wiley and Sons,  1981 Search PubMed .
+
+          H. W. Press, B. P. Flannery, S. A. Teukolsky and W. T. Vetterling, Numerical Recipes in C, Cambridge University Press, Cambridge,  1992, 2nd edn Search PubMed .
+The MathWorks. http://www.mathworks.com.
+G. G. Malliaras, J. E. Salem, P. J. Brock and J. C. Scott, J.Appl Phys., 1998, 84, 1583 CrossRef CAS .
+L. F. Shampine and M. W. Reichelt, Sci. Comput., 1997, 18, 1 Search PubMed .
+O. Tal, Y. Rosenwaks, Y. Preezant, N. Tessler, C. K. Chan and A. Kahn, Direct determination of the hole density of states in undoped and doped amorphous organic films with high lateral resolution, Phys. Rev. Lett., 2005, 95, 256405 CrossRef CAS .
+Y. Preezant and N. Tessler, Self-consistent analysis of the contact phenomena in low- mobility semiconductors, J. Appl. Phys., 2003, 93, 2059–2064 CrossRef CAS .
+A. A. Kornyshev and M. A. Vorotyntsev, Conductivity and space charge phenomena in solid electrolytes with one mobile charge carrier species, Electrochim. Acta, 1981, 26, 303 CrossRef CAS .
+
+Footnotes† A more efficient approach is to use interpolation to obtain the required back-values of the solution, thereby enabling the time integration to continue at high-order after re-gridding. This however requires a detailed understanding of the underlying ODE solver and introduces considerable complexity into the coding of the numerical problem.‡ For linear systems of equations with constant coefficients, A-stability means in simple terms that if the true solution decreases strictly with time then so too will the numerical solution irrespective of the step-size. The accuracy of the numerical solution, however, will still be step-size dependent.§ The ODEs may alternatively be formulated in the implicit form M∂tu(t) = g′(t,u) (i.e. as a differential algebraic equation) if the ODE solver is able to handle a (constant) mass matrix. This may be preferable from a stability point of view but is restrictive in terms of compatible ODE solvers. Radau5 and ODE15s—the solvers used here—both permit the use of a constant mass matrix. However in this paper, in order to describe the MOL method in a way that offers maximum freedom in the choice of ODE solver, we present results using the explicit form ∂tu(t) = g(t,u).¶ Note that the third line in eqn (29) represents an electric potential that varies linearly with position from V1 at the anode to VN at the cathode.|| We note that higher precision calculations are possible in Matlab via appropriate “add-in” toolboxes. However, these are compatible with only a limited number of Matlab functions.** The example we have selected here was chosen for evaluation purposes only and we stress that MOL approach can be adapted to a wide variety of device configurations. Importantly, it can readily handle situations in which the Einstein relationship breaks down (see Appendix 2).This journal is © the Owner Societies 2009
+Table Content:
+∂tu(x,t) = g(x,t,u,∂xu,∂2xu,…), [xL < x < xR, t > 0],	(1)
+u = [u1,u2,…,uN]T	(2)
+	(3)
+∂xu = D1·u,	(4)
+	(5)
+∂tu(t) = g(t,u,D1·u,D2·u).	(6)
+
+ 	Fig. 1  Piecewise linear approximations of an illustrative function using: (a) a uniform grid; (b) a grid that is equidistributed by arc length; and (c) a grid that is equidistributed by arc length and curvature. The original exact function is shown as a dotted line in each case. The arrows indicate regions in which a significant mismatch exists between the exact function and the piecewise linear approximation. It is clear that the approximation in (c) results in the closest match to the original function. The locations of the nodes are shown in the boxes directly above each plot.	 
+
+
+	(7)
+	(8)
+	(9)
+	(10)
+	(11)
+	(12)
+	(13)
+R(x,t) = κehn(x,t)p(x,t),	(14)
+	(15)
+	(16)
+	(17)
+	(18)
+	(19)
+	(20)
+	(21)
+	(22)
+	(23)
+	(24)
+	(25)
+	(26)
+	(27)
+	(28)
+	(29)
+
+ 	Fig. 2  Typical graph showing how the numerically determined (total) current density varies with position through the device. The steady-state current density must be constant throughout the device but the numerically determined current density shows a small variation with position due to slight numerical errors. The external current is obtained by spatially averaging the current through the bulk of the device.	 
+	(30)
+	(31)
+	(32)
+
+ 	Fig. 3  The numerical (dotted lines) and analytical (crosses) solutions in a model single layer device at a range of applied biases for: (a) the electric potential; (b) the electron density; and (c) the hole density. There is an extremely close correspondence between the numerical solutions and the (exact) analytical solutions at all biases. The numerical solutions were obtained using a grid of 300 data points.	 
+	(33)
+
+
+0 V	Radau5	8.47 × 10−4	8.47 × 10−4	1.53 × 10−10	8.47 × 10−4	8.47 × 10−4	1.5 × 10−	8.47 × 10−4	8.47 × 10−4	1.49 × 10−10
+ 	ODE15s	8.47 × 10−4	8.47 × 10−4	1.51 × 10−10	8.47 × 10−4	8.47 × 10−4	1.52 × 10−11	8.47 × 10−4	8.47 × 10−4	1.27 × 10−10
+0.7 V	Radau5	9.64 × 10−4	9.64 × 10−4	8.94 × 10−8	9.64 × 10−4	9.64 × 10−4	8.1 × 10−8	9.64 × 10−4	9.64 × 10−4	8.09 × 10−8
+ 	ODE15s	9.64 × 10−4	9.64 × 10−4	8.09 × 10−8	9.64 × 10−4	9.64 × 10−4	7.91 × 10−8	9.64 × 10−4	9.64 × 10−4	8.09 × 10−8
+1 V	Radau5	3.54 × 10−7	3.76 × 10−7	9.57 × 10−8	3.76 × 10−7	3.76 × 10−7	9.68 × 10−8	3.76 × 10−7	3.76 × 10−7	9.68 × 10−8
+ 	ODE15s	3.76 × 10−7	3.76 × 10−7	9.7 × 10−8	3.76 × 10−7	3.76 × 10−7	9.68 × 10−8	3.76 × 10−7	3.76 × 10−7	9.68 × 10−8
+1.3 V	Radau5	5.36 × 10−4	5.36 × 10−4	2.49 × 10−7	5.36 × 10−4	5.36 × 10−4	8.20 × 10−8	5.36 × 10−4	5.36 × 10−4	8.09 × 10−8
+ 	ODE15s	5.36 × 10−4	5.36 × 10−4	8.12 × 10−8	5.36 × 10−4	5.36 × 10−4	8.08 × 10−8	5.36 × 10−4	5.36 × 10−4	8.08 × 10−8
+2 V	Radau5	3.75 × 10−4	3.75 × 10−4	4.34 × 10−8	3.75 × 10−4	3.75 × 10−4	6.50 × 10−10	3.75 × 10−4	3.75 × 10−4	7.19 × 10−11
+ 	ODE15s	3.75 × 10−4	3.75 × 10−4	8.76 × 10−12	3.75 × 10−4	3.75 × 10−4	2.08 × 10−11	3.75 × 10−4	3.75 × 10−4	1.03 × 10−10
+
+ 	Fig. 4  The bias dependence of the current density for the model single layer device of Fig. 3. The dotted line indicates the exact analytical solution, the crosses indicate the numerical solution obtained using a grid of 300 data points and the circles indicate the numerical solution obtained using a grid of 1000 data points. The 300 node numerical solution shows excellent agreement with the exact solution above 0.6 V but deviates from the exact solution at lower biases due to numerical errors (see main text). The accuracy of the numerical solution is improved by increasing the number of nodes to 1000, resulting in good agreement for all biases above 0.4 V.	 
+	(34)
+	(35)
+	(36)
+	(37)
+	(38)
+	(39)
+
+ 	Fig. 5  The constituent drift and diffusive contributions to the total hole current for the model single layer device of Fig. 3. The upper plot shows the analytical data and the lower plot shows the numerical data for a grid of 300 data points. The analytical data shows the reason for discrepancy between the numerical and analytical solutions in Fig. 4. In the range 0 < V < 0.6 V the drift and diffusive currents are of almost identical magnitude but opposite sign. (The drift current is negative below the built-in potential of 1 V due to the negative field.) The total hole current is many orders of magnitude smaller than the individual drift and diffusive currents. Hence, minute errors in the numerically determined drift and diffusive currents lead to substantial errors in the numerically determined total hole current. The same considerations apply to the electron currents as well.	 
+
+
+0 V	Radau5	151	640	20	151	163	200	987	22	198	260	363	2182	52	314	602
+ 	ODE15s	474	8298	32	177	692	958	8080	28	292	1420	2434	13266	37	505	4487
+0.7 V	Radau5	149	618	20	149	156	171	747	20	169	191	243	1194	20	195	316
+ 	ODE15s	312	3513	20	69	389	550	3846	20	136	722	1121	5075	20	226	1951
+1 V	Radau5	153	625	20	153	157	181	775	20	172	197	272	1316	20	191	347
+ 	ODE15s	279	1226	20	50	325	460	1476	20	81	575	878	2337	20	157	1436
+1.3 V	Radau5	154	638	20	155	161	191	842	20	178	216	296	1490	20	211	397
+ 	ODE15s	336	3552	21	71	428	617	3945	20	144	821	1266	5576	21	253	2216
+2 V	Radau5	155	637	20	153	160	193	841	20	170	215	301	1478	20	197	391
+ 	ODE15s	384	5219	20	95	499	656	5670	20	157	950	1257	7194	21	262	2239
+	(A1)
+	(A2)
+Jext = 〈Jp(x)〉−〈Jn(x)〉 = 〈J(x)〉,	(A3)
+	(A4)
+	(A5)
+	(A6)
+	(A7)
+	(A8)
+	(A9)
+	(A10)
+Footnotes
+† A more efficient approach is to use interpolation to obtain the required back-values of the solution, thereby enabling the time integration to continue at high-order after re-gridding. This however requires a detailed understanding of the underlying ODE solver and introduces considerable complexity into the coding of the numerical problem.
+‡ For linear systems of equations with constant coefficients, A-stability means in simple terms that if the true solution decreases strictly with time then so too will the numerical solution irrespective of the step-size. The accuracy of the numerical solution, however, will still be step-size dependent.
+§ The ODEs may alternatively be formulated in the implicit form M∂tu(t) = g′(t,u) (i.e. as a differential algebraic equation) if the ODE solver is able to handle a (constant) mass matrix. This may be preferable from a stability point of view but is restrictive in terms of compatible ODE solvers. Radau5 and ODE15s—the solvers used here—both permit the use of a constant mass matrix. However in this paper, in order to describe the MOL method in a way that offers maximum freedom in the choice of ODE solver, we present results using the explicit form ∂tu(t) = g(t,u).
+¶ Note that the third line in eqn (29) represents an electric potential that varies linearly with position from V1 at the anode to VN at the cathode.
+|| We note that higher precision calculations are possible in Matlab via appropriate “add-in” toolboxes. However, these are compatible with only a limited number of Matlab functions.
+** The example we have selected here was chosen for evaluation purposes only and we stress that MOL approach can be adapted to a wide variety of device configurations. Importantly, it can readily handle situations in which the Einstein relationship breaks down (see Appendix 2).
+
+This journal is © the Owner Societies 2009

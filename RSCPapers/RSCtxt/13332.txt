@@ -1,0 +1,398 @@
+Investigating charge carrier scattering processes in anisotropic semiconductors through first-principles calculations: the case of p-type SnSe   - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/D0CP05022A View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D0CP05022A
+(Paper)
+Phys. Chem. Chem. Phys., 2021, 23, 900-913Investigating charge carrier scattering processes in anisotropic semiconductors through first-principles calculations: the case of p-type SnSe†
+
+        
+          
+            Anderson S. 
+            Chaves
+          
+        
+      *a, 
+      
+        
+          
+            Robert Luis 
+            González-Romero
+          
+        
+      b, 
+      
+        
+          
+            Juan J. 
+            Meléndez
+          
+        
+      cd and 
+
+        
+          
+            Alex 
+            Antonelli
+          
+        
+      e
+aInstituto de Física Gleb Wataghin, Universidade Estadual de Campinas, UNICAMP, 13083-859 Campinas, São Paulo, Brazil. E-mail: aschaves@ifi.unicamp.br
+bDepartamento de Sistemas Físicos, Químicos y Naturales, Universidad Pablo de Olavide, Ctra. de Utrera, km. 1, 41013 Sevilla, Spain. E-mail: robertl2703@gmail.com
+cDepartment of Physics, University of Extremadura, Avenida de Elvas, s/n, 06006 Badajoz, Spain. E-mail: melendez@unex.es
+dInstitute for Advanced Scientific Computing of Extremadura (ICCAEx), Avda. de Elvas, s/n, 06006 Badajoz, Spain
+eInstituto de Física Gleb Wataghin and Centre for Computational Engineering & Sciences, Universidade Estadual de Campinas, UNICAMP, 13083-859 Campinas, São Paulo, Brazil. E-mail: aantone@ifi.unicamp.br
+Received 
+      22nd September 2020
+    , Accepted 26th November 2020First published on 8th December 2020AbstractEfficient ab initio computational methods for the calculation of the thermoelectric transport properties of materials are of great interest for energy harvesting technologies. The constant relaxation time approximation (CRTA) has been largely used to efficiently calculate thermoelectric coefficients. However, CRTA usually does not hold for real materials. Here we go beyond the CRTA by incorporating realistic k-dependent relaxation time models of the temperature dependence of the main scattering processes, namely, screened polar and nonpolar scattering by optical phonons, scattering by acoustic phonons, and scattering by ionized impurities with screening. Our relaxation time models are based on a smooth Fourier interpolation of Kohn–Sham eigenvalues and its derivatives, taking into account non-parabolicity (beyond the parabolic or Kane models), degeneracy and multiplicity of the energy bands on the same footing, within very low computational cost. In order to test our methodology, we calculated the anisotropic thermoelectric transport properties of the low temperature phase (Pnma) of intrinsic p-type and hole-doped tin selenide (SnSe). Our results are in quantitative agreement with experimental data, regarding the evolution of the anisotropic thermoelectric coefficients with both temperature and chemical potential. Hence, from this picture, we also obtained the evolution and understanding of the main scattering processes of the overall thermoelectric transport in p-type SnSe.
+Thermoelectric (TE) devices are heat engines based on an all-solid-state technology that attempt to harvest renewable energy from waste heat or function as heat pumps. Their properties make them suitable for several potential applications including automotive exhaust systems or solar energy converters.1 However, their widespread commercial use has been hampered by their low efficiency, and hence, efforts towards the enhancement of TE conversion efficiency have been intensified in the last few years. Highly efficient TE devices demand materials that exhibit high figures of merit (zT), a dimensionless quantity defined as zT = (σS2/κ)T (where S is the Seebeck coefficient, σ is the electrical conductivity, κ is the total thermal conductivity and T is an average temperature of operation), along with a large temperature difference (ΔT) across the materials. Even though the above-mentioned formula for calculating zT has been largely used, its applicability is questionable, as pointed out by Kim et al.,2 in the cases where there is a large ΔT across the material, due to the neglect of the temperature dependence of the material properties that affect thermoelectric performance. Consequently, a more suitable formula for the figure of merit has been introduced, called engineering dimensionless figure of merit, (zT)eng,2 in order to report realistic efficiencies.
+Clearly, the optimization of the figure of merit is obtained by lowering κ while maintaining the power factor (PF = σS2) high. Several ways have been attempted, including the reduction of κ through the enhancement of scattering processes for phonons by embedding nanostructures.3–5 In addition, other strategies deal with the challenge of maximizing PF, which is strongly hampered by the conundrum that σ and S are inversely interdependent and hence, recent strategies, based on modifications in the band structure of the existing semiconductors, have been proposed, such as increasing band degeneracy within convergence of bands4,6 or taking advantage of their band structure anisotropy7 and non-parabolicity.8
+In order to evaluate TE transport coefficients, the demand for more efficient computational approaches has increased. In particular, methods within the approximate solution of the Boltzmann transport equation (BTE) and the relaxation time approximation (RTA) have been extensively used, including transport models largely based on the dispersive effective mass, meff, as an adjustable parameter in closed-form expressions for the scattering mechanisms. These models, such as single parabolic band (SPB)9,10 or Kane models, adjust meff to fit the calculated transport properties to the experimental data and often impressively capture transport properties over a range of temperatures and carrier concentrations. Meanwhile, the anisotropy can be captured by the use of anisotropic effective mass tensors. However, these models impose limitations in the understanding of TE properties and their improvement, since they are based on meff and not on the density of states (DOS) effective mass, m*. Even though within Kane models non-parabolicity can be taken into account, the consideration of multiplicity and degeneracy of band edges is not straightforward. For example, in the two-band Kane model, the interaction between the valence band maximum (VBM) and conduction band minimum (CBM) is treated using the perturbative k·p method, while the remaining bands are neglected.
+Other BTE-RTA based models relying directly on the ab initio band structure have led to a more realistic description of TE transport properties. Approximating the quasi-particle energies by Kohn–Sham (KS) eigenvalues, within the density functional theory (DFT) framework,11,12 it is usually possible to access band structure dependent quantities with relative simplicity from the analytical representation of the bands obtained from the interpolation schemes.13–17 The BoltzTraP code18 has been extensively adopted to this end,19–23 particularly due to its numerical stability and efficiency in interpolating the band structure by using the smooth Fourier interpolation method and then approximating the solution of the linearized BTE-RTA by performing all the required integrations. However, the current version of BoltzTraP that is publicly available is based only on the constant relaxation time approximation (CRTA), with the resulting TE coefficients weighted by an unknown averaged relaxation time (RT), τ. This consideration ultimately takes τ to be direction independent, a feature that usually does not hold for real materials, which may possess strongly anisotropic Fermi-surface topology. Additionally, τ may possess a strong dependence with temperature and chemical potential that should be considered for real materials.
+
+Ab initio models for the scattering mechanisms and their RTs certainly improve the understanding of transport properties and aid in the search for the next-generation of high-performance TE materials.24,25 In this context, electron–phonon (el–ph) interactions have been fully treated within the ab initio framework, which enabled the calculation of mobility at different electron concentrations for several systems, for example, silicon,26–28 SrTiO329 and GaAs.30 However, to the best of our knowledge, such approaches have been limited to few specific systems, which are mainly attributed to the high computational cost, even in the case of short ranged el–ph interactions of metals and nonpolar semiconductors. For polar semiconductors and oxides, the situation is even more challenging from this viewpoint, since the ab initio treatment of the long range Fröhlich interaction31 involves a very large number of e–ph matrix elements to attain convergence. Recently, improvements regarding this problem have been achieved by splitting up the e–ph matrix elements into short- and long-range contributions,32,33 in which the long-range part can be treated by using an analytical formula based on the Vogl model,34 while the short-range part is well-behaved. Very recently, a combination of the many-body theory of the electron–phonon interaction and the Boltzmann transport formalism, within an ab initio framework, was used to obtain the temperature-induced renormalization of the electronic and transport problems of SnSe.35,36 However, the daunting task of calculating RTs over the entire Brillouin zone (BZ) is still extremely computationally demanding for three-dimensional systems.
+In this paper, our aim is to implement realistic models for the RT within BoltzTraP, which go beyond parabolic or Kane models, in order to include non-parabolicity, multiplicity and degeneracy of the band edges on the same footing, however, at a much lower computational cost than that of fully ab initio approaches. Recently, similar methodologies going beyond CRTA have been introduced by deriving RT models along with the BoltzTraP code.37,38 In order to proceed, we considered k-dependent RT models of the temperature dependence of the main scattering processes, namely, screened polar and nonpolar scattering by optical phonons, scattering by acoustic phonons, and scattering by ionized impurities with screening. Our implementation took advantage of the original BoltzTraP implementation concerning the calculations of band velocities within the RT formulae using the smooth Fourier interpolation of KS eigenvalues and its derivatives. As it will be discussed later, our methodology can explain many experimental transport data using in fact only very few fitting parameters, derived for only one temperature and chemical potential and subsequently extending it to larger ranges of temperatures and carrier concentrations.
+In order to test our methodology, we calculated the anisotropic TE transport properties of the low temperature phase (Pnma) of p-type tin selenide (SnSe), which is one of the highest-performing TE materials known that has recently attracted much research interest.39–44 The motivation for choosing this specific material comprises its intrinsic anisotropy along with non-parabolicity, degeneracy, and multiplicity of band edges, influencing TE transport properties. Hence, the understanding of their scattering mechanisms with temperature and chemical potential is of utmost importance in order to obtain hints about next-generation high-performance TE materials. Consequently, the subject of the present research is to report on the dominant anisotropic charge carrier scattering mechanisms in SnSe considering different temperature and carrier concentration ranges, in which experimental transport data have been used to probe the limits of our methodology.
+1 Theoretical approach
+1.1 BTE within the RTA
+Our methodology for carrier transport is based on the approximate numerical solution to the semiclassical BTE, which has been applied to some extent to semiconductors. In the diffusive transport limit, in the presence of a temperature gradient (∇T) and applied electric (E) and magnetic fields (B), carrier transport properties can be obtained by solving the semiclassical BTE for the nonequilibrium carrier distribution function fn,k = f(εn,k) (1)where n and k label the band index and the wavevector, respectively. The electronic band velocity of the carrier in the {n,k} state with energy εn,k is defined as vn,k = (1/ħ)∇kεn,k, while the external force is given by F = e(E + vn,k × B), where e is the absolute value of the charge carrier. The right-hand side term is related to charge carrier collisions and describes different sources of scattering and dissipation driving the system into a steady state. This scattering term can be expressed by introducing the per-unit-time probability, W(n,k|j,k′), of the transition of the charge carrier from state {n,k} to state {j,k′}, as a result of a particular scattering mechanism. From the principle of detailed equilibrium, the number of charge carriers coming into state {j,k′} from {n,k} is the same as the number coming out from {j,k′} into {n,k}, we have (2)
+The knowledge of fn,k allows the evaluation of the charge current density (3)and the heat energy flux density (4)where factor 2 appears due to the electron spin, V is the crystal's volume, and μ is the chemical potential.
+In order to proceed, we consider that the system is close enough to equilibrium so that the nonequilibrium distribution function, fn,k, differs only slightly from that of the equilibrium state, f(0)n,k, that is Δf(n,k) = |fn,k − f(0)n,k| ≪ f(0)n,k. Within such an approximation, eqn (2) can be written in the RTA (5)where (6)given the absence of quantization effects, thus W(n,k|j,k′) does not depend on E, B, or ∇T. Consequently, in the case of a homogeneous system, zero magnetic field, and a time-independent electric field, in the steady-state limit, eqn (1) simplifies to (7)from which it is possible to obtain the nonequilibrium distribution function provided that τn,k does not depend on E or ∇T.
+Moreover, from the smallness of the deviation from equilibrium, fn,k can be expanded to first order as (8)where  is the generalized disturbing force (dynamic and static) causing the deviation from the equilibrium distribution, where ε = E + (1/e)∇μ = −∇(ϕ0 − (μ/e)) is the gradient of the electrochemical potential. Substituting eqn (8) into eqn (6) we obtain (9)
+Considering that the per-unit-time probability of charge carrier transition, W(n,k|j,k′), does not depend on k and k′ separately, but only on the magnitudes of the vectors, |k| and |k′|, and the angle between them, k·k′, that is W(n,k|j,k′) = Wn,j(|k|,|k′|,k·k′). Additionally, considering that the dispersion relation is an arbitrary spherically symmetric function of the magnitude of the wavevector, k = |k| (not necessarily parabolic), and the charge carrier scattering is purely elastic, that is, the charge carriers exchange energy during scattering only by impulses with ε(|k|) = ε(|k′|), eqn (9) may be rewritten as45 (10)At this point, some comments are in order. Although eqn (10) has been derived for isotropic bands, results obtained from it have been used to study the transport properties of lead chalcogenides, which are anisotropic.46,47 The use of this methodology in this case is possible because, although anisotropic, the transport properties in these materials along the different directions are mutually independent, except for the magnetoresistance, which essentially depends on the anisotropy. As it will be clear later, the application of this methodology in the case of SnSe is justified by the good agreement of our results with the experiment at different values of temperature and chemical potential.
+1.2 TE kinetic coefficient tensors
+The tensorial formalism is appropriate to discuss TE effects for anisotropic materials. The off-diagonal coupling between the electronic current density, j, and heat energy flux density, jQ, can be derived on a more general basis within the linear response theory48 as (11)in which, L11, L12, L21, L22 are the moments of the generalized transport coefficients, which we will call kinetic coefficient tensors, with L12 = L21 based on the Onsager reciprocity relations.48 Such kinetic coefficients can be expressed as (12)with L11 = Λ(0), L21 = L12 = −(1/e)Λ(1), and L22 = (1/e2)Λ(2), in which Ξ(ε,μ,T) is the transport distribution kernel (TDK) given by (13)Under both experimental conditions of zero temperature gradient (∇T = 0) and zero electric current, the kinetic coefficient tensors can be identified with the electrical conductivity tensor, σ = Λ(0), with the Seebeck coefficient tensor, S = (eT)−1Λ(1)/Λ(0), and with the charge carrier contribution to the thermal conductivity tensor, κelec = (e2T)−1(Λ(1)·Λ(0)−1·Λ(1) − Λ(2)).
+2 Computational implementation
+The evaluation of carrier transport properties was carried out using the BoltzTraP code18 as a reference. The BoltzTraP code approximately solves the linearized BTE by Fourier interpolating the band energies and their derivatives computed within the DFT framework and performs all the integrations required to determine the TE transport properties. In the present work, we also have used the Fourier interpolation of the band energy derivatives within the RT models. The formulation of the Fourier interpolation over anisotropic k-mesh is presented in the ESI† along with the detailed derivation of the k-dependent RT models of the temperature dependence of the main scattering processes, namely, screened polar and nonpolar scattering by optical phonons, scattering by acoustic phonons, and scattering by ionized impurities with screening.
+2.1 Anisotropic RTs
+The consideration of anisotropy in the RTs of the aforementioned scattering processes can now be introduced. We start by generalizing the closed expressions for all RT formulae, comprising eqn (S15), (S19), (S24) and (S29) of the ESI,† for every band n by considering the interpolated quasi-particle energies, n,k, and their derivatives. It is important to stress that in such expressions for the RTs, the explicit dependence on k can have an arbitrary form, beyond the parabolic dependence. Hence, we may properly account for the multiplicity, degeneracy and non-parabolicity of the band edges on the same footing, along with anisotropy. It is also important to emphasize the crucial assumption in the present article, namely, that the properties along the crystallographic axes are independent of each other, which is a valid assumption when one is not dealing with the magnetoresistance, hence the derived isotropic relations for the scattering rates have been applied to each direction independently by using appropriate physical parameters measured or calculated for each direction.
+The expression for the RT of the non-polar scattering by acoustic phonons can now be expressed along the direction t and for a given band index n (14)in which the parameters have to be taken along each crystallographic axis, i.e., it is necessary to consider anisotropic parameters. Hence, the subscript t in eqn (14), as well in the subsequent equations, indicates a given crystallographic direction. The acoustic deformation potential constants (E1) for holes and electrons can be calculated from ab initio methods on the basis of the energy change of the VBM and CBM, respectively, between compressed and expanded regions of the material.49,50 As the absolute position of a single-particle state energy in an infinite solid is ill-defined and only energy differences are accessible to either calculations or experiments, absolute E1s have to be defined in relation to a reference energy given by the core levels that present small E1s with strain. Even though the E1s of core levels are small they are not necessarily negligible, so that core states cannot be used as absolute energy levels in the presence of strain.49,50 However, when the magnitude of strain is sufficiently small, deep core states can be used as approximate reference energies, so that the core-level deformation potential is negligible. As pointed out by Wei and Zunger the error due to this approximation is around ±0.5 meV kbar−1.49,50
+The anisotropic velocity entering in eqn (14) as well as in the subsequent equations is defined as (see the ESI†) (15)in which we are only interested in the magnitude of the velocity. Along the same line of reasoning, in order to capture the anisotropy, the RT of the non-polar scattering by optical phonons can now be rewritten as (16)The evaluation of the anisotropic optical deformation potential (ODP) from ab initio methods is more involving than the evaluation of E1s, since it characterizes the energy change of the carrier due to a relative atomic displacement. Therefore, external stresses that deform the unit cell as a whole cannot reveal ODPs, which have to be evaluated empirically on the basis of experimental data. The anisotropic RT of polar mode scattering of optical phonons can also be written as (17)with the anisotropic screening function given by (18)in which r∞,t is the high-frequency anisotropic screening radius defined from eqn (S25) of the ESI† as (19)where the dependence on the band index n has been included. The equilibrium electron distribution function, f(0)(ε,μt,T), is also defined to be anisotropic through an anisotropic electronic chemical potential μt, which will be discussed in detail below. In practice, the evaluation of the DOS, g(ε), is obtained numerically on an energy grid with spacing dε sampled over Nkk-points (20)
+Similarly, the expression for the RT of scattering by ionized impurities has to be rewritten to include anisotropy as (21)where the screening function has to be rewritten as Fimp(n,kt) = ln(1 + η) − η/(1 + η), with η = (2ktr0,t)2, in which the static anisotropic screening radius, r0,t, is related to eqn (S31) of the ESI† and defined by (22)The electronic chemical potential, μ, is a result of the condition of charge neutrality. In principle, μ can be experimentally influenced mainly by doping, which determines the carrier concentration. The anisotropic electronic chemical potential, μt, as entering in the expressions for the RTs, (τpol)t and (τimp)t, through their respective screening formulae, is a direct consequence of dissimilar carrier concentrations along different axial directions, as it has been measured by Zhao et al.39 through Hall transport properties. It is important to stress that such measurements have been done along each axial direction separately and it does not mean three different chemical potentials simultaneously in a single system. The same line of reasoning has been adopted here by defining an anisotropic chemical potential, given that our calculations are performed independently for each axial direction. Given μt and T, the carrier concentration in the axis t can be calculated as the deviation from charge neutrality (23)in which Z is the nuclear charge and g(ε) is the DOS as evaluated from eqn (20). In practice, we can insert a target carrier concentration n(0)carr within BoltzTraP, with n(0)carr > 0 (n(0)carr < 0) for holes (electrons) and μt is calculated iteratively up to ncarr(μt,T) ∼ n(0)carr within a predefined criterion of 10−12. The incremental variation of μt is given by (24)and hence, a n-type semiconductor can be obtained if μt approaches the conduction band while a p-type material is obtained when μt moves to the valence band.
+Once the anisotropic RTs are obtained for each scattering process, the total anisotropic RT, (τtot)t, that enters in the TE transport calculations can be derived from Matthiessen's rule as (τtot)t−1(n,k,μt,T) = (τac)t−1(n,k,T) + (τnpol)t−1(n,k,T) + (τpol)t−1(n,k,μt,T) + (τimp)t−1(n,k,μt,T),(25)which is justified by considering the scattering mechanisms as approximately independent. Once (τtot)t is determined, the TDKs can be evaluated similarly to the calculation of the DOS as (26)where vTn,k is the transpose of the vector vn,k given by eqn (S3) of the ESI,† expanded over the band indices, and the matrix vn,kvTn,k is diagonal by construction. From the TDKs, the coefficient transport tensors, given by eqn (12), can then be evaluated. For example, Λ(0)tt(μt,T) = σtt(μt,T) is given by (27)which accounts for the diagonal terms of the electrical conductivity tensor. The diagonal terms of the Seebeck coefficient tensor (Stt(μt,T)) are obtained by calculating Λ(1)tt(μt,T) as (28)in which Stt(μt,T) = (eT)−1Λ(1)tt(μt,T)·[σtt(μt,T)]−1. Similarly, the diagonal terms of the corresponding coefficient tensor for the charge carrier contribution to the thermal conductivity, κelec, can also be determined. It is important to note that, due to the factor [−∂f(0)/∂ε], only bands within a few kBT from the Fermi level are relevant for transport properties.
+3 Results: the case of anisotropic SnSe
+The methodology developed in the preceding sections was employed to investigate the TE transport properties of p-type tin selenide (SnSe), which is one of the highest-performing TE materials available today. To perform the calculations, we have considered the RT models for scattering mechanisms introduced earlier. The polar scattering by acoustic phonons, known as piezoelectric scattering, has been neglected here. As emphasized by Li,51 for a typical III–V compound semiconductor, the piezoelectric scattering is usually much less important than the acoustic deformation potential scattering. The piezoelectric scattering becomes more important with increasing ionicity of the systems, for example, in most of the II–VI compound semiconductors, in which the wurtzite crystal structure lacks inversion symmetry, and, therefore, the piezoelectric stress tensor is nonvanishing. On the basis of the above facts, it is expected that this kind of scattering mechanism is not relevant for IV–VI SnSe.
+The choice to study SnSe is due to its following features. (i) The charge carrier transport properties of SnSe have a strong anisotropy, which is expected due to its layered structure. (ii) In particular, p-type SnSe presents strongly non-parabolic dispersion and its VBM has a pudding-mold-like shape.52 (iii) It is also noticed that the first and second VBMs can be considered to be degenerate, with an offset between them of only 0.02–0.06 eV.40 (iv) SnSe exhibits multiple local band edges aside from the global extrema, within an energy range comparable to the thermal energy of the carriers.53 (v) Moreover, SnSe has attracted much attention in recent years due to its record zT ∼ 2.6.39 Therefore, based on the above features, we found SnSe to be a suitable material to test the methodology we are proposing here. Our results are compared with the experimental data provided by Zhao et al.39,40
+At room temperature, SnSe crystallizes in a layered orthorhombic structure with the Pnma space group and 8 atoms in the unit cell. The nomenclature of the SnSe axes will follow that employed in the work of Zhao et al. Along the b–c plane, Sn and Se atoms are linked by strong covalent bonds (∼2.80 Å) forming a layered substructure with zig-zag chains along the b axis. The intralayer bonds are much stronger than the interlayer interactions. The latter are predominantly weak van der Waals-like Se–Sn bonds (∼3.50 Å) along the a-axis. Upon heating, SnSe undergoes a second-order phase transition to the higher symmetry Cmcm phase around T ∼ 807 K, due to the condensation of the TO soft phonon mode of Ag symmetry at the BZ center (Γ). However, in this work, we are considering only the low-temperature Pnma phase of SnSe, and, therefore, from now on, unless otherwise explicitly stated, SnSe will be referred only to this phase, without reference to the high-temperature phase.
+3.1 DFT calculation of the crystalline structure and band structure
+For the optimization of the crystalline structure and band structure calculations, we employed DFT within the generalized gradient approximation (GGA) in the formulation of Perdew–Burke–Ernzerhof (PBE),54 as implemented in the VASP package.55,56 To model the ion cores, projector augmented-wave (PAW) pseudopotentials57 were used, considering as valence electrons those in the orbitals 4d, 5s, and 5p of Sn and those in the orbitals 4s and 4p of Se. The electronic wave functions were expanded in a plane-wave basis-set with a kinetic-energy cutoff of 800 eV. To sample the BZ, a 4 × 11 × 12 Monkhorst–Pack k-point mesh was used for the force on the ion calculations. Subsequently, to determine the transport properties, we used a finer k-mesh of 16 × 40 × 43, which ensures the calculated transport coefficients to be converged. Within BoltzTraP the original k-mesh is then interpolated onto a mesh five times as dense (M/NKS = 5). We used the experimental structure58 as the starting configuration and relaxed the lattice parameters and atomic positions until all atomic force components were smaller than 1 meV Å−1.
+The weak interactions between layers along the a direction were accurately captured by incorporating van der Waals (vdW) corrections to DFT, according to the D3 approach as provided by Grimme et al.59 We found that DFT-D3 performed reasonably in predicting both the lattice parameters and the internal atomic positions of SnSe. We found that a = 11.564 Å, b = 4.542 Å and c = 4.166 Å, diverging by 0.52%, 1.98% and 0.24%, respectively, from experimental lattice structure parameters determined at 300 K.58 The spin–orbit coupling (SOC) has been neglected in our calculations. As shown by Wu et al.41 the neglected SOC does not lead to noticeable effects on the band structures, which has been attributed to the low symmetry of SnSe that removes the degeneracy of the electronic states.
+The optimization of the TE properties by chemical doping has been widely adopted. Particularly for SnSe, hole-doping by p-type dopants such as Ag60–62 and Na62 has led to the enhancement of zT over a broad temperature range in comparison with the intrinsic (undoped) material. Here, we have also considered the transport properties of hole-doped SnSe. An important modification caused in SnSe due to doping is the downward shift of chemical potential that enters in the valence band, turning the crystal into a metal. However, we have considered that the valence band shape has not changed considerably in relation to the intrinsic case due to doping, the so-called rigid band approximation.
+3.2 Calculation of SnSe TE transport properties
+
+3.2.1 Carrier concentration for intrinsic and extrinsic P-type cases. 
+In order to calculate the TE transport properties of p-type SnSe, firstly it is necessary to properly estimate the hole concentration. On the basis of experimental anisotropic SnSe Hall coefficients,39,40 from which Hall concentration, nHall, can be inferred for each axis, it is possible to acquire hints concerning the evolution of hole concentration with temperature. In particular, for intrinsic SnSe, the Hall concentration remains almost constant in the range of ∼300–550 K, corresponding to the non-equilibrium concentration of charge carriers due to growth conditions. At higher temperatures comprising the transition region (∼550–807 K), a marked Arrhenius-type enhancement has been observed that is mainly related to thermally activated formation of vacancies accompanied by the production of holes.44 The formation energies of intrinsic defects in SnSe have been systematically investigated on the basis of DFT.44,63 The Sn vacancy, VSn, exhibited the lowest formation energy with an ultra-shallow thermodynamic transition level. Hence, VSn plays a prominent role for p-type conduction in the absence of extrinsic doping. For example, depending on the chemical potential, the Sn vacancy can be singly, VSn(1−), or doubly, VSn(2−), charged, by capturing one or two electrons and producing one or two holes for each created vacancy.44
+As pointed out by Kutorasinski et al,52 Hall concentrations should not be considered the actual hole concentrations because they are based on the assumption of a single parabolic band model and Hall scattering factor of unity. Hence, these measurements yield only an indication of the charge carrier concentrations. Despite this qualitative aspect, the evolution of the experimental Hall coefficients suggests that the carrier concentration increases with temperature. Here, in order to determine the hole concentration, ncarr, we applied the condition that experimental Seebeck coefficients (Sexp)39,40 should be essentially the same as theoretical ones (Stheor(μ,T)), that is, Sexp = Stheor(μ,T) for any temperature. This fitting is possible by varying the target hole concentration in the calculation of the Seebeck coefficients in eqn (28). This is done through the neutrality condition (eqn (23)); for a given concentration ncarr(μt,T) a corresponding chemical potential, μt, for each axis, is obtained. As nHall suggests that ncarr should be almost constant in the range of ∼300–550 K, we kept ncarr constant in this range, which best adjusts the experimental data. The resulting hole concentration, ncarr, is shown in the top panel of Fig. 1.
+ Fig. 1  Evolution of carrier (ncarr) and vacancy (Ni) concentrations with temperature (300–810 K) in intrinsic SnSe (top panel) and in hole-doped SnSe (bottom panel) for each crystallographic axis. 
+The same methodology has been applied for the case of hole-doped SnSe, in which the resulting hole concentration is shown in the bottom panel of Fig. 1. In this case, the evolution of hole concentration is much more involved and includes complex processes, such as the compensation effects, possibly due to the formation of doubly charged Se vacancies, VSe(2+) and antisite defects, SeSn(2+), which will annihilate the holes created by acceptor impurities, such as Na, and vacancies, or due to the change in the charge state of the impurities. In fact, the measured Hall coefficients for the b and c axes highlight the tendency of the hole concentration to decrease with temperature, especially around 600 K the Hall coefficient abruptly raises,40 in close correspondence with our results. Furthermore, the same tendency was also observed in Na and Ag-doped p-type SnSe, a specific kind of hole-doped SnSe.64 Unlike metals, in which the conductivity decreases almost inversely with temperature, the conductivity of hole-doped SnSe decreases with the temperature following an exponential-like decay, suggesting that the carrier concentration is diminishing, as shown in the lower panel of Fig. 1. Withal, the chemical potential shifts up with temperature as indicated by Fig. 2. Eventually, at elevated temperatures, an activated (semiconducting) behavior sets in, leading ncarr to increase, mainly above 700 K.
+ Fig. 2  Evolution of the chemical potential with temperature (300–810 K) for both intrinsic and hole-doped SnSe for each crystallographic axis. 
+In the intrinsic case, at low temperatures (T ≤ ∼550 K), the concentration of ionized impurities, Ni, is due to crystal growth conditions corresponding to a non-equilibrium concentration of vacancies. In this temperature range Ni has been considered to be almost the same as ncarr, since according to previous calculations,44 in the range of chemical potentials determined in our calculations, the Sn vacancy is predominantly singly negatively charged, VSn(1−). However, at a given higher temperature, the thermally activated process of vacancy formation becomes relevant and we have to take into account the variation of Ni with temperature. This is done in our calculations by adjusting our calculated electrical conductivity to experimental results. In other words, the optimal values of Ni presented in the top panel of Fig. 1 are the result of this fitting procedure.
+The concentrations of ionized impurities for the extrinsic hole-doped SnSe are shown in the bottom panel of Fig. 1. As it was mentioned before, in the extrinsic case there are different charged impurities at play and the overall behavior is complex. The concentrations for the crystalline axes are somewhat related to their chemical potentials. It is important to notice that as temperature rises and the chemical potential becomes positive (enters the gap), there is a dip in the concentration of ionized impurities, this reduction is possibly caused by a change in the charge state of the impurities, which become neutral. Another interesting feature is that as temperature continues to increase, the concentrations of ionized impurities increase steeply, possibly due to the creation of charged impurities, analogously to the intrinsic case, and the concentrations for each one of the axes seem to converge to a similar value.
+
+
+3.2.2 SnSe parameters for the RT models. 
+Once the temperature evolution of hole concentration is determined, it is possible to adjust RT models for TE transport modeling of SnSe. The parameters entering in the RT models for both cases of intrinsic and hole-doped SnSe are shown in Table 1. Even though there is a debate in the literature about the values reported for the sample mass density, ρ,65,66 in the present work we considered ρ = 6180 kg m−3, which was estimated from powder X-ray diffraction58 and neutron diffraction studies,67 and is close to the theoretical value.65
+Table 1 Parameters used to calculate the RTs of SnSe in the Pnma phase. The parameters are ζ0 (static dielectric constant),71ζ∞ (high-frequency dielectric constant),71v0 (sound velocity),68ρ (mass density),58,67β (ratio of the average optical phonon energy and optical deformation potential constant), E1 (acoustic deformation potential),68 gap energy39 and Kpol (proportionality factor of Frölich interaction to account for the conduction of p-like symmetry holes)
+
+
+
+
+Parameter
+
+a axis
+
+b axis
+
+c axis
+
+
+
+
+
+ζ
+0
+
+47
+50
+56
+
+
+
+ζ
+∞
+
+18
+15
+15
+
+
+
+v
+0 (m s−1)
+3356
+3267
+3493
+
+
+
+ρ (kg m−3)
+6180
+6180
+6180
+
+
+
+E
+1 (eV)
+14.1
+15.8
+16.4
+
+
+
+β
+
+0.000082
+0.001702
+0.000136
+
+
+Gap (eV)
+0.86
+0.86
+0.86
+
+
+Lattice constant (Å)
+11.564
+4.542
+4.166
+
+
+
+K
+pol
+
+4.85
+4.85
+4.85
+
+
+
+
+In particular, E1 values have been extracted from DFT calculations by Guo et al.68 for each axis. These calculations were performed on the basis of the methodology proposed by Franceschetti, Wei and Zunger.49,50 However, anisotropic renormalized effective ODP constants (β) have not been found in the literature, to the best of our knowledge. In this case, β values have been obtained by fitting our transport data for σ at 300 K to the experimental data.39 Hence, the effective ODPs can be considered, as emphasized by Conwell,69 as effective couplings representing the actual coupling matrix elements that account for the more complex q dependence. The resulting deformation potentials, both E1 and ODP constants, derived at 300 K, were directly applied throughout the full range of temperatures, extending up to ∼810 K. It is also important to stress that deformation potential constants were considered to be the same in both cases, intrinsic and hole-doped SnSe. The large anisotropy in the derived ODP constants is directly related to the strong and weak Sn–Se bonds in the crystal structure. It has been shown by heat capacity measurements the existence of two characteristic vibrational scales corresponding to hard and soft substructures.70
+From our DFT-PBE calculation of Pnma-SnSe, we obtained a band gap of 0.77 eV, which is in close agreement with previous DFT-PBE results72 and, as expected from DFT calculations within local and semilocal exchange–correlation functionals, underestimates the reported experimental band gap of 0.86 eV.39 Consequently, as it is usually done in this type of calculation,36,73 for the purpose of comparison with experimental data, the calculations of the TE properties of SnSe were done by rigidly shifting upward the DFT-PBE conduction bands in order to attain the experimental value of the band gap.
+As will be discussed, the polar mode scattering by optical phonons dominates along the b axis, consequently, we have adjusted the Kpol proportionality factor of the Frölich interaction (see the ESI† for further details) to account for the conduction of p-like symmetry holes, which has been considered the same for all axes. Thus, it is important to stress that we only fitted two parameters (β and Kpol) for the phonon-related scattering processes in intrinsic SnSe at 300 K, which were used in the calculations for the full range of temperatures in both cases, undoped and hole-doped systems.
+
+
+3.2.3 Main scattering mechanisms and RTs. 
+Finally, a picture of the axial dependence of each scattering processes with temperature and chemical potential can be inferred from the average of each RT over the band indices n and the wavevectors k, (29)where Nk is the number of k-points sampled, Nband is the number of bands, and x stands for the charge carrier scattering mechanism, namely, non-polar scattering by acoustic phonons (τac), nonpolar scattering by optical phonons (τnpol), polar scattering by optical phonons (τpol) and scattering by ionized impurities (τimp). The total average RT (τtot) is calculated through Matthiessen's rule. The calculated average RTs as functions of the temperature for each axis of intrinsic and hole-doped SnSe are shown in Fig. 3 and 4, respectively. As it will be discussed below, in general, the dominant scattering mechanism varies with temperature and is not the same for each axis, highlighting the strong SnSe anisotropy. It is important to observe that another source of anisotropy in transport properties comes from the band velocities. In general, as shown in the ESI,†vc > vb > va, where va,b,c values are the band velocities for the a, b, c axes, respectively.
+ Fig. 3  Temperature and axial dependence of average RTs calculated for each scattering process in intrinsic SnSe, namely, non-polar scattering of acoustic phonons (τac), scattering by ionized impurities (τimp), non-polar scattering of optical phonons (τnpol) and polar scattering of optical phonons (τpol). The average total RTs (τtot) that are calculated from Matthiessen's rule are also shown as a function of temperature for each crystallographic axis. 
+ Fig. 4  Temperature and axial dependence of average RTs calculated for each scattering process in hole-doped SnSe, namely, non-polar scattering of acoustic phonons (τac), scattering by ionized impurities (τimp), non-polar scattering of optical phonons (τnpol) and polar scattering of optical phonons (τpol). The average total RTs (τtot) that are calculated from Matthiessen's rule are also shown as a function of temperature for each crystallographic axis. 
+The scattering by acoustic phonons strengthens with temperature, for both intrinsic and hole-doped SnSe, this is intimately related to the enhancement in the number of available phonons for scattering as the temperature increases. Fig. 3 and 4 show that the RT, τac, associated with this process, decreases as 1/T. In the b axis, the scattering by acoustic phonons plays a more prominent role than in the other axes, highlighting the strong anisotropy, however, this kind of scattering mechanism is only secondary in the overall transport process.
+In the intrinsic case, the polar scattering by optical phonons strengthens as the temperature increases, reducing τpol approximately as 1/T up to ∼550 K. Above this temperature, this scattering process begins to weaken, consequently increasing τpol. This behavior is closely related to the onset of the thermally activated process of vacancy formation, which effectively increases the number of charge carriers in the material, hence inducing a stronger screening of the polarization. The onset of this screening effect on the polar scattering by optical phonons occurs in all axes at around the same temperature, however, this behavior mostly affects the overall transport in the a and b axes, in which τtot tends to increase following τpol, despite the competition with the other scattering processes.
+The RT due to nonpolar scattering by optical phonons, τnpol, also decreases as 1/T, for both intrinsic and hole-doped SnSe. As discussed in the previous section, the strong anisotropy of SnSe is clearly shown by the fitted ODP constants E0 = ħω0/β. Even though the ODP for the a axis is larger than that for the c axis, the resulting RTs are relatively smaller than that for the c axis, emphasizing the importance of the band velocities in the calculation of RTs. From Fig. 3, one observes that the electron–phonon scattering by optical phonon modes dominates the overall transport properties of intrinsic SnSe in the interval 300–500 K, rather than acoustic phonon modes; this corresponds to the same conclusion of the work by Ma et al.74 in which fully ab initio calculations of the electron–phonon coupling were done by using the state-of-the-art Electron–Phonon Wannier (EPW) code.25 Particularly, the present work discriminates the contributions from nonpolar scattering by optical phonons that dominates in a and c axes at 300–500 K, while polar scattering by optical phonons dominates in the b axis in the same range of temperatures.
+The RT due to scattering by ionized impurities in the intrinsic case is almost constant up to temperatures at which the process of thermal creation of vacancies becomes relevant with respect to preexisting vacancies created during growth. Above these temperatures, the concentrations of vacancies begin to increase rather fast, and the RT associated with this scattering mechanism drops quite rapidly as well, for all three axes.
+For hole-doped SnSe, the dominant scattering mechanisms are the nonpolar scattering by optical phonons and scattering by charged vacancies. The latter mechanism dominates along the b axis for the whole temperature range and becomes the primary scattering mechanism above 700 K for the a axis, while strongly affects the overall transport properties for the c axis at higher temperatures. It reflects the strong influence of the thermally activated process of vacancy formation for TE transport properties at higher temperatures, especially above 700 K. In fact, in the case of hole-doped SnSe, in which the hole concentration is large and the screening is stronger, the polar scattering by optical phonons practically does not cause pronounced effects on the transport properties, since τpol ∼ 10−11 s.
+
+
+3.2.4 Electrical conductivity. 
+Our results for the anisotropic electronic conductivity, σ, are in close agreement with experimental data39,40 (see Fig. 5). It is noteworthy to point out that the fitting procedure against experimental conductivity data to obtain the parameters β and Kpol entering the scattering models was performed only once at 300 K for intrinsic SnSe. For the remaining temperatures and chemical potentials (doped case), the same parameters were used. Only at higher temperatures, above 600 K, a fitting procedure was used to obtain the concentration of ionized impurities, Ni, which enters in the relaxation time τimp. Thus, the good agreement of our results for σ is not a result of the simple fitting procedure, but it also indicates that a quite reasonable description of the scattering mechanisms has been attained. It is also important to stress that Seebeck coefficients do depend on the scattering rates and the conductivity strongly depends on the carrier concentration, hence, it is important to clarify that our approach to fit β and Kpol parameters at 300 K was performed iteratively, indicating a consistency between the calculated Seebeck coefficient and electrical conductivity.
+ Fig. 5  SnSe anisotropic electronic conductivity, σ, as a function of temperature, for intrinsic SnSe (top panel) and for hole-doped SnSe (bottom panel). Our findings are plotted along with experimental results.39,40 
+The magnitude of σ along the a axis is almost one decade smaller than that for b and c axes. This is related to the strong anisotropy of the chemical bonding. For intrinsic SnSe, between 300 and 550 K, σ decreases with temperature as a direct consequence of the enhancement of the scattering processes with temperature, while the hole concentration is maintained approximately constant in that temperature range. Above ∼550 K, the thermally activated process of defect formation sets in and, consequently, σ markedly increases with temperature. This behavior is attained even though the scattering by charged vacancies becomes more relevant, however, the enhancement in the screening of the polar scattering by optical phonons largely compensates for the effect of scattering by ionized impurities. For the b axis the polar scattering by optical phonons dominates. Consequently, the overall scattering is strongly influenced by this mechanism. As the temperature increases and the activation process of vacancy formation sets in, the generation of more free carriers causes a stronger screening in this scattering mechanism, consequently increasing the electrical conductivity in the b axis to values even larger than those for the c axis for temperatures above ∼550 K, where the mechanism of polar optical phonon scattering is only secondary.
+In the case of hole-doped SnSe, σ presents a metal-like behavior, in which σ decreases steadily with temperature, up to high temperatures (∼800 K), differently than what is observed in the intrinsic case. Above this temperature, σ tends to increase as a consequence of the pronounced enhancement in the hole concentration with temperature. In fact, this pronounced enhancement in the hole concentration begins around 670 K. However, unlike the intrinsic case, where σ begins to increase, for hole-doped SnSe, σ continues to decrease, highlighting the stronger influence of the scattering by ionized charged impurities.
+
+
+3.2.5 Seebeck coefficient. 
+Our results for the Seebeck coefficients, S, as a function of temperature, are shown in Fig. 6 together with the experimental results for both intrinsic SnSe39 and hole doped SnSe.40 The close agreement between calculations and experiment results from two facts: (1) the evolution of hole concentration with temperature was taken into consideration and (2) the relaxation times obtained from the electrical conductivity calculations are properly described. This demonstrates again the consistency between the calculated Seebeck coefficient and electrical conductivity. At ∼550 K, the experimental Seebeck coefficients of intrinsic SnSe exhibit unpronounced maxima, which can be attributed mainly to the increase of hole concentration. A similar maximum occurs to the hole-doped SnSe, however at higher temperatures (∼750 K).
+ Fig. 6  SnSe anisotropic Seebeck coefficient, S, as a function of temperature for intrinsic SnSe (top panel) and for hole-doped SnSe (bottom panel). Our findings are plotted along with experimental results.39,40 
+
+
+3.2.6 Carrier thermal conductivity. 
+Our results for the thermal conductivity due to the carrier transport are shown in Fig. 7, for both cases, intrinsic (top panel) and hole-doped (bottom panel) SnSe. It is noteworthy to mention that the calculations for the thermal conductivity were performed without any additional fitting parameter, that is, it was directly calculated by using carrier concentrations along with relaxation times determined iteratively, for each temperature and chemical potential, from the calculations of the Seebeck coefficient and electric conductivity. These results are related to two dissimilar experimental situations, namely, κelec,J and κelec,E. The former corresponds to the electric open-circuit condition where the electric current throughout the system is null. Experimentally, this situation corresponds to the measurement process performed by a device with high internal electrical resistance. The latter situation corresponds to the electric short-circuit condition where the electrochemical potential is constant throughout the system. Both experimental conditions are related by κelec,J = κelec,E − TσS2, resulting in κelec,E > κelec,J, as observed from Fig. 7. Moreover, the thermal conductivity due to the carriers is greater in the hole-doped system compared to the intrinsic case.
+ Fig. 7  SnSe anisotropic thermal conductivities due to the carrier transport, κelec,J and κelec,E, as functions of temperature for intrinsic SnSe (top panel) and for hole-doped SnSe (bottom panel). Our findings are plotted along with the available experimental results for κelec,J.39 
+The Lorenz number, L, defined as (30)is commonly considered as a constant in order to determine κelec,J, a practice that is extensively used. Zhao et al.39 have considered the non-degenerate limit, where L = 1.5 × 10−8 V2 K−2, to obtain κelec,J for SnSe. Our findings for κelec,J can be compared with Zhao's results for intrinsic SnSe in Fig. 7 (top panel). One can observe an excellent agreement for the three axes for temperatures ≤∼600 K. It should be emphasized that our results for κelec,J are completely free from any empirical fitting procedure. However, above ∼600 K, for the a and b axes our results are greater than Zhao's results, which were determined considering L as a constant, while for the c axis our values are smaller than the experimental values. Our results suggest the fact that L cannot be considered as a constant. Since SnSe has a complex band structure and the RTs have a complex behavior with the electron energy, L dependence on temperature and chemical potential should be taken into account. Such deviations between our results and Zhao's results may have significant implications, resulting in corrections to the earlier predicted values of the figure of merit,39zT, which may have been overestimated for a and b axes and underestimated for the c axis in the intrinsic case. Fig. 7 also depicts our results for κelec,E for both cases intrinsic and hole-doped SnSe. It is important to note that in both cases κelec,E is larger than κelec,J. The difference between these two thermal conductivities can be up one order of magnitude for the intrinsic case. This is a manifestation of the large power factor of SnSe.
+
+Fig. 8 shows the results of our calculations for anisotropic L. At 300 K, L values are within the non-degenerate and degenerate limits, the latter being defined by the Wiedemann–Franz law.75 As temperature increases, we can properly observe the variation of L for each crystallographic axis of both hole-doped and intrinsic SnSe. There is a large discrepancy between the L results depending on the crystallographic axis, which can be even lower (larger) than the non-degenerate (degenerate) limit depending on the temperature. It is important to note that such deviations from predefined limits are in accord with earlier observations by Putatunda and Singh76 that large deviations can occur for materials known to have non-parabolic band structures and/or low-band gaps.
+ Fig. 8  SnSe anisotropic Lorenz number, L, as a function of temperature for intrinsic SnSe and for hole-doped SnSe. The horizontal lines indicate the non-degenerate limit of semiconductors (1.5 × 10−8 V2 K−2) and the degenerate limit (2.44 × 10−8 V2 K−2) defined by the Wiedemann–Franz law. 
+In general, Lc values for the c axis tend to be around the non-degenerate limit or below, while for a and b axes the values are much larger. The ordering is basically Lc < La < Lb at low temperatures, with an inversion between a and b axes as the temperature increases. For the intrinsic case, above ∼550 K, which is the onset temperature for vacancy formation, La begins to be greater than Lb. Similarly, such an inversion occurs at a higher temperature, ∼700 K, for the hole-doped case and can be attributed to a fast increase of κelec,J for the a axis with temperature, which is not evident from Fig. 7 because of the logarithmic scale. At 810 K, L assumes very similar values for each one of the axes, for both cases hole-doped and intrinsic SnSe, because the carrier concentrations tend to be closer in both cases.
+
+4 Summary
+Based on the approximate solution of the linearized BTE and using smooth Fourier interpolation of the KS eigenvalues and their corresponding velocities, we propose a methodology that incorporates models of anisotropic RTs for the main scattering mechanisms to calculate TE transport coefficients within the BoltzTraP code. The scattering mechanisms considered include the non-polar scattering by acoustic phonons (as described within the deformation potential theory), screened polar (based on the Frölich theory) and non-polar scattering (also within the deformation potential theory) by optical phonons and the scattering by ionized impurities with screening (within the Brooks-Herring approach). Such models for RTs include dependence on temperature, chemical potential and ab initio band velocities, consequently, the methodology is able to directly capture important contributions to TE properties from multiple band edges, degenerate band edges and non-parabolicity effects on the same footing.
+From the computational viewpoint, our implementation cannot be considered as fully ab initio, since two parameters have been determined semi-empirically by adjusting to experimental data. However, it is important to note that, from the empirical knowledge of the electrical conductivity and Seebeck coefficient measured at just one temperature, our implementation allows quantitative extension of the calculations of anisotropic transport properties to an entire range of temperatures, provided that the charge carrier concentration is kept almost constant in such a range. In the case that there is broad experimental knowledge of the material's transport properties in a wide range of temperatures, as in the present case for SnSe, our implementation allows direct grasping and understanding of the physical mechanisms underlying the experimental transport data, including the knowledge of the main scattering processes and their evolution with temperature and chemical potential.
+This methodology was applied to both intrinsic and hole-doped SnSe. For intrinsic SnSe, within the range of 300–550 K, in which the hole concentration is approximately constant, σ decreases with temperature as a direct consequence of the enhancement of the scattering processes with temperature. Above ∼550 K, the thermally activated process of defect formation sets in and, consequently, σ markedly increases with temperature, even though the scattering by charged vacancies becomes more relevant. However, the enhancement in the screening of the polar scattering by optical phonons largely compensates for the effect of scattering by ionized impurities. In the case of hole-doped SnSe, σ presents a metal-like behavior, with σ decreasing steadily as the temperature increases, up to high temperatures (∼800 K), highlighting the stronger influence of the scattering by ionized charged impurities.
+Furthermore, toward transport property optimization for TE applications, the methodology presented here can be extended to strained materials considering almost the same constants of unstrained systems. Particularly, this is a motivation for strained SnSe due to the sensitivity of its band-edge states to lattice strains.41 Most importantly, the calculations take approximately the same amount of computational cost as the calculation using CRTA, as developed in the public version of the BoltzTraP code. As the present formalism does not take into account phonon dispersion calculations explicitly, its computational cost is about 3 orders of magnitude lower than full ab initio methods treating electron–phonon coupling and related transport properties.25,77 We expect that our approach can be applied to a broad range of semiconducting materials and potentially investigate the enhancement of TE properties in next-generation TE materials that explore materials’ anisotropy with multiplicity, degeneracy and non-parabolicity of the band edges.
+Computer code availability
+All computer implementations of the methodology developed in this project were written in Fortran 90 and are available upon request.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+ASC and AA gratefully acknowledge support from the Brazilian agencies CNPq and FAPESP under Grants #2010/16970-0, #2013/08293-7, #2015/26434-2, #2016/23891-6, #2017/26105-4, and #2019/26088-8. JJM acknowledges funding by the Ministerio de Economía y Competitividad, Agencia Estatal de Investigación, and Fondo Europeo de Desarrollo Regional (FEDER) (Spain and European Union) through Grant No. PGC2018-094763-B-I00, and by Junta de Extremadura (Spain) through Grant No. IB16013 (partially funded by FEDER). The calculations were performed at CCJDR-IFGW-UNICAMP in Brazil.
+References
+L. E. Bell, Science, 2008, 321, 1457–1461 CrossRef CAS PubMed .
+H. S. Kim, W. Liu, G. Chen, C.-W. Chu and Z. Ren, Proc. Natl. Acad. Sci. U. S. A., 2015, 112, 8205–8210 CrossRef CAS PubMed .
+M. G. Kanatzidis, Chem. Mater., 2009, 22, 648–659 CrossRef .
+L.-D. Zhao, S. Hao, S.-H. Lo, C.-I. Wu, X. Zhou, Y. Lee, H. Li, K. Biswas, T. P. Hogan and C. Uher, 
+            et al.
+          , J. Am. Chem. Soc., 2013, 135, 7364–7370 CrossRef CAS PubMed .
+S. Johnsen, J. He, J. Androulakis, V. P. Dravid, I. Todorov, D. Y. Chung and M. G. Kanatzidis, J. Am. Chem. Soc., 2011, 133, 3460–3470 CrossRef CAS PubMed .
+W. Liu, X. Tan, K. Yin, H. Liu, X. Tang, J. Shi, Q. Zhang and C. Uher, Phys. Rev. Lett., 2012, 108, 166601 CrossRef PubMed .
+D. S. Parker, A. F. May and D. J. Singh, Phys. Rev. Appl., 2015, 3, 064003 CrossRef .
+X. Chen, D. Parker and D. J. Singh, Sci. Rep., 2013, 3, 3168 CrossRef PubMed .
+D. Rode and S. Knight, Phys. Rev. B: Solid State, 1971, 3, 2534 CrossRef .
+J.-H. Bahk, Z. Bian and A. Shakouri, Phys. Rev. B: Condens. Matter Mater. Phys., 2014, 89, 075204 CrossRef .
+P. Hohenberg and W. Kohn, Phys. Rev., 1964, 136, B864 CrossRef .
+W. Kohn and L. J. Sham, Phys. Rev., 1965, 140, A1133 CrossRef .
+L. Chaput, P. Pécheur, J. Tobola and H. Scherrer, Phys. Rev. B: Condens. Matter Mater. Phys., 2005, 72, 085126 CrossRef .
+D. Hamann and D. Vanderbilt, Phys. Rev. B: Condens. Matter Mater. Phys., 2009, 79, 045109 CrossRef .
+W. E. Pickett, H. Krakauer and P. B. Allen, Phys. Rev. B: Condens. Matter Mater. Phys., 1988, 38, 2721 CrossRef PubMed .
+K. Uehara and S. T. John, Phys. Rev. B: Condens. Matter Mater. Phys., 2000, 61, 1639 CrossRef CAS .
+D. Koelling and J. Wood, J. Comput. Phys., 1986, 67, 253–262 CrossRef CAS .
+G. K. Madsen and D. J. Singh, Comput. Phys. Commun., 2006, 175, 67–71 CrossRef CAS .
+D. J. Singh and M.-H. Du, Phys. Rev. Lett., 2008, 100, 237003 CrossRef CAS PubMed .
+G. Hautier, A. Miglio, G. Ceder, G.-M. Rignanese and X. Gonze, Nat. Commun., 2013, 4, 2292 CrossRef PubMed .
+A. F. May, D. J. Singh and G. J. Snyder, Phys. Rev. B: Condens. Matter Mater. Phys., 2009, 79, 153101 CrossRef .
+D. Parker, X. Chen and D. J. Singh, Phys. Rev. Lett., 2013, 110, 146601 CrossRef PubMed .
+J. He, M. Amsler, Y. Xia, S. S. Naghavi, V. I. Hegde, S. Hao, S. Goedecker, V. Ozolinš and C. Wolverton, Phys. Rev. Lett., 2016, 117, 046602 CrossRef PubMed .
+S. Poncé, W. Li, S. Reichardt and F. Giustino, Rep. Prog. Phys., 2020, 83, 036501 CrossRef PubMed .
+S. Poncé, E. R. Margine, C. Verdi and F. Giustino, Comput. Phys. Commun., 2016, 209, 116–133 CrossRef .
+O. Restrepo, K. Varga and S. Pantelides, Appl. Phys. Lett., 2009, 94, 212103 CrossRef .
+B. Qiu, Z. Tian, A. Vallabhaneni, B. Liao, J. M. Mendoza, O. D. Restrepo, X. Ruan and G. Chen, EPL, 2015, 109, 57006 CrossRef .
+S. Poncé, E. R. Margine and F. Giustino, Phys. Rev. B, 2018, 97, 121201 CrossRef .
+B. Himmetoglu, A. Janotti, H. Peelaers, A. Alkauskas and C. G. Van de Walle, Phys. Rev. B: Condens. Matter Mater. Phys., 2014, 90, 241204 CrossRef .
+J.-J. Zhou and M. Bernardi, Phys. Rev. B, 2016, 94, 201201 CrossRef .
+M. Rohlfing and S. G. Louie, Phys. Rev. B: Condens. Matter Mater. Phys., 2000, 62, 4927 CrossRef CAS .
+C. Pellegrini, A. Marinelli and S. Reiche, Rev. Mod. Phys., 2016, 88, 015006 CrossRef .
+C. Bostedt, S. Boutet, D. M. Fritz, Z. Huang, H. J. Lee, H. T. Lemke, A. Robert, W. F. Schlotter, J. J. Turner and G. J. Williams, Rev. Mod. Phys., 2016, 88, 015007 CrossRef .
+
+          R. M. Martin, Electronic structure: basic theory and practical methods, Cambridge University Press,  2004 Search PubMed .
+F. Caruso, M. Troppenz, S. Rigamonti and C. Draxl, Phys. Rev. B, 2019, 99, 081104 CrossRef CAS .
+S. Li, Z. Tong and H. Bao, J. Appl. Phys., 2019, 126, 025111 CrossRef .
+A. Faghaninia, J. W. Ager III and C. S. Lo, Phys. Rev. B: Condens. Matter Mater. Phys., 2015, 91, 235123 CrossRef .
+T. Deng, G. Wu, M. B. Sullivan, Z. M. Wong, K. Hippalgaonkar, J.-S. Wang and S.-W. Yang, npj Comput. Mater., 2020, 6, 1–11 CrossRef .
+L.-D. Zhao, S.-H. Lo, Y. Zhang, H. Sun, G. Tan, C. Uher, C. Wolverton, V. P. Dravid and M. G. Kanatzidis, Nature, 2014, 508, 373 CrossRef CAS PubMed .
+L.-D. Zhao, G. Tan, S. Hao, J. He, Y. Pei, H. Chi, H. Wang, S. Gong, H. Xu and V. P. Dravid, 
+            et al.
+          , Science, 2016, 351, 141–144 CrossRef CAS PubMed .
+Y. Wu, W. Xia, W. Gao, W. Ren and P. Zhang, Phys. Rev. Appl., 2017, 8, 034007 CrossRef .
+J. M. Skelton, L. A. Burton, S. C. Parker, A. Walsh, C.-E. Kim, A. Soon, J. Buckeridge, A. A. Sokol, C. R. A. Catlow and A. Togo, 
+            et al.
+          , Phys. Rev. Lett., 2016, 117, 075502 CrossRef PubMed .
+R. L. González-Romero, A. Antonelli and J. J. Meléndez, Phys. Chem. Chem. Phys., 2017, 19, 12804–12815 RSC .
+A. Dewandre, O. Hellman, S. Bhattacharya, A. H. Romero, G. K. Madsen and M. J. Verstraete, Phys. Rev. Lett., 2016, 117, 276601 CrossRef PubMed .
+
+          B. M. Askerov and S. Figarova, Thermodynamics, Gibbs Method and Statistical Physics of Electron Gases, Springer Science & Business Media,  2009, vol. 57 Search PubMed .
+S. Ahmad and S. Mahanti, Phys. Rev. B: Condens. Matter Mater.
+Phys., 2010, 81, 165203 CrossRef .
+Y. I. Ravich, B. Efimova and V. Tamarchenko, Phys. Status Solidi B, 1971, 43, 11–33 CrossRef CAS .
+
+          H. B. Callen, Thermodynamics and an Introduction to Thermostatistics, Wiley,  1985 Search PubMed .
+A. Franceschetti, S.-H. Wei and A. Zunger, Phys. Rev. B: Condens. Matter Mater. Phys., 1994, 50, 17797 CrossRef CAS PubMed .
+S.-H. Wei and A. Zunger, Phys. Rev. B: Condens. Matter Mater. Phys., 1999, 60, 5404 CrossRef CAS .
+
+          S. S. Li, Semiconductor physical electronics, Springer Science & Business Media,  2012 Search PubMed .
+K. Kutorasinski, B. Wiendlocha, S. Kaprzyk and J. Tobola, Phys. Rev. B: Condens. Matter Mater. Phys., 2015, 91, 205201 CrossRef .
+G. Shi and E. Kioupakis, J. Appl. Phys., 2015, 117, 065103 CrossRef .
+J. P. Perdew, K. Burke and M. Ernzerhof, Phys. Rev. Lett., 1996, 77, 3865 CrossRef CAS PubMed .
+G. Kresse and J. Hafner, Phys. Rev. B: Condens. Matter Mater. Phys., 1993, 48, 13115 CrossRef CAS PubMed .
+G. Kresse and J. Furthmüller, Phys. Rev. B: Condens. Matter Mater. Phys., 1996, 54, 11169 CrossRef CAS PubMed .
+G. Kresse and D. Joubert, Phys. Rev. B: Condens. Matter Mater. Phys., 1999, 59, 1758 CrossRef CAS .
+K. Adouby, C. Perez-Vicente, J. C. Jumas, R. Fourcade and A. Abba Touré, Z. Kristallogr., 1998, 213, 343–349 CAS .
+S. Grimme, J. Antony, S. Ehrlich and H. Krieg, J. Chem. Phys., 2010, 132, 154104 CrossRef PubMed .
+C.-L. Chen, H. Wang, Y.-Y. Chen, T. Day and G. J. Snyder, J. Mater. Chem. A, 2014, 2, 11171–11176 RSC .
+H. Leng, M. Zhou, J. Zhao, Y. Han and L. Li, J. Electron. Mater., 2016, 45, 527–534 CrossRef CAS .
+K. Peng, X. Lu, H. Zhan, S. Hui, X. Tang, G. Wang, J. Dai, C. Uher, G. Wang and X. Zhou, Energy Environ. Sci., 2016, 9, 454–460 RSC .
+Y. Huang, C. Wang, X. Chen, D. Zhou, J. Du, S. Wang and L. Ning, RSC Adv., 2017, 7, 27612–27618 RSC .
+K. Peng, X. Lu, H. Zhan, S. Hui, X. Tang, G. Wang, J. Dai, C. Uher, G. Wang and X. Zhou, Energy Environ. Sci., 2016, 9, 454–460 RSC .
+P.-C. Wei, S. Bhattacharya, J. He, S. Neeleshwar, R. Podila, Y. Chen and A. Rao, Nature, 2016, 539, E1–E2 CrossRef CAS PubMed .
+L.-D. Zhao, S.-H. Lo, Y. Zhang, H. Sun, G. Tan, C. Uher, C. Wolverton, V. P. Dravid and M. G. Kanatzidis, Nature, 2016, 539, E2–E3 CrossRef CAS PubMed .
+T. Chattopadhyay, J. Pannetier and H. Von Schnering, J. Phys. Chem. Solids, 1986, 47, 879–885 CrossRef CAS .
+R. Guo, X. Wang, Y. Kuang and B. Huang, Phys. Rev. B: Condens. Matter Mater. Phys., 2015, 92, 115202 CrossRef .
+
+          E. M. Conwell, High Field Transport in Semiconductors, Academic
+Press,  1967 Search PubMed .
+S. R. Popuri, M. Pollet, R. Decourt, M. Viciu and J.-W. G. Bos, Appl. Phys. Lett., 2017, 110, 253903 CrossRef .
+H. Chandrasekhar, R. Humphreys, U. Zwick and M. Cardona, Phys. Rev. B: Solid State, 1977, 15, 2177 CrossRef CAS .
+B. Xu, J. Zhang, G. Yu, S. Ma, Y. Wang and L. Yi, J. Electron. Mater., 2016, 45, 5232–5237 CrossRef CAS .
+W. Chen, J.-H. Pöhls, G. Hautier, D. Broberg, S. Bajaj, U. Aydemir, Z. M. Gibbs, H. Zhu, M. Asta and G. J. Snyder, 
+            et al.
+          , J. Mater. Chem. C, 2016, 4, 4414–4426 RSC .
+J. Ma, Y. Chen and W. Li, Phys. Rev. B, 2018, 97, 205207 CrossRef CAS .
+X. Wang, V. Askarpour, J. Maassen and M. Lundstrom, J. Appl. Phys., 2018, 123, 055104 CrossRef .
+A. Putatunda and D. J. Singh, Mater. Today Phys., 2019, 8, 49–55 CrossRef .
+A. S. Chaves, A. Antonelli, D. T. Larson and E. Kaxiras, Phys. Rev. B, 2020, 102, 125116 CrossRef CAS .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: 10.1039/d0cp05022aThis journal is © the Owner Societies 2021
+Table Content:
+	(1)
+	(2)
+	(3)
+	(4)
+	(5)
+	(6)
+	(7)
+	(8)
+	(9)
+	(10)
+	(11)
+	(12)
+	(13)
+	(14)
+	(15)
+	(16)
+	(17)
+	(18)
+	(19)
+	(20)
+	(21)
+	(22)
+	(23)
+	(24)
+(τtot)t−1(n,k,μt,T) = (τac)t−1(n,k,T) + (τnpol)t−1(n,k,T) + (τpol)t−1(n,k,μt,T) + (τimp)t−1(n,k,μt,T),	(25)
+	(26)
+	(27)
+	(28)
+
+ 	Fig. 1  Evolution of carrier (ncarr) and vacancy (Ni) concentrations with temperature (300–810 K) in intrinsic SnSe (top panel) and in hole-doped SnSe (bottom panel) for each crystallographic axis.	 
+
+ 	Fig. 2  Evolution of the chemical potential with temperature (300–810 K) for both intrinsic and hole-doped SnSe for each crystallographic axis.	 
+
+
+ζ
+0
+	47	50	56
+
+ζ
+∞
+	18	15	15
+
+v
+0 (m s−1)	3356	3267	3493
+
+ρ (kg m−3)	6180	6180	6180
+
+E
+1 (eV)	14.1	15.8	16.4
+
+β
+	0.000082	0.001702	0.000136
+Gap (eV)	0.86	0.86	0.86
+Lattice constant (Å)	11.564	4.542	4.166
+
+K
+pol
+	4.85	4.85	4.85
+	(29)
+
+ 	Fig. 3  Temperature and axial dependence of average RTs calculated for each scattering process in intrinsic SnSe, namely, non-polar scattering of acoustic phonons (τac), scattering by ionized impurities (τimp), non-polar scattering of optical phonons (τnpol) and polar scattering of optical phonons (τpol). The average total RTs (τtot) that are calculated from Matthiessen's rule are also shown as a function of temperature for each crystallographic axis.	 
+
+ 	Fig. 4  Temperature and axial dependence of average RTs calculated for each scattering process in hole-doped SnSe, namely, non-polar scattering of acoustic phonons (τac), scattering by ionized impurities (τimp), non-polar scattering of optical phonons (τnpol) and polar scattering of optical phonons (τpol). The average total RTs (τtot) that are calculated from Matthiessen's rule are also shown as a function of temperature for each crystallographic axis.	 
+
+ 	Fig. 5  SnSe anisotropic electronic conductivity, σ, as a function of temperature, for intrinsic SnSe (top panel) and for hole-doped SnSe (bottom panel). Our findings are plotted along with experimental results.39,40	 
+
+ 	Fig. 6  SnSe anisotropic Seebeck coefficient, S, as a function of temperature for intrinsic SnSe (top panel) and for hole-doped SnSe (bottom panel). Our findings are plotted along with experimental results.39,40	 
+
+ 	Fig. 7  SnSe anisotropic thermal conductivities due to the carrier transport, κelec,J and κelec,E, as functions of temperature for intrinsic SnSe (top panel) and for hole-doped SnSe (bottom panel). Our findings are plotted along with the available experimental results for κelec,J.39	 
+	(30)
+
+ 	Fig. 8  SnSe anisotropic Lorenz number, L, as a function of temperature for intrinsic SnSe and for hole-doped SnSe. The horizontal lines indicate the non-degenerate limit of semiconductors (1.5 × 10−8 V2 K−2) and the degenerate limit (2.44 × 10−8 V2 K−2) defined by the Wiedemann–Franz law.	 
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/d0cp05022a
+
+This journal is © the Owner Societies 2021

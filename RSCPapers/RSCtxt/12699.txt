@@ -1,0 +1,331 @@
+A multi-process model for the photocatalytic reduction of CO 2   - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/D2CP03798J View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2CP03798J
+(Paper)
+Phys. Chem. Chem. Phys., 2022, 24, 22231-22240A multi-process model for the photocatalytic reduction of CO2†
+
+        
+          
+            Chen 
+            Sun
+          
+        
+      , 
+      
+        
+          
+            Yimin 
+            Xuan
+          
+        
+      * and 
+
+        
+          
+            Kai 
+            Zhang
+          
+        
+      
+School of Energy and Power Engineering, Nanjing University of Aeronautics and Astronautics, Nanjing 210001, China. E-mail: ymxuan@nuaa.edu.cn
+Received 
+      17th August 2022
+    , Accepted 27th August 2022First published on 1st September 2022AbstractThe photocatalytic conversion of CO2 to fuel and valuable carbon compounds is a feasible method for the large-scale reuse of CO2. However, it involves complex multi-processes and physical phenomena, limiting the enhanced performance of photocatalysis. Consequently, building a comprehensive model is necessary. Herein, we present a multi-process computational framework for simulating the whole photocatalytic CO2 reduction process. In this work, the physical and chemical properties of the catalysts were determined by density functional theory (DFT). Specifically, we employed a framework consisting of an optical absorption and carrier transport model to simulate the conversion process from photons to carriers, a micro-kinetic model to describe the surface catalytic reaction process, and a continuum transport model to calculate the mass transfer process between the solution and surface. Using this multiscale model, we simulated and analyzed the photocatalytic processes of rGO-MoS2/PPy (MoS2 and polymer polypyrrole on reduced graphene oxide). The simulation clarified the key factors affecting the catalyst activity and selectivity. Moreover, the energy loss in different processes was also clarified, which showed that the model can be a theoretical analysis tool for analyzing and improving the photocatalytic performance of materials.
+Introduction
+Considering the large-scale use of fossil energy, it is necessary to find alternative energy sources for sustainable development. Accordingly, one of the options is the photocatalytic CO2 reduction reaction (CO2RR), which can both convert solar energy to chemical energy and adsorb CO2. In recent years, the CO2RR has attracted extensive attention worldwide. However, finding photocatalysts with superb performances still remains challenging. Usually, good photocatalytic materials should possess the merits of high light absorption in the visible spectrum, fast charge separation and transfer, high stability, low cost, and nontoxicity.1,2 Although the trial-and-error method has revealed several catalysts with good performances, such as TiO2 and MoS2, their overall energy conversion efficiency is not high. Specifically, the bottleneck is the lack of practical theoretical analysis tools for photocatalysis. Nowadays, the design of computer-based catalyst materials has played a vital role, which emphasizes the necessity of theoretical modelling in understanding material properties and reaction mechanisms.
+Most of the current calculations on the mechanism mainly focus on the properties of the catalyst, such as band structure, adsorption energy, and barriers of the surface elementary reactions. However, simulations limited to a single process or a single scale cannot help to increase the understanding of the overall performance of catalysts. In recent years, some researchers have explored multi-process methods. Hammer Schmidt et al. studied the photo-reduction of CO2 to formic acid on anatase TiO2 in a multiscale manner, which addresses the impact of these heterogeneities on the photocatalytic kinetics by combining kinetic Monte Carlo with electromagnetic wave simulations.3 Some studies, successfully coupling DFT with kinetic Monte Carlo (kMC) and micro kinetics have been reported in other catalytic fields. Jonathan et al. built a DFT-based micro-kinetic model, which combined DFT with kMC and studied the ethanol low-temperature steam reforming on the Pt catalyst.4 Schaefer et al. developed a method to couple kMC simulations of surface reactions on the molecular scale to transport equations at the macroscopic scale.5 Sergio Valencia et al. developed a new kinetic model for heterogeneous photocatalytic reactions as an alternative to the Langmuir–Hinshelwood (L–H) and the direct–indirect (D–I) models.6 To date, all the models lack one or more processes including light absorption, light excitation, carrier migration, surface catalytic reaction, and mass transportation. The computation of reaction selectivity is mostly based on the calculation of the Gibbs energy barrier of the surface elementary reaction. However, this calculation often ignores the competitive reactions, the limitation of coverage, and the different adsorbed molecules on the active sites. These calculations may produce unreasonable conclusions and mislead the research direction. Besides, there is a lack of unified analysis of multiple processes in the study of mechanisms, which may lead to the fact that a photocatalyst with good photocatalytic performances in a certain process is limited to a poor performance in other processes. This will also lead to the incorrect evaluation of global parameters such as temperature, even misleading further research. Therefore, it is desirable to develop a multi-process model that can simulate the performance of photocatalysis.
+Herein, we propose a multi-process and multi-scale photocatalytic model involving processes ranging from light absorption to mass transport. Most of the intrinsic properties of the catalysts were calculated by DFT, which reduces the dependence on experimental measurements and eliminates some possible problems in model parameterization. In the optical absorption and carrier transport model, the number of excited free carriers, Rg, was obtained by combining the calculated optical absorption spectrum with the incident spectrum. Further, the surface carrier concentration, ce/h, was obtained using a drift-diffuse model. Also, the micro-kinetic model was built to describe the kinetic process of the surface chemical reactions. The reaction, rj, and coverage of species, θi, were obtained using the micro-kinetic model. Also, the rates of the reactant consumption and product formation calculated from the micro-kinetic model were used as boundary conditions for a continuum model, simulating the transport of the species through the aqueous solution, and to determine the concentration of species present at the catalytic surfaces. The final step was to establish the unified physical model using the above-mentioned parameters, and then the quasi-steady state process was solved by an iterative method. To verify the correctness of the model, the experimental data of pure MoS2 and rGO-MoS2/PPy7 (MoS2 and N-containing conducting polymer polypyrrole on reduced graphene oxide) in the liquid–solid system were fitted to the model for computation. We demonstrated that by using this multi-process model, it is feasible to predict the production and selectivity of photocatalytic reactions, which are in agreement with experimental results.6 Also, we analysed the material transfer of the photocatalytic processes using this model to identify in which processes the energy loss mainly occurs.
+Models and computational details
+Photocatalytic process and model framework
+A typical process of photocatalytic reduction using a flat 2D catalyst in aqueous solution is illustrated in Fig. 1. It involves the following processes: (1) light absorption and excitation, (2) carrier transport and recombination, (3) surface reaction, and (4) mass exchange between solution and surface. In the first step, the photons with energy greater than the bandgap are captured by the catalyst. Also, the corresponding number of electrons is excited from the valence band to the conduction band. In the next step, electrons and holes are transported to the reduction site and oxidation site, respectively, and some of them combine. Subsequently, the electrons and holes arriving at the active site drive the redox reaction on the surface. Finally, the catalytic reaction on the surface leads to the mass exchange between the surface and the solvent.
+ Fig. 1  Schematic diagram of the multiscale photocatalytic model. (a) Schematic illustration of photocatalytic processes at the liquid–solid interface and (b) schematic illustration of optical absorption and carrier transport in catalyst. (c) DFT calculations provide the properties of catalysts, which are needed in other modules. (d) Continuum transport model explicit ionization equilibrium and the migration of species in solution. (e) Micro-kinetic model shows the mechanism of photocatalysis and the adsorption equilibrium over the surface, which is coupled with the optical absorption and carrier transport model and continuum transport model. 
+In this work, the model contained all processes and consisted of four parts, as follows: DFT calculations, optical absorption and carrier transport model, micro-kinetic model, and continuum transport model, as shown in Fig. 1. To establish the model, we made the following assumptions: (a) the catalyst of each component is evenly distributed; (b) the light shines vertically on the catalyst surface without considering the diffuse reflection; (c) temperature distribution is uniform; and (d) the reaction is in the steady-state. Accordingly, a more accurate simulation of each process can be realized.
+Fundamental properties
+It is well known that the performance of photocatalysis largely depends on the fundamental properties of the catalyst such as the energy band structure, dielectric constant, carrier mobility, and energy barrier of surface elementary reaction. In this work, most of these properties were determined by DFT calculations.
+To obtained the accurate bandgap of the catalysts, we used the Heyd–Scuseria–Ernzerhof (HSE) hybrid functional in the calculations of the band structure. For m-MoS2 and rGO, the strong excitonic effects should be considered, resulting from the poor screening of electrons and holes. To obtain the macroscopic dielectric tensor including an accurate description of the electron–electron and electron–hole interactions, we employed the GW approximation8 and the Bethe–Salpeter equation (BSE)9 in this work. All DFT calculations were carried out using the Vienna ab initio simulation package (VASP, version 5.6.4)10,11 and the details are presented in the ESI.†
+The mobility of carriers was obtained by the deformation potential theory12 and given as follows: (1)where m* is the effective mass in the transmission direction, T is the temperature, kB is the Boltzmann constant, E1 is the deformation potential constant of the hole at the top of the valence band (VBM) or the electron gathered at the bottom of the conduction band (CBM) along the transmission direction, and md is the average effective mass of carriers, which is defined by the following formula: (2)
+Single-layer MoS2 was used in the models because the bandgap of the rGO-MoS2 sample is close to single-layer results due to the quantum confinement in nanosheets.13 Herein, monolayer MoS2 (m-MoS2) of the 2H-phase was constructed with a 15 Å-thick vacuum slab, as shown in Fig. 2a. We set the Brillouin zone integration on a Γ-centered 12 × 12 × 1 K mesh in the geometry optimization. The lattice constants of the relaxed models are 3.18 Å × 3.18 Å × 17.88 Å, which are in reasonable agreement with the experimental data of 3.16 Å × 3.16 Å × c.14 There are two style edges of the m-MoS2 nanobelt, i.e., the armchair edge and the more stable zigzag edge. Also, we only considered the Mo-terminated edge structure due to the smaller energy barrier of the H2O hydrolysis at the Mo-terminated edge.15 The structure of PPy is an S-shaped chain, as shown in Fig. 2b. The structure of PPy with CN is wavy, as shown in Fig. 2c. Due to the difficulties to get an explicit structure of rGO,16 the measured values of rGO (including light absorption and carrier transport properties) were used in our calculations.
+ Fig. 2  Structure of catalysts. (a) Schematic drawing of m-MoS2. The yellow atoms are S and the purple atoms are Mo. (b) Schematic drawing of the PPy structures used in this work. The brown, light blue and white spheres represent C atoms, N atoms, and H atoms, respectively. (c) Schematic drawing of PPy with CN defect. 
+Optical absorption and carrier transport model
+The data of the incident spectrum was AM 1.5G fitted to the ASTM G173-03 Global tilt. Also, the absorption spectrum of the catalysts was obtained using the calculated dielectric tensor. In this model, we assumed that all the photons with an energy greater than Eg can excite 100% electrons from the valence band to the conduction band. Thus, the generation rate of electron–hole pairs can be calculated as follows: (3)where I(ω) is the light intensity at the frequency of (ω), [ω0,ω1] is the frequency range of material light excitation, and A(ω) is the light absorbance, which is given by: A(ω) = 1 − e−αΔz(4)where α is the absorption coefficient and Δz is the thickness.
+For the materials with a small thickness, eqn (4) can be changed to:17 (5)where c is the speed of light and ε2 is the imaginary part of the dielectric tensor. Eqn (5) can be seen as a Taylor expansion for Δz → 0 of eqn (4) with  (refractive index n = 1 because of the vacuum in simulation cells).
+The carrier transport model was built with the drift-diffusion equation, as follows: (6) (7)where n is the density of electrons, p is the density of holes, q is the elementary charge, Dn(orp),th is the thermal diffusion coefficient, and Dn(or p) is the diffusion coefficient.
+Micro-kinetic model
+The micro-kinetic model was built using chemical engineering theory.18–20 In this model, the Langmuir–Hinshelwood mechanism (L–H mechanism)21 was used to explain the surface catalytic mechanism. Also, the adsorption–desorption equilibrium of the reactants and products was considered, as shown in detail in the ESI.†
+In this model, we mainly considered the following photocatalytic products: H2, CO, HCOOH, CH3OH, and CH4. According to the corresponding ref. 22–24, the reaction paths of photocatalysis on the surfaces of m-MoS2 and PPy adopted herein are shown in Fig. 3. In this model, the reaction parameters were calculated based on the chemical properties of the m-MoS2 edge because the reactive active site of m-MoS2 is the Mo atoms exposed at the edge. Also, PPy is regarded as an active site evenly distributed on the m-MoS2/rGO nanosheets.
+ Fig. 3  CO2RR and HER reaction paths computed for m-MoS2 and PPy. The red species are the final products and the x-axis represents the number of electrons transferred. 
+The first step is the dissociation of H2O because the primary source of hydrogen is H2O.22 Also, we also considered the dissociation of H2O at the active sites (eqn (8) and (9)) and the ionization equilibrium of H2O in solution (eqn (10)). (8) (9) (10)k+w = 2.4 × 10−5 mol L−1 s−1, KW = 1 × 10−14 mol2 L−2where k is the rate constant and K is the reaction equilibrium constant.
+In this model, two main reduction reactions, the HER and CO2RR, were considered, as shown in eqn (11)–(15). 2H2O → H2↑ + O2↑(11) CO2 + 2H+ + 2e− → CO + H2O(12) CO2 + 2H+ + 2e− → HCOOH(13) CO2 + 6H+ + 6e− → CH3OH + H2O(14) CO2 + 8H+ + 8e− → CH4 + 2H2O(15)
+The basic formulas used in this model are listed below. The reaction rates of the elementary steps were obtained by solving the micro-kinetic equations based on mean-field approximation and steady-state approximation.25 The rates have the expression (16) (17)where rj is the rates of each elementary reaction,  is the surface concentrations of species i, and vji is the stoichiometry for elementary step j. The rates constant of each elementary step, kj, is as follows: (18)where kB is the Boltzmann constant, −ΔGTS is the energy barrier of the elementary steps, h is the Planck constant, and T is the temperature of the reactions in Kelvin.
+Herein, we assumed that the total coverage of the intermediate body remains unchanged, that is, the steady-state approximation such that: (19)
+To solve the micro-kinetic equations, we must set the coverage constraint as:26 (20)
+The reaction rate, rj, and surface concentration, θi, can be obtained by solving eqn (17)–(20). Further, the turnover frequency of the total reaction can be calculated by rj. To solve eqn (17)–(20), we need an accurate initial guess of θi, which can be obtained using the Gibbs distribution, as follows: (21)where Gi is the Gibbs energy of formation for molecule i.
+The m-MoS2 and rGO catalysts provide the main reaction active sites according to the calculations and experiments. We mainly considered the following products in the calculation: H2, CO, HCOOH, CH3OH, and CH4. The overall reaction path is shown in Fig. 3. To simplify the solution process and improve the calculation efficiency, only the main reaction paths of each product were considered according to ref. 27.
+ Fig. 4  Architecture and algorithm of the multiscale simulation model for photocatalysis. 
+Continuum transport model
+In addition to the electrons supplied by the catalyst, the photocatalysis also needs the participation of CO2, H2O, and H+. Therefore, the mass transfer in aqueous solution and the material exchange between solution and catalyst surface were considered in this model. As shown in the schematic in Fig. 1(d), we established a 2-dimensional continuum transport model with a size of 5–16 μm to simulate the mass transfer process above the catalyst surface. We assumed that CO2 flows steadily from the left side with pure CO2 gas (1 bar, 5 mL min−1) flow and the dissolution of gas products was not considered. In the continuum transport model, we considered the dissolution equilibrium of CO2 and the ionization equilibrium of CO2 and H2O. Thus, the transport of ionic species and molecules, such as HCO3−, CO32−, H+, CO2, and CO, was considered in this model. Given that the concentration of the species in the aqueous solution is <1 mol%, the diffusion, migration, and surface reactions of this species were modeled using the dilute solution theory in the Nernst–Planck equations, as follows: (22)where ci is the concentration of species i, Di is the diffusion coefficient, Ni is the molar flux and ri is its molar reaction source rate. More details of the continuum transport model are given in the ESI.†
+Multi-process simulation
+To realize the simulation of the whole photocatalytic process, we integrated these models and solved them iteratively to obtain the performance of the photocatalyst, as shown in Fig. 4. The optical absorption spectrum, carrier mobility, band structure, binding energy of the surface adsorbates, and reaction barrier were calculated in the Vienna ab initio simulation package (VASP, version 5.6.4).10,11 The micro-kinetic simulations were performed in CatMap28 to obtain the reaction rates and coverage of intermediates. The multi-process simulations were performed in COMSOL®, where the optical absorption and carrier transport model and the continuum transport model were solved using the parameters obtained from VASP and CatMap. We use Matlab to control the iterative calculations, which achieved convergence when the difference of all the reaction rates was less than 1%.
+To verify the reliability of the model, we used the model to simulate the experiments by Neeraj Kumar et al.7 All calculations were carried out under the standard conditions (300 K, 1 atm, pH = 7, AM 1.5G), which were consistent with the experimental conditions. In their work, the rGO-MoS2/PPy nano-composites improved the photocatalytic reduction of CO2 into CH4, CO, and H2 compared with pure MoS2 nanosheets. The photocatalytic experiments were carried out in an NaHCO3 (0.5 M, pH = 7) aqueous solution (20 mL) at room temperature (300 K) with pure CO2 gas (1 bar, 5 mL min−1) flow, and the light intensity in the sample surface was 1 sun (100 mW cm−2). The spectrum of the Xe lamp was fitted well with the ASTM G173-03 Global tilt in the wavelength range of 300–600 nm, and thus the ASTM spectral data was used. The mole ratios of the m-MoS2 and PPy catalysts were 1:21.2, 1:10.6, and 1:5.3 in rGO-MoS2/PPy-600, rGO-MoS2/PPy-300, and rGO-MoS2/PPy-150, respectively. Also, the proportion of active sites was 1:1.16, 1.95:1, and 2.33:1, and the details of the calculation can be seen in SI and S2. In the simulations, we controlled the proportion of active sites on MoS2, PPy, and Cd-PPy close to the real value.
+Results and discussion
+Light absorption and carrier transport
+The accurate computations of the optical absorption of m-MoS2, PPy, and graphene were performed using the GW and Bethe–Salpeter equation (BSE). Fig. 5 compares the absorbance of m-MoS2 (calculated and experimental29 value), graphene, and PPy. The quantitative agreement observed between the computed and experimental absorbance confirms the accuracy of the computing method. We predicted that m-MoS2 has a higher absorbance (10–15%) than PPy and graphene in the visible region. This is consistent with the experimental result that the light absorption capacity of PPy in the visible range is poor because of its large bandgap (2.41 eV). This means that excessive PPy and rGO may hinder the light absorption of the catalyst in the spectral range of 1.8–2.4 eV.30
+ Fig. 5  The computed and experimental absorbance of m-MoS2, the computed absorbance of graphene, and the incident AM 1.5G solar flux. 
+A comparison of the carrier mobility of m-MoS2, PPy, and rGO is shown in Table 1. Graphene has very high carrier mobility, but the carrier migration capacity of rGO is limited due to the presence of disorders or defective sites.16 The carrier mobility of rGO could not be determined without a clear structure, and thus we employed the average value (798 cm2 V−1 s−1 and 475 cm2 V−1 s−1) as the calculation quantity. It can be seen that rGO and m-MoS2 have strong carrier migration abilities. Therefore, the carrier migration and distribution of these two materials were mainly considered in the simulated calculation.
+Table 1 Bandgap and carrier mobility (μ, cm2 V−1 s−1) in m-MoS2, PPy, rGO, and graphene31 at 300 K
+
+
+
+
+
+
+m-MoS2
+PPy
+rGO
+Graphene
+
+
+
+
+
+E
+g (eV)
+1.89
+2.41
+1.3–1.8
+0
+
+
+
+μ
+e (cm2 V−1 s−1)
+205
+5.6
+0.59–1596
+∼1 × 104
+
+
+
+μ
+h (cm2 V−1 s−1)
+135
+3.4
+0.23–950
+4–8 × 105
+
+
+
+
+Micro-kinetics on surface
+The Gibbs energy of different elementary reactions on m-MoS2 and PPy are shown in Fig. 6. The reaction energy barriers of the rate-limiting steps for the H2, CO, COOH, CH3OH, and CH4 products on m-MoS2 are 0.63 eV, 1.66 eV, 1.00 eV, and 1.18 eV, respectively. However, the barriers were not smaller for all the products on PPy. It is difficult to explain the high selectivity of CH3OH and CH4 for rGO-MoS2/PPy. Another possibility is that the CN defects in PPy play a special role in the reactions. The structures of the CN defect PPy (Cd-PPy) are shown in Fig. S1 (ESI†).
+ Fig. 6  CO2RR and HER Gibbs energy diagram computed for PPy and m-MoS2. 
+The Gibbs energy for the reactions on Cd-PPy is shown in Fig. 7, and the adsorption energy is shown in Table S1 (ESI†). It can be seen that the presence of the CN defect significantly enhanced the adsorption of CO2 and reduced the reaction energy barriers of CH3OH and CH4. According to the Bader charge analysis, the N atom at the active site of PPy containing the CN defect is unsaturated, carries more negative charge (−1.057 charge) compared to the N atom in PPy (−0.8522), and is easier to bind with the C atom carrying a positive charge in CO2. Therefore, it can be considered that the CN defect is one of the important factors enabling PPy to improve the yield and selectivity for CH4.
+ Fig. 7  CO2RR and HER Gibbs energy diagram computed for PPy and Cd-PPy. 
+In addition to the influence of the reaction energy barrier on the reaction rate and selectivity, another important factor is the competitive adsorption of intermediates on the active sites. The coverage on the m-MoS2 surface is shown in Fig. 8. The *H and *CO intermediates occupy large fractions of the active sites, resulting in the final products being mainly H2 and CO. This limits the oxidation reaction rate. and thus the coverage ratio of *O is low. Accordingly, the number of active sites occupied by *O on the surface of rGO-MoS2/PPy is much larger (13%), which also explains why rGO-MoS2/PPy has higher reactivity than m-MoS2. The adsorption area ratio of CO2 is about 1:2 for m-MoS2 and PPy in the rGO-MoS2/PPy-150 nanocomposites according to the measured value of CO2 adsorption in ref. 6. Therefore, the new adsorption sites for *OCHO, *COOH, and *O mainly come from the contribution of PPy.
+ Fig. 8  Coverage ratio of key intermediates includes *H, *COOH, *CO, *O, *CHO, and *COH. (a) m-MoS2 surface. (b) rGO-MoS2/PPy surface. 
+Another possibility is that the interfacial interaction between MoS2 and PPy (Cd-PPy) results in the electron transfer, which will contribute to the selectivity. This is because the enrichment of electrons in the active sites is beneficial for the production of multi-electron products.
+CO2 supply for photocatalytic reaction
+The concentration distribution of CO2 (aq) is stable at 0.032 mol m−3 along the vertical direction of the surface, as shown in Fig. 9(a). This is largely due to the reaction rate of CO2 on the surface being very small, only 5.57 × 10−10 mol m−2. As can be seen in Fig. 9(b), when the reaction rate is larger than 1 × 10−6 mol m−2, the concentration of CO2 and photocatalytic activity will show a significant negative correlation. Obviously, the supply of CO2 under standard conditions is not the main factor limiting the surface chemical reaction.
+ Fig. 9  Supply of CO2 (aq) to photocatalytic reaction on rGO-MoS2/PPy catalyst surface. (a) Concentration distribution and flow direction of CO2 (aq) and (b) dependence of surface CO2 concentration and photocatalytic quantum yield. 
+Formation rate and selectivity
+The calculated and experimental values for the CO2RR and HER reactions of these catalysts were compared in Fig. 10. It is obvious that m-MoS2 has low photocatalysis activity, and its main products are H2 and CO. In contrast, the photocatalytic active sites provided by PPy can significantly improve the yield of CH4 and CH3OH. The results of the simulation show that MoS2 can produce a small amount of C product, which was not measured in the experiment. We considered that the main reason for this is that yield of C products is too small. In general, the calculated values are in good agreement with the experimental values for these catalysts.
+ Fig. 10  Comparison of the computed and experimental photocatalytic conversion activity of MoS2, rGO-MoS2, rGO-MoS2/PPy, and rGO-dMoS2/PPy. 
+In order to further improve the catalytic performance, MoS2 was doped with different elements. The structure of m-MoS2 doped with a metal atom (dMoS2) is shown in Fig. S2 (ESI†). Our target products are high value-added products of CH4 and CH3OH and reduced HER competitive reaction as much as possible. To improve the reaction rate, it is very important for the stability of the *COOH, *CHO, and *COH intermediates. The adsorption of CO2 is the primary condition of the reaction, and the adsorption capacity of CO2 should be strong enough to activate the O–C–O bond. As indicated in the previous studies, the CO2RR steps on MoS2 are shown in Fig. 6. To improve the selectivity of the CO2RR, X. Mao et al.23 compared the adsorption energies of CO2, CO, and COOH with different dopants, and thus we selected Fe, Re, Mn, W, Cr, and Tc for further calculation. Through calculation, the binding energies of CHO and COH were further compared, as shown in Fig. 11. In general, the binding energies of the CO2 reduction intermediates determine the limiting potential and the reaction rate and a linear scaling relationship among the binding energies has been revealed.32 Thus, the larger binding energy of *CHO is conducive to the production of CH4 and CH3OH. By comparison, Mn shows better properties.
+ Fig. 11  Binding energies of *COH and *CHO on the surface of m-MoS2 doped with different metal atoms. 
+The improvement in the *CHO and *COH adsorption capacity is mainly due to the contribution of the d orbital of Mo, which is affected by Mn, as shown in Fig. S3 (ESI†). To verify the effect of doping, the photocatalytic process of rGO-dMoS2/PPy was simulated using the multi-process model, as shown in Fig. 10. The output of CH4 improved from 1.42 μmol g−1 h−1 to 1.66 μmol g−1 h−1. However, the total photocatalytic activity of 32.14 μmol e− g−1 h−1 was reduced to 30.4 μmol e− g−1 h−1. The main reason for this problem is that the impurity level caused by Mn doping increased the probability of electron–hole pair recombination,33 as shown in Fig. S4 (ESI†).
+Energy loss in the photocatalytic reaction
+We analysed the energy flow of different processes in the m-MoS2 and rGO-dMoS2/PPy photocatalytic reactions, as shown in Tables 2 and 3. For m-MoS2, the main energy loss occurs in the process of light absorption and carrier transport. The former is mainly due to the size factor of m-MoS2, whereas the latter is mainly due to poor conductivity and lack of a built-in electric field to guide the orderly movement of charges. Herein, by constructing a heterojunction and introducing PPy as the active site of the CO2RR, the energy conversion efficiency in the carrier transport and surface reaction improved. The decrease in the light absorption rate is mainly due to the poor light absorption capacity and large bandgap (2.41 eV) of PPy, which hinder some light absorption.
+Table 2 Energy loss in photocatalytic process on m-MoS2 catalyst
+
+
+
+
+
+
+Light absorption
+Excitation
+Carrier transport
+Surface reaction
+
+
+
+
+Energy input (W)
+100
+3.81
+3.20
+0.029
+
+
+Energy output (W)
+3.81
+3.20
+0.029
+1.98 × 10−3
+
+
+Energy efficiency (100%)
+3.81%
+84.8%
+0.91%
+6.9%
+
+
+
+
+Table 3 Energy loss in photocatalytic process on rGO-dMoS2/PPy catalyst
+
+
+
+
+
+
+Light absorption
+Excitation
+Carrier transport
+Surface reaction
+
+
+
+
+Energy input (W)
+100
+2.76
+2.23
+0.18
+
+
+Energy output (W)
+2.76
+2.23
+0.18
+0.017
+
+
+Energy efficiency (100%)
+2.76%
+80.8%
+7.9%
+9.7%
+
+
+
+
+The light absorption of the actual material may be larger than the calculated value because the model used in the calculation is relatively thin (<2 nm). However, the light absorption in the bulk phase is difficult to transport the excited carriers to the active site. Thus, this method is still reasonable. The low carrier transport efficiency is partly due to the limitation of the surface chemical reaction rate. As shown in Fig. 12, the electrons at the surface active site are in excess, which recombine with the holes. In the calculation involved in this work, the supply of CO2 and H2O in the surface diffusion model is also excessive, and thus increasing the surface reaction rate is the key to improving the photocatalytic efficiency.
+ Fig. 12  Dependence of electron density on active sites for the surface reaction rate. 
+Model limitations
+Considering the difficulty and amount of calculation, the influence of complex morphology and catalyst structure was not considered in the model computation. This can affect the yield and even selectivity. The model computed the photocatalytic reaction process in the steady-state, and thus cannot explain how the processes of different time scales are coupled with each other. This may lead to great errors in the computation and simulation of the moving process of carriers in heterojunction and surfaces. Compared to the actual reaction, we dismissed a large number of competitive adsorptions and interactions of functional groups with the molecules adsorbed on the surface.
+Conclusions
+In summary, we built a multi-process model to simulate the photocatalytic process in the steady-state considering the light absorption, carrier transport, chemical reaction, and mass exchange on the catalyst surface. The effects of light absorption, Gibbs energy barrier, coverage of intermediates, carrier mobility, and supply of CO2 on the efficiency and selectivity were discussed. To improve the efficiency, we analysed the energy flow in different processes of photocatalytic reactions. In the photocatalytic reactions of the m-MoS2 catalyst, the energy loss of light absorption and carrier transport reached 96.2% and 99.1%, respectively. By constructing heterojunctions and introducing active sites of Cd-PPy, the efficiency of carrier transport improved to 7.9%, and the conversion efficiency of the surface reaction increased (from 6.9% to 9.7%). The calculated yield of the H2, CO, and CH4 products was 4.48 μmol g−1 h−1, 3.36 μmol g−1 h−1, and 1.42 μmol g−1 h−1, which is consistent with the experimental results. We further analysed the main influencing factors of the selectivity correlation, and the results showed that the adsorption energy of the *COH and *CHO intermediate products is negatively correlated with the selectivity of the product, and the high selectivity of H2 is partly attributed to the occupation of *H on most active sites. Also, we found that in addition to the construction of a heterojunction, the key to improving the selectivity of the CH4 product is the presence of CN defects in PPy. Cd-PPy has a lower reaction energy barrier and higher intermediate coverage on its active sites than PPy without defects. To verify the dependence of the product selectivity on the adsorption energy of the key intermediates *CHO and *COH, we also tried doping different metal atoms in m-MoS2 to improve the selectivity of rGO-dMoS2/PPy for CH4 and CH3OH. Also, we proved that Mn-doped MoS2 can effectively improve the selectivity for CH4 by calculations. In addition, we also pointed out that the surface chemical reaction rate limits the carrier migration for m-MoS2. In general, we established a feasible simulation model for the photocatalytic process in the solid-liquid phase, which can help analyse and improve the performance of photocatalytic systems.
+Conflicts of interest
+There are no competing financial interests to be declared.
+Acknowledgements
+This work was financially supported by the Basic Science Center Program for Ordered Energy Conversion of the National Natural Science Foundation of China (No. 51888103).
+Notes and references
+S. Neatu, J. A. Macia-Agullo and H. Garcia, Int. J. Mol. Sci., 2014, 15, 5246–5262 CrossRef PubMed .
+A. K. Singh, K. Mathew, H. L. Zhuang and R. G. Hennig, J. Phys. Chem. Lett., 2015, 6, 1087–1098 CrossRef CAS .
+M. Hammerschmidt, S. Döpking, S. Burger and S. Matera, J. Phys. Chem. C, 2020, 124, 3177–3187 CrossRef CAS .
+J. E. Sutton, P. Panagiotopouou, X. E. Veryldos and D. G. Vlachos, J. Phys. Chem. C, 2013, 117, 4691–4706 CrossRef CAS .
+C. Schaefer and A. P. Jansen, J. Chem. Phys., 2013, 138, 054102 CrossRef CAS .
+S. Valencia, F. Cataño, L. Rios, G. Restrepo and J. Marín, Appl. Catal., B, 2011, 104, 300–304 CrossRef CAS .
+N. Kumar, S. Kumar, R. Gusain, N. Manyala, S. Eslava and S. S. Ray, ACS Appl. Energy Mater., 2020, 3, 9897–9909 CrossRef CAS .
+M. S. Hybertsen and S. G. Louie, Phys. Rev. B: Condens. Matter Mater. Phys., 1986, 34, 5390–5413 CrossRef CAS .
+G. Onida, L. Reining and A. Rubio, Rev. Mod. Phys., 2002, 74, 601–659 CrossRef CAS .
+G. Kresse and D. Joubert, Phys. Rev. B: Condens. Matter Mater. Phys., 1999, 59, 1758–1775 CrossRef CAS .
+P. E. Blochl, Phys. Rev. B: Condens. Matter Mater. Phys., 1994, 50, 17953–17979 CrossRef PubMed .
+J. Bardeen and W. Shockley, Phys. Rev., 1950, 80, 72–80 CrossRef CAS .
+Q. H. Wang, K. Kalantar-Zadeh, A. Kis, J. N. Coleman and M. S. Strano, Nat. Nanotechnol., 2012, 7, 699–712 CrossRef CAS PubMed .
+Y. L. Xie, X. Li, Y. Wang, B. W. Li, L. Yang, N. Zhao, M. F. Liu, X. Z. Wang, Y. Yu and J. M. Liu, Appl. Surf. Sci., 2020, 499, 143964 CrossRef CAS .
+K. K. Ghuman, S. Yadav and C. V. Singh, J. Phys. Chem. C, 2015, 119, 6518–6529 CrossRef CAS .
+A. Haque, M. A.-A. Mamun, M. F. N. Taufique, P. Karnati and K. Ghosh, IEEE Trans. Semicond. Manuf., 2018, 31, 535–544 Search PubMed .
+L. Yang, J. Deslippe, C. H. Park, M. L. Cohen and S. G. J. P. R. L. Louie, Phys. Rev. Lett., 2009, 103, 186802 CrossRef .
+
+          M. E. Davis and R. J. J. M. H. H. E. Davis, Fundamentals of chemical reaction engineering, McGraw-hill, New York,  2003, ch. 7 Search PubMed .
+M. Neurock, AIChE J., 1994, 40, 1085–1087 CrossRef .
+
+          D. Chatterjee, V. Schmeier, M. Frey and M. Weibel, Modeling and Simulation of Heterogeneous Catalytic Reactions: From the Molecular Process to the Technical System, Modeling and Simulation of Heterogeneous Catalytic Reactions,  2011 Search PubMed .
+
+          W. M. Irvine, in Encyclopedia of Astrobiology, ed. M. Gargaud, R. Amils, J. C. Quintanilla, H. J. Cleaves, W. M. Irvine, D. L. Pinti and M. Viso, Springer Berlin Heidelberg, Berlin, Heidelberg,  2011, ch. 863, pp. 905–905 DOI:10.1007/978-3-642-11274-4_863 .
+X. Hong, K. R. Chan, C. Tsai and J. K. Norskov, ACS Catal., 2016, 6, 4428–4437 CrossRef CAS .
+X. N. Mao, L. Wang, Y. F. Xu and Y. Y. Li, J. Phys. Chem. C, 2020, 124, 10523–10529 CrossRef CAS .
+Y. Xie, X. Li, Y. Wang, B. Li, L. Yang, N. Zhao, M. Liu, X. Wang, Y. Yu and J. M. Liu, Appl. Surf. Sci., 2020, 499, 143964 CrossRef CAS .
+
+          L. Kunz, L. Maier, S. Tischer and O. Deutschmann, Modeling and Simulation of Heterogeneous Catalytic Reactions: From the Molecular Process to the Technical System, Modeling and Simulation of Heterogeneous Catalytic Reactions,  2011 Search PubMed .
+A. J. Medford, A. C. Lausche, F. Abild-Pedersen, B. Temel, N. C. Schjødt, J. K. Nørskov and F. Studt, Top. Catal., 2014, 57, 135–142 CrossRef CAS .
+S. Singh, A. Modak, K. K. Pant, A. Sinhamahapatra and P. Biswas, ACS Appl. Nano Mater., 2021, 4, 8644–8667 CrossRef CAS .
+A. J. Medford, C. Shi, M. J. Hoffmann, A. C. Lausche, S. R. Fitzgibbon, T. Bligaard and J. K. J. C. L. Nrskov, Catal. Lett., 2015, 145, 794–807 CrossRef CAS .
+K. F. Mak, C. Lee, J. Hone, J. Shan and T. F. Heinz, Phys. Rev. Lett., 2010, 105, 136805 CrossRef PubMed .
+L. Gong, C. Cai, H. Liang, Y. Huang, Y. Zhang, T. Jia, B. Tu, W. Liu and T. Liu, Diamond Relat. Mater., 2022, 122, 108822,  DOI:10.1016/j.diamond.2022.108822 .
+J. Deb, N. Seriani and U. Sarkar, Phys. E, 2021, 127, 114507 CrossRef CAS .
+A. A. Peterson, F. Abild-Pedersen, F. Studt, J. Rossmeisl and J. K. Nørskov, Energy Environ. Sci., 2010, 3, 1311–1315 RSC .
+K. A. Duerloo, Y. Li and E. J. Reed, Nat. Commun., 2014, 5, 4214 CrossRef CAS PubMed .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2cp03798jThis journal is © the Owner Societies 2022
+Table Content:
+
+ 	Fig. 1  Schematic diagram of the multiscale photocatalytic model. (a) Schematic illustration of photocatalytic processes at the liquid–solid interface and (b) schematic illustration of optical absorption and carrier transport in catalyst. (c) DFT calculations provide the properties of catalysts, which are needed in other modules. (d) Continuum transport model explicit ionization equilibrium and the migration of species in solution. (e) Micro-kinetic model shows the mechanism of photocatalysis and the adsorption equilibrium over the surface, which is coupled with the optical absorption and carrier transport model and continuum transport model.	 
+	(1)
+	(2)
+
+ 	Fig. 2  Structure of catalysts. (a) Schematic drawing of m-MoS2. The yellow atoms are S and the purple atoms are Mo. (b) Schematic drawing of the PPy structures used in this work. The brown, light blue and white spheres represent C atoms, N atoms, and H atoms, respectively. (c) Schematic drawing of PPy with CN defect.	 
+	(3)
+A(ω) = 1 − e−αΔz	(4)
+	(5)
+	(6)
+	(7)
+
+ 	Fig. 3  CO2RR and HER reaction paths computed for m-MoS2 and PPy. The red species are the final products and the x-axis represents the number of electrons transferred.	 
+	(8)
+	(9)
+	(10)
+k+w = 2.4 × 10−5 mol L−1 s−1, KW = 1 × 10−14 mol2 L−2
+2H2O → H2↑ + O2↑	(11)
+CO2 + 2H+ + 2e− → CO + H2O	(12)
+CO2 + 2H+ + 2e− → HCOOH	(13)
+CO2 + 6H+ + 6e− → CH3OH + H2O	(14)
+CO2 + 8H+ + 8e− → CH4 + 2H2O	(15)
+	(16)
+	(17)
+	(18)
+	(19)
+	(20)
+	(21)
+
+ 	Fig. 4  Architecture and algorithm of the multiscale simulation model for photocatalysis.	 
+	(22)
+
+ 	Fig. 5  The computed and experimental absorbance of m-MoS2, the computed absorbance of graphene, and the incident AM 1.5G solar flux.	 
+
+
+E
+g (eV)	1.89	2.41	1.3–1.8	0
+
+μ
+e (cm2 V−1 s−1)	205	5.6	0.59–1596	∼1 × 104
+
+μ
+h (cm2 V−1 s−1)	135	3.4	0.23–950	4–8 × 105
+
+ 	Fig. 6  CO2RR and HER Gibbs energy diagram computed for PPy and m-MoS2.	 
+
+ 	Fig. 7  CO2RR and HER Gibbs energy diagram computed for PPy and Cd-PPy.	 
+
+ 	Fig. 8  Coverage ratio of key intermediates includes *H, *COOH, *CO, *O, *CHO, and *COH. (a) m-MoS2 surface. (b) rGO-MoS2/PPy surface.	 
+
+ 	Fig. 9  Supply of CO2 (aq) to photocatalytic reaction on rGO-MoS2/PPy catalyst surface. (a) Concentration distribution and flow direction of CO2 (aq) and (b) dependence of surface CO2 concentration and photocatalytic quantum yield.	 
+
+ 	Fig. 10  Comparison of the computed and experimental photocatalytic conversion activity of MoS2, rGO-MoS2, rGO-MoS2/PPy, and rGO-dMoS2/PPy.	 
+
+ 	Fig. 11  Binding energies of *COH and *CHO on the surface of m-MoS2 doped with different metal atoms.	 
+
+Energy input (W)	100	3.81	3.20	0.029
+Energy output (W)	3.81	3.20	0.029	1.98 × 10−3
+Energy efficiency (100%)	3.81%	84.8%	0.91%	6.9%
+
+Energy input (W)	100	2.76	2.23	0.18
+Energy output (W)	2.76	2.23	0.18	0.017
+Energy efficiency (100%)	2.76%	80.8%	7.9%	9.7%
+
+ 	Fig. 12  Dependence of electron density on active sites for the surface reaction rate.	 
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2cp03798j
+
+This journal is © the Owner Societies 2022

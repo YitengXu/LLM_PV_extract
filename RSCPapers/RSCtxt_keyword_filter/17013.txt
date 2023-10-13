@@ -1,0 +1,227 @@
+Modeling Monte Carlo simulation on photon regeneration effects of perovskite FAPbI 3 for photovoltaic applications   - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/D2CP04953H View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2CP04953H
+(Paper)
+Phys. Chem. Chem. Phys., 2023, 25, 5869-5877Modeling Monte Carlo simulation on photon regeneration effects of perovskite FAPbI3 for photovoltaic applications†
+
+        
+          
+            Hengbin 
+            Xu
+          
+        
+      a and 
+
+        
+          
+            Xiangfu 
+            Wang
+          
+        
+      *ab
+aCollege of Electronic and Optical Engineering & College of Flexible Electronics (Future Technology), Nanjing University of Posts and Telecommunications, Nanjing, 210023, China. E-mail: xfwang@njupt.edu.cn
+bKey Laboratory of Radio Frequency and Micro-Nano Electronics of Jiangsu Province, Nanjing, People's Republic of China
+Received 
+      22nd October 2022
+    , Accepted 17th January 2023First published on 20th January 2023AbstractControlling the photon regeneration effects in FAPbI3 films is a noteworthy approach to improve the photovoltaic (PV) efficiency of FAPbI3-based solar cells. However, the lack of systematic study on the relationship between photon regeneration effects and PV efficiency in the experimental process makes it difficult to control the photon regeneration effects effectively. In this work, we combine the Monte Carlo sampling method and the polar coordinate calculation method to design a new algorithm for a detailed simulation of the main processes of photon regeneration effects affecting the PV efficiency in a model based on an n–i–p type FAPbI3 perovskite solar cell (PSC). The algorithm is validated to be used to compare the power-conversion efficiency (PCE) of different PSCs to filter out the PSC structure with the highest PCE or to determine the range of material parameter values corresponding to the highest PCE. This work opens up new ideas to effectively control the photon regeneration effects in PSCs to improve the device PV efficiency.
+1. Introduction
+Lead halide perovskite fluorescent materials are considered to be one of the most promising photovoltaic (PV) materials because of their excellent photoelectric properties such as low defect density,1 adjustable bandgap,2 strong photoluminescence (PL) characteristics,3 high exciton mobility4 and long carrier lifetime.5 Since 1979, the study of photon regeneration processes in different fluorescent materials has been uninterrupted until now.6–10 Therefore, the research on the controllability of photon regeneration effects has become a promising direction for the future development of a new generation of energy-efficient PV FAPbI3-based devices. With the in-depth study of FAPbI3 fluorescent materials, researchers affirmed their far-reaching prospects in PV fields, such as X-ray detectors,11 photodetectors,12,13 LEDs14–16 and solar cells.17–22 Xie et al. prepared FA-based solar cells with a power-conversion efficiency (PCE) of 19.9% using MAPbBr3-doped FAPbI3 films.23 Jeong et al. prepared highly crystallized FAPbI3 films with a PCE as high as 25.2% by adding FAHCOO to the precursor solution.25 The certified PCE of perovskite solar cells (PSCs) increased from 10.9% to 25.7% from 2012 to 2021, which is comparable to the non-concentrator monocrystalline silicon-based solar cells.26 However, the relationship between the photon regeneration effects and PV gain remains ambiguous in previous studies, which makes it difficult to find the optimal range of action of the photon regeneration effects in experiments. Therefore, it is necessary to systematically investigate the photon regeneration effects in FAPbI3 films and thus explore the general process of the photon regeneration effects acting on PV gain in PSCs.
+In this work, we choose an n–i–p type FAPbI3 PSC proposed by Lu et al.24 to establish the physical model required for the simulation (Fig. 1) and follow the basic idea of the traditional Monte Carlo method while combining the polar coordinate system to simplify the particle position calculation to develop a systematic and comprehensive simulation of the main processes of the photon regeneration effects acting on the PV gain. Usually, the finite difference method (FDM),27,28 the finite element method (FEM),29 diffusion approximation (DA),30,31 and the Monte Carlo (MC) method32,33 can be used to study the particle propagation problems. However, for multi-particle propagation problems with statistical properties like the photon regeneration process, the probability-based Monte Carlo method has clear advantages: in contrast to the FDM and FEM, the MC method does not require discretization and can be used directly for the distribution of variables required for the simulation according to different sampling functions. At the same time, the errors caused by the MC method are independent of the dimensionality of the numerical calculation method, which provides the basis for our later idea of reducing the dimensionality of the 3D problem. For the problem of particle propagation in closed space, DA is not accurate at the boundary, so it is not a suitable method for simulating particle propagation in the film. Li et al. obtained a model for photon transport in somatic bio-optical imaging using the MC method.34 Wang et al. proposed an MC method to model the migration path of photons in turbid media.35 Wegmann et al. performed transport measurements of a single photon transport (SPT) source for cesium-137 using the MC method and calculated the proportion of scattered radiation.36 The experimental results of all three demonstrate the correctness and effectiveness of the MC algorithm for solving the problem of particle propagation in confined space; therefore, we chose the MC simulation method to study the photon regeneration effects in FAPbI3 films. In addition, the similarity of different particle motion processes in the photon regeneration process is exploited in this study, and the idea of modularity is proposed to further simplify the computational process: the main processes of the photon regeneration effects are divided into three modules – photon motion, carrier motion and constraints. This idea not only takes advantage of the circular program to reduce the computational time in the program, but also facilitates the construction of the relational chain diagram of the photon regeneration process. Using the above method, we successfully simulated the variation curves of material parameters affecting PCE in PSCs with different structures, and the obtained simulation results are very close to the experimental results, which provides a convenient and effective way for screening PSCs with higher performance in the future.
+ Fig. 1  A structural model of the FAPbI3-based solar cell with a schematic diagram of the photon regeneration effects in its FAPbI3 film. 
+2. Modeling and simulation
+In our work, we describe the photon regeneration effects by establishing the cuboid model of the FAPbI3 film, and Fig. 1 gives a structural model of a FAPbI3-based solar cell and a schematic diagram of the photon regeneration effects in the cubic FAPbI3 film. In the above model, some photons will be refracted into the FAPbI3 film, which marks the beginning of the photon regeneration process. If a photon is absorbed by the film during propagation, a pair of photocarriers will be generated at the same position and will continue to diffuse in the film at a random emission angle. Then, random recombination process may occur between a pair of electron and hole at a certain time (indicated by the dashed line in the figure). Recombination can usually be divided into bulk recombination (including radiative recombination, Shockley-Read-Hall (SRH) recombination and Auger recombination) and surface recombination.37 For the surface recombination process, perovskite materials are usually subjected to a surface-defect passivation process to reduce the occurrence of surface recombination in practical applications,38 and various passivation films often have varying degrees of inhibition on the surface recombination process, and their effects on exciton mobility under different conditions are difficult to predict. Therefore, in the simulation, we choose to ignore the surface recombination process of minority carriers and study the bulk recombination process only. Furthermore, this work investigates the photon regeneration effects in monocrystalline FAPbI3 at low-level injection, where there is a quite low doping and carrier concentration, which would cause a very weak Auger recombination process. For this reason, the Auger recombination can be ignored in subsequent simulation and the non-radiative recombination can be approximated as SRH recombination. When the SRH recombination occurs, the electrons in the conduction band recombine with holes in the valence band, which is mediated by trap states. Most of the generated energy is released in the form of emitting phonons and is converted into lattice vibrations, thus ending the photon regeneration process. When the radiative recombination occurs, a photon with energy approximately equal to the bandgap of FAPbI3 will be emitted in a random direction due to electron-phonon coupling effects,39 while the film will not absorb photons with energy less than its bandgap, and these photons will eventually transmit from the film. Photons with energy greater than the bandgap can be absorbed possibly, allowing the next round of the photon regeneration process to begin. Such a cycle can happen several times in the FAPbI3 film.
+The following are the assumptions made during the modeling process:
+(1) The distribution of light in the model is assumed to be static.
+(2) Scattering losses and polarization of light are neglected in the calculations.
+(3) The FAPbI3 film is considered to be an isotropic intrinsic semiconductor material.
+(4) Under room temperature and low-level injection conditions, the FAPbI3 film can be regarded as a non-degenerate semiconductor.
+Based on the physical model and assumptions above, we use the polar coordinate system (z-axis) to describe the particle motion trajectory in the simulation. The position of a photon incident on the film is set to the origin of the z-axis belonging to this photon and the surface normal to the interior of the film is set to the positive direction of the z-axis, which means different incident photons may have different z-axes. However, since the width (or length) of the effective light-receiving area (ELA) of the FAPbI3 layer is usually more than 5 mm and the thickness is usually tens to hundreds of nanometers in practical applications,24,40,45 the probability of particle collision with the longitudinal boundary is much higher than that with the transverse boundary, considering the micron-scale carrier diffusion length and nanometer-scale photon absorption distance. In addition, the flatness and accuracy of the transverse boundary cannot be guaranteed in the device package. When light refracts out of the transverse interface, it may break the Fresnel Formulas under the condition of vertical interface approximation. Therefore, it can be assumed that the transverse motion of particles in the layer is not limited by the boundary conditions, and the transverse translation between multiple z-axes will not affect the simulation results. Since the film is considered isotropic, a linear approximation can be used to simplify the numerical simulation of the particle trajectories. Moreover, due to the properties of intrinsic semiconductors, electrons and holes can be regarded as having the same effective mass and mobility for FAPbI3. Therefore, in the calculations, we can equate these two particles and study only one of them, as has been proposed in previous studies.41–44
+Under the above premise, the trajectory of each particle in the FAPbI3 layer from its creation to its disappearance (transmitting from the surface or being absorbed by the film) can be considered as being in the same plane. The incident photon motion plane  is determined by the unit vector vp parallel to the initial direction of the photon when it first enters the layer surface and the unit vector z in the positive direction of the z-axis, and the carrier motion plane  is determined by the unit vectors vc in the same direction as the motion of one of the photocarriers and z, and the new photon motion plane  is determined by the unit direction vector vnp of the radiatively emitted photon and z. Due to this symmetry, we can use similar expressions to calculate the position and motion of particles in three planes and approximate the original three-dimensional random motion of the particle in a closed space as a combination of multiple predictable motions in a semi-closed two-dimensional plane. According to the previous description, we are not concerned with the distance of the particle's transverse motion, but more about the longitudinal depth of the particle's motion in the film. Therefore, in the following simulation, we only record the position projection of the particles in the z-axis direction.
+Each complete photon regeneration cycle can be considered as a combination of photon motion and carrier motion. The photon motion can be divided into two parts: the incident photon motion and the new photon motion. Since the two photon motions are very similar from a computational point of view, we put them in a single module for a unified description. In the carrier motion module, we choose electrons as the object of study based on the similarity of the two types of carriers mentioned above. Apart from that, the simulation of photon regeneration effects still involves a series of constraints that will be described in detail in the ESI.† Due to these constraints, we refer to the position that the particle actually arrives at in the simulation as the actual position, and the position that the particle would arrive at in the absence of constraints as the ideal position. On this basis, we have used the MC method for the specific description of the photon regeneration effects in the FAPbI3 film, and the flow chart of the simulation is shown in Fig. 2. The MATLAB code implementing the above MC method has been reported in the ESI† (S6), and the specific calculation steps are described as follows.
+ Fig. 2  Flowchart of Monte Carlo simulation. 
+2.1. Motion of photons
+Motion of photons is determined by the step size l and deflection angle θ. θ is the angle between the direction of photon motion and the positive direction of the z-axis. According to the definition of the absorption coefficient, in the infinitesimal interval (l0, l0 + dl), the absorption probability of photons meets: (1)Integrating both sides of eqn (1), we can find that l obeys the expression of exponential distribution: P{l ≥ l0} = exp(−αl)(2)Then, we can write the probability density and photon step size function as: (3)where rand represents a random number between 0 and 1. Therefore, the ideal-projection of the position after a complete step (i.e., the projection of the ideal-position of the photon onto the z-axis) zidep can be written as: (4)where  represents the projection coordinate of the starting position of this movement for photons.
+2.2. Motion of carriers
+Similar to the motion of photons, we describe the motion of carriers by the diffusion length L and random deflection angle φ.
+According to the definition of the carrier diffusion distance, L is an expression for the diffusion coefficient D and carrier lifetime τ (detailed calculation of τ is described in the ESI†): (5)Because the scattering losses are neglected during thermal motion, the ideal-projection of carrier zidec can be calculated by: (6)where  is the starting projection coordinate of the carrier, similarly.
+2.3. Main simulation process and application of the polar coordinate system
+During each photon regeneration cycle, the initial photon position is recorded as z0, the initial photon wavelength is recorded as λ0 and we can calculate the corresponding absorption coefficient α0 from the absorption spectrum according to the eqn (6) in the ESI†. Then, we can get the random absorption distance l combined with randomly generated deflection angle θ0, judge the boundary conditions of the photon propagation process and calculate the final-position zf0. If the photon refracts, the photon regeneration cycle ends; if not, we assign zf0 to zact0 like: zact0 ← zf0(7)And start the carrier's motion process at the same position: the initial electron position is recorded as z1 which is: z1 ← zact0(8)The random electron lifetime τ, random deflection angle φ, recombination probability γ, and radiative recombination probability γr all can be calculated at the same time. When t ≥ τ, if rand ≤ γr, the radiative recombination will occur, and the radiative recombination position z2 can be calculated by z1, d, τ and φ. The wavelength λ2 of new photons produced obeys the PL spectrum distribution, the corresponding absorption coefficient is α2, and the deflection angle θ2 is random. The data of new photons are then returned to the photon motion module:z0 ← z2λ0 ← λ2 θ0 ← θ2(9)The photon regeneration process enters the next cycle, and the number of photon regeneration cycles is n plus one.
+2.4. Calculation of the open-circuit voltage
+After completing the above simulation process, we need to calculate the open-circuit voltage (VOC), the calculation method of which refers to the results of previous studies:
+In a previous simulation,46 we can obtain the formula for the saturation current density J0: (10)where qe is the electron charge, dp,n is the p (n) region thickness, L is the carrier step size, N is the acceptor (donor) concentration in the PN junction, ni is the intrinsic carrier concentration, and the value of ni is about 2.3 × 105 cm−3 according to Roberto Brenes et al.47 Meanwhile, from their study, we can obtain the calculation method of the carrier density n: (11)Based on the value of n, it is obtained that: JSRH(V) = qek1n(V)d(12)where k1 is the first-order SRH recombination rate constants. And k1 is taken as 105 s−1.47 Since the Auger recombination is neglected in the simulation, J0 can be written as: J0 = Jrad0 + Jnon-rad0 = Jrad,int0 + Jrad,ext0 + JSRH(13)where Jrad0 and Jnon-rad0 are the radiative and non-radiative components of J0, and Jrad,int0 and Jrad,ext0 are the internal and external components of Jrad0, respectively, whereas Jrad,int0 can be calculated by: (14)where kint2 is the radiative rate which is about 2 × 10−10 cm−3 s−1.47 According to eqn (13), we can derive the formula for Jrad,ext0 which is difficult to calculate directly: Jrad,ext0(τ,V) = J0 − Jrad,int0 − JSRH(15)According to the definition of the escape probability Pesc, we can obtain: (16)The value of the Pesc allows us to get the external light-emitting diode (LED) electroluminescence efficiency (QLEDe): (17)Based on the above results, we can obtain the radiative component of open-circuit voltage (VradOC): (18)where JSC is the short-circuit current density which is 24.4 mA cm−2 according to a previous work,24 and VOC is written as follows: (19)
+2.5. Calculation of the power-conversion efficiency
+Having obtained the open-circuit voltage VOC, we can then calculate the power-conversion efficiency (PCE) of PSCs containing different hole transport layers (HTLs) and electron transport layers (ETLs): (20)where ISC is the short-circuit current, FF is the fill factor, I is the irradiance of sunlight, and S is the ELA. In our simulation, FF is 81.3%, S is 0.27 cm2 and I is set to the AM 1.5G illumination (100 mW cm−2), which are consistent with the premise of Lu et al.'s experiment.24
+3. Results and discussion
+Using the Monte Carlo sampling method and MATLAB as a platform, we successfully simulated the mechanism of the photon regeneration effects in the FAPbI3 fluorescent material and finally obtained simulation results that are very similar to the experimental results. Since different HTLs and ETLs may interfere with our discussion of the relationships between different parameters, the object of our study before drawing conclusions from Fig. 5 is a single-crystal FAPbI3 layer in a vacuum (excluding electrodes and transport layers). Also, due to the many nested cycle procedures, the expression may be unclear, and the following provisions are made: we refer to the cyclic process of an incident photon from a photon to a photocarrier and then to the photon as a photon regeneration cycle element (abbreviated as a cycle element), and the process in which an incident photon and its derived particles all disappear (the photon refracts out of the film or the carrier undergoes non-radiative recombination) as a total photon regeneration cycle (abbreviated as the total cycle). The number of cycle elements in the total cycle is the experimentally measured number of photon regeneration cycles n. We refer to the carrier lifetime in each cycle element as the lifetime element τe, and the sum of τe in a total cycle constitutes the total lifetime τ.
+
+Fig. 3(a) and (b) show the distribution of the sampling results for n and (τ/τ0) in each interval when X = 25000. Before studying the variation of the average number of photon regeneration cycles navg and the average multiple of carrier lifetime (τ/τ0)avg with material parameters, we would like to make some judgments on the variation of n and carrier amplification (τ/τ0) with X to exclude the interference of X values on the subsequent simulation results as much as possible. In order to quantify the effect of X, we define the concept of the maximum fluctuation value (MFV): for a specific X = X0, we perform i rounds of repeated simulation experiments and call the range of the i results obtained for parameter a in some interval p1 the MFV of a in p1 at X = X0, and the range of the array composed of the MFVs of all intervals the MFV of a at X = X0.
+ Fig. 3  Distribution of (a) n, (b) (τ/τ0) in FAPbI3 films in a vacuum with d = 480 nm, QYi = 0.7 when X = 25000, and the fitted function curves of the MFV of (c) n, (d) (τ/τ0) as a function of X in films with the same conditions. 
+
+Fig. 3(c) and (d) show that when the parameters of the FAPbI3 film are kept constant, the MFV ∼ X curve of n is steeper compared to (τ/τ0), meaning that it is more significantly influenced by X. As the value of X increases, the MFV of n decreases from 8.4% at X = 500 to 0.695% at X = 20000 while the parameters are kept constant, and the MFV of (τ/τ0) corresponding to X = 20000 is 0.34%, and we believe that the effect of X on n, (τ/τ0) at X = 20000 can be neglected. Therefore, when we study the relationship between navg, (τ/τ0)avg and material parameters, we set the value of X chosen for each sampling point to 20000.The reason for the above fluctuation amplitude attenuation phenomenon is due to the fact that the value of τ is determined by two factors: (1) The value of n. As the value of n increases, the number of cycle elements contained in a total cycle increases, and each cycle element contains a sampling process of carrier lifetime. Therefore, the larger n is, the greater the number of τe contained in τ. However, this is not sufficient to show that the value of τ must increase, due to the fact that τ obeys a certain sampling distribution condition (S3.1 in the ESI†). (2) The value of rand. The value of τe is random in nature and is related to the value of rand in the sampling equation, which leads to a large fluctuation amplitude of τ. However, as the value of X increases, the overall randomness reflected by a large number of τ values under certain conditions diminishes accordingly, and we use the fluctuations of multiple τavg values obtained from multiple sampling under the same preconditions to reflect this overall randomness. When X is large enough, the fluctuation amplitude can be controlled to reflect the trend of the dependent variable τavg, i.e., the correlation between τavg and the independent variable will be more obvious at this time. Therefore, in the subsequent simulations, instead of choosing the parameter (τ/τ0) for which there is a large amount of disturbing data, we choose its average value (τ/τ0)avg to study the correlation between the variables.
+Based on the pie chart of n at high X values, we can initially screen those perovskite materials with stronger or weaker photon regeneration effects: We note the ratio of n = 0 in the pie chart as R1, the ratio of n > 0 as R2, the ratio of n = 1 as R3, and the ratio of n > 1 as R4. The higher (R1/R2) represents the weaker photon regeneration effects. If (R1/R2) of two materials is equal, the higher (R3/R4) represents the weaker photon regeneration effects, and if (R3/R4) of two materials is equal, we need to continue the comparison. Since the above method is too cumbersome and have large errors when the X value is not large enough, we need a more intuitive standard for measuring the intensity of the photon regeneration effects. In this regard, we use the dimensionless navg as a measure of the intensity of the photon regeneration effects IPR, use the dimensionless (τ/τ0)avg as a measure of the average amplification of the carrier lifetime ACL, and then use ACL as a link between the photon regeneration effects and the PV efficiency of the device.
+When the layer thickness d increases from 480 nm to 2000 nm and the value of internal photoluminescence quantum yield (QYi) is kept constant, the changes of IPR and ACL are shown in Fig. 4(a). When d increases, it causes the PL spectrum of the material to shift toward the red end (Fig. S2, ESI†), i.e., there is an increasing probability of the appearance of long-wavelength PL photons. Meanwhile, it is easy to find by the absorption spectrum that the longer the wavelength of the photon, the lower its corresponding A. Since α is proportional to A (eqn (S6) in ESI†), it can be obtained that the closer to the red end the photon has a lower α. According to the photon step size equation (eqn (3)), we can conclude that when rand takes a certain value, a lower α corresponds to a longer photon step size l. When the single step size increases, the probability of the photon colliding with the top or bottom interfaces increases, which will make the probability of the photon refraction increase, and the total cycle ends when the photon transmits from the layer surface. Thus, an increase in d causes a decrease in navg. At the same time, when d increases, if l is assumed not to increase, the mean probability of photon escape from the film Pesc decreases, while the lower Pesc indicates that the photon is more likely to stay in the film, which makes the probability of photon absorption Pabs increase, and correspondingly the IPR increases. From the above description, we can conclude that the effect of increasing layer thickness on the photon regeneration effects is bi-directional. Also, from Fig. 4(a) we can find that there is a correlation between IPR and ACL, but the value of ACL does not exactly follow the value of IPR. The specific discussion on the correlation between IPR and ACL can be found in the ESI.† Using IPR, we can quickly compare the photon regeneration effects of different perovskite materials to exclude inferior products effectively, and the simulation results of Fig. 4 also show that it becomes much easier to determine the values of material parameters corresponding to strong photon regeneration effects (high IPR values). When the value of X is large enough, these high IPR points will basically correspond to high ACL points. According to eqn (20), we can determine the values of the material parameters corresponding to the highest PCE by comparing the PCE values of these high ACL points.
+ Fig. 4  (a) The variation of IPR and ACL with d when QYi = 0.7 and (b) the variation of IPR and ACL with QYi when d = 480 nm in the FAPbI3 film in a vacuum. 
+Based on the description of the ACL − IPR correlation above (Fig. 4), we can construct the complete action process of the material parameters affecting IPR and thus the device PCE through the intermediate variable ACL, as shown in Fig. 5. We connect the positively correlated set of variables with a red line and mark them with a “+” sign, while the negatively correlated set of variables is marked by a blue line and identified with a “−” sign. When the sunlight irradiance I increases, the average number of photons incident on the FAPbI3 material surface increases, which corresponds to an increase of X in the simulation. The results in Fig. 4 show that ACL has a positive correlation to IPR, but the manifestation of this property is influenced by X. When the value of X is small, this characteristic is seriously disturbed by the randomness of sampling, so the positive correlation between the two is marked with a red dashed line. Also, since the effect of X on ACL is also influenced by the random number rand, this correlation is uncertain and is marked with a black line in the figure, but this does not negate the fact that the increase in X weakens the volatility of ACL. In addition, different combinations of HTLs and ETLs will affect the probability of the incident photons reaching the FAPbI3 layer and refracting from the layer, which will affect the IPR.
+ Fig. 5  Relational chain diagram of the photon regeneration effects process. 
+To verify the correctness of Fig. 5 and the generality of the algorithm, we simulated two typical PSCs and plotted their PCE versus the perovskite layer thickness dp and QYi (as shown in Fig. 6(a) and (b)). The structures of FA+ PSC and MA+ PSC were taken from the studies of Lu et al.24 and Heo et al.,48 respectively, and the parameters used in our simulation have been gathered in the parameter table of the ESI.† Data in Fig. 6(a) were all obtained with the QYi of 0.7. Since the values of QYi were not explicitly given in both studies, whether the PCE values obtained are consistent with the experimental results will not be shown in Fig. 6(a). But we can find that both sets of PCE curves in Fig. 6(a) do not show an overall increasing or decreasing trend when dp increases, which supports Fig. 5 about the bidirectional effect of dp on IPR. The simulation results shown in Fig. 6(b) show that the average PCE of FA+ PSCs with dp = 480 nm in the full QYi range is 26.7%, which is consistent with the experimental result of more than 23% of Lu et al.,24 but this simulation result is obviously idealized; the average PCE of MA+ PSCs with dp = 300 nm in the full QYi range is 17.1%, which is close to the experimental result of 18.1% obtained by Heo et al.48 The reason for the inaccuracy we believe is that the average carrier lifetime measured experimentally was not given by them, and the average carrier lifetime of the MAPbI3 material selected for the simulation is from a study of Teh et al.49 In addition, both PCE curves in Fig. 6(b) show an increasing trend with increasing QYi, which supports Fig. 5 that QYi is positively correlated with IPR.
+ Fig. 6  Variation curves of PCE of n–i–p type FA+ PSC and p–i–n type MA+ PSC affected by (a) dp and (b) QYi. 
+The high agreement between the simulation results and the experimental results shows that: (1) We can use the above-mentioned method to simulate the average PCE of several groups of PSCs with different configurations under the same external environment to initially select several PSC structures with high PCE, which can sometimes significantly reduce the total amount of data to be processed for the experiment. (2) When a particular PSC structure is selected, a series of material parameter points with high PCE can be initially identified using the simulation method proposed in this work, and then subsequent comparative experiments and data analysis can be conducted more effectively by setting the range of parameters to be investigated around these parameter points.
+4. Conclusion
+In this work, we simulated the photon regeneration effects in single-crystal FAPbI3 thin films using the Monte Carlo method and incorporated the idea of modularity, and proposed a general algorithm that can be used to calculate the effect of the photon regeneration process in PSCs on the PV efficiency. In calculating the positions and states of the particles, provided that the actual conditions and approximation requirements are satisfied, we used the polar coordinate system to simplify the problem of propagation of a single particle in a closed space to the problem of propagation of a single particle in a two-dimensional semi-open space, which greatly simplified the calculation of the trajectories and positions of the particles. After completing the analysis of simulation results for the FAPbI3 layer in a vacuum, we constructed a chain diagram of the photon regeneration process from the change of material parameters to the change of PV gain. Finally, the correctness of the chain diagram and the feasibility of the algorithm were further verified by simulating the PCE variation with material parameters for two typical PSCs. Researchers can adjust the values of different parameters in the algorithm or replace the absorption and PL spectra, according to the material and structure of the PSC simulated, to obtain the variation of PSC's PCE with material parameters. Meanwhile, this study provides a new idea to quantitatively control the intensity of the photonic regeneration effects of PSCs and also lays the foundation for further improving the photovoltaic efficiency of PSCs in the future.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+This work was supported by the Natural Science Outstanding Youth Fund of Jiangsu Province (BK20170101) and the Scientific Research Fund of Nanjing University of Posts and Telecommunications (NY220011 and NY220034).
+References
+Y. Guo, T. Wang, Q. Yang, X. Li, H. Li, Y. Wang, T. Jiao, Z. Huang, B. Dong, W. Zhang, J. Fan and C. Zhi, ACS Nano, 2020, 14, 9089–9097 CrossRef CAS PubMed .
+A. Leblanc, N. Mercier, M. Allain, J. Dittmer, T. Pauporté, V. Fernandez, F. Boucher, M. Kepenekian and C. Katan, ACS Appl. Mater. Interfaces, 2019, 11, 20743–20751 CrossRef .
+Q. Zhang, Y. Wu, Y. Feng, L. Sun and J. Dai, J. Lumin., 2021, 42, 1396–1402 CAS .
+D. Giovanni, M. Righetto and Q. Zhang, 
+            et al.
+          , Light: Sci. Appl., 2021, 10, 2 CrossRef CAS PubMed .
+C. Wehrenfennig, G. E. Eperon, M. B. Johnston, H. J. Snaith and L. M. Herz, Adv. Mater., 2013, 26, 1584–1589 CrossRef PubMed .
+S. H. Turren-Cruz, A. Hagfeldt and M. Saliba, Science, 2018, 362, 449–453 CrossRef CAS PubMed .
+Y. Liu, X. Ren, J. Zhang, D. Yang, F. Yu and J. Sun, 
+            et al.
+          , Sci. China: Chem., 2017, 60, 1367–1376 CrossRef CAS .
+F. Cordero, F. R. Craciun and F. Trequattrini, 
+            et al.
+          , J. Phys. Chem. Lett., 2019, 10, 2463–2469 CrossRef CAS PubMed .
+C. Cho, Y. Jang, S. Lee, Y. Vaynzof and M. Choi, 
+            et al.
+          , Sci. Adv., 2021, 7, 52 Search PubMed .
+Y. Yamada, T. Yamada and Y. Kanemitsu, Bull. Chem. Soc. Jpn., 2017, 90, 10 Search PubMed .
+W. Pan, H. Wu and J. Luo, 
+            et al.
+          , Nature Photon, 2017, 11, 726–732 CrossRef CAS .
+M. Shang, G. Lian, S. Lv and Q. Wang, 
+            et al.
+          , Adv. Mater. Interfaces, 2021, 8, 12 Search PubMed .
+H. Zhou, Z. H. Song, P. Tao and H. Lei, 
+            et al.
+          , RSC Adv., 2016, 6, 6205–6208 RSC .
+W. Xu, Q. Hu, S. Bai and Y. Miao, 
+            et al.
+          , Nat. Photonics, 2019, 13, 418–424 CrossRef CAS .
+K. Lin, J. Xing and Q. Lin, 
+            et al.
+          , Nature, 2018, 562, 245–248 CrossRef CAS PubMed .
+X. Zhang, D. Han and C. Wang, 
+            et al.
+          , Adv. Opt. Mater., 2019, 7, 20 Search PubMed .
+S. Bai, P. Da, C. Li, Z. Wang and F. Fu, 
+            et al.
+          , Nature, 2019, 571, 245–250 CrossRef CAS PubMed .
+W. Nie, H. Tsai, R. Asadpour, J. Blancon, A. J. Neukirch, G. Gupta, J. J. Crochet, M. Chhowalla, S. Tretiak, M. A. Alam, H. Wang and A. D. Mohite, Science, 2015, 347, 522–525 CrossRef PubMed .
+S. Lv, S. Pang, Y. Zhou and H. Hu, 
+            et al.
+          , Phys. Chem. Chem. Phys., 2014, 16, 19206–19211 RSC .
+H. Min, M. Kim and S. U. Lee, 
+            et al.
+          , Science, 2019, 366, 749–753 CrossRef CAS PubMed .
+G. Liu, L. Liu, X. Niu, H. Zhou and Q. Chen, Crystals, 2018, 8, 185 CrossRef .
+R. K. Yong, M. O. Chang and J. Y. Chang, 
+            et al.
+          , Nanoscale, 2021, 13, 5652–5659 RSC .
+L. Q. Xie, L. Chen and Z. A. Nan, 
+            et al.
+          , J. Am. Chem. Soc., 2017, 139, 3320–3323 CrossRef CAS PubMed .
+H. Z. Lu and Y. H. Liu, 
+            et al.
+          , Science, 2020, 370, 6512 CrossRef PubMed .
+J. Jeong, M. Kim, J. Seo, H. Lu and P. Ahlawat, 
+            et al.
+          , Nature, 2021, 592, 381–385 CrossRef CAS PubMed .
+NREL. Best Research-Cell Efficiency Chart https://www.nrel.gov/pv/cell-efficiency.html (accessed 17 March 2021).
+S. D. Li, G. Y. Feng and Y. H. Gao, 
+            et al.
+          , China Laser, 2006, 33, 260–263 Search PubMed .
+C. Li and H. Ding, Appl. Math. Modell., 2014, 38, 3802–3821 CrossRef .
+A. Larese and R. Rossi, 
+            et al.
+          , Eng. Comput., 2013, 10, 385–425 Search PubMed .
+Daniele Contini, Fabrizio Martelli and Giovanni Zaccanti, Appl. Opt., 1997, 36, 4587–4599 CrossRef CAS PubMed .
+R. Weymann, Phys. Fluids, 1965, 8, 2112–2114 CrossRef .
+J. P. Suo, P. J. Wang and X. W. Zhang, 
+            et al.
+          , J. Photoluminescence, 2019, 40, 7 Search PubMed .
+E. Alerstam, T. Svensson and S. Andersson-Engels, J. Biomed. Opt., 2008, 13, 060504 CrossRef PubMed .
+H. Li, J. Tian and G. Wang, J. Software, 2004, 15, 11 Search PubMed .
+J. Wang, G. Wang and Z. Xu, Chin. Opt. Lett., 2008, 6, 530–532 CrossRef CAS .
+K. Wegmann, L. E. Adam and L. Livieratos, 
+            et al.
+          , IEEE Trans. Nucl. Sci., 2002, 46, 1184–1190 CrossRef .
+J. L. Terry, B. Lipschultz and A. Y. Pigarov, 
+            et al.
+          , Phys. Plasmas, 1998, 5, 1759–1766 CrossRef CAS .
+R. Wang, J. Xue and K. L. Wang, 
+            et al.
+          , Science, 2019, 366, 1509–1513 CrossRef CAS PubMed .
+R. Kentsch, M. Scholz, J. Horn, D. Schlettwein, K. Oum and T. Lenzer, 
+            et al.
+          , J. Phys. Chem. C, 2018, 112, 25940–25947 CrossRef .
+J. Wang, 
+            et al.
+          , J. phys., 2021, 70, 288–293 Search PubMed .
+B. Wu, L. Li and Y. Wang, 
+            et al.
+          , Opt. Lett., 2021, 46, 2988–2991 CrossRef PubMed .
+T. M. Brenner, D. A. Egger and L. Kronik, 
+            et al.
+          , Nat. Rev. Mater., 2016, 1, 15007 CrossRef CAS .
+J. K. Katahara and H. W. Hillhouse, J. Appl. Phys., 2014, 116, 173504 CrossRef .
+X. Lu, Z. Zhao, K. Li and S. Wei, 
+            et al.
+          , Acta Phys.-Chim. Sin., 2016, 32, 1439–1445 CAS .
+S. Lee, K. Choi and C. H. Min, 
+            et al.
+          , MRS Bull., 2020, 45, 439–448 CrossRef .
+S. R. Kurtz, P. Faine and J. M. Olson, J. Appl. Phys., 1990, 68, 1890–1895 CrossRef CAS .
+R. Brenes, M. Laitz and J. Jean, 
+            et al.
+          , Phys. Rev. Applied, 2019, 12, 014017 CrossRef CAS .
+J. H. Heo, H. J. Han and D. Kim, 
+            et al.
+          , Energy Environ. Sci., 2015, 8, 1602 RSC .
+C. H. Teh, R. Daik and E. L. Lim, 
+            et al.
+          , J. Mater. Chem. A, 2016, 4, 15788 RSC .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2cp04953hThis journal is © the Owner Societies 2023
+Table Content:
+
+ 	Fig. 1  A structural model of the FAPbI3-based solar cell with a schematic diagram of the photon regeneration effects in its FAPbI3 film.	 
+
+ 	Fig. 2  Flowchart of Monte Carlo simulation.	 
+	(1)
+P{l ≥ l0} = exp(−αl)	(2)
+	(3)
+	(4)
+	(5)
+	(6)
+zact0 ← zf0	(7)
+z1 ← zact0	(8)
+z0 ← z2
+λ0 ← λ2
+θ0 ← θ2	(9)
+	(10)
+	(11)
+JSRH(V) = qek1n(V)d	(12)
+J0 = Jrad0 + Jnon-rad0 = Jrad,int0 + Jrad,ext0 + JSRH	(13)
+	(14)
+Jrad,ext0(τ,V) = J0 − Jrad,int0 − JSRH	(15)
+	(16)
+	(17)
+	(18)
+	(19)
+	(20)
+
+ 	Fig. 3  Distribution of (a) n, (b) (τ/τ0) in FAPbI3 films in a vacuum with d = 480 nm, QYi = 0.7 when X = 25000, and the fitted function curves of the MFV of (c) n, (d) (τ/τ0) as a function of X in films with the same conditions.	 
+
+ 	Fig. 4  (a) The variation of IPR and ACL with d when QYi = 0.7 and (b) the variation of IPR and ACL with QYi when d = 480 nm in the FAPbI3 film in a vacuum.	 
+
+ 	Fig. 5  Relational chain diagram of the photon regeneration effects process.	 
+
+ 	Fig. 6  Variation curves of PCE of n–i–p type FA+ PSC and p–i–n type MA+ PSC affected by (a) dp and (b) QYi.	 
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2cp04953h
+
+This journal is © the Owner Societies 2023

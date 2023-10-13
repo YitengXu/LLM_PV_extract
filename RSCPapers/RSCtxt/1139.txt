@@ -1,0 +1,928 @@
+A comparative life cycle analysis of electromicrobial production systems   - Energy & Environmental Science (RSC Publishing) DOI:10.1039/D2EE00569G View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2EE00569G
+(Paper)
+Energy Environ. Sci., 2022, 15, 3062-3085A comparative life cycle analysis of electromicrobial production systems†
+
+        
+          
+            Anthony J. 
+            Abel‡
+a, 
+      
+        
+          
+            Jeremy David 
+            Adams‡
+a and 
+
+        
+          
+            Douglas S. 
+            Clark
+          
+        
+      *ab
+aDepartment of Chemical and Biomolecular Engineering, University of California, Berkeley, CA 94720, USA. E-mail: dsc@berkeley.edu
+bMolecular Biophysics and Integrated Bioimaging Division, Lawrence Berkeley National Laboratory, 1 Cyclotron Road, Berkeley, CA 94720, USA
+Received 
+      18th February 2022
+    , Accepted 25th May 2022First published on 31st May 2022AbstractElectromicrobial production (EMP) processes, in which electricity or electrochemically-derived mediator molecules serve as energy sources to drive biochemical processes, represent an attractive strategy for the conversion of CO2 into carbon-based products. However, these systems have yet to be employed on an industrial scale, limiting our understanding of their potential performance and environmental benefits/impacts. We describe the development and application of a comprehensive framework to analyze EMP systems relying on reactor, process, and life cycle impact models. This framework is used to analyze three proposed EMP systems relying on formate, H2, and acetate as intermediate molecules, each producing three hypothetical products: biomass, lactic acid, and industrial enzymes. Physics-based bioreactor models predict that EMP systems can achieve productivities up to 0.65 g L−1 h−1 for biomass production and 0.42 g L−1 h−1 for the production of lactic acid. Despite improved solubility of formate as a substrate, formate-fed EMP systems do not lead to improved productivities compared to H2-fed systems due to O2 gas–liquid mass transfer limitations (for biomass and enzymes) or salinity-induced toxicity issues (for lactic acid). Process models revealed that substrate generation was by far the largest energy demand of the EMP systems, followed by carbon capture and ammonia production, while energy required for gas–liquid mass transfer and fluid mixing accounted for only a small fraction of the systems’ energy footprints. Life cycle impact model results demonstrated that EMP systems can achieve a smaller carbon footprint than traditional bioprocessing strategies provided the electric grid supplying electricity to the EMP system is composed of at least 90% renewable energy sources. For each of the three products we consider, the H2-mediated Knallgas bacteria system achieves the lowest overall global warming potential, indicating that this EMP strategy may be best-suited for industrial efforts based on current technology. EMP systems also would use ∼95% less land compared to traditional bioprocesses. We also identify environmental hotspots and process limitations that are key targets for future engineering and research efforts for each EMP system. Our analysis demonstrates the utility of an integrated assessment framework and should help guide the design of working, scalable, and sustainable electromicrobial production systems.
+
+Broader context
+Biotechnology has a key role to play in developing a circular carbon economy as demand for industrial enzymes and biotherapeutics grows and biochemical processes displace fossil-based production of fuels, plastics, and commodity chemicals. Traditional bioprocesses use heterotrophic microbes and therefore require large amounts of arable land for feedstock production, igniting the “food versus fuel” debate. To overcome this tradeoff, “electromicrobial production” (EMP) systems, in which electricity drives biochemical transformation of carbon dioxide to value-added products, have been proposed and experimentally demonstrated at benchtop scales. However, the environmental viability of this strategy has yet to be evaluated. Moreover, comparisons among benchtop EMP systems are challenging, so efforts to identify best-case performance, technological bottlenecks, and optimal design strategies are necessary to enable industrial deployment. Our work analyzes three emerging EMP systems on the basis of productivity, efficiency, life cycle carbon footprint, and land occupation. To enable our analysis, we developed bioreactor and life cycle models that predict system performance for a variety of useful products. Our results determine the required conditions for EMP systems to become environmentally viable and identify areas of potential improvement and future performance targets for each individual system.
+
+Introduction
+Ongoing and worsening ecological and humanitarian crises caused by anthropogenic climate change have precipitated efforts to transition away from fossil fuel-based commodity chemical production. Whole-cell biocatalysis provides a theoretically carbon neutral method of producing value-added products if all of the required carbon is originally fixed from atmospheric carbon dioxide (CO2). Many petroleum-based products including fuels, plastics, and commodity chemicals can be produced biologically.1–3 Moreover, some products, such as proteins, can only be produced biologically and have wide-ranging applications including in food production, chemical sensing, and as therapeutics.4–6 Traditional bioprocesses rely on heterotrophic microbes that require exogenous sources of carbon and energy (Fig. 1).
+ Fig. 1  Overview of traditional bioprocessing and electromicrobial production. Traditional bioprocessing relies on feedstock crop growth, pretreatment of the resulting biomass (typically enzymatic or chemical), and subsequent biochemical production using crop-derived sugars as the feedstock. Electromicrobial production uses electricity (ideally renewable) to produce energy substrates (e.g., H2) for biochemical production from CO2. 
+Glucose from corn starch and sucrose from sugarcane are currently the most common feedstocks in bioprocessing. These biochemical processes rely on extensive agricultural production and therefore compete with the food supply and require land use changes that have significant negative impacts on the environment. Moreover, the high carbon footprint associated with fertilizer production and application, especially when growing corn as a feedstock, causes traditional bioprocesses to have a relatively high carbon footprint. To alleviate some of these challenges, researchers have proposed cyanobacteria and algae as alternative microorganisms to be used in bioprocessing, and have demonstrated photosynthetic production of fuels, plastics, and pharmaceuticals.7 However, these systems are still limited by slow growth rates and the relatively inefficient energy conversion of photosynthesis.8 To overcome these shortcomings, and with the expectation of cheaper and cleaner electricity in the intermediate future, various electromicrobial production (EMP) processes have been proposed and demonstrated (Fig. 1).
+Although nomenclature for bioelectrochemical systems varies in the literature, we define EMP processes as any process that converts CO2 into a value-added product (i.e., contains some form of primary production), uses electricity as the primary source of energy driving that transformation, and uses microbes to produce the final product. Perhaps most notable are systems based on Knallgas (aerobic hydrogen-oxidizing) bacteria, such as Cupriavidus necator, which use molecular hydrogen (H2), produced by the electrolysis of water, to fix CO2. C. necator has historically been studied for production of its natively-produced polymer polyhydroxybutyrate (PHB)9 and of biomass for use as a single cell protein.10 More recently, C. necator has been engineered to produce other carbonaceous products including fuels and commodity chemicals.11–13 As an alternative, formatotrophic microorganisms have been employed, in which formic acid produced from the electrochemical reduction of CO2 is used as an energy source or assimilated by microbes to produce value-added products.14–16 Naturally formatotrophic microbes such as C. necator have been studied for this purpose,17 as have organisms engineered to express formate-assimilating pathways.18 Two-step systems have also been developed based on bio-acetate as an intermediary molecule, in which CO2 and H2 are consumed by the acetogen Sporomusa ovata to produce acetate, which is then converted by a heterotroph such as E. coli to produce various value-added products.19,20 Other EMP strategies are possible; however, the three EMP systems described here are well-represented in the literature and have been employed for a wide variety of products through genetic engineering.
+To date, research efforts have focused primarily on studying the fundamental metabolisms that permit EMP processes or on engineering metabolic pathways to enable production of specific products in relevant microbial chassis. Despite these successful bench-scale demonstrations, progress towards scaled and integrated processes has remained limited. Moreover, rigorous calculations of productivity and efficiency limits that can enable comparisons among EMP processes have been elusive, in part due to significantly different operating conditions across laboratories. Physics-based models that capture relevant phenomena (microbial growth, production and consumption of species, acid/base reactions, gas/liquid mass transfer, etc.) can enable like-to-like comparisons across EMP processes. Additionally, such models are necessary to quantify design and operation strategies that optimize performance and to identify process parameters that limit productivity and efficiency.
+To that end, several computational analyses of EMP processes have been developed. Claassens et al. developed a data-driven analysis to calculate metabolic efficiencies and to quantify the specific growth rates of organisms relying on H2, formate, acetate, and other substrates for biomass formation.21 Salimijazi et al. developed thermodynamic models of metabolism in a variety of EMP systems based on direct electron transfer or H2-mediated growth.22 They used their model to calculate the limiting efficiency of these EMP systems and the relative area necessary for photovoltaic cells and bioreactors. Recently, Leger et al. compared biomass production efficiency for photovoltaics-driven EMP using H2, formate, and methanol as mediator molecules.23 Their analysis included quantification of biomass yields and energy demands for supporting processes such as carbon capture and electrolysis. They demonstrated that EMP-based biomass production could use sunlight more efficiently than crop growth. Because these analyses focused on quantifying metabolic limits to energy efficiency, their analyses did not consider other factors that may induce upper-bounds on the productivity or practical efficiency, including gas–liquid mass transfer, pH control, and salinity effects.
+EMP systems also rely on subprocesses, such as electrocatalysis and carbon capture, that are outside the purview of most literature that focuses on the microbial and biochemical reaction engineering components of these processes. While metabolic efficiencies, productivities, and yields of these systems may be compared, these analyses do not consider differences in electrocatalytic efficiencies and productivities that affect the viability of the process as a whole. Hence, development of end-to-end process models that rely on the material and energy balances quantified in individual reactor models is necessary for a comprehensive analysis of the relative merits of EMP process options.
+Life cycle assessment (LCA) is a tool for quantifying the environmental impact of products and processes across their entire life cycle in relevant categories including greenhouse gas emissions, human and environmental health effects, and resource depletion. LCAs, which follow the standards set by ISO 14040 and 14044,24,25 aggregate and analyze material and energy flows as well as emissions from every step in the supply chain within a given system boundary and quantify the impact of a process in the desired categories. LCAs aid in decision-making in process design as they can be used to evaluate the environmental impacts of multiple alternatives and inform strategies to lower their footprints. Life cycle assessment has been critical in evaluating the environmental tradeoffs of biochemical production strategies, particularly in the development of biofuels.7,26,27 Because EMP systems have been proposed as more sustainable alternatives to traditional bioprocesses, conducting LCAs on these systems is a crucial tool in assessing these claims. Principles of life cycle assessment have been applied to analyze EMP systems to date. For example, Nangle et al. included land use calculations in addition to demonstrating lithoautotrophic production of novel chemicals.28 Leger et al. recently produced a comprehensive analysis of energy and land occupation footprints in the electromicrobial production of single-celled protein (SCP),23 expanding on similar assessments of SCP production.29,30 However, comprehensive life cycle assessments that simultaneously consider various EMP pathways, products, and impact categories to develop broad insights to the field are still needed.
+Here, we present a detailed LCA of three major EMP process options relying respectively on acetate, H2, and formate/ic acid as mediator molecules and compare their impacts to a traditional bioprocessing scheme relying on corn-derived glucose (Fig. 1). We chose biomass, enzymes, and lactic acid as examples to represent the breadth of products that can be manufactured by EMP systems. Biomass is useful as a reference product to assess energy demands solely to grow the bacteria. Enzymes are useful representatives of low yield, high value biomacromolecules while lactic acid is a good example of a low-value, high yield commodity chemical. To enable our analysis, we developed two-phase bioreactor models that describe microbial growth and product formation, acid/base reactions, gas/liquid mass transfer, gas and liquid phase flow, and active pH control. The models are used to evaluate the effects of reactor parameters and operating conditions on critical performance metrics including productivity, titer, and material and energy efficiency, and are coupled to process models that present a complete picture of material and energy demands for the EMP processes. Our analysis demonstrates the utility of integrating reactor, process, and life cycle impact models for comprehensively evaluating biotechnological processes. Together, the presented models, methodology, and analysis provide a framework for analyzing EMP systems that can help enable working, scalable, and sustainable electromicrobial production processes.
+Computational methods
+System overview and governing equations
+All bioreactor models (Fig. 2a) assume well-mixed liquid and gas phases that are exchanged at fixed liquid- and gas-phase dilution rates. In the liquid phase, we consider, where relevant, dissolved CO2, dissolved H2, dissolved O2, bicarbonate anions (HCO3−), carbonate anions (CO32−), protons (H+), hydroxide anions (OH−), sodium cations (Na+), chloride anions (Cl−), formic acid (HCOOH), formate (HCOO−), acetic acid (H3C2O2H), acetate anions (H3C2O2−), lactic acid (H5C3O3H), lactate anions (H5C3O3−), enzyme (E), and microbes (X). In the gas phase, we consider CO2, H2, and O2. By neglecting ammonium/a species, we have assumed they are fed in excess to the liquid phase as NH3.
+ Fig. 2  Overview of reactor model and metabolic pathways. (a) Bioreactor scheme. Gas and liquid media (dark blue arrows) are fed to and extracted from a two-phase, well-mixed bioreactor. The model considers gas–liquid mass transfer (purple), acid–base reactions (pink), microbial growth and product formation (green), and pH control (light blue). (b) Metabolic pathway map showing acetate assimilation and H2 and formate oxidation coupled to lactate production (left), and acetate production in acetogenic microbes (right). Colors correspond to the three processes we evaluate (red: acetate-mediated; yellow: H2-mediated; blue: formate-mediated). 
+The well-mixed phases are assumed to have sufficient convective mixing such that no concentration gradients are formed. Such an open, well-mixed system must satisfy mass conservation, given generally for the liquid phase as (1)and for the gas phase as (2)where ci is the concentration, pi is the partial pressure, Ri is the net volumetric rate of formation and consumption due to microbial growth (X), acid/base reactions (A–B), liquid or gas flow (LF/GF), gas/liquid mass transfer (G–L), and pH control (pH) for species i (Fig. 2a). The operating temperature is given by T, and R is the gas constant. Note that the gas phase species are assumed to follow ideal behavior and that the liquid and gas volumes in the reactor are equal.
+Microbial growth and product formation
+Microbial growth occurs in the well-mixed liquid phase and is responsible for the production of more cells and the consumption or production of several chemical species (Fig. 2a). These reactions are compiled in RX,i. We assume that the kinetics of carbon fixation (or acetate uptake, in the case of acetotrophic growth) represent the upper bound on the biomass and product formation rates because all carbon-containing molecules produced by the cell are derived from the carbon-fixing metabolism. Hence, we assume that the combined rate of biomass and product (lactate or enzyme) formation (moles carbon per volume per time) is dependent on the molar biomass carbon concentration (cX) and the specific growth rate (μ). For lactate, this results in RX,X + 3RX,L = μcX(3)where the factor of 3 precedes RX,L because lactate is a 3-carbon molecule. For the enzyme, the analogous equation is given by RX,X + RX,E = μcX(4)We define the fraction of carbon diverted to biomass as (5)where ζ is the stoichiometric ratio of products to cells in, for example, the generic biomass equation given by (6)where S is a generic substrate and P is a generic product. We assume x is an engineerable parameter (e.g. by tuning the expression levels of different enzymes) and calculate ζ according to (7)Hence, the biomass growth rate (RX,X) and product formation rate (RX,L, RX,E) are given byRX,X = xμcX RX,L/E = ζxμcX(8)and consumption or production of other molecules (e.g. O2, H2, CO2, etc.) is written as RX,i = αX,iRX,X + αL/E,iRX,L/E(9)where αi < 0 if the species is consumed in the reaction following standard convention.31
+Microbial growth kinetics are defined using the Monod model with dependencies on each potentially growth-limiting substrate. The equations for aerobic formatotrophic (F), aerobic hydrogenotrophic (H2), anaerobic acetogenic (A), and aerobic acetotrophic growth (Ac) are given as (10) (11) (12) (13)where μmax is the maximum specific growth rate of the organism when all fixed carbon is diverted to biomass and Ki is the Monod constant for substrate. Note that acetotrophic growth includes an Andrews/Haldane inhibition term (KI,Ac) to account for growth defects associated with high acetate concentrations reported previously.32
+Biomass and product yield
+We use a combination of experimental values and stoichiometric and energetic calculations to determine the yields of biomass and products on different carbon and energy sources (Fig. 2b). In all cases we assume that enzyme yield  is equivalent to biomass yield  and that enzymes have approximately the same chemical composition as biomass.
+
+Formatotrophic (aerobic) growth. 
+For formatotrophic growth with O2 as the terminal electron acceptor and formate as the energy and carbon source (note that formate is completely oxidized and CO2 is fixed via the Calvin cycle in C. necator), the biomass reaction is written as αX,FHCOO− + αX,FH+ + βX,FNH3 + γX,FO2 → CH1.77O0.49N0.24 + κX,FCO2 + εX,FH2O(14)where CH1.77O0.49N0.24 represents cell mass (molar mass ∼25 g mol−1). From stoichiometry, (15)where  is the molar yield of biomass on formate, which we define according to a previously described empirical relationship,16,17 (16)where θF is a fitting parameter that represents the maximum formate/ic acid concentration at which cells can grow.
+The lactate formation reaction is written as αL,FHCOO− + (αL,F − 1)H+ + βL,FNH3 + γL,FO2 → C3H5O3− + κL,FCO2 + εL,FH2O(17)Relying on stoichiometry, (18)where  is the molar yield of lactate on formate. To determine this value, we follow the stoichiometry and energetics of carbon fixation via the Calvin cycle to lactate as follows (Fig. 2b). Microbes support energy carrier (NADH and ATP) regeneration by using NAD+-dependent formate dehydrogenases to catalyze the reaction HCOO− + NAD+ → CO2 + NADH(19)NADH is then used to regenerate ATP following aerobic respiration (oxidative phosphorylation): (20)where P/O is the oxidative phosphorylation ratio (typically 2–3). When using the Calvin cycle to fix CO2, seven ATP and five NADH are consumed to fix three CO2 molecules into one pyruvate molecule: 3CO2 + 5NADH + 7ATP + 4H+ → C3H3O3− + 5NAD+ + 7(ADP + Pi) + 3H2O(21)Pyruvate is then converted to lactate via lactate dehydrogenase according to C3H3O3− + NADH + H+ → C3H5O3− + NAD+(22)The resulting overall reaction for lactate production (using a P/O ratio of 2.5) is given by (23)Hence, the maximum theoretical molar yield of lactate on formate is ∼0.11 mol mol−1. Because the molar cell yield  is influenced by the formate concentration due to a variety of toxicity effects in C. necator, we include this dependency for lactate as well: (24)
+
+
+Hydrogenotrophic aerobic (Knallgas) growth. 
+We use the same formulation as that for formatotrophy to describe biomass growth and product formation, but we modify the stoichiometry to account for the different energy source. The biomass equation is written as αX,HH2 + βX,HNH3 + γX,HO2 + κX,HCO2 → CH1.77O0.49N0.24 + εX,HH2O(25)resulting in the stoichiometric relationships given by (26)The lactic acid production reaction is written as αL,HH2 + βL,HNH3 + γL,HO2 + κL,HCO2 → C3H6O3 + εL,HH2O(27)with stoichiometry given by (28)We determine the lactic acid production yield on H2 following the same method as for formate, resulting in: 8.8H2 + 3CO2 + 1.4O2 → C3H6O3 + 5.8H2O(29)The equivalent theoretical molar yield of lactate on H2 and formate is because H2 and formate oxidation both result in the reduction of one molecule of NAD+ to NADH (Fig. 2b).
+
+
+Acetogenic (anaerobic) growth. 
+Acetogenic growth relies on the energy derived from acetate generation to drive biomass formation. Following Fast and Papoutsakis,33 H2 oxidation drives acetyl-CoA formation from CO2 given by 4H2 + 2CO2 + (1 − n)ATP + HSCoA → C2H3OSCoA + 3H2O + (1 − n)(ADP + Pi)(30)where n is the ATP conservation coefficient, representing ATP regeneration driven by the conservation of energy from proton or sodium gradients.33,34 A simple equation for biomass formation from acetyl-CoA is also derived by Fast and Papoutsakis,33 written as (31)where Δγ is the difference in the degree of reduction between acetyl-CoA (γ = 4) and biomass (γ = 4.07). We note that this equation, as written, is neither atomically nor charge balanced, so it should be taken to only represent the energy carrier demand of biomass formation. To generate the necessary energy, acetyl-CoA can be oxidized to acetic acid, resulting in the generation of an ATP: (32)A linear combination of these equations to balance ATP results in (33)NADH is readily generated by the oxidation of H2 using hydrogenases, and we assume the nitrogen content in biomass is supplied by ammonia. Hence, a balanced overall acetogenic growth equation is given by (34)where b is the oxygen content in the biomass equation (0.49 in this case).
+
+
+Acetotrophic (aerobic) growth. 
+The biomass equation is written as αX,AC2H3O2− + αX,AH+ + βX,ANH3 + γX,AO2 → CH1.77O0.49N0.24 + κX,ACO2 + εX,AH2O(35)with stoichiometry given by (36)The lactate-forming reaction is written similarly, αL,AC2H3O2− + (αL,A − 1)H+ + βL,ANH3 + γL,AO2 → C3H5O3− + κL,ACO2 + εL,AH2O(37)resulting in stoichiometry given by: (38)To determine the yield of lactate on acetate , we follow the stoichiometry and energetics of acetate assimilation and oxidation through the glyoxylate shunt (Fig. 2b). Acetate is first activated to acetyl-CoA according to C2H3O2− + 2ATP + HSCoA + H+ → C2H3OSCoA + 2(ADP + Pi) + H2O(39)Note that here we’ve combined equations for ATP hydrolysis due to acetyl-CoA synthetase (resulting in AMP) and due to recombination with AMP resulting in 2 ADP. Acetyl-CoA is passed through the glyoxylate shunt to produce oxaloacetate and regenerate energy carriers, resulting in the net reaction given by 2C2H3OSCoA + 3H2O + 2NAD+ + FAD → C4H3O5− + 3H+ + 2NADH + FADH2 + 2HSCoA(40)We assume oxaloacetate is converted to lactate via phosphoenolpyruvate and pyruvate with the net reaction C4H3O5− + NADH + H+ → C3H5O3− + CO2 + NAD+(41)Using the P/O ratio of 2.5 for NADH (as above) and 1.5 for FADH2, the resulting net reaction for acetate conversion to lactate is given as 2C2H3O2− + O2 + H+ → C3H5O3− + CO2 + H2O(42)Hence, we use a theoretical molar yield of lactate on acetate  of 0.5 mol mol−1.
+
+Growth rate dependence on pH and salinity
+We use a simple model to describe the effects of pH and salinity on microbial growth: μmax = μoptρ(pH)ν(cNa)(43)where μopt is the specific growth rate at optimal conditions and ρ(pH) and ν(cNa) are functions describing the impacts of pH and Na+ concentration on the growth rate.
+Following Rosso et al.,35 we write ρ(pH) as (44)Here, pHmin/max is the range of pH over which microbial growth is observed, and the function f (pH) is (45)where pHopt is the optimal pH for growth.
+Microbial growth is strongly dependent on the salinity of the medium. In an effort to adapt E. coli to high salt concentrations necessary for high lactic acid titers, Wu et al. demonstrated that the effect is determined primarily by the Na+ concentration, and that the maximum growth rate decreases approximately linearly with increasing Na+ concentration.36 We use data from Wu et al. to fit this dependence according to (46)where cNa,min/max is the range of Na+ concentration over which growth is impacted, and the function f(cNa) is given by (47)To ensure a fair comparison across processes, we assume that Na+ concentration has the same impact on each organism in our models.
+Acid/base reactions
+The acid/base bicarbonate/carbonate, formic acid/formate, acetic acid/acetate, lactic acid/lactate, and water dissociation reactions shown below occur in the liquid phase (Fig. 2a) and are treated as kinetic expressions without assuming equilibrium: (48) (49) (50) (51) (52) (53) (54) (55)where k+n and k−n are the forward and reverse rate constants, respectively, and Kn is the equilibrium constant for the nth reaction. For formic acid, acetic acid, lactic acid, and water, we calculate Kn from the van’t Hoff equation using the change of entropy, ΔSn, and the heat of reaction, ΔHn, given by (56)For CO2/HCO3− and HCO3−/CO32− equilibria, we calculate Kn using the empirical relationships compiled by W. G. Mook that account for salinity-induced impacts on the equilibrium constant:37 (57) (58)where S is the medium salinity (in units g kg−1 water).
+Source and sink terms resulting from these reactions are compiled in RA−B,i, written as: (59)where νi is the stoichiometric coefficient of species i for the n th reaction and reverse rate constants (k−n) are calculated from (60)
+Liquid and gas flow
+Liquid media is fed to and extracted from the well-mixed liquid phase at a constant dilution rate (Fig. 2a), resulting in a feed term written as RLF,i = Dliq (cf,i − ci)(61)where Dliq is the liquid dilution rate (defined as the inverse space time, or volumetric flow rate divided by reactor volume). We assume the feed stream is free of microbes. We similarly define a feed term for the gas phase according to (62)where Dgas is the gas dilution rate.
+Gas–liquid mass transfer
+Gas fed to the reactor results in mass transfer to the liquid phase according to RG−L,i = kLai(βipi − ci)(63)where kLai is the volumetric mass-transfer coefficient on the liquid side of the gas/liquid interface, and βi is the Bunsen solubility coefficient (Fig. 2a). Volumetric gas/liquid mass transfer coefficients can be calculated from first principles31 or by using correlations that depend on the system geometry. For O2, we use the correlation developed by Vasconcelos et al. for stirred tank reactors with a height that is twice the diameter, kLaO2 = 22.3(PG)0.66(uG)0.51(64)where PG is the specific power input (in units W m−3) and uG is the superficial gas velocity (in units m s−1). We relate uG to the gas phase dilution rate using (65)where AS is the specific surface area of sparging holes in the reactor (units m−1). In our model, we assume a value of 5.6 m−1 to make a gas dilution rate of 100 h−1 correspond to a superficial gas velocity of 0.05 m s−1, and we use the correlation above to determine the power demand necessary to achieve a given gas/liquid mass transfer rate.
+To calculate the kLa value for CO2 and H2, we use (66)where Di is the diffusivity of species i following Meraz et al. to account for differences in the mass transfer coefficient (kL).38
+We calculate the equilibrium solubility of CO2, O2, and H2 according to the empirical relationship for the Bunsen solubility coefficient (β), (67)where An and Bn are fitting parameters and S is the medium salinity (in units g kg−1 water).
+pH control
+A feedback control loop is included in the reactor to maintain an optimal pH for microbial growth by adding 1 M hydrochloric acid or 1 M sodium hydroxide solutions where appropriate (Fig. 2a). The manipulated flow rate variable (units h−1) is defined as (68)where KC is the controller gain, E is the error, and τ is the controller reset time. The error (E) is defined according to E = pHset − pH(69)where pHset is equivalent to pHopt. The resulting pH control flow is given by RpH,i = rMcpH,i(70)where cpH,i is 1 M for H+/Cl− (acid addition) or 1 M for OH−/Na+ (base addition).
+Reactor model analysis
+
+Reactor productivity. 
+We defined a normalized dilution rate (δ) according to (71)to account for the fact that the maximum growth rate is reduced by diversion of carbon to the product. The reactor productivity can then be calculated as ṁj,n = Zjδj,nxjμmax,ncj(72)where Zj is the molar mass of product j and the subscript n refers to a particular process. For the acetogenic system, we calculated the full-system productivity by accounting for flow through both reactors using (73)where the subscripts “Ac” and “A” refer to the acetotrophic and acetogenic reactors, respectively, and the subscript “AA” refers to the full acetate-mediated system.
+
+
+Reactor energy efficiency. 
+We calculated the energy efficiency of each reactor system according to (74)where PC, PG, and Pth are the powers per unit volume embodied in the formation of product j or the substrate in process n, the demand from mixing and gas/liquid mass transfer (calculated using eqn (64)), and due to heating the liquid feed from room temperature to the operating temperature, respectively. We define the power of formation of a chemical species as the Gibbs free energy change per volume per time associated with the complete combustion of the chemical species following Claassens et al.:21 PC,i,n = |RLF,i,nΔrG0i|(75)for liquid-phase species and PC,i,n = |RGF,i,nΔrG0i|(76)for gas-phase species. We note that these formulations mean that we have assumed residual substrate can be perfectly recycled and therefore represent upper bounds on the efficiency of the systems. The power necessary to heat the liquid feed, Pth, is given by (77)where CP,W and ρW are the heat capacity and density of water, respectively, and COP is the coefficient of performance of the heat transfer unit. Overall efficiency for the acetate-mediated process is calculated by accounting for the power demands of each individual reactor with H2 as the sole energy substrate.
+In the formate-mediated system, the productivity of lactic acid is enhanced by concentrating the formate/ic acid effluent from the CO2 electrolysis system (see Results and discussion). To account for the energy demand associated with this, we assume formate is concentrated using electrodialysis and calculate the power demand according to (78)where cFFA,f is the total concentration of formate and formic acid in the feed stream for the system, ηED,F is the energy efficiency of the electrodialysis system concentrating formate/ic acid, and cFFA,eff is the total concentration of formate/ic acid in the effluent stream of the CO2 electrolyzer. This power demand is then included in the reactor efficiency calculation (eqn (74)).
+
+
+CO2 demand. 
+For each reactor, we assume that all fed CO2 (in the gas phase) that is not transferred to the liquid phase is recycled perfectly such that the net CO2 demand for the reactor producing product j is given directly by the net gas phase CO2 feed rate: ṅCO2,j,n = RGF,CO2,j,n(79)This balance accounts for the fact that CO2 is generated by microbes oxidizing formate (in the formate-mediated system) and acetate (in the acetate-mediated system). In these reactors, ṅCO2<0 because CO2 is generated. In the formate-mediated system, CO2 is consumed to produce formate by the CO2 electrolyzer. Hence, the full-system net consumption of CO2 is given by ṄCO2,j,F = RLF,FFA,j,F + ṅCO2,j,F(80)where RLF,FFF,j,F is the liquid-phase net feed rate of formate/ic acid (which is produced on a 1:1 molar basis from CO2 in the upstream electrolyzer). In the acetate-mediated system, CO2 is consumed in the acetogenic reactor and consumed in the acetotrophic reactor. Hence, the full-system net consumption of CO2 is written as (81)where the subscript “AA” refers to the full acetate-mediated system.
+
+Reactor model implementation
+All equations are solved using the MUMPS general solver in COMSOL Multiphysics 5.4. Model parameters are listed in Table S1 (ESI†).
+Life cycle analysis goal and scope definition
+This life cycle assessment was carried out according to the standards in ISO 14044.24 The open source life cycle assessment software openLCA version 1.10.3 (https://www.openlca.org/)39 was used to aggregate life cycle inventory data and apply impact assessment methods. The Product Environmental Footprints Dataset40 was used to obtain most background life cycle inventories while others were aggregated from literature as needed. Unless otherwise stated, the analysis was made indifferent to the exact location of the process. MATLAB was used to develop an impact model sensitive to changes of various variables and parameters studied.
+The primary goal of this LCA is to predict the performance of three electromicrobial production systems (labelled as the Knallgas bacteria-based system, the formatotrophic system, and the acetogenic system) with regard to two sustainability metrics: global warming potential and land occupation. The LCA compares these systems to each other as well as to a traditional bioprocess using corn-derived glucose as a feedstock for a heterotrophic bacterium. A secondary goal of this analysis is to determine the specific limitations, bottlenecks, and environmental hotspots of each proposed EMP system. The final goal of this analysis is to integrate the life cycle impact model with the bioreactor models developed to create a tool enabling the eco-design of EMP processes.
+Functional unit and system boundaries
+The production of three products is considered: biomass, industrial enzymes, lactic acid. The life cycle impact analysis ends at the production of each product in unprocessed form. Downstream processing is not considered, as the processing of a given product would be identical for each system studied. For the production of biomass, the functional unit is 1 kg biomass. For industrial enzyme production, the functional unit is 1 kg of enzyme unpurified from the cell pellet. For lactic acid, the functional unit is 1 kg of lactic acid at a concentration of 100 g L−1.41 Despite not considering end of life processing of the products, biogenic carbon is not considered as sequestered carbon, and all biogenic carbon is assumed to decompose to carbon dioxide.
+Process modelling and life cycle inventory
+Material and energy requirements for the process are obtained from the results of the EMP reactor models and are sub-divided into the following categories: electricity generation for the EMP system; carbon dioxide direct air capture; ammonia production; other required nutrients and pH control agents; electrolyzer materials; electrodialysis materials; and plant and bioreactor construction. In addition, a corn-derived glucose-fed E. coli process is modelled, in which glucose production is added as a process category. Carbon dioxide flows are explicitly considered in the EMP models (see eqn (79)–(81)). For all other non-substrate nutrient requirements, the medium is assumed to be recycled such that 95% of input materials are consumed by cells in the bioreactor (i.e. the nutrient utilization ratio is 0.95). We assume a C:P ratio of 50:1 and base calcium, magnesium, and sulfur requirements on the elemental composition of E. coli.42
+We assume each major process in the system draws electricity from a grid composed of coal, natural gas, hydropower, nuclear, photovoltaic, and wind-derived energy. The composition of the grid is treated as a variable in our impact assessment model. The life cycle inventories of these six electricity sources are obtained from the Product Environmental Footprints (PEF) dataset. Direct air capture of carbon dioxide via temperature-vacuum swing adsorption is modelled based on Duetz and Bardow's analysis of industrial-scale plants operated by Climeworks.43 Two possible routes for ammonia synthesis are considered, both involving the Haber–Bosch process. In one route, hydrogen for ammonia synthesis is obtained from steam methane reforming (SMR). In an alternative route, hydrogen is obtained from electrolysis of water drawing electricity from the grid (green ammonia). In both cases, the energy requirements and life cycle impacts are adapted from Singh et al.44 A mix of ammonium phosphate (from phosphoric acid) and ammonium chloride (from hydrochloric acid) is supplied to the bioreactor to maintain the assumed C:N:P ratio. Life cycle inventories for phosphoric acid, magnesium sulfate, and calcium chloride are obtained from the PEF dataset. The pH is controlled in the bioreactor by addition of hydrochloric acid and sodium hydroxide, which are obtained through the chlor-alkali process and rely on electricity from the grid. Energy requirements and life cycle impacts are derived from Garcia-Herrero et al.45
+Power demand for electrolytic H2 production in the Knallgas system is given by (82)where VH2 is the operating voltage of the electrolyzer, nH2 is the stoichiometric ratio of electrons to product, F is Faraday's constant, and ηF,H2 is the faradaic efficiency of the electrolyzer producing H2. Power demand for formate production in the formatotrophic system is calculated similarly, resulting in (83)Power demand for H2 production in the acetate-mediated system is calculated using (84)to account for the two-step conversion of H2 into products with acetate as the intermediate. Electrolyzer material requirements are adapted from previous literature46–48 and the life cycle inventories associated with each component are obtained from the PEF database. The lifetime of the electrolyzers is assumed to be three years.
+Because none of the processes achieve a lactic acid titer of 100 g L−1, we model the power demand necessary to concentrate lactate using an electrodialysis system. Using data from Hábová et al.,49 we fit an empirical relationship (see Supplementary Note 6, ESI†) between the lactate titer fed to the electrodialysis system and the energy demand for separation and concentration, resulting in Pconc,LLA,n = ṁLLA,n(aED − bEDcLLA,n)(85)where aED and bED are fitting parameters. To determine material demands of electrodialysis, we fit an empirical equation (see Supplementary Note 6, ESI†) of the form (86)to relate the rate of lactic acid flux (ΓLLA,n) through the membrane to the titer of lactic acid effluent from the reactor. Here, both Γmax and κM are fitting parameters meant to represent the maximum rate of lactic acid flux and the concentration at half the maximum rate, respectively. Using this calculated flux, an assumed lifetime (tM) of three years, and an assumed diluate concentration (cLLA,d) of 1 g L−1, the membrane material requirements are given by (87)The same calculations are used to determine the material demands for concentrating the formate feed stream in the formate-mediated system in the case of lactic acid production, and the life cycle inventory associated with the electrodialysis membrane (we use Nafion 324 as a stand-in) is obtained from the Stropnik et al.50
+The process productivities obtained from the reactor models are used to determine the total bioreactor volumes required to produce the functional unit of a given product. Stainless steel bioreactors are used, with material requirements calculated based on the design of Mobius Bioreactors from EMD Millipore. The impacts of the bioreactor and the plant facility are due primarily to producing the required construction materials—stainless steel for the bioreactor and concrete and steel for the plant, assuming a constant amount of concrete and steel per square meter of facility area.51 The area of facility space required per aggregate volume of the bioreactors is based on the Natureworks lactic acid production facility in Blair, NE. Steel, stainless steel, and concrete life cycle inventories are all obtained from the PEF database. We assume a reactor lifetime of eight years and a plant lifetime of thirty years.
+Glucose for the heterotrophic process is obtained from the hydrolysis of corn starch, and life cycle inventories of glucose production are obtained from the PEF dataset. Ammonia requirements for corn production are obtained from Ma et al.52 and the life cycle inventories for glucose production are adjusted to account for reduced carbon emissions in the case of green ammonia production.
+Life cycle impact assessment
+Global warming potentials were calculated according to the 2013 IPCC model for 100 year global warming potential and are expressed in kilograms of CO2-equivalents [kg CO2-e].53 The land use footprint is calculated using the ReCiPe (H) 2016 method, which weights the impact of various types of land use by their impact on biodiversity.54 The units of land use are expressed as m2 year crop equivalents, representing the weighted land use needed to produce a given functional unit of product per year.
+Sensitivity analysis
+All parameters used in the development of the bioreactor models and life cycle analysis (e.g., growth rates, reactor lifetimes, solar electricity GWP) other than physical properties (molecular weights, heat capacities, etc.) were independently altered by ±30% and the global warming potential of each process was recalculated. The ratio of the global warming potential of each EMP process (formatotrophic, Knallgas, and acetogenic) and the global warming potential of the heterotrophic process in each scenario was taken to be the metric of interest to evaluate the sensitivity of each parameter. The parameters that caused the largest deviation of this ratio from the equivalent ratio for the base case value of all parameters were taken to be the most critical parameters in the study (a 10% deviation of this ratio from the base case value was used as a cutoff). A list of all parameters studied can be found in Table S3 (ESI†).
+Results and discussion
+Reactor models reveal trade-offs in productivity and efficiency across processes
+We first describe trends in the productivity (Fig. 3a–c), titer (Fig. 3d–f), and efficiency (Fig. 3g–i) of the three EMP processes producing biomass, enzyme, and lactic acid, and second make comparisons between base case conditions for the three processes.
+ Fig. 3  EMP reactor performance. Productivity (a–c), titer (d–f), and energy efficiency (g–i) as a function of normalized dilution rate (δ) for the three EMP systems producing biomass (a, d and g), enzyme (b, e and h), and lactic acid (c, f and i). Base case conditions (see Table 1) are indicated by blue diamonds (formate-mediated), yellow circles (H2-mediated), and red triangles (acetate-mediated). The color scheme in all panels follows that in (a). 
+The productivity, titer, and efficiency of biomass and enzyme production for each system have nearly identical dynamics. Because formate is fed in the liquid phase, the formatotrophic system follows the standard trend of initially increasing productivity as a function of the dilution rate, followed by a rapid decline as cell washout occurs (Fig. 3a and b). Complete washout (i.e., a productivity and titer of ∼0) occurs well before the dilution rate exceeds the maximum growth rate (at a normalized dilution rate of 1). This is due to the limitation on productivity imposed by O2 gas–liquid mass transfer. As the dilution rate increases, the formate feed rate exceeds the consumption rate limit imposed by O2 mass transfer, causing toxic build-up of formate in the reactor. Formate build-up prevents cell growth, which results in cell washout. Mass transfer limit-induced washout dynamics are also observed in the acetogenic system (Fig. 3a, b, d and e), although the behavior for acetate is slightly different from that for the formate case due to the different strategies for modeling acetate and formate toxicity. The productivity of biomass (Fig. 3a) and enzymes (Fig. 3b) in the H2 mediated system does not follow the typical trend because all substrates necessary for growth are fed via the gas phase. Hence, productivity is only slightly dependent on the liquid phase dilution rate until washout begins to occur at a normalized dilution rate of ∼0.85 (Fig. 3a and b). Instead, for the H2-mediated system, product titer is controlled by the liquid dilution rate, enabling a wide range of achievable product titers (Fig. 2d and e). For each system, the optimal efficiency occurs at the same dilution rate at which the productivity is maximized.
+In each system, lactic acid production is significantly influenced by the toxicity induced by high salinity (Fig. 3c, f and i). In the formatotrophic system, the productivity initially increases as the dilution rate increases, reaching a maximum at a normalized dilution rate of 0.55 (Fig. 3c). In contrast to biomass and enzyme production, this maximum is not due to the gas–liquid mass transfer limit of O2. Instead, lactic acid production (resulting in a lactic acid titer of ∼42 g L−1, Fig. 3f), requires pH control to maintain an optimal pH for microbial growth. This results in a high Na+ concentration due to NaOH addition, reducing the maximum growth rate of cells (eqn (46) and (47)). In this case, the lactic acid titer of ∼42 g L−1 reduces the growth rate to ∼56% of its maximum value, causing cell washout to begin to occur at a normalized dilution rate of ∼0.56 (Fig. 3c and f). Cell washout also reduces the titer of lactic acid (Fig. 3f). These effects, in addition to the incomplete utilization of formate feed as cell washout occurs, combine to reduce the efficiency of formatotrophic lactic acid production as the normalized dilution rate exceeds ∼0.56 (Fig. 3i).
+In the acetate-mediated system, the toxicity effect of high salinity also causes cell washout near ∼56% of the maximum growth rate (Fig. 3c and f). The decline in productivity, titer, and efficiency is much more rapid than in the formatotrophic case. This is because the Na+ concentration in the feed stream is much higher than in the formate case. Acetic acid production in the upstream reactor requires NaOH addition to maintain a neutral pH for acetogenesis, so the acetotrophic reactor cannot avoid a high Na+ concentration by reducing the lactic acid titer. Hence, even though the acetotrophic reactor requires acid addition to maintain a near-neutral pH (resulting in no additional Na+ supplied to the reactor), the residual Na+ fed from the acetogenic reactor is sufficient to result in cell washout above a normalized dilution rate of ∼0.56.
+In the H2-mediated system, Na+ toxicity limits the productivity and titer of lactic acid, although this limitation occurs at lower dilution rates (δ <0.55) rather than high dilution rates. This effect is because the lactic acid titer (and therefore, the Na+ concentration) increases as the dilution rate decreases (Fig. 3f), which in turn is a result of the fact that all substrates for growth and lactic acid formation (H2, CO2, O2) are fed via the gas phase (similar to the biomass and enzyme production cases).
+The efficiency of lactic acid production, in addition to that of biomass and enzyme production, is optimized at the maximum productivity. We therefore selected base-case operating conditions by maximizing the productivity for each system (Table 1). A minimum normalized dilution rate of 0.1 was arbitrarily set for the H2-mediated system producing biomass and enzymes because it has a wide dilution rate range at which the productivity is roughly equal. In the acetate-mediated system, the dilution rate in the acetogenic (S. ovata) reactor was set by maximizing the full-system productivity (see Supplementary Note 1, ESI†). For lactic acid production in the formate-mediated system, we used a concentrated (5.1 M) formate feed stream to maximize productivity (see Supplementary Note 2, ESI†).
+Table 1 Base case operating conditions
+
+
+
+
+Parameter
+Value
+Units
+
+
+Description
+Variable
+Formatotrophic
+Knallgas
+Acetogenic
+
+
+
+
+
+Biomass
+
+
+
+Normalized dilution rate (liquid phase)
+
+δ
+
+0.37
+0.1
+0.55 (S. ovata)
+—
+
+
+0.24 (E. coli)
+
+
+H2 feed pressure
+
+P
+H2
+
+—
+1
+1 (S. ovata)
+atm
+
+
+— (E. coli)
+
+
+O2 feed pressure
+
+P
+O2
+
+0.21
+0.21
+— (S. ovata)
+atm
+
+
+0.21 (E. coli)
+
+
+Formate feed concentration
+
+c
+FFA,f
+
+2.08
+—
+—
+M
+
+
+Titer
+
+c
+X
+
+8.8
+36.1
+11.25
+g L−1
+
+
+Productivity
+
+ṁ
+X
+
+0.585
+0.65
+0.20
+g L−1 h−1
+
+
+Efficiency
+
+η
+X
+
+31.6
+34.0
+34.7
+%
+
+
+
+
+
+
+
+Enzyme
+
+
+
+Normalized dilution rate (liquid phase)
+
+δ
+
+0.41
+0.1
+0.55 (S. ovata)
+—
+
+
+0.27 (E. coli)
+
+
+H2 feed pressure
+
+P
+H2
+
+—
+1
+1 (S. ovata)
+atm
+
+
+— (E. coli)
+
+
+O2 feed pressure
+
+P
+O2
+
+0.21
+0.21
+— (S. ovata)
+atm
+
+
+0.21 (E. coli)
+
+
+Formate feed concentration
+
+c
+FFA,f
+
+2.08
+—
+—
+M
+
+
+Carbon fraction to biomass
+
+x
+
+0.9
+0.9
+— (S. ovata)
+—
+
+
+0.9 (E. coli)
+
+
+
+
+
+
+Titer
+
+c
+E
+
+0.88
+4.0
+1.1
+g L−1
+
+
+Productivity
+
+ṁ
+E
+
+0.058
+0.065
+0.020
+g L−1 h−1
+
+
+Efficiency
+
+η
+E
+
+3.16
+3.40
+3.45
+%
+
+
+
+
+
+
+
+Lactic acid
+
+
+
+Normalized dilution rate (liquid phase)
+
+δ
+
+0.55
+0.55
+0.55 (S. ovata)
+—
+
+
+0.56 (E. coli)
+
+
+H2 feed pressure
+
+P
+H2
+
+—
+1
+1 (S. ovata)
+atm
+
+
+— (E. coli)
+
+
+O2 feed pressure
+
+P
+O2
+
+0.21
+0.21
+— (S. ovata)
+atm
+
+
+0.21 (E. coli)
+
+
+Formate feed concentration
+
+c
+FFA,f
+
+5.1
+—
+—
+M
+
+
+Carbon fraction to biomass
+
+x
+
+0.1
+0.1
+— (S. ovata)
+—
+
+
+0.1 (E. coli)
+
+
+
+
+
+
+Titer
+
+c
+LLA
+
+42.4
+42.4
+18.3
+g L−1
+
+
+Productivity
+
+ṁ
+LLA
+
+0.42
+0.42
+0.18
+g L−1 h−1
+
+
+Efficiency
+
+η
+LLA
+
+37.0
+45.8
+41.8
+%
+
+
+
+
+Considering biomass first, the achievable productivity is highest for the H2-mediated system at ∼0.65 g L−1 h−1, ∼11% and ∼225% higher than the productivities of the formatotrophic and acetogenic systems, respectively (Fig. 3a). The former difference is due to the ∼13% higher biomass yield on O2 with H2 as the energy substrate than with formate and the fact that the H2 gas/liquid mass transfer limit is slightly lower than the O2-imposed limit. The acetogenic system, in contrast, is primarily limited by the acetate production rate of the acetogen, which grows ∼4-fold slower than Knallgas and formatotrophic bacteria.
+The Knallgas system also achieves the highest biomass titer (∼36 g L−1vs. ∼8.8 g L−1 and ∼11 g L−1) because the titer is fully controllable by the liquid-phase dilution rate for this system (Fig. 3d). These trends also hold for the enzyme production case, although the productivity, titer, and efficiency are all ∼10-fold lower than for biomass because we assume only 10% of the fixed carbon is diverted to enzyme production (Fig. 3b and e). For both biomass and enzyme formation, the efficiency of each EMP process is remarkably similar (∼32–35% for biomass production, Fig. 3g). These efficiencies are dominated by the metabolic efficiency, defined as the ratio of energy embodied in the product to energy embodied in the main substrate. That these efficiencies are nearly equal is surprising given the remarkably different metabolic strategies for biomass (or enzyme) production.
+In contrast to the case for biomass and enzyme formation, the formate-mediated and H2-mediated lactic acid productivity is equal at ∼0.42 g L−1 h−1, ∼130% higher than the acetogenic system (Fig. 3c). Each system is limited by the Na+ concentration-induced toxicity; in the acetate-mediated system, each of the two bioreactors experience this limitation, which is responsible for the substantially lower productivity. The H2-mediated system achieves the highest efficiency of the three EMP options; the efficiency of the formate-mediated system is hindered by the requirement that the formate effluent from the CO2 electrolyzer must be concentrated by a factor of ∼2.5 to achieve high productivity (eqn (78) and Supplementary Note 2, ESI†).
+Several initial conclusions can be drawn from this analysis. First, both the Knallgas and formatotrophic systems can achieve higher productivities than the acetogenic system. The acetogen-based system does maintain advantages not captured in this analysis, including that a wider range of industrial microorganisms (e.g., E. coli, Bacillus licheniformis, and some oleaginous yeasts) grow naturally on acetate, but bioengineering efforts could obviate this advantage in the future. Second, the solubility advantage of formate as a growth substrate is only relevant in cases where the O2 gas–liquid mass transport is a less stringent limit on productivity than H2 transport. This depends both on the ratio of H2 to O2 in the gas phase and the ratio of H2 to O2 consumed per unit of product. In the production cases we explored here, the formatotrophic system never achieves a higher productivity than the Knallgas system. In the biomass and enzyme production cases, the O2 mass transport limit is rate-determining. In principle, the formatotrophic system could achieve a higher lactic acid productivity than the Knallgas system, but salinity effects prevent this (Fig. 3c). Third, the necessity of concentrating formate from the effluent of a CO2 electrolyzer to achieve high formatotrophic productivity when O2 gas liquid mass transfer is not rate-limiting represents a non-negligible energy penalty, reducing energy efficiency (Fig. 3i). Improvements in CO2 electrolysis reactor operation may overcome this challenge, as we discuss later.
+We also note that the gas mixture we have assumed for the Knallgas system is flammable.55 A nonflammable gas mixture would either require significantly less air (∼0.27 atm vs. the assumed 1 atm), reducing productivity by decreasing O2 solubility, or significantly more H2 (∼3.62 atm vs. the assumed 1 atm), increasing safety concerns associated with pressurized gases and likely increasing reactor and control systems complexity.
+These results indicate trade-offs in productivity, titer, and efficiency such that reactor models alone cannot identify a clearly-best EMP strategy. Moreover, upstream processes including energy substrate generation (via either water of CO2 electrolysis), CO2 capture, ammonia production, NaOH and HCl production for pH control, and other considerations, require explicit attention as important drivers of material and energy demand for EMP processes. We therefore developed a complete process model (diagrammed in Fig. 4) for the EMP processes to understand material and energy flows for the full system, which we discuss next.
+ Fig. 4  Schematic representation of the EMP system. Grid electricity (midnight blue) supplies electricity to the EMP reactors and supporting processes, including direct air capture of CO2 (blue), ammonia production via the Haber–Bosch process (royal purple), the chlor-alkali process producing pH control agents (purple), and downstream electrodialysis-based separations for lactic acid (orange). Mining and production of electrolyzer materials (magenta) and materials for reactor and plant construction (pink) are also considered within the impact model. 
+Energy requirements for EMP processes
+In our EMP process model (see methods), there are five major energy demands: electrosynthesis of mediator molecules (H2 or formic acid), bioreactor energy demands (heating, gas–liquid mass transfer, etc.), direct air capture of carbon dioxide, green ammonia production, and production of NaOH and HCl for pH control through electrolysis of NaCl and water. The material and energy flows for each of the three systems are summarized in Table 2, with process power demands broken down by subcategory in Table S2 (ESI†).
+Table 2 Energy and material demand for biomass production
+
+
+
+
+Process demand
+Value
+Units
+
+
+Formatotrophic
+Knallgas
+Acetogenic
+Theoreticala
+
+
+
+
+
+a Theoretical energy and material demand calculations can be found in Supplementary Note 8 (ESI).
+
+
+
+
+
+Total process electricity
+54.3
+28.4
+32.0
+6.55
+kW h kg−1 CDW
+
+
+Electrolysis & bioreactor electricity
+48.0
+23.2
+21.5
+5.32
+kW h kg−1 CDW
+
+
+CO2
+2.09
+1.76
+2.08
+1.76
+kg CO2 kg−1 CDW
+
+
+NH3
+0.179
+0.179
+0.201
+0.17
+kg NH3 kg−1 CDW
+
+
+Total NaOH and HCl
+0.30
+0
+3.23
+0
+kg kg−1 CDW
+
+
+
+
+In all cases, electrolysis to produce H2 or formate contributes the majority of the energy demand of each system over the entire process. Even though the acetogenic EMP system has the lowest energy requirements when considering only electrolysis and bioreactor operation (Table 2), the Knallgas bacteria system has the overall lowest energy demand of the three systems when considering the entire electromicrobial production process. This is caused by a combination of lower CO2 and NH3 consumption, and the lack of required pH control in the Knallgas bacteria system. The increased carbon and nitrogen requirements of the acetogenic process stem from the “wasteful” production of S. ovata biomass (eqn (32)).
+The Knallgas bacteria system requires no pH control (see eqn (68)–(70)) for calculations) because conversion of H2 and CO2 to biomass involves no net consumption or generation of protons (eqn (25)). The formatotrophic system requires only a relatively small amount of NaOH to balance the pH due to the formic acid feed (eqn (14)). Our model predicts the acetogenic system requires substantial pH control (eqn (34) and (35)), as conversion of CO2 into acetate lowers the pH of the S. ovata medium (requiring addition of basic solution) while conversion of acetate to biomass raises the pH of the heterotroph reactor (requiring addition of acidic solution). Owing to the substantial amount of electricity required by the chlor-alkali process to produce NaOH and HCl, pH control accounts for 12.4% of the total electricity required by the acetogenic EMP process (Table 2).
+Direct air capture (DAC), despite being a relatively immature technology industrially, only accounts for (at most) 12.5% of the total energy use of the EMP systems given current industrial DAC data (Table S2, ESI†). Therefore, neither improving the direct air capture process nor utilizing carbon from a different source with lower energy requirements is likely to substantially alter the results of this analysis.
+Global warming potential
+The global warming impacts of all components shown in Fig. 3 were calculated as outlined in the methods section for each of the three EMP systems and the traditional glucose-fed process. For the case of a wind-powered process, the global warming potential broken down by process categories is shown in Fig. 5. It should be noted that other means of clean electricity production (such as thin-film photovoltaics and hydropower) have roughly equivalent life cycle emissions per kW h produced, and therefore would lead to similar results. To study general trends regarding the potential of each process alternative, 1 kg of biomass is chosen as the product and functional unit for a baseline comparison.
+ Fig. 5  Global warming potential of EMP and traditional bioprocesses. Global warming potential for the three EMP systems and traditional heterotrophic system for the production of (a) biomass, (b) enzymes, and (c) lactic acid, broken down by process category. Data shown here assume base-case conditions as described in Table 1. 
+Our impact model shows that all three proposed EMP systems have the potential to have a lower global warming potential than that of the corn-based glucose-fed bioprocess, given a clean electricity source. Our analysis indicates the Knallgas bacteria system has a lower overall global warming potential (0.68 kg CO2-eq. kg−1 biomass) than both the formatotrophic system and acetogenic system (1.16 and 1.35 kg CO2-eq. kg−1 biomass respectively). The reduction in greenhouse gas emissions associated with the electromicrobial production system compared to the heterotrophic system stems from the low emissions of the individual components of the EMP systems when drawing energy from a low-impact energy grid. The high-impact agricultural production of corn and other crops as feedstocks in bioprocesses contributes the largest share of the global warming potential of these systems. While the carbon emissions associated with fertilizer production can be reduced with increased clean energy (as calculated in our impact model), the large amount of nitrous oxide emissions due to fertilizer application will not be affected by this change, leading to a relatively large global warming potential of traditional bioprocesses. Therefore, in a clean-electricity dominated scenario, the Knallgas bacteria-based EMP system will have a GWP 64% lower than a glucose-fed process (Fig. 5).
+Although both rely on the same microorganism in our model (C. necator), the formate-mediated electromicrobial system will have a larger global warming potential than a hydrogen-mediated system. CO2 electrolysis to formate occurs at lower current densities (140 mA cm−2vs. 1 A cm−2) and with higher overpotentials (>2 V vs. ∼0.8 V) compared to water electrolysis, resulting in an increased carbon footprint due to an increased demand for electrolyzer materials (e.g. Ir, Pt, Nafion, etc.) and increased energy consumption. We further describe the effects of potential improvements to this system in the later section titled “Engineering Targets for Formate Electrolysis”.
+The greatest environmental hotspot of the acetogen-based system compared to the others is due to the production of NaOH and HCl for pH control (Fig. 5). The chlor-alkali process that produces NaOH and HCl is an energy-intensive electrolytic process, and therefore contributes a substantial carbon footprint. Even when running the chlor-alkali process with clean electricity, NaCl production and other processing steps still contribute to the carbon footprint of pH control.45 However, there are options to help alleviate this constraint. For example, engineering the acetogen-based process to take place in a single reactor could address the problem of pH control because the combined biochemical reactions result in no net generation or consumption of protons. The key impediment to this solution is the strict oxygen sensitivity of acetogens such as S. ovata56 and the requirement for oxygen in assimilation of acetate as a sole carbon source.57 However, for certain applications, this may be achievable. S. ovata has recently been evolved to tolerate low concentrations of oxygen.58 If paired with a heterotroph producing a product traditionally produced by fermentation, such as butanol,59 microaerobic conditions would be suitable to achieve high yields. Therefore, the aeration conditions of the two organisms could be similar enough to warrant their co-culture in a single reactor.
+Further transitions to a clean energy grid will likely reduce the carbon footprint of EMP processes due to a combination of effects too granular to be captured in our model. The life cycle carbon footprint of solar energy production, for example, will likely fall as silicon production and purification processes begin to use cleaner energy. Emissions due to transportation along the supply chain will likely fall due to increased use of electric vehicles. As such changes continue to occur, it is in principle feasible for electromicrobial production processes to achieve full carbon neutrality. The carbon footprint of glucose-based bioprocesses, however, is unlikely to achieve full carbon neutrality. Cleaner methods of fertilizer production and electrified processes for farming machinery and glucose processing will indeed lower the carbon footprint of conventional bioprocesses. However, the primary source of greenhouse gas emissions in corn production is due to the application of fertilizers, as nitrogenous fertilizers are partially degraded to nitrous oxide, a greenhouse gas with 298-fold higher global warming potential than of CO2.52,53 Further transitions to a clean electric grid and electrified processing, then, are more likely to decrease the global warming potential of EMP processes than of heterotroph-based processes.
+We extended our life cycle impact analysis to the other two products modelled, industrial enzymes and lactic acid (Fig. 5b and c). In the case of an industrial enzyme as the product of interest, the trends largely follow that of biomass (Fig. 5b). Assuming the industrial enzyme product is intracellular, effects of titer do not impact the energy demand as low-energy separation methods (e.g., settling, filtering, centrifuging) are possible. Therefore, the similar trends for GWP in enzyme production and biomass production, scaled due to the relative yields of each, are expected. In the case of lactic acid production, the trends between EMP systems are similar to those of biomass production, with Knallgas bacteria-based production of lactic acid exhibiting the lowest global warming potential of the systems studied. We note that the lactic acid effluent must be concentrated (we assume electrodialysis, see Methods) in all three EMP systems studied in order to achieve the desired 100 g L−1 titer. However, due to the relatively low material and energy demands of the electrodialysis process, this does not significantly impact the global warming potential (Fig. 5c).
+We have also calculated a cradle-to-grave life cycle global warming potential of polylactic acid (PLA) made from lactic acid in each of these processes (Fig. S4, ESI†), assuming the PLA is incinerated at the end-of-life. We have found that PLA made from EMP-generated lactic acid will have lower life-cycle greenhouse gas emissions compared to petroleum-based plastics such as polystyrene (PS) and polyethylene terephthalate (PET), assuming a sufficiently high yield (see Supplementary Note 4, ESI†).
+Importantly, the data shown in Fig. 5 assume 90% of the fixed carbon is converted to lactic acid (see Table 1), which matches the yield commonly achieved by lactic acid fermentation from glucose.60 This high yield of lactic acid, achievable due to the high yield of fermentation products during anaerobic growth, may not be achievable in EMP systems. All three EMP systems considered (based on hydrogen-oxidizing, formatotrophic, or acetotrophic metabolism) require respiration, suggesting the high yield of lactic acid may not be achievable. We expand on the effect product yield has on the viability of EMP systems in the following section.
+Effect of electric grid on global warming potential of EMP systems
+The dominant factor affecting the environmental sustainability of electromicrobial production systems is the source of energy due to the high electricity demand of each system. We therefore studied how the electricity grid composition affects the global warming potential associated with each system (Fig. 6a). Although our impact model can input an electric grid composition comprising several sources (coal, natural gas, hydropower, nuclear, photovoltaic, and wind), to simplify the results we assumed an electric grid comprised of some combination of wind power and natural gas, defining the fraction of electricity derived from wind power as the “percent of grid renewable.” It should be noted that the electric grid composition of the United States (as of 2019) has a global warming potential of about 450 g CO2 per kW h, roughly equivalent to a grid that is based 100% on natural gas.61 As shown in Fig. 5a, even the Knallgas bacteria system, which has the lowest GWP of the three schemes, will not have a lower GWP than a traditional glucose-based system unless over 90% of the electric grid comes from renewable resources. These “breakeven” values are 95% and 97% renewable electricity for the acetogenic and formatotrophic system, respectively.
+ Fig. 6  Effect of electricity grid on global warming potential. (a) Global warming potential for the production of biomass for the formate- (blue), acetate- (red), H2- (Knallgas, yellow), and glucose-fed (traditional bioprocessing, dashed gray) systems drawing electricity from a grid composed of variable fractions of wind power (renewable) and natural gas (non-renewable). Inset shows the >90% renewables region bounded by the dashed box. (b) Global warming potential for the production of lactic acid in the H2-fed (Knallgas) system (yellow) as a function of electricity grid compositions for variable carbon efficiencies (fraction of fixed carbon diverted to lactic acid) as well as global warming potential for the traditional glucose fermentation of lactic acid (dashed gray). 
+
+Fig. 6b shows similar breakeven curves for the production of lactic acid in a Knallgas bacteria-based system at a range of carbon efficiencies (defined as the fraction of fed or fixed carbon diverted to lactic acid). As noted previously, lactic acid production in EMP systems has not yet been demonstrated, although other similar products (i.e., traditionally made through fermentation) such as isopropanol and butanol have been produced with moderate carbon efficiency.59,62 The carbon efficiency of product formation will play a large role in its global warming potential. At 90% carbon efficiency, lactic acid production in a hydrogen-fed system will attain environmental viability if at least 90% of the electric grid is composed of renewable resources. At lower carbon efficiencies, stricter requirements of the grid are necessary to achieve a lower GWP than traditional glucose-fed processes. At 30%, production of lactic acid through EMP will result in higher greenhouse gas emissions than the glucose-fed process (Fig. 6b) regardless of the electricity source. This result highlights the importance of maximizing the product yield as electromicrobial systems are developed and establishes a target yield of at least 50% of the theoretical maximum.
+Land use
+Our impact assessment demonstrates a significantly lower land use of EMP systems compared to traditional bioprocesses, even when using solar energy, the electricity generation method with the largest land occupation footprint (Fig. 7). This result is expected as EMP processes have been proposed in part to alleviate the “food vs. fuel debate” that stems from the high agricultural land use of traditional bioprocesses and biofuels. The dominant factor determining the land occupation of EMP systems is the land used by solar panels required for electricity production, including electricity production for electrolysis, ammonia production, and HCl and NaOH production. Therefore, the land occupation impacts follow the same trends of total electricity use in Table 2. The weighted land occupation footprint of the Knallgas bacteria system is 0.15 m2 year crop-eq. kg−1 compared to 2.84 m2 year crop-eq. kg−1 for the heterotrophic system, representing a 95% reduction in land use. The improved energetic efficiency of lithoautrotrophic carbon fixation compared to photosynthetic carbon fixation is the primary driver of this large disparity.
+ Fig. 7  Land occupation footprints of EMP and traditional bioprocesses. Land occupation footprint as calculated by ReCiPe 2016 (H) midpoint method for the three EMP systems and traditional heterotrophic system for the production of biomass, broken down by process category. All EMP processes assume power is derived from thin-film photovoltaics. 
+We report a weighted land occupation footprint as described by the ReCiPe 2016 midpoint method, which weights different types of land use according to their impact on the environment. Solar panels may be deployed in many environments, including sparsely vegetated or urban land, and therefore will have lower land use impacts than agricultural land use. When discounting weighting factors, the raw land use of the Knallgas bacteria-based system is 0.25 m2 year kg−1 biomass, representing an 11-fold decrease in land use compared to a glucose-fed system. These results are consistent with the energetic efficiencies of solar-to-biomass efficiencies of 9.7% for a Cupriavidus necator hydrogen-fed system and ∼1% for photosynthetic plants reported by Liu et al.55 Although land use data from databases are generally recognized to be less reliable than greenhouse gas emission data, the land occupation footprint of both EMP systems and of the traditional bioprocess are dominated by the land requirements of solar panels and corn farmland respectively, both of which have well-studied data. Additionally, the calculated land requirements of EMP processes are over an order of magnitude smaller than that of heterotroph-based processes. We are therefore confident in our assessment than EMP processes will have a substantially lower land occupation footprint than current biomanufacturing methods.
+Intrinsically safer operation of the H2-mediated Knallgas system
+Despite the lower GWP associated with the H2-mediated system, the flammable gas mixture fed to the reactor under base case operating conditions (1 atm H2 and 0.21 atm O2) may pose a significant barrier to adoption of this EMP strategy. We therefore evaluated intrinsically safer operation (ISO) of the H2-mediated system by adjusting the H2:O2 ratio in the gas phase such that the gas mixture was inherently non-flammable (defined as comprising an H2:O2 ratio of >10:1).55 Under these conditions, O2 gas/liquid mass transfer limits the productivity for each product (Fig. S3, ESI†). However, reactor productivities equivalent to that of the base case scenario can be achieved simply by increasing the total gas pressure while maintaining the inherently non-flammable gas ratio, so the GWP of the H2-mediated EMP process is not negatively impacted by ensuring intrinsically safer operating conditions (Fig. S3, ESI†). For biomass, enzymes, and lactic acid, the partial pressure of H2 must be 3.62 atm, 3.62 atm, and ∼1.8 atm, respectively, to match the GWP of the base case scenario, pressures that are readily achievable with existing water electrolysis and bioreactor technology.63,64
+LCA as an ecodesign tool: engineering targets for formate electrolysis
+The formate-mediated EMP system is associated with a significantly higher GWP than the H2-mediated system due primarily to differences in electrolyzer performance with currently achievable efficiencies and current densities. Because electrochemical reduction of CO2 is an active area of research, this technology may improve in coming years, making the formate-mediated system more competitive with the H2-mediated system. To identify engineering targets that must be met by CO2 electrolysis systems, we calculated the GWP of biomass and lactic acid production as a function of electrolyzer parameters (current density, j; energy efficiency, η; formate titer, cFFA), and we compared these results to the H2-mediated system operated under intrinsically safe conditions (Fig. 8).
+ Fig. 8  Effects of CO2 electrolysis operating parameters. Global warming potential of biomass production with the formate-mediated system as a function of electrolyzer current density and electrolyzer efficiency. Overlaid white dashed lines correspond to the global warming potential of the intrinsically-safer H2-mediated system (as described in the text) operating at different H2 partial pressures (1 atm, 2 atm, 3.62 atm). Point highlighted by the diamond (white fill, black outline) denotes the base case CO2 electrolysis operation using current technology. 
+Base-case electrolysis operation (j = 140 mA cm−2,) results in a significantly higher GWP than the H2-mediated system (Fig. 8). A current density of >∼250 mA cm−2 and η > ∼40% is necessary to outcompete the H2-mediated system operating at an H2 partial pressure of 1 atm, while a current density in excess of ∼750 mA cm−2 with η > 75% is necessary to reach parity with an H2-mediated system operating at 3.62 atm of H2 (Fig. 8). Despite significant progress towards improving CO2 electrolysis performance in the past decade,65 these metrics represent extremely challenging targets that may be infeasible. Hence, H2-mediated EMP systems based on Knallgas bacteria appear to be better-suited for industrial adoption.
+LCA as an ecodesign tool: effect of electric grid and reactor lifetime
+Our approach of integrating a physics-based bioreactor model with a life cycle impact model can also provide a decision-making tool in designing electromicrobial processes at scale. Alone, the bioreactor model may provide reasonable estimates for productivities, titers, and energy efficiencies that can be achieved in scaled-up electromicrobial production processes, thereby providing a valuable tool in the design of such processes. However, these values alone provide little insight into real-world implications of these systems, particularly in terms of their environmental sustainability. Our approach of integrating a bioreactor model with a life cycle assessment framework provides the ability to contextualize the tradeoffs that may occur between efficiency and productivity and provide a single metric (i.e., global warming potential) by which to evaluate the sustainability of a particular EMP design. We highlight this utility by returning to the example of comparing a formatotrophic EMP system (high productivity, low efficiency) with that of a Knallgas-based system operating under inherently safer conditions and atmospheric pressure (low productivity, high efficiency).
+All other impact model parameters held constant, the impact model can be reduced to: (88)
+The parameters α1, α2, and α3 are obtained from the life cycle impact model and are dependent on myriad subordinate parameters. These parameters provide a weighting system for comparing the independent effects of energy efficiency and productivity. However, it is important to note that these parameters are not universally-set parameters but depend on several specifics of the process design.
+For example, α2 is strongly dependent on the global warming potential of the electric grid from which energy is supplied (which in turn is dependent on the composition of that grid), while α3 is mostly dependent on specification of the reactor and plant infrastructure required for the EMP process, and therefore varies with parameters such as the reactor lifetime. Therefore, there is no universal answer for how to weigh the tradeoffs between efficiency and productivity, and therefore no universal solution for comparing the formatotrophic and the (inherently safer) Knallgas EMP systems. We can, however, provide a tool that considers the parameter landscape of these systems and shows under what conditions efficiency or productivity become dominant factors in minimizing the global warming potential of a system.
+
+Fig. 9 demonstrates the effect of reactor lifetime and electricity global warming potential (which is in turn dependent on the electricity source) on relative greenhouse gas savings of either the Knallgas system or formatotrophic system. In our base case scenario, assuming a grid GWP of 9 g per kW h (the GWP associated with wind power) and a reactor lifetime of 8 years, the Knallgas system is preferred (yellow region in Fig. 9). This benefit is driven by the higher energy efficiency of this system. However, if the reactor lifetime is reduced, the weighting factor associated with the productivity of the system increases, as the reactor size per functional unit of product increases. Therefore, if the reactor lifetime becomes sufficiently short, the productivity will become a more important factor in determining the GWP of the system, which will then favor the formatotrophic system (blue-shaded region in Fig. 9). Likewise, if the electricity global warming potential is decreased further, the formate-mediated system will be favored as the energy savings of the Knallgas system will become less important. In addition to demonstrating under which conditions either a H2- or formate-mediated system is superior in terms of minimizing greenhouse gas emissions, Fig. 9 demonstrates the novel utility of an integrated bioreactor/life cycle model in the eco-design of electromicrobial production systems.
+ Fig. 9  Life cycle impact-based break-even analysis. Difference in global warming potential of biomass production between formate-mediated and intrinsically safer H2-mediated EMP systems as a function of bioreactor lifetime and the electric grid carbon footprint. Base case conditions are highlighted by the diamond (white fill, black outline), and the break-even condition (i.e., no difference between the two systems) is denoted by the black dashed line. 
+Parameter sensitivity analysis
+To investigate the impact of uncertainty on our model and conclusions, we performed a sensitivity analysis on the 96 individual parameters in our model (Table S3 in the ESI†). We identified the most important parameters for biomass production, defined as those for which a 30% change in the parameter value induced a significant change in the results of the analysis as defined in the Computational methods (Fig. 10). Of these, three (global warming potential of glucose, biomass yield on glucose, and global warming potential of wind-produced renewable energy) are outside the scope of reactor models and therefore do not affect the productivities or efficiencies of any of the electromicrobial production systems. These parameters do, however, impact the comparative life cycle assessment of these systems. Of these three parameters, the life cycle global warming potential of glucose production has the greatest potential to affect our assessment indicating the advantages of EMP systems over traditional systems. There is lack of consensus in the literature and databases on this value, which range between 0.75–1.2 kg CO2-eq. kg−1 glucose, due to variations in corn growth methods, locations, and processing, as well as allocation methods.66,67 Therefore, the range shown in Fig. 10a does reasonably depict the uncertainty of our analysis. If EMP systems are to replace traditional bioprocess methods, attention must be paid to the specifics of the heterotrophic feedstock production to ensure an accurate comparison. However, we do note that even in the “worst-case” scenario, all three systems do outperform a traditional bioprocess.
+ Fig. 10  Parameter sensitivity analysis. Global warming potential dependence of producing biomass on ±30% variation in (a) glucose production global warming potential, (b) biomass yield on acetate, (c) biomass yield on formate, (d) biomass yield on glucose, (e) biomass yield on H2, (f) wind-based energy production global warming potential, and (g) the nutrient utilization ratio for each process. Dark bars represent base case values, shaded bars represent the range in global warming potential induced by variation. 
+The yield of biomass on glucose in the heterotrophic system can also significantly affect the analysis. Although literature yields on glucose do vary slightly,68,69 a 30% deviation in this value is unlikely, reducing the uncertainty related to this parameter. The global warming potential of electricity production (wind power in the base case) does impact the overall life cycle assessment, particularly in the formatotrophic system where the electricity demand is highest. However, due to the low carbon footprint of wind energy, even a 30% increase of this value would not significantly affect the viability of EMP systems in comparison to heterotrophic systems.
+Biomass yields on acetate, formate, and H2 can all significantly impact the global warming potential of the relevant processes; however, the Knallgas bacteria system still outperforms the others even if the biomass yield on H2 is 30% lower than expected while the biomass yields on formate and acetate are 30% higher (Fig. 10). Notably, microbial growth rates do not significantly impact global warming potential mainly because gas/liquid mass transfer rates impose an upper bound on productivity (see discussion around Fig. 3). Because the electricity demand associated with achieving high kLa values is small compared to energy substrate generation via electrolysis (Table S2, ESI†), productivity improvements via increased agitation or other strategies to enhance gas/liquid mass transfer rates are a straightforward strategy to reduce the carbon footprint of a given process. The final significantly impactful parameter is the nutrient utilization ratio, indicating that efforts to recycle unconsumed nutrients (especially ammonia) are also important for the viability of EMP (and traditional) bioprocesses.
+The sensitivity analysis demonstrates that neither 30% variability in any single parameter nor any pair of parameters is sufficient to dislodge Knallgas bacteria-based EMP systems as the process with the lowest global warming potential, although variation in some single parameters can result in re-ordering EMP processes: for example, a 30% higher yield on acetate enables the acetate-mediated system to outperform the formate-mediated system. However, all EMP processes outcompete glucose-based bioprocessing given 30% uncertainty in any single parameter, and concomitant variation in multiple parameters in particular directions is required for glucose-based systems to achieve parity with any of the EMP processes. This analysis indicates that our conclusions are robust to significant uncertainties in parameters used in our reactor, process, and life cycle impact models.
+Analysis limitations
+This study employed a three-part framework, relying on physics-based bioreactor models, process models, and life cycle assessment, to analyze three proposed electromicrobial production systems. This framework predicted achievable productivity, energy use, life cycle global warming potential, and land use of each of the three EMP systems. General trends regarding system performance, as well as specific engineering targets, were determined in this analysis. However, several limitations and opportunities for future work regarding the analysis of EMP systems remain. First, the three EMP systems considered here do not represent an exhaustive list of proposed or possible EMP systems. Although these three systems are prominent in the literature, several other systems that meet the criteria for electromicrobial production described in the introduction are possible. For example, methanotrophs have also been proposed for the production of bioproducts including PHB.70,71 Methane and methanol, both potential feedstocks for methanotrophic bacteria, can be produced from CO2 through a variety of means using renewable electricity.72–74 Furthermore, in an attempt to obviate the need for an electrochemically-derived mediator molecule, electroautotrophic systems have been proposed in which carbon fixation is driven by direct electron transfer via reversible electron conduit proteins such as those found in Shewanella oneidensis.75,76 Future work will involve applying the framework developed here for the analysis of such systems.
+Second, our current analysis predicted four key metrics regarding the potential performance of EMP systems (productivity, energy use, life cycle GWP, and land use). These metrics each give valuable insight to the capacities and environmental impacts of EMP processes. However, this is not an exhaustive list of possible social and environmental impacts of such processes. For example, eutrophication effects of unused ammonia in EMP processes, as well as the ecotoxicity of by-products (such as chlorine gas and sodium hypochlorite from the chlor-alkili process) are important environmental considerations. However, such impacts do not affect the energy demand, carbon footprint, or land use of EMP processes and are therefore outside the stated scope of this current life cycle assessment. Targeted analysis of more niche environmental impacts of EMP such as these should be performed prior to large-scale industrial adoption.
+Conclusions
+We have developed a tripartite framework for analyzing EMP systems that relies on physics-based bioreactor modelling, process design and modelling, and life cycle assessment. While life cycle assessments are typically done using industrial data from an existing process, our three-part framework allows proactive assessments of the potential environmental impacts of EMP despite its relative immaturity compared to existing industrial biotechnology. Specifically, our methodology predicts vital metrics such as bioreactor productivity, electricity consumption, global warming potential, and land occupation footprint of hypothetical scaled-up EMP technologies based on limited bench-scale empirical data. This analysis not only demonstrates the promise of EMP for industrial application, but also identifies important hurdles that must be addressed for successful and environmentally sustainable implementation.
+In brief, our bioreactor models predict productivities up to ∼0.7 g L−1 h−1 with current technology, which are reasonably close to common targets for industrial commodity chemical bioproduction (∼1 g L−1 h−1).77,78 In general, gas–liquid mass transfer is shown to be one of the limiting factors for each system's productivity, indicating that reactor designs that enable high pressure operation and/or high gas–liquid interfacial contact areas can enhance the performance of EMP systems. In some cases, the salinity tolerance of microbes limited the productivity, signaling that efforts to improve halotolerance of industrial strains or employing native halophiles for industrial applications could play an important role in the development of EMP processes.
+Our life cycle impact assessment of biomass production shows that each of the three analyzed EMP (formate-mediated, H2-mediated, and acetate-mediated) systems can potentially reduce greenhouse gas emissions compared to traditional heterotroph-based processes provided the electric grid is composed of at least ∼90% renewable energy sources. The carbon footprint of each EMP process is very sensitive to the composition of the electricity grid, indicating that substantial progress towards decarbonizing the grid must occur before EMP becomes environmentally advantageous. Based on our analysis, assuming current technology, the hydrogen-mediated system has the lowest global warming potential. For the acetate-mediated process to have a carbon footprint comparable to the hydrogen-mediated process, either the need for pH control must be obviated or the pH control elements (HCl and NaOH) must be obtained through a more sustainable process than currently exists industrially. For the formate-mediated process to have a global warming potential as low as the hydrogen-mediated system, improvements must be made to the energy efficiency and/or current density of formate electrolysis (see Fig. 8). Because formate-mediated EMP does have several advantages over hydrogen-mediated (e.g., reduced safety concerns, less challenging transportation and storage), research in the field of electrochemistry to improve the performance of CO2 reduction to formate has the potential to greatly improve EMP systems. However, in our current modelling and analysis, hydrogen-mediated EMP has the lowest global warming potential and is currently most suitable for industrial application.
+Sensitivity analysis revealed that the most important engineering parameter for the global warming potential of the hydrogen-mediated system is the yield of product on hydrogen. Utilization of carbon fixation pathways other than the Calvin cycle with higher thermodynamic efficiency could improve this yield and therefore improve the environmental (and economic) viability of EMP. Efforts to improve the yield through more efficient carbon fixation pathways, as has been done with the reductive glycine pathway in C. necator,79 represent a promising research direction for the field. Likewise, the carbon efficiency (which affects the overall hydrogen-to-product yield) for commodity chemical products such as lactic acid strongly influences the global warming potential of the process. Therefore, metabolic engineering efforts should prioritize engineering strains capable of maximizing carbon flux towards the product of interest while minimizing the production of unnecessary byproducts. As individual components of EMP systems continue to improve, our framework will be able to evaluate these changes in terms of productivity, energy demand, global warming potential, and land use. Our methodology is therefore a useful tool for iteratively assessing the status of this technology and identifying obstacles to its implementation.
+Electromicrobial production has the potential to “electrify” the biotechnology industry. However, our analysis indicates that, due to the abundance of fossil energy sources in the current electric grid, EMP would lead to higher greenhouse gas emissions compared to traditional bioprocesses if implemented in the United States today. Nonetheless, as the grid is decarbonized in the coming decades, EMP will become an attractive alternative method of bioproduction. Pilot-scale EMP of various value-added products should be thus developed in the near term such that further scaling and distribution can be accomplished in the coming decades as the electricity grid becomes fully decarbonized.
+Author contributions
+Conceptualization: A. J. A., J. D. A.; data curation: A. J. A., J. D. A.; formal analysis: A. J. A., J. D. A.; funding acquisition: D. S. C.; methodology: A. J. A., J. D. A.; software: A. J. A., J. D. A.; supervision: D. S. C.; visualization: A. J. A., J. D. A.; writing – original draft: A. J. A., J. D. A.; writing - review & editing: A. J. A., J. D. A., D. S. C.
+Conflicts of interest
+There are no conflicts of interest to declare.
+Acknowledgements
+This work was supported by the Center for the Utilization of Biological Engineering in Space (CUBES, https://cubes.space/), a NASA Space Technology Research Institute (grant number NNX17AJ31G). A. J. A. is supported by an NSF Graduate Research Fellowship under grant number DGE 1752814. We thank Dr Jacob Hilzinger (UC Berkeley) for feedback on the analysis, Marisa Watanabe for advice on schematics, and Dr Paul Tol (Netherlands Institute for Space Research, SRON) for a helpful reference on accessible color schemes (https://personal.sron.nl/~pault/). The authors acknowledge this research was performed on unceded land of the Chochenyo-speaking Ohlone people.
+References
+S. Huffer, C. M. Roche, H. W. Blanch and D. S. Clark, Trends Biotechnol., 2012, 30, 538–545 CrossRef CAS PubMed .
+A. M. Brandon and C. S. Criddle, Curr. Opin. Biotechnol, 2019, 57, 160–166 CrossRef CAS PubMed .
+
+          T. Werpy and G. Petersen, Top Value Added Chemicals from Biomass Volume I-Results of Screening for Potential Candidates from Sugars and Synthesis Gas,  2004 Search PubMed .
+R. Singh, M. Kumar, A. Mittal and P. K. Mehta, 3 Biotech, 2016, 6(174) DOI:10.1007/s13205-016-0485-8 .
+J. D. Adams, J. J. Røise, D. S. Lee and N. Murthy, Chem. Commun., 2020, 56, 3175–3178 RSC .
+J. Puetz and F. M. Wurm, Processes, 2019, 7, 476 CrossRef CAS .
+L. M.-L. Laurens, J. Markham, D. W. Templeton, E. D. Christensen, S. Van Wychen, E. W. Vadelius, M. Chen-Glasser, T. Dong, R. Davis and P. T. Pienkos, Energy Environ. Sci., 2017, 10, 1716–1738 RSC .
+R. E. Blankenship, D. M. Tiede, J. Barber, G. W. Brudvig, G. Fleming, M. Ghirardi, M. R. Gunner, W. Junge, D. M. Kramer, A. Melis, T. A. Moore, C. C. Moser, D. G. Nocera, A. J. Nozik, D. R. Ort, W. W. Parson, R. C. Prince and R. T. Sayre, Science, 2011, 332, 805–809 CrossRef CAS .
+K. Tanaka and A. Ishizaki, J. Ferment. Bioeng., 1994, 77, 425–427 CrossRef CAS .
+B. Kunasundari, V. Murugaiyah, G. Kaur, F. H.-J. Maurer and K. Sudesh, PLoS One, 2013, 8, 78528 CrossRef .
+E. Grousseau, J. Lu, N. Gorret, S. E. Guillouet and A. J. Sinskey, Appl. Microbiol. Biotechnol., 2014, 98, 4277–4290 CrossRef CAS .
+C. Windhorst and J. Gescher, Biotechnol. Biofuels, 2019, 12, 163 CrossRef CAS PubMed .
+L. Crépin, E. Lombard and S. E. Guillouet, Metab. Eng., 2016, 37, 92–101 CrossRef PubMed .
+O. Yishai, S. N. Lindner, J. Gonzalez de la Cruz, H. Tenenboim and A. Bar-Even, Curr. Opin. Chem. Biol., 2016, 35, 1–9 CrossRef CAS PubMed .
+H. Li, P. H. Opgenorth, D. G. Wernick, S. Rogers, T. Wu, W. Higashide, P. Malati, Y. Huo, K. M. Cho and J. C. Liao, Science, 2012, 335, 1596 CrossRef CAS PubMed .
+A. J. Abel and D. S. Clark, ChemSusChem, 2021, 14, 344–355 CrossRef CAS PubMed .
+S. Grunwald, A. Mottet, E. Grousseau, J. K. Plassmeier, M. K. Popović, J. L. Uribelarrea, N. Gorret, S. E. Guillouet and A. Sinskey, Microb. Biotechnol., 2015, 8, 155–163 CrossRef CAS PubMed .
+S. Kim, S. N. Lindner, S. Aslan, O. Yishai, S. Wenk, K. Schann and A. Bar-Even, Nat. Chem. Biol., 2020, 16, 538–545 CrossRef CAS PubMed .
+C. Liu, J. J. Gallagher, K. K. Sakimoto, E. M. Nichols, C. J. Chang, M. C.-Y. Chang and P. Yang, Nano Lett., 2015, 15, 3634–3639 CrossRef CAS PubMed .
+S. Cestellos-Blanco, S. Friedline, K. B. Sander, A. J. Abel, J. M. Kim, D. S. Clark, A. P. Arkin and P. Yang, Front. Microbiol., 2021, 12, 1–12 Search PubMed .
+N. J. Claassens, C. A.-R. Cotton, D. Kopljar and A. Bar-Even, Nat. Catal., 2019, 2, 437–447 CrossRef CAS .
+F. Salimijazi, J. Kim, A. M. Schmitz, R. Grenville, A. Bocarsly and B. Barstow, Joule, 2020, 4, 2101–2130 CrossRef CAS .
+D. Leger, S. Matassa, E. Noor, A. Shepon, R. Milo and A. Bar-Even, Proc. Natl. Acad. Sci. U. S. A., 2021, 118, e2015025118 CrossRef CAS .
+International Organization for Standardization (ISO), ISO 14044.
+International organization for standarization, ISO 14040.
+T. E. McKone, W. W. Nazaroff, P. Berck, M. Auffhammer, T. Lipman, M. S. Torn, E. Masanet, A. Lobscheid, N. Santero, U. Mishra, A. Barrett, M. Bomberg, K. Fingerman, C. Scown, B. Strogen and A. Horvath, Environ. Sci. Technol., 2011, 45, 1751–1756 CrossRef CAS PubMed .
+
+          J. Izursa, E. A. Hanlon, N. Y. Amponsah and J. C. Capece, Carbon Footprint of Biofuel Sugarcane Produced in Mineral and Organic Soils in Florida - Manuscript submitted for publication, LaBelle, FL,  2013 Search PubMed .
+S. N. Nangle, M. Ziesack, S. Buckley, D. Trivedi, D. M. Loh, D. G. Nocera and P. A. Silver, Metab. Eng., 2020, 62, 207–220 CrossRef CAS .
+J. Sillman, L. Nygren, H. Kahiluoto, V. Ruuskanen, A. Tamminen, C. Bajamundi, M. Nappa, M. Wuokko, T. Lindh, P. Vainikka, J.-P. Pitkänen and J. Ahola, Global Food Secur., 2019, 22, 25–32 CrossRef .
+
+          T. Cumberlege, T. Blenkinsopp and J. Clark, Assessment of environmental impact of FeedKind protein,  2016 Search PubMed .
+
+          H. W. Blanch and D. S. Clark, Biochemical Engineering, CRC Press, 2nd edn,  1997 Search PubMed .
+Y. Xiao, X. Feng, A. M. Varman, L. He, H. Yu and Y. J. Tang, Ind. Eng. Chem. Res., 2012, 51, 15855–15863 CrossRef CAS .
+A. G. Fast and E. T. Papoutsakis, Curr. Opin. Chem. Eng., 2012, 1, 380–395 CrossRef .
+K. Schuchmann and V. Müller, Nat. Rev. Microbiol., 2014, 12, 809–821 CrossRef CAS PubMed .
+L. Rosso, J. R. Lobry, S. Bajard and J. P. Flandrois, Appl. Environ. Microbiol., 1995, 61, 610–616 CrossRef CAS PubMed .
+X. Wu, R. Altman, M. A. Eiteman and E. Altman, Appl. Environ. Microbiol., 2014, 80, 2880–2888 CrossRef PubMed .
+
+          W. G. Mook, Environmental isotopes in the hydrological cycle: Principles and applications, Volume I: Introduction: Theory, Methods, Review,  2001, vol. 1 Search PubMed .
+J. L. Meraz, K. L. Dubrawski, S. H. El Abbadi, K. H. Choo and C. S. Criddle, J. Environ. Eng., 2020, 146, 03120006 CrossRef CAS .
+A. Ciroth, Int. J. Life Cycle Assess., 2007, 12, 209 CrossRef .
+
+          D. M. de S. Simone Manfredi, K. Allacker, K. Chomkhamsri and N. Pelletier, Product Environmental Footprint (PEF) Guide,  2012 Search PubMed .
+M. R. Subramanian, S. Talluri and L. P. Christopher, Microb. Biotechnol., 2015, 8, 221–229 CrossRef CAS .
+M. Heldal, S. Norland and O. Tumyr, Appl. Environ. Microbiol., 1985, 50, 1251–1257 CrossRef CAS .
+S. Deutz and A. Bardow, Nat. Energy, 2021, 6, 203–213 CrossRef CAS .
+
+          V. Singh, I. Dincer and M. A. Rosen, in Energetic and Environmental Dimensions, ed. I. Dincer, C. O. Colpan and O. B. T.-E. Kizilkan, Academic Press,  2018, pp. 935–959 Search PubMed .
+I. Garcia-Herrero, M. Margallo, R. Onandía, R. Aldaco and A. Irabien, Sci. Total Environ, 2017, 580, 147–157 CrossRef CAS .
+A. Buttler and H. Spliethoff, Renewable Sustainable Energy Rev., 2018, 82, 2440–2454 CrossRef CAS .
+J. Xu, G. Liu, J. Li and X. Wang, Electrochim. Acta, 2012, 59, 105–112 CrossRef CAS .
+H. Yang, J. J. Kaczur, S. D. Sajjad and R. I. Masel, J. CO2 Util., 2017, 20, 208–217 CrossRef CAS .
+V. Hábová, K. Melzoch, M. Rychtera and B. Sekavová, Desalination, 2004, 162, 361–372 CrossRef .
+R. Stropnik, A. Lotrič, A. Bernad Montenegro, M. Sekavčnik and M. Mori, Energy Sci. Eng., 2019, 7, 2519–2539 CrossRef CAS .
+
+          E. Masanet, A. Stadel and P. Gursel, Life-cycle evaluation of concrete building construction as a strategy for sustainable cities, PCA R&D serial no. SN3119, Skokie, IL, USA: Portland Cement Association,  2012 Search PubMed .
+B. L. Ma, B. C. Liang, D. K. Biswas, M. J. Morrison and N. B. McLaughlin, Nutr. Cycling Agroecosyst., 2012, 94, 15–31 CrossRef CAS .
+J. Huang, B. Mendoza, J. S. Daniel, C. J. Nielsen, L. Rotstayn and O. Wild, Clim. Chang. 2013 Phys. Sci. Basis Work. Gr. I Contrib. to Fifth Assess. Rep. Intergov. Panel Clim. Chang., 2013, 9781107057, 659–740 Search PubMed .
+
+          M. Huijbregts, Z. J. N. Steinmann, P. M. F. M. Elshout, G. Stam, F. Verones, M. D. M. Vieira, M. Zijp and R. van Zelm, ReCiPe 2016 - A harmonized life cycle impact assessment method at midpoint and endpoint level. Report I: Characterization, 2016.
+
+          M. A. Terpstra, MS thesis, University of Calgary,  2012.
+B. Möller, R. Oßmer, B. H. Howard, G. Gottschalk and H. Hippe, Arch. Microbiol., 1984, 139, 388–396 CrossRef .
+R. Kutscha and S. Pflügl, Int. J. Mol. Sci., 2020, 21, 1–30 Search PubMed .
+X. C. Shi, P. L. Tremblay, L. Wan and T. Zhang, Sci. Total Environ., 2021, 754, 142440 CrossRef CAS PubMed .
+E. M. Nichols, J. J. Gallagher, C. Liu, Y. Su, J. Resasco, Y. Yu, Y. Sun, P. Yang, M. C.-Y. Chang, C. J. Chang, C. J.-C. Designed, Y. Su and Y. Sun, Proc. Natl. Acad. Sci. U. S. A., 2015, 112, 11461–11466 CrossRef CAS .
+B. P. Upadhyaya, L. C. DeVeaux and L. P. Christopher, Trends Biotechnol., 2014, 32, 637–644 CrossRef CAS .
+J. A. de Chalendar, J. Taggart and S. M. Benson, Proc. Natl. Acad. Sci. U. S. A., 2019, 116, 25497–25502 CrossRef CAS .
+C. Liu, B. C. Colón, M. Ziesack, P. A. Silver and D. G. Nocera, Science, 2016, 352, 1210–1213 CrossRef CAS PubMed .
+M. Carmo, D. L. Fritz, J. Mergel and D. Stolten, Int. J. Hydrogen Energy, 2013, 38, 4901–4934 CrossRef CAS .
+W. Van Hecke, R. Bockrath and H. De Wever, Bioresour. Technol., 2019, 293, 122129 CrossRef CAS .
+M. Y. Lee, K. T. Park, W. Lee, H. Lim, Y. Kwon and S. Kang, Crit. Rev. Environ. Sci. Technol., 2020, 50, 769–815 CrossRef CAS .
+I. Tsiropoulos, B. Cok and M. K. Patel, J. Cleaner Prod., 2013, 43, 182–190 CrossRef .
+
+          V. An, D. Evelien, B. Katrien, Life cycle assessment study of starch products for the European starch industry association (AAF): sector study, Flemish Institute for Technological Research NV, Boeretang,  2012 Search PubMed .
+H. Link, B. Anselment and D. Weuster-Botz, Metabolomics, 2008, 4, 240–247 CrossRef CAS .
+J. Shiloach and R. Fass, Biotechnol. Adv., 2005, 23, 345–357 CrossRef CAS .
+E. R. Sundstrom and C. S. Criddle, Appl. Environ. Microbiol., 2015, 81, 4767–4773 CrossRef CAS PubMed .
+S. N. Nangle, M. Y. Wolfson, L. Hartsough, N. J. Ma, C. E. Mason, M. Merighi, V. Nathan, P. A. Silver, M. Simon, J. Swett, D. B. Thompson and M. Ziesack, Nat. Biotechnol., 2020, 38, 401–407 CrossRef CAS .
+M. Götz, J. Lefebvre, F. Mörs, A. McDaniel Koch, F. Graf, S. Bajohr, R. Reimert and T. Kolb, Renewable Energy, 2016, 85, 1371–1390 CrossRef .
+J. C. Fornaciari, D. Primc, K. Kawashima, B. R. Wygant, S. Verma, L. Spanu, C. B. Mullins, A. T. Bell and A. Z. Weber, ACS Energy Lett., 2020, 5, 2954–2963 CrossRef CAS .
+M. Umeda, Y. Niitsuma, T. Horikawa, S. Matsuda and M. Osawa, ACS Appl. Energy Mater., 2020, 3, 1119–1127 CrossRef CAS .
+A. Prévoteau, J. M. Carvajal-Arroyo, R. Ganigué and K. Rabaey, Curr. Opin. Biotechnol, 2020, 62, 48–57 CrossRef .
+A. J. Abel, J. M. Hilzinger, A. P. Arkin and D. S. Clark, Bioelectrochemistry, 2022, 108054 CrossRef CAS .
+R. Davis, L. Tao, E. C.-D. Tan, M. J. Biddy, G. T. Beckham, C. Scarlata, J. Jacobson, K. Cafferty, J. Ross, J. Lukas, D. Knorr and P. Schoen, Natl. Renewable Energy Lab., 2013, 147 Search PubMed .
+Y. Li, S. S. Bhagwat, Y. R. Cortés-Peña, D. Ki, C. V. Rao, Y.-S. Jin and J. S. Guest, ACS Sustainable Chem. Eng., 2021, 9, 1341–1351 CrossRef CAS .
+N. J. Claassens, G. Bordanaba-Florit, C. A.-R. Cotton, A. De Maria, M. Finger-Bou, L. Friedeheim, N. Giner-Laguarda, M. Munar-Palmer, W. Newell, G. Scarinci, J. Verbunt, S. T. de Vries, S. Yilmaz and A. Bar-Even, Metab. Eng., 2020, 62, 30–41 CrossRef CAS PubMed .
+
+Footnotes† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2ee00569g‡ These authors contributed equally.This journal is © The Royal Society of Chemistry 2022
+Table Content:
+
+Broader context
+Biotechnology has a key role to play in developing a circular carbon economy as demand for industrial enzymes and biotherapeutics grows and biochemical processes displace fossil-based production of fuels, plastics, and commodity chemicals. Traditional bioprocesses use heterotrophic microbes and therefore require large amounts of arable land for feedstock production, igniting the “food versus fuel” debate. To overcome this tradeoff, “electromicrobial production” (EMP) systems, in which electricity drives biochemical transformation of carbon dioxide to value-added products, have been proposed and experimentally demonstrated at benchtop scales. However, the environmental viability of this strategy has yet to be evaluated. Moreover, comparisons among benchtop EMP systems are challenging, so efforts to identify best-case performance, technological bottlenecks, and optimal design strategies are necessary to enable industrial deployment. Our work analyzes three emerging EMP systems on the basis of productivity, efficiency, life cycle carbon footprint, and land occupation. To enable our analysis, we developed bioreactor and life cycle models that predict system performance for a variety of useful products. Our results determine the required conditions for EMP systems to become environmentally viable and identify areas of potential improvement and future performance targets for each individual system.
+
+
+ 	Fig. 1  Overview of traditional bioprocessing and electromicrobial production. Traditional bioprocessing relies on feedstock crop growth, pretreatment of the resulting biomass (typically enzymatic or chemical), and subsequent biochemical production using crop-derived sugars as the feedstock. Electromicrobial production uses electricity (ideally renewable) to produce energy substrates (e.g., H2) for biochemical production from CO2.	 
+
+ 	Fig. 2  Overview of reactor model and metabolic pathways. (a) Bioreactor scheme. Gas and liquid media (dark blue arrows) are fed to and extracted from a two-phase, well-mixed bioreactor. The model considers gas–liquid mass transfer (purple), acid–base reactions (pink), microbial growth and product formation (green), and pH control (light blue). (b) Metabolic pathway map showing acetate assimilation and H2 and formate oxidation coupled to lactate production (left), and acetate production in acetogenic microbes (right). Colors correspond to the three processes we evaluate (red: acetate-mediated; yellow: H2-mediated; blue: formate-mediated).	 
+	(1)
+	(2)
+RX,X + 3RX,L = μcX	(3)
+RX,X + RX,E = μcX	(4)
+	(5)
+	(6)
+	(7)
+RX,X = xμcX
+RX,L/E = ζxμcX	(8)
+RX,i = αX,iRX,X + αL/E,iRX,L/E	(9)
+	(10)
+	(11)
+	(12)
+	(13)
+αX,FHCOO− + αX,FH+ + βX,FNH3 + γX,FO2 → CH1.77O0.49N0.24 + κX,FCO2 + εX,FH2O	(14)
+	(15)
+	(16)
+αL,FHCOO− + (αL,F − 1)H+ + βL,FNH3 + γL,FO2 → C3H5O3− + κL,FCO2 + εL,FH2O	(17)
+	(18)
+HCOO− + NAD+ → CO2 + NADH	(19)
+	(20)
+3CO2 + 5NADH + 7ATP + 4H+ → C3H3O3− + 5NAD+ + 7(ADP + Pi) + 3H2O	(21)
+C3H3O3− + NADH + H+ → C3H5O3− + NAD+	(22)
+	(23)
+	(24)
+αX,HH2 + βX,HNH3 + γX,HO2 + κX,HCO2 → CH1.77O0.49N0.24 + εX,HH2O	(25)
+	(26)
+αL,HH2 + βL,HNH3 + γL,HO2 + κL,HCO2 → C3H6O3 + εL,HH2O	(27)
+	(28)
+8.8H2 + 3CO2 + 1.4O2 → C3H6O3 + 5.8H2O	(29)
+4H2 + 2CO2 + (1 − n)ATP + HSCoA → C2H3OSCoA + 3H2O + (1 − n)(ADP + Pi)	(30)
+	(31)
+	(32)
+	(33)
+	(34)
+αX,AC2H3O2− + αX,AH+ + βX,ANH3 + γX,AO2 → CH1.77O0.49N0.24 + κX,ACO2 + εX,AH2O	(35)
+	(36)
+αL,AC2H3O2− + (αL,A − 1)H+ + βL,ANH3 + γL,AO2 → C3H5O3− + κL,ACO2 + εL,AH2O	(37)
+	(38)
+C2H3O2− + 2ATP + HSCoA + H+ → C2H3OSCoA + 2(ADP + Pi) + H2O	(39)
+2C2H3OSCoA + 3H2O + 2NAD+ + FAD → C4H3O5− + 3H+ + 2NADH + FADH2 + 2HSCoA	(40)
+C4H3O5− + NADH + H+ → C3H5O3− + CO2 + NAD+	(41)
+2C2H3O2− + O2 + H+ → C3H5O3− + CO2 + H2O	(42)
+μmax = μoptρ(pH)ν(cNa)	(43)
+	(44)
+	(45)
+	(46)
+	(47)
+	(48)
+	(49)
+	(50)
+	(51)
+	(52)
+	(53)
+	(54)
+	(55)
+	(56)
+	(57)
+	(58)
+	(59)
+	(60)
+RLF,i = Dliq (cf,i − ci)	(61)
+	(62)
+RG−L,i = kLai(βipi − ci)	(63)
+kLaO2 = 22.3(PG)0.66(uG)0.51	(64)
+	(65)
+	(66)
+	(67)
+	(68)
+E = pHset − pH	(69)
+RpH,i = rMcpH,i	(70)
+	(71)
+ṁj,n = Zjδj,nxjμmax,ncj	(72)
+	(73)
+	(74)
+PC,i,n = |RLF,i,nΔrG0i|	(75)
+PC,i,n = |RGF,i,nΔrG0i|	(76)
+	(77)
+	(78)
+ṅCO2,j,n = RGF,CO2,j,n	(79)
+ṄCO2,j,F = RLF,FFA,j,F + ṅCO2,j,F	(80)
+	(81)
+	(82)
+	(83)
+	(84)
+Pconc,LLA,n = ṁLLA,n(aED − bEDcLLA,n)	(85)
+	(86)
+	(87)
+
+ 	Fig. 3  EMP reactor performance. Productivity (a–c), titer (d–f), and energy efficiency (g–i) as a function of normalized dilution rate (δ) for the three EMP systems producing biomass (a, d and g), enzyme (b, e and h), and lactic acid (c, f and i). Base case conditions (see Table 1) are indicated by blue diamonds (formate-mediated), yellow circles (H2-mediated), and red triangles (acetate-mediated). The color scheme in all panels follows that in (a).	 
+
+
+
+Biomass
+
+Normalized dilution rate (liquid phase)	
+δ
+	0.37	0.1	0.55 (S. ovata)	—
+0.24 (E. coli)
+H2 feed pressure	
+P
+H2
+	—	1	1 (S. ovata)	atm
+— (E. coli)
+O2 feed pressure	
+P
+O2
+	0.21	0.21	— (S. ovata)	atm
+0.21 (E. coli)
+Formate feed concentration	
+c
+FFA,f
+	2.08	—	—	M
+Titer	
+c
+X
+	8.8	36.1	11.25	g L−1
+Productivity	
+ṁ
+X
+	0.585	0.65	0.20	g L−1 h−1
+Efficiency	
+η
+X
+	31.6	34.0	34.7	%
+
+
+
+Enzyme
+
+Normalized dilution rate (liquid phase)	
+δ
+	0.41	0.1	0.55 (S. ovata)	—
+0.27 (E. coli)
+H2 feed pressure	
+P
+H2
+	—	1	1 (S. ovata)	atm
+— (E. coli)
+O2 feed pressure	
+P
+O2
+	0.21	0.21	— (S. ovata)	atm
+0.21 (E. coli)
+Formate feed concentration	
+c
+FFA,f
+	2.08	—	—	M
+Carbon fraction to biomass	
+x
+	0.9	0.9	— (S. ovata)	—
+0.9 (E. coli)
+
+
+Titer	
+c
+E
+	0.88	4.0	1.1	g L−1
+Productivity	
+ṁ
+E
+	0.058	0.065	0.020	g L−1 h−1
+Efficiency	
+η
+E
+	3.16	3.40	3.45	%
+
+
+
+Lactic acid
+
+Normalized dilution rate (liquid phase)	
+δ
+	0.55	0.55	0.55 (S. ovata)	—
+0.56 (E. coli)
+H2 feed pressure	
+P
+H2
+	—	1	1 (S. ovata)	atm
+— (E. coli)
+O2 feed pressure	
+P
+O2
+	0.21	0.21	— (S. ovata)	atm
+0.21 (E. coli)
+Formate feed concentration	
+c
+FFA,f
+	5.1	—	—	M
+Carbon fraction to biomass	
+x
+	0.1	0.1	— (S. ovata)	—
+0.1 (E. coli)
+
+
+Titer	
+c
+LLA
+	42.4	42.4	18.3	g L−1
+Productivity	
+ṁ
+LLA
+	0.42	0.42	0.18	g L−1 h−1
+Efficiency	
+η
+LLA
+	37.0	45.8	41.8	%
+
+ 	Fig. 4  Schematic representation of the EMP system. Grid electricity (midnight blue) supplies electricity to the EMP reactors and supporting processes, including direct air capture of CO2 (blue), ammonia production via the Haber–Bosch process (royal purple), the chlor-alkali process producing pH control agents (purple), and downstream electrodialysis-based separations for lactic acid (orange). Mining and production of electrolyzer materials (magenta) and materials for reactor and plant construction (pink) are also considered within the impact model.	 
+
+
+
+Total process electricity	54.3	28.4	32.0	6.55	kW h kg−1 CDW
+Electrolysis & bioreactor electricity	48.0	23.2	21.5	5.32	kW h kg−1 CDW
+CO2	2.09	1.76	2.08	1.76	kg CO2 kg−1 CDW
+NH3	0.179	0.179	0.201	0.17	kg NH3 kg−1 CDW
+Total NaOH and HCl	0.30	0	3.23	0	kg kg−1 CDW
+
+ 	Fig. 5  Global warming potential of EMP and traditional bioprocesses. Global warming potential for the three EMP systems and traditional heterotrophic system for the production of (a) biomass, (b) enzymes, and (c) lactic acid, broken down by process category. Data shown here assume base-case conditions as described in Table 1.	 
+
+ 	Fig. 6  Effect of electricity grid on global warming potential. (a) Global warming potential for the production of biomass for the formate- (blue), acetate- (red), H2- (Knallgas, yellow), and glucose-fed (traditional bioprocessing, dashed gray) systems drawing electricity from a grid composed of variable fractions of wind power (renewable) and natural gas (non-renewable). Inset shows the >90% renewables region bounded by the dashed box. (b) Global warming potential for the production of lactic acid in the H2-fed (Knallgas) system (yellow) as a function of electricity grid compositions for variable carbon efficiencies (fraction of fixed carbon diverted to lactic acid) as well as global warming potential for the traditional glucose fermentation of lactic acid (dashed gray).	 
+
+ 	Fig. 7  Land occupation footprints of EMP and traditional bioprocesses. Land occupation footprint as calculated by ReCiPe 2016 (H) midpoint method for the three EMP systems and traditional heterotrophic system for the production of biomass, broken down by process category. All EMP processes assume power is derived from thin-film photovoltaics.	 
+
+ 	Fig. 8  Effects of CO2 electrolysis operating parameters. Global warming potential of biomass production with the formate-mediated system as a function of electrolyzer current density and electrolyzer efficiency. Overlaid white dashed lines correspond to the global warming potential of the intrinsically-safer H2-mediated system (as described in the text) operating at different H2 partial pressures (1 atm, 2 atm, 3.62 atm). Point highlighted by the diamond (white fill, black outline) denotes the base case CO2 electrolysis operation using current technology.	 
+	(88)
+
+ 	Fig. 9  Life cycle impact-based break-even analysis. Difference in global warming potential of biomass production between formate-mediated and intrinsically safer H2-mediated EMP systems as a function of bioreactor lifetime and the electric grid carbon footprint. Base case conditions are highlighted by the diamond (white fill, black outline), and the break-even condition (i.e., no difference between the two systems) is denoted by the black dashed line.	 
+
+ 	Fig. 10  Parameter sensitivity analysis. Global warming potential dependence of producing biomass on ±30% variation in (a) glucose production global warming potential, (b) biomass yield on acetate, (c) biomass yield on formate, (d) biomass yield on glucose, (e) biomass yield on H2, (f) wind-based energy production global warming potential, and (g) the nutrient utilization ratio for each process. Dark bars represent base case values, shaded bars represent the range in global warming potential induced by variation.	 
+Footnotes
+† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2ee00569g
+‡ These authors contributed equally.
+
+This journal is © The Royal Society of Chemistry 2022

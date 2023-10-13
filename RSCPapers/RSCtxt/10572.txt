@@ -1,0 +1,185 @@
+Electrifying the disk: a modular rotating platform for wireless power and data transmission for Lab on a disk application   - Lab on a Chip (RSC Publishing) DOI:10.1039/C5LC00138B View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C5LC00138B
+(Technical Innovation)
+Lab Chip, 2015, 15, 2584-2587Electrifying the disk: a modular rotating platform for wireless power and data transmission for Lab on a disk application†
+
+        
+          
+            Jens 
+            Höfflin
+          
+        
+      a, 
+      
+        
+          
+            Saraí M. 
+            Torres Delgado
+          
+        
+      a, 
+      
+        
+          
+            Fralett 
+            Suárez Sandoval
+          
+        
+      b, 
+      
+        
+          
+            Jan G. 
+            Korvink
+          
+        
+      ac and 
+
+        
+          
+            Dario 
+            Mager
+          
+        
+      *a
+aSimulation Laboratory, Department of Microsystems Engineering (IMTEK), University of Freiburg, Germany. E-mail: dario.mager@imtek.uni-freiburg.de; dario.mager@kit.edu;  Fax: +49 761 203 7437;   Tel: +49 761 203 7436
+bMicroactuators Laboratory, Department of Microsystems Engineering (IMTEK), University of Freiburg, Germany
+cInstitute of Microstructure Technology - IMT, Karlsruhe Institute of Technology, Germany
+Received 
+      4th February 2015
+    , Accepted 1st May 2015First published on 4th May 2015AbstractWe present a design for wireless power transfer, via inductively coupled coils, to a spinning disk. The rectified and stabilised power feeds an Arduino-compatible microcontroller (μC) on the disc, which in turn drives and monitors various sensors and actuators. The platform, which has been conceived to flexibly prototype such systems, demonstrates the feasibility of a wireless power supply and the use of a μC circuit, for example for Lab-on-a-disk applications, thereby eliminating the need for cumbersome slip rings or batteries, and adding a cogent and new degree of freedom to the setup. The large number of sensors and actuators included demonstrate that a wide range of physical parameters can be easily monitored and altered. All devices are connected to the μC via an I2C bus, therefore can be easily exchanged or augmented by other devices in order to perform a specific task on the disk. The wireless power supply takes up little additional physical space and should work in conjunction with most existing Lab-on-a-disk platforms as a straightforward add-on, since it does not require modification of the rotation axis and can be readily adapted to specific geometrical requirements.
+Lab-on-a-disk platforms build upon, in their basic implementation, passive microfluidic devices which offer unit micro-fluidic operations, such as mixing, valving, volume metering, separation, or siphoning.1,2 More recently, an electrical power supply using slip rings has been proposed,3,4 which enables the Lab-on-a-disk to be paired with active devices. Slip rings add friction to the rotor axis, consequently the complete setup is fairly complicated and can only handle a limited number of electrical connections. Furthermore, slip rings wear out over time and have to be replaced often. To alleviate this problem we propose to use wireless power transfer (WPT) to the rotating disk. This is achieved by placing a stationary transmitter coil under the Lab-on-a-disk device and a receiver coil attached to the rotating disk. The coils, concentric with the rotation axis, are inductively coupled. It is therefore possible to efficiently transfer AC power from one coil to the other, in this case by using a frequency of 2.6 MHz. Other power transfer mechanisms are also possible but do not offer the flexibility of a wireless power supply and have their own drawbacks, for example: solar cells induce heat into the substrate; batteries besides being heavy, thus limiting the rotation speed, can discharge themselves and only provide limited power over extended load periods; for microwave radiation, a rotating antenna will reduce the possible power transmission.
+Inductive power transfer is a very flexible option, since the coils can be readily designed as needed and fabricated with printed circuit board technology. Furthermore, since transmitter and receiver coil are in the coaxial configuration, rotation does not affect the power transfer efficiency. In this paper, we aim to bring wireless power, data transmission and logging, as well as active control and feedback, to a rotating disk and thereby improve upon previously reported approaches.5,6 The main improvements achieved are: available output power above 2 W, which exceeds what has been reported so far6 by a factor of 10, makes it feasible to also power a heater, or a power hungry actuator, and thereby enabling the Lab-on-a-disk to benefit from a larger range of active devices currently available; a μC on the rotating disk makes more complex measurements and experiments possible, for example, by being able to react to the instantaneous state of an experiment on the disk; wireless data transmission makes possible the transfer of signals out from the disk in real time, for example, in order to monitor the state of a disk experiment or provide open and closed-loop control by a mobile device; a custom layouted, yet standard configuration Arduino μC on the rotating disk, offers a user-friendly programming interface, with full access to the vast online resources currently available from the Arduino community.
+To efficiently transfer electric power to the rotating disk, we use a class E amplifier7 which produces a 2.6 MHz AC waveform. These amplifiers are robust and efficient devices that are well suited for wireless power applications.8 At its core, a transistor is periodically switched with the frequency of operation. Using only a few components (L1, C1, L2, C2), a sinusoidal output voltage at the load is generated (see Fig. 2(a)), while current and voltage waveforms over the transistor do not overlap, leading to vanishing switching loss. Using the equations from Sokal et al.,7 it is possible to design the amplifier to achieve target criteria, such as required output power, desired load resistance, or specific component values.
+The power is subsequently transferred between two inductively coupled coils. The stationary coil is placed under the rotating disk. The wireless power transfer module (WPT) schematic is shown in Fig. 1(c). After the receiver coil, the AC power is rectified. A DC–DC converter after the rectification stage is connected to the rotating coil. The DC–DC converter provides a 5 V supply for the μC and the sensors and actuators.
+ Fig. 1  Concept and realization of the proposed system. a) Conception and physical implementation, depicting the stack system design, the rotating platform and the static transmitter coil. b) Block diagram of the system. c) Schematic of the wireless power transfer, rectification and DC–DC conversion. 
+ Fig. 2  a) Schematic of the implemented class E amplifier. Inset: measured voltage waveform of drain to source (VDS) and gate to source (VGS). b) Measured power transmission efficiency between the two coils as a function of their separation. At a minimum distance of 2.6 mm due to the physical configuration, the power transmission efficiency between the coils is 86%. 
+The efficiency of wireless power transfer between inductively coupled coil pairs decreases rapidly with increasing separation9 (see Fig. 2(b)), but for a rotating disk platform, the distance between the coil pair can be kept small enough to achieve acceptable transmission efficiency.
+To characterize the power transmission capabilities of the entire system, the output voltage on the disk after the DC–DC converter was measured for varying load resistance. A power of 2.4 W was measured after the linear regulator, so this is the maximum power available on the current disk (see Fig. 3). Only 1 W in output power is measured when the linear regulator is replaced by a switching DC–DC converter (LT3470), due to its maximum output current limitation of 200 mA. The DC–DC converter has to be chosen according to the actual power consumed on the disk. While linear regulators are easy to implement and only need few components, they are inefficient if the input voltage or output current of the regulator are high, which leads to additional heat on the disk that is potentially undesired. On the other hand, switching DC–DC converters are highly efficient devices, however, in general they require more components and a more complicated circuit layout. The load regulation of the system can be observed in Fig. 3. We measured a system efficiency of 40% at a maximum power of 1 W with the switching DC–DC converter and 30% with the linear regulator at 2.4 W.
+ Fig. 3  Load regulation of the entire system for different configurations. a) Only with a rectifier, b) with a switching DC–DC converter with a maximum output current of 200 mA, c) with a linear regulator, d) online power measurement on the disk during spinning with switching DC–DC converter. 
+Having available a constant power supply on the rotating system greatly increases the flexibility of a Lab-on-a-disk system. Not only can electrically driven sensors and actuators be used, but furthermore, a μC can be powered, which allows for control loops, monitoring, and communication to be implemented. The choice of the μC should fulfil the following criteria:
+• Low power consumption. This is due to the constantly available but still limited amount of power on the disk.
+• Reasonable clock speed. Real-time applications require fast response times, especially when microfluidics is involved, so that at least μs clock speeds are necessary.
+• A reasonable number and type of I/O ports. With 5 to 10 I/O ports, a large number of signals can be read and written, and if more are needed, port expanders can be used. An I2C and SPI Bus greatly simplifies system design and opens up the platform for a range of commercially available subsystems.
+• Easy of programming and use. Since typical users will not be experts in microelectronics or programming, an intuitive interface is needed.
+The Arduino open hardware platform10 currently fulfils these criteria. It is based on an Atmel μC, a standardized hardware interface design in a number of useful configurations, and a cross-platform software development environment. The software is designed to provide the programmer with a simplified command set, which allows programming without the need to learn the internal specifications of the μC. The hardware setup used in this paper is based on the Arduino micro board featuring an ATMega32UA μC (16 MHz clock, 8 bit CPU, 32 I/O pins, 8-channel 10-bit A/D converter, 4.5–5.5 V supply). The schematic of the standard board, available in the public domain, was rearranged to fit our application (see Fig. 4).
+ Fig. 4  a) Standard Arduino-micro board: 48 mm × 18 mm. b) Custom Arduino-micro, rearranged on a disk: 50 mm ∅. 
+In order to demonstrate the flexibility and capabilities of the platform, a modular plug-and-play and therefore non-compact design was chosen that facilitates rapid prototyping, rather than focusing on a specific application, for which a more compact design could have been manufactured. The rotating system consists of six disks (see Fig. 1(a) for an overview), containing several sensors (gyroscope, temperature, pressure), two actuators (fan and motor), seven LEDs, a bluetooth module and an SD-card reader in addition to the μC. The system functionality is characterised by exemplary measurement curves shown in Fig. 5. The received power is monitored over time for three different resistive loads in Fig. 5(a). Fig. 5(b) plots temperature and angular velocity over time, as measured by sensors on the disk. By activating all components of the system, 0.7 W of power was consumed.
+ Fig. 5  Example of online measurable physical variables in the proposed rotating system. (a) Received power at 3 different loads with a switching DC–DC converter (LT3470). (b) Logged temperature and angular velocity ω of the disk. ω was obtained by means of a gyroscope and from acceleration in the X and Y directions. At high enough rotation speed, the gyroscope signal saturated. 
+While the last paragraph demonstrated the system capabilities of the platform in principle, the following focuses on the opportunities that emerge for reported applications (Table 1).
+Potential applications
+Amasia et al.11 report on integrating a PCR onto a fluidic disk. The heating and cooling of the reaction chamber was implemented using a large thermal block that was placed in close proximity under the rotating disk. A constant supply of power on the disk would facilitate integrating a thermoelectric element directly in contact with the fluidic disk and controlling and measuring it using the μC. This should allow for a more efficient and precise control of the temperature in the fluid with a much smaller thermal element. Glynn et al.12 report the magnetic selection of cells by sorting these into separate compartments. The integration of logic and sensors allows a more quantitative detection by directly counting each bead. This can either be done with a light trap, or via impedance spectroscopy. Having the sensing elements at a fixed position, and close to the fluidic chamber, dramatically increases the sensitivity compared to usual disk setups. The second advantage is that, in contrast to detection from outside the disk, the beads move linearly (radially) relative to the on-disk detector. N. Kim et al.14 present an automated microfluidic compact disk (CD) system specialized for cultivating and monitoring Caenorhabditis elegans. With active components on the disk, parameters such as temperature and the acting gravitational force could be monitored much more precisely. Also, an active sorting mechanism could be implemented that is then controlled by the μC. Lee et al.13 report a fully integrated device that can perform both multiple biochemical analysis and sandwich type immunoassay simultaneously on a disk. The capability of the ferro-wax valve platform would be greatly enhanced if these valves could be actuated while the disk was spinning. Y. Kim et al.15 report on a new robust and reliable way to dynamically control laminar flow interfaces for very long time periods. With active control on the disk this could be implemented on Lab-on-a-disk devices.
+Table 1 Possible improvements of reported Lab-on-a-disk applications by using subsystems of the modular platform. (for more details see Potential applications section)
+
+
+
+
+Reference
+μC
+Storage
+Sensors
+Actuators
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+M. Amasia11
++
++
+++
++++
+
+
+M. Glynn12
+++
++
++++
+
+
+
+
+B. Lee13
++
++
+++
+++
+
+
+N. Kim14
+++
++
+++
++++
+
+
+Y. Kim15
++++
+++
+++
++++
+
+
+
+
+Conclusions and outlook
+The presented approach opens the door to a much more direct and sophisticated system level toolbox for Lab-on-a-disk applications. The implementation of wireless constant power supply, communication, and control logic, together with sensing and actuation, combines stationary analysis and spinning fluidic disks towards the best of both worlds. In this paper we demonstrated the technical foundation of what we believe will have numerous applications in the future.
+Acknowledgements
+This work was financed in part by the ERC Grant NMCEL (grant number 290586), and in part by an operating grant from the University of Freiburg. The authors express their gratitude to their colleague Nils Spengler who made available the ShareLATEX environment.
+References
+J. Ducrée, S. Haeberle, S. Lutz, S. Pausch, F. von Stetten and R. Zengerle, J. Micromech. Microeng., 2007, 17, S103 CrossRef .
+R. Gorkin, J. Park, J. Siegrist, M. Amasia, B. S. Lee, J.-M. Park, J. Kim, H. Kim, M. Madou and Y.-K. Cho, Lab Chip, 2010, 10, 1758–1773 RSC .
+Z. Noroozi, H. Kido and M. J. Madou, J. Electrochem. Soc., 2011, 158, P130–P135 CrossRef CAS .
+K. Abi-Samra, T.-H. Kim, D.-K. Park, N. Kim, J. Kim, H. Kim, Y.-K. Cho and M. Madou, Lab Chip, 2013, 13, 3253–3260 RSC .
+G. Wang, H.-P. Ho, Q. Chen, A. K.-L. Yang, H.-C. Kwok, S.-Y. Wu, S.-K. Kong, Y.-W. Kwan and X. Zhang, Lab Chip, 2013, 13, 3698–3706 RSC .
+
+          J. Burger, A. Gross, D. Mark, G. Roth, F. von Stetten and R. Zengerle, IR thermocycler for centrifugal microfluidic platform with direct on-disk wireless temperature measurement system,  2011,  DOI:10.1117/12.887178.
+N. Sokal and A. Sokal, IEEE J. Solid-State Circuits, 1975, 10, 168–176 CrossRef .
+Z. N. Low, R. Chinga, R. Tseng and J. Lin, IEEE Trans. Ind. Electron., 2009, 56, 1801–1812 CrossRef .
+C.-J. Chen, T.-H. Chu, C.-L. Lin and Z.-C. Jou, IEEE Trans. Circuits Syst. II, Exp. Briefs, 2010, 57, 536–540 CrossRef .
+
+Arduino. http://www.arduino.cc Search PubMed .
+M. Amasia, M. Cozzens and M. J. Madou, Sens. Actuators, B, 2012, 161, 1191–1197 CrossRef CAS .
+M. Glynn, D. Kirby, D. Chung, D. J. Kinahan, G. Kijanka and J. Ducrée, J. Lab. Autom., 2014, 19, 285–296 CrossRef PubMed .
+B. S. Lee, Y. U. Lee, H.-S. Kim, T.-H. Kim, J. Park, J.-G. Lee, J. Kim, H. Kim, W. G. Lee and Y.-K. Cho, Lab Chip, 2011, 11, 70–78 RSC .
+N. Kim, C. M. Dempsey, J. V. Zoval, J.-Y. Sze and M. J. Madou, Sens. Actuators, B, 2007, 122, 511–518 CrossRef CAS .
+Y. Kim, B. Kuczenski, P. R. LeDuc and W. C. Messner, Lab Chip, 2009, 9, 2603–2609 RSC .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: 10.1039/c5lc00138bThis journal is © The Royal Society of Chemistry 2015
+Table Content:
+
+ 	Fig. 1  Concept and realization of the proposed system. a) Conception and physical implementation, depicting the stack system design, the rotating platform and the static transmitter coil. b) Block diagram of the system. c) Schematic of the wireless power transfer, rectification and DC–DC conversion.	 
+
+ 	Fig. 2  a) Schematic of the implemented class E amplifier. Inset: measured voltage waveform of drain to source (VDS) and gate to source (VGS). b) Measured power transmission efficiency between the two coils as a function of their separation. At a minimum distance of 2.6 mm due to the physical configuration, the power transmission efficiency between the coils is 86%.	 
+
+ 	Fig. 3  Load regulation of the entire system for different configurations. a) Only with a rectifier, b) with a switching DC–DC converter with a maximum output current of 200 mA, c) with a linear regulator, d) online power measurement on the disk during spinning with switching DC–DC converter.	 
+
+ 	Fig. 4  a) Standard Arduino-micro board: 48 mm × 18 mm. b) Custom Arduino-micro, rearranged on a disk: 50 mm ∅.	 
+
+ 	Fig. 5  Example of online measurable physical variables in the proposed rotating system. (a) Received power at 3 different loads with a switching DC–DC converter (LT3470). (b) Logged temperature and angular velocity ω of the disk. ω was obtained by means of a gyroscope and from acceleration in the X and Y directions. At high enough rotation speed, the gyroscope signal saturated.	 
+
+
+M. Amasia11	+	+	++	+++
+M. Glynn12	++	+	+++	
+
+B. Lee13	+	+	++	++
+N. Kim14	++	+	++	+++
+Y. Kim15	+++	++	++	+++
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/c5lc00138b
+
+This journal is © The Royal Society of Chemistry 2015

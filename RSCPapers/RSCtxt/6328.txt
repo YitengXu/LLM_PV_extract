@@ -1,0 +1,246 @@
+Designing promising molecules for organic solar cells via machine learning assisted virtual screening   - Journal of Materials Chemistry A (RSC Publishing) DOI:10.1039/C9TA04097H View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C9TA04097H
+(Paper)
+J. Mater. Chem. A, 2019, 7, 17480-17488Designing promising molecules for organic solar cells via machine learning assisted virtual screening†
+
+        
+          
+            Harikrishna 
+            Sahu
+          
+        
+      a, 
+      
+        
+          
+            Feng 
+            Yang
+          
+        
+      a, 
+      
+        
+          
+            Xiaobo 
+            Ye
+          
+        
+      a, 
+      
+        
+          
+            Jing 
+            Ma
+          
+        
+      a, 
+      
+        
+          
+            Weihai 
+            Fang
+          
+        
+      ab and 
+
+        
+          
+            Haibo 
+            Ma
+          
+        
+      *a
+aKey Laboratory of Mesoscopic Chemistry of MOE, School of Chemistry and Chemical Engineering, Nanjing University, Nanjing 210023, China. E-mail: haibo@nju.edu.cn
+bKey Laboratory of Theoretical and Computational Photochemistry of Ministry of Education, Department of Chemistry, Beijing Normal University, Beijing 100875, China
+Received 
+      18th April 2019
+    , Accepted 24th June 2019First published on 28th June 2019AbstractNavigating chemical space for organic photovoltaics (OPVs) is in high demand for further increasing the device efficiency, which can be accelerated through virtual screening of a large number of possible candidate molecules using a computationally cheap and efficient model. However, predicting the efficiency of an OPV is quite challenging due to the complex correlations between factors influencing the energy conversion process. In this work, we performed high-throughput virtual screening of 10170 candidate molecules, constructed from 32 unique building blocks, with several newly built, computationally affordable and high-performing (Pearson's correlation coefficient = 0.7–0.8) machine learning (ML) models using relevant descriptors. Important building blocks are identified, and new design rules are introduced to construct efficient molecules. The critical molecular properties required for high efficiency are unraveled. Also, 126 candidates with theoretically predicted efficiency >8% are proposed for synthesis and device fabrication. Similar ML-assisted virtual screening studies may reveal hidden guidelines to design promising molecules and could be a breakthrough in the search for lead candidates for OPVs.
+1 Introduction
+Organic photovoltaics (OPVs) have attracted considerable attention due to their ability to form lightweight, transparent and flexible photovoltaic panels by low-cost solution processing methods, with the recently reported high power conversion efficiency (PCE) of 17.3%.1–4 The efficiency and stability of these devices can be further improved through device engineering and material design. As a result of great efforts made to improve the device architecture, single junction solar cells are now replaced by bulk-heterojunction and the recently developed tandem-structured and ternary system solar cells.5–7 Similarly, the performance of OPVs is tested with a variety of donors and fullerene as well as non-fullerene8–11 acceptors to find efficient materials. However, there is a possibility of an infinite number of candidate materials due to intrinsic degrees of freedom in organic molecules, and choosing an appropriate material is a highly challenging task because the trial-and-error experimental routines suffer from a stringent synthesis procedure, laborious purification steps, and large time-consumption. Computing the photo-physical properties of organic molecules related to formation, migration, and dissociation of excitons and transport of charge carriers requires high-level quantum chemical methods due to strong electron–electron correlation, electron–phonon coupling, and complex donor–acceptor (D/A) morphology,12,13 which are prohibitively expensive for screening purposes. Usually, design guidelines for chemical construction and modification of conjugated molecules are nowadays proposed by comparing experimental/computed properties of a large number of systems reported in the literature. In this regard, several comprehensive reviews on a variety of chemical structures14–20 are greatly helpful to reveal new design concepts. However, understanding correlations between different properties of molecules, and their relations to the complex energy conversion process is not a trivial task due to the possibility of non-linear relationships between them. In this scenario, revealing new design principles could accelerate the search for promising molecules for OPVs and accordingly is highly desirable.
+High-throughput virtual screening of candidate molecules is a cost-effective approach to predict the efficiency of new materials and deduce new design principles, without time-consuming experiments.21,22 Notably, in the Harvard Clean Energy Project,23 new promising molecules are proposed by screening 2.3 million molecular motifs by means of 150 million density functional theory (DFT) calculations. However, the Scharber model,24 widely used in current virtual screening studies for OPVs,25,26 is not accurate enough for the prediction of PCE as it is based on only energies of the frontier molecular orbitals of organic molecules. Further, the applicability domain of this model is limited to PC61BM, and a more general model is necessary to cover non-fullerene acceptors.
+A breakthrough in the search for new candidate materials is possible through data-driven studies by combining machine learning (ML), DFT and available experimental data, which may provide a fast and efficient route to discover lead candidates for OPVs. ML has already been successfully applied to reduce the computational costs of high-level quantum chemical calculations27–31 and in the discovery of drugs,32,33 reactions,34–37 and materials.38–49 To improve the prediction of PCE, Aspuru-Guzik et al.50 proposed to calibrate computed PCE obtained using the Scharber model using molecular similarity and optical gap through the Gaussian process regression approach, and they achieved a prediction accuracy of Pearson's correlation coefficient (r) = 0.43. Recently, a ML model was proposed by Troisi et al.51 to predict the efficiency of OPVs by considering both structural and electronic descriptors with an impressive predictive performance (r = 0.68). Although the performances of these models are good enough for the screening of candidate molecules, the applicability domain of them is limited to the chemical structure seen in the training set. The performance and applicability domain of a ML model can be further enhanced by avoiding structural descriptors and choosing all appropriate ones related to the photophysical processes in an OPV.
+We are keenly interested in establishing a global, accurate and computationally viable ML model for the prediction of PCE using relevant descriptors. In our recent work,52 a number of ML models were built using different techniques such as an artificial neural network (ANN), random forest and gradient boosting regression tree (GBRT) using 13 microscopic properties of organic materials as descriptors. The performance of a GBRT model was found to be quite impressive (r = 0.77), which is suitable enough for predicting the efficiency of new candidate molecules. However, this model requires expensive descriptors, for example, polarizability and excited state properties for donors, which prevents its use for large-scale high-throughput virtual screening of potential molecules. Thus, a model constructed from easily accessible descriptors is highly desired to explore large chemical space. Further, only predicting the efficiency of new candidates is not sufficient, and extracting hidden design principles is more critical for constructing promising materials without even using ML models. A detailed analysis of molecular properties essential for high PCE is desired to improve understanding of the fundamental concepts of the energy conversion process.
+In order to design efficient materials, it is important to identify suitable building blocks and how to construct promising molecules from them. Donor molecules are composed of many different types of building units based on their roles in push–pull conjugated systems, such as donor, acceptor, π-spacer and end-capping groups. For each class, a large number of building blocks are known to date, and there are infinite ways to combine them. As there is no proper guidance to choose potential building units, the hit-and-trial approach is often used in practice, which makes the search procedure expensive as well as time-consuming. High-throughput virtual screening using ML-models can certainly provide information regarding the importance of building units and their arrangements.
+In this work, we carried out high-throughput virtual screening of ∼10000 molecules constructed from 32 unique building units using high-performing ML models, where descriptors are calculated by performing nearly 17000 DFT calculations for the ground and excited states of candidate molecules. By identifying important building blocks and their arrangements, this study provides a set of instructions to construct efficient materials for OPVs. Desired molecular properties required for high-PCE are also revealed. We are quite hopeful that high-throughput virtual screening via ML-models will greatly assist the development of OPVs by predicting the PCE of new candidates, providing design principles to construct promising chemical structures and finding new correlations between the molecular properties of organic materials and the PCE.
+2 Dataset and machine learning model
+For effective screening of candidate molecules, it is essential to train a ML-model using sufficient experimental data and easily accessible descriptors. At first, we collected experimental PCE from 300 recently reported small-molecule OPVs (SM-OPVs) with absorption layers consisting of a variety of donor molecules including squaraine, benzodithiophene-(BDT), quinoxaline- and Zn-porphyrin-based systems, with 290 unique chemical structures (see Table S1†). We verified the frequency of building units in donor molecules and the efficiency of devices, which indicates that their PCEs depend not only on the presence of building blocks but also their arrangements in the conjugated backbone. For example, the PCE of 65 donor molecules containing BDT-like units is varied from 3.09% to 9.84%, indicating the distinct chemical structure of each donor molecule irrespective of the presence of a similar building unit, which probably originated from the quantum chemical nature of conjugated molecules. In the dataset, donor molecules are blended with either PC61BM or PC71BM as the acceptor. Although only small molecules are chosen due to their discrete and well-defined structures, our findings are also expected to be applicable for polymer solar cells. We stick to bulk-heterojunction type SM-OPVs as the D/A interface plays a vital role in the hole–electron separation and significantly affect the PCE of a device. In the dataset, the median value is 5.21% with data ranging from 0.5% to 9.84% PCE.
+The ground state geometries of the studied molecules are optimized using DFT at the M06-2X/6-31G(d) level without any geometrical constraints, followed by cationic, anionic and excited state calculations. Out of the total 28 descriptors obtained from these calculations, important ones are identified, and ML models are trained using 10-fold cross-validation in combination with the stratified sampling method, and the performance of each model is evaluated for a separate unseen dataset by the mean absolute percentage error (MAPE), root mean square error (RMSE) and Pearson's correlation coefficient (r). Further, all models are post-validated through leave-one-out cross-validation (LOOCV) and error analysis. All DFT calculations are carried out using the Gaussian 09 software package,53 and ML techniques used to build models are easily accessible in the scikit-learn package.54 Detailed descriptions for the calculations of descriptors and ML models are reported in the ESI.†
+3 Results and discussion
+Unraveling new design guidelines is essential to constructing promising molecules for OPVs; however, it is a very challenging task as the PCE depends on a number of properties of donor and acceptor materials. At first, we build machine learning models using all relevant and easily accessible descriptors, and the results are compared with the commonly used Scharber model. The performances of ML models are verified for chemical structures, not present in the training set. Then, we screened 10000 candidate molecules, and proposed design rules concerning building units, combinations of them and properties of isolated molecules.
+3.1 Performance of machine learning models
+Before performing high throughput virtual screenings of a large number of candidate molecules, we first checked the performance of the Scharber model and validated the performance of our newly build ML models. As a result of the simplicity and low computational cost of the Scharber model,24 it is nowadays considered as the preferable choice for high-throughput screening of candidate materials for organic solar cells.25,26,50 To estimate the predictive ability of this model for SM-OPVs, the PCEs for 300 known systems are calculated and compared with the corresponding experimental data (Table 1). The performance of this model is found to be quite poor (r < 0.2), which is consistent with the result reported in the literature.51 The failure of the model may be attributed to (1) oversimplification and limited applicability domain of the model and (2) limitation of the DFT to estimate the energies of frontier orbitals.
+Table 1 Prediction of the PCE using the gradient boosting regression tree (GBRT), artificial neural network (ANN) and Scharber modelsa
+
+
+
+
+Model
+MAPE (%)
+RMSE
+
+r
+
+
+
+
+
+
+a For ML models, results of 10-fold cross-validation over 250 data points and a separate test set (50 points) are reported inside and outside the parenthesis, respectively. In the case of the Scharber model, the PCE is calculated for all 300 data points. In the GBRT* model, easily accessible molecular properties derived from the optimized ground state geometry and energies of frontier orbitals of donor/acceptor molecules are considered as descriptors while an extended set of descriptors is used for GBRT and ANN models. MAPE, RMSE and r represent mean absolute percentage error, root mean square error, and Pearson's correlation coefficient, respectively. The performance of a k-nearest neighbor (k-NN, where k = 5) model is reported for comparison.
+
+
+
+
+
+GBRT
+21.0(20.1)
+1.107 (1.078)
+0.80 (0.79)
+
+
+ANN
+21.1 (21.1)
+1.194 (1.175)
+0.77 (0.75)
+
+
+GBRT*
+24.8 (22.6)
+1.294 (1.209)
+0.72 (0.72)
+
+
+Scharber
+115.35
+5.32
+0.14
+
+
+
+k-NN
+25.8
+1.279
+73.1
+
+
+
+
+Although our recent model52 is more accurate than the Scharber model, the computations of some of its descriptors are still expensive. Therefore, with an aim to reduce the computational cost, ML models are retrained using suitable and less expensive descriptors. We trained a ML-model from a sufficiently large number of reported experimental data (250 data points) using the GBRT technique and a set of 13 descriptors: (1) number of unsaturated atoms (NDatom), (2) number of hetero atoms (NDhet), (3) energy difference of the LUMO of the donor and LUMO of the acceptor (EDALL), (4) reorganization energy for holes (λh), (5) energy difference of the HOMO of the donor and LUMO of the acceptor (EDAHL), (6) energy difference of the HOMO and HOMO−1 of donors (ΔH), (7) energy difference of LUMO+1 and LUMO of donors (ΔL), (8) ionization potential (IP(v)), (9) optical gap (Eg), (10) change in the dipole moment in going from the ground state to the first excited state (Δμge), (11) hole–electron binding energy (Ebind), (12) triplet state (ET1) and (13) name of acceptors (Acceptor), chosen from the complete set of 28 descriptors. These descriptors are carefully selected based on domain knowledge, correlation analysis (Fig. S1†) and the forward selection approach. This ML-model efficiently predicts the PCE with an impressive r of 0.8 (see Table 1 and Fig. S2†), and outperforms the Scharber model. A very good correlation between experimental and predicted PCE (r = 0.78) by the LOOCV approach and a normal distribution of errors indicate that the GBRT model generalizes well to an independent dataset. To overcome the limitations of the GBRT,55 an ANN-model was also trained using the same set of descriptors with slightly declined performance (r = 0.77), and it can be used to predict PCE beyond the training set. For rapid screening of a large number of candidate molecules, a simple GBRT model (GBRT*) was built using NDatom, Acceptor and descriptors related to the Frontier orbitals of donor and acceptor molecules, such as ΔH, ΔL, ΔHL, (EDAHL) and (EDALL), with a remarkable prediction efficiency of r = 0.72. The performance of this model is competitive to a recently reported ML-model built from both the electronic and structural descriptors (r = 0.68 (ref. 51)) of conjugated molecules, and it can certainly be useful for screening of a large number of molecules at a marginal computational cost. We would like to clarify that the effects of side chains, solvents, and D/A morphology are not taken into account explicitly in these models, and predicted PCEs might differ from the experiments if the photophysical properties of an organic layer are significantly altered due to any of these factors.
+Tanimoto and Euclidean distances are calculated between molecules present in test and training sets, and the distances are compared with the respective change of experimental PCE. As shown in Fig. S3,† although Tanimoto and Euclidean distances are small, there is a significant change in PCE. These findings indicate that our models have learned complex correlations between descriptors, not restricted to structures of molecules, and thus these models can be applied for new chemical structures.
+To further ensure the predictive ability of the ML-models for new chemical structures, a few donor molecules with different chemical compositions are figured out in the literature, and PCEs predicted using these models are compared with their respective experimental results. A donor molecule containing dithienocarbazole as the central building block, not present in the training dataset, blended with PC71BM exhibits a PCE of 6.75%.56 The predicted PCEs using GBRT and ANN models are 5.98% and 5.78%, respectively. Tao et al.57 proposed two (A–D)2Ar-type molecules, in which triphenylamine (TPA) was used as donor and anthracene was used as π-bridge in combination with two other acceptors, with an average PCE of 1.3–1.66%. The device performances were also found to be poor for three molecules based on a cis-stilbene central unit with or without its confinement within a seven-member ring.58 These poor performing molecules are effectively screened out by our ML-models (Table S3†). These results indicate that our models are not restricted to a particular family of molecules and can be applied for a wide variety of chemical structures. It is important to note that OPVs with very poor experimental PCEs (<3%) are often associated with issues in device fabrication, and the ML-predicted PCEs are qualitative, which only indicates that molecules are not suitable for OPVs. We noticed that most of the recently reported OPVs molecules are composed of derivatives of commonly used building units, which are present in the training set. Looking at the current interest and a large number of possibilities to modify chemical structures of OPV molecules using these building units, our models are used to navigate the chemical space of the most preferred moieties.
+3.2 Screening of candidate materials
+Conjugated molecules used in OPVs are composed of different types of building blocks such as donor (D), acceptor (A), π-spacer (S) and end-capping (C) units. The presence of D/A units in a molecule facilitates hole–electron separation by polarizing the electron cloud. π-Spacers and end-capping groups enhance the π-conjugation and influence the geometry, photon absorption, energy level of Frontier orbitals, etc., and thus they influence the PCE of an OPV. To reveal guidelines for chemical construction, most preferred 15 donor, 6 acceptor, 5 π-spacer and 6 end-capping groups are chosen (see Fig. 1), and these moieties are combined in 10 different possible arrangements: (1) DA; (2) ADA; (3) DAD; (4) DSA; (5) DSASD; (6) ASDSA; (7) CSDSC; (8) CASDSAC; (9) CDSASDC; (10) CDSAC, generating a total of 10170 candidate molecules. There are many possible ways to modify the structure of moieties and their arrangements; however, it is not possible to consider all of them due high-computational cost of DFT calculations. Our dataset of ∼10000 candidate molecules constructed from 32 unique building blocks is sufficient to extract reliable information from computed PCEs. Before constructing donor molecules, each building unit is optimized separately using DFT at the M06-2X/6-31G(d) level, and then initial geometries are generated by taking account of non-covalent interactions between O, S, and N-atoms.59,60 Finally, all geometries are fully optimized at the same level of theory, and the necessary descriptors are calculated.
+ Fig. 1  Chemical structures of donor, acceptor, π-spacer and end-capping building units considered in this work. 
+We follow a two-step screening approach to select lead candidates from 10170 molecules with respect to PC71BM as the acceptor using three ML-models: GBRT*, GBRT and ANN. At first, all candidates are screened using the GBRT* model and 1000 lead molecules (PCE > 7.45%) are identified. The distribution of predicted PCEs for all the screened molecules, depicted in Fig. 2(a), has a positive skew which indicates that only a few candidates are suitable for high-performing devices. It is worth pointing out that extracting useful information on the chemical structure and molecular properties from the high-throughput virtual screening is more important than the absolute values of ML-predicted PCEs, and highly desired to construct new promising molecules even without using ML-models. z-Scores for the hypergeometric distribution, the measure of distance between a data point and the population mean, can be used to estimate the importance of building units and combinations of them.23,50 A positive z-score indicates that an individual building unit or a combination of units is more likely to be found in the top 1000 lead candidates, and vice versa. z-Scores of all building units are calculated to estimate their importance for building promising molecules and depicted in Fig. S4.† Out of 15 donor units, BDT (D3 and D4), dithieno-benzodithiophene (D5) and napthodithiophene (D8) based building blocks are statistically over-represented in the top set. To find the reason behind the selection of these building units over other units, excited state calculations are carried out for all donor units, and Eg and absorption spectra are reported in Table S4 and Fig. S5,† respectively. A redshift is noticed in Eg and absorption spectra for these four units compared to most of the donor building units. It is worth noting that enhanced photon absorption is one essential criterion but not sufficient to tune the molecular properties of a molecule for high device efficiency. Interestingly, the electron-rich BDT fragment is already known as a suitable moiety due to its structural rigidity and planarity which lead to extended π conjugation and favorable π–π intermolecular interaction, and its derivatives are often seen in high-performing OPV materials.61,62 However, in the literature, there are only a few known donor molecules constructed from the D5/D8 fragment, and structural variations of them may introduce new efficient donor materials for OPVs.
+ Fig. 2  Histogram of predicted PCE for 10170 candidates molecules using the GBRT* model with respect to the PC71BM acceptor (a) and hypergeometric z-scores for different ways to construct molecules from building blocks (b), combinations of donor–acceptor (c), donor–π-spacer (d) and donor–end-capping units (e). In panel (a), green colored bars represent the top 1000 lead candidate molecules. 
+In push–pull donor molecules, it is essential to choose an appropriate electron-deficient building unit as it determines the extent of charge transfer from donor to acceptor units. The z-scores of these moieties indicate that the following two acceptor units are often found in the top 1000 lead molecules: naphtho-bis[1,2,5]thiadiazole (A3) and isoindigo (A5). In comparison to other acceptor units, the energy of the LUMO for these two units are lower (Fig. S6†), and absorption spectra are red-shifted (Fig. S5†), which may benefit intramolecular charge transfer from the donor unit to the acceptor unit and help to increase photon absorption in donor materials.63 In organic electronics, A5 is considered as a promising acceptor unit due to its deep LUMO level and extended absorption, and often incorporated into polymers.64,65 However, A3 as well as A5 moieties are somehow largely ignored in the SM-OPV community. We further extend our analysis to π-spacer and end-capping units. π-Spacers such as bithiophene (S4) and terthiophene (S5) often dominate in lead molecules, as they extend the π conjugation of a molecule to a greater extent compared to other spacers considered in this study, which is clearly visible from their extended absorption spectra (Fig. S5†). Out of 6 end-capping units, electron deficient C1, C2, and C3 are over-represented while electron rich C4, C5, and C6 are under-represented in lead candidates. Usually, the central donor units play a significant role in photon absorption due to extended π-conjugation, and in such a scenario, the electron accepting end-capping building blocks polarise the exciton and ease the hole–electron separation. Recently, Peng et al.66 reported a small-molecule constructed from D3, A3, S5 and C1 building units with an impressive PCE of 9.84%. Interestingly, all these four units are chosen as promising building blocks by our ML-model, which further confirms the reliability of our prediction. It is worth pointing out that quantum chemical descriptors are used to build the ML-model, and therefore our model did not remember the structures of building units. In the previous subsection, we even verified our models for chemical structures different from those present in the training set. Also, it is very difficult to estimate PCE by considering structural similarity (see Fig. S3†). This evidence ruled out any possible circular reasoning behind revealing promising building units by the screening process with respect to their presence in the training set.
+To introduce new design rules, identifying promising individual building blocks is not sufficient, and it is more important to find the most suitable pairs of building units, as the nature of the coupling between two moieties determines the frontier orbitals and photophysical properties of a molecule.67,68 For more in-depth analysis, z-scores of possible combinations of building units are depicted in Fig. 2 and S7–S9. As shown in Fig. 2(c), all possible combinations of important donor and acceptor moieties are not equally favorable. D5 and D8 combined with A3/A5 are often found in the top set; however, D3–A5 and D4–A3 are found to be statistically over-represented in comparison to D3–A3 and D4–A5. Although both S4 and S5 π-spacers have high z-scores, S5–D5, S5–D8 and S4–D8 are the preferred choices while D2 and D6 combined with S5, and D1, D2, D6, D12 and D13 combined with S4 are not recommended. It is interesting to note that the individual z-scores of S1 and S3 are negative; however, efficient molecules constructed from these fragments combined with other suitable moieties, such as D3, D4, D5 and D8, are also seen in the top set. Out of three electron deficient end-capping units, C2 is often found in lead molecules, especially with D4, D5 and D8 donor units. Although D11 has a small positive z-score, it also forms promising molecules when combined with C2. Fig. S9† shows that a large number of lead molecules are constructed from both C2 and S5 units. Among all possible combinations of acceptor and π-spacer units, A3–S5 is over-represented in the top set. The significance of a pair of building units probably depends on two factors: (1) strengths of electron-rich and electron-deficient units and (2) π-conjugation lengths, and care must be taken to ensure that an appropriate set of building units are chosen for constructing donor molecules for an OPV.
+As can be seen in Fig. 2(b), the most favorable way to construct efficient donor molecules from these important building units is to combine them in the following pattern: CASDSAC. In addition, efficient molecules can also be constructed by combining building units in the CDSASDC pattern with a comparatively lower probability of getting high-PCE compared to the former one. The joint distributions of descriptors and predicted PCEs are depicted in Fig. S10 and S11.† Both CASDSAC and CDSASDC types of molecules have an extended π-conjugated backbone with an average NDatom of 76.4 and 81.1, respectively. However, the average values of ΔL for CASDSAC and CDSASDC patterns are 0.08 and 0.50 eV, respectively, which may significantly alter the hole–electron dissociation at the D/A interface.52 Also, the average values of ΔHL, EDAHL and EDALL for the CASDSAC pattern favours high PCE in comparison to those for the CDSASDC pattern (Fig. S11†). Other possible ways to construct molecules, such as DA, ADA, DAD, DSA, DSASD, ASDSA, CSDSC, and CDSAC, are largely under-represented in the top set, probably due to their limited π-conjugation length. Overall, we suggest constructing medium size molecules with a central donor unit and internal acceptor moieties on both sides, which are separated by π-spacers and end-capped units with electron deficient groups. Our findings can be easily implemented to design potential chemical structures, for example, a few isoindigo-based molecules are developed for SM-OPVs due to its extended absorption toward the near infrared and the synthetic accessibility,65 with a maximum PCE of 7.54% (ref. 69) to date. However, none of the reported molecules follow the CASDSAC pattern, and further improvement in efficiency could be realized by applying our design rules. This work provides an exciting strategy to design medium-sized molecules with enhanced π-conjugation and alternating D–A units, and can significantly assist in the search for new materials for OPVs.
+To provide simple instructions to select promising materials based on the properties of molecules, joint distributions of descriptors and predicted PCEs for all the candidate molecules are shown in Fig. 3. Out of 6 descriptors, the ΔL is found to be the most informative. The PCE is found to be >7.5% for molecules having ΔL < 0.5 eV, and the ΔL of all high performing molecules is <0.25 eV. For small ΔL, contributions of orbitals other than just the LUMO may enhance the electron coupling between orbitals of two interacting molecules at the D/A interface, leading to an increase in the exciton dissociation.52,70 The molecules are recommended to have NDatom and ΔHL of greater than 60 and smaller than 4.25 eV, respectively. The NDatom represents the conjugation length of a molecule, which is strongly correlated with photon absorption and size of the photo-generated exciton. The ΔHL is often considered in place of the optical gap for low computational cost and is related to the short-circuit current (JSC) of a device.25,26 The EDAHL is directly related to the open-circuit voltage (VOC) of an OPV,6,26 and for all efficient molecules, it is found to be within the range of 3.4–3.9 eV. The EDALL influences hole–electron separation at the D/A interface. A small gap is not sufficient for the exciton dissociation while a large gap may lead to loss of energy. Interestingly, the EDALL for all high-performing molecules is less than 0.6 eV. These guidelines can be followed to select high-performing molecules without even using ML-models.
+ Fig. 3  Joint distributions using kernel density estimation for important descriptors and the PCE. The marginal distributions are for the individual variables. 
+The top 1000 promising molecules are further screened using GBRT and ANN models with additional computationally expensive descriptors such as λh, Ebind, Eg, Δμge, and ET1. The importance of these descriptors is clearly visible in Fig. 4. As shown in the figure, molecules having large λh and Ebind are effectively screened out. It is worth noting that large λh and Ebind are responsible for reduced hole mobility and high hole–electron recombination rate in donor materials, respectively.71 Finally, we select 126 molecules for which the predicted PCEs are greater than 8.0% for both the models (Table S5†), and the top 6 candidates of them are depicted in Fig. 5. As the ANN model has the ability to predict beyond the data seen in the training set, PCEs calculated using this model are reported in Table S4.† For 20 molecules, the predicted efficiency is greater than 9.5%, and out of them, 11 candidates have PCE > 10.0%. We would like to highlight that the proposed chemical structures are chosen based on the results of the three machine learning models; hence they are reliable enough for synthesis and device fabrication. Experimental verification of our findings is highly desired, and the work is currently in progress.
+ Fig. 4  Joint distributions using kernel density estimation for important descriptors (λh and Ebind) and the PCE. The marginal distributions are for the individual variables. 
+ Fig. 5  Six promising molecules for OPVs obtained by screening 1000 candidates using GBRT and ANN-models. 
+4 Conclusions
+In summary, we have screened ∼10000 candidate molecules constructed from 32 unique building blocks using the GBRT* model and important moieties are identified. Donor building units based on benzodithiophene, dithieno-benzodithiophene and naphtho-dithiophene and acceptor units, such as naphtho-bisthiadiazole and isoindigo, are promising building units to construct efficient molecules for an OPV. Based on the molecular properties of high performing molecules, instructions are provided to select molecules at a marginal computational cost. Combining the results of both GBRT and ANN models, 126 candidate molecules with predicted efficiencies ≥8% are proposed for further analysis, synthesis and device fabrication. It is worth noting that the chemical knowledge extracted from the screening is much more important than the absolute predicted values. We believe that similar analysis will significantly assist the development of OPVs by revealing new design principles and suitable molecules with desired photo-physical properties for high-performing OPVs.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+The work was supported by the National Natural Science Foundation of China [Grant No: 21673109 and 21722302] and the Fundamental Research Funds for the Central Universities [Grant No: 020414380126].
+References
+L. Meng, Y. Zhang, X. Wan, C. Li, X. Zhang, Y. Wang, X. Ke, Z. Xiao, L. Ding, R. Xia, H.-L. Yip, Y. Cao and Y. Chen, Science, 2018, 361, 1094–1098 CrossRef CAS PubMed .
+P. Cheng, G. Li, X. Zhan and Y. Yang, Nat. Photonics, 2018, 12, 131–142 CrossRef CAS .
+B. Fan, X. Du, F. Liu, W. Zhong, L. Ying, R. Xie, X. Tang, K. An, J. Xin, N. Li, W. Ma, C. J. Brabec, F. Huang and Y. Cao, Nat. Energy, 2018, 3, 1051–1058 CrossRef CAS .
+C. J. Traverse, P. Chen and R. R. Lunt, Adv. Energy Mater., 2018, 8, 1703678 CrossRef .
+T. Kumari, S. M. Lee, S.-H. Kang, S. Chen and C. Yang, Energy Environ. Sci., 2017, 10, 258–265 RSC .
+J. Zhang, L. Zhu and Z. Wei, Small Methods, 2017, 1, 1700258 CrossRef .
+J. Y. Kim, K. Lee, N. E. Coates, D. Moses, T.-Q. Nguyen, M. Dante and A. J. Heeger, Science, 2007, 317, 222–225 CrossRef CAS PubMed .
+C. Yan, S. Barlow, Z. Wang, H. Yan, A. K. Y. Jen, S. R. Marder and X. Zhan, Nat. Rev. Mater., 2018, 3, 18003 CrossRef CAS .
+J. Hou, O. Inganäs, R. H. Friend and F. Gao, Nat. Mater., 2018, 17, 119–128 CrossRef CAS PubMed .
+G. Zhang, J. Zhao, P. C. Y. Chow, K. Jiang, J. Zhang, Z. Zhu, J. Zhang, F. Huang and H. Yan, Chem. Rev., 2018, 118, 3447–3507 CrossRef CAS PubMed .
+A. Kuzmich, D. Padula, H. Ma and A. Troisi, Energy Environ. Sci., 2017, 10, 395–401 RSC .
+G. Gryn'ova, K.-H. Lin and C. Corminboeuf, J. Am. Chem. Soc., 2018, 140, 16370–16386 CrossRef PubMed .
+H. Oberhofer, K. Reuter and J. Blumberger, Chem. Rev., 2017, 117, 10319–10357 CrossRef CAS PubMed .
+D. He, F. Zhao, L. Jiang and C. Wang, J. Mater. Chem. A, 2018, 6, 8839–8854 RSC .
+S. Li, W. Liu, C.-Z. Li, M. Shi and H. Chen, Small, 2017, 13, 1701120 CrossRef PubMed .
+M. Liu, Y. Gao, Y. Zhang, Z. Liu and L. Zhao, Polym. Chem., 2017, 8, 4613–4636 RSC .
+Y. Cai, A. Qin and B. Z. Tang, J. Mater. Chem. C, 2017, 5, 7375–7389 RSC .
+Y. Cai, L. Huo and Y. Sun, Adv. Mater., 2017, 29, 1605437 CrossRef PubMed .
+A. Tang, C. Zhan, J. Yao and E. Zhou, Adv. Mater., 2017, 29, 1600013 CrossRef PubMed .
+D. Gedefaw, M. Prosa, M. Bolognesi, M. Seri and M. R. Andersson, Adv. Energy Mater., 2017, 7, 1700575 CrossRef .
+L. Wilbraham, E. Berardo, L. Turcani, K. E. Jelfs and M. A. Zwijnenburg, J. Chem. Inf. Model., 2018, 58, 2450–2459 CrossRef CAS PubMed .
+S. Curtarolo, G. L. W. Hart, M. B. Nardelli, N. Mingo, S. Sanvito and O. Levy, Nat. Mater., 2013, 12, 191 CrossRef CAS PubMed .
+J. Hachmann, R. Olivares-Amaya, A. Jinich, A. L. Appleton, M. A. Blood-Forsythe, L. R. Seress, C. Román-Salgado, K. Trepte, S. Atahan-Evrenk, S. Er, S. Shrestha, R. Mondal, A. Sokolov, Z. Bao and A. Aspuru-Guzik, Energy Environ. Sci., 2014, 7, 698–704 RSC .
+M. C. Scharber, D. Mühlbacher, M. Koppe, P. Denk, C. Waldauf, A. J. Heeger and C. J. Brabec, Adv. Mater., 2006, 18, 789–794 CrossRef CAS .
+Y. Imamura, M. Tashiro, M. Katouda and M. Hada, J. Phys. Chem. C, 2017, 121, 28275–28286 CrossRef CAS .
+C. Zanlorenzi and L. Akcelrud, J. Polym. Sci., Part B: Polym. Phys., 2017, 55, 919–927 CrossRef CAS .
+A. Chandrasekaran, D. Kamal, R. Batra, C. Kim, L. Chen and R. Ramprasad, npj Comput. Mater., 2019, 5, 22 CrossRef .
+W.-K. Chen, X.-Y. Liu, W.-H. Fang, P. O. Dral and G. Cui, J. Phys. Chem. Lett., 2018, 9, 6702–6708 CrossRef CAS PubMed .
+D. Hu, Y. Xie, X. Li, L. Li and Z. Lan, J. Phys. Chem. Lett., 2018, 9, 2725–2732 CrossRef CAS PubMed .
+P. O. Dral, M. Barbatti and W. Thiel, J. Phys. Chem. Lett., 2018, 9, 5660–5663 CrossRef CAS PubMed .
+X. Li, Y. Xie, D. Hu and Z. Lan, J. Chem. Theory Comput., 2017, 13, 4611–4623 CrossRef CAS PubMed .
+R. F. Murphy, Nat. Chem. Biol., 2011, 7, 327–330 CrossRef CAS PubMed .
+W. P. Walters and M. Namchuk, Nat. Rev. Drug Discovery, 2003, 2, 259–266 CrossRef CAS PubMed .
+D. Fooshee, A. Mood, E. Gutman, M. Tavakoli, G. Urban, F. Liu, N. Huynh, D. Van Vranken and P. Baldi, Mol. Syst. Des. Eng., 2018, 3, 442–452 RSC .
+C. W. Coley, W. H. Green and K. F. Jensen, Acc. Chem. Res., 2018, 51, 1281–1289 CrossRef CAS PubMed .
+G. Skoraczyński, P. Dittwald, B. Miasojedow, S. Szymkuć, E. P. Gajewska, B. A. Grzybowski and A. Gambin, Sci. Rep., 2017, 7, 3582 CrossRef PubMed .
+C. W. Coley, R. Barzilay, T. S. Jaakkola, W. H. Green and K. F. Jensen, ACS Cent. Sci., 2017, 3, 434–443 CrossRef CAS PubMed .
+A. Mannodi-Kanakkithodi, A. Chandrasekaran, C. Kim, T. D. Huan, G. Pilania, V. Botu and R. Ramprasad, Mater. Today, 2018, 21, 785–796 CrossRef CAS .
+T. C. Le and N. Tran, ACS Appl. Nano Mater., 2019, 2, 1637–1647 CrossRef CAS .
+G. Panapitiya, G. A. Frano, P. Ren, X.-D. Wen, Y. Li and J. P. Lewis, J. Am. Chem. Soc., 2018, 140, 17508–17514 CrossRef CAS PubMed .
+S. Lu, Q. Zhou, Y. Ouyang, Y. Guo, Q. Li and J. Wang, Nat. Commun., 2018, 9, 3405 CrossRef PubMed .
+B. Sanchez-Lengeling and A. Aspuru-Guzik, Science, 2018, 361, 360–365 CrossRef CAS PubMed .
+A. Mansouri Tehrani, A. O. Oliynyk, M. Parry, Z. Rizvi, S. Couper, F. Lin, L. Miyagi, T. D. Sparks and J. Brgoch, J. Am. Chem. Soc., 2018, 140, 9844–9853 CrossRef CAS PubMed .
+K. Ryan, J. Lengyel and M. Shatruk, J. Am. Chem. Soc., 2018, 140, 10158–10168 CrossRef PubMed .
+B. Meyer, B. Sawatlon, S. Heinen, O. A. von Lilienfeld and C. Corminboeuf, Chem. Sci., 2018, 9, 7069–7077 RSC .
+J. P. Janet, L. Chan and H. J. Kulik, J. Phys. Chem. Lett., 2018, 9, 1064–1071 CrossRef CAS PubMed .
+A. Nandy, C. Duan, J. P. Janet, S. Gugler and H. J. Kulik, Ind. Eng. Chem. Res., 2018, 57, 13973–13986 CrossRef CAS .
+Y. He, E. D. Cubuk, M. D. Allendorf and E. J. Reed, J. Phys. Chem. Lett., 2018, 9, 4562–4569 CrossRef CAS PubMed .
+K. K. Bejagam, S. Singh, Y. An and S. A. Deshmukh, J. Phys. Chem. Lett., 2018, 9, 4667–4672 CrossRef CAS PubMed .
+S. A. Lopez, B. Sanchez-Lengeling, J. de Goes Soares and A. Aspuru-Guzik, Joule, 2017, 1, 857–870 CrossRef CAS .
+D. Padula, J. D. Simpson and A. Troisi, Mater. Horiz., 2019, 6, 343–349 RSC .
+H. Sahu, W. Rao, A. Troisi and H. Ma, Adv. Energy Mater., 2018, 8, 1801032 CrossRef .
+
+          M. J. Frisch, G. W. Trucks, H. B. Schlegel, G. E. Scuseria, M. A. Robb, J. R. Cheeseman, G. Scalmani, V. Barone, B. Mennucci, G. A. Petersson, H. Nakatsuji, M. Caricato, X. Li, H. P. Hratchian, A. F. Izmaylov, J. Bloino, G. Zheng, J. L. Sonnenberg, M. Hada, M. Ehara, K. Toyota, R. Fukuda, J. Hasegawa, M. Ishida, T. Nakajima, Y. Honda, O. Kitao, H. Nakai, T. Vreven, J. A. Montgomery Jr, J. E. Peralta, F. Ogliaro, M. Bearpark, J. J. Heyd, E. Brothers, K. N. Kudin, V. N. Staroverov, T. Keith, R. Kobayashi, J. Normand, K. Raghavachari, A. Rendell, J. C. Burant, S. S. Iyengar, J. Tomasi, M. Cossi, N. Rega, J. M. Millam, M. Klene, J. E. Knox, J. B. Cross, V. Bakken, C. Adamo, J. Jaramillo, R. Gomperts, R. E. Stratmann, O. Yazyev, A. J. Austin, R. Cammi, C. Pomelli, J. W. Ochterski, R. L. Martin, K. Morokuma, V. G. Zakrzewski, G. A. Voth, P. Salvador, J. J. Dannenberg, S. Dapprich, A. D. Daniels, O. Farkas, J. B. Foresman, J. V. Ortiz, J. Cioslowski and D. J. Fox, Gaussian 09 Revision B.01, Gaussian, Inc., Wallingford CT,  2010 Search PubMed .
+F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer, R. Weiss, V. Dubourg, J. Vanderplas, A. Passos, D. Cournapeau, M. Brucher, M. Perrot and É. Duchesnay, J. Mach. Learn. Res., 2011, 12, 2825–2830 Search PubMed .
+
+          S. Guido and A. Müller, Introduction to Machine Learning with Python, O'Reilly Media,  2016 Search PubMed .
+H. Feng, M. Li, W. Ni, F. Liu, X. Wan, B. Kan, Y. Wang, Y. Zhang, Q. Zhang, Y. Zuo, X. Yang and Y. Chen, J. Mater. Chem. A, 2015, 3, 16679–16687 RSC .
+Q. Tao, D. Yan, Y. Liao, X. Huang, J. Deng and D. Yu, ChemistrySelect, 2019, 4, 752–758 CrossRef CAS .
+C.-T. Chen, F.-Y. Tsai, C.-Y. Chiang and C.-P. Chen, J. Phys. Chem. C, 2017, 121, 15943–15948 CrossRef CAS .
+H. Huang, L. Yang, A. Facchetti and T. J. Marks, Chem. Rev., 2017, 117, 10291–10318 CrossRef CAS PubMed .
+S. Yu, Y. Chen, L. Yang, P. Ye, J. Wu, J. Yu, S. Zhang, Y. Gao and H. Huang, J. Mater. Chem. A, 2017, 5, 21674–21678 RSC .
+S. D. Collins, N. A. Ran, M. C. Heiber and T.-Q. Nguyen, Adv. Energy Mater., 2017, 7, 1602242 CrossRef .
+Z. Wang, L. Zhu, Z. Shuai and Z. Wei, Macromol. Rapid Commun., 2017, 38, 1700470 CrossRef PubMed .
+C. Duan, F. Huang and Y. Cao, J. Mater. Chem., 2012, 22, 10416–10434 RSC .
+N. M. Randell and T. L. Kelly, Chem. Rec., 2018, 18, 1 CrossRef .
+R. Stalder, J. Mei, K. R. Graham, L. A. Estrada and J. R. Reynolds, Chem. Mater., 2014, 26, 664–678 CrossRef CAS .
+J. Wan, X. Xu, G. Zhang, Y. Li, K. Feng and Q. Peng, Energy Environ. Sci., 2017, 10, 1739–1745 RSC .
+S. Hedström, A. J. Matula and V. S. Batista, J. Phys. Chem. C, 2017, 121, 19053–19062 CrossRef .
+H. Zhou, L. Yang and W. You, Macromolecules, 2012, 45, 607–632 CrossRef CAS .
+M. Li, Z. Qiu, G. Zhang, Y. Liu, L. Xiong, D. Bai, M. Zhu, Q. Peng and W. Zhu, J. Mater. Chem. A, 2018, 6, 12493–12505 RSC .
+H. Li, J.-L. Brédas and C. Lennartz, J. Chem. Phys., 2007, 126, 164704 CrossRef PubMed .
+O. Ostroverkhova, Chem. Rev., 2016, 116, 13279–13412 CrossRef CAS PubMed .
+
+Footnote† Electronic supplementary information (ESI) available: Experimentally estimated VOC, JSC, FF and PCE of SM-OPVs, correlations between various properties, details of the Scharber and machine learning models, and predicted PCEs for 126 promising molecules are provided. See DOI: 10.1039/c9ta04097hThis journal is © The Royal Society of Chemistry 2019
+Table Content:
+
+
+GBRT	21.0(20.1)	1.107 (1.078)	0.80 (0.79)
+ANN	21.1 (21.1)	1.194 (1.175)	0.77 (0.75)
+GBRT*	24.8 (22.6)	1.294 (1.209)	0.72 (0.72)
+Scharber	115.35	5.32	0.14
+
+k-NN	25.8	1.279	73.1
+
+ 	Fig. 1  Chemical structures of donor, acceptor, π-spacer and end-capping building units considered in this work.	 
+
+ 	Fig. 2  Histogram of predicted PCE for 10170 candidates molecules using the GBRT* model with respect to the PC71BM acceptor (a) and hypergeometric z-scores for different ways to construct molecules from building blocks (b), combinations of donor–acceptor (c), donor–π-spacer (d) and donor–end-capping units (e). In panel (a), green colored bars represent the top 1000 lead candidate molecules.	 
+
+ 	Fig. 3  Joint distributions using kernel density estimation for important descriptors and the PCE. The marginal distributions are for the individual variables.	 
+
+ 	Fig. 4  Joint distributions using kernel density estimation for important descriptors (λh and Ebind) and the PCE. The marginal distributions are for the individual variables.	 
+
+ 	Fig. 5  Six promising molecules for OPVs obtained by screening 1000 candidates using GBRT and ANN-models.	 
+Footnote
+† Electronic supplementary information (ESI) available: Experimentally estimated VOC, JSC, FF and PCE of SM-OPVs, correlations between various properties, details of the Scharber and machine learning models, and predicted PCEs for 126 promising molecules are provided. See DOI: 10.1039/c9ta04097h
+
+This journal is © The Royal Society of Chemistry 2019

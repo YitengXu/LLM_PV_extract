@@ -1,0 +1,1459 @@
+Spatial–temporal analysis of various land use classifications and their long-term alteration's impact on hydrological components: using remote sensing ...  - Environmental Science: Water Research & Technology (RSC Publishing) DOI:10.1039/D2EW00138A View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2EW00138A
+(Paper)
+Environ. Sci.: Water Res. Technol., 2023, 9, 1161-1181Spatial–temporal analysis of various land use classifications and their long-term alteration's impact on hydrological components: using remote sensing, SAGA-GIS, and ARCSWAT model
+
+        
+          
+            Farinaz 
+            Gholami
+          
+        
+      a, 
+      
+        
+          
+            Zahra 
+            Sedighifar
+          
+        
+      *b, 
+      
+        
+          
+            Parastoo 
+            Ghaforpur
+          
+        
+      *b, 
+      
+        
+          
+            Yue 
+            Li
+          
+        
+      *c and 
+
+        
+          
+            Junlong 
+            Zhang
+          
+        
+      c
+aSchool of Automation, Qingdao University, Qingdao, China
+bDepartment of Geography and Science, Kharazmi University, Tehran, Iran. E-mail: zsedighifar@gmail.com; parastooghaforpur@Khu.ac.ir
+cCollege of Environmental Science and Engineering, Qingdao University, Qingdao, 266071, China. E-mail: qdenv@126.com
+Received 
+      18th February 2022
+    , Accepted 23rd January 2023First published on 14th February 2023AbstractFuture land use land cover (LULC) changes are significant concerns that substantially impact the water balance components of the watershed. LULC transformation may have negative consequences on soil erosion, disrupting the sustainability of water resources, and maintaining hydrological balance. Therefore, this study evaluates the potential impact of LULC changes in past and future scenarios on the hydrological components of the Chalus basin, Northern Iran. In this case, the LULC maps of 1987, 2001, and 2021 were classified by the random forest algorithm, and 2049's LULC was predicted using the CA–Markov model. The accuracy assessment of all the years was investigated utilizing confusion matrices, the kappa coefficients, and overall accuracies. Then, different LULC scenarios were applied to the calibrated Soil and Water Assessment Tool (SWAT) model to analyze the monthly and annual rates of evapotranspiration, surface runoff, lateral flow, and water yield. The result revealed that each land use scenario significantly impacts hydrological components. We found that with the reduction of forest and rangeland by expanding built-up and cultivated land, the average annual surface runoff, and water yield will increase by approximately +7.6%, and +3.3%, respectively, until 2049. The result was proved by a high negative correlation between built-up, cultivated land, forest, and rangeland. However, the average annual rate of lateral flow and evapotranspiration will decrease by roughly −3.2% and −1.09% up to 2049 in the middle and downstream of the study area. The declining trend of evapotranspiration rates through the wet and dry seasons in the past and future LULC indicates that forest land produces more evapotranspiration than agricultural land in this area. This agreement was confirmed by the maximum correlation coefficient of 1.00. This research finding could assist urban planners and decision-makers in re-examining and organizing new strategies for sustainable development and water resource management.
+
+Water impact
+This study develops a methodology for quantifying the impact of land use land cover change and contributes to the sustainable management of the investigated catchment. The result shows the impact of environmental change on hydrological extremes (low flow and floods) and determines hot spots, which are critical for environmental development.
+
+1. Introduction
+Land use land cover (LULC) changes, along with climate variables, are important factors affecting the hydrological responses of a river system and spatial heterogeneity in watersheds.1,2 LULC transformation is the consequence of various intricate conditions, such as natural or biological entities and social, economic, political, and human activities, which significantly affect the magnitude and timing of extreme events.3 LULC changes have a remarkable influence on hydrological processes such as infiltration, evapotranspiration, surface runoff, groundwater discharge, sediment load, and base flow amount.4,5
+According to the Global Annual Report of River characteristics, river discharge has been increasing since the 1900s, and researchers have concluded that LULC changes and human activity may be directly responsible for more than 50% of this increase.6 In addition, climate change factors, including precipitation, evapotranspiration, and glacial melting, are the other 50% of the factors influencing river discharge changes.7 This increased discharge has intensified the negative consequences, including urban flooding, property damage, loss of natural resources, water pollution, erosion, and excessive sedimentation in lakes and reservoirs, thereby threatening the health of marine life and hydroelectric power generation.8
+Therefore, the impact of LULC changes on hydrology is continuously considered by researchers to explore the complex relationship between hydrological cycles and human-induced environmental changes.9 However, the heterogeneity of watershed characteristics, along with inadequate geomorphology and hydrometeorological data, is the crucial scientific challenge to comprehend such complex relationships entirely.10 In this regard, the application of multiple models and techniques, including remote sensing (RS), geographic information system (GIS), and hydrologic models (i.e., MIKE SHE, WEPP, HEC-RAS, TOPMODEL, VIC, and SWAT models), has been conducted to assess the LULC change trend impact on hydrological systems.7,10,11 However, the spatial distribution of future changes in land use types and their quantities and contributions to the hydrological components have rarely been discussed.8,9,12,13
+The Soil Water Assessment Tool (SWAT) is a popular robust model for assessing the effects of land use change on hydrological processes and ecosystems, which was frequently used in previous studies.14 For example, Belihu et al. in 2020 assessed the effect of land use land cover change in 1986, 1996, and 2010 on the water balance in the afforested River basin, Pakistan. They concluded that rapid socioeconomic development is a crucial factor that causes changes in land use land cover. The transformation of agricultural land or forest land into industrialized and residential areas owing to population expansion has a significant impact on water balance components.15 Gyamfi et al. in 2016 reported the effect of land use changes (historical trends) on watershed hydrological attributes by applying the SWAT model in the Olifants Basin in South Africa. They concluded that urbanization was the most substantial contributor to increases in water yield and surface runoff generation.16 Kumar et al. in 2017 applied the SWAT model to assess how LULC changes affect Kharun Catchment water resources in Chhattisgarh, India. They collected various scenarios from the land use map in 1991, 2001, 2011, and 2021. They showed that expanding built-up areas significantly increased the annual surface runoff.17 Hayicho et al. in 2019 utilized the SWAT and MUSLE models to evaluate the impact of LULC changes on the Melka Wakena Hydropower Dam in the Wabe-Shebelle Watershed, south-eastern Ethiopia. The LULC changes estimated during 1986, 2011, and 2015 displayed a significant transformation of natural forest and grazing land to cultivated land. The results showed that LULC changes directly affected the surface runoff and water yields of the catchment.18 Although a detailed understanding of the spatiotemporal dynamics and characteristics of regional LULC changes is crucial in maintaining regional sustainable development and regulating human activities, there have been limited studies in this field.10
+With this aim, this study attempts: (i) to explore and quantify the various types of LULC change effects on hydrological components at different spatiotemporal scales; (ii) to develop and detect the changes of the LULC long-term scenario and its impact on hydrological parameters in the Chalus basin for the first time in Iran; (iii) to determine the correlation between LULC types and hydrological parameters during the historical and future scenarios.
+The Chalus basin in Northern Iran was chosen because it has essential population centers and tourist attractions in an area with unique natural and geographical features, such as forest land and mountainous landscapes, special climatic conditions, and land-use diversity. Due to the increasing population, the expansion of urbanization, and the lack of urban spaces, the forests, and grasslands around the cities have been severely exposed to destruction and change.19,20 These changes ultimately affect the performance of hydrological conditions in the catchment.21 Therefore, in this study, we assessed the impact of land use land cover long-term changes during approximately 28 years (from 2021 to 2049) on surface runoff, lateral flow, water yields, and evapotranspiration levels using RS-GIS and the SWAT model in the Chalus basin. Appraising LULC transformation effects on the hydrological response and evapotranspiration yield is challenging due to the differences in hydrological systems, relatively short hydrological records, and complexities in managing land use.22
+For this purpose, various LULC images for the years 1987, 2001, and 2021 were extracted from two different Landsat satellites, including Landsat TM (the satellite images consist of seven spectral bands with a spatial resolution of 30 meters) and Landsat OLI/TIRS (the satellite consists of two science instruments, the Operational Land Imager and the Thermal Infrared Sensor).23–26 All the applied LULC images were classified by the random forest (RF) algorithm in SAGA-GIS software. Then, the accuracy of the classified images was checked by employing the error matrix and kappa coefficient. Next, after detecting and quantifying the historical LULC, the future LULC changes were projected for the year 2049 by utilizing IDRISI software and the Markov-automatic cell chain. Finally, the spatiotemporal alteration in the hydrological parameter with respect to the long-term changes in land use land cover was evaluated by performing, calibrating, and validating the SWAT hydrological model in the Chalus basin. Moreover, sensitivity analysis was investigated to identify the influential parameter under past and future LULC change scenarios. The correlation analysis was evaluated between the various LULC types and hydrological components at different periods.
+The rest of the paper is structured as follows. Section 2 presents the study area and the simulation method. The results are presented and discussed in section 3. Lastly, in section 4, the conclusions of the results and outcomes of the study are summarized. The results of this study provide a helpful approach and reference for analyzing the impact of LULC changes on the hydrological system for local ecological conservation and sustainable utilization of water resources in any watershed.
+2. Data and methods
+2.1 Study area
+The Chalus basin is an essential sub-basin in the Ramsar basin, located in the center of northern Iran. Fig. 1 depicts the Chalus drainage basin, located between 36° 00′ and 37° 30′ N longitude and 49° 30′ and 52° 30′ E latitude; it covers an area of 1616 km2.27 The Chalus River basin area extends from the west to the Sardabroud River catchment area, east to the Korkorsar River catchment area, south to the Karaj River catchment area, and from the north to the Caspian Sea. The Chalus River is permanent west of Mazandaran; it originates from the northern slopes of Kandovan and Taleghan heights and flows into the Caspian Sea after about 72 km near the village of Faridabad. The area coverage of slopes in percentage is 0–20 (24.15%), 20–50 (42.75%), and 33.1% for slopes above 50 degrees.
+ Fig. 1  Location of the Chalus drainage basin. 
+The minimum and maximum elevations of the studied area vary from −21 at the outlet to 4274 m above sea level, respectively. The Chalus River is a mountainous river that is exceptionally narrow and prone to flooding, especially in the early spring when the snow melts, leading to inundation and causing tremendous damage to villages and agricultural land. According to the Domarten climate index, the study sites are categorized by various conditions, under the temperate and humid classes, and as semi-arid cold and cold in some places.28 The average annual precipitation and discharge are 1100 mm and 13.93 m3 s−1, respectively. Moreover, the average annual amount of freshwater is about 44.38 MCM, some of which is expended for agricultural land (rice fields), with the rest distributed into the Caspian Sea.29
+2.2 Methodology
+This study was conducted in two main phases using remote sensing and the SWAT model to assess the potential impact of future LULC change on hydrological components at different spatial–temporal scales. The first step quantifies the historical trend of land use change from 1982 to 2021 and projects the future LULC change in 2049. The second step includes various processes, (i) setting up the SWAT model, model running, model calibration, and validation. (ii) The model focuses on the simulation of hydrological processes (surface runoff, lateral flow, water yields, and evapotranspiration levels) based on land use change scenarios for the past and future. Finally, the result signifies different findings, with three main outputs presented as follows:
+(1) The spatial distribution of hydrologic components at the sub-basin scale based on LULC change scenarios. (2) Correlation between LULC types and hydrological components during the historical and future periods. (3) The general impact of LULC long-term changes on surface runoff, lateral flow, water yields, and evapotranspiration.
+The methodological framework is shown in Fig. 2, and the steps mentioned above and the data sets are detailed in the following sections.
+ Fig. 2  The metrological flamework designed for this study. 
+2.3 LULC map development and future prediction
+
+2.3.1 LULC classification of satellite images. 
+To detect the spatial–temporal alterations of LULC at different periods, various Landsat satellite images and field data are required.6 In this case, two kinds of Landsat satellite imagery, including Landsat 5 TM and Landsat 8 OLI/TIRS sensors (provided by the United States Geological Survey (USGS) Earth Explorer with a 30 m resolution), were extracted to produce the maps for three different years, 1987, 2001, and 2021. The Landsat satellite data were selected because of their availability with medium spatial and high temporal resolutions.30,31Table 1 shows the satellite image features of the different Landsat sensors. The images were obtained during the dry season in the Chalus basin in a clear sky period with zero clouds. The applied Landsat needs to compose 6 to 8 bands to produce a LULC map. Therefore, preprocessing operations are mandatory to produce an accurate LULC and dismiss the impact of some factors (such as atmospheric condition, solar angle, and sensor view angle).32 To do this, the radiometric, atmospheric, and geometric corrections were performed in the Environment for Visualization Images (ENVI) software. Thereupon, we selected the random forest (RF) supervised classification machine learning algorithm in SAGA-GIS software to classify LULC types. The RF algorithm generally has greater processing power for data noise and overfitting.33 Additionally, the RF can deal with multiple and complex data sets and can usually present higher accuracy than other traditional algorithms, such as single decision trees and maximum likelihood.34 The RF classifier process is conducted by determining two parameters: the number of classification trees and the number of predictor variables used at each node to grow the tree.33 In this research, the number of trees was set to 600, and six random variables were chosen from the best split when each tree grows. In order to ensure the classification results of the study area, we used other secondary data (Google Earth) and a field survey. Lastly, the LULC was classified into six classes, including built-up, waterbodies, dense forest, cultivated land, gardens, and rangeland (Table 2). The accuracy of the LULC classification is an essential step, which was evaluated by two quantitative precision measurement systems, overall accuracy (OA) and kappa coefficient (KC).33
+Table 1 Characteristic of the satellite images
+
+
+
+
+Type
+Acquisition
+Datum
+WRS
+WRS
+Spatial resolution
+Format
+
+
+Date
+Path
+Row
+
+
+
+
+Landsat 8 OLI/TIRS
+Jun, 2021
+WGS84
+164–165
+35
+30 M
+Tiff
+
+
+Landsat 5/TM
+Jun, 2001
+WGS84
+164–165
+35
+30 M
+Tiff
+
+
+Landsat 5/TM
+Jun, 1987
+WGS84
+164–165
+35
+30 M
+Tiff
+
+
+
+
+Table 2 Description of the LULC classification patterns
+
+
+
+
+No.
+LULC types
+Description
+
+
+
+
+1
+Built-up
+Areas that involve residential, commercial, and industrial buildings, as well as roads and other transport services
+
+
+2
+Dense forest
+Areas with a tree canopy density between 40 and 70 percent
+
+
+3
+Cultivated land
+Agricultural (planted or irrigated) areas, fallow land, and paddy crops
+
+
+4
+Waterbodies
+Including rivers, check dams, wetlands, lakes, reservoirs, and permanent open water
+
+
+5
+Garden
+Including ornamental plants, herbs, fruit, vegetables, and trees
+
+
+6
+Rangeland
+Including grasslands, shrublands, savannas, tundra, deserts, swamps, and pastures
+
+
+
+
+
+
+2.3.2 Prediction and validation of LULC change. 
+The CA–Markov model has the combined advantages of CA (cellular automata) theory and the Markov model's ability to produce temporal and spatial dimensions of LULC changes. The CA–Markov model is a prominent model among Land Use Land Cover modeling techniques and methodologies.35,36 In this study, LULC change prediction was processed using the CA–Markov model in IDRISI software, which was expanded by Sang et al. in 2011.37 The LULC changes processed in IDRISI software were allocated in three steps: (i) computing the transition area matrix, (ii) generating the land suitability maps, and (iii) predicting the future LULC map. A transition area matrix includes the number of pixels needed to alter a land use class to another class during a period.6 The suitability maps were generated by fixing the transition rules and deriving the potential factors for each LULC class. The factors, such as distance from the road, distance from the river, elevation, and slope, were used as the conditions to make the suitability maps, shown in Fig. 3. Finally, the projected LULC maps were generated based on the transition matrix and suitability maps.
+ Fig. 3  Conditioning factors for LULC modeling: a: distances from rivers, b: distances from roads, c: elevation, d: slope. 
+In this regard, the LULC alteration was assessed by utilizing three maps from 1987, 2001, and 2021. In the initial stage, the land use maps from 1987 and 2001 were chosen as a baseline map to calculate transformation matrices and conversion probabilities using Markov chain analysis. Then, six land use classes were generated as a set of conditional probability statistics, such as built-up, waterbodies, dense forests, cultivated land, gardens, and rangeland. The Markov matrix of changes was able to illustrate each land use class transformation in the past and predict the changes in the future.38 Therefore, the predicted LULC for 2021 was generated by analyzing the LULC for 1987 and 2001 to obtain the accuracy of the CA–Markov model and detect the LULC transformation over the fourteen years.
+It is essential to calibrate and validate any prediction models, and the model output efficacy depends on the validation results. The performance of the CA–Markov model in IDRISI software to predict the LULC was evaluated by the overall accuracy (OA) and kappa coefficient (KC) computed using eqn (1) and (2), respectively. In this case, the OA and KC were utilized to check the prediction accuracy of the simulated LULC 2021 map results compared with the existing LULC 2021 map of the Chalus basin. Overall accuracy is calculated by dividing all correctly identified pixels by the total number of classified pixels in the error matrix. (1)where OA is the accuracy, N is the total number of accuracy pixels, and ∑Pii is the summation of the main diagonal of elements in the error matrix.
+The kappa coefficient measures the degree of agreement between two maps when all elements of the error matrix are estimated. (2)where Po is the quantity of acceptable simulated cells and Pc is the expected quantity modification by chance among the observed and simulated maps. Therefore, if kappa ≤ 0.5 demonstrates rare agreement, 0.5 ≤ kappa ≤ 0.75 displays a medium level of agreement, 0.75 ≤ kappa ≤ 1 indicates a high level of agreement, and kappa = 1 shows perfect agreement.
+Finally, based on the CA–Markov analysis and multi-criteria evaluation, the 2049 LULC map was predicted for the next 28 years by employing the LULC 2001 and 2021 maps; then, the output was evaluated again.
+
+2.4 Setup and simulation of the SWAT hydrological model
+
+2.4.1 SWAT model input data and preparation. 
+In this study, various types of data were employed to simulate the hydrologic processes based on the land use land cover future transformation. The observed daily precipitation (mm) and maximum and minimum temperature data (°C) were obtained from four weather stations from the Iran Meteorological Organization (IMO). Table 3 presents the characteristics of the four weather stations within the watershed, and Fig. 4(a and b) show the precipitation and temperature distribution maps in the Chalus basin. The daily discharge data (M3 S−1) was acquired from a Pol-e-Zoghal hydrometric station in the Iran Water Resources Management Company (IWRM). Table 4 represents the hydrometric station's attributes within the watershed. The climate data and river discharge for 1987–2014 were selected to model the hydrological parameters and further calibrate and validate according to the SWAT model's catchment characteristics. The yearly average discharge in this basin has been recorded at roughly 5099.57 M3 per year, and the maximum and minimum monthly average discharges have been observed at 939.95 and 229.72 M3 per month, respectively. A digital elevation model (DEM) with a 10 m resolution and a soil map with a spatial resolution of 10 km were derived from the National Cartographic Center of Iran and the global SOIL-FAO (Food and Agriculture Organization) database, respectively, https://www.fao.org/. The DEM data was utilized to create a watershed delineation and calculate the slope and sub-basin parameters. The soil data provides additional information about the soil texture, available water content, hydraulic conductivity, bulk density, and organic carbon content for each soil type, as well as physical and chemical properties used in the Arc-SWAT HRU definition. In this study area, the soil map is divided into four classes; Fig. 4(c) illustrates the distribution soil map of this study area.
+Table 3 Weather station features in the Chalus basin
+
+
+
+
+Station no.
+Name
+Station type
+Organization
+Latitude (m)
+Longitude (m)
+Elevation (m)
+
+
+
+
+1
+Noushahr
+Synoptic
+Iran Meteorological Organization
+544691.27
+4056163.28
+−20.9
+
+
+2
+Siahbisheh
+Synoptic
+Iran Meteorological Organization
+528462.21
+4008026.89
+1855
+
+
+3
+Kojoor
+Synoptic
+Iran Meteorological Organization
+565772.75
+4026716.73
+1550
+
+
+4
+Baladeh
+Synoptic
+Iran Meteorological Organization
+571920.31
+4006428.30
+2120
+
+
+
+
+ Fig. 4  a: Precipitation; b: temperature; c: soil distribution maps in the Chalus basin. 
+Table 4 Hydrometric stations feature in the Chalus basin
+
+
+
+
+Station no.
+Name
+River
+Latitude (m)
+Longitude (m)
+Elevation (m)
+
+
+
+
+1
+Pol-e-Zoghal
+Chalus
+530171
+4040631
+351
+
+
+
+
+Land use data is one of the most significant factors influencing surface runoff, evapotranspiration, and soil erosion in a watershed.32 Landsat imagery was freely obtained from Landsat TM for 1987 and 2001 and from Landsat OLI/TIRS for 2021 on the United States Geological Survey (USGS) website, https://earthexplorer.usgs.gov/. Table 1 illustrates the Landsat image features that were applied in this study. The satellite images with ground control points (collected using Google Earth) were analyzed using Saga GIS (random forest modeling), Envi4.8, and Arc-Map 10.3 software packages.
+
+
+2.4.2 SWAT hydrological modeling. 
+The SWAT model is a semi-distributed physical-based hydrological model developed by Dr. Jeff Arnold in 1985 to investigate the impact of land use land cover and climate changes on watershed characteristics, the hydrologic cycle, soil temperature, crop development, nutrients, agricultural management, and sediment at a watershed level for daily, monthly, and annual time increments.39 The SWAT integrated tool was applied in multidisciplinary research under various climate and physiographic conditions.40,41
+In this study, the Soil and Water Assessment Tool (SWAT version 2012 on ArcGIS 10.3) was used to assess each independent LUCL change impacting related hydrologic components such as surface runoff, lateral flow, water yield, and evapotranspiration both annually and during the wet and dry seasons. In this case, different types of input data, such as LULC maps from the past to the future (1987, 2001, 2021, and 2049), a soil map, a topography map, climate, and discharge data, were used as the input data that drives the dynamics of hydrologic processes. In this study, the watershed was divided into multiple sub-basins and further subdivided into hydrological response units (HRUs); each HRU includes management, soil characteristics, and homogenous land use. The hydrological sub-model is based on the water balance equation, which includes daily precipitation, evapotranspiration, percolation, runoff, and return flow components.
+The modeling was based on the water balance obtained in eqn (3). The water balance function contains four storage volume variables that were identified for each HRU, the soil profile (0–3 m), shallow aquifer (typically 2–20 m), deep aquifer (>25 m), and snow.42 (3)where SWt is the final soil water content (mm), SW0 is the initial soil water content (mm), t is time in days, Rday is rainfall (mm), Qsurf is surface runoff (mm), Ea is evapotranspiration (mm), Wseep is the amount of water entering the vadose zone from the soil profile (mm), and Qgw is return flow (mm). Generally, there are two methods to calculate the surface runoff in the SWAT model, the Green AMPT infiltration and the SCS curve number.43 In this research, we utilized the SCS curve number method to calculate the surface runoff. The inputs to the method are local land cover, soil type, and antecedent moisture conditions. Additionally, a lateral flow prediction for each layer of soil was estimated by kinematic storage routing methods based on saturated hydraulic conductivity, slop degrees, and slope lengths. Depending on the availability of data, the model provides various methods for estimating potential evapotranspiration, including the Penman–Monteith, Priestley–Taylor, and Hargreaves methods. In this study, the Hargreaves method was utilized to evaluate the potential evapotranspiration.44 The surface runoff was calculated using eqn (4). (4)where Rday is the amount of rainfall in a day, Ia is an initial abstraction, and S is the watershed storage. Runoff was computed individually for each HRU guided to obtain the total runoff for the watershed. This method increases the accuracy of the simulation and provides a better physical description of the water balance.45
+
+
+2.4.3 Sensitivity analysis and SWAT calibration. 
+Model calibration is an important step in hydrology studies to ensure accurate estimation for generating a practical catchment model.10 A combination of validation and sensitivity analysis is needed to measure the precision of the particular model, which will increase the conclusion's stability.40 The sensitivity analysis should be evaluated to assess the most notable parameters affecting the catchment characteristics before calibration.46 Accordingly, a sensitivity analysis is necessary to ensure the assurance conclusion in the initial analysis.47 The SWAT-CUP package was applied to adjust the parameters in the determined range, as defined by the user, to calibrate the SWAT model. The SWAT-CUP program uses the Sequential Uncertainty Fitting Index v.2 (SUFI-2) for calibration and uncertainty analysis.48 In addition, the uncertainty of the input parameters was verified by the 95PPU (95% prediction uncertainty) band calculated at 97.5% and 2.5% levels of the variable output.48 The Latin hypercube sampling method was utilized to estimate the 95PPU and confine the 5% of invalid simulations. In this study, the Pol-e-Zoghal gauging station simulation data from 1988–2010 and 2011–2014 were employed for calibration and validation, respectively. Furthermore, the first two years of the simulation were considered a warm-up period (1986–1988) to mitigate unknown initial conditions. The sensitivity analysis was conducted 25 times on 30 influential runoff parameters to acquire the best value range based on two LULC change scenarios (1987 to 2021 and 2021 to 2049). Then, the runoff calibration was performed by considering the temporal parameters in 1000 simulations for each LULC scenario. Next, the most accurate result was obtained in 11 runs, and finally, 30 critical parameters in the control hydrology in our case study were adjusted to model and validate the entire catchment. A short definition of the runoff influenced factors in this case study is listed in Table 5. The R-factor and P-factor measurements were used to examine and quantify the strength of the calibration/uncertainty analysis. Theoretically, the P-factor (the fraction of data bracketed by the 95PPU band) and R-factor ranges are 0–100% and 0–infinity, respectively. A P-factor of 1 and an R-factor of 0 indicate a prediction that precisely matches the observed data.43 Moreover, the model performance after the sensitivity analysis was evaluated by comparing the observed and simulated monthly discharges and calculating the Nash–Sutcliffe efficiency (NSE), the coefficient of determination (R2), and the percent bias (PBIAS).49
+Table 5 List of contributing parameters in the sensitivity analysis process
+
+
+
+
+Parameter
+Description
+Parameter
+Description
+
+
+
+
+SOL_AWC
+Available water capacity of soil layer
+SMFMN
+Minimum melt rate for snow during the year (occurs on winter solstice)
+
+
+SOL_K
+Saturated hydraulic conductivity
+SMTMP
+Snow melts base temperature
+
+
+SHALLST
+Initial depth of water in the shallow aquifer
+SURLAG
+Surface runoff lag coefficient
+
+
+MSK_CO2
+Calibration coefficient that controls impact of the storage time constant for low flow
+SMFMX
+Maximum melt rate for snow during year (occurs on summer solstice)
+
+
+GWHT
+Initial groundwater height
+CH-N2
+Manning's ‘n’ value for the main channel
+
+
+GW_DELAY
+Groundwater delay from soil to channel
+CH-K2
+Effective hydraulic conductivity in main channel alluvium
+
+
+MSK_CO2
+Calibration coefficient that controls impact of the storage time constant for low flow
+ALPHA-BNK
+Base flow alpha factor for bank storage
+
+
+SOL_BD
+Soil bulk density
+ESCO
+Soil evaporation compensation factor
+
+
+HRU_SLP
+Average slope steepness
+OV_N
+Manning's ‘n’ value for the overland
+
+
+ALPHA_BF
+Base flow alpha-factor
+SOL_ZMX
+Maximum rooting depth of the soil profile
+
+
+GWQMN
+Threshold depth of water in the shallow aquifer required for return flow to occur
+CH_K1
+Effective hydraulic conductivity in tributary channel alluvium
+
+
+GW_REVAP
+Groundwater ‘Revap’ coefficient
+CH_N1
+Manning's ‘n’ value for the tributary channel
+
+
+TIMP
+Snow pack temperature lag factor
+CN2
+Initial SCS runoff curve number II
+
+
+RCHRG-DP
+Deep aquifer percolation fraction
+LAT_TTIME
+Lateral flow travel time
+
+
+GW_SPYLD
+Specific yield of the shallow aquifer
+SFTMP
+Snowfall temperature
+
+
+
+
+
+3. Results and discussion
+3.1 LULC change assessment
+
+3.1.1 Accuracy evaluation of the classified images. 
+The accuracy evaluation of historical LULC maps is required in any research utilizing remote sensing Landsat image data. The accuracy of the LULC map is measured by making a confusion matrix or an error matrix that compares the classified map with an original map.6
+To confirm the classification model's accuracy in producing the past and present LULC maps, the overall accuracy and kappa coefficients were evaluated for 1987, 2001, and 2021, Table 6. The results show that the overall accuracies of the RF classification model were 93.54, 95.04, and 86.62%, and the kappa coefficient was 0.92, 0.94, and 0.83% for 1987, 2001, and 2021, respectively. Our findings demonstrate that the supervised classification model can precisely categorize the LULC maps.
+Table 6 Accuracy assessment of land use land cover classified images
+
+
+
+
+Assessment criteria
+Year
+
+
+1987
+2001
+2021
+
+
+
+
+Kappa coefficient (%)
+0.92
+0.94
+0.83
+
+
+Overall accuracy (%)
+93.54
+95.04
+86.62
+
+
+
+
+These results are consistent with some other research presented by Gashaw et al. 2018 (ref. 50) in the Dera watershed in Ethiopia. They suggested that the RF gives the best results compared to other classification models in terms of precision, recall, and accuracy.
+
+
+3.1.2 Land use land cover change detection. 
+Numerous processes were utilized to detect and forecast the present condition into the future to enable the supervision and control of watershed changes over the next 28 years. In this case, three maps from 1987, 2001, and 2021 were employed to project the LULC change map up to 2049. In this study, the LULC map was categorized into six classes: built-up, waterbody, dense forest, cultivated land, garden, and rangeland. The spatial distribution of LULC in the study area for 1987, 2001, and 2021 is shown in Fig. 5.
+ Fig. 5  Land use land cover maps in the Chalus basin for the period of 1987, 2001, and 2021. 
+According to the calculated area of each LULC class presented in Table 7, a significant amount of change occurred in all land use classes of the watershed from 1987 to 2021. As a result, it can be expected that the changes will continue in the future scenario until 2049. The results reveal that during the study period (1987–2021), the built-up, cultivated land, and garden classes increased by (+199.74 km2), (+126.3 km2), and (+55 km2), while the dense forest and rangeland area classes decreased by (−72.93 km2) and (−260.17 km2), respectively. As can be seen, the most dynamic classes were built-up and rangeland classes during the 1987–2021 period. The results also show that rangeland is the dominant LULC type in this watershed, covering about 57% of the total area in 1987, 52% in 2001, and 41% of the area in 2021. The dense forest land is the second large LULC class and covered approximately 30% of the study area in 1987, 26% in 2001, and 24% in 2021. However, the forest land significantly decreased −10.3% from 1987 to 2001 and −7.7% from 2001 to 2021 due to increased urbanization. The reduction in rangeland and forest land was primarily due to its transformation into cultivated and built-up uses.
+Table 7 Area and percentage of changes in different land cover classes for 1987, 2001, and 2021 images
+
+
+
+
+LULC type
+Area
+Change
+
+
+1987 (km2)
+2001 (km2)
+2021 (km2)
+2001–1987 (km2)
+2021–2001 (km2)
+Difference area (%) (1987–2001)
+Difference area (%) (2001–2021)
+
+
+
+
+Rangeland
+927.72
+839.49
+667.55
+−88.23
+−171.94
+−5.47
+−10.66
+
+
+Garden
+121.50
+155.34
+176.50
++33.84
++21.16
++2.10
++1.31
+
+
+Forest
+483.78
+428.94
+410.85
+−54.84
+−18.08
+−3.40
+−1.12
+
+
+Built-up
+75.06
+143.71
+274.80
++68.64
++131.09
++4.25
++8.12
+
+
+Waterbody
+0.20
+0.11
+0.21
+−0.09
++0.10
+−0.01
++0.01
+
+
+Cultivated
+5.28
+46.29
+131.58
++41.01
++85.29
++2.54
++5.29
+
+
+
+
+Consequently, there was a noticeable increase in the built-up area and cultivated land by 68.64 km2 and 41.01 km2 from 1987 to 2001, respectively. The increasing trend was also observed from 2001 to the 2021 period, with a considerable expansion of 8.12% and 5.29% in the built-up area and cultivated land, respectively. From the results, it can be seen that the highest development in the built-up and cultivated area is located at the lower elevation (downstream in the north and east-north) and gentle slope along the riversides. Due to the difference in height between upstream and downstream, along with a steep slope and severe land use change in the Chalus basin, the surface runoff forms rapidly downstream and intensifies the risk of flooding. Therefore, if the development in built-up and agricultural areas is not controlled along the river and downstream, runoff and flooding would cause a lot of losses and casualties. Garden land adjacent to the built-up area also increased by +2.10% from 1987 to 2001 and 1.31% from 2001 to 2021. Waterbodies were found to cover less of the entire area, decreasing by −0.09% from 1987 to 2021. Conversely, this trend changed from 2001 to 2021, and a 0.1% increase was measured in the study area. This result was compared with the Google Earth map, and this trend was also observed in the expansion of wetlands and artificial lakes in the study area.
+The findings of the current study are consistent with the results of other published research in northern Iran. Shooshari (2020) in the Neka River basin and51 in Casilian (Mazandaran Province) concluded that cultivated land and built-up areas were noticeably increasing while forest and rangeland were shrinking.
+
+
+3.1.3 Conditioning factors contributing to LULC changes. 
+In this study, the LULC influencing changes were selected based on topography and proximity factors. The Cramer's v test is executed to calculate the association between each factor and a LULC class through a value between 0 and 1.9Table 8 shows the result of Cramer's v test; the four conditioning factors can be utilized in generating a prediction model for LULC. From Table 8, it can be observed that all factors, including distance from road, distance from river, elevation, and slope, are respected as essential variables in transitions. The factors with high association values show that they are the most significant factors for LULC changes. The slope and elevation were identified as the imperative topographic variables influencing LULC transformation. Topography impacts the distribution and extent of residential, range, and forest land alterations to agricultural land. It was also reported that there is an indirect relationship between deforestation and slope gradient, where deforestation declines with the increase of the slope gradient.22 Other conditioning factors, such as distance from the road and the river, also fundamentally affect the change of LULC because each provides the ease of residents' access to resources.
+Table 8 Cramer's v test of conditioning factors for LULC change
+
+
+
+
+No.
+Condition factors
+Cramer's v test
+
+
+
+
+1
+Distance from road
+0.1639
+
+
+2
+Distance from river
+0.2815
+
+
+3
+Elevation
+0.2947
+
+
+4
+Slop
+0.2103
+
+
+
+
+
+
+3.1.4 Validation of the CA–Markov model and predictions of LULC future changes. 
+In this research, the CA–Markov model was used to predict and detect LULC changes at various times. Therefore, it is crucial to measure the agreement and quality of the two categorical maps (actual and simulated maps) by validating the model. In this case, the model validation was evaluated by comparing the accuracy of the existing and projected map of 2021.
+The validation results of the model from the actual and simulated LULC are shown in Table 9. K indices are utilized as a statistical tool to measure the accuracy of assessments in many studies. In this study, the K-indices were evaluated to estimate the model's accuracy based on the four overall accuracy components (Kno, Klocation, KlocationStrata, and Kstandard). A K-index value of more than 80% indicates satisfactory agreement between the simulated and real LULC maps.51 Furthermore, a standard k value over 70% indicates that the model is considered validated.4 In this study, all K index areas greater than 80% represent an acceptable LULC projection. Hence, based on the successfully projected results of the Markov model, future LULC changes were forecasted for 2049. The transition probability matrix was applied to the previous LULC change map (1987–2021) to predict future spatial changes. The predicted LULC changes based on the CA–Markov model are displayed in Fig. 6. The results show that this model was also satisfactorily accurate (kappa = 0.83) in forecasting future land use land cover in the study area. The area and percentage of each LULC class in the Chalus basin for the next 28 years (scenario 2021–2049 LULC) are presented in Table 10.
+Table 9 Accuracy assessment of the Chalus basin in 2021
+
+
+
+
+
+Kno
+
+Klocation
+
+KlocationStrata
+
+KStandard
+
+
+
+
+0.76
+0.92
+0.92
+0.86
+
+
+
+
+ Fig. 6  Predicted land use map of the Chalus basin in 2049. 
+Table 10 Area and percentage of land use cover changes of the Chalus basin in 2049
+
+
+
+
+LULC type
+Rangeland
+Garden
+Dense forest
+Built-up
+Waterbody
+Cultivated land
+
+
+
+
+Area (km2) in 2049
+491.53
+191.30
+391.15
+388.7
+0.3
+198.12
+
+
+Difference area (%) (2021–2049)
+−10.60
++0.89
+−1.19
++6.86
++0.01
++4.01
+
+
+
+
+The results of the obtained data in Table 10 indicate that rangeland and forest land will significantly decrease to 491.53 and 391.15 km2, a −1.18% and −10.59% reduction, from 2021 to 2049, respectively. Moreover, the built-up area, cultivated land, and garden will expand by +6.85%, +4%, and +0.89%, respectively. However, the continuous increment is relatively slower than the 1987 to 2021 period. The built-up area and cultivated land will be the predominant LULC type in the future by transforming forest land and rangeland, see Fig. 6. A comparable continuous increase was also observed in waterbodies from 2021 to 2049. According to the spatial distribution of the 2049 map, most of the built-up and cultivated land will be concentrated downstream (the north-east and center) near the Chalus River. Urban expansions and job scarcity in the study area strengthened the socioeconomic activities for changing LULC. Furthermore, local people's unplanned and illegal expansion of residential and agricultural land contributes to forest land, range land, and grassland destruction. The transformation of other land uses into cultivated land in the Chalus basin might be generally related to the land demand for crop production, especially rice production, to satisfy the food demand of the growing human population. Thus, reasonable land use plans, control, and well-managing should be conducted in an organized way in this study area.
+
+3.2 Sensitivity analysis
+The model simulation was performed for 28 years, from 1986 to 2014, after preparing all input data. Then, the sensitivity analysis was executed at the Pole-Zoghal station of the Chalus River. The sensitivity analysis determines the most responsive hydrological parameters that considerably impact particular model results to improve the reliability of outputs. The sensitivity was defined utilizing the t-stat and p-values through the SUFI-2 program. Sensitive parameters are characterized by a large t-test and a small p-value.45 A p-value of less than 0.05 identifies a parameter with significant sensitivity. The parameters with negative t-stat values indicate that reducing their values causes the model outputs to be closer to the observed values.40,52
+In this study, the 25 most sensitive parameters were selected to calibrate and validate the predictive model potential based on sensitivity estimation criteria. Fig. 7 shows the most sensitive parameter that impacts streamflow generation based on LULC change scenarios. The top five most sensitive parameters under LULC change scenarios, including i: (LULC changes from 1987–2021) and ii: (LULC changes from 2021–2049), are the SCS runoff curve number (CN), groundwater delay (GW_DELAY), available water capacity of the soil layer (SOL_AWC), saturated hydraulic conductivity (SOL_K), and moist bulk density (SOL_BD). These parameters affect the status of groundwater flow, runoff production, lateral flow, and soil properties. From the results, it can be concluded that all 25 chosen parameters have different contributions to runoff generation and evapotranspiration rates according to hydrological conditions and land changes.
+ Fig. 7  The most sensitive hydrological parameters before the calibration and validation process based on LULC change scenarios during (a) 1987–2021 and (b) 2021–2049. 
+
+3.2.1 SWAT model calibration and validation analysis. 
+After identifying the most sensitive parameters that influence streamflow production, it is essential to fix suitable and accurate values for calibration and validation. Thus, the parameter values were tuned to acceptable ranges until the best simulation was obtained. The optimized values of the selected parameters based on LULC scenarios are shown in Table 11.
+Table 11 Selected parameters and their best values used in model calibration based on LULC change scenarios. Scenario1 (based on LULC change from 1987 to 2021) and scenario2 (based on LULC change from 2021 to 2049)
+
+
+
+
+Id
+Parameters name
+Min value
+Max value
+Calibrated values for both scenarios
+
+
+Optimized value
+Optimized value
+
+
+Scenario1
+Scenario2
+
+
+
+
+1
+SOL_AWC
+0.535
+0.613
+0.548
+0.569
+
+
+2
+MSK_CO2
+7.494
+7.895
+7.865
+7.7249
+
+
+3
+MSK_CO1
+10.588
+10.984
+10.716
+10.802
+
+
+4
+CH_K2
+283.247
+297.561
+287.183
+288.520
+
+
+5
+OV_N
+10.133
+12.213
+10.227
+11.572
+
+
+6
+HRU_SLP
+0.238
+0.266
+0.259
+0.246
+
+
+7
+SOL_K
+−0.220
+−0.173
+−0.185
+−0.175
+
+
+8
+SOL_BD
+−0.081
+0.057
+−0.044
+0.043
+
+
+9
+ESCO
+0.153
+0.162
+0.156
+0.159
+
+
+10
+RCHRG
+0.335
+0.382
+0.373
+0.381
+
+
+11
+SHALLST
+170.520
+208.276
+199.781
+180.525
+
+
+12
+GWHT
+13.400
+15.170
+14.701
+15.126
+
+
+13
+TIMP
+0.653
+0.754
+0.715
+0.708
+
+
+14
+SMFMN
+3.630
+5.468
+4.742
+4.209
+
+
+15
+SMFMX
+3.704
+4.525
+4.455
+4.362
+
+
+16
+SMTMP
+0.682
+1.762
+1.595
+1.634
+
+
+17
+SFTMP
+−0.846
+0.054
+−0.625
+−0.695
+
+
+18
+GWQMN
+2461.712
+2748.463
+2681.077
+2599.831
+
+
+19
+GW_DELAY
+351.012
+376.375
+375.234
+372.444
+
+
+20
+ALPHA_BF
+0.090
+0.113
+0.095
+0.105
+
+
+21
+CN2
+64.188
+68.557
+67.662
+64.501
+
+
+22
+LAT_TTIME
+24.107
+26.565
+24.144
+24.144
+
+
+23
+GW_REVAP
+0.028
+0.046
+0.028
+0.039
+
+
+24
+SURLAG
+7.564
+8.987
+8.723
+7.727
+
+
+25
+CH_N2
+0.306
+0.320
+0.316
+0.318
+
+
+
+
+The model was validated utilizing the calibrated parameters to assess the model's ability to simulate the watershed's hydrological components. The model calibration and validation were executed for 1988–2011 and 2011–2014, respectively, and the first two years (1986–1988) were considered the warm-up time. Therefore, the stream flow data has been calibrated and validated with the observed data under the LULC scenarios during the 1987–2021 and 2021–2049 periods. Fig. 8a and b indicate that the SWAT model accurately predicts the monthly surface runoff compared with the observed discharge during the calibration and validation processes in both scenarios. The result shows that the observed and simulated data have similar trends under LULC change scenarios from 1987 to 2021 and 2021 to 2049. Furthermore, the model's efficiency in calculating the simulated runoff compared with observed discharges was estimated via five statistical performance evaluation criteria for LULC change scenarios, see Table 12. The results indicate that the performance measurement rates are satisfactory in the simulation of the surface runoff caused by the impact of the LULC changes. Other similar studies have suggested that the SWAT model's performance is considered satisfactory if the hydrological outcomes of the model generate an NSE and an R2 > 0.5.53 Moreover, the optimal value of PBIAS is 0.0, with low-amount values representing accurate model simulation. Negative values indicate that the model has an underestimation bias, while positive values imply an overestimation bias.54
+ Fig. 8  Monthly simulated and observed discharge at the Pole-Zoghal station for the calibration and validation periods based on LULC change scenarios during (a) 1987–2021 and (b) 2021–2049. 
+Table 12 Performance criteria of monthly simulated discharge for SWAT during the calibration and validation periods based on different LULC change scenarios
+
+
+
+
+LULC change scenarios
+Period
+
+P-Factor
+
+R-Factor
+
+R
+2
+
+NS
+PBIAS
+
+
+
+
+1987–2021
+Calibration
+0.73
+0.65
+0.83
+0.81
+2.3%
+
+
+Validation
+0.63
+0.63
+0.77
+0.74
+3.1%
+
+
+2021–2049
+Calibration
+0.72
+0.65
+0.82
+0.80
+−0.3%
+
+
+Validation
+0.69
+0.64
+0.79
+0.77
+−2.1%
+
+
+
+
+The results depict that the model predicts slightly higher values of NSE and R2 as well as the P-factor and R-factor when utilizing the LULC changes from 1987 to 2021 during the calibration. However, during the validation, the NSE, R2, P-factor, and R-factor based on the LULC changes from 2021 to 2049 were greater than the validated results when using the LULC changes from 1987 to 2021. Furthermore, the simulation results tended to overpredict the runoff during the calibration and validation when using the LULC changes from 1987 to 2021. The simulation results tend to overpredict runoff during calibration and validation when using LULC changes from 1987 to 2021. Conversely, the model underpredicts runoff during calibration and validation when applying future LULC changes from 2021 to 2049.
+
+3.3 Hydrological responses to the LULC transformation
+
+3.3.1 Impacts of LULC changes on the hydrological components in the basin scale. 
+The effect of LULC changes in various periods (1987, 2001, 2021, and 2049) on hydrological components in the Chalus basin was evaluated separately based on monthly, seasonal, and annual simulations. In this study area, the seasonal evolution was divided into two categories, high precipitation months (January to May and October to November) and low precipitation months (June to September). Therefore, the hydrological components, including surface runoff, water yield, lateral flow, and evapotranspiration due to LULC transformation, were estimated based on these two precipitation seasons, see Fig. 9.
+ Fig. 9  Hydrologic components values during the high and low precipitation seasons. 
+The results demonstrated that more than 80% of surface runoff and water yield occurred in the high precipitation months (wet seasons) for all LULC periods, while less than 25% of surface runoff occurred during the low precipitation season months (dry season). As can be seen in Fig. 9, LULC changes from 2021 to 2049 caused the surface runoff and water yield to increase by 8.6 mm (2.5%) and 4.69 mm (0.8%) during the wet season, respectively. Similarly, changing LULC changes from 2021 to 2049 caused the lateral flow and evapotranspiration to decrease by −3.22 mm (−3.99%) and 2.76 mm (1.43%), respectively. In the low precipitation season, the surface runoff and water yield rise by 3.71 mm (16.32%) and 4.18 mm (3.70%) during the LULC changes from 2021 to 2049. However, in the low precipitation season, LULC changes from 2021 to 2049 caused the water flow and evapotranspiration to reduce by −3.34 mm (26%) and 7.49 mm (4.38%), respectively.
+From the results, it can be concluded that the surface runoff will increase due to the penetration reduction.55 By increasing urbanization and forest extraction land, the soil infiltration, evapotranspiration percentages, and base flow are reduced.2 The reduction trend of evapotranspiration rates from the past to future LULC through high and low precipitation months revealed that forest land produced more evapotranspiration than agricultural land.49
+According to the trend of the LUCL changes observed from the past to the future, increasing cultivated lands and built-up areas and reducing forest areas and rangelands will directly influence the surface runoff peak flow and base flow.15,32,56 The findings of this study agree with other similar research. They showed that reducing the forest land would increase the surface runoff, particularly during the wet season, causing flooding in some parts of the watershed. Therefore, the increase of surface runoff during the high precipitation seasons may cause flooding, and the reduction of surface runoff in the low precipitation season may impact the sustainability of water supply schemes.26,31,49,57
+
+Table 13 presents the variation of annual hydrologic parameters (surface runoff, evapotranspiration, lateral flow, and water yield) under several LULC change scenarios (1987, 2001, 2021, and 2049). The future scenario (LULC 2049) produces higher surface runoff and water yield and lower lateral flow and evapotranspiration compared to the other scenarios. The average annual simulated surface runoff increased from 14.6% to +29.88 in the LULC change scenarios of 1987–2021 to 2021–2049 due to the sustained spread of cultivated and residential lands and the extraction of forest, and range land in the future.
+Table 13 Average annual hydrologic parameters under various LULC change scenarios in the Chalus basin
+
+
+
+
+LULC changes scenarios
+Surface runoff (mm)
+Evapotranspiration (mm)
+Lateral flow (mm)
+Water yield (mm)
+
+
+
+
+LULC1987
+345.8
+373.1
+100.51
+585.12
+
+
+LULC2001
+348.8
+372.4
+94.8
+589.45
+
+
+LULC2021
+360.4
+365.4
+91.76
+610.16
+
+
+LULC2049
+390.28
+361.8
+88.29
+631.38
+
+
+Change from 1987 to 2021 (%)
+14.6
+−7.7
+−8.75
+25.04
+
+
+Change from 2021 to 2049 (%)
+29.88
+−3.6
+−3.47
+21.22
+
+
+
+
+In contrast, the average annual evapotranspiration and lateral flow of the watershed were reduced by −7.7% and −8.75% in the previous LULC scenarios (1987 to 2021) and −3.6% and −3.47% in the next 28 year scenario (2021 to 2049). In general, the high annual surface runoff observed in the middle and downstream of the basin may have broader consequences for increasing soil erosion and sedimentation if not adequately controlled. It also eliminates the top productive soil and destroys agricultural land, natural river banks, and low-lying plain areas. This decreases the efficiency of the product and leads to food insecurity and sediment entering the downstream reservoirs, reducing the lifecycle of service reservoirs and hydraulic structures. Similar findings have been discussed in other studies.26,58,59
+
+
+3.3.2 LULC individual changes' impact on hydrological components at the sub-basin scale. 
+
+Fig. 10 and 11 display the spatial–temporal distribution of changes in four types of LULC (cultivated, built-up, forest, and rangeland) and four hydrological components (surface runoff, water yield, evapotranspiration, and lateral flow) simulated during (a) 1987–2021 and (b) 2021–2049 in the sub-basin level. Evaluating the spatial pattern of LULC change's effect on hydrology in the sub-basin scale provides crucial information about the vulnerability level of local water resources.7 Furthermore, Table 14 presents the correlation between LULC classes and hydrological components through a correlation matrix.
+ Fig. 10  Spatial–temporal distribution of LULC changes (%) at the sub-basin scale (a) 1987–2021 and (b) 2021–2049. 
+ Fig. 11  Spatial–temporal distribution of hydrological components variation at the sub-basin scale. (a) 1987–2021; (b) 2021–2049. 
+Table 14 Pearson correlation coefficient for LULC types and hydrological components between 1987 and 2049a
+
+
+
+
+
+
+SurfQ
+LatQ
+WYLD
+ET
+CL
+FRST
+BUA
+RNGL
+Gdn
+WatB
+
+
+
+
+Note:a SurfQ = surface runoff, LatQ = lateral flow, WYLD = water yield, ET = evapotranspiration, CL = cultivated land, FRST = forest, BUA = built-up area, RNGL = rangeland, Gdn = garden, WatB = waterbody.
+
+
+
+
+SurfQ
+1.00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+LatQ
+−0.65
+1.00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+WYLD
+0.89
+0.87
+1.00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ET
+−0.94
+0.78
+−0.74
+1.00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CL
+0.96
+−0.71
+0.56
+0.65
+1.00
+
+
+
+
+
+
+
+
+
+
+
+
+FRST
+−0.95
+0.77
+0.61
+1.00
+−0.97
+1.00
+
+
+
+
+
+
+
+
+
+
+BUA
+0.88
+−0.98
+0.84
+−0.83
+0.85
+−0.87
+1.00
+
+
+
+
+
+
+
+
+RNGL
+−0.94
+0.59
+−0.31
+0.91
+−0.96
+0.89
+−0.7
+1.00
+
+
+
+
+
+
+Gdn
+0.65
+−0.64
+0.48
+0.78
+0.86
+−0.85
+0.78
+−0.91
+1.00
+
+
+
+
+WatB
+0.99
+−0.68
+0.5
+−0.97
+0.96
+−0.98
+0.79
+−0.88
+0.8
+1.00
+
+
+
+
+In Fig. 10(a) for scenario 1987–2021, build-up development mostly occurred in the north and northeast (sub-basin 4, 7, 9, 10 and surrounding areas). Similarly, expansion in cultivated land was high in the northern parts of the basin (sub-basins 2, 4, 5, and 15). From Fig. 10(b) for scenario 2021–2049, it can be seen that the pattern of LULC transformation and its speed have shifted slightly. The built-up and cultivated areas will be expanded in the eastern and central parts of the basin. Decreases in rangeland and forestland occurred across all the subbasins during the 1987–2049 scenarios. In the first scenario, the significant reduction was placed in the north and northeast; however, the second scenario will be located in the central and east, where these land use types transform into urban and agricultural areas. The built-up and cultivated land expansion is due to the rangeland and forest land invasion. This is proved by the high negative correlation between built-up, cultivated land, forest, and rangeland (Table 14).
+Accordingly, the considerable increase in hydrological components, including surface runoff and water yield, happened principally in the north and northeast parts of the sub-basin (downstream), corresponding to the broad spatial distribution of built-up and cultivated areas (scenario 1987–2021). Likewise, in scenario 2021–2049 the surface runoff and water yield will increase in the downstream, central, northern, and eastern regions. The maximum surface runoff and water yields happened in sub-basins 7 and 9 and surrounding areas during the 1987–2049 scenario. This is evident in the strong positive correlation of surface runoff and water yield with built-up and cultivated areas (Table 13). The increase in the spatial distribution of evapotranspiration and lateral flow is only related to the south and southwest during the 1987–2049 scenario. However, in general, the evapotranspiration and lateral flow rates in the basin have been decreasing. This increment corresponds to the areas revealed to be covered by forest and cultivated land. Trees and plants in forests and cultivated lands receive much water for transpiration and photosynthesis, which may lead to increased ET. This agreement was confirmed by the maximum correlation coefficient of 1.00. Evapotranspiration is the crucial determinant of water availability in the basin since it negatively affects water yield and surface runoff.
+The results obtained in this study are consistent with previous studies, which found that surface runoff is extremely susceptible to urbanization and agriculture expansion, and LULC changes have substantial impacts on hydrological processes.9,10 Accordingly, the findings obtained from this study will help the Natural Resources Agency and water resources planners to use the future spatiotemporal perspective of LULC change while planning and designing hydropower and irrigation projects. Furthermore, the outcomes provide a proper way for controlling surface runoff intensity by increasing the forest land, which contributes to better soil water infiltration and helps to recharge vital groundwater resources.
+
+4. Conclusion
+This study was conducted to evaluate the influence of different LULC change scenarios for the periods of (1987–2021) and (2021–2049) on hydrological components utilizing the SWAT model in the Chalus basin of northern Iran. Firstly, the combination of multiple approaches, including GIS, remote sensing, random forest, and the CA–Markov model, assisted in predicting and generating spatiotemporal LULC change maps of the Chalus basin. Six main LULC types were classified: built-up, dense forest, cultivated land, waterbodies, garden land, and rangeland. The results showed that the study area may undergo a critical LULC transformation in the next 28 years (2049), particularly downstream in low-altitude areas adjacent to the Chalus River. Then the SWAT model and sensitivity analysis, with satisfactory accuracy, quantified the magnitude and direction of changes in hydrological components (surface runoff, water yield, evapotranspiration, lateral flow) resulting from long-term LULC transformation. For all time periods, rangeland and forest land as dominant land use types decreased considerably with concomitant increases in built-up area and cultivated land, which led to a crucial increase in surface runoff production. Urbanization and agriculture expansion, as the most effective contributors, amplify surface runoff production and water yield with high correlation coefficients. Evapotranspiration was found to be the primary water availability determinant, which negatively affects water yield and surface runoff. Changes in evapotranspiration rates were associated with deforestation and cultivated expansion.
+Moreover, the average annual stream flow as a significant element of the water cycle increased in all LULC change scenarios, which may significantly influence hydroelectricity generation and irrigation production during flood and drought periods. Additionally, increased surface runoff and water yield simulated during the wet season may lead to intensifying sedimentation, water pollution, and extreme weather events in the basin. Deforestation was found as an influential element in increasing runoff and water production and reducing side flow and groundwater in this area. Therefore, in order to prevent deforestation in high-risk areas of the Chalus basin, appropriate management strategy measures should be implemented based on future LULC.
+Considering the effect of LULC transformations on the catchments, identifying hydrological components will allow planners and concerned bodies to make better decisions and strategies and help diminish the adverse effects of future LULC dynamics. Our findings will aid water resource management's long-term planning and reduce soil destruction, flooding, and sedimentation affected by LULC changes.
+Data availability
+The data employed for the simulations and the data supporting the findings of this study are available from the corresponding authors upon request.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+The authors would like to thank Mrs. Shari Lin Holderread for proofreading and editing the manuscript.
+References
+M. A. Al Baky, M. Islam and S. Paul, Flood hazard, vulnerability and risk assessment for different land use classes using a flow model, Earth Syst. Environ., 2020, 4(1), 225–244 CrossRef .
+F. K. Muriithi, Land use and land cover (LULC) changes in semi-arid sub-watersheds of Laikipia and Athi River basins, Kenya, as influenced by expanding intensive commercial horticulture, Remote Sens. Appl.: Soc. Environ., 2016, 3, 73–88 Search PubMed .
+Y. Lu, P. Wu, X. Ma and X. Li, Detection and prediction of land use/land cover change using spatiotemporal data fusion and the Cellular Automata–Markov model, Environ. Monit. Assess., 2019, 191(2), 68 CrossRef PubMed .
+H. Karimi, J. Jafarnezhad, J. Khaledi and P. Ahmadi, Monitoring and prediction of land use/land cover changes using CA-Markov model: a case study of Ravansar County in Iran, Arabian J. Geosci., 2018, 11(19), 1–9 Search PubMed .
+Y. Dong, Z. Ren, Y. Fu, Z. Miao, R. Yang and Y. Sun, 
+            et al., Recording Urban Land Dynamic and Its Effects during 2000–2019 at 15-m Resolution by Cloud Computing with Landsat Series, Remote Sens., 2020, 12(15), 2451 CrossRef .
+D. Rivas-Tabares, A. M. Tarquis, Á. De Miguel, A. Gobin and B. Willaarts, Enhancing LULC scenarios impact assessment in hydrological dynamics using participatory mapping protocols in semiarid regions, Sci. Total Environ., 2022, 803, 149906 CrossRef CAS PubMed .
+D. Liu, X. Chen, Y. Lian and Z. Lou, Impacts of climate change and human activities on surface runoff in the Dongjiang River basin of China, Hydrol. Processes, 2010, 24(11), 1487–1495 CrossRef .
+D. F. B. Usta, M. Teymouri and U. Chatterjee, Assessment of temperature changes over Iran during the twenty-first century using CMIP6 models under SSP1-26, SSP2-4.5, and SSP5-8.5 scenarios, Arabian J. Geosci., 2022, 15(5), 1–16 Search PubMed .
+C. Zhan, S. Jiang, F. Sun, Y. Jia, C. Niu and W. Yue, Quantitative contribution of climate change and human activities to runoff changes in the Wei River basin, China, Hydrol. Earth Syst. Sci., 2014, 18(8), 3069–3077 CrossRef .
+E. Arnone, D. Pumo, A. Francipane, G. La Loggia and L. V. Noto, The role of urban growth, climate change, and their interplay in altering runoff extremes, Hydrol. Processes, 2018, 32(12), 1755–1770 CrossRef .
+F. Gholami, A. Nemati, Y. Li and J. Zhang, Calculation of runoff computation cost and sensitivity analysis of topological attributes, Remote Sens. Appl.: Soc. Environ., 2022, 26, 100714 Search PubMed .
+B. Zhang, N. K. Shrestha, P. Daggupati, R. Rudra, R. Shukla and B. Kaur, 
+            et al., Quantifying the impacts of climate change on streamflow dynamics of two major rivers of the Northern Lake Erie Basin in Canada, Sustainability, 2018, 10(8), 2897 CrossRef .
+J. Lyu, S. Mo, P. Luo, M. Zhou, B. Shen and D. Nover, A quantitative assessment of hydrological responses to climate change and human activities at spatiotemporal within a typical catchment on the Loess Plateau, China, Quat. Int., 2019, 527, 1–11 CrossRef .
+N. Sajikumar and R. Remya, Impact of land cover and land use change on runoff characteristics, J. Environ. Manage., 2015, 161, 460–468 CrossRef CAS PubMed .
+M. Belihu, S. Tekleab, B. Abate and W. Bewket, Hydrologic response to land use land cover change in the Upper Gidabo Watershed, Rift Valley Lakes Basin, Ethiopia, HydroResearch, 2020, 3, 85–94 CrossRef .
+C. Gyamfi, J. M. Ndambuki and R. W. Salim, Hydrological responses to land use/cover changes in the Olifants Basin, South Africa, Water, 2016, 8(12), 588 CrossRef .
+N. Kumar, B. Tischbein, J. Kusche, M. K. Beg and J. J. Bogardi, Impact of land-use change on the water resources of the Upper Kharun Catchment, Chhattisgarh, India, Reg. Environ. Change, 2017, 17(8), 2373–2385 CrossRef .
+H. Hayicho, M. Alemu and H. Kedir, Assessment of Land-Use and Land Cover Change Effect on Melka Wakena Hydropower Dam in Melka Wakena Catchment of Sub-Upper Wabe-Shebelle Watershed, South Eastern Ethiopia, Agric. Sci., 2019, 10(6), 819–840 Search PubMed .
+D. X. Tran, F. Pla, P. Latorre-Carmona, S. W. Myint, M. Caetano and H. V. Kieu, Characterizing the relationship between land use land cover change and land surface temperature, ISPRS J. Photogramm. Remote Sens., 2017, 124, 119–132 CrossRef .
+C. Liping, S. Yujun and S. Saeed, Monitoring and predicting land use and land cover changes using remote sensing and GIS techniques—A case study of a hilly area, Jiangle, China, PLoS One, 2018, 13(7), e0200493 CrossRef PubMed .
+A. Arabameri, K. Rezaei, A. Cerdà, C. Conoscenti and Z. Kalantari, A comparison of statistical methods and multi-criteria decision making to map flood hazard susceptibility in Northern Iran, Sci. Total Environ., 2019, 660, 443–458 CrossRef CAS PubMed .
+F. Hooshyaripor, S. Faraji-Ashkavar, F. Koohyian, Q. Tang and R. Noori, Annual flood damage influenced by El Niño in the Kan River basin, Iran, Nat. Hazards Earth Syst. Sci., 2020, 20(10), 2739–2751 CrossRef .
+Y. H. Araya and P. Cabral, Analysis and modeling of urban land cover change in Setúbal and Sesimbra, Portugal, Remote Sens., 2010, 2(6), 1549–1563 CrossRef .
+M. S. Islam and R. Ahmed, Land use change prediction in Dhaka city using GIS aided Markov chain modeling, J. Life Earth Sci., 2011, 6, 81–89 CrossRef .
+L. Li, D. Lu and W. Kuang, Examining urban impervious surface distribution and its dynamic change in Hangzhou metropolis, Remote Sens., 2016, 8(3), 265 CrossRef .
+Y. Li, J. Chang, L. Luo, Y. Wang, A. Guo and F. Ma, 
+            et al., Spatiotemporal impacts of land use land cover changes on hydrology from the mechanism perspective using SWAT model with time-varying parameters, Hydrol. Res., 2019, 50(1), 244–261 CrossRef .
+M. Zabihi, F. Mirchooli, A. Motevalli, A. K. Darvishan, H. R. Pourghasemi and M. A. Zakeri, 
+            et al., Spatial modelling of gully erosion in Mazandaran Province, northern Iran, Catena, 2018, 161, 1–13 CrossRef .
+F. F. Maghsood, H. Moradi, A. R. Massah Bavani, M. Panahi, R. Berndtsson and H. Hashemi, Climate change impact on flood frequency and source area in northern Iran under CMIP5 scenarios, Water, 2019, 11(2), 273 CrossRef .
+A. Zarandian, H. Baral, A. R. Yavari, H. R. Jafari, N. E. Stork and M. A. Ling, 
+            et al., Anthropogenic decline of ecosystem services threatens the integrity of the unique Hyrcanian (Caspian) forests in Northern Iran, Forests, 2016, 7(3), 51 CrossRef .
+B. Rimal, L. Zhang, H. Keshtkar, N. Wang and Y. Lin, Monitoring and modeling of spatiotemporal urban expansion and land-use/land-cover change using integrated Markov chain cellular automata model, ISPRS Int. J. Geo-Inf., 2017, 6(9), 288 CrossRef .
+U. Kenea, D. Adeba, M. S. Regasa and M. Nones, Hydrological Responses to Land Use Land Cover Changes in the Fincha'a Watershed, Ethiopia, Land, 2021, 10(9), 916 CrossRef .
+A. Guzha, M. C. Rufino, S. Okoth, S. Jacobs and R. Nóbrega, Impacts of land use and land cover change on surface runoff, discharge and low flows: Evidence from East Africa, J. Hydrol. Reg. Stud., 2018, 15, 49–67 CrossRef .
+J. Sadler, J. Goodall, M. Morsy and K. Spencer, Modeling urban coastal flood severity from crowd-sourced flood reports using Poisson regression and Random Forest, J. Hydrol., 2018, 559, 43–55 CrossRef .
+L. Breiman, Random forests, Mach. Learn., 2001, 45(1), 5–32 CrossRef .
+M. Munthali, S. Mustak, A. Adeola, J. Botai, S. Singh and N. Davis, Modelling land use and land cover dynamics of Dedza district of Malawi using hybrid Cellular Automata and Markov model, Remote Sens. Appl.: Soc. Environ., 2020, 17, 100276 Search PubMed .
+J. He, J. Huang and C. Li, The evaluation for the impact of land use change on habitat quality: A joint contribution of cellular automata scenario simulation and habitat quality assessment model, Ecol. Modell., 2017, 366, 58–67 CrossRef .
+L. Sang, C. Zhang, J. Yang, D. Zhu and W. Yun, Simulation of land use spatial pattern of towns and villages based on CA–Markov model, Math. Comput. Model., 2011, 54(3–4), 938–943 CrossRef .
+H. Keshtkar, W. Voigt and E. Alizadeh, Land-cover classification and analysis of change using machine-learning classifiers and multi-temporal remote sensing imagery, Arabian J. Geosci., 2017, 10(6), 1–15 Search PubMed .
+S. H. Hosseini and M. R. Khaleghi, Application of SWAT model and SWAT-CUP software in simulation and analysis of sediment uncertainty in arid and semi-arid watersheds (case study: the Zoshk–Abardeh watershed), Model. Earth Syst. Environ., 2020, 6(4), 2003–2013 CrossRef .
+B. Bhatta, S. Shrestha, P. K. Shrestha and R. Talchabhadel, Evaluation and application of a SWAT model to assess the climate change impact on the hydrology of the Himalayan River Basin, Catena, 2019, 181, 104082 CrossRef .
+M. Nazari-Sharabian, M. Taheriyoun, S. Ahmad, M. Karakouzian and A. Ahmadi, Water quality modeling of Mahabad Dam watershed–reservoir system under climate change conditions, using SWAT and system dynamics, Water, 2019, 11(2), 394 CrossRef CAS .
+S. Poorheydari, H. Ahmadi, A. Moeini, S. Feiznia and M. Jafari, Efficiency of SWAT model for determining hydrological responses of marl formation, Int. J. Environ. Sci. Technol., 2020, 17(8), 3741–3750 CrossRef .
+K. C. Abbaspour, J. Yang, I. Maximov, R. Siber, K. Bogner and J. Mieleitner, 
+            et al., Modelling hydrology and water quality in the pre-alpine/alpine Thur watershed using SWAT, J. Hydrol., 2007, 333(2–4), 413–430 CrossRef .
+J. G. Arnold, R. Srinivasan, R. S. Muttiah and J. R. Williams, Large area hydrologic modeling and assessment part I: model development 1, J. Am. Water Resour. Assoc., 1998, 34(1), 73–89 CrossRef CAS .
+Y. Brouziyne, A. Abouabdillah, R. Bouabid, L. Benaabidate and O. Oueslati, SWAT manual calibration and parameters sensitivity analysis in a semi-arid watershed in North-western Morocco, Arabian J. Geosci., 2017, 10(19), 1–13 Search PubMed .
+U. Duru, M. Arabi and E. E. Wohl, Modeling stream flow and sediment yield using the SWAT model: a case study of Ankara River basin, Turkey, Phys. Geogr., 2018, 39(3), 264–289 CrossRef .
+I. Chaubey, A. Cotter, T. Costello and T. Soerens, Effect of DEM data resolution on SWAT output uncertainty, Hydrol. Processes, 2005, 19(3), 621–628 CrossRef CAS .
+
+          K. C. Abbaspour, Swat-cup 2012. SWAT Calibration and uncertainty program—a user manual,  2013 .
+J. Anand, A. K. Gosain and R. Khosa, Prediction of land use changes based on Land Change Modeler and attribution of changes in the water balance of Ganga basin to land use change using the SWAT model, Sci. Total Environ., 2018, 644, 503–519 CrossRef CAS PubMed .
+T. Gashaw, T. Tulu, M. Argaw and A. W. Worqlul, Land capability classification for planning land uses in the Geleda watershed, Blue Nile Basin, Ethiopia, Model. Earth Syst. Environ., 2018, 4(2), 489–499 CrossRef .
+F. Hajian, A. P. Dykes and S. Cavanagh, Assessment of the flood hazard arising from land use change in a forested catchment in northern Iran, J. Flood Risk Manag., 2019, 12(4), e12481 Search PubMed .
+H. W. Kim, M.-H. Li, J.-H. Kim and F. Jaber, Examining the impact of suburbanization on surface runoff using the SWAT, Int. J. Environ. Res., 2016, 10(3), 379–390 Search PubMed .
+D. Moriasi, B. Wilson, K. Douglas-Mankin, J. Arnold and P. Gowda, Hydrologic and water quality models: Use, calibration, and validation, Trans. ASABE, 2012, 55(4), 1241–1247 Search PubMed .
+S. Lin, C. Jing, N. A. Coles, V. Chaplot, N. J. Moore and J. Wu, Evaluating DEM source and resolution uncertainties in the Soil and Water Assessment Tool, Stochastic Environ. Res. Risk Assess., 2013, 27(1), 209–221 CrossRef .
+J. Y. G. dos Santos, S. M. G. L. Montenegro, R. M. da Silva, C. A. G. Santos, N. W. Quinn and A. P. X. Dantas, 
+            et al., Modeling the impacts of future LULC and climate change on runoff and sediment yield in a strategic basin in the Caatinga/Atlantic forest ecotone of Brazil, Catena, 2021, 203, 105308 CrossRef .
+
+          M. C. Cheruto, M. K. Kauti, D. P. Kisangau and P. C. Kariuki,Assessment of land use and land cover change using GIS and remote sensing techniques: A case study of Makueni County, Kenya,  2016 Search PubMed.
+R. K. Sinha, T. Eldho and G. Subimal, Assessing the impacts of land use/land cover and climate change on surface runoff of a humid tropical river basin in Western Ghats, India, Int. J. River Basin Manag., 2020, 1–12 Search PubMed .
+C. Hyandye, C. G. Mandara and J. Safari, GIS and logit regression model applications in land use/land cover change and distribution in Usangu catchment, American Journal of Remote Sensing, 2015, 3(1), 6–16 CrossRef .
+R. Martínez-Retureta, M. Aguayo, A. Stehr, S. Sauvage, C. Echeverría and J.-M. Sánchez-Pérez, Effect of land use/cover change on the hydrological response of a southern center basin of Chile, Water, 2020, 12(1), 302 CrossRef .
+
+This journal is © The Royal Society of Chemistry 2023
+Table Content:
+
+Water impact
+This study develops a methodology for quantifying the impact of land use land cover change and contributes to the sustainable management of the investigated catchment. The result shows the impact of environmental change on hydrological extremes (low flow and floods) and determines hot spots, which are critical for environmental development.
+
+
+ 	Fig. 1  Location of the Chalus drainage basin.	 
+
+ 	Fig. 2  The metrological flamework designed for this study.	 
+
+
+Landsat 8 OLI/TIRS	Jun, 2021	WGS84	164–165	35	30 M	Tiff
+Landsat 5/TM	Jun, 2001	WGS84	164–165	35	30 M	Tiff
+Landsat 5/TM	Jun, 1987	WGS84	164–165	35	30 M	Tiff
+
+1	Built-up	Areas that involve residential, commercial, and industrial buildings, as well as roads and other transport services
+2	Dense forest	Areas with a tree canopy density between 40 and 70 percent
+3	Cultivated land	Agricultural (planted or irrigated) areas, fallow land, and paddy crops
+4	Waterbodies	Including rivers, check dams, wetlands, lakes, reservoirs, and permanent open water
+5	Garden	Including ornamental plants, herbs, fruit, vegetables, and trees
+6	Rangeland	Including grasslands, shrublands, savannas, tundra, deserts, swamps, and pastures
+
+ 	Fig. 3  Conditioning factors for LULC modeling: a: distances from rivers, b: distances from roads, c: elevation, d: slope.	 
+	(1)
+	(2)
+
+1	Noushahr	Synoptic	Iran Meteorological Organization	544691.27	4056163.28	−20.9
+2	Siahbisheh	Synoptic	Iran Meteorological Organization	528462.21	4008026.89	1855
+3	Kojoor	Synoptic	Iran Meteorological Organization	565772.75	4026716.73	1550
+4	Baladeh	Synoptic	Iran Meteorological Organization	571920.31	4006428.30	2120
+
+ 	Fig. 4  a: Precipitation; b: temperature; c: soil distribution maps in the Chalus basin.	 
+
+1	Pol-e-Zoghal	Chalus	530171	4040631	351
+	(3)
+	(4)
+
+SOL_AWC	Available water capacity of soil layer	SMFMN	Minimum melt rate for snow during the year (occurs on winter solstice)
+SOL_K	Saturated hydraulic conductivity	SMTMP	Snow melts base temperature
+SHALLST	Initial depth of water in the shallow aquifer	SURLAG	Surface runoff lag coefficient
+MSK_CO2	Calibration coefficient that controls impact of the storage time constant for low flow	SMFMX	Maximum melt rate for snow during year (occurs on summer solstice)
+GWHT	Initial groundwater height	CH-N2	Manning's ‘n’ value for the main channel
+GW_DELAY	Groundwater delay from soil to channel	CH-K2	Effective hydraulic conductivity in main channel alluvium
+MSK_CO2	Calibration coefficient that controls impact of the storage time constant for low flow	ALPHA-BNK	Base flow alpha factor for bank storage
+SOL_BD	Soil bulk density	ESCO	Soil evaporation compensation factor
+HRU_SLP	Average slope steepness	OV_N	Manning's ‘n’ value for the overland
+ALPHA_BF	Base flow alpha-factor	SOL_ZMX	Maximum rooting depth of the soil profile
+GWQMN	Threshold depth of water in the shallow aquifer required for return flow to occur	CH_K1	Effective hydraulic conductivity in tributary channel alluvium
+GW_REVAP	Groundwater ‘Revap’ coefficient	CH_N1	Manning's ‘n’ value for the tributary channel
+TIMP	Snow pack temperature lag factor	CN2	Initial SCS runoff curve number II
+RCHRG-DP	Deep aquifer percolation fraction	LAT_TTIME	Lateral flow travel time
+GW_SPYLD	Specific yield of the shallow aquifer	SFTMP	Snowfall temperature
+
+
+Kappa coefficient (%)	0.92	0.94	0.83
+Overall accuracy (%)	93.54	95.04	86.62
+
+ 	Fig. 5  Land use land cover maps in the Chalus basin for the period of 1987, 2001, and 2021.	 
+
+
+Rangeland	927.72	839.49	667.55	−88.23	−171.94	−5.47	−10.66
+Garden	121.50	155.34	176.50	+33.84	+21.16	+2.10	+1.31
+Forest	483.78	428.94	410.85	−54.84	−18.08	−3.40	−1.12
+Built-up	75.06	143.71	274.80	+68.64	+131.09	+4.25	+8.12
+Waterbody	0.20	0.11	0.21	−0.09	+0.10	−0.01	+0.01
+Cultivated	5.28	46.29	131.58	+41.01	+85.29	+2.54	+5.29
+
+1	Distance from road	0.1639
+2	Distance from river	0.2815
+3	Elevation	0.2947
+4	Slop	0.2103
+
+0.76	0.92	0.92	0.86
+
+ 	Fig. 6  Predicted land use map of the Chalus basin in 2049.	 
+
+Area (km2) in 2049	491.53	191.30	391.15	388.7	0.3	198.12
+Difference area (%) (2021–2049)	−10.60	+0.89	−1.19	+6.86	+0.01	+4.01
+
+ 	Fig. 7  The most sensitive hydrological parameters before the calibration and validation process based on LULC change scenarios during (a) 1987–2021 and (b) 2021–2049.	 
+
+
+
+1	SOL_AWC	0.535	0.613	0.548	0.569
+2	MSK_CO2	7.494	7.895	7.865	7.7249
+3	MSK_CO1	10.588	10.984	10.716	10.802
+4	CH_K2	283.247	297.561	287.183	288.520
+5	OV_N	10.133	12.213	10.227	11.572
+6	HRU_SLP	0.238	0.266	0.259	0.246
+7	SOL_K	−0.220	−0.173	−0.185	−0.175
+8	SOL_BD	−0.081	0.057	−0.044	0.043
+9	ESCO	0.153	0.162	0.156	0.159
+10	RCHRG	0.335	0.382	0.373	0.381
+11	SHALLST	170.520	208.276	199.781	180.525
+12	GWHT	13.400	15.170	14.701	15.126
+13	TIMP	0.653	0.754	0.715	0.708
+14	SMFMN	3.630	5.468	4.742	4.209
+15	SMFMX	3.704	4.525	4.455	4.362
+16	SMTMP	0.682	1.762	1.595	1.634
+17	SFTMP	−0.846	0.054	−0.625	−0.695
+18	GWQMN	2461.712	2748.463	2681.077	2599.831
+19	GW_DELAY	351.012	376.375	375.234	372.444
+20	ALPHA_BF	0.090	0.113	0.095	0.105
+21	CN2	64.188	68.557	67.662	64.501
+22	LAT_TTIME	24.107	26.565	24.144	24.144
+23	GW_REVAP	0.028	0.046	0.028	0.039
+24	SURLAG	7.564	8.987	8.723	7.727
+25	CH_N2	0.306	0.320	0.316	0.318
+
+ 	Fig. 8  Monthly simulated and observed discharge at the Pole-Zoghal station for the calibration and validation periods based on LULC change scenarios during (a) 1987–2021 and (b) 2021–2049.	 
+
+1987–2021	Calibration	0.73	0.65	0.83	0.81	2.3%
+Validation	0.63	0.63	0.77	0.74	3.1%
+2021–2049	Calibration	0.72	0.65	0.82	0.80	−0.3%
+Validation	0.69	0.64	0.79	0.77	−2.1%
+
+ 	Fig. 9  Hydrologic components values during the high and low precipitation seasons.	 
+
+LULC1987	345.8	373.1	100.51	585.12
+LULC2001	348.8	372.4	94.8	589.45
+LULC2021	360.4	365.4	91.76	610.16
+LULC2049	390.28	361.8	88.29	631.38
+Change from 1987 to 2021 (%)	14.6	−7.7	−8.75	25.04
+Change from 2021 to 2049 (%)	29.88	−3.6	−3.47	21.22
+
+ 	Fig. 10  Spatial–temporal distribution of LULC changes (%) at the sub-basin scale (a) 1987–2021 and (b) 2021–2049.	 
+
+ 	Fig. 11  Spatial–temporal distribution of hydrological components variation at the sub-basin scale. (a) 1987–2021; (b) 2021–2049.	 
+
+
+SurfQ	1.00	
+	
+	
+	
+	
+	
+	
+	
+	
+
+LatQ	−0.65	1.00	
+	
+	
+	
+	
+	
+	
+	
+
+WYLD	0.89	0.87	1.00	
+	
+	
+	
+	
+	
+	
+
+ET	−0.94	0.78	−0.74	1.00	
+	
+	
+	
+	
+	
+
+CL	0.96	−0.71	0.56	0.65	1.00	
+	
+	
+	
+	
+
+FRST	−0.95	0.77	0.61	1.00	−0.97	1.00	
+	
+	
+	
+
+BUA	0.88	−0.98	0.84	−0.83	0.85	−0.87	1.00	
+	
+	
+
+RNGL	−0.94	0.59	−0.31	0.91	−0.96	0.89	−0.7	1.00	
+	
+
+Gdn	0.65	−0.64	0.48	0.78	0.86	−0.85	0.78	−0.91	1.00	
+
+WatB	0.99	−0.68	0.5	−0.97	0.96	−0.98	0.79	−0.88	0.8	1.00
+
+This journal is © The Royal Society of Chemistry 2023

@@ -1,0 +1,856 @@
+Experimental and simulation study of REEV charging and discharging strategy considering battery temperature  - Sustainable Energy & Fuels (RSC Publishing) DOI:10.1039/D3SE00066D View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D3SE00066D
+(Paper)
+Sustainable Energy Fuels, 2023, 7, 2229-2243Experimental and simulation study of REEV charging and discharging strategy considering battery temperature
+
+        
+          
+            Liange 
+            He
+          
+        
+      abc, 
+      
+        
+          
+            Zihan 
+            Gu
+          
+        
+      a, 
+      
+        
+          
+            Yan 
+            Zhang
+          
+        
+      *abc, 
+      
+        
+          
+            Haodong 
+            Jing
+          
+        
+      a and 
+
+        
+          
+            Pengpai 
+            Li
+          
+        
+      a
+aKey Laboratory of Advanced Manufacture Technology for Automobile Parts (Chongqing University of Technology), Ministry of Education, Chongqing 400054, China. E-mail: zhangyan@cqut.edu.cn
+bNingbo Shenglong Group Co., Ltd., Ningbo 315104, China
+cChongqing Energy Technology Research Institute, Chongqing 400054, China
+Received 
+      16th January 2023
+    , Accepted 20th March 2023First published on 4th April 2023AbstractTo improve the range of REEV (Range Extend Electric Vehicle) at high temperatures while meeting the cooling requirements of the battery and the cabin, this study proposes an APU (Auxiliary Power Unit) control strategy C that considers battery SOC (State of Charge), vehicle power, and battery temperature. Strategy C is also compared with strategy A (only considering battery SOC) and strategy B (considering battery SOC and overall vehicle power). The experimental results show that strategy C not only reduces the fuel consumption of the REEV but also increases the cooling rate of the battery and cabin. The fuel consumption of strategy C is 12.2% and 1.49% lower than that of A and B, respectively. In terms of cooling rate, the battery and cabin cooling rates under strategy C were improved by 0.57% and 2.32% over strategies A and B, respectively, and the fuel consumption of strategy C was 1.49% lower than that of strategy B.
+1 Introduction
+The research shows that energy demand will increase by 1.3% per year until 2040, which will lead to a rapid rise in emissions.1 Road traffic is one of the major contributors to CO2 emissions, which is also a major cause of urban air pollution.2 The battery capacity problem of pure electric vehicles is not yet a major breakthrough, and the capacity decays too quickly at low temperatures, so there is still mileage anxiety.3–6 However, REEV can overcome this problem, and compared to a fuel car, REEV can significantly reduce fuel consumption.7 In order to reduce carbon emissions, REEV is an important development route,8 and the energy management and thermal management of the REEV both affect the fuel consumption economy and range.9
+Currently, many studies have focused on engine energy management to achieve optimal energy distribution between the auxiliary power unit (APU) and the battery.10–13 Li et al.14 simultaneously optimized the fuel cost, power cost, and battery degradation cost by real-time multi-objective prediction of EMS. Eckert et al.15 maximized the vehicle range and battery life while minimizing the mass of the onboard energy storage system through an interactive adaptive weighted genetic algorithm approach. Liu et al.16 considered energy consumption, emissions, and battery life and used this to propose a novel hybrid point-line energy management strategy. Khaboshan17et al. designed a BTMS for 18650 (Panasonic NCR18650PF, 2.4 A h) by combining phase change material (PCM), foam metal, fins, etc. It can reduce the cell surface temperature by 3 K under 3C current discharge conditions. Talele18et al. verified the thermal performance of the battery pack with three different cooling structures (no cooling), 70% immersed paraffin, and EG CPCM and PCM integrated metal separator coupling designs by numerical analysis. Li19et al. developed a heating strategy based on UBHC (upper bound of heating current) adaptive AC pulse, and a heating strategy was established. The cyclic heating experiments showed that the capacity loss of 110% UBHC was 0.49 A h after 60 heating cycles, while the capacity loss of the original UBHC was only 0.1 A h. Panchal20et al. developed an empirical battery-level aging model by combining cyclic and calendar aging models. By comparing the aging test data under different driving conditions, the aging predictions of the empirical aging model showed very good agreement with the test data, with maximum normalized root mean square error (RMSE) of 0.85%. Braga21et al. used GT-Autolion software for the development of a one-dimensional electrochemical model of a 144 A h prismatic rolling battery with a pseudo-two-dimensional approach. The test results showed that the model can effectively reflect the measured values.
+Research on the REEV thermal management system has focused on the battery, engine, and air conditioning systems. Studies have shown that the most significant energy consumption of the cooling system lies in the compressor.22–25 It is also necessary to consider the power battery, which has the most appropriate operating temperature of 20–40 °C and can guarantee 80% charging and discharging efficiency.26–29 Therefore, the thermal management system of REEV should not only consider the heat dissipation of the engine and motor but also ensure the heat dissipation capability of the power battery under high temperatures to prevent capacity decay or even explosion caused by high temperatures.30–33 The control method based on the optimal range can lead to frequent battery charging. Therefore, the thermal management system of REEV needs to be considered more comprehensively.
+The development of the energy management and control of APUs in REEV has improved the fuel economy and effectively reduced carbon emissions. Few studies combine the target temperature of thermal management systems with the APU condition management. This study proposes an APU control strategy C that considers battery SOC, vehicle power, and battery temperature. In this study, the three control strategies of APU are compared. Strategy A is to control the APU to maintain the battery SOC at 30–40%. Strategy B considers the whole vehicle power on this basis and enters the CS mode when the vehicle power is greater than 15 kW. Strategy C builds on B and also turns on the APU when the battery temperature is greater than 40 °C. This study compares the total fuel consumption, battery SOC, and the time to reach the target battery and cabin temperatures of the vehicle under the three strategies. The experimental results show that strategy C can reduce fuel consumption and improve the range of the REEV at high temperatures compared to strategies A and B. Under the same compressor cooling capacity, the cooling rate of the battery and the cabin will be better when the thermal management system and energy management are considered together.
+2 Experiment method
+2.1 Parameters of the whole car
+The research object of this is a REEV that includes components such as a 1.0 L four-cylinder engine, a generator, and a permanent magnet synchronous motor. In this powertrain, the APU consists of an engine and a generator that can power the motor and the battery. The basic parameters of the experimental vehicle and its key components used in this study are shown in Tables 1 and 2. C is a measurement of the charge/discharge current relative to its rated capacity.
+Table 1 Whole vehicle parameters
+
+
+
+
+Complete vehicle herb mass
+1206 kg
+Air penetration coefficient
+0.33
+
+
+
+
+Frontal area
+2.1 m2
+Tire radius
+0.3 m
+
+
+Maximum climbing degree
+20
+Rolling resistance coeff.
+0.013
+
+
+Maximum speed
+>120 km h−1
+Driving mileage of BEV mode
+60 km
+
+
+
+
+Table 2 Key component parameters
+
+
+
+
+Component
+Parameters
+Value
+
+
+
+
+Engine
+Engine displacement
+1.0 L
+
+
+Nominal power
+35 kW
+
+
+Peak speed
+5500 rpm
+
+
+Peak torque
+80 N m
+
+
+Engine water pump
+Flow
+0.001 L
+
+
+Speed
+1000 rpm
+
+
+Efficiency
+0.8
+
+
+High-temperature heat sink
+Length
+0.558 m
+
+
+Width
+0.459 m
+
+
+Compensation kettle
+Total volume
+4 L
+
+
+Motor
+Nominal power
+18 kW
+
+
+Nominal speed
+3000 rpm
+
+
+Peak power
+42 kW
+
+
+Peak speed
+8000 rpm
+
+
+Peak torque
+175 N m
+
+
+Battery
+Total voltage
+380 V
+
+
+Battery capacity
+60 A h
+
+
+Depth of discharge
+90–20%
+
+
+Voltage of cell
+3.2 V
+
+
+Maximum discharge rate
+3C
+
+
+Single unit capacity
+60 A h
+
+
+Monomer size
+100 × 32 × 182 mm
+
+
+Maximum charge rate
+1.4C
+
+
+Mass of cell
+1.9 kg
+
+
+Battery and motor circuit pumps
+Maximum speed
+4000 rpm
+
+
+Diameter of water pump mouth
+10 mm
+
+
+Water pump efficiency
+0.8
+
+
+Generator
+Nominal power
+35 kW
+
+
+Nominal torque
+>80 N m
+
+
+Peak speed
+5500 rpm
+
+
+Evaporator of cabin
+Heat exchange area
+6.7 m2
+
+
+Fan inner diameter
+0.05 m
+
+
+Fan outer diameter
+0.25 m
+
+
+Inlet and outlet dimensions
+128 mm2
+
+
+Evaporator of battery
+Heat exchange area
+5 m2
+
+
+Inlet and outlet dimensions
+114 mm2
+
+
+Fan inner diameter
+0.05 m
+
+
+Fan outer diameter
+0.24 m
+
+
+Compress
+Displacement
+66 cm3
+
+
+Rated speed
+2500 rpm
+
+
+Rotational speed range
+500–5000 rpm
+
+
+Shaft power
+3.2 kW
+
+
+Refrigerant
+R134a
+
+
+Condenser
+Heat exchange area
+16 m2
+
+
+Inlet and outlet dimensions
+152 mm2
+
+
+Fan inner diameter
+0.05 m
+
+
+Fan outer diameter
+0.3 m
+
+
+
+
+2.2 Power system
+In this study, the APU configuration scheme is shown in Table 3. The power supply closed-loop control can be realized using the onboard controller. This approach can realize the coordination among the drive motor, battery, and generator, avoiding frequent changes in engine torque and ensuring efficient engine operation.
+Table 3 APU configuration and control scheme
+
+
+
+
+APU configuration
+Engine
+Generator
+AC–DC unit
+
+
+Type
+Control method
+Type
+Control method
+
+
+
+
+Engine–generator–generator controller
+High speed
+Speed control
+PMSG
+Torque control
+Generator controller
+
+
+
+
+There are three principles for the control strategy of the REEV. (1) In the case of sufficient battery power, the power battery is used as a single energy source output (the power consumption phase). (2) When the battery power drops to a certain level, the APU turns on to maintain the battery power and drive the whole vehicle (the power maintenance phase). (3) Selecting the appropriate engine operating point, so that the engine study at the economic power point to reduce fuel consumption and improve the economy of the whole vehicle.
+Also, for the REEV, the operating point of the engine can be chosen at the most economical power point to reduce fuel consumption and emissions.34 The high-efficiency zone of the engine in this study is between 1600 and 3500 rpm and the engine output torque is between 50 and 65 N m, and the fuel consumption of the engine is the lowest at 245 g kW−1 h−1. In this study, the operating point of the engine is selected to be 2500 rpm with 15 kW power and the lowest fuel consumption.
+APU charging control strategies can be divided into two categories: power demand tracking strategies and optimal range strategies. The optimal range strategy can maintain high APU fuel efficiency. The engine has an optimal operating range for its relatively high energy conversion efficiency. Therefore, this strategy sets the engine to always operate at a fixed optimization point or operating range. The strategy logic is shown in Fig. 1. When the vehicle is operating in NEDC , it is neceseary to calculate the power required to drive the vehicle, the energy consumption of the thermal management system, etc. When the battery SOC > 30%, the whole vehicle is in pure electric mode, so the battery provides the driving power consumption of the whole vehicle. When SOC < 30%, it enters the extended range mode and the APU starts and works at the operating point. When the APU output power is less than the required power, it enters the hybrid mode, when the APU and the battery output power at the same time. For example, the APU in the literature35 operates at three operating points with high energy efficiency. Once the APU is turned on, the redundant power supply is used to charge the power battery.
+ Fig. 1  Control based on the mileage optimization strategy. 
+2.3 Thermal management system
+The thermal management system for the whole vehicle is shown in Fig. 2. When the engine temperature was above 80 °C, the coolant is dissipated through the high-temperature radiator. The cooling system needs to control the temperature of the cabin near 25 °C and control the temperature of the power battery between 25 °C and 40 °C.36 The battery was cooled by the chiller. On one side of the chiller is a high-temperature coolant that absorbs heat from the battery, and on the other side is a low-temperature refrigerant. The target battery temperature set in this study was 26 °C. The battery coolant inlet and outlet were arranged with temperature and flow sensors. The cabin was cooled by the air conditioning system and the target temperature was set at 23 °C. The air outlet of the evaporator is arranged with air speed and temperature sensors. The motor in this study utilizes a low-temperature radiator for heat dissipation. Temperature and flow sensors were arranged at the motor coolant outlet.
+ Fig. 2  Schematic of the structure. 
+3 Experimental bench
+3.1 Complete vehicle experiment
+The environmental chamber used for the experiments is shown in Fig. 3, which can achieve accurate simulation and control of the key indicators such as temperature, humidity, wind speed, and traction force inside the chamber. The lab is also equipped with fast-charging and slow-charging national standard plugs to meet the testing needs of the REEVs. The maximum speed of the chassis dynamometer used was 250 km h−1, the maximum tractive force is 12500 N and the motor power is 150 kW. The important components of the experimental whole vehicle part include the exhaust system, simulated light equipment, fan, and information receiver. The experimental conditions are shown in Table 4.
+ Fig. 3  Automobile environment simulation test. 
+Table 4 Experimental conditions
+
+
+
+
+Simulation conditions
+NEDC
+
+
+
+
+Ambient temperature
+40 °C
+
+
+Humidity
+50%
+
+
+Condenser inlet air temperature
+41.4 °C
+
+
+Evaporator air volume
+450 m3 h−1
+
+
+Battery coolant flow rate
+<18 L min−1
+
+
+Motor coolant flow rate
+<18 L min−1
+
+
+Initial battery SOC
+50%
+
+
+Simulation time
+5000 s
+
+
+The target temperature of the cabin
+23 °C
+
+
+The target temperature of the battery
+26 °C
+
+
+
+
+3.2 Arrangement of sensors
+The vehicle sensor arrangement is shown in Fig. 4. Temperature sensors and flow sensors are arranged at the evaporator refrigerant outlet, condenser refrigerant inlet, engine coolant outlet, and battery pack coolant outlet. Flow rate sensors are deployed to detect the coolant flow rate of the engine, motor, and battery. Temperature sensors are laid out to sense temperature changes in the engine, motor, cabin, and battery. The control of APU and compressor power can be achieved by receiving the temperature signal changes at high temperatures. The passenger compartment is cooled by air conditioning, and the temperature of the air outlet of the passenger compartment is measured by a sensor with a sampling interval of 1 min. The experiment is controlled by a control device outside the laboratory to simulate the energy consumption of the whole vehicle under different strategies. The passenger compartment has an uneven temperature distribution due to the large space. This study mainly considers the temperature of the main driver, so the temperature sensors are arranged in four positions, namely, the left breathing point of the main driver, the right breathing point of the main driver, the left foot surface of the main driver, and the right foot surface of the main driver. The average value of these four temperature sensors is taken as the interior temperature, and the sampling frequency of all temperature sensors is 5 seconds. All the temperature sensors used in the system were high-precision type K thermocouples, and all pressure sensors were piezo-resistive. The measurement accuracy figures for these sensors are listed in Table 5. The hardware equipment is divided into three parts, which are sensors, signal conditioning devices, and data acquisition cards. Temperature, flow rate, voltage, and current need to be measured and acquired in real-time in this experiment. The temperature collected in the experiment is both solid and liquid, including the coolant temperature at the main inlet and outlet of the heat exchanger, the temperature of the external surface of the cell, the coolant temperature at the inlet and outlet of the radiator, the coolant temperature at the inlet, and the ambient temperature. In this study, both universality and specificity are considered when selecting the temperature measurement points on the external surface. The universality is to make the temperature measurement points as evenly distributed and representative as possible, so that the temperature of the temperature measurement points can represent the temperature of the parts. The special feature is the consideration of the temperature difference at the contact point with the cooling plate. The tab temperature was considered because that temperature affects the internal circulation in the cabin and the intake air temperature of the front radiator.
+ Fig. 4  Partial sensor arrangement. 
+Table 5 Sensor parameters
+
+
+
+
+Parameters
+Instruments
+Range
+Precision
+
+
+
+
+Refrigerant temperature
+Pt100
+−200–420 °C
+±1%
+
+
+Air temperature
+Temperature and humidity sensor
+−20–80 °C
+±0.5 °C
+
+
+Air humidity
+Temperature and humidity sensor
+0–100%
+±0.20
+
+
+Cold plate temperature
+K-thermocouple
+−200–260 °C
+±0.75
+
+
+Refrigerant pressure
+Pressure sensors
+0–3000 kPa
+±0.5%
+
+
+Air flow rate
+Wind speed transmitter
+0–10 m s−1
+3%
+
+
+
+
+4 Heat load and power calculation
+4.1 Thermal load of the engine
+The heat generation of the range extender has an important impact on the control of the system, and this study mainly considers the heat generation of the engine. Engine heat balance is defined as the distribution in the engine of the total heat released from the fuel consumed by engine combustion. This includes four components: conversion to effective power, heat removed by the coolant, heat removed by the exhaust, and residual losses. When the engine is in steady-state operation, the heat balance equation can be expressed as: Qt = Qe + Qw + Qr + Qres(1)where, Qt is the total heat generated by burning the fuel, kJ h−1. Qe is the heat converted to effective work. Qw is the heat removed by the cooling water. Qr is the heat lost to the exhaust. Qres is the residual loss. This study ignores the Qres. They are calculated respectively by the following equations: Qt = Mf × Hu(2) Qe = 3.6 × 103Pe(3) Qw = MwCPW(t2 − t1)(4) Qr = MrCpr(t6 − t5)(5)where, Mf is the mass of the fuel, kJ h−1. Hu is the low calorific value of the fuel, kJ kg−1. Pe is the effective power of the engine, kW. Mw is the mass flow rate of cooling water, kg h−1. CPW is the average constant pressure specific heat capacity of cooling water, kJ (kg K)−1. t1, t2 are the engine cooling water inlet and outlet temperatures respectively, K. Mr is the mass flow rate of the exhaust, kg h−1. Cpr is the average constant pressure specific heat capacity of the exhaust, kJ (kg K)−1. t5 and t6 are the exhaust and intake temperatures, respectively, K.
+The target model is equipped with an engine rated at 35 kW. 10 kW was calculated to be dissipated by the engine through cooling water. This study ignores the water tank and assumes that the cooling water dissipates the same amount of heat as the heater. Assuming a utilization rate of 70% on the air side, the amount of heat that can be utilized is 7 kW. The amount of temperature change is calculated by the following equation. (6)where, V is the air volume, 0.1 m3 s−1. ρ is the air density, 1.29 kg m−3. c is the specific heat capacity of air, 1.0048 kg (kg °C)−1.
+4.2 Thermal load of the battery
+The suitable working temperature of a lithium battery is 15–40 °C, which can maintain the charging and discharging efficiency of the battery above 80%. As the battery temperature is between 25 and 40 °C, the battery internal resistance does not change much, while not considering the slope resistance power and acceleration resistance power. The following expressions proposed by Bernardi are usually used to determine the heat production rate in the core: (7)where U is the open circuit voltage, V. V is the core voltage, V. hs is the heat transfer coefficient of each core. I(U − V) is the heat caused by core polarization.  is the entropy coefficient caused by a reversible process in the core. MA is the core mass on the bit area. Cp is the average specific heat capacity of the core. Assuming that the temperature inside the core changes uniformly, the equation can be rewritten as: (8)where, , Vb, E0, E and I are unit volume heat production, battery volume, open circuit voltage, battery voltage, and current, respectively. After obtaining the power of the whole vehicle, the current of the battery during operation was calculated by the formula: (9)where, η1 is the battery discharge efficiency, which is taken as 0.9 in this study. η2 is the motor efficiency, which is taken as 0.89 in this study.
+The discharge current of the battery at 120 km h−1 is 96.5 A. At this time, the internal resistance of the battery unit is taken as a constant value, which is 1.84 mΩ, and the heat generation power of the battery unit at 120 km h−1 is 18.3 W. The heat dissipation of the whole battery pack is 1728 W. Ignoring the self-absorption heat and convection heat dissipation of the battery, it is assumed that all the heat of the battery has to be cooled by the battery thermal system.
+4.3 Thermal load of the cabin
+This study treats the entire passenger compartment as a model with constant capacity and pressure, whose heat balance equation can be expressed as QC = Qsolar + Qamb + Qmass + Qvent + Qmet(10)where, Qsolar is the heat conducted into the room by the glass, Qamb is the ambient heat load, Qmass is the internal equipment heat load, Qvent is the ventilation heat load, and Qmet is the human metabolic heat load. Qsolar = A(tm − ti)K + MAC(μqb)(11)where, A is the surface area of the glass, m2. tm is the integrated surface temperature of the glass, °C. ti is the air temperature inside the vehicle, °C. K is the integrated heat transfer coefficient, W m−2·°C−1. μ is the glass correction factor, single-layer glass takes 1. C is the shading factor of glass. M is the glass area factor. qb is the solar radiation intensity through single-pane glass, W m−2.
+Depending on the material of the car enclosure structure, it can be divided into different calculation areas, such as glass, roof, side body, and bottom of the car. Qamb = (Q1 + Q2 + Q3 + Q4) × α1(12)
+
+Q
+1, Q2, Q3, Q4 are the heat exchanged with the environment through the glass, roof, side body, and bottom of the car, respectively, W. α1 is the correction factor and takes the value of 1.3. This study ignores the heat transfer from the power battery and electric drive system to the cabin, Qmass is 200 W. The human heat load is calculated according to 170 W per person, and Qmet is 720 W for 4 people. Qvent = 1000Go × ρ(Hi − Ho)(13)where, Go is the volume of fresh air entering the passenger compartment, m3. Hi is the enthalpy of air outside the vehicle, kJ kg−1. Ho is the enthalpy of air inside the vehicle, kJ kg−1. ρ is the air density, 1.293 kg m−3. cp is the specific heat capacity of air, 1.003 kJ (kg °C)−1. The cabin system diagram is shown in Fig. 5. The temperature of the passenger compartment is set at 23 °C, and the required heating capacity of the cabin is calculated to be 1985.6 W.
+ Fig. 5  The cabin system. 
+4.4 Power of the vehicle
+Because the experimental and simulation conditions in this study were conducted at 40 °C, the air conditioning was turned on throughout the car. The most important energy-consuming component in the air conditioning system is the compressor, so the calculated power of the whole car power is calculated by the following equation: Pcar = Pmotor + Pcom(14)
+The incremental electric vehicle is driven by the drive motor to drive the whole vehicle. In the mode of pure electric driving, the energy demand power of the whole vehicle for the power battery is relatively large, the discharge current of the battery is larger and more heat is generated. Ignoring the slope resistance and acceleration resistance, the driving power of the motor can be found by the vehicle power balance equation as follows: (15)where, ηT is the mechanical transmission efficiency, taken as 0.86. G is the car mass, and f is the rolling resistance coefficient, which is taken as 0.013 in this study. ua is the car speed, km h−1. CD is the wind resistance coefficient, which is taken as 0.33 in this study. A is the windward area, m2.
+From Section 4.2, it can be seen that the actual demand cooling load of the power battery at 120 km h−1 is 2459.5 W. From Section 4.3, it can be seen that the demand cooling load of the passenger compartment at an ambient temperature of 40 °C is 4256.8 W, so the total heat load of the air conditioning system is 6716.3 W. Considering the actual working condition of the air conditioning, the cooling capacity provided by the air conditioning system needs to be 7388 W. In this study, the air conditioning system needs to cool the passenger compartment and the battery system, so the Pcom is 4682 W. Based on the above power and the engine efficiency, the APU operating point 4 selected for strategy C is 7 kW.
+5 Three control strategies
+5.1 Consider the control of SOC
+For the REEV, the initial on–off strategy is based on the thermostat strategy. Where the APU on–off for strategy A is determined by the SOC of the battery. In addition, the module controls the operating power of the APU when rapid acceleration or climbing occurs. When the APU is started at low temperatures, the APU will idle and self-heat with 2.4 kW of power. In this study, experiments were conducted at high temperatures, so cold starts are not considered. The initial value of SOC was set to 50%. Therefore, the vehicle enters the CS mode when the SOC is below 30% and then enters a new pure charge mode when the battery SOC is charged above 40%, see Fig. 6.
+ Fig. 6  Logic block diagram of strategy A. 
+This study controls the start–stop of APU and controls the power battery SOC between the two points of the set SOCmax and SOCmin by the unidirectional power output of APU. Where SOCmin is equal to 30% and SOCmax is equal to 40%. The vehicle initially works in pure electric mode, and the APU is not activated. The power battery supplies power to the drive motor, which drives the whole vehicle. The APU is turned on when the battery SOC drops to SOCmin. At this time, the APU operates at the high-efficiency power point, while outputting electrical energy to power the drive motor and charging the battery with the excess power. When the battery SOC rises to SOCmax, the APU is turned off. This control strategy can control the engine to work at the economic power point, which ensures the economy of the whole vehicle, and also effectively avoids frequent engine starts. In the experiment, the switching signals and operating power of the APU are shown in Fig. 7.
+ Fig. 7  Engine signal and operating power. 
+5.2 Consider SOC and vehicle power control
+Based on the traditional thermostat-based control strategy, the vehicle power demand is considered to develop control strategy B for the REEV to improve the vehicle economy and energy utilization efficiency. Enter CS mode when the battery SOC is less than 40% and the vehicle demand power is greater than 15 kW, or when the SOC is less than 30%. The CD mode is entered when the SOC is greater than 32% and the car power is less than 15 kW, or when the SOC is greater than 40%. This strategy generates power that can be better adapted to the actual consumption on the one hand and uses less efficient operating points on the other. The operating points were selected according to the moving average power demand. The operation mode state diagram is shown in Fig. 8.
+ Fig. 8  Logic block diagram of strategy B. 
+Under the experimental conditions, it can be seen from Fig. 9 that the start–stop signal of APU is more frequent after the 3000 s. Because the REEV is in CS mode, the APU needs to start charging the battery continuously and it varies with the power demand of the whole vehicle.
+ Fig. 9  Engine signal and operating power. 
+5.3 Consider SOC, whole vehicle power, and battery temperature control
+Strategy C adds the influence of battery temperature on APU based on SOC and vehicle power. When the battery temperature is greater than 40 °C, the APU will turn on and the power will be 7 kW. In the thermostat control strategy, the whole vehicle power demand and the battery temperature are considered to develop a control strategy for the REEV. Enter CS mode when the battery SOC is less than 40% and the vehicle demand power is greater than 15 kW, SOC is less than 30% or the battery temperature is greater than 40 °C. The difference with strategy B is that the entire vehicle relies on the APU to provide some of the energy, reducing the battery output power and cooling the battery more quickly. CD mode is entered when SOC is greater than 32% and vehicle power is less than 15 kW, SOC is greater than 40% or battery temperature is less than 38 °C (Fig. 10).
+ Fig. 10  Logic block diagram of strategy C. 
+Under the experimental conditions, it can be observed from Fig. 11 that compared to strategy B, strategy C turns on the APU and enters CS mode at the early stage of vehicle operation. Meanwhile, the APU operates at OP4 and shuts down when the battery temperature drops to 38 °C and reenters pure power mode. The power of APU varies with the power demand of the whole vehicle, and the vehicle spends less time in CS mode than under strategy B.
+ Fig. 11  Engine signal and operating power. 
+6 Results and discussion
+6.1. 1Total fuel consumption and mileage
+Depending on the operating strategy, the battery SOC may vary over the time period under consideration or at the end of the driving cycle. Therefore, fuel consumption and battery SOC can be used as comparison criteria, as it is directly related to the driving range. The experimental time was 5000 s, and the experiments were conducted at 40 °C ambient temperature, and NEDC conditions for strategies A, B, and C, respectively. It can be observed that both strategies A and B do not open the APU initially. Strategy C opens the APU at 7 kW for 200 s because the battery temperature is taken into account. When the battery temperature drops below 38 °C, the APU shuts down. Therefore, strategy C has fuel consumption in the early stage, while there is a modest increase in SOC. At the end of the 5000 s run time, the fuel consumption of strategy A was 10.87% and 12.2% higher than B and C, respectively. The SOC value was 4.76% higher than B and C at the end of the experiment. Strategy A based only on the battery SOC can significantly reduce the number of APU switches, but the fuel consumption is higher compared to the other two methods. Fig. 12 shows the fuel consumption under each of the three strategies.
+ Fig. 12  Total fuel consumption. 
+
+Fig. 13 shows the battery output power under the three strategies. From the figure, it can be observed that the battery under strategy C is in a charging state of around 0–200 s, so the power is positive. The battery of strategy B is in charge at 3256–3500 s, while the battery of strategy A is in charge at 3600–3820 s. Except for the three time periods with large differences mentioned above, there is no very significant differentiation in the power of the battery at other times. This indicates that the variation in the strategy does not have a significant effect on the power input and output of the battery.
+ Fig. 13  The power of the battery. 
+From Fig. 14, it can be observed that the cell SOC values of strategies A and B decrease at the same rate during the period 0–3000 s. The SOC value of strategy B has a small increase from 0–200 s, which is because the APU starts to charge the battery with excess energy, and after 3000 s until the end of the experiment, the SOC values of strategy A and strategy B change in the same trend because both are in the SOC maintenance phase. The SOC value under strategy A gradually rises up to 40% and opens a new CD mode. Under strategy C, the initial temperature of the battery is higher than 38 °C, so the APU is activated. But at this point, the energy consumption of the APU is greater than the energy consumption of the cooling system and the energy required to drive it. Therefore, the redundant energy charges the battery and makes the SOC to rise.
+ Fig. 14  The SOC of the battery. 
+6.2 Battery temperature and cabin temperature
+In the thermal management system used in this study, the target temperature of the battery is 26 °C and the target temperature of the cabin is 23 °C. As can be observed from Fig. 15, strategy C activates the APU at the beginning of vehicle operation, reducing the battery output. Thus, the cooling system makes the battery temperature drop at a higher rate than strategies A and B. Under strategy A, the battery's SOC is released to 30% when the APU starts to charge the battery. Therefore, the battery generates heat when discharging and the heat generated when charging causes the battery temperature to be higher than the target temperature. The temperature of the coolant affects the temperature of the refrigerant because the battery coolant exchanges heat through the chiller and the refrigerant. With the same cooling capacity as the compressor, the cabin temperature under strategy C will reach the target value faster. Fig. 16 shows the temperature plot measured by the thermocouple. It can be seen that the actual temperature variation is more stable, while the temperature variation in the model is more sensitive. This is because the internal heat absorption and external heat exchange of the battery and cabin are neglected in the model.
+ Fig. 15  The temperature of battery and cabin. 
+ Fig. 16  The test temperature of the cabin and battery. 
+7 Conclusion
+The conclusions that can be drawn from the experimental results are as follows.
+(1) Under NEDC conditions, strategy A can effectively reduce the number of APU boots. But, the total fuel consumption of strategy of A is 10.87% and 12.2% higher than that of B and C, respectively.
+(2) The battery SOC values of strategy C and strategy B are the same at the end of the experiment under the same operating conditions. However, the fuel consumption of strategy C is 1.49% lower than that of strategy B.
+(3) Strategy C increases the cooling rate of the battery and cabin to target temperature by 0.57% and 2.32%, respectively, compared to strategy B. It is also 3.2% lower than the target battery temperature, which can be achieved with strategy A.
+Nomenclature
+
+COPCoefficient of performance
+PTCPositive temperature coefficient
+PIDProcess identifier
+MCCSMulti-stage constant power control system
+BPNNBack propagation neural network
+BEVBlade electric car
+REEVRange extend electric vehicle
+SOCState of charge
+TMSThermal management system
+BTMSBattery thermal management system
+CDCharge-depleting
+CSCharge-sustaining
+PMSGPermanent magnet synchronous generators
+ACAlternating current
+DCDirect current
+HESSHybrid energy storage system
+EMSEnergy management system
+OPOperating condition
+OCVOpen circuit voltage
+PCMPhase change material
+LIBLithium-ion battery
+HEVHybrid electric vehicle
+OCVOpen circuit voltage
+APUAuxiliary power unit
+EVElectric vehicle
+ECMEngine control module
+NEDCNew European driving cycle
+BMSBattery management system
+UBHCUpper bound of heating current
+HPPCHybrid pulse power characterization
+CPCMCombination of phase change material
+EGEthylene glycol
+
+Subscripts
+
+
+P
+req
+Required power
+
+P
+out
+Power output
+
+P
+APU
+Power of APU
+
+T
+mot
+Torque of motor
+
+P
+motor
+Power of motor
+
+P
+com
+Power of compressor
+
+P
+car
+Power of car
+
+T
+cabin
+Cabin temperature
+
+T
+amb
+Ambient temperature
+
+T
+bat
+Battery temperature
+SOCminMinimum value of battery SOC
+SOCmaxMaximum value of battery SOC
+
+Author contributions
+Liange He (first author): conceptualization, investigation, formal analysis, writing – original draft; Zihan Gu: data curation, writing – original draft; Yan Zhang: investigation, modification, supervision; Jinghao Dong: resources, supervision; Pengpai Li: supervision.
+Conflicts of interest
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+Acknowledgements
+The authors would like to acknowledge the support of the Natural Science Foundation of Chongqing (Grant No. cstc2021jcyj-msxmX0440) and the youth project of the Science and Technology Research Program of Chongqing Education Commission of China (Grant No. KJQN201901113).
+References
+S. Lei, S. Xin and S. Liu, Separate and integrated thermal management solutions for electric vehicles: a review, J. Power Sources, 2022, 550, 232133 CrossRef CAS .
+M. Villani and L. Tribioli, Comparison of different layouts for the integration of an organic Rankine cycle unit in electrified powertrains of heavy duty Diesel trucks, Energy Convers. Manage., 2019, 187, 248–261 CrossRef .
+E. Feru, N. Murgovski and B. de Jager, 
+            et al., Supervisory control of a heavy-duty diesel engine with an electrified waste heat recovery system, Control Eng. Pract., 2016, 54, 190–201 CrossRef .
+C. Zhang, J. Huang and W. Sun, 
+            et al., Research on liquid preheating performance for battery thermal management of electric vehicles at low temperature, J. Energy Storage, 2022, 55, 105497 CrossRef .
+M. Sun, T. Liu and M. Li, 
+            et al., A deep supercooling eutectic phase change material for low-temperature battery thermal management, J. Energy Storage, 2022, 50, 104240 CrossRef .
+Y. Ma, H. Ding and Y. Liu, 
+            et al., Battery thermal management of intelligent-connected electric vehicles at low temperature based on NMPC, Energy, 2022, 244, 122571 CrossRef .
+Y. Gao, X. Wang and G. Shu, 
+            et al., Applicability analysis of waste heat recovery technology and strategy exploration for hybrid electric vehicles under diverse road conditions, Energy Convers. Manage., 2021, 230, 113780 CrossRef .
+G. Ren, J. Wang and C. Chen, 
+            et al., A variable-voltage ultra-capacitor/battery hybrid power source for extended range electric vehicle, Energy, 2021, 231, 120837 CrossRef .
+J. Gissing, T. Lichius and S. Baltzer, 
+            et al., Predictive energy management of range-extended electric vehicles considering cabin heat demand and acoustics, IFAC-PapersOnLine, 2015, 48(15), 209–216 CrossRef .
+J. Zhao, Y. Ma and Z. Zhang, 
+            et al., Optimization and matching for range-extenders of electric vehicles with artificial neural network and genetic algorithm, Energy Convers. Manage., 2019, 184, 709–725 CrossRef .
+Y. Yang, Y. Zhang and J. Tian, 
+            et al., Adaptive real-time optimal energy management strategy for extender range electric vehicle, Energy, 2020, 197, 117237 CrossRef .
+G. Pozzato, S. Formentin and G. Panzani, 
+            et al., Least costly energy management for extended-range electric vehicles: an economic optimization framework, Eur. J. Control, 2020, 56, 218–230 CrossRef .
+C. Yang, Running battery electric vehicles with extended range: coupling cost and energy analysis, Appl. Energy, 2022, 306, 118116 CrossRef CAS .
+J. Li, X. Wu and M. Xu, 
+            et al., A real-time optimization energy management of range extended electric vehicles for battery lifetime and energy consumption, J. Power Sources, 2021, 498, 229939 CrossRef CAS .
+J. J. Eckert, T. P. Barbosa and S. F. da Silva, 
+            et al., Electric hydraulic hybrid vehicle powertrain design and optimization-based power distribution control to extend driving range and battery life cycle, Energy Convers. Manage., 2022, 252, 115094 CrossRef .
+H. Liu, Y. Lei and Y. Fu, 
+            et al., A novel hybrid-point-line energy management strategy based on multi-objective optimization for range-extended electric vehicle, Energy, 2022, 247, 123357 CrossRef .
+H. N. Khaboshan, F. Jaliliantabar and A. A. Abdullah, 
+            et al., Improving the cooling performance of cylindrical lithium-ion battery using three passive methods in a battery thermal management system, Appl. Therm. Eng., 2023, 120320 CrossRef .
+V. Talele, M. S. Patil and S. Panchal, 
+            et al., Novel metallic separator coupled composite phase change material passive thermal design for large format prismatic battery pack, J. Energy Storage, 2023, 58, 106336 CrossRef .
+W. Li, Y. Xie and X. Hu, 
+            et al., An internal heating strategy for lithium-ion batteries without lithium plating based on self-adaptive alternating current pulse, IEEE Trans. Veh. Technol., 2022, 99, 1–14 Search PubMed .
+
+          S. Panchal, V. Pierre and M. Cancian, et al., Development and Validation of Cycle and Calendar Aging Model for 144Ah NMC/Graphite Battery at Multi Temperatures, DODs, and C-rates, SAE Technical Paper,  2023 Search PubMed.
+
+          R. Braga, A. Mevawalla and S. Gudiyella, et al., Transient Electrochemical model development and validation of a 144 Ah Cell performance under different drive cycles conditions, SAE Technical Paper,  2023 Search PubMed.
+C. Q. Su, Z. Z. Wang and X. Liu, 
+            et al., Research on thermal comfort of commercial vehicle and economy of localized air conditioning system with thermoelectric coolers, Energy Rep., 2022, 8, 795–803 CrossRef .
+Z. Zhang, J. Wang and X. Feng, 
+            et al., The solutions to electric vehicle air conditioning systems: a review, Renewable Sustainable Energy Rev., 2018, 91, 443–463 CrossRef .
+S. S. Jose and R. K. Chidambaram, Electric Vehicle Air Conditioning System and Its Optimization for Extended Range—A Review, World Electr. Veh. J., 2022, 13(11), 204 CrossRef .
+X. Huang, K. Li and Y. Xie, 
+            et al., A novel multistage constant compressor speed control strategy of electric vehicle air conditioning system based on genetic algorithm, Energy, 2022, 241, 122903 CrossRef .
+A. Afzal, A. D. M. Samee and R. K. A. Razak, 
+            et al., Thermal management of modern electric vehicle battery systems (MEVBS), J. Therm. Anal. Calorim., 2021, 144, 1271–1285 CrossRef CAS .
+G. Xia, L. Cao and G. Bi, A review on battery thermal management in electric vehicle application, J. Power Sources, 2017, 367, 90–105 CrossRef CAS .
+X. Zhang, Z. Li and L. Luo, 
+            et al., A review on thermal management of lithium-ion batteries for electric vehicles, Energy, 2022, 238, 121652 CrossRef CAS .
+M. WafirulHadi, T. Trisnadewi and N. Putra, Thermal management system based on phase change material (PCM) and heat pipe in Lithium-ion electric vehicle batteries, Journal of Advanced Research in Experimental Fluid Mechanics and Heat Transfer, 2021, 3(1), 26–35 Search PubMed .
+L. Jin, J. Tian and S. Gao, 
+            et al., A novel hybrid thermal management approach towards high-voltage battery pack for electric vehicles, Energy Convers. Manage., 2021, 247, 114676 CrossRef .
+M. Akbarzadeh, J. Jaguemont and T. Kalogiannis, 
+            et al., A novel liquid cooling plate concept for thermal management of lithium-ion batteries in electric vehicles, Energy Convers. Manage., 2021, 231, 113862 CrossRef .
+X. Tang, Q. Guo and M. Li, 
+            et al., Performance analysis on liquid-cooled battery thermal management for electric vehicles based on machine learning, J. Power Sources, 2021, 494, 229727 CrossRef CAS .
+J. T. Rajan, V. S. Jayapal and M. J. Krishna, 
+            et al., Analysis of battery thermal management system for electric vehicles using 1-tetradecanol phase change material, Sustain. Energy Technol. Assess., 2022, 51, 101943 Search PubMed .
+M. Y. Yazici, The effect of a new design preheating unit integrated to graphite matrix composite with phase change battery thermal management in low-temperature environment: an experimental study, Therm. Sci. Eng. Prog., 2022, 29, 101244 CrossRef CAS .
+
+          M. Rogge, S. Rothgang and D. U. Sauer, Operating strategies for a range extender used in battery electric vehicles, 2013 IEEE Vehicle Power and Propulsion Conference (VPPC), IEEE,  2013, pp. 1–5 Search PubMed .
+L. He, H. Jing and Y. Zhang, 
+            et al., Review of thermal management system for battery electric vehicle, J. Energy Storage, 2023, 59, 106443 CrossRef .
+
+This journal is © The Royal Society of Chemistry 2023
+Table Content:
+
+Frontal area	2.1 m2	Tire radius	0.3 m
+Maximum climbing degree	20	Rolling resistance coeff.	0.013
+Maximum speed	>120 km h−1	Driving mileage of BEV mode	60 km
+
+Engine	Engine displacement	1.0 L
+Nominal power	35 kW
+Peak speed	5500 rpm
+Peak torque	80 N m
+Engine water pump	Flow	0.001 L
+Speed	1000 rpm
+Efficiency	0.8
+High-temperature heat sink	Length	0.558 m
+Width	0.459 m
+Compensation kettle	Total volume	4 L
+Motor	Nominal power	18 kW
+Nominal speed	3000 rpm
+Peak power	42 kW
+Peak speed	8000 rpm
+Peak torque	175 N m
+Battery	Total voltage	380 V
+Battery capacity	60 A h
+Depth of discharge	90–20%
+Voltage of cell	3.2 V
+Maximum discharge rate	3C
+Single unit capacity	60 A h
+Monomer size	100 × 32 × 182 mm
+Maximum charge rate	1.4C
+Mass of cell	1.9 kg
+Battery and motor circuit pumps	Maximum speed	4000 rpm
+Diameter of water pump mouth	10 mm
+Water pump efficiency	0.8
+Generator	Nominal power	35 kW
+Nominal torque	>80 N m
+Peak speed	5500 rpm
+Evaporator of cabin	Heat exchange area	6.7 m2
+Fan inner diameter	0.05 m
+Fan outer diameter	0.25 m
+Inlet and outlet dimensions	128 mm2
+Evaporator of battery	Heat exchange area	5 m2
+Inlet and outlet dimensions	114 mm2
+Fan inner diameter	0.05 m
+Fan outer diameter	0.24 m
+Compress	Displacement	66 cm3
+Rated speed	2500 rpm
+Rotational speed range	500–5000 rpm
+Shaft power	3.2 kW
+Refrigerant	R134a
+Condenser	Heat exchange area	16 m2
+Inlet and outlet dimensions	152 mm2
+Fan inner diameter	0.05 m
+Fan outer diameter	0.3 m
+
+
+Engine–generator–generator controller	High speed	Speed control	PMSG	Torque control	Generator controller
+
+ 	Fig. 1  Control based on the mileage optimization strategy.	 
+
+ 	Fig. 2  Schematic of the structure.	 
+
+ 	Fig. 3  Automobile environment simulation test.	 
+
+Ambient temperature	40 °C
+Humidity	50%
+Condenser inlet air temperature	41.4 °C
+Evaporator air volume	450 m3 h−1
+Battery coolant flow rate	<18 L min−1
+Motor coolant flow rate	<18 L min−1
+Initial battery SOC	50%
+Simulation time	5000 s
+The target temperature of the cabin	23 °C
+The target temperature of the battery	26 °C
+
+ 	Fig. 4  Partial sensor arrangement.	 
+
+Refrigerant temperature	Pt100	−200–420 °C	±1%
+Air temperature	Temperature and humidity sensor	−20–80 °C	±0.5 °C
+Air humidity	Temperature and humidity sensor	0–100%	±0.20
+Cold plate temperature	K-thermocouple	−200–260 °C	±0.75
+Refrigerant pressure	Pressure sensors	0–3000 kPa	±0.5%
+Air flow rate	Wind speed transmitter	0–10 m s−1	3%
+Qt = Qe + Qw + Qr + Qres	(1)
+Qt = Mf × Hu	(2)
+Qe = 3.6 × 103Pe	(3)
+Qw = MwCPW(t2 − t1)	(4)
+Qr = MrCpr(t6 − t5)	(5)
+	(6)
+	(7)
+	(8)
+	(9)
+QC = Qsolar + Qamb + Qmass + Qvent + Qmet	(10)
+Qsolar = A(tm − ti)K + MAC(μqb)	(11)
+Qamb = (Q1 + Q2 + Q3 + Q4) × α1	(12)
+Qvent = 1000Go × ρ(Hi − Ho)	(13)
+
+ 	Fig. 5  The cabin system.	 
+Pcar = Pmotor + Pcom	(14)
+	(15)
+
+ 	Fig. 6  Logic block diagram of strategy A.	 
+
+ 	Fig. 7  Engine signal and operating power.	 
+
+ 	Fig. 8  Logic block diagram of strategy B.	 
+
+ 	Fig. 9  Engine signal and operating power.	 
+
+ 	Fig. 10  Logic block diagram of strategy C.	 
+
+ 	Fig. 11  Engine signal and operating power.	 
+
+ 	Fig. 12  Total fuel consumption.	 
+
+ 	Fig. 13  The power of the battery.	 
+
+ 	Fig. 14  The SOC of the battery.	 
+
+ 	Fig. 15  The temperature of battery and cabin.	 
+
+ 	Fig. 16  The test temperature of the cabin and battery.	 
+COP	Coefficient of performance
+PTC	Positive temperature coefficient
+PID	Process identifier
+MCCS	Multi-stage constant power control system
+BPNN	Back propagation neural network
+BEV	Blade electric car
+REEV	Range extend electric vehicle
+SOC	State of charge
+TMS	Thermal management system
+BTMS	Battery thermal management system
+CD	Charge-depleting
+CS	Charge-sustaining
+PMSG	Permanent magnet synchronous generators
+AC	Alternating current
+DC	Direct current
+HESS	Hybrid energy storage system
+EMS	Energy management system
+OP	Operating condition
+OCV	Open circuit voltage
+PCM	Phase change material
+LIB	Lithium-ion battery
+HEV	Hybrid electric vehicle
+OCV	Open circuit voltage
+APU	Auxiliary power unit
+EV	Electric vehicle
+ECM	Engine control module
+NEDC	New European driving cycle
+BMS	Battery management system
+UBHC	Upper bound of heating current
+HPPC	Hybrid pulse power characterization
+CPCM	Combination of phase change material
+EG	Ethylene glycol
+
+P
+req
+	Required power
+
+P
+out
+	Power output
+
+P
+APU
+	Power of APU
+
+T
+mot
+	Torque of motor
+
+P
+motor
+	Power of motor
+
+P
+com
+	Power of compressor
+
+P
+car
+	Power of car
+
+T
+cabin
+	Cabin temperature
+
+T
+amb
+	Ambient temperature
+
+T
+bat
+	Battery temperature
+SOCmin	Minimum value of battery SOC
+SOCmax	Maximum value of battery SOC
+
+This journal is © The Royal Society of Chemistry 2023

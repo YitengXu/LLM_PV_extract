@@ -1,0 +1,812 @@
+Computational chemistry for graphene-based energy applications: progress and challenges  - Nanoscale (RSC Publishing) DOI:10.1039/C5NR00690B View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C5NR00690B
+(Review Article)
+Nanoscale, 2015, 7, 6883-6908Computational chemistry for graphene-based energy applications: progress and challenges
+
+        
+          
+            Zak E. 
+            Hughes
+          
+          
+        
+      * and 
+
+        
+          
+            Tiffany R. 
+            Walsh
+          
+          
+        
+      *
+      Institute for Frontier Materials, Deakin University, Geelong, VIC 3216, Australia. E-mail: tiffany.walsh@deakin.edu.au; zhughes@deakin.edu.au;  Fax: +61 (0)3 5227 1103;   Tel: +61 (0)3 5227 3116
+Received 
+      29th January 2015
+    , Accepted 22nd March 2015First published on 23rd March 2015AbstractResearch in graphene-based energy materials is a rapidly growing area. Many graphene-based energy applications involve interfacial processes. To enable advances in the design of these energy materials, such that their operation, economy, efficiency and durability is at least comparable with fossil-fuel based alternatives, connections between the molecular-scale structure and function of these interfaces are needed. While it is experimentally challenging to resolve this interfacial structure, molecular simulation and computational chemistry can help bridge these gaps. In this Review, we summarise recent progress in the application of computational chemistry to graphene-based materials for fuel cells, batteries, photovoltaics and supercapacitors. We also outline both the bright prospects and emerging challenges these techniques face for application to graphene-based energy materials in future.Zak E. HughesZak Hughes obtained his MChem from Durham University before continuing on at Durham University to complete PhD under the supervision of Prof. Mark Wilson. From 2007–2012 he was a research fellow at Curtin University in Perth, Western Australia. Since 2013 he has been a research fellow at the Institute for Frontier Materials, at Deakin University, Victoria. His research focuses on the molecular simulation of soft matter and interfacial systems.Tiffany R. WalshTiff Walsh is a Professor of Bio/Nanotechnology at the Institute for Frontier Materials at Deakin University, Australia. She is a veski Innovation Fellow and a current member of the College of Experts for the Australian Research Council. Her research interests are focussed on the development and application of advanced molecular simulation for studying complex interfaces, such as graphene and carbon nanotubes, for a range of applications, including energy materials.
+Introduction
+Isolation of the two-dimensional allotrope of carbon known as graphene in 20041 has sparked rapid growth in research of this material. Graphene possesses an abundance of desirable materials properties; high electrical and thermal conductivity, exceptional mechanical properties, high specific surface area, flexibility, corrosion resistance and optical transparency, amongst others. Many of these properties can be and have been exploited profitably in the creation of novel materials for environmentally-friendly energy conversion and energy storage solutions.2,3 However, for these graphene-based energy storage and energy conversion materials to attain commercial viability, further advances are needed. Structural characterisation of these materials provides an essential and fundamental foundation for realising these advances.
+As a complement to experimental characterisation, molecular simulation and quantum chemistry can help establish vital links between the atomic-scale structure of the graphene interfaces in these materials, and their performance in energy conversion and energy storage. Here, we review the contributions of quantum chemistry and molecular simulation to the area of graphene-based energy materials. We start with an overview of these two classes modelling approaches. Since in many of these energy applications ambient moisture will be present, we next provide a survey of progress to date in modelling and simulation of aqueous graphene interfaces. In the context of energy storage, namely batteries and supercapacitors, we next highlight the interface between electrolytes and graphene. We follow this with a comprehensive overview of the contribution, mostly from quantum chemical approaches, to developments in the field of photovoltaics and graphene-based fuel cells. We finish with a survey of progress in the area of batteries. We conclude with an outlook on the future challenges that computational chemistry faces in making further valuable contributions to advancing graphene-based energy materials.
+Overview of computational methods
+Over the last 60 years computational chemistry approaches and molecular simulation have emerged to become major techniques in the investigation of the physics and chemistry of materials. In this section we will provide a brief overview of the background and current status of molecular simulation, for more detailed information on these topics we recommend ref. 4 and 5.
+Molecular simulation aims to characterise the potential energy surface (PES) of a system, in particular the location of the minima on the PES, and their connections via saddle points. The basis for such a characterisation involves two components, the technique used to sample the PES of the system and the model employed to describe the PES. The sampling technique used for a given system will depend on the nature of the system; for small system sizes, high symmetry or well-ordered systems, energy minimisation-based approaches, such as basin hopping6,7 may be sufficient to locate the relevant basins on the PES. However, for many systems, this type of approach is not suitable, and instead the PES can only be characterised via more extensive statistical sampling of accessible basins under appropriate conditions. Traditionally there are two techniques (or more accurately classes of techniques) that have been used for this purpose, Monte Carlo (MC) and molecular dynamics (MD).4,5
+In MD, the PES is sampled by taking an initial configuration and then propagating Newton's equations of motion to explore how the system will behave over time. This results in a trajectory, comprising a series of molecular configurations which, if the simulation is carried out for a suitable duration, will yield the ensemble averaged behaviour of the system. MC also relies on the accumulation of a set of configurations with the correct Boltzmann weighting. However, these configurations are generated in a different manner. In the MC approach, random changes are made to an existing configuration to generate a new configuration, this new configuration is then either accepted or rejected according to the Metropolis criterion.8 Both techniques have advantages and disadvantages; MD provides a trajectory that is continuous in time, allowing the dynamics of the system to be investigated as well as equilibrium behaviour. MC has the advantage that only the energy, and not the derivatives of the energy, of the system needs to be calculated at each step. MC also allows the simulation of properties in the Grand Canonical (μpT) ensemble whereas MD is traditionally limited to ensembles where the number of molecules in the system remains constant. Ultimately, the nature of the system under investigation will determine which technique is the most appropriate to use. Moreover, advances in both classes of technique have overcome some of the traditional disadvantages of both classes of techniques, sometimes by blending the two, e.g. performing a MD simulation with occasional MC moves within it. A particular focus of molecular simulation in recent years has been the development of a series of techniques for calculating the free energy differences between two states, such methods include umbrella sampling,9 steered MD,10 meta-dynamics11,12 and others.13
+The second component of a molecular simulation is the model used to describe the interaction of all species (typically inter-atomic interactions) in the system. The most detailed and rigorous descriptions of molecular systems are quantum mechanical (QM) techniques, which explicitly capture the electronic degrees of freedom present in the system. There are two broad classes of QM methods, those based on wavefunction theory (WFT), based on post-Hartree–Fock techniques, and those which make use of density functional theory (DFT). The advantage of the former methods is that they can be systematically improved; their disadvantages include their cost (making them impractical for many systems) and the fact that they are typically (but not exclusively) applied in the study of non-periodic systems. For example, a graphene sheet will be approximated by an arene ring (e.g. benzene or coronene, as shown in Fig. 1), meaning that the delocalised states at the surface will not be captured, and edge effects may be present. The alternative QM approach, DFT, can be readily used to describe periodic systems. Unfortunately, traditional DFT functionals based on the generalised gradient approximation (GGA)14 cannot reliably recover the dispersion contribution to the interaction energy, at mid- to long-range separations.15–17 For example, the inability of traditional GGA functionals to capture weak interactions means that the attraction between layers of graphene cannot be recovered with these functionals. Recently, attempts have been made to address this limitation18 either through the incorporation of empirical correction terms19 or by using functionals that incorporate genuine nonlocal contributions to the correlation functional.20,21 A summary of the key concepts and techniques is provided in Table 1 for convenience.
+ Fig. 1  The arene ring systems (a) benzene and (b) coronene used in WFT based QM calculations and (c) a graphene sheet. The three binding locations on the graphene sheet, atop, bridging and hollow are marked by A, B and H, respectively. 
+Table 1 Summary of computational techniques and concepts
+
+
+
+
+Abbreviation
+Technique
+Description
+
+
+
+
+BOMD
+Born-Oppenheimer molecular dynamics
+A type of first-principles MD approach
+
+
+CC
+Coupled-cluster
+A wave-function-based method for QM calculations
+
+
+CPMD
+Car-Parrinello molecular dynamics
+A type of first-principles MD approach
+
+
+DFT
+Density functional theory
+One of main theories used for QM calculations of molecular systems, based on the electron density
+
+
+DFTB
+Density functional tight-binding
+A QM approach that yields an approximation to the DFT Kohn-Sham energy
+
+
+FF
+Force-field
+A set of inter-site potentials used to describe the potential energy of a system
+
+
+FPMD
+First-principles molecular dynamics
+MD simulations in which the electronic degrees of freedom are calculated
+
+
+LDA
+Local density approximation
+A DFT functional based solely on electron density and derived from the uniform electron gas
+
+
+GGA
+Generalised gradient approximation
+A class of DFT functionals that incorporate information about the density gradient as well as the electron density
+
+
+MC
+Monte Carlo
+Simulation approach in which configurations are sampled by the random generation of configurations, that are accepted or rejected based on the Metropolis Criterion
+
+
+MD
+Molecular dynamics
+Simulation approach in which configurations are sampled by propagating Newton's equations of motion
+
+
+PBE
+Perdew–Burke–Ernzerhof functional
+A DFT functional based on the GGA
+
+
+PBEsol
+PBE solid
+A refinement of the PBE functional to better describe solid systems
+
+
+SAPT
+Symmetry-adapted perturbation theory
+An accurate method for calculating the non-covalent interaction between molecules
+
+
+QM
+Quantum mechanics/mechanical
+Any approach that seeks to solve Schroedinger's equation
+
+
+QMC
+Quantum Monte Carlo
+An alternative QM approach to WFT and DFT, based on MC methods to solve Schroedinger's equation
+
+
+WFT
+Wave function theory
+One of main theories used for the QM calculation of molecular systems, based on Hartree–Fock and post-Hartree–Fock techniques
+
+
+
+
+
+Fig. 2 shows the results of a study22 that reported calculation of the interlayer binding energy of graphene sheets as a function of separation distance for the LDA, GGA, PBEsol23 and five different functionals that account for the nonlocal contributions of the correlation function.20,21,24,25 The LDA functional (which comprises the Slater exchange functional and the Vosko–Wilk–Nusair correlation functional) is well known to over-bind in the case of weak, non-covalent interactions, and in this case actually yields attraction between the graphene sheets, unlike the GGA. The PBEsol functional (a functional specifically designed to solid-state systems) does marginally better than the GGA functional but still significantly underbinds the interaction between the graphene sheets. In this study, the performance of the vdW functionals appears to form two categories. The revPBE-vdW20 and vdW-DF224,25 functionals yielded binding energies that fall within the experimentally measured range but give an interlayer separation slightly larger than experiment. In contrast, optPBE-vdW, optB88-vdW and optB86-vdW functionals21 can recover the separation between the graphite sheets, at the expense of a slightly overbinding the interaction.
+ Fig. 2  The interlayer binding energy of graphite as a function of interlayer separation, d, as determined from a variety of different DFT functionals. Taken from ref. 22. 
+This relationship between the adsorption energy and separation distance for the vdW functionals is not limited to graphene sheets, but is a more general feature of these functionals.26,27 Berland et al.26 investigated the adsorption of benzene to graphene, while Hughes and Walsh calculated the adsorption energies and geometries of a variety of small organic molecules to graphene.27 In both studies it was found that there is an inverse relationship between the adsorption energies and separation distances.
+The improved quality of the vdW functionals can be seen in Table 2 and Fig. 3, where the adsorption energies of a number of small molecules to a graphene surface have been determined using four different vdW functionals, and compared against reference values. The reference values have been obtained from experimental work29,30 or from very high quality density functional theory/coupled cluster (DFT/CC) calculations.28,31 Compared with the PBE functional, all four functionals with nonlocal contributions show a huge improvement. DFT/CC is a hybrid ab initio-DFT method that overcomes the traditional limitations of DFT approaches.28,31 Another possible strategy for ensuring a better description of the weak interactions is to use symmetry-adapted perturbation theory DFT (SAPT-DFT).32,33 Both DFT/CC and DFT-SAPT have been used to investigate the behaviour of graphene systems.28,31,34–37 Quantum Monte Carlo (QMC) studies of lithium insertion into graphite structures have also shown that functionals with an improved description of the dispersion interactions outperform traditional functionals.38
+ Fig. 3  Comparison between the reference adsorption energies for a set of small molecules adsorbed onto a graphene surface and those calculated with the revPBE-vdW-DF functional. The hydrocarbon, oxygen-containing and nitrogen-containing adsorbates are marked as the black, red and blue points, respectively. Taken from ref. 27. 
+Table 2 Adsorption energies, Eads, and separation distances, dsep, in parentheses, to graphene of the reference molecules for the various functionals. Adapted from ref. 27
+
+
+
+
+Index
+Molecule
+PBE
+
+E
+ads/kJ mol−1 (dsep/Å)
+Reference
+
+
+revPBEvdW-DF
+optB88-vdw-DF
+vdW-DF2
+vdW-DF-C09
+
+
+
+
+
+a DFT/CC calculation.28
+b Experimental.29
+c Experimental.30
+
+
+
+
+
+1
+Methane
+−0.9 (3.88)
+−16.6 (3.53)
+−17.0 (3.43)
+−14.1 (3.43)
+−17.4 (3.32)
+−13.5a (3.31a)
+
+
+2
+Ethane
+−1.5 (4.22)
+−23.7 (3.69)
+−25.7 (3.51)
+−20.6 (3.65)
+−26.6 (3.44)
+−20.8a (3.44a)
+
+
+3
+Hexane
+−2.5 (4.32)
+−56.6 (3.78)
+−63.2 (3.60)
+−50.5 (3.71)
+−64.4 (3.52)
+−51.0b
+
+
+4
+Ethene
+
+
+−22.6 (3.52)
+−24.9 (3.29)
+−19.3 (3.37)
+−26.2 (3.20)
+−20.2a (3.24a)
+
+
+5
+Benzene
+−1.7 (3.41)
+−46.9 (3.59)
+−54.4 (3.33)
+−41.4 (3.52)
+−57.3 (3.24)
+−43.1a, −48.2c (3.30a)
+
+
+6
+Toluene
+−2.5 (4.32)
+−57.6 (3.60)
+−66.5 (3.36)
+−50.7 (3.50)
+−69.2 (3.28)
+−56.5b
+
+
+7
+Ethyne
+
+
+−19.7 (3.49)
+−21.4 (3.31)
+−17.2 (3.46)
+−22.1 (3.24)
+−17.1a (3.26a)
+
+
+8
+Water
+−2.3 (3.69)
+−13.2 (3.51)
+−13.8 (3.34)
+−12.0 (3.35)
+−14.1 (3.28)
+−13.5a (3.19a)
+
+
+9
+Ethanol
+−2.2 (3.78)
+−29.9 (3.33)
+−32.0 (3.10)
+−26.3 (3.24)
+−34.1 (3.03)
+−30.5b
+
+
+10
+Acetone
+
+
+−37.4 (3.28)
+−43.1 (3.09)
+−34.1 (3.18)
+−45.5 (3.05)
+−34.3b
+
+
+11
+Ammonia
+−1.3 (3.97)
+−13.4 (3.65)
+−13.5 (3.58)
+−11.4 (3.52)
+−14.2 (3.58)
+−13.5a (3.31a)
+
+
+12
+Acetonitrile
+
+
+−29.9 (3.44)
+−31.4 (3.18)
+−26.2 (3.33)
+−33.2 (3.17)
+−31.8b
+
+
+13
+Ethyl Acetate
+
+
+−51.2 (3.48)
+−57.5 (3.22)
+−45.6 (3.37)
+−60.0 (3.16)
+−48.1b
+
+
+
+
+While a QM description of a system can provide a great deal of information, in practice, the computational expense of such models means that they are often more likely to be used to calculate the properties of a configuration, or set of configurations, rather than within a simulation, where an ensemble of configurations is generated. First-principles MD (FPMD), such as Car-Parrinello39,40 and Born-Oppenheimer (CP or BOMD) simulations enable the MD simulation of systems that include the electronic degrees of freedom, although such simulations are limited to short time- and length-scales (tens of ps and Å). For graphene systems CP/BOMD simulations have e.g. been used to study graphene-aqueous interfaces,41–43 the formation of graphene sheets on metal surfaces44–46 and the effects of doping on a graphene sheet on a SiO2 substrate.47,48
+Density functional tight-binding (DFTB)49,50 is a fully quantum-mechanical approach that yields an approximation of the Kohn–Sham energy, while being more economical in terms of computational resource compared with solving the Kohn–Sham equations in the conventional manner. In a MD context, the DFTB approach allows the consideration of relatively larger system sizes (number of atoms in the system) and longer trajectories compared with first-principles MD. Examples relevant to energy materials include the study of transition metal clusters adsorbed on graphene,51 charge transfer at aqueous graphene interfaces,52 and the stability of graphene defects in the presence of adsorbed water.53
+The limitations of the time- and length-scales that are practicable with a QM treatment makes QM unsuitable for the study of a number of systems and properties. If data about the behaviour of a system over ns or hundreds of Å were required, a less computationally expensive model to describe the system is essential. This can be done through the use of a force-field (FF), where the interactions between different sites within the system are described through inter-site potentials. In an atomistic FF, each site will correspond to an atomic site within the system. To describe a system appropriately, a FF must be parametrised; typically this parametrisation is made using data obtained from either experiments and/or QM calculations. Each FF will be parametrised for a certain set of systems/molecules (a fitting set); one well-known limitation of a FF representation is its transferability. If a FF is used to model a system that is too dissimilar from that which was used in the parametrisation, the results may not be meaningful. As such, choice of which FF to use in any molecular simulation should be made with care.
+Traditionally, atomistic FFs capture the electronic degrees of freedom implicitly. This can be a limitation in the case of graphene, which is a highly conductive material. To overcome this limitation a number of FFs have incorporated a description of atomic polarisation. Simple descriptions of polarisability include the rigid-rod dipole54 and core–shell55 (or Drude oscillator) models. A more rigorous description of polarisation is that used in the AMEOBAPRO FF;56–59 this model of polarisation was partnered with a high-quality description of the electrostatics via the distributed multipole approximation.60,61
+Another possible variation of FFs is whether they are reactive or not. A reactive FF can capture the dynamic formation/destruction of covalent bonds, while in a conventional, non-reactive FF the number and type of bonds remains fixed throughout the simulation.62,63 Reactive FFs that have been used for graphene simulations include the ReaxFF developed by van Duin and co-workers,64–66 the reactive bond order/adaptive intermolecular reactive bond order (REBO/AIREBO) potentials, and the charge-optimised many-body (COMB) potential.67,68 The drawbacks of reactive FFs are that they typically have a higher computational cost compared with conventional FFs, often require a more complex parametrisation procedure. These FFs typically have a large number of parameters, and this can lead to difficulties in obtaining physical insights from the results generated by these FFs.
+Ultimately it is vital to select the most appropriate techniques to study a system computationally, just as in experimental work. The choice of technique, structural model and FF should be made with care.
+Graphene-aqueous interfaces
+Typically, water is not one of the primary species that is intentionally present in systems designed for energy applications. However, the ubiquitous presence of water means that even, or especially, in anhydrous systems the effect of water should be considered. As such, we give a brief overview of computational investigations the interaction of water with the graphene surface.
+The aqueous-graphene/graphite interface has been studied in some detail, at both the force-field69–82 and quantum41–43 levels of theory. While there is general agreement on a number of criteria, e.g. the position of the peaks in the vertical density profiles (see Fig. 4), other characteristics, such as the orientation of the O–H bonds at the interface, are not as clearly resolved.
+ Fig. 4  Interfacial density profiles of graphene–water interface calculated using (a) the GRAPPA FF,27 and (b) the AMOEBAPRO FF.56,59 Adapted with permission from ref. 27. 
+A number of studies have investigated the importance of explicitly including polarisation in FFs used to model the interfaces of graphitic nanostructures with water.77,79,83–86 Zhao and Johnson derived a FF that incorporated polarisability via atomic quadrupoles on graphite and water.83 These authors found that for weakly polar fluids the polarisation contributions were negligible compared with the Lennard-Jones (LJ) interactions. However, for strongly polar fluids, such as water, the contribution from the polar terms to the total potential energy was found to be significant. The first MD simulation using a polarisable nanotube immersed in liquid water was done by Moulin et al.,84 the FF comprised a LJ term between the carbon and oxygen and an electrostatic term between charges on water and the induced dipoles on the polarisable nanotube, with the TIP4P potential for water.87 Despite the fact that CNTs have a very large polarisability, they concluded that the influence of the nanotube polarisation was negligible on the arrangement of the water molecules around the nanotube and on their adsorption energy. Sala et al. investigated how the interface of graphene with aqueous NaCl solutions changed when polarisability was incorporated into their FF (where only the salt ions and water molecules were treated as polarisable). This study found that the accumulation of ionic species at the graphene surfaces was greater for the polarisable than the non-polarisable FF. In a recent study which simulated a polarisable water model interacting with a polarisable graphene surface,79 polarisability enhanced the number of water molecules with an O–H bond oriented towards the surface. In determining the adsorption energies of ions with a graphene surface in vacuo, Schyman and Jorgensen reported that polarisation was essential.86
+Simulations of electrolytes at graphene interfaces
+The interaction of electrolytes at graphene interfaces has implications for graphene based energy applications.88 Mixed carbonate electrolytes, containing such species as ethylene carbonate (EC) and dimethyl carbonate (DMC), are used as electrolytes in commercial lithium ion batteries (see section ‘Lithium/alkali metal batteries’). While ionic liquid (IL) electrolytes have been suggested as potential components of both supercapacitors,89 and alkali metal ion batteries.
+The majority of simulation studies on IL electrolytes interacting with graphene surfaces89–104 have used MD to predict the interfacial structure of electrolyte solutions.
+In all cases the structuring, both translational and orientational, of the IL electrolytes normal to the graphene electrodes is observed, typically extending ∼20–30 Å from interface.90,91,94,105 The exact nature of this structuring of the species in the electrolyte solution depends on a range of factors, including the charge of the electrodes, the chemical composition of the electrolytes, the presence of dopants and the FF used for the simulations. Kislenko et al.90 found that in addition to the structuring normal to the interface there was a 2-D hexagonal lateral ordering of ions at an uncharged substrate, though other studies have not reported a similar observation. Using the polarisable APPLE&P FF,106,107 Vatamanu et al. found that as the charge on the electrodes was increased, there was a build-up of counterions at the electrode and decrease in co-ion population in first adsorbed layer.
+Shim et al.92,108 used MD simulations to compare the differences between an electrolyte consisting of a pure room temperature IL, [EMI][PF4], and an organic electrolyte doped with the same IL, 1.1 M [EMI][PF4] in acetonitrile. It was found that the ion-conductivity of the electrolyte solutions depended upon the system setup. In systems containing a double-sided electrode the ion conductivity was greater for the mixed RTIL/organic than for the pure RTIL electrolyte.108 In a system having a parallel plate configuration the opposite result was true.92 The authors also observed a strong cathode/anode asymmetry in capacitance for the parallel-plate configuration. This was attributed to the more efficient screening of the electrode charge by [BF4] compared with [EMI]. Likewise ‘through graphene’ screening effects enhance and reduce the screening of the cathode and anode, respectively, in the double-sided electrode configuration.
+Lynden-Bell and co-workers reported a number of studies on the behaviour of IL electrolytes at graphene interfaces.94,105 They investigated the effects of screening at uncharged, positively and negatively charged graphene interfaces for a solution of [DMIM][CL] (using the OPLS FF, i.e. a non-polarisable FF) by calculating the potential of mean force (PMF) profiles of different probe molecules with the graphene interface. Both the charge and size of the probe was varied. They summarised the structure of the ions at interfaces as shown in Fig. 5. At the cathode there is a dense layer of [DMIM] counter ions, which are oriented such that the long axis of the molecules is parallel to the plane of the substrate. This in turn is followed by a layer of chloride co-ions and a further less dense layer of co-ions that is less orientationally ordered. At the uncharged wall both cations and anions are present in the first layer molecules, but the density of cations is greater than that of the anions. At the anode the chloride ions form a dense first layer at the wall, there is then a layer of co-ions orientated parallel to the plane of the interface. This difference in the structuring to ions at the cathode and anode causes significant asymmetry in the interactions of probes with charged walls. Indeed two of the findings are rather counter-intuitive, (1) the free-energy minimum for a positive probe in contact with a negative wall was higher in free-energy than the minima when the probe was embedded in the second layer of ions and (2) that a minimum in the free-energy profile of a negative probe near a positive graphene surface was lower than the minima of a positive probe in contact with the same surface. The authors explained the reason for these results as due to the fact that the interaction of the probe with the solvent is more significant than the interaction of the probe with the wall. As the probe is effectively an ion itself; this implies that the solvent–solvent interactions dominate the solvent–electrode interactions. These simulations have recently been extended to investigate the interaction of IL electrolyte doped with alkali metal ions, ([BMIM][BF4] doped with LiBF4/KBiF4) between charged graphene sheets using the OPLS-AA FF.103 In agreement with their previous work, it was found that there were significant energy barriers for the Li+/K+ ions to diffuse to the cathode. At 10 mol% LiBF4/KBiF4 no lithium or potassium ions were able to diffuse to the negatively charged graphene electrode. Increasingly the concentration of salt to 25 mol% does allow Li+ and K+ cations to adsorb onto the cathode but even in this case the free-energy barrier for the metal ions to diffuse past the first layer of [BMIM] cations is considerable (∼20kBT). Again, this indicates the dominance of the ion–ion interactions over the ion–electrode interactions in these simulations.94,105
+ Fig. 5  Structure of [DMIM][Cl] at negatively, uncharged and positively charged graphene interfaces, shown in schematic form (top) and snapshots from the MD simulation (bottom). The [DMIM] cations are shown as red ovals or coloured pink, while the [Cl] anions are shown as blue spheres. Taken from ref. 105. 
+Classical MD simulations have also been used to investigate the structure of carbonate based electrolytes doped with lithium salts, most commonly LiPF6, at graphitic interfaces.97,109–112 Vatamanu et al. found that the composition of the electrolyte interfacial layer depended strongly on the electrode potential. The amount of EC and DMC at the interface increased as the electrode charge was increased, for both positively and negatively charged electrodes. In contrast with the work of Méndez-Morales et al.103 studying lithium doped IL electrolytes (see above), both Vatamanu et al. and Xing et al. have found that Li+ was able to accumulate at the negative electrode in carbonate electrolytes.97,111 However, it was found that the structure of the EDL at the interface depended strongly on both the electrolyte composition and applied potential. Thus the difference in the findings of the Vatamanu et al./Xing et al. and Mendez Morales et al. studies may be explained as due to the difference of in the electrolyte compositions. An alternative explanation is that in the study of Vatamanu et al./Xing et al. the polarisability of the electrodes was explicitly modelled within the FF.
+Abou Hamad et al.110 investigated the effect of using an oscillating electric field of a system consisting of an graphite anode and an electrolyte of EC, propylene carbonate (PC) and LiPF6. The simulations showed that the oscillating electric field was able to reduce the average intercalation time, and that the dependence of the intercalation time on the applied field amplitude was exponential.
+Recently Jorn et al. used MD simulations to investigate the structure of the solid electrolyte interface (SEI) of a EC/LiPF6 electrolyte. The full electrode-SEI-electrolyte region was modelled, with the finding that as the thickness of the SEI was increased Li+ ions were drawn closer to the SEI.
+The majority of MD simulations of electrolytes have tended to use non-polarisable FFs, although there are a few exceptions.91,93,96–98,104 Unfortunately, to the knowledge of the authors there has not been a systematic study of the effect of polarisation on behaviour of electrolytes at graphene interfaces. As mentioned above a number of studies94,103,105 have found that the ion–ion interactions tend to be of greater importance then the ion–graphene interactions. However, this may be due to the fact the polarisability of the graphene substrate has not been accounted for in the models. One would predict that use of a FF that explicitly includes polarisation of the graphene interface would identify a greater importance for the ion–graphene interactions. For example, in the GRAPPA FF27 the polarisation contribution of the in vacuo adsorption energy of a charged amino-acid and a counter ion is ∼50%.
+While the size of the systems simulated typically makes FF-based models more appropriate, there have been a number of FPMD simulations of graphitic-electrolyte systems.113–115 Leung et al. have used FPMD simulations to investigate the initial stages of the SEI formation on graphite anodes of lithium ion batteries.114,115 The carbon edge termination of the graphitic anodes was found to play a major role in affecting EC decomposition. Ganesh et al.38 reported FPMD simulations of the SEI of LiPF6 in EC, DMC and PC electrolytes, as well as for different anode surface terminations. It was found that PC was more readily reduced than DMC and EC, with Li2CO3 being an important component of the SEI. The formation of LiF, and its agglomeration at the interface was also observed. The reduction of the carbonates was heightened at O or OH terminated surfaces. While the computational cost of such simulations are limited to short time- and length-scales, they revealed insights on the reduction processes that occur at the SEI.
+Photovoltaic applications and the electronic structure of graphene
+There has been considerable interest in the utilisation of graphene within photovoltaic devices, such as organic photovoltaic cells (OPVs) and dye-sensitised solar cells (DSSCs).116,117 Theoretical studies for these applications have typically investigated the electronic proprieties of graphene structures, since the majority of the publications in this area have reported use of QM calculations.47,48,118–122
+Much of the interest of graphene for photovoltaic applications is due to its high charge-carrier mobility.117,118 This is despite the fact that graphene is a zero-band gap semiconductor (i.e. the density of states (DOS) is zero at the Dirac point). The high carrier mobility observed in graphene is due to the fact that the sheets will be usually be doped, as even mere exposure to moisture and air can moderately dope graphene.123,124 The presence of dopant species will mean that the Fermi level will not reside at the Dirac point of the graphene film and that charge will flow through the film. While graphene films exposed to air will show this effect, the charge carrier concentration can be increased by further chemical doping, which will reduce the resistance of the film further.118
+The doping of graphene films by substrates,48,125–133 non-covalently adsorbed molecules,47,122,134–138 or the insertion of B/N atoms into the graphene film139–142 can either induce charge transfer from the graphene, p or hole doping, or to the graphene, electron or n, doping. Manipulation of band-gap properties is central to advancing developments in photovoltaics.
+Considering the effect of the substrate first, there have been a number of theoretical studies that have investigated graphene on silicon carbide, SiC.126,127,143,144 First-principles calculations have shown,123,126,127 in agreement with experimental data,145,146 that the first layer of graphene will covalently bond to the SiC substrate. This will induce n-doping of that layer of graphene but with further layers of graphene having the same electronic behaviour as isolated graphene sheets. The facet of the substrate also affects the electronic behaviour of the system, with graphene overlayers on SiC(0001) and SiC(000) being metallic and semiconducting, respectively.126 Kim et al. investigated the covalent bonding between the substrate and graphene overlayer in more details by using a large supercell, finding the systems split into different regions.143 In those regions where there is alignment of the lattices, covalent bonding occurred, while outside these regions there were boundaries where the C atoms moved away from the substrate. Overall this produces a hexagonal pattern on covalently bonded regions.
+SiO2 is another substrate whose effect on graphene has been investigated theoretically.129,132,133,147 On pristine hydrogen-passivated SiO2 there is alignment of the Dirac point with the Fermi level indicating that no doping occurs.29,132,148 However, experimental data obtained using Raman spectroscopy has shown that SiO2 can induce doping.148,149 Using FPMD simulations, Nistor et al. have shown that certain defects in the SiO2 substrate are able to induce doping and charge transfer.48 The introduction of a silicon vacancy at the interface will not cause doping of the graphene layer, as the atoms in the vicinity of the defect site will quickly re-arrange to self-passivate the defect. However, if the defect centre contains a dangling bond the system is unable to terminate the bond (at least on the time scales accessible to the simulations) and p doping occurs. If boron or phosphorous impurities are present within the substrate then strong doping can occur with graphene being p- or n-doped, respectively.
+One substrate which has prompted particular interest is hexagonal boron–nitride (hBN).125,147,150–154 Theoretical studies have shown that a band gap is present in graphene-hBN bilayer systems,125,150,153 and that this gap can be tuned by changing the interlayer spacing and stacking arrangement.151,152 However, experimental studies have had difficultly finding such a band gap.153 Kharche et al. argued that this discrepancy could arise from the fact that while the perfectly Bernal/AB stacked graphene/hBN (where half of the C atoms are positioned exactly above the B atoms) does show a band gap, misaligned graphene overlayers have no band gap.153 As well as investigating the effect of a bulk hBN substrate, DFT calculations have also been used to study the properties of graphene/boron–nitride heterobilayers (C/BN HBLs).152,154 For these systems, both the AA and AB stacked bilayers produce a band gap, with the AA arrangement always giving a larger gap for the same interlayer distance.152,154 This was reasoned as being due to stronger orbital interaction leading to stronger charge transfer for the AA arrangement.154 It has also been shown that it is possible to tune the band gap of C/BN HBLs, theoretically, by functionalising the hBN sheet with hydrogen and fluorine.147
+The incorporation of B or N atoms into lattice is another way to dope graphene.139,140–142,155,156 The swapping of a single C atom for a B atom or a N atom will shift the Fermi level downwards (p-doping) or upwards (n-doping), respectively. Surprisingly, however, the charge density distributions on singly doped B and N defect are the opposite of what would be expected from their classification as p- or n dopants. The N atom actually gains charge while the B atom loses charge to the graphene sheet. The reason for this apparent inconsistency arises from the fact that in order to retain the aromaticity of the lattice the dopant atoms are required to have a half filled pz orbital. At the same time there is an unequal sharing of electrons in the sp2 σ-bonds of the dopant atoms and the adjacent C atoms.141 In addition to single substitutions, more complex systems have also been studied, including triple substitutions with a vacancy (also called pyridinic, see Fig. 6)141 and multiply-doped systems.140,156 The effect of nitrogen doping through the covalent bonding of N-containing aromatic species, e.g. pyridine, pyrimidine, etc., has also been investigated.142
+ Fig. 6  Representative examples of the different types of doping in graphene. The carbon, nitrogen, boron and sulphur atoms are coloured grey, blue, green and yellow, respectively. 
+Doping graphene with non-covalently adsorbed molecules rather than covalent bonding species offers a number of advantages, in that it does not perturb the lattice and is also reversible.122,157 Hu and Gerber recently investigated the non-covalent doping of graphene sheets by tetrathiafulvalene (TTF) and tetracyanoethylene (TCNE), comparing the effect of the LDA, PBE and vdW-DF functionals.122 They found that by including the nonlocal correlation terms (via the vdW-DF functional) the strength of the binding between the dopants and the graphene sheet was significantly increased over not only the PBE but also the LDA functional. They also compared the effect of functional on the degree of charge transfer between the molecules and the graphene monolayer. For TTF they found that the behaviour of the two GGA functionals was very similar, but there was a significant difference with the LDA results. LDA was found to overestimate the charge transfer, which the authors explained as due to the LDA functionals intrinsic tendency to delocalise electron density. This ‘over-delocalised’ electron density results in a large overlap of the electron density of the two species and a larger charge transfer. The authors concluded that in contrast to previous studies,136,158 on the same system that low concentrations of TTF will not n-dope graphene. In contrast, they found that although the adsorption energies for TCNE differed with functional, the degree of charge transfer was largely unchanged at ∼0.46 e. This level of charge transfer had a significant effect on the electronic structure of the graphene monolayer, with a shifting of the Fermi level. The p-doping of the graphene by the TCNE molecule was sufficient to make the substrate metallic. The interaction of both TTF and TCNE with the graphene substrate was mainly physisorption, emphasising the importance of using an appropriate functional, in DFT calculations of such systems, i.e. one that captures weak non-covalent interactions.
+Nistor et al. used FPMD simulations to investigation the interactions of two p-dopants, to advance the theory that the charge transfer in surface-doped graphene systems is driven by a 2D surface-induced electronegativity equalisation principle (2SEE).47 In this process graphene acts as a 2D surface catalyst on which the disproportion of adsorbed dopants into charge transfer complexes is facilitated, these complexes then dope the graphene. To validate this theory, first-principles simulations of two molecular p-doping species, SbCl5 and HNO3, as well as the compound AlCl3 between two graphene sheets were reported. Graphene induced disproportionation of all three molecules was observed with the formation of open shell complexes. Once dissociated species had formed, an opening in the bad gap was indeed observed.
+The ability of theoretical methods to investigate the electronic structure of graphene under different conditions is vital to both providing us with a greater understanding of the processes occurring as well as assisting in the development of new (nano)-electronic and photovoltaic applications.
+Fuel cells
+Polymer electrolyte fuel cells (PEFCs) possess significant future potential as alternatives to fossil-fuel based solutions for efficient energy conversion. Currently, these fuel cell technologies are not competitive when judged over a range of metrics including cost, reliability and durability. One of the key reactions in PEFCs is the oxygen reduction reaction (ORR), which takes place at the cathode. This reaction is widely recognised to be the kinetic bottleneck in the fuel cell, being very sluggish compared with the corresponding reaction at the anode. The best performing Pt/C fuel cell catalysts facilitate an efficient ORR, which is thought to be most efficient when it proceeds via the 4-electron mechanism:O2 + 4H+ + 4e− → 2H2O
+At present, the presence of platinum is considered to be essential for the efficiency of this process. In the following, we have focused on PEFCs, but recognise that graphene-based materials in Zn-air and Li-air fuel cells are essential for catalysing the oxygen evolution reaction (OER). The number of studies investigating these systems using computational chemistry (see for example ref. 159 and 160) is not high; there may be considerable scope for molecular modelling to make valuable contributions to improving the OER in these devices in future.
+From a commercially-viable perspective, these Pt/C catalysts remain uncompetitive with fossil-fuel based energy solutions because they suffer from serious drawbacks, due to several factors. These include: the gradual sintering of Pt nanostructures with time that leads to Pt agglomeration, losing surface area and thereby loss of the catalytic activity; the Pt nanostructures are highly susceptible to catalyst poisoning; Pt itself is very expensive, thus from a cost perspective it is highly desirable to limit or eliminate the dependence of fuel cell devices on Pt. The challenges to reduce the dependence on Pt in these PEFC catalysts, while retaining device durability is significant; the US Department of Energy has set targets that state that by 2017 the total Pt loading of a fuel cell device (both electrodes) must be reduced below 0.125 mg cm−2 and must deliver 5000 hours of stability under simulated operational conditions.162
+The carbon support for these Pt/C devices has also been the subject of intense scrutiny. Graphene, with its high surface-area-to-mass ratio, superior charge-carrier mobility, high tensile strength and excellent thermal conductivity, is an ideal candidate for this purpose. For this reason, in recent years, considerable effort has been directed at the use of graphene-based materials, in a search to either limit, or, entirely eliminate, the dependence on Pt for delivering ORR efficiencies and increased durability in PEFCs. Graphene has been exploited as a support substrate for Pt (and other metal) clusters for ORR catalysis, while doped graphene has been shown to capable of functioning as the catalytic material itself. In working towards meeting these goals of advancing the efficiency, economy and durability of PEFCs, computational techniques have made valuable contributions to the advancement in this field in several arenas. In this section, we will review use of computational chemistry and modelling in this area.
+Undoped graphene as a Pt support material
+The investigation of undoped graphene as a support material for Pt-based fuel cell catalysts has benefited substantially from quantum chemical calculations, principally using density functional theory (DFT). One focus of such studies has been the sintering mechanism of the graphene-adsorbed Pt nanoparticles (PtNPs), which could conceivably take place either via coalescence or Ostwald ripening.163 Yumura et al.161 considered finite-sized hydrogen-terminated graphene flakes and used both real-space DFT calculations with traditional functionals (the hybrid B3LYP164 and LDA165,166) and modest-sized basis sets, and fully-periodic plane-wave DFT (PW-DFT) calculations (with the PW91 functional167), to calculate the structure and energetics of surface binding of Pt, Pt5 and Pt6 on graphene (see Fig. 7). Unlike many other studies of PtNP adsorption, these authors considered a range of possible PtNP configurations. Their findings suggested that PtNPs could be pinned at the hydrogen-terminated graphene edges.
+ Fig. 7  Possible adsorption sites on a hydrogenated graphene nanoflake (C96H26) for Pt nanoparticles. Taken from Yumura et al.161 
+Besides a propensity for agglomeration, Pt-based catalysts also have a drawback due to high costs and ever-decreasing availability of raw materials. Use of alloyed metal NPs is one viable strategy for decreasing this reliance on the availability of Pt. In a study chiefly focused on the experimental process of making high quality graphene sheets decorated with PtNPs, free from surfactants and halide ions, Qian et al.170 also reported use of PW-DFT calculations with the PBE functional171 to probe how adsorption of PtNPs and alloyed NPs (Pt/Pd) on pristine graphene affected the electronic structure of the nanoparticles.
+Very little has been reported to date regarding the use of force-field based molecular dynamics (MD) simulations in this particular area. However, recently Xu et al.172 complemented their extensive microscopy-based evidence of PtNP self-organization on freestanding pristine graphene sheets with such MD simulations, using the reactive force-field ReaxFF.64–66 These simulations indicated a strain-based mechanism of PtNP lateral self-organisation, resulting in flattened PtNP shapes that were elevated above the suspended graphene substrate rather than being partially encapsulated by the graphene. The dimensions of the resulting self-organised PtNPs was consistent with their experimental results. The possibility of covalently anchoring metal NPs to the graphene surface, e.g. via surface functionalisation, such as was reported recently for tethering of PdNPs onto graphene oxide, using benzyl mercaptan linkers173 could prove to be a useful strategy for immobilisation of Pt-containing NPs for ORR catalysts.
+Besides a propensity for PtNP sintering, another general disadvantage of Pt/graphene based PEFCs is the propensity for CO poisoning of the PtNPs. One key concept that is central to much of the current literature in the study of catalytic activity for metal-based systems, with respect to the propensity for CO poisoning as well as the efficiency of the ORR, is the energy of the d-band centre (εdc) of the metal atoms, Nørskov et al.174 had found that for pristine Pt surfaces, the Pt atom d-band centre was strongly correlated with the adsorbate binding strength. Considering pristine graphene as a substrate, Kim et al.175 presented PW-DFT calculations using the PBE functional of small Ptn (n = 1,2,4) clusters on strained graphene. The applied strain was found to enhance to the PtNP binding to the surface, thus improving the thermal stability of the catalyst. These authors also found that strain delivered a lower εdc, most notably for the Pt atoms in immediate contact with the graphene substrate. This effect was related to the calculated adsorption energies of H2, CO and OH adsorbates. The CO oxidation reaction pathway was also explored (including barrier calculations via transition-state optimisation) for Pt6. Imposing strain on the graphene was found to lower the barrier of the rate-determining step in this process. As a recent and different way of approaching this problem, Xiao et al.169 explored the catalytic behaviour of a Pt nanowire adsorbed along the edge of a graphene nanoribbon substrate (see Fig. 8). Building on an earlier study,168 and using periodic PBE calculations, Soldano et al. calculated the free energy of binding of key ORR intermediates at the nanowire, indicating the viability of this substrate configuration.
+ Fig. 8  Structures of the bare and water/OH decorated Pt-wire adsorbed on a graphene edge. Gray, blue, white and red colors denote C, Pt, H and O atoms. (a) is the side view of the bare structure from Soldano et al.,168 (b) and (c) are the side view of the bare and solvated structures in this work while (d) and (e) are the corresponding plan views, respectively. Taken from Xiao et al.169 
+Doped graphene as a Pt support material
+By far the greatest number of reports in the literature regarding the computational exploration of graphene as a support material for PtNPs has considered doped, rather than pristine, graphene.176,177 While the majority of these studies have focused on nitrogen, other dopants, such as B, O, S, P, and Be have also been investigated.176–184 The broad conclusion from these studies is that dopants are generally predicted to enhance the binding of both Pt atoms and PtNPs on graphene surfaces with respect to the pristine case, with boron dopants identified as being particularly effective. This includes studies on alloyed PtNPs.177,178 The influence of PtNP size on the binding strength has also been explored.176 However, for all of the studies summarised here, the authors did not consider a wide variety of possible cluster structures, such as was investigated by Ramos-Sanchez and Balbuena185 for Pt nanoclusters on 3-sheet graphene substrates. In terms of the choice of model substrate, many of these studies made use of hydrogenated graphene nanoflakes for their DFT calculations (with B3LYP being the most commonly used functional), although some periodic (PW-DFT) calculations have been reported.176,179,183,184 Topics such as the propensity for CO poisoning179,180 and durability,183 as well as estimation of εdc values179,183,184 have also been considered. Direct experimental verification of the effectiveness of dopants to both pin PtNPs on the graphene surface and enhance their electrochemical stability and ORR activity is not widely available, although indirect evidence was shown to be favourable for N-dopants183 and S-dopants.184
+Viewing the entire fuel cell process from a different perspective, Durbin and Malardier-Jugroot182 used B3LYP calculations with modest basis sets on doped graphene flakes to investigate the possibility of using metal (Ni, Pt and Au/Ir) adsorbed on graphene as a membrane to clean H2 feedstock fuel for the reaction at the fuel cell anode. The dopants were found to enhance binding between single metal atoms and graphene, while also showing reasonable binding selectivity between CO and H2. O-dopants were found to work best in this respect, with Ir/Au performing better than Pt.
+The utility of doped graphene has also been explored via computational chemistry from the perspective of the stability of ORR intermediates at the graphene-supported PtNP interface. For the previously-mentioned N-doped graphene and pristine graphene systems reported by Seo et al.,183 these authors also used DFT calculations to evaluate the range of εdc for the surface-adsorbed Pt55 NP. These authors correlated these εdc values with the adsorption energy of an oxygen atom on the supported PtNP; oxygen binding was weakest for the N-doped graphene support, thus supporting the prediction that PtNPs supported by N-doped graphene could improve ORR kinetics. In a similar vein, Higgins et al.184 explained the superior ORR kinetics of the Pt/S-doped graphene system via the calculated negative shift in εdc values for supported Pt13 compared with undoped graphene.
+Doped graphene as a support for other metals
+Graphene-supported metals (not substitutional dopants) other than Pt have been investigated with quantum chemical approaches, notably graphene-supported Fe and Co. Both bulk and edge locations were investigated as candidate sites for nitrogen doping, using PW-DFT PW91 calculations by Jain et al.187 These authors also used these calculations to predict the most likely edge site (on N-doped graphene) for adsorption of Fe atoms. However, these authors did not probe the adsorption of any ORR-relevant intermediates in this work. Vayner and Anderson188 reported calculations of adsorption energies for key intermediates in the ORR for a substrate comprising a Co atom bound to an N-doped graphene flake. These data were used to predict reversible potentials for ORR-relevant reactions on this substrate. They concluded that the Co-adsorbed system featured favourable reversible potentials for intermediate steps in the ORR. However, the calculated poor stability of the Co complex with N-doped graphene flake indicated this catalyst to be highly prone to rapid deactivation. Co-decorated undoped graphene was the subject of PW-DFT PBE calculations reported by Olson et al.,189 who investigated binding of key intermediates H2O2, O2, CO, and N2. The ordering of adsorption energies supported their proposal that the Co-based catalyst has selectivity for H2O2 over O2, thus favouring a 2e− path over the preferred 4e− pathway. The selectivity of H2O2 over O2 was found to agree with their experimental results in this study. The influence of more than one N-doped graphene flake, covalently connected via oxygen/cobalt linkages, on the activity of the ORR was investigated by He et al.190 Using real-space B3LYP calculations with modest basis sets, the authors reported optimised geometries of possible catalyst structures and proposed that the molecular orbital delocalisation on the Co atom could help explain the ORR kinetics experimentally observed for this system.
+Doped graphene as a carbon alloy catalyst
+
+Metal–nitrogen dopants. 
+While replacement of graphene-supported PtNPs with less precious metals may form a viable alternative strategy for fuel cell development in future, significant research activity has instead focused on the complete exclusion of metal clusters, by targeting engineered graphene (particularly substitutionally-doped graphene) as a catalytic material for ORR in itself. These materials will be referred to herein as carbon alloy catalysts (CACs).
+Dopants in graphene are known to strongly influence the electronic structure of the material.192 Significant activity in this area has been aimed at computationally elucidating the properties of Me/N/C catalyst (where Me is typically a transition metal atom). The MeN4 and MeN2 configurations have been the chief points of focus for these DFT studies. Topics that have been explored include optimization of the ORR-activity for a range of metals193 identifying +2 as the optimal metal oxidation state, the preference for graphene edge site locations,194 and the influence of location of these sites in pores (see Fig. 9), for different metals, on the ORR activity.186 A general finding is that both Co and Fe appear to support 4e− ORR pathways, although the reaction pathway calculations of Orellana195 also identified Mn-based sites as promising ORR candidates.
+ Fig. 9  Structures of (a) graphitic pores, and (b) MeN4 (Me = Fe, Co, or Ni) clusters embedded between these graphitic pores. Gray, blue, and brown spheres represent C, N and metal atoms, respectively. Rectangles enclosed with solid black lines show the unit cell used in the DFT calculations. Taken from Kattel and Wang.186 
+The Fe-based Me/N/C site has been the subject of the most computational studies in this area.191,196–200 These site configurations (see Fig. 10) have been investigated for the 4e− pathway selectivity, as a function of site location, including when positioned between nanographene ribbon edges.191 This DFT study by Szakacs et al.191 is of particular note for the favourable comparison with experimental data, notably Mössbauer spectroscopy observations.201 While none of these studies explicitly considered the influence of the presence of liquid water on the ORR activity, the use of continuum solvation approximations (e.g. such as COSMO202) have been explored.200 The work of Sun et al.199 also considered microsolvation in addition to continuum solvation models.
+ Fig. 10  Optimised structures (top and side view) of a structure resulting from the FeN4 moiety embedded in an extended graphene sheet. Grey, blue and cyan spheres represent carbon, nitrogen and Fe respectively. Taken from Szakacs et al.191 
+Distinct from these studies that have considered isolated Fe/N/C sites, Holby et al.198 probed the most likely structures for various distributions of these motifs, as embedded in the edges of graphene nanoribbon substrates, and the ORR activity of these multi-site catalyst materials. By calculation of the O2 adsorption intermediate binding energies, the clustered bimetallic Fe–N3 system was found to be the most promising compared with lone sites. These authors also used FPMD simulations to check that these clustered catalyst substrates were stable in the presence of liquid water.
+
+
+Non metal–nitrogen dopants. 
+While Me–N–graphene sites have received a growing amount of attention in recent years, a considerable focus has been placed on predicting the structure of other types of dopant sites in graphene.
+The effect of doping on the electronic structure of graphene, particularly nitrogen, boron, and co-doped B/N structures has been extensively examined using computational approaches.156,204,205 Clusters of N-dopant sites (3 or 4 nitrogens in close spatial proximity) were predicted by Feng et al.,205via PW-DFT PW91 calculations, to suggest promising ORR activity. Co-dopants (B, Fe and Co) were predicted to stabilize these N-clusters, while not compromising performance. The presence of graphene defects (e.g. Stone–Wales defects206) have been considered in the context of CAC doping, for nitrogen or nitrogen/boron co-doping.
+As an alternative to nitrogen and boron doping, the electronic effects of sulphur doping have been investigated, based on B3LYP calculations on hydrogenated graphene nanoflakes,207,208 including co-doping with nitrogen. Neither of these reported calculations directly evaluated ORR performance of these materials. The influence of dopants on graphene surfaces with defects (such as the Stone–Wales defect206) has been investigated by quantum chemical approaches.205,206,209–212 The doping of graphene, with defects, with nitrogen,213 B/N co-dopants211 has been recently reported.
+Some studies have applied rigorous approaches to systematically screen CAC dopant characteristics.183,214,215 Kaukonen et al.214 screened for dopant element (all first-row transition-metal atoms, plus Al, Ru, Rh, Pd, Pt, Ga, Sn and Bi, and also N, P, and B), for both single and double doping sites, targeting both the formation energy of the doped structure, and the O2 adsorption energy, to evaluate the viability for ORR performance. The most viable catalyst materials were single-site dopants comprising Ni, Pd, Pt, Sn, and P. As an example of a systematic process to identify doping structures, the use of cluster expansion theory216,217 was reported by Seo et al.183 to propose and screen, via PW-DFT PBE calculations, 117 different dopant site structures ranging from 0% to 100% doping levels of nitrogen in graphene, Kwak et al.215 screened ∼900 different N-doped graphene configurations (from 0% to 57.1% nitrogen) via DFT calculations (vide infra), and evaluated the most promising candidates for ORR viability via calculation of reaction intermediate free energies. These authors found the catalytic efficiency of the ORR decreased as the dopant concentration increased, with better performance for bulk substituents over edge sites.
+One limitation shared by most of the DFT calculations summarised above is their reliance on generalised gradient approximation (GGA) functionals, which are well known to have serious deficiencies when describing non-covalent interactions.16–18 When describing the key stages of the ORR, it is preferable that non-covalent interactions are described reasonably, despite the fact that covalent bonds are also being formed and broken. The recent calculations of Kwak et al.215 have attempted to correct for these shortcomings. These authors made use of the Grimme empirical correction218 along with the PBE functional (PBE + D2) in their PW-DFT based screening predictions for nitrogen dopant structure and concentration, and the resulting ORR reaction intermediate free energies at these sites. In contrast to many existing studies, these authors also considered how the presence of liquid water at the graphene interface influenced the binding of the ORR intermediates. However, they found that stabilisation of adsorbed atomic oxygen was found to be the key determinant in the ORR, even in the presence of water molecules (approximating liquid water).
+
+Dopant characterization: aiding experimental interpretation
+While quantum chemical calculations can predict a wide range of ideal dopant site structures, it is a different challenge to realise these structures in an experimental setting. Experimental determination of the structure of ORR-relevant sites on graphene and related compounds is pivotal to elucidating the fundamental structure-function relationships inherent to these catalytic materials. X-ray photoelectron spectroscopy (XPS), X-ray emission spectroscopy (XES) and X-ray absorption spectroscopy (XAS) are key techniques for accomplishing this. Electronic structure theory calculations provide essential complementary data to enable assignment of site types with greater confidence. For example, Hou et al.220 used a combination of XAS and periodic DFT (PBE) calculations of infinite graphene sheets, and finite graphene flakes and nanoribbons. On the basis of these calculations they could simulate C K-edge XAS spectra, with a focus on edge hydrogenation state. Since nitrogen dopants in graphene are a leading candidate material for ORR catalysts, the clear and unambiguous identification of types of nitrogen dopant structures in an experimental setting is a high priority. This is particularly true for distinguishing pyridinic and pyrrolic nitrogen sites.
+By comprehensively considering nitrogen doping in the vicinity of graphene nanoribbon edges, with differing edge hydrogenation states, Wang et al.221 were able to identify the role of dihydrogenated carbons in stabilising nitrogen sites near the ribbon edges.222 The successful interpretation of XPS spectra relies on the use of reference spectra; this is problematic for nitrogen dopants in graphene, for which some reference spectra are not available. To address this problem with regards to ORR-relevant Me–Nx dopants (where Me is Fe, Co, etc.), Artyushkova et al.223 reported a methodical comparison of DFT-predicted N 1s binding energy shifts with reference XPS spectra, for the purposes of successfully identifying Me–N4vs. Me–N2 sites in situ in doped graphene. Aside from X-ray based techniques, where the characterisation of dopants is observed in a spatially averaged sense, scanning tunneling microscopy (STM) has been profitably used, in partnership with DFT calculations, to characterise individual nitrogen dopant sites in graphene.224
+Investigations of the catalysed ORR pathway: reaction intermediates
+Quantum chemical calculations have found widespread use in the prediction of the binding energies and structures of adsorption intermediates along the proposed ORR pathway, in the presence of CACs,203,207,210–212,225–229 particularly nitrogen-doped CACs. Basing their studies on small (C41H17) graphene nanoflakes doped with a nitrogen atom, Sidik et al.225 used real-space B3LYP calculations with modest basis sets to predict partial charge distributions of the substrate, adsorption free energies of ORR intermediates, and reversible potentials. The latter were in good agreement with experimental observations. These authors predicted that a 2e− reduction pathway, with nitrogen dopant sites far from the sheet edges being the most active. Kurak and Anderson226 built on this work by considering graphene nanoribbons with two nitrogen atoms placed on adjacent edge sites, using PW-DFT PW91 calculations. Their predictions of the ORR-relevant reversible potentials indicated that 2e− reduction to H2O2 was more likely than the desired 4e− pathway.
+Okamoto227 considered nitrogen dopants in basal sites, via PW-DFT PBE calculations, where the number of dopant nitrogen atoms was varied. As one part of this study, Okamoto calculated the binding energy of O2 and other intermediates adsorbed on these sites. After identifying a 4e− pathway, reversible potentials for the intermediate steps of this pathway were predicted using these binding energies.
+Using a similar approach to Sidik et al.,225 Zhang and Xia228 reported the influence of a single nitrogen dopant atom, in this instance on the nanoflake edge, on the binding of ORR-relevant intermediates, by applying B3LYP calculations with modest basis sets. A 4e− pathway was identified for these substrates. The presence of defects and the concentration of nitrogen dopants in this context has also been studied.210 These authors found that higher concentrations of dopants were detrimental to predicated catalytic behaviour. With a focus on the adsorption energy and geometry of intermediate states along the ORR pathway (see Fig. 11), the PBE calculations of Boukhvalov and Son203 indicated that a nitrogen dopant concentration of 4% (close to the experimentally reported value of 5%) allowed the initial stages of the ORR process (e.g. O2 adsorption and dissociation) to proceed at a much lower energy cost compared with pristine graphene.
+ Fig. 11  Structures for five steps in the ORR from top to bottom on a 4% N-doped graphene substrate. Green, yellow, blue and red spheres are C, N, H and O respectively. Taken from Boukhvalov and Son.203 
+Recently, quantum chemical studies on this topic have also considered the influence of other dopants on the binding of ORR intermediates. Having used PW-DFT PBE calculations to identify plausible sites in their study of boron–nitrogen co-dopants in graphene substrates with defects, Sen et al.211 calculated adsorption energies of O2 and related these to activated ORR processes. The presence of sulphur dopants in graphene and their impact on binding of ORR intermediates was explored by Zhang et al.207 The model substrate was a hydrogenated graphene nanoflake with 100 carbon atoms, and a range of sulphur dopant sites were investigated (some with defects). Real space B3LYP calculations with modest basis sets were used; the authors reported that both 2e− and 4e− ORR pathways were possible. The predicted reaction free energy for the 2e− was found to agree with experimental estimates,225 while the predicted number of electrons transferred also agreed with experimental values.230
+Zhang et al.231 investigated the catalytic effect of silicon dopants in graphene, alongside the effects of interfacial curvature. Their periodic PBE calculations indicate that O2 adsorption strength over the Si dopant site increased when going from a convex, to flat, to a concave surface, with the corresponding free energy change of the rate-determining step in the ORR becoming lower. The tuning of the ORR catalytic activity via manipulation of interfacial curvature was also reported by Chai et al.,212 who considered nitrogen dopants in graphene sheets (both basal and edge sites, and in the presence of defects) and (n,0) carbon nanotubes (where n = 6–18). After applying FPMD to estimate the O2 adsorption barrier in a liquid water environment to identify promising candidate sites (using the HCTH functional,232 which unlike other GGAs, yields an excellent estimate of the O2 binding energy and bond length), these authors used PW-DFT PBE calculations to predict free energies for the ORR intermediates for a number of pathways, including the standard 4e− pathway. Their results indicated one particular site configuration that can approach the maximum ORR activity (for the standard pathway).
+Motivated by experimental observations of ORR activity on N-doped graphene quantum dots (GQDs), Saidi reported DFT calculations on ten model N-doped, hydrogenated GQD structures (∼40–50 carbon atoms), including graphitic and edge dopant sites. One key distinctive feature of this study was the use of vdW-DF functionals (for example Dion et al.,20 see section ‘Computational methods’); another was the use of approximations to account for solvation effects, based on micro-solvation (with 2–6 water molecules). By calculating the binding free energies of the ORR intermediates, the author showed that both graphitic and pyridinic edge dopant sites conferred ORR catalytic activity.
+As a combined experimental and theoretical study, and as part of a more comprehensive and broadly holistic approach to explaining ORR performance of existing doped CACs, and to theoretically predicting optimal ORR performance for new CAC materials, Jiao et al.229 used real space B3LYP calculations with modest basis sets to calculate the free energies of intermediates in the ORR process. A continuum solvation model, PCM233 was used to capture long-ranged solvation effects. Their calculations were based on small hydrogenated graphene nanoflakes, doped at a range of sites with N, B, P, S and O atoms. In addition, using a natural bond order234 (NBO) analysis, these authors introduced a new activity descriptor for CACs, being the difference between the lowest valence orbital energy of the active centre and the highest valence orbital energy of the entire graphene cluster. This descriptor theoretically motivates an as-yet unknown dopant type, configuration and/or combination that yields an optimal ORR activity. The electrochemical descriptors evaluated in this study were found to be consistent with their DFT predictions. In a related study regarding the hydrogen evolution reaction,235 this structural model and computational approach (same functional and basis set) were used to investigate dual-doped structures with N, B, O, S, P, F substituents.
+Going beyond free graphene as a catalysis substrate, and as a way to investigate the possible corrosion-resistant properties of graphene supported on transition-metal surfaces, Noh et al.236 reported calculations of ORR reaction intermediates on both nitrogen-doped free graphene and supported graphene (on Cu(111), Ni(111) and Co(0001) surfaces). Their PW-DFT calculations included empirical dispersion corrections,218 and accounted for the presence of water at the molecular level. Their findings suggested that the Cu(111) support was the most promising for ORR activity.
+Investigations of the catalysed ORR pathway: reaction pathways and barriers
+A more thorough examination of the viability of graphene-based CACs for fuel cell applications has been made via the prediction of ORR pathways, as opposed to identification of intermediates only. In brief, two classes computational approaches have been applied in this context; first-principles molecular dynamics (FPMD) simulations, and, static geometry optimisation (including identification of transition state structures on the reaction pathway) using DFT calculations. Historically, both strategies have been reliant on the application of DFT, and both have strengths and weaknesses. In the FPMD approach, temperature effects can be accounted for, as can the dynamic representation of liquid water at the CAC interface. However, it is challenging to extract reaction barriers from the FPMD (e.g. via the Blue Moon ensemble,237,238 as reported in a number of previous studies221,239,240 – vide infra), especially given the large error bars associated with these systems. Furthermore, the sheer system size and complexity becomes a limiting factor for FPMD, as this curtails the maximum possible duration of the trajectories used to extract this information. This also limits the degree of configurational sampling of the system, and therefore relevant mechanisms/pathways may be missed. On the other hand, static DFT calculations, while conducted at 0 K, can be approximately corrected for temperature effects. The range of possibilities of reaction pathways can be very thoroughly and systematically mapped out, particularly with reference to selectivity of the 2e− reaction vs. the (preferred) 4e− ORR process. Relatively larger system sizes can, in principle, be considered. However, the presence of water (at the molecular level of detail) at the CAC interface can only be addressed in a static manner, typically via microsolvation approaches. Regardless, it is imperative that any transition-states (TSs) found are also tested via calculation of reaction pathways, such that the TS can be clearly shown to connect two minima on the PES.
+Ikeda et al.240 doped graphene sheets with nitrogen both at the sheet edges and basal plane. Using the Car-Parrinello MD (CPMD)241 approach in partnership with the Blue Moon ensemble, these authors calculated the free energy barriers for the adsorption and reduction of O2 at these sites. They found that O2 preferentially adsorbed at carbon edge sites where a nitrogen dopant site was nearby. Okamoto227 considered a model nitrogen-dopant configurations (with 1–4 nitrogens) as a structural model for subsequent FPMD simulations of O2 adsorption and reaction, in the presence of liquid water. These PW-DFT PBE FPMD simulations were combined with subsequent static DFT calculations to elucidate a 4e− ORR pathway, and identify routes to the (unwanted) 2e− reaction. Wang et al.221 used CPMD with the Blue Moon ensemble to demonstrate how it was possible for O2 to dissociatively attack the CH edge groups of N-doped graphene. Recently, Ikeda et al.239 reported the use of CPMD with the Blue Moon ensemble to elucidate the ORR mechanism at graphene edges doped with nitrogen, and co-doped both with N and O atoms, and N and S atoms. Their resulting CPMD trajectories suggest that both graphitic and pyridinic N-doping sites lead to activation of the 4e− ORR process under acidic conditions, but via different mechanisms.
+Alternatively, there are a number of studies on the static calculation of reaction pathways relevant to the ORR process at CAC interfaces. Based on a model graphene nanoflake structure (circumcoronene), Fazio et al.242 used real-space B3LYP calculations with modest basis sets, but considered continuum solvation effects (PCM) and +D3 empirical dispersion corrections.243,244 Minima and true transition states were located on the ORR path for both associative and dissociative pathways, considering both the Eley–Rideal and Langmuir–Hinschelwood mechanisms. On the basis of their resulting free energy diagrams, these authors predicted the overpotentials required for spontaneous reaction under both acidic and basic conditions. Their prediction for the onset potential for this reaction at pH 14 was consistent with corresponding experimental observations.229 While it is more common to see TS structure optimisations in the context of real-space DFT calculations, Kim et al.245 used PW-DFT PBE calculations along with the nudged elastic band (NEB)246 approach to predict reaction barriers for oxygen adsorption in periodic N-doped graphene systems. The presence of the dopants was found to reduce the oxygen adsorption barrier as well as the first electron transfer barrier.
+Fuel cells: concluding remarks
+Despite the considerable body of work summarised here, a substantial research effort using quantum chemical approaches clearly remains for future studies. Of particular interest from the point of view of reducing the amount of Pt in ORR catalyst materials are intermetallic core–shell nanocatalysts (IMCs),219 see Fig. 12. In addition to the significant complexities in synthesising these materials, as well as organising their stable arrangement on a graphene surface, there will also be challenges in modeling these catalysts – see Gracia-Espino et al.247 for an example. Advances in synthetic strategies for shape-controlled catalytic metal NPs may also motivate more detailed quantum chemical studies of supported metal clusters in terms of predicting facet-specific reactivities for the ORR.
+ Fig. 12  (a) Experimentally determined onset potential for the ORR at PdxAu(1−x) core–shell nanoparticles, plotted as a function of the corresponding oxygen binding energy calculated by DFT. (b) Illustrative structure of PdxAu(1−x) core–shell nanoparticles. Reproduced with permission from ref. 219. 
+Lithium/alkali metal batteries
+Graphene has generated substantial interest as a material for possible use in lithium (or other alkali metal) ion batteries (LIBs). The setup of a typical LIB is shown in Fig. 13, with an anode and cathode made from layered materials into which the Li+ ions can intercalate. Between the two is an Li+ conducting electrolyte. When the device is charging the applied voltage causes the Li+ ions to move from the cathode, through the electrolyte, and ultimately intercalate between the graphite layers of the anode. When the battery is discharging the Li+ ions flow back in the opposite direction, and there is a flow of electrons from the anode to the cathode. The nature of the electrodes is one of the most important factors in LIBs, playing a crucial role in determining energy and power density, as well as battery lifetime.248,249 One limiting factor of LIBs is the storage Li storage capacity of the graphite electrode, and graphene has been suggested as potential replacement, due to a possible higher storage capacity and reduced charging times.248,250,251 Computational methods have played an important role in clarifying some of the properties of graphene as a candidate electrode material.
+ Fig. 13  Schematic of a first-generation rechargeable lithium-ion cell. During charging, lithium ions flow to the negative electrode through the electrolyte and electrons flow from the external circuit. During discharge the directions are reversed, generating useful power to be consumed by the device. Taken from ref. 249. 
+Simulation studies in the area can be largely divided into two sets, MD simulations of electrolytes at graphene (see section ‘Simulations of electrolytes at graphene interfaces’), and DFT calculations investigating the adsorption of the Li+ to the graphene electrodes251–263 which are discussed below.
+The maximum Li capacity of graphite is 372 mA h g−1, where Li+ atoms are adsorbed as LiC6 in a ( × )R30° structure, with the Li+ atoms located in the hollow sites.22,250,251 Experimental studies have found that graphene systems are able to achieve specific capacities above 372 mA h g−1.248,250,251 Some initial theoretical studies predicted that a sheet of graphene was able to exceed the maximum theoretical capacity of graphite due to the adsorption of Li atoms to both surfaces of the sheet, allowing a higher Li/C ratio than 1:6.250,254,256,258 In particular, it has been predicted that a Li2C2 structure was theoretically stable,254,255 with one Li ion adsorbing atop a carbon atom and another Li ion adsorbing above the C atom on the opposite side of the sheet, with the result of the graphene sheet buckling and forming a structure similar to that of graphane. However, more recent theoretical studies251,264,265 (supported by Raman spectra that show that the intercalation of Li in few-layer graphene resembles that of graphite266) have suggested that pristine graphene systems may have a theoretical Li+ capacity that is lower than that of graphite. Using cluster expansion methods and DFT calculations, Lee and Persson found that the adsorption energy of Li to a single layer of graphene was positive for all Li coverages studied.264 They assigned this apparent contradiction with previous theoretical studies that have found favourable adsorption energies252–256,261 to the use of difference reference states. Lee and Persson defined the reference states as pure single layer graphene and metallic Li, due to the fact that Li metal can form in Li-ion batteries, if a Li gas atom was used as a reference state then they found that a negative adsorption energy for some structures. Fan et al. further investigated if pristine graphene sheets could work through a kinetically limiting process by choosing a reference state as the adsorption of an adatom of Li to a Li(001) surface.262 Under this condition they found that it was favourable for Li to adsorb to pristine graphene but only at concentrations lower than LiC6.
+One possible reason for the higher Li capacities observed in experiment may be due to the presence of defects in the graphene sheets.251,259,265,267 Fan et al. found that vacancy defects present in a graphene sheet are both able to increase the Li/C ratio and enhance the diffusion energetics of Li+.251 Zhou et al. have predicted that both divacancy and Stone–Wales defects are energetically favourable sites for Li adsorption and could enhance Li adsorption on graphene.259 In addition, the same authors also predicted that Li adsorption at graphene grain boundaries was favourable with respect to bulk Li.267 These calculations also found that the energy barrier to diffusion along the grain boundary was lower than that perpendicular to the boundary suggesting that grain boundaries may be able to act as channels for Li atoms. Uthaisar and Barone investigated the diffusion pathways of Li close to the edge of graphene nano-ribbons, and also found that diffusion was faster close to the edge than along the bulk surface.268 Wigner V22 defects in multilayer graphene have also been found to be energetically favourable for Li adsorption compared with pristine graphene.260 Defects have also been predicted to support the adsorption of Na+ and Ca2+ ions to graphene surfaces.263 On pristine graphene surfaces neither metal is able to absorb, however, with a sufficient density of defects a capacity higher than that of bulk graphite can be achieved. The findings from computational studies that the presence of defects can improve the performance of LIBs has been supported by recent experimental evidence. By tailoring the nanostructure of the graphene sheet the Li+ storage capacity can be increased.269,270
+Another possibility of increasing the storage capacity of graphene for use in LIBs is to dope the graphene with other elements, typically boron or nitrogen.265,271–276 Liu et al.265 found that substituting a B atom for an C atom, thus creating a slightly electron deficient system, promoted the adsorption of Li compared with pristine graphene. In contrast, replacing a C atom with N was unfavourable. Experimental studies have also found that doping graphene with N or B can improve the reversible capacity of the system, as well as improving the charging/discharging times.277,278 Other studies have investigated the effect of graphitic (where a C atom is substituted for a N atom), pyridinic and pyrrolic N (where in addition to the substitution C atoms are removed) doping.271,272 While graphitic N-doped graphene is more unfavourable for Li adsorption than pristine graphene, pyridinic and, to a lesser extent, pyrrolic N-doped graphene promotes the adsorption of Li, with the Li atom adsorbing in the centre of the defect site. Hardikar et al. investigated both the storage capacity and energy barriers to Li diffusion for a variety of defective, doped and doped defective graphene systems.276 While a number of N-doped systems showed low energy barriers overall they concluded that B doped mono-vacancy graphene was the most promising candidate. Boron doped graphene has also been shown to allow the stable adsorption of Na+ ions, significantly reducing the adsorption energy.274
+Finally it should also be mentioned that other 2D carbon nanostructure, such as graphyne273,279,280 and graphidyne280,281 have been investigated theoretically as possible anode materials molecules, with the B-doped graphyne significantly outperforming pristine graphyne.273
+Supercapacitors
+Supercapacitors, otherwise referred to as electrical double layer capacitors (EDLCs) are devices that can store and release energy. A key difference between a battery and a supercapacitor is that a battery stores energy electrochemically, while a supercapacitor stores energy via an electrostatic mechanism where ions are accumulated on the material surface. This allows supercapacitors to be charged and discharged relatively faster than batteries, ensuring a relatively higher power density for supercapacitors. While supercapacitors generally exhibit high power densities, these devices to date have featured only modest energy densities. Considerable effort has been focused on optimizing the combination of the electrolyte, electrode material, and electrode geometry (such as porous electrodes with a high specific surface area, i.e. control of the pore size distribution), to improve energy densities without impacting detrimentally on power densities. Graphene, with its inherent high specific surface area and high conductivity, has been identified as an electrode material that can deliver such improvements to the energy density.
+The number of reports in the literature detailing the application of both quantum chemical approaches and molecular simulation to the study of supercapacitor materials is growing rapidly. Here, we restrict our focus strictly to those studies that report investigations of graphene-based supercapacitors, particularly those that report the prediction of properties other than interfacial electrolyte structuring alone. Those readers interested in the application of molecular modelling to the study of supercapacitors in general are directed to the excellent reviews of Burt et al.,282 Merlet et al.283 and Feng et al.284
+While most of the computational studies in this area have focused on the electrical properties of the electrolyte/graphene interface, there have been some reports of the use of molecular simulation to model the formation of nanostructured electrode materials based on graphene.285–287 However, the majority of reports regarding graphene-based supercapacitors are fundamental investigations of the structuring of ionic liquids (IL) or other electrolytes at the graphene interface, and the impact of this structuring on the capacitance of the electrical double layer. Using MD simulation, this is typically accomplished by predicting the mass density profile of the IL at the graphene interface as a function of distance from the surface (z), and converting this to a charge density profile, ρq(z). The electric potential as a function of distance from the surface, ϕ(z), can then be obtained by solving Poisson's equation in 1D. The potential drop across the interface (Δϕ) can be used to calculate the integral EDL capacitance, CD, of the system, via CD = σ/Δϕ, where σ is the surface charge density of the electrode.
+The interfacial structuring of the electrolyte at the graphene interface will therefore contribute to the resulting capacitance, and consequently is of considerable interest in this community. However, we note here that it is not our chief objective to review the extensive literature regarding the structuring of electrolytes at interfaces. Instead, our focus is on computational chemistry approaches that have exploited predictions of interfacial structuring to calculate electrical properties of the interface. Comparisons with experimental structural data are critical in this field, notwithstanding the fact that it is hugely challenging from an experimental perspective to resolve the structure of molecules adsorbed at liquid/solid interfaces. One notable example of close integration of experiment and theory was reported by Zhou et al.,99 where findings from atomistic MD simulations were compared with X-ray reflectivity data.
+Kislenko et al.90 reported MD simulations along these lines for the interface between [BMIM][PF6] and graphene, for charge-neutral and positively- and negatively-charged interfaces. These authors found that the capacitance differed depending on the electrode polarity; this effect was ascribed to differences in the cation and anion interfacial structure. In a later work288 on the same system they also probed the temperature dependence of Δϕ and reported predictions for the self-diffusion coefficients of the ions. The temperature dependence of the differential capacitance, as well as the influence of the interfacial potential, was also explored by Vatamanu et al.91 for the interface between graphene and the [pyr13][TFSI] IL. These authors followed this with a related study, considering an IL system with a larger anion, [pyr13][FSI].289 Shim et al.92,108 provided a broadened perspective by considering both a pure IL, [EMI][BF4], and an electrolyte solution of 1.1 M [EMI][BF4] in acetonitrile, at both charge-neutral and charged (positive and negative) graphene interfaces. Based on their simulations, the estimated specific capacitance for the pure IL case was shown to be substantially higher, while the ion conductivity normal to the electrode surface was only modestly higher for the electrolyte case.
+While most studies reported in this area have focused on calculating the EDL capacitance (CD) of the system, the relative contributions arising from the quantum capacitance, CQ have been recently investigated.290,291 The EDL capacitance was determined as described above, using MD simulations, while the quantum capacitance was determined from PW-DFT PW91 calculations of the electronic density of states. These authors found that the total capacitance, calculated as 1/CT = 1/CD + 1/CQ, can be a strong function of the applied voltage, ascribed to the differing admixtures of the quantum and EDL contributions.
+The effect of modification of the graphene surface has also been investigated. The impact of nanoscale interfacial structuring was investigated by Vatamanu et al.,93 who contrasted their predictions in differential capacitance between the flat basal and rough prismatic facets of graphene for the [EMIM][FSI] IL. The surface roughness was shown to produce a qualitative differences of the differential capacitance. These authors followed this with studies on graphene surface roughness for the [CnMIM][TFSI] series of ILs,96 where n = 2, 4, 6, and 8, and in a comparative study between the ILs [BMIM][PF6] and [BMIM][BF4].292 Most recently, these authors have more comprehensively investigated the relationship between nanoscale surface topography and differential capacitance, as a function of temperature.104 In this study, the degree of graphene surface corrugation was varied; these authors found that flat surfaces showed very little variation of differential capacitance with temperature, in contrast to the more corrugated surfaces.
+Recently, Ho and Striolo293 predicted the effect on the EDL capacitance of the NaCl/graphene interface due to patterning (in this case notching) the graphene surface, for both charged (positive and negative) and charge-neutral graphene substrates. The capacitance of the negatively-charged electrodes was predicted to be significantly affected by surface patterning. Recently, nitrogen-doped graphene has been observed experimentally to deliver substantial enhancements in CT.294 This was explored using both MD simulation and PW-DFT PW91 calculations by Paek et al.,295 where the authors again considered the EDL and quantum contributions to the overall capacitance.
+Very recently, investigations of the effect of graphene oxidation on the interfacial capacitance have been reported.101,102 Comparison of predicted capacitance properties with those measured experimentally can be very challenging due to the complex character of the interface at the atomistic scale, and the impact this may deliver on the resulting electrical properties of the interface. A possible consequence of this complexity may be the wide spread in experimentally-determined capacitance behaviours of graphene-based systems. Kerisit et al.102 proposed that graphene oxidation in these systems may contribute, at least in part, to this variation in experimental values. These authors predicted the capacitance of an interfacial system comprising the [BMIM][OTf] IL and two different classes of oxidised graphene, one based on surface hydroxyl groups, while in the other, and the other on epoxy groups. These authors found that the hydroxylated graphene had a detrimental impact on the EDL capacitance, while the epoxy-decorated substrate was not affected as significantly. In the case of hydroxylated graphene, the effects of oxygen surface coverage on interfacial capacitance were explored by DeYoung et al.,101 for the [EMI][BF4] IL system. In exploring the full range of hydroxyl coverage, these authors found that interfacial capacitance decreased upon increasing the surface hydroxyl coverage.
+The interfacial chemistry of the electrode is one factor amongst many that can influence the interfacial capacitance. The nanoscale morphology of the electrode surface, and particularly the pore dimension, can also affect the specific capacitance of the interface. As indicated by several experimental studies,296–299 narrowing the pore size can significantly enhance the capacitance. Feng and Cummings300 predicted the capacitance of the [EMIM][Tf2N] IL system as a function of pore diameter in the subnanometer range, using a slit-pore graphene system for their simulations. The enhanced capacitance found by these authors for specific pore diameters was explained by the mutual interference of the two EDLs near each pore wall. Xing et al.301 also studied the effect of pore diameter on the direct capacitance using molecular simulation of the [EMIM][TFSI] IL in contact with a graphene slit pore. These authors identified a factor of two enhancement in electrode capacitance for subnanometre sized pores, attributed to a demixing transition inside the narrow pore.
+While most of the simulation studies summarised here have made use of atomistic force-fields, Merlet et al.302 made use of a coarse-grained force-field, along with a polarisable representation of the graphene surface, in their simulations of the [BMI][PF6] IL for a range of constant potential differences applied between the two electrodes. Their findings agreed very well with fully atomistic simulations.90 The importance of capturing the polarisability of the graphene substrate was further illustrated by Merlet et al.,303 where the same system was modelled and contrasted with the case where the graphene electrode was represented with fixed partial charges. Their simulation data showed significant differences between these two cases. The use of polarisable representations for the graphene substrate have also been employed in fully atomistic simulations, for example see Vatamanu et al.289 A polarisation model for the graphene surface within a framework of an atomistic force-field, denoted GRAPPA, has most recently been developed by Hughes and Walsh,27 based on the rigid rod dipole representation.54 GRAPPA was parametrised with respect to PW-DFT calculations using the genuinely non-local vdW-DF functional, which showed exceptional performance compared with experimental and high-level quantum chemistry benchmarks.27 Adaptation of the GRAPPA force-field to modelling IL/graphene interfaces may provide a promising and computationally economical approach to capturing electrode polarisation in atomistic simulation models of supercapacitors in future.
+Summary and outlook
+Computational methods have shown considerable advances in the last decade, but a number of challenges remain. Fig. 14 illustrates at a glance, these remaining challenges for the different computational approaches, as well as the developments that are required for progress. These challenges and developments are outlined in more detail below.
+ Fig. 14  Schematic summarising the challenges for the current computational approaches discussed in this review, as well as the developments required for progress. 
+The continuing increases in computational power mean that MD and MC simulations of greater time- and length-scales will be possible in future. However, merely simulating larger systems for longer durations will not necessarily provide more insight unless the advances in computing power are accompanied by corresponding advances in simulation techniques and methodology.
+One area of development for atomistic simulations of graphene-based energy materials is in the refinement of force-fields (FFs). Parametrisation and validation of FFs, particularly for describing complex interfacial systems, remains an ongoing challenge. High-quality experimental and/or QM data is needed to ensure that the FFs used to model graphene-based materials are appropriate. The advances in QM, summarised in this Review, will continue to provide valuable input into the (re-)parametrisation of such FFs. The relatively greater cost that polarisable FFs generally incur is increasingly becoming less of an issue. This means that the development and use of polarisable FFs, especially for a highly conductive system such as graphene, is likely to play a major role in MD and MC simulations of graphene-based energy materials in future.
+For example, in the MD simulations of electrolytes at graphene interfaces, polarisation may play a significant role; further studies systematically investigating these polarisation effects are certainly warranted. Such developments will ensure that MD simulations continue to play an important role in elucidating the structure of the graphene–electrolyte interface, as present in energy storage materials. The use of reactive FFs is also likely to increase over the next decade, although in this instance the challenge of parametrising such FFs remains a challenge. However, the ability to bridge the gap between QM and classical descriptions makes the development of reactive FFs an attractive prospect. Aside from FF development, the various techniques for improving the sampling of the potential energy surface have become increasingly commonplace over the last decade, and such methods are likely to find wider use in the energy materials space in future. The availability of meta-dynamics, umbrella sampling, steered MD and other such approaches means that calculation of free energy differences is now not unusual, often allowing a more direct comparison between simulation and experimental data.
+Approaches based on quantum chemistry also face challenges in describing graphene-based energy materials. Modelling at the first-principles level of these systems has, by necessity, been accomplished using DFT. However, the inability of generalised gradient approximation (GGA) functionals to reliably capture weak, non-covalent interactions is well-known. Unfortunately the bulk of the calculations published to date in this area have made use of such GGAs. A small number of studies have reported the use of the ‘+D’ type empirical corrections to DFT GGA functionals. However, this strategy is also not without limitation, in particular due to the transferability of the parametrisation of the damping function that is associated with the dispersion correction. These damping functions have typically been devised for intra- and inter-molecular interactions,304 not molecule–surface interactions. Further validation and/or refitting of these damping functions may be warranted. There are very few examples of quantum chemical calculations in the area of graphene-based energy materials that use vdW-DF functionals. While also not perfect, these functionals show substantial promise. Developments of this class of functional may be very beneficial for advancing graphene-based energy materials. In terms of first principles molecular simulation (FPMD) that are capable of describing dynamic bond breaking and bond formation events, there is a limited but growing number of studies appearing in this area. These may also form a valuable platform for creating and validating new, more sophisticated force-fields. These advances in sampling techniques, force-field development and the possibilities of improved density functionals all give cause for expecting a very bright future for their application to graphene-based energy materials.
+Acknowledgements
+We thank the National Computing Infrastructure (NCI) for provision of computational resources. ZEH and TRW thank veski for research funding, and TRW thanks veski for an Innovation Fellowship.
+References
+K. S. Novoselov, A. K. Geim, S. V. Morozov, D. Jiang, Y. Zhang, S. V. Dubonos, I. V. Grigorieva and A. A. Firsov, Science, 2004, 306, 666–669 CrossRef CAS PubMed .
+J. Liu, Y. Xue, M. Zhang and L. Dai, MRS Bull., 2012, 37, 1265–1272 CrossRef CAS .
+J. Zhang, F. Zhao, Z. Zhang, N. Chen and L. Qu, Nanoscale, 2013, 5, 3112–3126 RSC .
+
+          M. P. Allen and D. J. Tildesley, Computer Simulation of Liquids, Oxford University Press, 1st edn,  1987 Search PubMed .
+
+          D. Frenkel and B. Smit, Understanding Molecular Simulation, Elsevier, 2nd edn,  2002 Search PubMed .
+D. J. Wales and J. P. K. Doye, J. Phys. Chem. A, 1997, 101, 5111–5116 CrossRef CAS .
+Z. Li and H. A. Scheraga, Proc. Natl. Acad. Sci. U. S. A., 1987, 84, 6611–6615 CrossRef CAS .
+N. Metropolis, A. W. Rosenbluth, M. N. Rosenbluth, A. H. Teller and E. Teller, J. Chem. Phys., 1953, 21, 1087–1092 CrossRef CAS .
+G. M. Torrie and J. P. Valleau, J. Comput. Phys., 1977, 23, 187–199 CrossRef .
+C. Jarzynski, Phys. Rev. Lett., 1997, 78, 2690 CrossRef CAS .
+A. Laio, Proc. Natl. Acad. Sci. U. S. A., 2002, 99, 12562–12566 CrossRef CAS PubMed .
+A. Barducci, G. Bussi and M. Parrinello, Phys. Rev. Lett., 2008, 100, 020603 CrossRef PubMed .
+A. Pohorille, C. Jarzynski and C. Chipot, J. Phys. Chem. B, 2010, 114, 10235–10253 CrossRef CAS PubMed .
+Y. Zhang and W. Yang, Phys. Rev. Lett., 1998, 80, 890 CrossRef CAS .
+D. J. Lacks and R. G. Gordon, Phys. Rev. A, 1993, 47, 4681 CrossRef CAS .
+T. van Mourik and R. J. Gdanitz, J. Chem. Phys., 2002, 116, 9620 CrossRef CAS .
+T. R. Walsh, Phys. Chem. Chem. Phys., 2005, 7, 443–451 RSC .
+J. Klimeš and A. Michaelides, J. Chem. Phys., 2012, 137, 120901 CrossRef PubMed .
+S. Grimme, J. Comput. Chem., 2004, 25, 1463–1473 CrossRef CAS PubMed .
+M. Dion, H. Rydberg, E. Schröder, D. C. Langreth and B. I. Lundqvist, Phys. Rev. Lett., 2004, 92, 246401 CrossRef CAS PubMed .
+J. Klimeš, D. R. Bowler and A. Michaelides, J. Phys.: Condens. Matter, 2010, 22, 022201 CrossRef PubMed .
+Z. Wang, S. M. Selbach and T. Grande, RSC Adv., 2014, 4, 4069–4079 CAS .
+J. P. Perdew, A. Ruzsinszky, G. I. Csonka, O. A. Vydrov, G. E. Scuseria, L. A. Constantin, X. Zhou and K. Burke, Phys. Rev. Lett., 2008, 100, 136406 CrossRef PubMed .
+É. D. Murray, K. Lee and D. C. Langreth, J. Chem. Theory Comput., 2009, 5, 2754–2762 CrossRef .
+K. Lee, É. D. Murray, L. Kong, B. I. Lundqvist and D. C. Langreth, Phys. Rev. B: Condens. Matter, 2010, 82, 081101 CrossRef .
+K. Berland and P. Hyldgaard, Phys. Rev. B: Condens. Matter, 2013, 87, 205421 CrossRef .
+Z. E. Hughes, S. M. Tomásio and T. R. Walsh, Nanoscale, 2014, 6, 5438–5448 RSC .
+M. Rubeš, J. Kysilka, P. Nachtigall and O. Bludský, Phys. Chem. Chem. Phys., 2010, 12, 6438–6444 RSC .
+P. Lazar, F. Karlický, P. Jurečka, M. Kocman, E. Otyepková, K. Šafářová and M. Otyepka, J. Am. Chem. Soc., 2013, 135, 6372–6377 CrossRef CAS PubMed .
+R. Zacharia, H. Ulbricht and T. Hertel, Phys. Rev. B: Condens. Matter, 2004, 69, 155406 CrossRef .
+O. Bludský, M. Rubeš, P. Soldan and P. Nachtigall, J. Chem. Phys., 2008, 128, 114102 CrossRef PubMed .
+A. J. Misquitta and K. Szalewicz, Chem. Phys. Lett., 2002, 357, 301–306 CrossRef CAS .
+A. Heßelmann, G. Jansen and M. Schütz, J. Chem. Phys., 2005, 122, 014103 CrossRef PubMed .
+G. R. Jenness and K. D. Jordan, J. Phys. Chem. C, 2009, 113, 10242–10248 CAS .
+G. R. Jenness, O. Karalti and K. D. Jordan, Phys. Chem. Chem. Phys., 2010, 12, 6375 RSC .
+J. Kysilka, M. Rubeš, L. Grajciar, P. Nachtigall and O. Bludský, J. Phys. Chem. A, 2011, 115, 11387–11393 CrossRef CAS PubMed .
+Y. Cho, S. K. Min, J. Yun, W. Y. Kim, A. Tkatchenko and K. S. Kim, J. Chem. Theory Comput., 2013, 9, 2090–2096 CrossRef CAS .
+P. Ganesh, J. Kim, C. Park, M. Yoon, F. A. Reboredo and P. R. C. Kent, J. Chem. Theory Comput., 2014, 10, 5318–5323 CrossRef CAS .
+R. Car and M. Parrinello, Phys. Rev. Lett., 1985, 55, 2471–2474 CrossRef CAS PubMed .
+T. D. Kuehne, M. Krack, F. R. Mohamed and M. Parrinello, Phys. Rev. Lett., 2007, 98, 066401 CrossRef .
+G. Cicero, J. C. Grossman, E. Schwegler, F. Gygi and G. Galli, J. Am. Chem. Soc., 2008, 130, 1871–1878 CrossRef CAS PubMed .
+M. K. Rana and A. Chandra, J. Chem. Phys., 2013, 138, 204702 CrossRef PubMed .
+C. Calero, J. Marti, E. Guardia and M. Masia, J. Chem. Theory Comput., 2013, 9, 5070–5075 CrossRef CAS .
+W. Zhang, P. Wu, Z. Li and J. Yang, J. Phys. Chem. C, 2011, 115, 17782–17787 CAS .
+Y. Wang, A. J. Page, Y. Nishimoto, H.-J. Qian, K. Morokuma and S. Irle, J. Am. Chem. Soc., 2011, 133, 18837–18842 CrossRef CAS PubMed .
+H.-B. Li, A. J. Page, C. Hettich, B. Aradi, C. Kohler, T. Frauenheim, S. Irle and K. Morokuma, Chem. Sci., 2014, 5, 3493–3500 RSC .
+R. A. Nistor, D. M. Newns and G. J. Martyna, ACS Nano, 2011, 5, 3096–3103 CrossRef CAS PubMed .
+R. A. Nistor, M. A. Kuroda, A. A. Maarouf and G. J. Martyna, Phys. Rev. B: Condens. Matter, 2012, 86, 041409 CrossRef .
+D. Porezag, T. Frauenheim, T. Köhler, G. Seifert and R. Kaschner, Phys. Rev. B: Condens. Matter, 1995, 51, 12947 CrossRef CAS .
+M. Elstner, D. Porezag, G. Jungnickel, J. Elsner, M. Haugk, T. Frauenheim, S. Suhai and G. Seifert, Phys. Rev. B: Condens. Matter, 1998, 58, 7260–7268 CrossRef CAS .
+W. Song, M. G. Jiao, K. Li, Y. Wang and Z. J. Wu, Chem. Phys. Lett., 2013, 588, 203–207 CrossRef CAS .
+R. X. Song, W. Feng, C. A. Jimenez-Cruz, B. Wang, W. R. Jiang, Z. G. Wang and R. H. Zhou, RSC Adv., 2015, 5, 274–280 RSC .
+R. X. Song, S. Wangmo, M. S. Xin, Y. Meng, P. Huai, Z. G. Wang and R. Q. Zhang, Nanoscale, 2013, 5, 6767–6772 RSC .
+F. Iori and S. Corni, J. Comput. Chem., 2008, 29, 1656–1666 CrossRef CAS PubMed .
+A. W. Dick and B. G. Overhauser, Phys. Rev., 1958, 112, 90–103 CrossRef .
+P. Ren and J. W. Ponder, J. Comput. Chem., 2002, 23, 1497–1506 CrossRef CAS PubMed .
+J. W. Ponder and D. A. Case, Adv. Protein Chem., 2003, 66, 27–85 CrossRef CAS PubMed .
+P. Ren and J. W. Ponder, J. Phys. Chem. B, 2003, 107, 5933–5947 CrossRef CAS .
+T. R. Walsh, Mol. Phys., 2008, 106, 1613–1619 CrossRef CAS .
+A. J. Stone, Chem. Phys. Lett., 1981, 83, 233–239 CrossRef CAS .
+A. J. Stone and M. Alderton, Mol. Phys., 1985, 56, 1047–1064 CrossRef CAS .
+T. Liang, Y. K. Shin, Y.-T. Cheng, D. E. Yilmaz, K. G. Vishnu, O. Verners, C. Zou, S. R. Phillpot, S. B. Sinnott and A. C. T. van Duin, Annu. Rev. Mater. Res., 2013, 43, 109–129 CrossRef CAS .
+Y. K. Shin, T.-R. Shan, T. Liang, M. J. Noordhoek, S. B. Sinnott, A. C. T. van Duin and S. R. Phillpot, MRS Bull., 2012, 37, 504–512 CrossRef CAS .
+A. van Duin, S. Dasgupta, F. Lorant and W. A. Goddard, J. Phys. Chem. A, 2001, 105, 9396–9409 CrossRef CAS .
+C. Zhang, Y. Wen and X. Xue, ACS Appl. Mater. Interfaces, 2014, 6, 12235–12244 CAS .
+S. Goverapet Srinivasan and A. C. T. van Duin, J. Phys. Chem. A, 2011, 115, 13269–13280 CrossRef CAS PubMed .
+T. Liang, T.-R. Shan, Y.-T. Cheng, B. D. Devine, M. Noordhoek, Y. Li, Z. Lu, S. R. Phillpot and S. B. Sinnott, Mater. Sci. Eng., R, 2013, 74, 255–279 CrossRef .
+T. P. C. Klaver, S.-E. Zhu, M. H. F. Sluiter and G. C. A. M. Janssen, Carbon, 2014, 1–10 Search PubMed .
+M. C. Gordillo and J. Mart, J. Chem. Phys., 2002, 117, 3425 CrossRef CAS .
+A. Pertsin and M. Grunze, J. Phys. Chem. B, 2004, 108, 1357–1364 CrossRef CAS .
+R. L. Jaffe, P. Gonnet, T. Werder, J. H. Walther and P. Koumoutsakos, Mol. Simul., 2004, 30, 205–216 CrossRef CAS .
+M. C. Gordillo, G. Nagy and J. Martí, J. Chem. Phys., 2005, 123, 054707 CrossRef CAS PubMed .
+J. Martí, G. Nagy, M. C. Gordillo and E. Guardia, J. Chem. Phys., 2006, 124, 094703 CrossRef PubMed .
+A. Pertsin and M. Grunze, J. Chem. Phys., 2006, 125, 114707 CrossRef PubMed .
+G. R. Birkett and D. D. Do, J. Phys. Chem. C, 2007, 111, 5735–5742 CAS .
+M. Gordillo and J. Martí, Phys. Rev. B: Condens. Matter, 2008, 78, 075432 CrossRef .
+J. Sala, E. Guardia and J. Martí, Phys. Chem. Chem. Phys., 2012, 14, 10799 RSC .
+C. Calero, M. C. Gordillo and J. Martí, J. Chem. Phys., 2013, 138, 214702 CrossRef CAS PubMed .
+T. A. Ho and A. Striolo, J. Chem. Phys., 2013, 138, 054117 CrossRef PubMed .
+D. Konatham, J. Yu, T. A. Ho and A. Striolo, Langmuir, 2013, 29, 11884–11897 CrossRef CAS PubMed .
+F. Taherian, V. Marcon and N. F. A. van der Vegt, Langmuir, 2013, 29, 1457–1465 CrossRef CAS PubMed .
+Y. Wu and N. R. Aluru, J. Phys. Chem. B, 2013, 117, 8802–8813 CrossRef CAS PubMed .
+X. Zhao and J. K. Johnson, Mol. Simul., 2005, 31, 1–10 CrossRef CAS .
+F. Moulin, M. Devel and S. Picaud, Phys. Rev. B: Condens. Matter, 2005, 71, 165401 CrossRef .
+S. M. Tomásio and T. R. Walsh, J. Phys. Chem. C, 2009, 113, 8778–8785 Search PubMed .
+P. Schyman and W. L. Jorgensen, J. Phys. Chem. Lett., 2013, 4, 468–474 CrossRef CAS PubMed .
+W. L. Jorgensen, J. Chandrasekhar, J. D. Madura, R. W. Impey and M. L. Klein, J. Chem. Phys., 1983, 79, 926–935 CrossRef CAS .
+M. V. Fedorov and A. A. Kornyshev, Chem. Rev., 2014, 114, 2978–3036 CrossRef CAS PubMed .
+R. Burt, G. Birkett and X. S. Zhao, Phys. Chem. Chem. Phys., 2014, 16, 6519–6538 RSC .
+S. A. Kislenko, I. S. Samoylov and R. H. Amirov, Phys. Chem. Chem. Phys., 2009, 11, 5584–5590 RSC .
+J. Vatamanu, O. Borodin and G. D. Smith, J. Am. Chem. Soc., 2010, 132, 14825–14833 CrossRef CAS PubMed .
+Y. Shim, H. J. Kim and Y. Jung, Faraday Discuss., 2012, 154, 249–263 RSC .
+J. Vatamanu, L. Cao, O. Borodin, D. Bedrov and G. D. Smith, J. Phys. Chem. Lett., 2011, 2, 2267–2272 CrossRef CAS .
+M. V. Fedorov and R. M. Lynden-Bell, Phys. Chem. Chem. Phys., 2012, 14, 2552 RSC .
+E. Paek, A. J. Pak and G. S. Hwang, J. Electrochem. Soc., 2012, 160, A1–A10 CrossRef .
+J. Vatamanu, O. Borodin, D. Bedrov and G. D. Smith, J. Phys. Chem. C, 2012, 116, 7940–7951 CAS .
+L. Xing, J. Vatamanu, O. Borodin, G. D. Smith and D. Bedrov, J. Phys. Chem. C, 2012, 116, 23871–23881 CAS .
+L. Xing, J. Vatamanu, G. D. Smith and D. Bedrov, J. Phys. Chem. Lett., 2012, 3, 1124–1129 CrossRef CAS PubMed .
+H. Zhou, M. Rouha, G. Feng, S. S. Lee, H. Docherty, P. Fenter, P. T. Cummings, P. F. Fulvio, S. Dai, J. McDonough, V. Presser and Y. Gogotsi, ACS Nano, 2012, 6, 9818–9827 CrossRef CAS PubMed .
+Y.-L. Wang, A. Laaksonen and Z.-Y. Lu, Phys. Chem. Chem. Phys., 2013, 15, 13559–13569 RSC .
+A. D. DeYoung, S.-W. Park, N. R. Dhumal, Y. Shim, Y. Jung and H. J. Kim, J. Phys. Chem. C, 2014, 118, 18472–18480 CAS .
+S. Kerisit, B. Schwenzer and M. Vijayakumar, J. Phys. Chem. Lett., 2014, 5, 2330–2334 CrossRef CAS PubMed .
+T. Méndez-Morales, J. Carrete, M. Pérez-Rodríguez, Ó. Cabeza, L. J. Gallego, R. M. Lynden-Bell and L. M. Varela, Phys. Chem. Chem. Phys., 2014, 16, 13271–13278 RSC .
+J. Vatamanu, L. Xing, W. Li and D. Bedrov, Phys. Chem. Chem. Phys., 2014, 16, 5174–5182 RSC .
+R. M. Lynden-Bell, A. I. Frolov and M. V. Fedorov, Phys. Chem. Chem. Phys., 2012, 14, 2693–2701 RSC .
+O. Borodin, J. Phys. Chem. B, 2009, 113, 11463–11478 CrossRef CAS PubMed .
+D. Bedrov, O. Borodin, Z. Li and G. D. Smith, J. Phys. Chem. B, 2010, 114, 4984–4997 CrossRef CAS PubMed .
+Y. Shim, Y. Jung and H. J. Kim, J. Phys. Chem. C, 2011, 115, 23574–23583 CAS .
+K. Tasaki, J. Phys. Chem. B, 2005, 109, 2920–2933 CrossRef CAS PubMed .
+I. A. Hamad, M. A. Novotny, D. O. Wipf and P. A. Rikvold, Phys. Chem. Chem. Phys., 2010, 12, 2740 RSC .
+J. Vatamanu, O. Borodin and G. D. Smith, J. Phys. Chem. C, 2012, 116, 1114–1121 CAS .
+R. Jorn, R. Kumar, D. P. Abraham and G. A. Voth, J. Phys. Chem. C, 2013, 117, 3747–3761 CAS .
+K. Tasaki, A. Goldberg, J.-J. Lian, M. Walker, A. Timmons and S. J. Harris, J. Electrochem. Soc., 2009, 156, A1019 CrossRef CAS .
+K. Leung and J. L. Budzien, Phys. Chem. Chem. Phys., 2010, 12, 6583 RSC .
+K. Leung, J. Phys. Chem. C, 2013, 117, 1539–1547 CAS .
+D. S. L. Abergel, V. Apalkov, J. Berashevich, K. Ziegler and T. Chakraborty, Adv. Phys., 2010, 59, 261–482 CrossRef CAS .
+D. W. Chang, H.-J. Choi, A. Filer and J.-B. Baek, J. Mater. Chem. A, 2014, 2, 12136–12149 CAS .
+A. Kasry, M. A. Kuroda, G. J. Martyna, G. S. Tulevski and A. A. Bol, ACS Nano, 2010, 4, 3839–3844 CrossRef CAS PubMed .
+A. Du and S. C. Smith, J. Phys. Chem. Lett., 2011, 2, 73–80 CrossRef CAS PubMed .
+M. A. Kuroda, J. Tersoff and G. J. Martyna, Phys. Rev. Lett., 2011, 106, 116804 CrossRef PubMed .
+M. A. Kuroda, J. Tersoff, D. M. Newns and G. J. Martyna, Nano Lett., 2011, 11, 3629–3633 CrossRef CAS PubMed .
+T. Hu and I. C. Gerber, J. Phys. Chem. C, 2013, 117, 2411–2420 CAS .
+S. Ryu, L. Liu, S. Berciaud, Y.-J. Yu, H. Liu, P. Kim, G. W. Flynn and L. E. Brus, Nano Lett., 2010, 10, 4944–4951 CrossRef CAS PubMed .
+Y. Yang and R. Murali, Appl. Phys. Lett., 2011, 98, 093116 CrossRef .
+G. Giovannetti, P. Khomyakov, G. Brocks, P. Kelly and J. van den Brink, Phys. Rev. B: Condens. Matter, 2007, 76, 073103 CrossRef .
+A. Mattausch and O. Pankratov, Phys. Rev. Lett., 2007, 99, 076802 CrossRef PubMed .
+F. Varchon, R. Feng, J. Hass, X. Li, B. Nguyen, C. Naud, P. Mallet, J. Y. Veuillen, C. Berger, E. Conrad and L. Magaud, Phys. Rev. Lett., 2007, 99, 126805 CrossRef CAS PubMed .
+S. Y. Zhou, G. H. Gweon, A. V. Fedorov, P. N. First, W. A. de Heer, D. H. Lee, F. Guinea, A. H. Castro Neto and A. Lanzara, Nat. Mater., 2007, 6, 770–775 CrossRef CAS PubMed .
+Y.-J. Kang, J. Kang and K. Chang, Phys. Rev. B: Condens. Matter, 2008, 78, 115404 CrossRef .
+G. Giovannetti, P. Khomyakov, G. Brocks, V. Karpan, J. van den Brink and P. Kelly, Phys. Rev. Lett., 2008, 101, 026803 CrossRef CAS PubMed .
+P. A. Khomyakov, G. Giovannetti, P. C. Rusu, G. Brocks, J. van den Brink and P. J. Kelly, Phys. Rev. B: Condens. Matter, 2009, 79, 195425 CrossRef .
+P. Shemella and S. K. Nayak, Appl. Phys. Lett., 2009, 94, 032101 CrossRef .
+T. C. Nguyen, M. Otani and S. Okada, Phys. Rev. Lett., 2011, 106, 106801 CrossRef PubMed .
+A. K. Manna and S. K. Pati, Chem. – Asian J., 2009, 4, 855–860 CrossRef CAS PubMed .
+Y. H. Lu, W. Chen, Y. P. Feng and P. M. He, J. Phys. Chem. B, 2009, 113, 2–5 CrossRef CAS PubMed .
+J. T. Sun, Y. H. Lu, W. Chen, Y. P. Feng and A. T. S. Wee, Phys. Rev. B, 2010, 81, 155403 CrossRef .
+M. Chi and Y.-P. Zhao, Comput. Mater. Sci., 2012, 56, 79–84 CrossRef CAS .
+J. P. Trinastic and H.-P. Cheng, Phys. Rev. B: Condens. Matter, 2014, 89, 245447 CrossRef .
+L. S. Panchakarla, K. S. Subrahmanyam, S. K. Saha, A. Govindaraj, H. R. Krishnamurthy, U. V. Waghmare and C. N. R. Rao, Adv. Mater., 2009, 4726–4730 CAS .
+N. Al-Aqtash, K. M. Al-Tarawneh, T. Tawalbeh and I. Vasiliev, J. Appl. Phys., 2012, 112, 034304 CrossRef .
+C. L. Muhich, J. Y. Westcott IV, T. C. Morris, A. W. Weimer and C. B. Musgrave, J. Phys. Chem. C, 2013, 117, 10523–10535 CAS .
+X. Wang, Q. Cai, G. Zhuang, X. Zhong, D. Mei, X. Li and J. Wang, Phys. Chem. Chem. Phys., 2014, 16, 20749–20754 RSC .
+S. Kim, J. Ihm, H. J. Choi and Y.-W. Son, Phys. Rev. Lett., 2008, 100, 146801 CrossRef .
+T. Jayasekera, B. D. Kong, K. W. Kim and M. B. Nardelli, Phys. Rev. Lett., 2010, 104, 176802 CrossRef .
+U. Starke, S. Forti, K. V. Emtsev and C. Coletti, MRS Bull., 2012, 37, 1177–1186 CrossRef CAS .
+H. Matsui, F. Matsui, N. Maejima, T. Matsushita, T. Okamoto, A. N. Hattori, Y. Sano, K. Yamauchi and H. Daimon, Surf. Sci., 2015, 632, 98–102 CrossRef CAS .
+S. Tang, J. Yu and L. Liu, Phys. Chem. Chem. Phys., 2013, 15, 5067 RSC .
+C. Stampfer, F. Molitor, D. Graf, K. Ensslin, A. Jungen, C. Hierold and L. Wirtz, Appl. Phys. Lett., 2007, 91, 241907 CrossRef .
+H. E. Romero, N. Shen, P. Joshi, H. R. Gutierrez, S. A. Tadigadapa, J. O. Sofo and P. C. Eklund, ACS Nano, 2008, 2, 2037–2044 CrossRef CAS PubMed .
+L. Liu and Z. Shen, Appl. Phys. Lett., 2009, 95, 252104 CrossRef .
+J. Sławińska, I. Zasada and Z. Klusek, Phys. Rev. B: Condens. Matter, 2010, 81, 155433 CrossRef .
+Y. Fan, M. Zhao, Z. Wang, X. Zhang and H. Zhang, Appl. Phys. Lett., 2011, 98, 083103 CrossRef .
+N. Kharche and S. K. Nayak, Nano Lett., 2011, 11, 5274–5278 CrossRef CAS PubMed .
+E. Kan, H. Ren, F. Wu, Z. Li, R. Lu, C. Xiao, K. Deng and J. Yang, J. Phys. Chem. C, 2012, 116, 3142–3146 CAS .
+T. Holme, Y. Zhou, R. Pasquarelli and R. O'Hayre, Phys. Chem. Chem. Phys., 2010, 12, 9461–9468 RSC .
+P. Rani and V. K. Jindal, RSC Adv., 2013, 3, 802–812 RSC .
+C. N. R. Rao and R. Voggu, Mater. Today, 2010, 13, 34 CrossRef CAS .
+Y.-H. Zhang, K.-G. Zhou, K.-F. Xie, J. Zeng, H.-L. Zhang and Y. Peng, Nanotechnology, 2010, 21, 065201 CrossRef PubMed .
+M. Li, L. Zhang, Q. Xu, J. Niu and Z. Xia, J. Catal., 2014, 314, 66–72 CrossRef CAS .
+M.-J. Cheng, M. Head-Gordon and A. T. Bell, J. Phys. Chem. C, 2014, 118, 29482–29491 CAS .
+T. Yumura, K. Kimura, H. Kobayashi, R. Tanaka, N. Okumura and T. Yamabe, Phys. Chem. Chem. Phys., 2009, 11, 8275–8284 RSC .
+
+          U. S. Dept. of Energy, Technical Plan Fuel Cells, United states deparment of energy technical report,  2012 Search PubMed .
+C. T. Campbell, S. C. Parker and D. E. Starr, Science, 2002, 298, 811–814 CrossRef CAS PubMed .
+A. D. Becke, J. Chem. Phys., 1993, 98, 5648–5652 CrossRef CAS .
+P. Hohenberg and W. Kohn, Phys. Rev., 1964, 136, B864–B871 CrossRef .
+S. H. Vosko, L. Wilk and M. Nusair, Can. J. Phys., 1980, 1200–1211 CrossRef CAS .
+J. P. Perdew, J. A. Chevary, S. H. Vosko, K. A. Jackson, M. R. Pederson, D. J. Singh and C. Fiolhais, Phys. Rev. B: Condens. Matter, 1992, 46, 6671–6687 CrossRef CAS .
+G. J. Soldano, P. Quaino, E. Santos and W. Schmickler, J. Phys. Chem. C, 2013, 117, 19239–19244 CAS .
+B. B. Xiao, X. Y. Lang and Q. Jiang, RSC Adv., 2014, 4, 28400–28408 RSC .
+W. Qian, R. Hao, J. Zhou, M. Eastman, B. A. Manhat, Q. Sun, A. M. Goforth and J. Jiao, Carbon, 2013, 52, 595–604 CrossRef CAS .
+J. P. Perdew, K. Burke and M. Ernzerhof, Phys. Rev. Lett., 1996, 77, 3865–3868 CrossRef CAS PubMed .
+P. Xu, L. Dong, M. Neek-Amal, M. L. Ackerman, J. Yu, S. D. Barber, J. K. Schoelz, D. Qi, F. Xu, P. M. Thibado and F. M. Peeters, ACS Nano, 2014, 8, 2697–2703 CrossRef CAS PubMed .
+E. Gracia-Espino, G. Hu, A. Shchukarev and T. Wågberg, J. Am. Chem. Soc., 2014, 136, 6626–6633 CrossRef CAS PubMed .
+J. K. Nørskov, T. Bligaard, J. Rossmeisl and C. H. Christensen, Nat. Chem., 2009, 1, 37–46 CrossRef PubMed .
+G. Kim, Y. Kawazoe and K. R. Lee, J. Phys. Chem. Lett., 2012, 3, 1989–1996 CrossRef CAS .
+C. K. Acharya and C. H. Turner, J. Phys. Chem. B, 2006, 110, 17706–17710 CrossRef CAS PubMed .
+C. K. Acharya and C. H. Turner, J. Phys. Chem. C, 2007, 111, 14804–14812 CAS .
+C. K. Acharya, D. I. Sullivan and C. H. Turner, J. Phys. Chem. C, 2008, 112, 13607–13622 CAS .
+G. Kim and S. H. Jhi, ACS Nano, 2011, 5, 805–810 CrossRef CAS PubMed .
+Y. Tang, Z. Yang and X. Dai, J. Nanopart. Res., 2012, 14, 844 CrossRef .
+M. N. Groves, C. Malardier-Jugroot and M. Jugroot, J. Phys. Chem. C, 2012, 116, 10548–10556 CAS .
+D. Durbin and C. Malardier-Jugroot, Mol. Simul., 2012, 38, 1061–1071 CrossRef CAS .
+M. H. Seo, S. M. Choi, E. J. Lim, I. H. Kwon, J. K. Seo, S. H. Noh, W. B. Kim and B. Han, ChemSusChem, 2014, 7, 2609–2620 CrossRef CAS PubMed .
+D. Higgins, M. A. Hoque, M. H. Seo, R. Wang, F. Hassan, J.-Y. Choi, M. Pritzker, A. Yu, J. Zhang and Z. Chen, Adv. Funct. Mater., 2014, 24, 4325–4336 CrossRef CAS .
+G. Ramos-Sanchez and P. B. Balbuena, Phys. Chem. Chem. Phys., 2013, 15, 11950–11959 RSC .
+S. Kattel and G. F. Wang, J. Mater. Chem. A, 2013, 1, 10790–10797 CAS .
+M. Jain, S. H. Chou and A. Siedle, J. Phys. Chem. B, 2006, 110, 4179–4185 CrossRef CAS PubMed .
+E. Vayner and A. B. Anderson, J. Phys. Chem. C, 2007, 111, 9330–9336 CAS .
+T. S. Olson, S. Pylypenko, S. Kattel, P. Atanassov and B. Kiefer, J. Phys. Chem. C, 2010, 15190–15195 CAS .
+Q. He, Q. Li, S. Khene, X. Ren, F. E. Lopez-Suarez, D. Lozano-Castello, A. Bueno-Loopez and G. Wu, J. Phys. Chem. C, 2013, 117, 8697–8707 CAS .
+C. E. Szakacs, M. Lefevre, U. I. Kramm, J.-P. Dodelet and F. Vidala, Phys. Chem. Chem. Phys., 2014, 16, 13654–13661 RSC .
+S. R. Stoyanova, A. V. Titova and P. Kral, Coord. Chem. Rev., 2009, 253, 2852–2871 CrossRef .
+F. Calle-Vallejo, J. I. Martinez and J. Rossmeisl, Phys. Chem. Chem. Phys., 2011, 13, 15639–15643 RSC .
+S. Kattel, P. Atanassov and B. Kiefer, J. Phys. Chem. C, 2012, 116, 17378–17383 CAS .
+W. Orellana, J. Phys. Chem. C, 2013, 117, 9812–9818 CAS .
+S. Kattel, P. Atanassov and B. Kiefer, Phys. Chem. Chem. Phys., 2014, 16, 13800–13806 RSC .
+J. Zhang, Z. Wang and Z. Zhu, J. Power Sources, 2014, 255, 65–69 CrossRef CAS .
+E. F. Holby, G. Wu, P. Zelenay and C. D. Taylor, J. Phys. Chem. C, 2014, 118, 14388–14393 CAS .
+J. Sun, Y. H. Fang and Z. P. Liu, Phys. Chem. Chem. Phys., 2014, 16, 13733–13740 RSC .
+W. Liang, J. Chen, Y. Liu and S. Chen, ACS Catal., 2014, 4, 4170–4177 CrossRef CAS .
+U. I. Kramm, J. Herranz, N. Larouche, T. M. Arruda, M. Lefevre, F. Jaouen, P. Bogdanoff, S. Fiechter, I. Abs-Wurmbach, S. Mukerjee and J.-P. Dodelet, Phys. Chem. Chem. Phys., 2012, 14, 11673–11688 RSC .
+A. Klamt and G. Schüürmann, J. Chem. Soc., Perkin Trans. 2, 1993, 799–805 RSC .
+D. W. Boukhvalov and Y.-W. Son, Nanoscale, 2012, 4, 417–420 RSC .
+S. F. Huang, K. Terakura, T. Ozaki, T. Ikeda, M. Boero, M. Oshima, J. I. Ozaki and S. Miyata, Phys. Rev. B: Condens. Matter, 2009, 80, 235410 CrossRef .
+Y. Feng, F. Li, Z. Hu, X. Luo, L. Zhang, X.-F. Zhou, H.-T. Wang, J.-J. Xu and E. G. Wang, Phys. Rev. B: Condens. Matter, 2012, 85, 155454 CrossRef .
+A. J. Stone and D. J. Wales, Chem. Phys. Lett., 1986, 128, 501–503 CrossRef CAS .
+L. Zhang, J. Niu, M. Li and Z. Xia, J. Phys. Chem. C, 2014, 118, 3545–3553 CAS .
+J. Liang, Y. Jiao, M. Jaroniec and S. Z. Qiao, Angew. Chem., Int. Ed., 2012, 11496–11500 CrossRef CAS PubMed .
+Z. Hou, X. Wang, T. Ikeda, K. Terakura, M. Oshima, M.-A. Kakimoto and S. Miyata, Phys. Rev. B: Condens. Matter, 2012, 85, 165439 CrossRef .
+L. Zhang, J. Niu, L. Dai and Z. Xia, Langmuir, 2012, 28, 7542–7550 CrossRef CAS PubMed .
+D. Sen, R. Thapa and K. K. Chattopadhyay, ChemPhysChem, 2014, 15, 2542–2549 CrossRef CAS PubMed .
+G. L. Chai, Z. F. Hou, D. J. Shu, T. Ikeda and K. Terakura, J. Am. Chem. Soc., 2014, 136, 13629–13640 CrossRef CAS PubMed .
+Z. F. Hou, D. J. Shu, G. L. Chai, T. Ikeda and K. Terakura, J. Phys. Chem. C, 2014, 118, 19795–19805 CAS .
+M. Kaukonen, A. V. Krasheninnikov, E. Kauppinen and R. M. Nieminen, ACS Catal., 2013, 3, 159–165 CrossRef CAS .
+D. Kwak, A. Khetan, S. Noh, H. Pitsch and B. Han, ChemCatChem, 2014, 6, 2662–2670 CrossRef CAS .
+B. C. Han, A. V. der Ven, G. Ceder and B.-J. Hwang, Phys. Rev. B: Condens. Matter, 2005, 72, 205409 CrossRef .
+B. Han, V. Viswanathan and H. Pitsch, J. Phys. Chem. C, 2012, 116, 6174–6183 CAS .
+S. Grimme, J. Comput. Chem., 2006, 27, 1787–1799 CrossRef CAS PubMed .
+N. Jung, D. Y. Chung, J. Ryu, S. J. Yoo and Y.-E. Sung, Nano Today, 2014, 9, 433–456 CrossRef CAS .
+Z. Hou, X. Wang, T. Ikeda, S.-F. Huang, K. Terakura, M. Boero, M. Oshima, M. Kakimoto and S. Miyata, J. Phys. Chem. C, 2011, 115, 5392–5403 CAS .
+X. Wang, Z. Hou, T. Ikeda, S.-F. Huang, K. Terakura, M. Boero, M. Oshima, M. Kakimoto and S. Miyata, Phys. Rev. B: Condens. Matter, 2011, 245434 CrossRef .
+X. Wang, Z. Hou, T. Ikeda, M. Oshima, M. Kakimoto and K. Terakura, J. Phys. Chem. A, 2012, 117, 579–589 CrossRef PubMed .
+K. Artyushkova, B. Kiefer, B. Halevi, A. Knop-Gericke, R. Schlogl and P. Atanassov, Chem. Commun., 2013, 49, 2539–2541 RSC .
+L. Zhao, R. He, K. T. Rim, T. Schiros, K. S. Kim, H. Zhou, C. Gutierrez, S. P. Chockalingam, C. J. Arguello, L. Palova, D. Nordlund, M. S. Hybertsen, D. R. Reichman, T. F. Heinz, P. Kim, A. Pinczuk, G. W. Flynn and A. N. Pasupathy, Science, 2011, 333, 999–1003 CrossRef CAS PubMed .
+R. A. Sidik, A. B. Anderson, N. P. Subramanian, S. P. Kumaraguru and B. N. Popov, J. Phys. Chem. B, 2006, 110, 1787–1793 CrossRef CAS PubMed .
+K. A. Kurak and A. B. Anderson, J. Phys. Chem. C, 2009, 113, 6730–6734 CAS .
+Y. Okamoto, Appl. Surf. Sci., 2009, 256, 335–341 CrossRef CAS .
+L. Zhang and Z. Xia, J. Phys. Chem. C, 2011, 115, 11170–11176 CAS .
+Y. Jiao, Y. Zheng, M. Jaroniec and S. Z. Qiao, J. Am. Chem. Soc., 2014, 136, 4394–4403 CrossRef CAS PubMed .
+Z. Yang, Z. Yao, G. Li, G. Fang, H. Nie, Z. Liu, X. Zhou, X. Chen and S. Huang, ACS Nano, 2012, 6, 205–211 CrossRef CAS PubMed .
+P. Zhang, X. Hou, J. Mi, Y. He, L. Lin, Q. Jiang and M. Dong, Phys. Chem. Chem. Phys., 2014, 16, 17479–17486 RSC .
+F. A. Hamprecht, A. J. Cohen, D. J. Tozer and N. C. Handy, J. Chem. Phys., 1998, 109, 6264 CrossRef CAS .
+J. Tomasi, B. Mennucci and R. Cammi, Chem. Rev., 2005, 105, 2999–3094 CrossRef CAS PubMed .
+A. E. Reed and F. Weinhold, J. Chem. Phys., 1983, 78, 4066–4073 CrossRef CAS .
+Y. Zheng, Y. Jiao, L. H. Li, T. Xing, Y. Chen, M. Jaroniec and S. Z. Qiao, ACS Nano, 2014, 8, 5290–5296 CrossRef CAS PubMed .
+S. H. Noh, D. H. Kwak, M. H. Seo and B. H. T. Ohsaka, Electrochim. Acta, 2014, 140, 225–231 CrossRef CAS .
+M. Sprik and G. J. Ciccotti, J. Chem. Phys., 1998, 109, 7737–7744 CrossRef CAS .
+M. Boero, M. Parrinello and K. Terakura, J. Am. Chem. Soc., 1998, 120, 2746–2752 CrossRef CAS .
+T. Ikeda, Z. Hou, G.-L. Chai and K. Terakura, J. Phys. Chem. C, 2014, 118, 17616–17625 CAS .
+T. Ikeda, M. Boero, S.-F. Huang, K. Terakura, M. Oshima and J. Ozaki, J. Phys. Chem. C, 2008, 112, 14706–14709 CAS .
+R. Car and M. Parrinello, Phys. Rev. Lett., 1985, 55, 2471–2474 CrossRef CAS PubMed .
+G. Fazio, L. Ferrighi and C. D. Valentin, J. Catal., 2014, 318, 203–210 CrossRef CAS .
+S. Grimme, J. Antony, S. Ehrlich and H. Krieg, J. Chem. Phys., 2010, 132, 154104 CrossRef PubMed .
+S. Grimme, S. Ehrlich and L. Goerigk, J. Comput. Chem., 2011, 32, 1456–1465 CrossRef CAS PubMed .
+H. Kim, K. Lee, S. I. Woo and Y. Jung, Phys. Chem. Chem. Phys., 2011, 13, 17505–17510 RSC .
+
+          H. Jonsson, G. Mills and K. W. Jacobsen, in Classical and Quantum Dynamics in Condensed Phase Simulations, ed. B. J. Berne, G. Ciccotti and D. F. Coker, World Scientific,  1998, ch. Nudged Elastic Band Method for Finding Minimum Energy Paths of Transitions, p. 385 Search PubMed .
+E. Gracia-Espino, X. Jia and T. Wågberg, J. Phys. Chem. C, 2014, 118, 2804–2811 CAS .
+J. Liu, Y. Xue, M. Zhang and L. Dai, MRS Bull., 2012, 37, 1265–1272 CrossRef CAS .
+M. S. Islam and C. A. J. Fisher, Chem. Soc. Rev., 2013, 43, 185–204 RSC .
+G. Wang, B. Wang, X. Wang, J. Park, S. Dou, H. Ahn and K. Kim, J. Mater. Chem., 2009, 19, 8378–8384 RSC .
+X. Fan, W. T. Zheng and J.-L. Kuo, ACS Appl. Mater. Interfaces, 2012, 4, 2432–2438 CAS .
+M. Khantha, N. Cordero, L. Molina, J. Alonso and L. Girifalco, Phys. Rev. B: Condens. Matter, 2004, 70, 125422 CrossRef .
+K. T. Chan, J. B. Neaton and M. L. Cohen, Phys. Rev. B: Condens. Matter, 2008, 77, 235430 CrossRef .
+C.-K. Yang, Appl. Phys. Lett., 2009, 94, 163115 CrossRef .
+R. E. Mapasha and N. Chetty, Comput. Mater. Sci., 2010, 49, 787–791 CrossRef CAS .
+P. V. C. Medeiros, F. de Brito Mota, A. J. S. Mascarenhas and C. M. C. de Castilho, Nanotechnology, 2010, 21, 115701 CrossRef PubMed .
+J. Zheng, Z. Ren, P. Guo, L. Fang and J. Fan, Appl. Surf. Sci., 2011, 258, 1651–1655 CrossRef CAS .
+A. M. Garay-Tapia, A. H. Romero and V. Barone, J. Chem. Theory Comput., 2012, 8, 1064–1071 CrossRef CAS .
+L.-J. Zhou, Z.
+F. Hou and L.-M. Wu, J. Phys. Chem. C, 2012, 116, 21780–21787 CAS .
+J. Song, B. Ouyang and N. V. Medhekar, ACS Appl. Mater. Interfaces, 2013, 5, 12968–12974 CAS .
+A. Buldum and G. Tetiker, J. Appl. Phys., 2013, 113, 154312 CrossRef .
+X. Fan, W. T. Zheng, J.-L. Kuo and D. J. Singh, ACS Appl. Mater. Interfaces, 2013, 5, 7793–7797 CAS .
+D. Datta, J. Li and V. B. Shenoy, ACS Appl. Mater. Interfaces, 2014, 6, 1788–1795 CAS .
+E. Lee and K. A. Persson, Nano Lett., 2012, 12, 4624–4628 CrossRef CAS PubMed .
+Y. Liu, V. I. Artyukhov, M. Liu, A. R. Harutyunyan and B. I. Yakobson, J. Phys. Chem. Lett., 2013, 4, 1737–1742 CrossRef CAS PubMed .
+E. Pollack, B. Gang, K.-J. Jeon, I. T. Lucas, T. Richadson, F. Wang and R. Kostecki, Nano Lett., 2010, 10, 3386–3388 CrossRef PubMed .
+L.-J. Zhou, Z. F. Hou, L.-M. Wu and Y.-F. Zhang, J. Phys. Chem. C, 2014, 118, 28055–28062 CAS .
+C. Uthaisar and V. Barone, Nano Lett., 2010, 10, 2838–2842 CrossRef CAS PubMed .
+X. Li, Y. Hu, J. Liu, A. Lushington, R. Li and X. Sun, Nanoscale, 2013, 5, 12607 RSC .
+E. M. Lotfabad, J. Ding, K. Cui, A. Kohandehghan, W. P. Kalisvaart, M. Hazelton and D. Mitlin, ACS Nano, 2014, 8, 7115–7129 CrossRef CAS PubMed .
+C. Ma, X. Shao and D. Cao, J. Mater. Chem., 2012, 22, 8911–8915 RSC .
+X.-K. Kong and Q.-W. Chen, Phys. Chem. Chem. Phys., 2013, 15, 12982–12987 RSC .
+R. Lu, D. Rao, Z. Meng, X. Zhang, G. Xu, Y. Liu, E. Kan, C. Xiao and K. Deng, Phys. Chem. Chem. Phys., 2013, 15, 16120–16126 RSC .
+C. Ling and F. Mizuno, Phys. Chem. Chem. Phys., 2014, 16, 10419–10424 RSC .
+D. Das, S. Kim, K.-R. Lee and A. K. Singh, Phys. Chem. Chem. Phys., 2013, 15, 15128–15134 RSC .
+R. P. Hardikar, D. Das, S. S. Han, K.-R. Lee and A. K. Singh, Phys. Chem. Chem. Phys., 2014, 16, 16502–16508 RSC .
+A. L. M. Reddy, A. Srivastava, S. R. Gowda, H. Gullapalli, M. Dubey and P. M. Ajayan, ACS Nano, 2010, 4, 6337–6342 CrossRef CAS PubMed .
+Z.-S. Wu, W. Ren, L. Xu, F. Li and H.-M. Cheng, ACS Nano, 2011, 5, 5463–5471 CrossRef CAS PubMed .
+H. Zhang, M. Zhao, X. He, Z. Wang, X. Zhang and X. Liu, J. Phys. Chem. C, 2011, 115, 8845–8850 CAS .
+K. Srinivasu and S. K. Ghosh, J. Phys. Chem. C, 2012, 116, 5951–5956 CAS .
+H. Zhang, Y. Xia, H. Bu, X. Wang, M. Zhang, Y. Luo and M. Zhao, J. Appl. Phys., 2013, 113, 044309 CrossRef .
+R. Burt, G. Birkett and X. S. Zhao, Phys. Chem. Chem. Phys., 2014, 16, 6519–6538 RSC .
+C. Merlet, B. Rotenberg, P. A. Madden and M. Salanne, Phys. Chem. Chem. Phys., 2013, 15, 15781–15792 RSC .
+G. Feng, S. Li, V. Presser and P. T. Cummings, J. Phys. Chem. Lett., 2013, 4, 3367–3376 CrossRef CAS .
+Z. Liu, Q. Xue, W. Xing, Y. Du and Z. Han, Nanoscale, 2013, 5, 11132–11138 RSC .
+M. Yan, F. Wang, C. Han, X. Ma, X. Xu, Q. An, L. Xu, C. Niu, Y. Zhao, X. Tian, P. Hu, H. Wu and L. Mai, J. Am. Chem. Soc., 2013, 135, 18176–18182 CrossRef CAS PubMed .
+J. A. Baimova, B. Liu, S. V. Dmitriev, N. Srikanth and K. Zhou, Phys. Chem. Chem. Phys., 2014, 16, 19505–19513 RSC .
+S. A. Kislenko, R. H. Amirov and I. S. Samoylov, Phys. Chem. Chem. Phys., 2010, 12, 11245–11250 RSC .
+J. Vatamanu, O. Borodin and G. D. Smith, J. Phys. Chem. B, 2011, 115, 3073–3084 CrossRef CAS PubMed .
+A. J. Pak, E. Paek and G. S. Hwang, Phys. Chem. Chem. Phys., 2013, 15, 19741–19747 RSC .
+E. Paek, A. J. Pak and G. S. Hwang, J. Phys. Chem. C, 2013, 117, 23539–23546 CAS .
+Z. Hu, J. Vatamanu, O. Borodin and D. Bedrov, Phys. Chem. Chem. Phys., 2013, 15, 14234–14247 RSC .
+T. A. Ho and A. Striolo, J. Chem. Phys., 2013, 139, 204708 CrossRef PubMed .
+H. M. Jeong, J. W. Lee, W. H. Shin, Y. J. Choi, H. J. Shin, J. K. Kang and J. W. Choi, Nano Lett., 2011, 11, 2472–2477 CrossRef CAS PubMed .
+E. Paek, A. J. Pak, K. E. Kweon and G. S. Hwang, J. Phys. Chem. C, 2013, 117, 5610–5616 CAS .
+J. Chmiola, G. Yushin, Y. Gogotsi, C. Portet, P. Simon and P. L. Taberna, Science, 2006, 313, 1760–1763 CrossRef CAS PubMed .
+E. Raymundo-Pinero, K. Kierzek, J. Machnikowski and F. Beguin, Carbon, 2006, 44, 2498–2507 CrossRef CAS .
+G. Lota, T. A. Centeno, E. Frackowiak and F. Stoeckli, Electrochim. Acta, 2008, 53, 2210–2216 CrossRef CAS .
+C. Largeot, C. Portet, J. Chmiola, P.-L. Taberna, Y. Gogotsi and P. Simon, J. Am. Chem. Soc., 2008, 130, 2730–2731 CrossRef CAS PubMed .
+G. Feng and P. T. Cummings, J. Phys. Chem. Lett., 2011, 2, 2859–2864 CrossRef CAS .
+L. Xing, J. Vatamanu, O. Borodin and D. Bedrov, J. Phys. Chem. Lett., 2013, 4, 132–140 CrossRef CAS PubMed .
+C. Merlet, M. Salanne, B. Rotenberg and P. A. Madden, J. Phys. Chem. C, 2011, 115, 16613–16618 CAS .
+C. Merlet, C. Pean, B. Rotenberg, P. A. Madden, P. Simon and M. Salanne, J. Phys. Chem. Lett., 2013, 4, 264–268 CrossRef CAS PubMed .
+S. Grimme, S. Ehrlich and L. Goerigk, J. Comput. Chem., 2011, 32, 1456–1465 CrossRef CAS PubMed .
+
+This journal is © The Royal Society of Chemistry 2015
+Table Content:
+Zak E. Hughes	Zak Hughes obtained his MChem from Durham University before continuing on at Durham University to complete PhD under the supervision of Prof. Mark Wilson. From 2007–2012 he was a research fellow at Curtin University in Perth, Western Australia. Since 2013 he has been a research fellow at the Institute for Frontier Materials, at Deakin University, Victoria. His research focuses on the molecular simulation of soft matter and interfacial systems.
+Tiffany R. Walsh	Tiff Walsh is a Professor of Bio/Nanotechnology at the Institute for Frontier Materials at Deakin University, Australia. She is a veski Innovation Fellow and a current member of the College of Experts for the Australian Research Council. Her research interests are focussed on the development and application of advanced molecular simulation for studying complex interfaces, such as graphene and carbon nanotubes, for a range of applications, including energy materials.
+
+ 	Fig. 1  The arene ring systems (a) benzene and (b) coronene used in WFT based QM calculations and (c) a graphene sheet. The three binding locations on the graphene sheet, atop, bridging and hollow are marked by A, B and H, respectively.	 
+
+BOMD	Born-Oppenheimer molecular dynamics	A type of first-principles MD approach
+CC	Coupled-cluster	A wave-function-based method for QM calculations
+CPMD	Car-Parrinello molecular dynamics	A type of first-principles MD approach
+DFT	Density functional theory	One of main theories used for QM calculations of molecular systems, based on the electron density
+DFTB	Density functional tight-binding	A QM approach that yields an approximation to the DFT Kohn-Sham energy
+FF	Force-field	A set of inter-site potentials used to describe the potential energy of a system
+FPMD	First-principles molecular dynamics	MD simulations in which the electronic degrees of freedom are calculated
+LDA	Local density approximation	A DFT functional based solely on electron density and derived from the uniform electron gas
+GGA	Generalised gradient approximation	A class of DFT functionals that incorporate information about the density gradient as well as the electron density
+MC	Monte Carlo	Simulation approach in which configurations are sampled by the random generation of configurations, that are accepted or rejected based on the Metropolis Criterion
+MD	Molecular dynamics	Simulation approach in which configurations are sampled by propagating Newton's equations of motion
+PBE	Perdew–Burke–Ernzerhof functional	A DFT functional based on the GGA
+PBEsol	PBE solid	A refinement of the PBE functional to better describe solid systems
+SAPT	Symmetry-adapted perturbation theory	An accurate method for calculating the non-covalent interaction between molecules
+QM	Quantum mechanics/mechanical	Any approach that seeks to solve Schroedinger's equation
+QMC	Quantum Monte Carlo	An alternative QM approach to WFT and DFT, based on MC methods to solve Schroedinger's equation
+WFT	Wave function theory	One of main theories used for the QM calculation of molecular systems, based on Hartree–Fock and post-Hartree–Fock techniques
+
+ 	Fig. 2  The interlayer binding energy of graphite as a function of interlayer separation, d, as determined from a variety of different DFT functionals. Taken from ref. 22.	 
+
+ 	Fig. 3  Comparison between the reference adsorption energies for a set of small molecules adsorbed onto a graphene surface and those calculated with the revPBE-vdW-DF functional. The hydrocarbon, oxygen-containing and nitrogen-containing adsorbates are marked as the black, red and blue points, respectively. Taken from ref. 27.	 
+
+
+
+1	Methane	−0.9 (3.88)	−16.6 (3.53)	−17.0 (3.43)	−14.1 (3.43)	−17.4 (3.32)	−13.5a (3.31a)
+2	Ethane	−1.5 (4.22)	−23.7 (3.69)	−25.7 (3.51)	−20.6 (3.65)	−26.6 (3.44)	−20.8a (3.44a)
+3	Hexane	−2.5 (4.32)	−56.6 (3.78)	−63.2 (3.60)	−50.5 (3.71)	−64.4 (3.52)	−51.0b
+4	Ethene	
+	−22.6 (3.52)	−24.9 (3.29)	−19.3 (3.37)	−26.2 (3.20)	−20.2a (3.24a)
+5	Benzene	−1.7 (3.41)	−46.9 (3.59)	−54.4 (3.33)	−41.4 (3.52)	−57.3 (3.24)	−43.1a, −48.2c (3.30a)
+6	Toluene	−2.5 (4.32)	−57.6 (3.60)	−66.5 (3.36)	−50.7 (3.50)	−69.2 (3.28)	−56.5b
+7	Ethyne	
+	−19.7 (3.49)	−21.4 (3.31)	−17.2 (3.46)	−22.1 (3.24)	−17.1a (3.26a)
+8	Water	−2.3 (3.69)	−13.2 (3.51)	−13.8 (3.34)	−12.0 (3.35)	−14.1 (3.28)	−13.5a (3.19a)
+9	Ethanol	−2.2 (3.78)	−29.9 (3.33)	−32.0 (3.10)	−26.3 (3.24)	−34.1 (3.03)	−30.5b
+10	Acetone	
+	−37.4 (3.28)	−43.1 (3.09)	−34.1 (3.18)	−45.5 (3.05)	−34.3b
+11	Ammonia	−1.3 (3.97)	−13.4 (3.65)	−13.5 (3.58)	−11.4 (3.52)	−14.2 (3.58)	−13.5a (3.31a)
+12	Acetonitrile	
+	−29.9 (3.44)	−31.4 (3.18)	−26.2 (3.33)	−33.2 (3.17)	−31.8b
+13	Ethyl Acetate	
+	−51.2 (3.48)	−57.5 (3.22)	−45.6 (3.37)	−60.0 (3.16)	−48.1b
+
+ 	Fig. 4  Interfacial density profiles of graphene–water interface calculated using (a) the GRAPPA FF,27 and (b) the AMOEBAPRO FF.56,59 Adapted with permission from ref. 27.	 
+
+ 	Fig. 5  Structure of [DMIM][Cl] at negatively, uncharged and positively charged graphene interfaces, shown in schematic form (top) and snapshots from the MD simulation (bottom). The [DMIM] cations are shown as red ovals or coloured pink, while the [Cl] anions are shown as blue spheres. Taken from ref. 105.	 
+
+ 	Fig. 6  Representative examples of the different types of doping in graphene. The carbon, nitrogen, boron and sulphur atoms are coloured grey, blue, green and yellow, respectively.	 
+O2 + 4H+ + 4e− → 2H2O
+
+ 	Fig. 7  Possible adsorption sites on a hydrogenated graphene nanoflake (C96H26) for Pt nanoparticles. Taken from Yumura et al.161	 
+
+ 	Fig. 8  Structures of the bare and water/OH decorated Pt-wire adsorbed on a graphene edge. Gray, blue, white and red colors denote C, Pt, H and O atoms. (a) is the side view of the bare structure from Soldano et al.,168 (b) and (c) are the side view of the bare and solvated structures in this work while (d) and (e) are the corresponding plan views, respectively. Taken from Xiao et al.169	 
+
+ 	Fig. 9  Structures of (a) graphitic pores, and (b) MeN4 (Me = Fe, Co, or Ni) clusters embedded between these graphitic pores. Gray, blue, and brown spheres represent C, N and metal atoms, respectively. Rectangles enclosed with solid black lines show the unit cell used in the DFT calculations. Taken from Kattel and Wang.186	 
+
+ 	Fig. 10  Optimised structures (top and side view) of a structure resulting from the FeN4 moiety embedded in an extended graphene sheet. Grey, blue and cyan spheres represent carbon, nitrogen and Fe respectively. Taken from Szakacs et al.191	 
+
+ 	Fig. 11  Structures for five steps in the ORR from top to bottom on a 4% N-doped graphene substrate. Green, yellow, blue and red spheres are C, N, H and O respectively. Taken from Boukhvalov and Son.203	 
+
+ 	Fig. 12  (a) Experimentally determined onset potential for the ORR at PdxAu(1−x) core–shell nanoparticles, plotted as a function of the corresponding oxygen binding energy calculated by DFT. (b) Illustrative structure of PdxAu(1−x) core–shell nanoparticles. Reproduced with permission from ref. 219.	 
+
+ 	Fig. 13  Schematic of a first-generation rechargeable lithium-ion cell. During charging, lithium ions flow to the negative electrode through the electrolyte and electrons flow from the external circuit. During discharge the directions are reversed, generating useful power to be consumed by the device. Taken from ref. 249.	 
+
+ 	Fig. 14  Schematic summarising the challenges for the current computational approaches discussed in this review, as well as the developments required for progress.	 
+
+This journal is © The Royal Society of Chemistry 2015

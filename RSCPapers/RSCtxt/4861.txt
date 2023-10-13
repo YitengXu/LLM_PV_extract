@@ -1,0 +1,3131 @@
+Parameter extraction of solar photovoltaic models via quadratic interpolation learning differential evolution  - Sustainable Energy & Fuels (RSC Publishing) DOI:10.1039/D0SE01000F View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D0SE01000F
+(Paper)
+Sustainable Energy Fuels, 2020, 4, 5595-5608Parameter extraction of solar photovoltaic models via quadratic interpolation learning differential evolution
+
+        
+          
+            Guojiang 
+            Xiong
+          
+        
+      *a, 
+      
+        
+          
+            Jing 
+            Zhang
+          
+        
+      a, 
+      
+        
+          
+            Dongyuan 
+            Shi
+          
+        
+      b, 
+      
+        
+          
+            Lin 
+            Zhu
+          
+        
+      c and 
+
+        
+          
+            Xufeng 
+            Yuan
+          
+        
+      a
+aGuizhou Key Laboratory of Intelligent Technology in Power System, College of Electrical Engineering, Guizhou University, Guiyang, 550025, China. E-mail: gjxiongee@foxmail.com
+bState Key Laboratory of Advanced Electromagnetic Engineering and Technology, Huazhong University of Science and Technology, Wuhan, 430074, China
+cDepartment of Electrical Engineering and Computer Science, University of Tennessee, Knoxville, TN 37996, USA
+Received 
+      7th July 2020
+    , Accepted 27th August 2020First published on 28th August 2020AbstractThe parameter extraction problem of solar photovoltaic (PV) models is a highly nonlinear multimodal optimization problem. In this paper, quadratic interpolation learning differential evolution (QILDE) is proposed to solve it. Differential evolution (DE) is a preeminent metaheuristic algorithm with good exploration. However, its exploitation is poor, resulting in low searching precision when applied to the problem. To overcome this deficiency, in QILDE, quadratic interpolation (QI) is embedded in the crossover operation of DE to construct a QI learning-backup crossover operation to enhance the performance of DE. The mutation scheme of DE is primarily responsible for exploring the new search space while QI is mainly in charge of exploiting the local solution space around the best individual, which, therefore, can achieve a good trade-off between exploitation and exploration. QILDE is applied to six different PV cases. The experimental results demonstrate that QI coupled with the mutation scheme DE/best/2 can obtain superior results in solving the parameter extraction problem of PV models. Besides, compared with other advanced algorithms, QILDE shows highly competitive performance in terms of solution quality, extraction accuracy, robust stability, convergence property, computational time, and statistical significance. In addition, the current–voltage characteristics provided by QILDE agree well with the measured data for different PV models under different operating conditions.
+Introduction
+Global warming, environmental harm, increasing demand, and lack of fossil energy have accelerated the development of renewable energy sources. Solar photovoltaic (PV) energy, as one of the most promising renewable energy sources, has gained fast-growing popularity due to its tempting merits, for example it is inexhaustible and carbon emission-free, has no fuel costs, and is noiseless.1 According to the data released by the International Renewable Energy Agency (IRENA),2 the total global installed capacity of solar PV in 2018 was 97.3 GW which accounted for 55.7% of the newly installed renewable energy capacity. By the end of 2018, solar PV represented 20.4% of the total renewable energy capacity. PV cells and modules are the basic units of a PV system. They directly affect the evaluation and control of the system. To improve the evaluation and control level, we need to develop accurate mathematical models.
+In general, the single diode model (SDM) and the double diode model (DDM) are the most popular equivalent circuit models used to describe the conversion behavior of PV cells and modules.3 However, accurate SDM and DDM are hard to achieve due to their high nonlinearity and nonconvexity. As such, this has attracted intense interest, and many researchers have developed multitudinous methods to deal with it. The first solution type is the analytical approach. This approach formulates a set of simplified or approximate mathematical equations to capture the model parameters. It has the advantages of simplicity and rapidity. However, the accuracy of the parameters relies heavily on several specific data points measured under the standard test conditions (STC) by the PV manufacturers. Any noise or different operating conditions will bring about unexpected errors. Therefore, simplification, approximation, and excessive reliance on several specific data points make the extracted parameters physically unrealistic and inaccurate.4–7
+The other solution type is the optimization approach. This approach does not rely on several specific data points determined under the STC. Instead, it is based on a large number of actual data points measured under the given environmental conditions. These actual data points cover the whole I–V curve, provide much more information, and thereby can characterize the nonlinear input–output behavior of a PV model accurately.8 The applied optimization methods can be subdivided into deterministic methods and metaheuristic methods.
+Deterministic methods, also termed numerical methods,9–13 are mainly gradient-based techniques. They are exceedingly sensitive to the initial starting point in the search space. The high nonlinearity and nonconvexity of PV models make them easily trapped in local optima, also resulting in inaccurate model parameters.
+As an alternative, metaheuristic methods require no information about the gradient of the objective function and are more robust to initial conditions compared to gradient-based techniques. In addition, they can guarantee the rationality of the extracted parameters by setting reasonable search ranges for these parameters. Therefore, they have gained increasing popularity. For example, Hamid et al. proposed a variant of a genetic algorithm that integrated a convex combination crossover to balance the intensification of the best solutions and the diversification of the search space in extracting unknown parameters of different PV models.14 Wei et al. applied particle swarm optimization to acquire the fitting parameters of a three-diode lumped parameter model of organic solar cells.15 In ref. 16, a flexible particle swarm optimization algorithm was developed, in which an elimination phase that replaced the worst particles with some new particles generated in a newly defined search space was designed to decrease the chance of falling into local minima. Subudhi et al. put forward a bacterial foraging optimization to extract the parameters of SDM-based PV modules.17 Mathew et al. employed wind-driven optimization to identify the parameters of a 12-parameter DDM-based PV model.18 Huang et al. used the probabilistic state transition rule in the ant system to keep the variability of the charged system search algorithm.19 Oliva et al. adopted chaotic maps to compute and automatically adapt the choosing probability of the whale optimization algorithm.20 Xiong et al. designed two prey searching strategies to balance the exploration and exploitation of the whale optimization algorithm.21 Yu et al. quantified the performance of individuals in the performance-guided JAYA algorithm and adaptively chose different evolution strategies to update them.22 Ramadan et al. used sine and cosine functions to iteratively determine the control parameters of the teacher phase of teaching–learning-based optimization.23 Chen et al. designed three hybrid search phases to make full use of the good exploration of the artificial bee colony and the excellent exploitation of teaching–learning-based optimization in solving three parameter extraction problems of PV models.24 Chen et al. utilized chaotic drifts and an opposition-based exploratory strategy to enhance the diversification of the Harris Hawks optimization.25 Jiao et al. combined orthogonal learning and general opposition-based learning to respectively improve the convergence speed and increase the population diversity of the Harris Hawks optimization.26 Zhang et al. utilized an orthogonal learning strategy and the Nelder–Mead simplex method to respectively construct healthier candidate locations for inferior individuals and augment the accurateness of the global optimal solution for moth flame optimization.27 Ben Messaoud utilized simulated annealing to improve the estimation of the parameters of solar photovoltaic models by taking into account the uncertainties of measurements.28 Diab et al. introduced the coyote optimization algorithm for parameter extraction of various models of PV cells and modules.29 Xiong et al. combined a winner-leading search strategy and a dynamic Gaussian mutation operator to elevate the exploration of the competitive swarm optimizer in solving the problems concerned.30 Long et al. hybridized the grey wolf optimizer and the cuckoo search to achieve a balance between exploration and exploitation.31
+In addition to the algorithms mentioned above, differential evolution (DE)32 is another popular metaheuristic algorithm and has shown powerful capacity in solving different optimization problems including the one considered in this work. For example, Chin et al. applied DE to extract the DDM parameters of six PV modules.33 Ayala et al. proposed an improved free search DE to extract the parameters of SDM-based PV models.34 Muangkote et al. presented an onlooker-ranking-based mutation scheme to accelerate the convergence speed of a repaired adaptive DE.35 Li et al. combined the success-history-based adaptive DE with the Nelder–Mead simplex method and the ranking-based elimination strategy to reduce the computational resources in extracting the unknown parameters of different PV models.36 In ref. 37, a linear population size reduction technique was applied to improve the success-history-based adaptive DE. Muhsen et al. utilized the attraction–repulsion concept of electromagnetism to boost the mutation operation of DE.38 Xiong et al. hybridized DE with the whale optimization algorithm to get a proper trade-off between exploration and exploitation.39 Li et al. introduced a crossover rate sorting mechanism and a dynamic population reduction strategy to respectively allow more good elements to be inherited in the next generation and improve the convergence speed of DE.40 Liang et al. developed a self-adaptive ensemble-based DE to combine three different mutation strategies with different properties into two groups to update each individual.41
+The above DE algorithms have shown the promising potential of DE in the parameter extraction problem of PV models. Nevertheless, the famous no free lunch theorem has remarkably indicated that there is no unique algorithm that can extract accurate and reliable parameters for all PV models consistently. Furthermore, this problem is a highly complex optimization problem with a large number of local minima where many solution methods are easily caught. Therefore, more attempts are still necessary and important.42
+It is well-known that both exploration and exploitation are equally crucial for a metaheuristic algorithm, and a proper trade-off between them is indispensable. DE performs well in exploration but poorly in exploitation. We note that quadratic interpolation (QI) exhibits an attractive exploitation ability that can find the optimum of a parabola quickly. In order to capitalize on the exploitation of QI, in this paper we present a variant of DE named quadratic interpolation learning differential evolution (QILDE) by integrating QI into DE for the parameter extraction problem of PV models. In reality, the idea of using QI to enhance the performance of metaheuristic algorithms has gained much attention. QI was first incorporated into the local phase of the random search technique to increase the convergence speed.43 After that, QI was successively introduced to other metaheuristic algorithms such as genetic algorithm,44 harmony search,45 particle swarm optimization,46 invasive weed optimization,47 self-organizing migrating algorithm,48 whale optimization algorithm,49 teaching–learning-based optimization,50 and DE.51–53
+In ref. 51, QI was merged into the mutation operation of DE, in which the possibility that the mutant vector was generated by using QI or the classical DE mutation scheme depended on an adaptive probability. In ref. 52, QI was utilized to initialize the population. In ref. 53, QI was employed to update the worst individual. Different from the work mentioned above, in this study, QI is used to form a learning strategy embedded in the crossover operation of DE to construct a QI learning-backup crossover operation. In this operation, the trial vector is possibly constituted by the mutant vector of DE and the approximated optimum of QI. The DE mutation scheme is primarily responsible for exploring the new search space while QI is mainly in charge of exploiting the local solution space around the best individual to find approximate optima with informative components. This way, the exploration of DE and the exploitation of QI can be mixed adequately. To verify the performance of QILDE, it is applied to six different PV cases including the SDM, DDM and PV modules. The experimental results and comparisons demonstrate the superiority of QILDE in solving the parameter extraction problem of PV models.
+The main contributions of this study are as follows:
+(1) To enhance the exploitation of DE in solving the parameter extraction problem of PV models, an improved variant referred to as QILDE is proposed by integrating QI into the crossover operation of DE. Different from the basic DE and abovementioned QI-based DE variants, in QILDE, the trial vector is a crossed combination of the DE mutant vector and the QI approximate optima, which can equilibrate the exploration and the exploitation effectively.
+(2) The influence of the DE mutation scheme on the performance of QILDE is empirically investigated for six PV cases with diverse characteristics.
+(3) The effectiveness of QILDE is fully verified by comparing with three QI-based DE variants, three advanced non-QI-based DE variants, and five non-DE-based advanced algorithms in terms of solution quality, extraction accuracy, robust stability, convergence property, computational time, and statistical significance.
+(4) Furthermore, the results provided by QILDE are also compared with the reported results of some recently-published parameter extraction methods to further verify its good performance.
+Problem formulation
+SDM
+The output current IL of a SDM is defined as:3 (1)where Iph and Isd are defined as the photogenerated and saturation currents, respectively. VL is the output voltage. Rs and Rsh are the series and shunt resistances, respectively. n is the diode ideality factor. k is the Boltzmann constant (1.38 × 10−23 J K−1). q is the electron charge (1.60 × 10−19 C). T is the temperature (K).
+To determine the concrete SDM, we should obtain the values of five unknown parameters (i.e., Iph, Isd, Rs, Rsh, n).
+DDM
+The output current IL of a DDM is defined as:3 (2)
+The DDM has seven parameters (i.e., Iph, Isd1, Isd2, Rs, Rsh, n1, n2).
+PV module
+The output current IL of a PV module with Ns × Np solar cells connected in series and/or in parallel is defined as:54 (3)
+Objective function
+The root mean square error (RMSE) is commonly used to quantify the disparity between the measured data and the calculated data: (4)where N is defined as the number of measured data points.  represents the parameter vector.
+Overview of DE and QI
+Differential evolution
+In basic DE,32 a population consisting of ps individuals is generally represented by , , where i = 1, 2, …, ps, t = 1, 2, …, tmax, tmax is the maximum number of iterations, and D is the problem dimension. DE comprises mutation, crossover and selection operations. In the mutation operation, a mutant vector  associated with a target individual  is generated by one of the following well-known mutation schemes:55
+(1) DE/rand/1: (5)
+(2) DE/rand/2: (6)
+(3) DE/best/1: (7)
+(4) DE/best/2: (8)
+(5) DE/current-to-best/1: (9)
+(6) DE/current-to-best/2: (10)
+(7) DE/rand-to-best/1: (11)
+(8) DE/rand-to-best/2: (12)where r1–r5 are mutually exclusive integers in {1, 2, …, ps}.  is the best individual. F is a scaling factor.
+Then, the crossover operation is applied on  and  to generate a trial vector : (13)where CR is the crossover rate. rand(0,1) is a random real number in (0,1). drand is a random integer selected from {1, 2, …, D}.
+Finally, the selection operation is carried out to decide whether  or  survives to the next iteration: (14)
+Quadratic interpolation
+QI is a simple yet efficient direct approximation method used to quickly find the optimum of a parabola defined by three different points. In general, a parabola is formulated as: f(x) = a0 + a1x + a2x2(15)where a0, a1 and a2 are coefficients. Suppose there are three points (x1, f(x1)), (x2, f(x2)) and (x3, f(x3)) on the curve of f(x): (16)
+We can get the values of a0, a1 and a2 by solving eqn (16) as: (17)
+By setting f′(x) = 0, the minimizer is easily found to be: (18)
+In a D-dimensional space, suppose the given three points are (x1, f(x1)), (x2, f(x2)) and (x3, f(x3)), x1 = [x11, x12, …, x1D], x2 = [x21, x22, …, x2D], x3 = [x31, x32, …, x3D]. The approximated optimum (o, f(o)) of this parabola is formulated as follows:43 (19)where d = 1, 2, …, D.
+Proposed algorithm: QILDE
+Motivations
+The first motivation is to enhance the exploitation ability of DE. DE is good at exploration but poor at exploitation. The QI learning strategy is a local search operator focusing on intensification and thereby can exploit the solution more quickly and thoroughly.
+The second motivation is that the notion of hybridization has attracted increasing attention in metaheuristic algorithms. Hybridization is an effective way to combine the complementary character of different optimization strategies to achieve top performance in solving hard optimization problems. DE is a population-based metaheuristic algorithm, while QI is a direct search method. Proper integration of them is highly expected to obtain fantastic results.
+The third motivation is that the use of QI in metaheuristic algorithms has been shown to be a promising alternative to improve the search performance significantly.43–53
+Main procedure of QILDE
+As shown in eqn (19), to generate the approximated optimum , first, we need to determine the three points involved. In this study, the best individual  and two other random distinct individuals  and  serve as the three points. In addition, we need to handle the situation where the denominator of eqn (19) is equal to zero. If this happens, the target individual  is set as  directly. In QILDE, QI is embedded in the crossover operation of DE to construct a QI learning-backup crossover operation as shown in Algorithm 1 (Scheme 1). The value  obtained from  or  depends on the crossover rate and the random integer drand. It is worth noting that in Algorithm 1, the mutation scheme DE/rand/1 is presented. Other schemes can also be employed conveniently. Another noteworthy point is that the random individuals used in the mutation operation and QI are not selected repeatedly. Namely, once the random individuals are selected, they are applied to the mutation operation and QI simultaneously. For example, the first two random individuals  and  used in DE/rand/1 are also used in QI. That is, , , and the best individual  are combined to generate . This usage, on the one hand, can guarantee the consistency of the crossover sources. On the other hand, it can save the computational cost of the selection of random individuals.
+ Scheme 1  Algorithm 1: the pseudocode of QILDE with DE/rand/1 scheme. 
+The core idea of the QI learning-backup crossover operation involves three considerations. Firstly, the mutation scheme of DE can explore the new search space while QI can exploit the local solution space around the best individual. Therefore, the mutant vector  and the approximated optimum  represent two different solutions that can satisfy the search requirements of different dimensions. Secondly, compared with the target individual , the approximated optimum  contains more informative components that can guide the search directions more effectively. Thirdly, the approximated optimum  is a newly generated exclusive solution which is beneficial to maintaining the population diversity.
+Case studies
+In this study, the population size ps is set to 50. For basic DE and QILDE, the scaling factor F and the crossover rate CR are uniformly distributed in (0.1,1) and (0,1), respectively. The maximum number of fitness evaluations (Max_FEs) is used as the stopping criterion. Six cases consisting of SDM, DDM, and PV module models are employed to verify QILDE:
+Case C1: SDM-based RTC France silicon solar cell.56
+Case C2: DDM-based RTC France silicon solar cell.56
+Case C3: Photowatt-PWP201 PV module.56
+Case C4: STM6-40/36 monocrystalline module.57
+Case C5: STP6-120/36 polycrystalline module.57
+Case C6: Sharp ND-R250A5 polycrystalline module.58
+The parameters’ search ranges are presented in Table 1. For C1 and C3, Max_FEs is set to 10000. For C2, Max_FEs is 20000. For C4, C5 and C6, Max_FEs is 30000. Experiments are conducted in MATLAB 2017a on an Intel Core i7-8550U 1.80 GHz PC with 8 GB memory.
+Table 1 Ranges of parameters
+
+
+
+
+Parameter
+Case
+
+
+C1/C2
+C3
+C4
+C5
+C6
+
+
+LB
+UB
+LB
+UB
+LB
+UB
+LB
+UB
+LB
+UB
+
+
+
+
+
+I
+ph (A)
+0
+1
+0
+2
+0
+2
+0
+8
+0
+10
+
+
+
+I
+sd (μA)
+0
+1
+0
+50
+0
+50
+0
+50
+0
+10
+
+
+
+R
+s (Ω)
+0
+0.5
+0
+2
+0
+0.36
+0
+0.36
+0
+2
+
+
+
+R
+sh (Ω)
+0
+100
+0
+2000
+0
+1000
+0
+1500
+0
+5000
+
+
+
+n
+
+1
+2
+1
+50
+1
+60
+1
+50
+1
+50
+
+
+
+
+Effect of DE mutation scheme
+Basic DE has many mutation schemes. Choosing an appropriate scheme for the specific problem at hand is difficult, yet very important. In this section, we conduct an experiment to choose an appropriate scheme for QILDE. The results (mean ± standard deviation (Std)) of 50 runs are presented in Table 2. It can be seen that the mutation scheme affects the performance of both DE and QILDE. QILDE is consistently better than DE in all cases for every scheme, indicating that the QI learning strategy can indeed improve the performance of DE for different mutation schemes. The results also show that the scheme DE/best/2 outperforms all the other schemes in all cases. Although the schemes DE/current-to-best/2 and DE/rand-to-best/2 have the same mean value of RMSE for case C4 and DE/rand-to-best/2 has the same mean value of RMSE for case C5, their standard deviation values are larger than those of scheme DE/best/2 in these two cases, indicating that they are unstable. Therefore, QILDE with the scheme DE/best/2 is used in the following experiments.
+Table 2 Effect of mutation scheme (mean ± Std)
+
+
+
+
+Case
+Algorithm
+DE/rand/1
+DE/rand/2
+DE/best/1
+DE/best/2
+
+
+
+
+C1
+DE
+1.2536 × 10−3 ± 1.6931 × 10−4
+1.3399 × 10−3 ± 1.4120 × 10−4
+1.0589 × 10−3 ± 3.6580 × 10−4
+1.0174 × 10−4 ± 1.2655 × 10−5
+
+
+QILDE
+1.1550 × 10−3 ± 1.4963 × 10−4
+1.1170 × 10−3 ± 9.8611 × 10−5
+9.9057 × 10−4 ± 1.3680 × 10−5
+
+9.8603 × 10
+
+−4
+ ± 2.7839 × 10−8
+
+
+C2
+DE
+1.3649 × 10−3 ± 3.1194 × 10−4
+1.6434 × 10−3 ± 2.9070 × 10−4
+1.0022 × 10−3 ± 1.0759 × 10−4
+1.0061 × 10−3 ± 1.1271 × 10−5
+
+
+QILDE
+1.1982 × 10−3 ± 2.6665 × 10−4
+1.1094 × 10−3 ± 2.0528 × 10−4
+9.8935 × 10−4 ± 1.1576 × 10−5
+
+9.8480 × 10
+
+−4
+ ± 1.5868 × 10−6
+
+
+C3
+DE
+3.0100 × 10−3 ± 2.8747 × 10−3
+3.2029 × 10−3 ± 1.8427 × 10−3
+2.4531 × 10−3 ± 1.2168 × 10−4
+2.4621 × 10−3 ± 1.9018 × 10−4
+
+
+QILDE
+2.4518 × 10−3 ± 5.4615 × 10−5
+2.4362 × 10−3 ± 3.2853 × 10−5
+2.4383 × 10−3 ± 5.2257 × 10−5
+
+2.4257 × 10
+
+−3
+
+± 2.2436 × 10
+
+−6
+
+
+
+
+C4
+DE
+2.3394 × 10−3 ± 1.7787 × 10−4
+2.1757 × 10−3 ± 9.8371 × 10−5
+1.7688 × 10−3 ± 2.2886 × 10−4
+1.7557 × 10−3 ± 1.8313 × 10−4
+
+
+QILDE
+2.1827 × 10−3 ± 1.9127 × 10−4
+1.7645 × 10−3 ± 2.1799 × 10−5
+1.7394 × 10−3 ± 5.5448 × 10−5
+
+1.7298 × 10
+
+−3
+ ± 1.1295 × 10−17
+
+
+C5
+DE
+2.2682 × 10−2 ± 2.3249 × 10−3
+1.9618 × 10−2 ± 9.2944 × 10−4
+3.4473 × 10−2 ± 3.1492 × 10−2
+1.6601 × 10−2 ± 1.9050 × 10−9
+
+
+QILDE
+1.8364 × 10−2 ± 1.4366 × 10−3
+1.6753 × 10−2 ± 7.4270 × 10−5
+2.0190 × 10−2 ± 1.6645 × 10−2
+
+1.6601 × 10
+
+−2
+ ± 8.8518 × 10−16
+
+
+C6
+DE
+2.4313 × 10−2 ± 1.0182 × 10−2
+1.9889 × 10−2 ± 1.0368 × 10−2
+5.7738 × 10−2 ± 1.1760 × 10−1
+1.1809 × 10−2 ± 4.1693 × 10−3
+
+
+QILDE
+1.5840 × 10−2 ± 6.9737 × 10−3
+1.1957 × 10−2 ± 2.0145 × 10−3
+1.1689 × 10−2 ± 1.4581 × 10−3
+
+1.1183 × 10
+
+−2
+ ± 5.1647 × 10−10
+
+
+
+
+
+
+Case
+Algorithm
+DE/current-to-best/1
+DE/current-to-best/2
+DE/rand-to-best/1
+DE/rand-to-best/2
+
+
+
+
+C1
+DE
+1.0339 × 10−3 ± 5.7596 × 10−5
+1.1748 × 10−3 ± 1.1412 × 10−4
+1.0184 × 10−3 ± 3.9826 × 10−5
+1.0810 × 10−3 ± 6.4932 × 10−5
+
+
+QILDE
+1.0025 × 10−3 ± 3.2762 × 10−5
+1.0061 × 10−3 ± 2.9124 × 10−5
+9.9523 × 10−4 ± 2.7278 × 10−5
+9.9256 × 10−4 ± 1.4169 × 10−5
+
+
+C2
+DE
+1.0582 × 10−3 ± 1.2154 × 10−4
+1.3201 × 10−3 ± 2.5491 × 10−4
+1.0019 × 10−3 ± 9.6300 × 10−5
+1.2673 × 10−3 ± 2.8322 × 10−4
+
+
+QILDE
+9.8562 × 10−4 ± 1.8942 × 10−6
+1.0256 × 10−3 ± 8.1599 × 10−5
+9.8553 × 10−4 ± 1.7639 × 10−6
+9.8517 × 10−4 ± 9.9254 × 10−7
+
+
+C3
+DE
+2.4441 × 10−3 ± 6.2485 × 10−5
+2.5208 × 10−3 ± 1.3421 × 10−4
+2.4496 × 10−3 ± 9.2207 × 10−5
+2.4776 × 10−3 ± 2.2205 × 10−4
+
+
+QILDE
+2.4363 × 10−3 ± 3.1051 × 10−5
+2.4396 × 10−3 ± 5.0904 × 10−5
+2.4405 × 10−3 ± 7.0045 × 10−5
+2.4311 × 10−3 ± 2.2085 × 10−5
+
+
+C4
+DE
+1.7349 × 10−3 ± 2.5954 × 10−5
+1.9813 × 10−3 ± 2.5737 × 10−4
+1.7596 × 10−3 ± 1.6416 × 10−4
+1.7300 × 10−3 ± 2.7851 × 10−7
+
+
+QILDE
+1.7325 × 10−3 ± 1.8700 × 10−5
+1.7298 × 10−3 ± 6.8773 × 10−11
+1.7305 × 10−3 ± 4.5455 × 10−6
+1.7298 × 10−3 ± 1.3116 × 10−14
+
+
+C5
+DE
+2.9958 × 10−2 ± 4.1370 × 10−2
+1.7840 × 10−2 ± 1.0018 × 10−3
+2.6161 × 10−2 ± 2.6115 × 10−2
+1.6620 × 10−2 ± 2.1186 × 10−5
+
+
+QILDE
+1.6750 × 10−2 ± 6.0058 × 10−4
+1.6603 × 10−2 ± 1.1666 × 10−5
+1.6789 × 10−2 ± 1.0293 × 10−3
+1.6601 × 10−2 ± 2.7428 × 10−6
+
+
+C6
+DE
+4.8389 × 10−2 ± 1.1819 × 10−1
+1.8048 × 10−2 ± 9.1789 × 10−3
+3.7424 × 10−2 ± 5.6031 × 10−2
+1.3067 × 10−2 ± 4.9714 × 10−3
+
+
+QILDE
+1.2121 × 10−2 ± 2.7449 × 10−3
+1.1923 × 10−2 ± 4.3702 × 10−3
+1.2948 × 10−2 ± 5.9977 × 10−3
+1.1361 × 10−2 ± 8.0126 × 10−4
+
+
+
+
+Comparison with other advanced algorithms
+In this section, QILDE is compared with three QI-based DE variants, namely DE_QI,51 QIDE,52 and DESQA,53 three advanced non-QI-based DE variants, namely AGDE,59 CoDE,60 and JADE,61 and five non-DE-based advanced algorithms, namely RGA_DX,62 PPSO,63 GL_PSO,64 TLABC,24 and NaCuSa.65 All the algorithms use the same population size and Max_FEs, while the other algorithm-specific parameters retain the same values as those used in the original literature.
+
+On the solution quality. 
+The experimental results are recorded and presented in Table 3. In terms of the minimum value of RMSE (Min), although other algorithms also achieve the same lowest values for cases C1 (9.8602 × 10−4 obtained by DESQA, QIDE and QILDE), C3 (2.4251 × 10−3 obtained by PPSO, AGDE, DESQA, JADE, QIDE and QILDE), C4 (1.7298 × 10−3 obtained by PPSO, AGDE and QILDE), C5 (1.6601 × 10−2 obtained by PPSO, AGDE and QILDE), and C6 (1.1183 × 10−2 obtained by AGDE, JADE and QILDE), their values are worse than that of QILDE for case C2 (the best value obtained by QILDE is 9.8248 × 10−4). In addition, QILDE is better than all the other algorithms in terms of the maximum (Max) and mean values of RMSE, and the standard deviations of RMSE in all cases. The comparison indicates that QILDE outperforms the other algorithms in all cases. Although the discrepancies between QILDE and the other algorithms are slight, any reduction in the value of RMSE is momentous because it leads to melioration of the information about the actual values of the unknown parameters involved in PV models.
+Table 3 Experimental results
+
+
+
+
+Case
+Result
+RGA_DX
+PPSO
+GL_PSO
+TLABC
+NaCuSa
+AGDE
+CoDE
+JADE
+DE_QI
+DESQA
+QIDE
+QILDE
+
+
+
+
+C1
+Min
+9.8654 × 10−4
+9.8706 × 10−4
+9.8631 × 10−4
+9.9829 × 10−4
+1.0051 × 10−3
+9.8710 × 10−4
+1.1413 × 10−3
+9.8670 × 10−4
+9.9147 × 10−4
+
+9.8602 × 10
+
+−4
+
+
+
+9.8602 × 10
+
+−4
+
+
+
+9.8602 × 10
+
+−4
+
+
+
+
+Max
+4.2667 × 10−3
+2.3798 × 10−3
+2.0468 × 10−3
+2.0482 × 10−3
+1.6248 × 10−3
+1.3242 × 10−3
+1.8551 × 10−3
+1.4265 × 10−3
+1.7821 × 10−3
+1.5452 × 10−3
+1.7222 × 10−3
+
+9.8616 × 10
+
+−4
+
+
+
+
+Mean
+1.6314 × 10−3
+1.3087 × 10−3
+1.3512 × 10−3
+1.3495 × 10−3
+1.2958 × 10−3
+1.0801 × 10−3
+1.4639 × 10−3
+1.1147 × 10−3
+1.3263 × 10−3
+1.1985 × 10−3
+1.1912 × 10−3
+
+9.8603 × 10
+
+−4
+
+
+
+
+Std
+5.9018 × 10−4
+3.3870 × 10−4
+2.8685 × 10−4
+2.5037 × 10−4
+1.4816 × 10−4
+8.0830 × 10−5
+1.5840 × 10−4
+1.1880 × 10−4
+1.8086 × 10−4
+1.5863 × 10−4
+1.5546 × 10−4
+
+2.7839 × 10
+
+−8
+
+
+
+
+Sig
+†
+†
+†
+†
+†
+†
+†
+†
+†
+†
+†
+
+
+
+
+C2
+Min
+9.8462 × 10−4
+9.8301 × 10−4
+9.8357 × 10−4
+9.9443 × 10−4
+1.0066 × 10−3
+9.8326 × 10−4
+1.1394 × 10−3
+1.0170 × 10−3
+1.1095 × 10−3
+9.8256 × 10−4
+9.8318 × 10−4
+
+9.8248 × 10
+
+−4
+
+
+
+
+Max
+2.4398 × 10−3
+1.6602 × 10−3
+1.7611 × 10−3
+2.2823 × 10−3
+2.4895 × 10−3
+1.5499 × 10−3
+2.1299 × 10−3
+1.8152 × 10−3
+2.5113 × 10−3
+1.4639 × 10−3
+1.4453 × 10−3
+
+9.8968 × 10
+
+−4
+
+
+
+
+Mean
+1.4835 × 10−3
+1.1060 × 10−3
+1.2012 × 10−3
+1.3559 × 10−3
+1.6824 × 10−3
+1.1284 × 10−3
+1.6854 × 10−3
+1.2694 × 10−3
+1.7311 × 10−3
+1.0745 × 10−3
+1.0269 × 10−3
+
+9.8480 × 10
+
+−4
+
+
+
+
+Std
+4.1962 × 10−4
+1.7292 × 10−4
+2.1331 × 10−4
+2.7829 × 10−4
+3.9144 × 10−4
+1.7547 × 10−4
+2.4792 × 10−4
+1.9636 × 10−4
+3.5261 × 10−4
+1.1589 × 10−4
+8.2750 × 10−5
+
+1.5868 × 10
+
+−6
+
+
+
+
+Sig
+†
+†
+†
+†
+†
+†
+†
+†
+†
+†
+†
+
+
+
+
+C3
+Min
+2.4271 × 10−3
+
+2.4251 × 10
+
+−3
+
+
+2.4252 × 10−3
+2.4267 × 10−3
+2.4290 × 10−3
+
+2.4251 × 10
+
+−3
+
+
+2.4509 × 10−3
+
+2.4251 × 10
+
+−3
+
+
+2.4259 × 10−3
+
+2.4251 × 10
+
+−3
+
+
+
+2.4251 × 10
+
+−3
+
+
+
+2.4251 × 10
+
+−3
+
+
+
+
+Max
+6.4639 × 10−3
+3.5370 × 10−3
+2.9424 × 10−3
+2.8332 × 10−3
+3.9644 × 10−3
+2.4436 × 10−3
+3.0337 × 10−3
+2.5090 × 10−3
+2.4773 × 10−3
+3.3653 × 10−3
+2.4708 × 10−3
+
+2.4370 × 10
+
+−3
+
+
+
+
+Mean
+2.7364 × 10−3
+2.5926 × 10−3
+2.4959 × 10−3
+2.4754 × 10−3
+2.8122 × 10−3
+2.4263 × 10−3
+2.5966 × 10−3
+2.4362 × 10−3
+2.4384 × 10−3
+2.4745 × 10−3
+2.4267 × 10−3
+
+2.4257 × 10
+
+−3
+
+
+
+
+Std
+6.6087 × 10−4
+2.7767 × 10−4
+1.0487 × 10−4
+7.1507 × 10−5
+3.8023 × 10−4
+3.4327 × 10−6
+1.1832 × 10−4
+2.2028 × 10−5
+1.1978 × 10−5
+1.6048 × 10−4
+6.7075 × 10−6
+
+2.2436 × 10
+
+−6
+
+
+
+
+Sig
+†
+†
+†
+†
+†
+†
+†
+†
+†
+†
+†
+
+
+
+
+C4
+Min
+2.0265 × 10−3
+
+1.7298 × 10
+
+−3
+
+
+1.7299 × 10−3
+1.8862 × 10−3
+3.1461 × 10−3
+
+1.7298 × 10
+
+−3
+
+
+2.0999 × 10−3
+1.7302 × 10−3
+2.4929 × 10−3
+2.0289 × 10−3
+2.2419 × 10−3
+
+1.7298 × 10
+
+−3
+
+
+
+
+Max
+2.7935 × 10−2
+7.1348 × 10−3
+6.4510 × 10−3
+2.9168 × 10−3
+5.6999 × 10−3
+1.7435 × 10−3
+2.6394 × 10−3
+2.3903 × 10−3
+3.3059 × 10−3
+1.8462 × 10−2
+1.2444 × 10−2
+
+1.7298 × 10
+
+−3
+
+
+
+
+Mean
+1.2697 × 10−2
+2.3338 × 10−3
+3.1636 × 10−3
+2.3197 × 10−3
+4.0861 × 10−3
+1.7303 × 10−3
+2.2820 × 10−3
+1.8989 × 10−3
+2.9080 × 10−3
+3.3622 × 10−3
+3.2897 × 10−3
+
+1.7298 × 10
+
+−3
+
+
+
+
+Std
+7.0436 × 10−3
+9.4722 × 10−4
+9.0213 × 10−4
+2.3351 × 10−4
+5.9948 × 10−4
+2.0956 × 10−6
+1.1972 × 10−4
+1.3778 × 10−4
+2.2195 × 10−4
+2.2604 × 10−3
+1.6111 × 10−3
+
+1.1295 × 10
+
+−17
+
+
+
+
+Sig
+†
+†
+†
+†
+†
+†
+†
+†
+†
+†
+†
+
+
+
+
+C5
+Min
+1.6950 × 10−2
+
+1.6601 × 10
+
+−2
+
+
+1.6858 × 10−2
+1.6770 × 10−2
+1.7121 × 10−2
+
+1.6601 × 10
+
+−2
+
+
+1.6961 × 10−2
+1.6612 × 10−2
+1.8199 × 10−2
+1.8358 × 10−2
+1.6635 × 10−2
+
+1.6601 × 10
+
+−2
+
+
+
+
+Max
+5.5259 × 10−2
+3.3244 × 10−2
+3.1866 × 10−2
+2.2538 × 10−2
+3.1992 × 10−2
+1.6750 × 10−2
+2.2109 × 10−2
+2.3011 × 10−1
+3.9157 × 10−2
+4.3312 × 10−2
+2.7762 × 10−1
+
+1.6601 × 10
+
+−2
+
+
+
+
+Mean
+4.4824 × 10−2
+1.8372 × 10−2
+2.1332 × 10−2
+1.8520 × 10−2
+2.2334 × 10−2
+1.6606 × 10−2
+1.9226 × 10−2
+2.8526 × 10−2
+3.0484 × 10−2
+3.2836 × 10−2
+6.0846 × 10−2
+
+1.6601 × 10
+
+−2
+
+
+
+
+Std
+9.0780 × 10−3
+3.8189 × 10−3
+3.4651 × 10−3
+1.2799 × 10−3
+3.9728 × 10−3
+2.4193 × 10−5
+1.1538 × 10−3
+3.9424 × 10−2
+4.3484 × 10−3
+6.8419 × 10−3
+6.7935 × 10−2
+
+8.8518 × 10
+
+−14
+
+
+
+
+Sig
+†
+†
+†
+†
+†
+†
+†
+†
+†
+†
+†
+
+
+
+
+C6
+Min
+1.2187 × 10−2
+1.1183 × 10−2
+1.2115 × 10−2
+1.1232 × 10−2
+1.1782 × 10−2
+
+1.1183 × 10
+
+−2
+
+
+1.4939 × 10−2
+
+1.1183 × 10
+
+−2
+
+
+1.6025 × 10−2
+1.2762 × 10−2
+2.0565 × 10−2
+
+1.1183 × 10
+
+−2
+
+
+
+
+Max
+1.5729 × 10−1
+5.0798 × 10−2
+2.9435 × 100
+3.2805 × 10−2
+3.9255 × 10−2
+1.1436 × 10−2
+2.0706 × 10−2
+7.9098 × 10−1
+8.1961 × 10−2
+6.7418 × 10−2
+1.7002 × 100
+
+1.1183 × 10
+
+−2
+
+
+
+
+Mean
+4.8056 × 10−2
+1.5446 × 10−2
+5.1388 × 10−1
+1.7078 × 10−2
+2.7788 × 10−2
+1.1188 × 10−2
+1.8106 × 10−2
+5.5319 × 10−2
+2.9793 × 10−2
+2.9973 × 10−2
+7.1489 × 10−1
+
+1.1183 × 10
+
+−2
+
+
+
+
+Std
+2.7418 × 10−2
+7.4164 × 10−3
+1.0455 × 100
+4.8496 × 10−3
+7.4433 × 10−3
+3.5681 × 10−5
+1.4059 × 10−3
+1.1847 × 10−1
+8.8898 × 10−3
+1.0254 × 10−2
+6.3154 × 10−1
+
+5.1647 × 10
+
+−10
+
+
+
+
+Sig
+†
+†
+†
+†
+†
+†
+†
+†
+†
+†
+†
+
+
+
+
+
+
+
+
+On the extraction accuracy. 
+The optimal parameters corresponding to the minimum RMSE values are presented in Tables 4–9. An index, i.e., the sum of individual absolute error (SIAE) formulated as  is used to gauge their accuracy. We can see that the SIAE values of AGDE are very close to those of QILDE, but the SIAE values of QILDE are consistently smaller. This means that the searching precision of QILDE is higher. QILDE consistently provides the lowest SIAE values in all cases, indicating that the parameter values extracted by QILDE are the closest to the actual values. The reconstructed I–V and P–V characteristic curves are illustrated in Fig. 1. The calculated data obtained by QILDE are highly consistent with the measured data. Consequently, we can conclude that QILDE is an effective alternative that can extract very accurate parameters of PV models.
+Table 4 Extracted values for the parameters of case C1
+
+
+
+
+Algorithm
+
+I
+ph (A)
+
+I
+sd (μA)
+
+R
+s (Ω)
+
+R
+sh (Ω)
+
+n
+
+SIAE
+CPU time (s)
+
+
+
+
+RGA_DX
+0.76080853
+0.32718958
+0.03632466
+53.78695420
+1.48247815
+0.01775204
+0.0540
+
+
+PPSO
+0.76073762
+0.32861107
+0.03631131
+54.21181566
+1.48292197
+0.01773253
+0.1201
+
+
+GL_PSO
+0.76079288
+0.31917717
+0.03642442
+53.27268081
+1.47998133
+0.01773408
+0.0775
+
+
+TLABC
+0.76091994
+0.33785067
+0.03613804
+53.11267330
+1.48570478
+0.01783818
+0.1116
+
+
+NaCuSa
+0.76101112
+0.32180409
+0.03640558
+51.78667832
+1.48086332
+0.01835384
+0.0414
+
+
+AGDE
+0.76078214
+0.33006787
+0.03628442
+54.18233445
+1.48336514
+0.01777338
+0.1312
+
+
+CoDE
+0.76083130
+0.42068293
+0.03528618
+57.88266549
+1.50838972
+0.01961552
+0.1029
+
+
+JADE
+0.76075879
+0.32879393
+0.03629925
+54.23102535
+1.48297030
+0.01771737
+0.0440
+
+
+DE_QI
+0.76075087
+0.33353315
+0.03624677
+55.37150709
+1.48440848
+0.01773805
+
+0.0241
+
+
+
+DESQA
+0.76077467
+0.32305185
+0.03637635
+53.72501895
+1.48119336
+0.01770489
+0.0274
+
+
+QIDE
+0.76077568
+0.32302840
+0.03637702
+53.71732803
+1.48118604
+0.01770455
+0.0249
+
+
+QILDE
+0.76077553
+0.32302080
+0.03637709
+53.71852071
+1.48118359
+
+0.01770381
+
+0.0269
+
+
+
+
+Table 5 Extracted values for the parameters of case C2
+
+
+
+
+Algorithm
+
+I
+ph (A)
+
+I
+sd1 (μA)
+
+R
+s (Ω)
+
+R
+sh (Ω)
+
+n
+1
+
+
+I
+sd2 (μA)
+
+n
+2
+
+SIAE
+CPU time (s)
+
+
+
+
+RGA_DX
+0.76076700
+0.80253844
+0.03679946
+56.58882245
+1.92181010
+0.19133916
+1.43855377
+0.01733736
+0.1182
+
+
+PPSO
+0.76077670
+0.54892507
+0.03665906
+55.16727404
+1.96230154
+0.23967215
+1.45623874
+0.01737064
+0.2423
+
+
+GL_PSO
+0.76077478
+0.20929985
+0.03678193
+55.37533253
+1.44544795
+0.64479728
+1.92106383
+0.01735183
+0.1601
+
+
+TLABC
+0.76145877
+0.22745856
+0.03656766
+42.98121565
+1.45526030
+0.15635361
+1.68319885
+0.02249033
+0.2253
+
+
+NaCuSa
+0.76061903
+0.18197836
+0.03619379
+55.61160505
+1.69488374
+0.25714961
+1.46764754
+0.01812227
+0.0910
+
+
+AGDE
+0.76077671
+0.26681808
+0.03657085
+54.67677298
+1.46496152
+0.41501373
+1.99963060
+0.01747410
+0.2609
+
+
+CoDE
+0.76040104
+0.99056798
+0.03761839
+54.97213113
+1.84047825
+0.09611230
+1.38496566
+0.01939491
+0.2001
+
+
+JADE
+0.76075359
+0.34991269
+0.03593899
+58.48187676
+1.49081736
+0.01555039
+1.60422517
+0.01777253
+0.0938
+
+
+DE_QI
+0.76010364
+0.22672753
+0.03588700
+63.07232475
+1.97891544
+0.00000034
+1.48810320
+0.02020184
+
+0.0568
+
+
+
+DESQA
+0.76078258
+0.24514865
+0.03665676
+55.08688313
+1.45783515
+0.58875661
+1.99983274
+0.01737070
+0.0652
+
+
+QIDE
+0.76077514
+0.26320288
+0.03657734
+54.82595838
+1.46386182
+0.00000044
+1.99422151
+0.01744818
+0.0574
+
+
+QILDE
+0.76078108
+0.74934954
+0.03674043
+55.48545008
+2.00000000
+0.22597408
+1.45101670
+
+0.01731807
+
+0.0598
+
+
+
+
+Table 6 Extracted values for the parameters of case C3
+
+
+
+
+Algorithm
+
+I
+ph (A)
+
+I
+sd (μA)
+
+R
+s (Ω)
+
+R
+sh (Ω)
+
+n
+
+SIAE
+CPU time (s)
+
+
+
+
+RGA_DX
+1.03015335
+3.57908953
+1.19886195
+1038.74323419
+48.74708655
+0.04219464
+0.0514
+
+
+PPSO
+1.03048731
+3.50023004
+1.20074231
+987.40945183
+48.66253610
+0.04182783
+0.1165
+
+
+GL_PSO
+1.03046443
+3.50334272
+1.20067060
+988.81242010
+48.66604957
+0.04184277
+0.0776
+
+
+TLABC
+1.03072831
+3.37737078
+1.20329965
+953.62843160
+48.52637977
+0.04224121
+0.1055
+
+
+NaCuSa
+1.03034483
+3.46022136
+1.20263657
+996.81588066
+48.61704922
+0.04184919
+0.0415
+
+
+AGDE
+1.03051591
+3.48391729
+1.20121184
+982.22102575
+48.64466575
+0.04179202
+0.1345
+
+
+CoDE
+1.02946678
+3.50660509
+1.20153561
+1075.79352509
+48.66908565
+0.04281945
+0.1034
+
+
+JADE
+1.03050723
+3.48337440
+1.20124629
+982.69212085
+48.64403996
+0.04179061
+0.0465
+
+
+DE_QI
+1.03046736
+3.51991792
+1.20051118
+1000.22876753
+48.68363750
+0.04187730
+
+0.0234
+
+
+
+DESQA
+1.03051427
+3.48224871
+1.20127109
+981.97650675
+48.64281955
+0.04178717
+0.0280
+
+
+QIDE
+1.03051431
+3.48223787
+1.20127168
+981.97802637
+48.64280724
+0.04178716
+0.0251
+
+
+QILDE
+1.03051433
+3.48223641
+1.20127169
+981.96949220
+48.64280580
+
+0.04178701
+
+0.0271
+
+
+
+
+Table 7 Extracted values for the parameters of case C4
+
+
+
+
+Algorithm
+
+I
+ph (A)
+
+I
+sd (μA)
+
+R
+s (Ω)
+
+R
+sh (Ω)
+
+n
+
+SIAE
+CPU time (s)
+
+
+
+
+RGA_DX
+1.66276359
+2.71785201
+0.00280680
+18.61626834
+1.57104454
+0.02829875
+0.1412
+
+
+PPSO
+1.66390479
+1.73865358
+0.00427378
+15.92828259
+1.52030271
+0.02177420
+0.3391
+
+
+GL_PSO
+1.66392450
+1.72842528
+0.00428966
+15.88628258
+1.51965679
+0.02181565
+0.2168
+
+
+TLABC
+1.66291256
+2.39216566
+0.00323073
+18.03233547
+1.55616825
+0.02440235
+0.2981
+
+
+NaCuSa
+1.66127589
+5.06107368
+0.00049719
+24.29611649
+1.64771876
+0.04964698
+0.1095
+
+
+AGDE
+1.66390479
+1.73865638
+0.00427377
+15.92828247
+1.52030289
+0.02177420
+0.3664
+
+
+CoDE
+1.66267768
+2.86398699
+0.00261062
+19.05187592
+1.57717281
+0.02979928
+0.2806
+
+
+JADE
+1.66392544
+1.74791560
+0.00424494
+15.89740501
+1.52089353
+0.02192554
+0.1110
+
+
+DE_QI
+1.66187452
+3.68807410
+0.00174176
+21.09088846
+1.60774985
+0.03807161
+
+0.0594
+
+
+
+DESQA
+1.66329675
+2.76905528
+0.00268407
+17.99830903
+1.57328019
+0.02901405
+0.0671
+
+
+QIDE
+1.66264521
+3.15361401
+0.00222372
+19.20799449
+1.58869826
+0.03308287
+0.0604
+
+
+QILDE
+1.66390478
+1.73865689
+0.00427377
+15.92829408
+1.52030292
+
+0.02177419
+
+0.0670
+
+
+
+
+Table 8 Extracted values for the parameters of case C5
+
+
+
+
+Algorithm
+
+I
+ph (A)
+
+I
+sd (μA)
+
+R
+s (Ω)
+
+R
+sh (Ω)
+
+n
+
+SIAE
+CPU time (s)
+
+
+
+
+RGA_DX
+7.46547720
+3.03033555
+0.00447588
+164.62989209
+1.28224318
+0.30164063
+0.1429
+
+
+PPSO
+7.47253028
+2.33502174
+0.00459463
+22.21974032
+1.26010445
+0.27797596
+0.3396
+
+
+GL_PSO
+7.46259707
+2.87857337
+0.00450472
+805.95112311
+1.27781498
+0.29616234
+0.2217
+
+
+TLABC
+7.46751697
+3.09748254
+0.00447095
+402.65124324
+1.28412704
+0.29868032
+0.3054
+
+
+NaCuSa
+7.46224352
+3.01240639
+0.00446497
+541.74580235
+1.28173794
+0.30029306
+0.1119
+
+
+AGDE
+7.47252979
+2.33499826
+0.00459463
+22.22020317
+1.26010359
+0.27797432
+0.3705
+
+
+CoDE
+7.46288564
+2.95674266
+0.00449897
+1404.60022165
+1.28016312
+0.30308459
+0.2857
+
+
+JADE
+7.47098011
+2.43376310
+0.00457640
+26.80914711
+1.26357430
+0.28034481
+0.1134
+
+
+DE_QI
+7.47044420
+3.97023067
+0.00433302
+876.43551578
+1.30606080
+0.33627042
+
+0.0611
+
+
+
+DESQA
+7.47060495
+4.07362641
+0.00432159
+1494.04368587
+1.30841452
+0.33913216
+0.0704
+
+
+QIDE
+7.46829639
+2.51003065
+0.00456324
+34.90180985
+1.26616589
+0.28411775
+0.0662
+
+
+QILDE
+7.47252992
+2.33499556
+0.00459463
+22.21991431
+1.26010350
+
+0.27797426
+
+0.0687
+
+
+
+
+Table 9 Extracted values for the parameters of case C6
+
+
+
+
+Algorithm
+
+I
+ph (A)
+
+I
+sd (μA)
+
+R
+s (Ω)
+
+R
+sh (Ω)
+
+n
+
+SIAE
+CPU time (s)
+
+
+
+
+RGA_DX
+9.15101679
+0.84978775
+0.00990373
+20.95736316
+1.19486440
+0.22349586
+0.1525
+
+
+PPSO
+9.14306224
+1.11432137
+0.00981924
+4850.64615709
+1.21499317
+0.21760587
+0.3426
+
+
+GL_PSO
+9.14952346
+0.86197615
+0.00990019
+24.61472638
+1.19589085
+0.22170555
+0.2286
+
+
+TLABC
+9.14455907
+1.17230717
+0.00980074
+4985.33619702
+1.21884740
+0.21867994
+0.3080
+
+
+NaCuSa
+9.14347648
+1.27134940
+0.00976541
+4150.49512448
+1.22508837
+0.22439167
+0.1162
+
+
+AGDE
+9.14305920
+1.11418122
+0.00981928
+4999.99999783
+1.21498368
+0.21759982
+0.3713
+
+
+CoDE
+9.15630842
+1.73668220
+0.00965864
+4400.55924036
+1.24961211
+0.29825198
+0.2876
+
+
+JADE
+9.14305990
+1.11421695
+0.00981927
+4999.63362993
+1.21498609
+0.21760118
+0.1224
+
+
+DE_QI
+9.16050299
+1.86756083
+0.00962134
+3479.51580465
+1.25537178
+0.31348545
+
+0.0641
+
+
+
+DESQA
+9.15259041
+1.47773974
+0.00971718
+4964.16647596
+1.23675361
+0.24047024
+0.0725
+
+
+QIDE
+9.16859150
+2.44013088
+0.00952472
+4180.64044758
+1.27741433
+0.44212530
+0.0709
+
+
+QILDE
+9.14305920
+1.11418099
+0.00981928
+4999.99999996
+1.21498366
+
+0.21759981
+
+0.0721
+
+
+
+
+ Fig. 1  Comparison between the measured and calculated data obtained by QILDE. (a) Case C1; (b) case C2; (c) case C3; (d) case C4; (e) case C5; (f) case C6. 
+
+
+On the robust stability. 
+Robustness is an essential index to assess the stability of optimizers. The standard deviations of the RMSE are summarized in Table 3. The data clearly show that QILDE consistently yields the lowest standard deviation values which are significantly smaller than those provided by all the other algorithms, especially for cases C4, C5, and C6. In these three cases, the standard deviation values provided by QILDE are respectively 1.1295 × 10−17, 8.8518 × 10−14 and 5.1647 × 10−10 which are appreciably smaller than the corresponding RMSE values. This means that QILDE achieves almost the same results in different runs. For some algorithms, such as GL_PSO and JADE for case C6, the standard deviation values exceed the mean values, indicating that the RMSE values differ greatly in different runs, i.e., the stability of these algorithms is relatively poor. The comparison makes clear that QILDE exhibits excellent robust stability and provides very reliable parameters of PV models.
+
+
+On the convergence property. 
+Convergence is an important performance criterion to analyze the exploitation/exploration abilities of an algorithm. The convergence curves of the mean RMSE values of all algorithms are presented in Fig. 2. They show that for some algorithms, such as NaCuSa and CoDE, although they make continuous progress from beginning to end, their convergence speeds are relatively slow, resulting in inefficiency and inferior solutions. On the other hand, some algorithms, such as RGA_DX, have decent speeds at the beginning stage, but are easily trapped in local minima, which also leads to poor-quality solutions. Unlike other algorithms, QILDE can maintain the overall fastest speed to escape from local optima and finally reach the approximate optimal solutions. In addition, it can be concluded by combining Table 3 and Fig. 2 that QILDE converges to almost the same approximate optimum in different runs, which indicates that QILDE succeeds in convergence. In short, the comparison demonstrates that QILDE achieves a good trade-off between exploration and exploitation.
+ Fig. 2  Convergence curves. (a) Case C1; (b) case C2; (c) case C3; (d) case C4; (e) case C5; (f) case C6. 
+
+
+On the computational time. 
+In order to know the computational efficiency of QILDE, the average computational times (CPU time in seconds) for the compared methods are recorded in Tables 4–9. DE_QI takes the least time while AGDE requires the longest time in each case. The tables also show that QI-based DE variants need less time to reach the final solutions compared with the other algorithms. The computational time for each run using QILDE is less than 0.1 second which is slightly longer than those of DE_QI and QIDE. However, the deviations are very small. The comparison demonstrates the high computational efficiency of QILDE in extracting parameters of PV models.
+
+
+On the statistical significance. 
+In addition to the direct comparison of the solution quality, an indirect comparison based on statistical analysis is also necessary and meaningful. In this subsection, both single-model statistical analysis by Wilcoxon’s rank-sum test and multiple-model statistical analysis by the Friedman test at a confidence level of 5% are used to identify the significance of the differences. The test results are presented in Table 3 and Fig. 3. Table 3 shows that QILDE is significantly better than its competitors in each case. The rankings based on the Friedman test in Fig. 3 also confirm that QILDE achieves the best ranking, followed by AGDE, PPSO, JADE, TLABC, DESQA, QIDE, CoDE, DE_QI, GL_PSO, NaCuSa, and RGA_DX. The test results again show that QILDE performs the best among all the compared algorithms.
+ Fig. 3  Friedman test results. 
+
+
+Comparison with reported results. 
+Another comparison with the reported results of different types of parameter extraction methods is provided here to further verify the performance of QILDE. The results are presented in Table 10. QILDE can achieve the lowest minimum RMSE values in all cases. It is slightly worse than MCSWOA for cases C1 and C3 but performs better for the other four cases in terms of the maximum, mean and standard deviation values of RMSE. Although SGDE obtains better overall results for the first three cases, its minimum value of RMSE is larger than that of QILDE for case C2. In addition, both MCSWOA and SGDE require a larger number of fitness evaluations (50000). As for the other algorithms, they provide worse or comparable results compared to QILDE. Consequently, it can be concluded that the proposed QILDE has superior or highly competitive performance in terms of the quality of the final solutions.
+Table 10 Comparison with reported resultsa
+
+
+
+
+Case
+Algorithm
+Min
+Max
+Mean
+Std
+
+
+
+
+
+a NA: not available in the literature.
+
+
+
+
+
+C1
+PS54
+2.863 × 10−1
+NA
+NA
+NA
+
+
+Method in ref. 57
+1.5051 × 10−3
+NA
+NA
+NA
+
+
+LI66
+1.0548 × 10−3
+NA
+NA
+NA
+
+
+Method in ref. 67
+2.9117 × 10−3
+NA
+NA
+NA
+
+
+A-bcNM68
+9.8602 × 10−4
+NA
+NA
+NA
+
+
+IBEXOPT69
+9.8603 × 10−4
+NA
+NA
+NA
+
+
+LMSA70
+9.8640 × 10−4
+NA
+NA
+NA
+
+
+SGDE71
+9.8602 × 10−4
+9.8604 × 10−4
+9.8602 × 10−4
+2.4747 × 10−9
+
+
+GWOCS31
+9.8607 × 10−4
+9.9095 × 10−4
+9.8874 × 10−4
+2.4696 × 10−8
+
+
+IWOA21
+9.8602 × 10−4
+1.0331 × 10−4
+9.9524 × 10−4
+1.1267 × 10−8
+
+
+IJAYA72
+9.8603 × 10−4
+1.0622 × 10−3
+9.9204 × 10−4
+1.4033 × 10−5
+
+
+MCSWOA73
+9.8602 × 10−4
+9.8603 × 10−4
+9.8602 × 10−4
+4.8373 × 10−10
+
+
+HFAPS74
+9.8602 × 10−4
+NA
+NA
+NA
+
+
+SDO75
+9.8602 × 10−4
+9.8616 × 10−4
+9.8603 × 10−4
+2.5141 × 10−8
+
+
+QILDE
+9.8602 × 10−4
+9.8616 × 10−4
+9.8603 × 10−4
+2.7839 × 10−8
+
+
+C2
+PS54
+1.5180 × 10−2
+NA
+NA
+NA
+
+
+A-bcNM68
+9.8250 × 10−4
+NA
+NA
+NA
+
+
+IBEXOPT69
+9.8257 × 10−4
+NA
+NA
+NA
+
+
+SGDE71
+9.8441 × 10−4
+9.8602 × 10−4
+9.8577 × 10−4
+4.0150 × 10−7
+
+
+GWOCS31
+9.8334 × 10−4
+1.0017 × 10−4
+9.9411 × 10−4
+9.5937 × 10−6
+
+
+IWOA21
+9.8255 × 10−4
+1.0889 × 10−4
+9.9693 × 10−4
+1.9297 × 10−5
+
+
+IJAYA72
+9.8293 × 10−4
+1.4055 × 10−3
+1.0269 × 10−3
+9.8325 × 10−5
+
+
+MCSWOA73
+9.8250 × 10−4
+1.1903 × 10−4
+1.0078 × 10−4
+3.7264 × 10−5
+
+
+HFAPS74
+9.8248 × 10−4
+NA
+NA
+NA
+
+
+SDO75
+9.8250 × 10−4
+1.0271 × 10−3
+9.8822 × 10−4
+8.8518 × 10−6
+
+
+EVPS76
+9.8510 × 10−4
+1.1190 × 10−3
+1.0083 × 10−3
+NA
+
+
+QILDE
+9.8248 × 10−4
+9.8968 × 10−4
+9.8480 × 10−4
+1.5868 × 10−6
+
+
+C3
+PS54
+1.18 × 10−2
+NA
+NA
+NA
+
+
+LI66
+2.4777 × 10−3
+NA
+NA
+NA
+
+
+Method in ref. 67
+1.1114 × 10−2
+NA
+NA
+NA
+
+
+SGDE71
+2.4251 × 10−3
+2.4251 × 10−3
+2.4251 × 10−3
+4.1698 × 10−10
+
+
+GWOCS31
+2.4251 × 10−3
+2.4275 × 10−3
+2.4261 × 10−3
+1.1967 × 10−6
+
+
+IWOA21
+2.4251 × 10−3
+2.4335 × 10−3
+2.4269 × 10−3
+2.2364 × 10−6
+
+
+IJAYA72
+2.4251 × 10−3
+2.4393 × 10−3
+2.4289 × 10−3
+3.7755 × 10−6
+
+
+MCSWOA73
+2.4251 × 10−3
+2.4270 × 10−3
+2.4252 × 10−3
+3.2927 × 10−7
+
+
+EVPS76
+2.4267 × 10−3
+3.4707 × 10−3
+2.7877 × 10−3
+NA
+
+
+Method in ref. 77
+5.181 × 10−3
+NA
+NA
+NA
+
+
+LM78
+2.27 × 10−3
+NA
+NA
+NA
+
+
+QILDE
+2.4251 × 10−3
+2.4370 × 10−3
+2.4257 × 10−3
+2.2436 × 10−6
+
+
+C4
+Method in ref. 57
+2.1815 × 10−3
+NA
+NA
+NA
+
+
+GWOCS31
+1.7337 × 10−3
+1.7528 × 10−3
+1.7457 × 10−3
+1.0446 × 10−15
+
+
+MCSWOA73
+1.7298 × 10−3
+1.7364 × 10−3
+1.7311 × 10−3
+1.0774 × 10−6
+
+
+HFAPS74
+1.97 × 10−3
+NA
+NA
+NA
+
+
+SDO75
+1.7298 × 10−3
+1.9500 × 10−3
+1.7703 × 10−3
+4.5108 × 10−5
+
+
+BHCS79
+1.7298 × 10−3
+3.3299 × 10−3
+1.8365 × 10−3
+4.0594 × 10−4
+
+
+ISCE80
+1.7298 × 10−3
+1.7298 × 10−3
+1.7298 × 10−3
+2.30 × 10−17
+
+
+QILDE
+1.7298 × 10−3
+1.7298 × 10−3
+1.7298 × 10−3
+1.1295 × 10−17
+
+
+C5
+Method in ref. 57
+1.7879 × 10−2
+NA
+NA
+NA
+
+
+MCSWOA73
+1.6601 × 10−2
+1.6741 × 10−2
+1.6632 × 10−2
+2.6486 × 10−5
+
+
+SDO75
+1.6601 × 10−2
+1.6866 × 10−2
+1.6683 × 10−2
+7.1751 × 10−5
+
+
+BHCS79
+1.6601 × 10−2
+2.4360 × 10−2
+1.3482 × 10−1
+2.6062 × 10−2
+
+
+ISCE80
+1.6601 × 10−2
+1.6601 × 10−2
+1.6601 × 10−2
+8.7400 × 10−14
+
+
+QILDE
+1.6601 × 10−2
+1.6601 × 10−2
+1.6601 × 10−2
+8.8518 × 10−14
+
+
+C6
+MCSWOA73
+1.1183 × 10−2
+1.1244 × 10−2
+1.1187 × 10−2
+9.1358 × 10−6
+
+
+EVPS76
+1.1253 × 10−2
+NA
+NA
+NA
+
+
+GAMS81
+1.1252 × 10−2
+NA
+NA
+NA
+
+
+QILDE
+1.1183 × 10−2
+1.1183 × 10−2
+1.1183 × 10−2
+5.1647 × 10−10
+
+
+
+
+
+Discussion
+(1) Among the eight popular DE mutation schemes, QILDE with the scheme DE/best/2 provides the best overall results for the six cases involved. Therefore, this scheme might be a promising choice for other DE variants in solving the parameter extraction problems of PV models.
+(2) The optimal RMSE values achieved by QILDE in these six cases are 9.8602 × 10−4, 9.8248 × 10−4, 2.4251 × 10−3, 1.7298 × 10−3, 1.6601 × 10−2 and 1.1183 × 10−2. They are smaller than or comparable to the values provided by the other algorithms, demonstrating the good searching performance of QILDE in solving the problem concerned.
+(3) The standard deviation values given by QILDE are 2.7839 × 10−8, 1.5868 × 10−6, 2.2436 × 10−6, 1.1295 × 10−17, 8.8518 × 10−14 and 5.1647 × 10−10. They are remarkably smaller than the corresponding RMSE values, which indicates that QILDE can achieve highly reliable values for the parameters of PV models.
+(4) QILDE overtakes all the other algorithms after about 1315, 2224, 1410, 2808, 6950 and 9247 fitness evaluations for these six cases. In addition, it takes about 6970, 8889, 6641, 12376, 18071 and 21102 fitness evaluations to reach the 1% neighborhood of the final RMSE results, meaning that QILDE exhibits a sound convergence property. A downside of the convergence is that the speed at the initial stage is not fast enough.
+(5) The average computational times required by QILDE in these six cases are 0.0269 s, 0.0598 s, 0.0271 s, 0.0670 s, 0.0687 s and 0.0721 s. Although they are slightly larger than those of DE_QI and QIDE, the deviations are very small, showing that it has good computational efficiency.
+Conclusions
+We propose a DE variant named QILDE for the parameter extraction problem of PV models. QILDE adopts QI to design a QI learning-backup crossover operation to balance exploitation and exploration. It keeps the simple structure of DE and is easy to implement. The experimental results and comparisons for six cases demonstrate that the QI learning-backup crossover operation can improve the performance of DE for different mutation schemes. QILDE with the mutation scheme DE/best/2 achieves the best results in all cases. Specifically, the results (mean RMSE values ± standard deviation values) achieved by QILDE are 9.8603 × 10−4 ± 2.7839 × 10−8, 9.8480 × 10−4 ± 1.5868 × 10−6, 2.4257 × 10−3 ± 2.2436 × 10−6, 1.7298 × 10−3 ± 1.1295 × 10−17, 1.6601 × 10−2 ± 8.8518 × 10−14, and 1.1183 × 10−2 ± 5.1647 × 10−10 for these six PV cases, with no more than 30000 fitness evaluations. Compared with other advanced algorithms, QILDE obtains the best overall results in terms of solution quality, extraction accuracy, robust stability, convergence property, computational time, and statistical significance. Besides, it also achieves better or highly competitive results compared with the reported results of some well-designed parameter extraction methods of different types. In conclusion, QILDE can be used as a competent parameter extraction method with high computational efficiency as well as fast convergence speed to provide reliable and accurate values for the parameters of PV models.
+In this work, for each PV model, only one operating condition is considered. In future, more PV models operating under different conditions will be studied to further verify the effectiveness of QILDE. In addition, accelerating the initial convergence speed of QILDE and integrating the QI learning-backup crossover in advanced DE algorithms will also be studied.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+The authors would like to thank the editor and the reviewers for their constructive comments. This work was supported by the National Natural Science Foundation of China (Grant No. 51907035, 51867005 and 51667007), the Guizhou Education Department Growth Foundation for Youth Scientific and Technological Talents (Grant No. QianJiaoHe KY Zi [2018]108), the Science and Technology Foundation of Guizhou Province (Grant No. QianKeHe Platform Talents [2018]5781), and the Management Innovation Program of Guizhou Power Grid (Grant No. 066500KK52200001).
+References
+M. Hosenuzzaman, N. A. Rahim, J. Selvaraj, M. Hasanuzzaman, A. B. M. A. Malek and A. Nahar, Renewable Sustainable Energy Rev., 2015, 41, 284–297 CrossRef .
+
+          International Renewable Energy Agency, Renewable Energy Statistics 2019,  2019 Search PubMed .
+A. R. Jordehi, Renewable Sustainable Energy Rev., 2016, 61, 354–371 CrossRef .
+F. Bradaschia, M. C. Cavalcanti, A. J. Do Nascimento, E. Alves Da Silva and G. Medeiros De Souza Azevedo, IEEE J. Photovolt., 2019, 9, 1388–1397 Search PubMed .
+M. Hejri and M. Hossein, IEEE J. Photovolt., 2017, 7, 250–258 Search PubMed .
+K. Ishaque, Z. Salam, S. Mekhilef and A. Shamsudin, Appl. Energy, 2012, 99, 297–308 CrossRef .
+V. J. Chin and Z. Salam, Appl. Energy, 2019, 237, 519–533 CrossRef CAS .
+R. Gutiérrez, J. M. Blanes, D. Marroquí, D. Garrigós and F. Javier Toledo, IEEE Trans. Ind. Inform., 2018, 14, 951–957 Search PubMed .
+U. Jadli, P. Thakur and R. D. Shukla, IEEE J. Photovolt., 2018, 8, 239–247 Search PubMed .
+C. Khin, P. Buasri, A. Siritaratiwat and R. Chatthaworn, Mahasarakham Int. J. Eng. Tech., 2018, 4, 29–36 Search PubMed .
+H. M. Waly, H. Z. Azazi, D. S. M. Osheba and A. E. El-Sabbe, IET Renew. Power Gener., 2019, 13, 1466–1473 CrossRef .
+
+          S. Shongwe and M. Hanif, in IEEE Electrical Power and Energy Conference (EPEC), London, ON, Canada,  2015, pp. 278–284 Search PubMed .
+A. Chatterjee, A. Keyhani and D. Kapoor, IEEE Trans. Energy Conver., 2011, 26, 883–889 Search PubMed .
+N. Hamid, R. Abounacer, M. Idali Oumhand, M. B. Feddaoui and D. Agliz, Int. J. Ambient Energy, 2019, 40, 517–524 CrossRef .
+T. Wei, F. Yu, G. Huang and C. Xu, IEEE Electron Device Lett., 2019, 40, 1511–1514 CAS .
+S. M. Ebrahimi, E. Salahshour, M. Malekzadeh and F. Gordillo, Energy, 2019, 179, 358–372 CrossRef CAS .
+B. Subudhi and R. Pradhan, IEEE Trans. Sustain. Energ., 2018, 9, 381–389 Search PubMed .
+D. Mathew, C. Rani, M. Rajesh Kumar, Y. Wang, R. Binns and R. Busawon, IEEE J. Photovolt., 2018, 8, 248–256 Search PubMed .
+Y. Huang, C. Huang, S. Chen and S. Yang, IEEE Trans. Sustain. Energ., 2019, 1 Search PubMed .
+D. Oliva, M. A. E. Aziz and A. E. Hassanien, Appl. Energy, 2017, 200, 141–154 CrossRef .
+G. Xiong, J. Zhang, D. Shi and Y. He, Energy Convers. Manage., 2018, 174, 388–405 CrossRef .
+K. Yu, B. Qu, C. Yue, S. Ge, X. Chen and J. Liang, Appl. Energy, 2019, 237, 241–257 CrossRef .
+A. Ramadan, S. Kamel, A. Korashy and J. Yu, Iran. J. Sci. Technol., Trans. Electr. Eng., 2020, 44, 767–779 CrossRef .
+X. Chen, B. Xu, C. Mei, Y. Ding and K. Li, Appl. Energy, 2018, 212, 1578–1588 CrossRef .
+H. Chen, S. Jiao, M. Wang, A. A. Heidari and X. Zhao, J. Cleaner Prod., 2019, 118778 Search PubMed .
+S. Jiao, G. Chong, C. Huang, H. Hu, M. Wang, A. A. Heidari, H. Chen and X. Zhao, Energy, 2020, 203, 117804 CrossRef .
+H. Zhang, A. A. Heidari, M. Wang, L. Zhang, H. Chen and C. Li, Energy Convers. Manage., 2020, 211, 112764 CrossRef .
+R. Ben Messaoud, Energy Rep., 2020, 6, 350–357 CrossRef .
+A. A. Z. Diab, H. M. Sultan, T. D. Do, O. M. Kamel and M. A. Mossa, IEEE Access, 2020, 8, 111102–111140 Search PubMed .
+G. Xiong, J. Zhang, D. Shi, L. Zhu, X. Yuan and Z. Tan, Energy Convers. Manage., 2020, 206, 112450 CrossRef .
+W. Long, S. Cai, J. Jiao, M. Xu and T. Wu, Energy Convers. Manage., 2020, 203, 112243 CrossRef .
+R. Storn and K. Price, J. Global Optim., 1997, 11, 341–359 CrossRef .
+V. J. Chin, Z. Salam and K. Ishaque, IEEE Trans. Ind. Electron., 2017, 64, 6212–6222 Search PubMed .
+H. V. Hultmann Ayala, L. D. S. Coelho, V. C. Mariani and A. Askarzadeh, Energy, 2015, 93, 1515–1522 CrossRef .
+N. Muangkote, K. Sunat, S. Chiewchanwattana and S. Kaiwinit, Renewable Energy, 2019, 134, 1129–1147 CrossRef .
+S. Li, W. Gong, X. Yan, C. Hu, D. Bai and L. Wang, Sol. Energy, 2019, 190, 465–474 CrossRef .
+P. P. Biswas, P. N. Suganthan, G. Wu and G. A. J. Amaratunga, Renewable Energy, 2019, 132, 425–438 CrossRef .
+D. H. Muhsen, A. B. Ghazali, T. Khatib and I. A. Abed, Sol. Energy, 2015, 119, 286–297 CrossRef .
+G. Xiong, J. Zhang, X. Yuan, D. Shi, Y. He and G. Yao, Sol. Energy, 2018, 176, 742–761 CrossRef .
+S. Li, Q. Gu, W. Gong and B. Ning, Energy Convers. Manage., 2020, 205, 112443 CrossRef .
+J. Liang, K. Qiao, K. Yu, S. Ge, B. Qu, R. Xu and K. Li, Sol. Energy, 2020, 207, 336–346 CrossRef .
+J. Liang, S. Ge, B. Qu, K. Yu, F. Liu, H. Yang, P. Wei and Z. Li, Energy Convers. Manage., 2020, 203, 112138 CrossRef .
+C. Mohan and K. Shanker, Asia Pac. J. Oper. Res., 1994, 11, 93–101 Search PubMed .
+K. Deep and K. N. Das, Appl. Math. Comput., 2008, 203, 86–98 CrossRef .
+M. G. H. Omran, Z. W. Geem and A. Salman, Int. J. Math. Model. Numer. Optim., 2011, 2, 28–50 Search PubMed .
+R. Liu, L. Wang, W. Ma, C. Mu and L. Jiao, Nat. Comput., 2014, 13, 17–37 CrossRef .
+Y. R. Naidu and A. K. Ojha, Soft Comput., 2015, 19, 3581–3598 CrossRef .
+D. Singh and S. Agrawal, Appl. Soft Comput., 2016, 38, 1040–1048 CrossRef .
+Y. Sun, T. Yang and Z. Liu, Appl. Soft Comput., 2019, 85, 105744 CrossRef .
+X. Chen, C. Mei, B. Xu, K. Yu and X. Huang, Knowl.-Based Syst., 2018, 145, 250–263 CrossRef .
+
+          M. Pant, R. Thangaraj and V. P. Singh, in 2009 International Conference on Advanced Computer Control, Singapore,  2009, pp. 388–392 Search PubMed .
+M. Ali, M. Pant and A. K. Nagar, Int. J. Comput. Sci. Math., 2010, 3, 298–315 CrossRef .
+H. Li, Y. Jiao and L. Zhang, Eng. Optimiz., 2011, 43, 115–134 CrossRef .
+M. F. Alhajri, K. M. El-Naggar, M. R. Alrashidi and A. K. Al-Othman, Renewable Energy, 2012, 44, 238–245 CrossRef .
+
+          K. Price, R. M. Storn and J. A. Lampinen, Differential Evolution: A Practical Approach to Global Optimization, Springer-Verlag, Berlin,  2005 Search PubMed .
+T. Easwarakhanthan, J. Bottin, I. Bouhouch and C. Boutrit, Int. J. Sol. Energy, 1986, 4, 1–12 CrossRef CAS .
+N. T. Tong and W. Pora, Appl. Energy, 2016, 176, 104–115 CrossRef .
+H. G. G. Nunes, J. A. N. Pombo, S. J. P. S. Mariano, M. R. A. Calado and J. A. M. F. Souza, Appl. Energy, 2018, 211, 774–791 CrossRef .
+A. W. Mohamed and A. K. Mohamed, Int. J. Mach. Learn. Cybern., 2019, 10, 253–277 CrossRef .
+Y. Wang, Z. Cai and Q. Zhang, IEEE Trans. Evolut. Comput., 2011, 15, 55–66 CAS .
+J. Zhang and C. S. Arthur, IEEE Trans. Evolut. Comput., 2009, 13, 945–958 Search PubMed .
+A. K. Das and D. K. Pratihar, Appl. Intell., 2019, 49, 1841–1865 CrossRef .
+M. Ghasemi, E. Akbari, A. Rahimnejad, S. E. Razavi, S. Ghavidel and L. Li, Soft Comput., 2019, 23, 9701–9718 CrossRef .
+Y. Gong, J. Li, Y. Zhou, Y. Li, H. S. Chung, Y. Shi and J. Zhang, IEEE Trans. Cybern., 2016, 46, 2277–2290 Search PubMed .
+N. J. Cheung, X. Ding and H. Shen, IEEE Trans. Cybern., 2017, 47, 391–402 CrossRef .
+H. I. L. Li, Z. Ye, J. Ye, D. Yang and H. Du, IEEE Trans. Ind. Electron., 2015, 62, 4181–4193 Search PubMed .
+A. A. E. Tayyan, Sudan University of Science & Technology, 2015, 39, 1–15 Search PubMed .
+X. Gao, C. Yao, X. Gao and Y. Yu, Trans. Chin. Soc. Agric. Eng., 2014, 30, 97–106 Search PubMed .
+R. Chenouard and R. A. El-Sehiemy, Energy Convers. Manage., 2020, 205, 112400 CrossRef .
+F. Dkhichi, B. Oukarfi, A. Fakkar and N. Belbounaguia, Sol. Energy, 2014, 110, 781–788 CrossRef .
+J. Liang, K. Qiao, M. Yuan, K. Yu, B. Qu, S. Ge, Y. Li and G. Chen, Energy Convers. Manage., 2020, 207, 112509 CrossRef .
+K. Yu, J. J. Liang, B. Y. Qu, X. Chen and H. Wang, Energy Convers. Manage., 2017, 150, 742–753 CrossRef .
+G. Xiong, J. Zhang, D. Shi, L. Zhu, X. Yuan and G. Yao, Remote Sens., 2019, 11, 2795 CrossRef .
+A. M. Beigi and A. Maroosi, Sol. Energy, 2018, 171, 435–446 CrossRef .
+G. Xiong, J. Zhang, D. Shi and X. Yuan, Complexity, 2019, 2019, 3923691 Search PubMed .
+P. J. Gnetchejo, S. N. Essiane, P. Ele, R. Wamkeue, D. M. Wapet and S. P. Ngoffe, J. Power Energ. Eng., 2019, 7, 1–26 CrossRef .
+H. K. Mehta, H. Warke, K. Kukadiya and A. K. Panchal, IEEE J. Photovolt., 2019, 9, 803–810 Search PubMed .
+A. K. Tossa, Y. M. Soro, Y. Azoumah and D. Yamegueu, Sol. Energy, 2014, 110, 543–560 CrossRef .
+X. Chen and K. Yu, Sol. Energy, 2019, 180, 192–206 CrossRef .
+X. Gao, Y. Cui, J. Hu, G. Xu, Z. Wang, J. Qu and H. Wang, Energy Convers. Manage., 2018, 157, 460–479 CrossRef .
+P. J. Gnetchejo, S. Ndjakomo Essiane, P. Ele, R. Wamkeue, D. Mbadjoun Wapet and S. Perabi Ngoffe, Energy Convers. Manage., 2019, 197, 111870 CrossRef .
+
+This journal is © The Royal Society of Chemistry 2020
+Table Content:
+	(1)
+	(2)
+	(3)
+	(4)
+	(5)
+	(6)
+	(7)
+	(8)
+	(9)
+	(10)
+	(11)
+	(12)
+	(13)
+	(14)
+f(x) = a0 + a1x + a2x2	(15)
+	(16)
+	(17)
+	(18)
+	(19)
+
+ 	Scheme 1  Algorithm 1: the pseudocode of QILDE with DE/rand/1 scheme.	 
+
+
+
+
+I
+ph (A)	0	1	0	2	0	2	0	8	0	10
+
+I
+sd (μA)	0	1	0	50	0	50	0	50	0	10
+
+R
+s (Ω)	0	0.5	0	2	0	0.36	0	0.36	0	2
+
+R
+sh (Ω)	0	100	0	2000	0	1000	0	1500	0	5000
+
+n
+	1	2	1	50	1	60	1	50	1	50
+
+C1	DE	1.2536 × 10−3 ± 1.6931 × 10−4	1.3399 × 10−3 ± 1.4120 × 10−4	1.0589 × 10−3 ± 3.6580 × 10−4	1.0174 × 10−4 ± 1.2655 × 10−5
+QILDE	1.1550 × 10−3 ± 1.4963 × 10−4	1.1170 × 10−3 ± 9.8611 × 10−5	9.9057 × 10−4 ± 1.3680 × 10−5	
+9.8603 × 10
+
+−4
+ ± 2.7839 × 10−8
+C2	DE	1.3649 × 10−3 ± 3.1194 × 10−4	1.6434 × 10−3 ± 2.9070 × 10−4	1.0022 × 10−3 ± 1.0759 × 10−4	1.0061 × 10−3 ± 1.1271 × 10−5
+QILDE	1.1982 × 10−3 ± 2.6665 × 10−4	1.1094 × 10−3 ± 2.0528 × 10−4	9.8935 × 10−4 ± 1.1576 × 10−5	
+9.8480 × 10
+
+−4
+ ± 1.5868 × 10−6
+C3	DE	3.0100 × 10−3 ± 2.8747 × 10−3	3.2029 × 10−3 ± 1.8427 × 10−3	2.4531 × 10−3 ± 1.2168 × 10−4	2.4621 × 10−3 ± 1.9018 × 10−4
+QILDE	2.4518 × 10−3 ± 5.4615 × 10−5	2.4362 × 10−3 ± 3.2853 × 10−5	2.4383 × 10−3 ± 5.2257 × 10−5	
+2.4257 × 10
+
+−3
+
+± 2.2436 × 10
+
+−6
+
+
+C4	DE	2.3394 × 10−3 ± 1.7787 × 10−4	2.1757 × 10−3 ± 9.8371 × 10−5	1.7688 × 10−3 ± 2.2886 × 10−4	1.7557 × 10−3 ± 1.8313 × 10−4
+QILDE	2.1827 × 10−3 ± 1.9127 × 10−4	1.7645 × 10−3 ± 2.1799 × 10−5	1.7394 × 10−3 ± 5.5448 × 10−5	
+1.7298 × 10
+
+−3
+ ± 1.1295 × 10−17
+C5	DE	2.2682 × 10−2 ± 2.3249 × 10−3	1.9618 × 10−2 ± 9.2944 × 10−4	3.4473 × 10−2 ± 3.1492 × 10−2	1.6601 × 10−2 ± 1.9050 × 10−9
+QILDE	1.8364 × 10−2 ± 1.4366 × 10−3	1.6753 × 10−2 ± 7.4270 × 10−5	2.0190 × 10−2 ± 1.6645 × 10−2	
+1.6601 × 10
+
+−2
+ ± 8.8518 × 10−16
+C6	DE	2.4313 × 10−2 ± 1.0182 × 10−2	1.9889 × 10−2 ± 1.0368 × 10−2	5.7738 × 10−2 ± 1.1760 × 10−1	1.1809 × 10−2 ± 4.1693 × 10−3
+QILDE	1.5840 × 10−2 ± 6.9737 × 10−3	1.1957 × 10−2 ± 2.0145 × 10−3	1.1689 × 10−2 ± 1.4581 × 10−3	
+1.1183 × 10
+
+−2
+ ± 5.1647 × 10−10
+
+C1	DE	1.0339 × 10−3 ± 5.7596 × 10−5	1.1748 × 10−3 ± 1.1412 × 10−4	1.0184 × 10−3 ± 3.9826 × 10−5	1.0810 × 10−3 ± 6.4932 × 10−5
+QILDE	1.0025 × 10−3 ± 3.2762 × 10−5	1.0061 × 10−3 ± 2.9124 × 10−5	9.9523 × 10−4 ± 2.7278 × 10−5	9.9256 × 10−4 ± 1.4169 × 10−5
+C2	DE	1.0582 × 10−3 ± 1.2154 × 10−4	1.3201 × 10−3 ± 2.5491 × 10−4	1.0019 × 10−3 ± 9.6300 × 10−5	1.2673 × 10−3 ± 2.8322 × 10−4
+QILDE	9.8562 × 10−4 ± 1.8942 × 10−6	1.0256 × 10−3 ± 8.1599 × 10−5	9.8553 × 10−4 ± 1.7639 × 10−6	9.8517 × 10−4 ± 9.9254 × 10−7
+C3	DE	2.4441 × 10−3 ± 6.2485 × 10−5	2.5208 × 10−3 ± 1.3421 × 10−4	2.4496 × 10−3 ± 9.2207 × 10−5	2.4776 × 10−3 ± 2.2205 × 10−4
+QILDE	2.4363 × 10−3 ± 3.1051 × 10−5	2.4396 × 10−3 ± 5.0904 × 10−5	2.4405 × 10−3 ± 7.0045 × 10−5	2.4311 × 10−3 ± 2.2085 × 10−5
+C4	DE	1.7349 × 10−3 ± 2.5954 × 10−5	1.9813 × 10−3 ± 2.5737 × 10−4	1.7596 × 10−3 ± 1.6416 × 10−4	1.7300 × 10−3 ± 2.7851 × 10−7
+QILDE	1.7325 × 10−3 ± 1.8700 × 10−5	1.7298 × 10−3 ± 6.8773 × 10−11	1.7305 × 10−3 ± 4.5455 × 10−6	1.7298 × 10−3 ± 1.3116 × 10−14
+C5	DE	2.9958 × 10−2 ± 4.1370 × 10−2	1.7840 × 10−2 ± 1.0018 × 10−3	2.6161 × 10−2 ± 2.6115 × 10−2	1.6620 × 10−2 ± 2.1186 × 10−5
+QILDE	1.6750 × 10−2 ± 6.0058 × 10−4	1.6603 × 10−2 ± 1.1666 × 10−5	1.6789 × 10−2 ± 1.0293 × 10−3	1.6601 × 10−2 ± 2.7428 × 10−6
+C6	DE	4.8389 × 10−2 ± 1.1819 × 10−1	1.8048 × 10−2 ± 9.1789 × 10−3	3.7424 × 10−2 ± 5.6031 × 10−2	1.3067 × 10−2 ± 4.9714 × 10−3
+QILDE	1.2121 × 10−2 ± 2.7449 × 10−3	1.1923 × 10−2 ± 4.3702 × 10−3	1.2948 × 10−2 ± 5.9977 × 10−3	1.1361 × 10−2 ± 8.0126 × 10−4
+
+C1	Min	9.8654 × 10−4	9.8706 × 10−4	9.8631 × 10−4	9.9829 × 10−4	1.0051 × 10−3	9.8710 × 10−4	1.1413 × 10−3	9.8670 × 10−4	9.9147 × 10−4	
+9.8602 × 10
+
+−4
+
+	
+9.8602 × 10
+
+−4
+
+	
+9.8602 × 10
+
+−4
+
+
+Max	4.2667 × 10−3	2.3798 × 10−3	2.0468 × 10−3	2.0482 × 10−3	1.6248 × 10−3	1.3242 × 10−3	1.8551 × 10−3	1.4265 × 10−3	1.7821 × 10−3	1.5452 × 10−3	1.7222 × 10−3	
+9.8616 × 10
+
+−4
+
+
+Mean	1.6314 × 10−3	1.3087 × 10−3	1.3512 × 10−3	1.3495 × 10−3	1.2958 × 10−3	1.0801 × 10−3	1.4639 × 10−3	1.1147 × 10−3	1.3263 × 10−3	1.1985 × 10−3	1.1912 × 10−3	
+9.8603 × 10
+
+−4
+
+
+Std	5.9018 × 10−4	3.3870 × 10−4	2.8685 × 10−4	2.5037 × 10−4	1.4816 × 10−4	8.0830 × 10−5	1.5840 × 10−4	1.1880 × 10−4	1.8086 × 10−4	1.5863 × 10−4	1.5546 × 10−4	
+2.7839 × 10
+
+−8
+
+
+Sig	†	†	†	†	†	†	†	†	†	†	†	
+
+C2	Min	9.8462 × 10−4	9.8301 × 10−4	9.8357 × 10−4	9.9443 × 10−4	1.0066 × 10−3	9.8326 × 10−4	1.1394 × 10−3	1.0170 × 10−3	1.1095 × 10−3	9.8256 × 10−4	9.8318 × 10−4	
+9.8248 × 10
+
+−4
+
+
+Max	2.4398 × 10−3	1.6602 × 10−3	1.7611 × 10−3	2.2823 × 10−3	2.4895 × 10−3	1.5499 × 10−3	2.1299 × 10−3	1.8152 × 10−3	2.5113 × 10−3	1.4639 × 10−3	1.4453 × 10−3	
+9.8968 × 10
+
+−4
+
+
+Mean	1.4835 × 10−3	1.1060 × 10−3	1.2012 × 10−3	1.3559 × 10−3	1.6824 × 10−3	1.1284 × 10−3	1.6854 × 10−3	1.2694 × 10−3	1.7311 × 10−3	1.0745 × 10−3	1.0269 × 10−3	
+9.8480 × 10
+
+−4
+
+
+Std	4.1962 × 10−4	1.7292 × 10−4	2.1331 × 10−4	2.7829 × 10−4	3.9144 × 10−4	1.7547 × 10−4	2.4792 × 10−4	1.9636 × 10−4	3.5261 × 10−4	1.1589 × 10−4	8.2750 × 10−5	
+1.5868 × 10
+
+−6
+
+
+Sig	†	†	†	†	†	†	†	†	†	†	†	
+
+C3	Min	2.4271 × 10−3	
+2.4251 × 10
+
+−3
+
+	2.4252 × 10−3	2.4267 × 10−3	2.4290 × 10−3	
+2.4251 × 10
+
+−3
+
+	2.4509 × 10−3	
+2.4251 × 10
+
+−3
+
+	2.4259 × 10−3	
+2.4251 × 10
+
+−3
+
+	
+2.4251 × 10
+
+−3
+
+	
+2.4251 × 10
+
+−3
+
+
+Max	6.4639 × 10−3	3.5370 × 10−3	2.9424 × 10−3	2.8332 × 10−3	3.9644 × 10−3	2.4436 × 10−3	3.0337 × 10−3	2.5090 × 10−3	2.4773 × 10−3	3.3653 × 10−3	2.4708 × 10−3	
+2.4370 × 10
+
+−3
+
+
+Mean	2.7364 × 10−3	2.5926 × 10−3	2.4959 × 10−3	2.4754 × 10−3	2.8122 × 10−3	2.4263 × 10−3	2.5966 × 10−3	2.4362 × 10−3	2.4384 × 10−3	2.4745 × 10−3	2.4267 × 10−3	
+2.4257 × 10
+
+−3
+
+
+Std	6.6087 × 10−4	2.7767 × 10−4	1.0487 × 10−4	7.1507 × 10−5	3.8023 × 10−4	3.4327 × 10−6	1.1832 × 10−4	2.2028 × 10−5	1.1978 × 10−5	1.6048 × 10−4	6.7075 × 10−6	
+2.2436 × 10
+
+−6
+
+
+Sig	†	†	†	†	†	†	†	†	†	†	†	
+
+C4	Min	2.0265 × 10−3	
+1.7298 × 10
+
+−3
+
+	1.7299 × 10−3	1.8862 × 10−3	3.1461 × 10−3	
+1.7298 × 10
+
+−3
+
+	2.0999 × 10−3	1.7302 × 10−3	2.4929 × 10−3	2.0289 × 10−3	2.2419 × 10−3	
+1.7298 × 10
+
+−3
+
+
+Max	2.7935 × 10−2	7.1348 × 10−3	6.4510 × 10−3	2.9168 × 10−3	5.6999 × 10−3	1.7435 × 10−3	2.6394 × 10−3	2.3903 × 10−3	3.3059 × 10−3	1.8462 × 10−2	1.2444 × 10−2	
+1.7298 × 10
+
+−3
+
+
+Mean	1.2697 × 10−2	2.3338 × 10−3	3.1636 × 10−3	2.3197 × 10−3	4.0861 × 10−3	1.7303 × 10−3	2.2820 × 10−3	1.8989 × 10−3	2.9080 × 10−3	3.3622 × 10−3	3.2897 × 10−3	
+1.7298 × 10
+
+−3
+
+
+Std	7.0436 × 10−3	9.4722 × 10−4	9.0213 × 10−4	2.3351 × 10−4	5.9948 × 10−4	2.0956 × 10−6	1.1972 × 10−4	1.3778 × 10−4	2.2195 × 10−4	2.2604 × 10−3	1.6111 × 10−3	
+1.1295 × 10
+
+−17
+
+
+Sig	†	†	†	†	†	†	†	†	†	†	†	
+
+C5	Min	1.6950 × 10−2	
+1.6601 × 10
+
+−2
+
+	1.6858 × 10−2	1.6770 × 10−2	1.7121 × 10−2	
+1.6601 × 10
+
+−2
+
+	1.6961 × 10−2	1.6612 × 10−2	1.8199 × 10−2	1.8358 × 10−2	1.6635 × 10−2	
+1.6601 × 10
+
+−2
+
+
+Max	5.5259 × 10−2	3.3244 × 10−2	3.1866 × 10−2	2.2538 × 10−2	3.1992 × 10−2	1.6750 × 10−2	2.2109 × 10−2	2.3011 × 10−1	3.9157 × 10−2	4.3312 × 10−2	2.7762 × 10−1	
+1.6601 × 10
+
+−2
+
+
+Mean	4.4824 × 10−2	1.8372 × 10−2	2.1332 × 10−2	1.8520 × 10−2	2.2334 × 10−2	1.6606 × 10−2	1.9226 × 10−2	2.8526 × 10−2	3.0484 × 10−2	3.2836 × 10−2	6.0846 × 10−2	
+1.6601 × 10
+
+−2
+
+
+Std	9.0780 × 10−3	3.8189 × 10−3	3.4651 × 10−3	1.2799 × 10−3	3.9728 × 10−3	2.4193 × 10−5	1.1538 × 10−3	3.9424 × 10−2	4.3484 × 10−3	6.8419 × 10−3	6.7935 × 10−2	
+8.8518 × 10
+
+−14
+
+
+Sig	†	†	†	†	†	†	†	†	†	†	†	
+
+C6	Min	1.2187 × 10−2	1.1183 × 10−2	1.2115 × 10−2	1.1232 × 10−2	1.1782 × 10−2	
+1.1183 × 10
+
+−2
+
+	1.4939 × 10−2	
+1.1183 × 10
+
+−2
+
+	1.6025 × 10−2	1.2762 × 10−2	2.0565 × 10−2	
+1.1183 × 10
+
+−2
+
+
+Max	1.5729 × 10−1	5.0798 × 10−2	2.9435 × 100	3.2805 × 10−2	3.9255 × 10−2	1.1436 × 10−2	2.0706 × 10−2	7.9098 × 10−1	8.1961 × 10−2	6.7418 × 10−2	1.7002 × 100	
+1.1183 × 10
+
+−2
+
+
+Mean	4.8056 × 10−2	1.5446 × 10−2	5.1388 × 10−1	1.7078 × 10−2	2.7788 × 10−2	1.1188 × 10−2	1.8106 × 10−2	5.5319 × 10−2	2.9793 × 10−2	2.9973 × 10−2	7.1489 × 10−1	
+1.1183 × 10
+
+−2
+
+
+Std	2.7418 × 10−2	7.4164 × 10−3	1.0455 × 100	4.8496 × 10−3	7.4433 × 10−3	3.5681 × 10−5	1.4059 × 10−3	1.1847 × 10−1	8.8898 × 10−3	1.0254 × 10−2	6.3154 × 10−1	
+5.1647 × 10
+
+−10
+
+
+Sig	†	†	†	†	†	†	†	†	†	†	†	
+
+
+RGA_DX	0.76080853	0.32718958	0.03632466	53.78695420	1.48247815	0.01775204	0.0540
+PPSO	0.76073762	0.32861107	0.03631131	54.21181566	1.48292197	0.01773253	0.1201
+GL_PSO	0.76079288	0.31917717	0.03642442	53.27268081	1.47998133	0.01773408	0.0775
+TLABC	0.76091994	0.33785067	0.03613804	53.11267330	1.48570478	0.01783818	0.1116
+NaCuSa	0.76101112	0.32180409	0.03640558	51.78667832	1.48086332	0.01835384	0.0414
+AGDE	0.76078214	0.33006787	0.03628442	54.18233445	1.48336514	0.01777338	0.1312
+CoDE	0.76083130	0.42068293	0.03528618	57.88266549	1.50838972	0.01961552	0.1029
+JADE	0.76075879	0.32879393	0.03629925	54.23102535	1.48297030	0.01771737	0.0440
+DE_QI	0.76075087	0.33353315	0.03624677	55.37150709	1.48440848	0.01773805	
+0.0241
+
+DESQA	0.76077467	0.32305185	0.03637635	53.72501895	1.48119336	0.01770489	0.0274
+QIDE	0.76077568	0.32302840	0.03637702	53.71732803	1.48118604	0.01770455	0.0249
+QILDE	0.76077553	0.32302080	0.03637709	53.71852071	1.48118359	
+0.01770381
+	0.0269
+
+RGA_DX	0.76076700	0.80253844	0.03679946	56.58882245	1.92181010	0.19133916	1.43855377	0.01733736	0.1182
+PPSO	0.76077670	0.54892507	0.03665906	55.16727404	1.96230154	0.23967215	1.45623874	0.01737064	0.2423
+GL_PSO	0.76077478	0.20929985	0.03678193	55.37533253	1.44544795	0.64479728	1.92106383	0.01735183	0.1601
+TLABC	0.76145877	0.22745856	0.03656766	42.98121565	1.45526030	0.15635361	1.68319885	0.02249033	0.2253
+NaCuSa	0.76061903	0.18197836	0.03619379	55.61160505	1.69488374	0.25714961	1.46764754	0.01812227	0.0910
+AGDE	0.76077671	0.26681808	0.03657085	54.67677298	1.46496152	0.41501373	1.99963060	0.01747410	0.2609
+CoDE	0.76040104	0.99056798	0.03761839	54.97213113	1.84047825	0.09611230	1.38496566	0.01939491	0.2001
+JADE	0.76075359	0.34991269	0.03593899	58.48187676	1.49081736	0.01555039	1.60422517	0.01777253	0.0938
+DE_QI	0.76010364	0.22672753	0.03588700	63.07232475	1.97891544	0.00000034	1.48810320	0.02020184	
+0.0568
+
+DESQA	0.76078258	0.24514865	0.03665676	55.08688313	1.45783515	0.58875661	1.99983274	0.01737070	0.0652
+QIDE	0.76077514	0.26320288	0.03657734	54.82595838	1.46386182	0.00000044	1.99422151	0.01744818	0.0574
+QILDE	0.76078108	0.74934954	0.03674043	55.48545008	2.00000000	0.22597408	1.45101670	
+0.01731807
+	0.0598
+
+RGA_DX	1.03015335	3.57908953	1.19886195	1038.74323419	48.74708655	0.04219464	0.0514
+PPSO	1.03048731	3.50023004	1.20074231	987.40945183	48.66253610	0.04182783	0.1165
+GL_PSO	1.03046443	3.50334272	1.20067060	988.81242010	48.66604957	0.04184277	0.0776
+TLABC	1.03072831	3.37737078	1.20329965	953.62843160	48.52637977	0.04224121	0.1055
+NaCuSa	1.03034483	3.46022136	1.20263657	996.81588066	48.61704922	0.04184919	0.0415
+AGDE	1.03051591	3.48391729	1.20121184	982.22102575	48.64466575	0.04179202	0.1345
+CoDE	1.02946678	3.50660509	1.20153561	1075.79352509	48.66908565	0.04281945	0.1034
+JADE	1.03050723	3.48337440	1.20124629	982.69212085	48.64403996	0.04179061	0.0465
+DE_QI	1.03046736	3.51991792	1.20051118	1000.22876753	48.68363750	0.04187730	
+0.0234
+
+DESQA	1.03051427	3.48224871	1.20127109	981.97650675	48.64281955	0.04178717	0.0280
+QIDE	1.03051431	3.48223787	1.20127168	981.97802637	48.64280724	0.04178716	0.0251
+QILDE	1.03051433	3.48223641	1.20127169	981.96949220	48.64280580	
+0.04178701
+	0.0271
+
+RGA_DX	1.66276359	2.71785201	0.00280680	18.61626834	1.57104454	0.02829875	0.1412
+PPSO	1.66390479	1.73865358	0.00427378	15.92828259	1.52030271	0.02177420	0.3391
+GL_PSO	1.66392450	1.72842528	0.00428966	15.88628258	1.51965679	0.02181565	0.2168
+TLABC	1.66291256	2.39216566	0.00323073	18.03233547	1.55616825	0.02440235	0.2981
+NaCuSa	1.66127589	5.06107368	0.00049719	24.29611649	1.64771876	0.04964698	0.1095
+AGDE	1.66390479	1.73865638	0.00427377	15.92828247	1.52030289	0.02177420	0.3664
+CoDE	1.66267768	2.86398699	0.00261062	19.05187592	1.57717281	0.02979928	0.2806
+JADE	1.66392544	1.74791560	0.00424494	15.89740501	1.52089353	0.02192554	0.1110
+DE_QI	1.66187452	3.68807410	0.00174176	21.09088846	1.60774985	0.03807161	
+0.0594
+
+DESQA	1.66329675	2.76905528	0.00268407	17.99830903	1.57328019	0.02901405	0.0671
+QIDE	1.66264521	3.15361401	0.00222372	19.20799449	1.58869826	0.03308287	0.0604
+QILDE	1.66390478	1.73865689	0.00427377	15.92829408	1.52030292	
+0.02177419
+	0.0670
+
+RGA_DX	7.46547720	3.03033555	0.00447588	164.62989209	1.28224318	0.30164063	0.1429
+PPSO	7.47253028	2.33502174	0.00459463	22.21974032	1.26010445	0.27797596	0.3396
+GL_PSO	7.46259707	2.87857337	0.00450472	805.95112311	1.27781498	0.29616234	0.2217
+TLABC	7.46751697	3.09748254	0.00447095	402.65124324	1.28412704	0.29868032	0.3054
+NaCuSa	7.46224352	3.01240639	0.00446497	541.74580235	1.28173794	0.30029306	0.1119
+AGDE	7.47252979	2.33499826	0.00459463	22.22020317	1.26010359	0.27797432	0.3705
+CoDE	7.46288564	2.95674266	0.00449897	1404.60022165	1.28016312	0.30308459	0.2857
+JADE	7.47098011	2.43376310	0.00457640	26.80914711	1.26357430	0.28034481	0.1134
+DE_QI	7.47044420	3.97023067	0.00433302	876.43551578	1.30606080	0.33627042	
+0.0611
+
+DESQA	7.47060495	4.07362641	0.00432159	1494.04368587	1.30841452	0.33913216	0.0704
+QIDE	7.46829639	2.51003065	0.00456324	34.90180985	1.26616589	0.28411775	0.0662
+QILDE	7.47252992	2.33499556	0.00459463	22.21991431	1.26010350	
+0.27797426
+	0.0687
+
+RGA_DX	9.15101679	0.84978775	0.00990373	20.95736316	1.19486440	0.22349586	0.1525
+PPSO	9.14306224	1.11432137	0.00981924	4850.64615709	1.21499317	0.21760587	0.3426
+GL_PSO	9.14952346	0.86197615	0.00990019	24.61472638	1.19589085	0.22170555	0.2286
+TLABC	9.14455907	1.17230717	0.00980074	4985.33619702	1.21884740	0.21867994	0.3080
+NaCuSa	9.14347648	1.27134940	0.00976541	4150.49512448	1.22508837	0.22439167	0.1162
+AGDE	9.14305920	1.11418122	0.00981928	4999.99999783	1.21498368	0.21759982	0.3713
+CoDE	9.15630842	1.73668220	0.00965864	4400.55924036	1.24961211	0.29825198	0.2876
+JADE	9.14305990	1.11421695	0.00981927	4999.63362993	1.21498609	0.21760118	0.1224
+DE_QI	9.16050299	1.86756083	0.00962134	3479.51580465	1.25537178	0.31348545	
+0.0641
+
+DESQA	9.15259041	1.47773974	0.00971718	4964.16647596	1.23675361	0.24047024	0.0725
+QIDE	9.16859150	2.44013088	0.00952472	4180.64044758	1.27741433	0.44212530	0.0709
+QILDE	9.14305920	1.11418099	0.00981928	4999.99999996	1.21498366	
+0.21759981
+	0.0721
+
+ 	Fig. 1  Comparison between the measured and calculated data obtained by QILDE. (a) Case C1; (b) case C2; (c) case C3; (d) case C4; (e) case C5; (f) case C6.	 
+
+ 	Fig. 2  Convergence curves. (a) Case C1; (b) case C2; (c) case C3; (d) case C4; (e) case C5; (f) case C6.	 
+
+ 	Fig. 3  Friedman test results.	 
+
+
+C1	PS54	2.863 × 10−1	NA	NA	NA
+Method in ref. 57	1.5051 × 10−3	NA	NA	NA
+LI66	1.0548 × 10−3	NA	NA	NA
+Method in ref. 67	2.9117 × 10−3	NA	NA	NA
+A-bcNM68	9.8602 × 10−4	NA	NA	NA
+IBEXOPT69	9.8603 × 10−4	NA	NA	NA
+LMSA70	9.8640 × 10−4	NA	NA	NA
+SGDE71	9.8602 × 10−4	9.8604 × 10−4	9.8602 × 10−4	2.4747 × 10−9
+GWOCS31	9.8607 × 10−4	9.9095 × 10−4	9.8874 × 10−4	2.4696 × 10−8
+IWOA21	9.8602 × 10−4	1.0331 × 10−4	9.9524 × 10−4	1.1267 × 10−8
+IJAYA72	9.8603 × 10−4	1.0622 × 10−3	9.9204 × 10−4	1.4033 × 10−5
+MCSWOA73	9.8602 × 10−4	9.8603 × 10−4	9.8602 × 10−4	4.8373 × 10−10
+HFAPS74	9.8602 × 10−4	NA	NA	NA
+SDO75	9.8602 × 10−4	9.8616 × 10−4	9.8603 × 10−4	2.5141 × 10−8
+QILDE	9.8602 × 10−4	9.8616 × 10−4	9.8603 × 10−4	2.7839 × 10−8
+C2	PS54	1.5180 × 10−2	NA	NA	NA
+A-bcNM68	9.8250 × 10−4	NA	NA	NA
+IBEXOPT69	9.8257 × 10−4	NA	NA	NA
+SGDE71	9.8441 × 10−4	9.8602 × 10−4	9.8577 × 10−4	4.0150 × 10−7
+GWOCS31	9.8334 × 10−4	1.0017 × 10−4	9.9411 × 10−4	9.5937 × 10−6
+IWOA21	9.8255 × 10−4	1.0889 × 10−4	9.9693 × 10−4	1.9297 × 10−5
+IJAYA72	9.8293 × 10−4	1.4055 × 10−3	1.0269 × 10−3	9.8325 × 10−5
+MCSWOA73	9.8250 × 10−4	1.1903 × 10−4	1.0078 × 10−4	3.7264 × 10−5
+HFAPS74	9.8248 × 10−4	NA	NA	NA
+SDO75	9.8250 × 10−4	1.0271 × 10−3	9.8822 × 10−4	8.8518 × 10−6
+EVPS76	9.8510 × 10−4	1.1190 × 10−3	1.0083 × 10−3	NA
+QILDE	9.8248 × 10−4	9.8968 × 10−4	9.8480 × 10−4	1.5868 × 10−6
+C3	PS54	1.18 × 10−2	NA	NA	NA
+LI66	2.4777 × 10−3	NA	NA	NA
+Method in ref. 67	1.1114 × 10−2	NA	NA	NA
+SGDE71	2.4251 × 10−3	2.4251 × 10−3	2.4251 × 10−3	4.1698 × 10−10
+GWOCS31	2.4251 × 10−3	2.4275 × 10−3	2.4261 × 10−3	1.1967 × 10−6
+IWOA21	2.4251 × 10−3	2.4335 × 10−3	2.4269 × 10−3	2.2364 × 10−6
+IJAYA72	2.4251 × 10−3	2.4393 × 10−3	2.4289 × 10−3	3.7755 × 10−6
+MCSWOA73	2.4251 × 10−3	2.4270 × 10−3	2.4252 × 10−3	3.2927 × 10−7
+EVPS76	2.4267 × 10−3	3.4707 × 10−3	2.7877 × 10−3	NA
+Method in ref. 77	5.181 × 10−3	NA	NA	NA
+LM78	2.27 × 10−3	NA	NA	NA
+QILDE	2.4251 × 10−3	2.4370 × 10−3	2.4257 × 10−3	2.2436 × 10−6
+C4	Method in ref. 57	2.1815 × 10−3	NA	NA	NA
+GWOCS31	1.7337 × 10−3	1.7528 × 10−3	1.7457 × 10−3	1.0446 × 10−15
+MCSWOA73	1.7298 × 10−3	1.7364 × 10−3	1.7311 × 10−3	1.0774 × 10−6
+HFAPS74	1.97 × 10−3	NA	NA	NA
+SDO75	1.7298 × 10−3	1.9500 × 10−3	1.7703 × 10−3	4.5108 × 10−5
+BHCS79	1.7298 × 10−3	3.3299 × 10−3	1.8365 × 10−3	4.0594 × 10−4
+ISCE80	1.7298 × 10−3	1.7298 × 10−3	1.7298 × 10−3	2.30 × 10−17
+QILDE	1.7298 × 10−3	1.7298 × 10−3	1.7298 × 10−3	1.1295 × 10−17
+C5	Method in ref. 57	1.7879 × 10−2	NA	NA	NA
+MCSWOA73	1.6601 × 10−2	1.6741 × 10−2	1.6632 × 10−2	2.6486 × 10−5
+SDO75	1.6601 × 10−2	1.6866 × 10−2	1.6683 × 10−2	7.1751 × 10−5
+BHCS79	1.6601 × 10−2	2.4360 × 10−2	1.3482 × 10−1	2.6062 × 10−2
+ISCE80	1.6601 × 10−2	1.6601 × 10−2	1.6601 × 10−2	8.7400 × 10−14
+QILDE	1.6601 × 10−2	1.6601 × 10−2	1.6601 × 10−2	8.8518 × 10−14
+C6	MCSWOA73	1.1183 × 10−2	1.1244 × 10−2	1.1187 × 10−2	9.1358 × 10−6
+EVPS76	1.1253 × 10−2	NA	NA	NA
+GAMS81	1.1252 × 10−2	NA	NA	NA
+QILDE	1.1183 × 10−2	1.1183 × 10−2	1.1183 × 10−2	5.1647 × 10−10
+
+This journal is © The Royal Society of Chemistry 2020

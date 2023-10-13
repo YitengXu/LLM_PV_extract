@@ -1,0 +1,2213 @@
+Towards membrane-electrode assembly systems for CO 2 reduction: a modeling study   - Energy & Environmental Science (RSC Publishing) DOI:10.1039/C9EE00909D View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C9EE00909D
+(Paper)
+Energy Environ. Sci., 2019, 12, 1950-1968Towards membrane-electrode assembly systems for CO2 reduction: a modeling study†
+
+        
+          
+            Lien-Chun 
+            Weng
+          
+        
+      ab, 
+      
+        
+          
+            Alexis T. 
+            Bell
+          
+        
+      *ab and 
+
+        
+          
+            Adam Z. 
+            Weber
+          
+        
+      *a
+aJoint Center for Artificial Photosynthesis, LBNL, Berkeley, CA 94720, USA. E-mail: alexbell@berkeley.edu; azweber@lbl.gov
+bDepartment of Chemical and Biomolecular Engineering, UC Berkeley, Berkeley, CA 94720, USA
+Received 
+      20th March 2019
+    , Accepted 7th May 2019First published on 8th May 2019AbstractMembrane-electrode assemblies (MEAs) are an attractive cell design for the electrochemical reduction of CO2 because they exhibit low ohmic loss and high energy efficiency. We describe here the development and application of a multiphysics model to investigate the fundamental limitations of two MEA designs: one with gaseous feeds at both the anode and cathode (full-MEA), and the other with an aqueous anode feed (KHCO3 or KOH exchange solution) and a gaseous cathode feed (exchange-MEA). The total current density for the three cases follows the order: KOH-MEA > KHCO3-MEA > full-MEA. This trend is established by examining the distribution of the applied voltage. We show that the main charge-carrying species are carbonate anions for an MEA that uses an anion-exchange membrane (AEM). The amount of CO2 consumed but not converted to CO decreases with increasing current densities above 100 mA cm−2 for a full-MEA, but converges to 50% for exchange-MEAs. The full-MEA becomes limited by ohmic resistance as the membrane dehydrates with increasing cell temperature, and eventually becomes limited due to water mass transport. The exchange-MEAs can maintain membrane hydration and the local ion concentration at the anode, but are limited by salt precipitation at the cathode, as well as a higher tendency to flood. Finally, we explore the effects of temperature and discuss the possibility of increasing water supply to the full-MEA to improve its performance at elevated temperatures. The MEA model and the understanding of MEA performance for the electrochemical reduction of CO2 presented in this study should help guide the design of next-generation CO2 reduction cells.
+
+Broader context
+CO2 electrolyzers powered by solar energy, either directly or indirectly, have become increasingly attractive as solar prices decline and atmospheric CO2 levels rise. The product formed by CO2 reduction can be used as fuel or as precursors to fuel or chemical industry, thereby enabling the storage of intermittent solar radiation in chemical bonds. For CO2 electrolyzers to be commercially viable, high current densities must be achieved with good selectivity at relatively low power inputs. The design and optimization of such devices require understanding the underlying physics, which includes transport phenomena, electrochemistry, heat transfer, and reaction kinetics. The work presented here describes a numerical model that accounts for the aforementioned physical phenomena occurring in membrane electrode assemblies (MEAs). The model reveals intrinsic tradeoffs and limitations of MEAs for the electrochemical reduction of CO2, and establishes design and operating criteria for such systems. The model also confirms that ohmic losses in MEAs are low because charge transport through a liquid electrolyte is eliminated.
+
+Introduction
+Electrochemical reduction of CO2 allows conversion of this greenhouse gas to value-added products under mild conditions. This process also provides a way to store excess electrical energy and tackle intermittency issues associated with renewable energy sources (e.g., wind and solar).1,2 For the electrochemical reduction of CO2 to be commercially viable, it is necessary to carry out CO2 reduction (CO2R) at current densities >100 mA cm−2, while minimizing the power input (or cell voltage).3 Such current densities require higher local concentrations of CO2, which have been achieved predominantly with gas-diffusion electrodes (GDEs), architectures that allow for new avenues of exploration and efficiency.4 GDEs overcome the significant mass-transfer resistances associated with CO2R carried out in aqueous electrolytes—a consequence of the large mass-transfer boundary layer near the planar electrodes.5–13
+Minimizing cell ohmic overpotential requires increasing the conductivity of the electrolyte, and decreasing the distance between the anode and cathode. Membrane-electrode-assemblies (MEAs) satisfy these two requirements by removing the aqueous electrolyte compartments between the electrodes and utilizing an ion-conducting polymer (ionomer) as both the separator and electrolyte. Membranes used in electrochemical systems are typically on the order of 10 to 100 μm thick, with conductivities ranging from 10 to 200 mS cm−1.14
+There have been numerous reports demonstrating the feasibility of MEA-like cells attaining CO2R current densities upwards of 100 mA cm−2, an order of magnitude higher than can be achieved using typical aqueous architectures.5–11,15 Various configurations and materials have been presented, with much debate as to which design is the most effective for scale-up and commercialization, as reviewed13 and discussed4 recently. Cook et al. first illustrated the electrochemical reduction of CO2 to hydrocarbons in an MEA design, showing an approximately 0.5 V reduction in the cell potential at 10 mA cm−2 when removing the anolyte compartment.16 Hori et al. found that an anion-exchange membrane (AEM) is more suitable for CO2R than a cation-exchange membrane (CEM), as the CEM not only prevents transport of HCO3− and CO=3 anions, but also allows high proton concentrations that promote the competing hydrogen evolution reaction (HER).17 In agreement with Hori et al., Delacourt et al. noted the importance of minimizing proton concentration near the cathode to suppress HER. However, these authors did not observe CO2R products over Ag using a CEM, but obtained an 80% CO2R faradaic efficiency (FE) after adding a KHCO3 buffer layer between the cathode and CEM. They found a FE of only 3% for CO2R with an AEM but did not fully explain why the efficiency was so low.18 It is notable that Salvatore et al. also explored adding a buffer layer between the cathode and membrane to improve the CO2R current efficiency for an MEA-like cell (aqueous anode feed and gaseous cathode feed, with no anolyte or catholyte compartments). These authors found that the buffer layer provided better hydration, since adding a water layer in place of the buffer layer also achieved a higher CO2R FE than could be reached in the absence of such a layer.19 While it is tempting to draw general conclusions from the above studies, it is important to note that each one was performed using cell designs that differed from each other. Hori et al. retained the aqueous anolyte compartment but removed the aqueous catholyte compartment;17 Narayanan, Li, and Salvatore removed the aqueous electrolyte compartments and used an aqueous feed instead;19–21 and Delacourt, Kriescher, and Wang utilized pure gaseous feeds with no aqueous electrolyte.18,22,23 Without a quantitative understanding of the limitations of each design, it is difficult to compare the results reported in different studies and to draw general conclusions from them. To date, there has been limited analysis of an MEA performing CO2R in the absence of aqueous electrolyte compartments at low temperature (as opposed to solid-oxide electrolyzers24,25). Delacourt et al. simulated an electrochemical cell with a cation exchange membrane and a catholyte (no anolyte), and briefly mentioned replacing the catholyte with an anion-exchange membrane to obtain a higher current density. They concluded that a fully solid-state MEA could enhance performance of a CO2 electrolyzer, but did not go into details to describe MEA operation and limitations.
+In this paper, we present a modeling framework that describes mass transport, electrochemical and homogenous reaction kinetics, and thermal effects for an AEM-MEA cell with pure gaseous feeds (full-MEA), and with a gaseous cathode feed but an aqueous anode feed (exchange-MEA). Our model differs from that for an alkaline fuel-cell/electrolyzer in two main aspects. First, there are competing electrochemical reactions occurring at the cathode (HER and CO2R) and second, the CO2 concentration is much higher in the CO2R system (compared to a maximum of 400 ppm for fuel cell systems), which means that the homogeneous acid/base bicarbonate reactions are significant and must be accounted for, especially in an alkaline environment. We use our model to examine the performance of an MEA system for the CO2 reduction over an Ag catalyst, which primarily produces CO and H2. Based on our simulations, we discuss the advantages and limitations of different MEA cell designs for performing CO2R, and examine potential methods for improving water management in the membrane and the overall cell efficiency. Finally, the presented model, methodology, and subsequent analysis provides a framework for investigating these and related electrochemical energy-conversion processes that involve complex and multiple reaction and transport processes.
+Model development
+This section aims to discuss the modeling approach, governing equations, and assumptions to give the reader a primer and methodology for tackling complex multiphysics problems common for electrochemical energy-devices. The discussion includes justifications, governing equation formulation, and determination of key parameter values. The MEA model comprises a 50 μm anion-exchange membrane (AEM), a 5 μm Ag cathode catalyst layer (CL), and a 100 μm cathode diffusion medium (DM), as shown in Fig. 1. The anode, an IrO2 mesh pressed against the membrane, is treated as an interface. N2 with 100% relative humidity (RH) is fed to the anode chamber for the full-MEA, and an aqueous solution is fed for the exchange-MEA; humidified CO2 (100% RH) is fed to the cathode chamber for both MEA configurations.
+ Fig. 1  Schematic of modeling framework and boundary conditions. 
+At the anode, the oxygen evolution reaction (OER) occurs via both acidic and alkaline processes, 2H2O → O2 + 4H+ + 4e−(1) 4OH− → O2 + 2H2O + 4e−(2)HER and CO2R reaction occur at the cathode. Similar to the OER, both acidic and alkaline HER can occur, 2H+ + 2e− → H2(3) 2H2O + 2e− → H2 + 2OH−(4)For a Ag cathode, CO has been shown to be the predominant CO2R product formed, therefore, CO evolution reaction (COER) is equivalent to CO2R reaction for our system.10,26,27 Shen et al. have observed a less prominent pH-dependence of the COER compared to the HER at low pH, suggesting that H2O serves as the proton source for the reaction.28 For this reason, the alkaline reaction is used for COER, CO2 + H2O + 2e− → CO + 2OH−(5)
+The ionomer membrane electrolyte has a fixed positive charge concentration, cM, determined by the product of its ion-exchange capacity, IEC, and its density, ρM. We use properties of a Tokuyama A201 membrane, listed in Table 1. The water content, λ, describes the extent of hydration of the membrane, and is defined as the number of water molecules per cationic group in the membrane. For simplicity, we use the water-uptake isotherm measured by Peng et al. for a HCO3− AEM at 25 °C, and ignore its dependence on the anion type and temperature.29 Water-uptake isotherms reported for several Tokuyama A201 membranes show a weak dependence on temperature.29–31 Results of temperature-dependent membrane isotherms are discussed in the ESI.† Additionally, the membrane is determined to be primarily in the HCO3−/CO=3 form (discussed later), making the HCO3− form of the isotherm a reasonable approximation. The water-uptake isotherm also describes the relationship between water concentration and water activity in the membrane.
+Table 1 List of parameters
+
+
+
+
+Parameter
+Value
+Unit
+Ref.
+
+
+
+
+Membrane
+
+
+
+L
+M
+
+5 × 10−5
+M
+
+
+
+
+IEC
+1.7
+mmol g−1
+
+29
+
+
+
+
+ρ
+M
+
+1.2
+g ml−1
+
+29
+
+
+
+
+
+
+
+DM
+
+
+
+L
+DM
+
+10−4
+M
+
+
+
+
+
+ε
+DM
+
+0.8
+
+
+
+
+
+
+
+r
+p,DM
+
+7.33 × 10−7
+M
+
+38
+
+
+
+
+σ
+DM
+
+220
+S m−1
+
+39
+
+
+
+
+κ
+osat,DM
+
+1.72 × 10−11
+m2
+
+40
+
+
+
+
+k
+T,DM
+
+0.015
+W m−1 K−1
+
+41
+
+
+
+
+
+
+
+CL
+
+
+
+L
+CL
+
+5 × 10−6
+M
+
+
+
+
+
+ε
+CL
+
+0.5
+
+
+
+
+
+
+
+r
+p,CL
+
+25 × 10−7
+M
+
+38
+
+
+
+
+a
+v
+
+107
+m−1
+
+42
+
+
+
+
+σ
+CL
+
+100
+S m−1
+
+39
+
+
+
+
+κ
+osat,CL
+
+8 × 10−16
+m2
+
+40
+
+
+
+
+k
+T,CL
+
+0.003
+W m−1 K−1
+
+41
+
+
+
+
+
+
+
+Gas species properties
+
+
+
+v
+p,H2
+
+7.07
+
+
+
+43
+
+
+
+
+v
+p,H2O
+
+12.7
+
+
+
+43
+
+
+
+
+v
+p,CO
+
+18.9
+
+
+
+43
+
+
+
+
+v
+p,CO2
+
+26.9
+
+
+
+43
+
+
+
+
+p
+vap
+
+
+
+
+mmHg
+
+44
+
+
+
+
+H
+CO2
+
+
+
+
+mM atm−1
+
+44
+
+
+
+
+
+
+
+Aqueous species properties
+
+
+
+D
+K+
+
+
+
+
+cm2 s−1
+
+45
+
+
+
+
+D
+H+
+
+
+
+
+cm2 s−1
+
+46
+
+
+
+
+D
+OH−
+
+
+
+
+cm2 s−1
+
+46
+
+
+
+
+D
+HCO3−
+
+
+
+
+cm2 s−1
+
+47
+
+
+
+
+D
+CO3−
+
+
+
+
+cm2 s−1
+
+47
+
+
+
+
+D
+CO2
+
+
+
+
+cm2 s−1
+
+44
+
+
+
+
+D
+w
+
+9 × 10−17exp(5.9aw)
+cm2 s−1
+
+29
+
+
+
+
+
+
+
+Homogeneous reactions
+
+
+
+S
+1
+
+−96.31
+J mol−1 K−1
+
+44
+
+
+
+
+S
+2
+
+−148.1
+J mol−1 K−1
+
+44
+
+
+
+
+S
+w
+
+−80.66
+J mol−1 K−1
+
+44
+
+
+
+
+H
+1
+
+7.64
+kJ mol−1
+
+44
+
+
+
+
+H
+2
+
+14.85
+kJ mol−1
+
+44
+
+
+
+
+H
+w
+
+55.84
+kJ mol−1
+
+44
+
+
+
+
+k
+1
+
+10−2
+s−1
+
+32
+
+
+
+
+k
+2
+
+102
+s−1
+
+32
+
+
+
+
+k
+3
+
+103
+L mol−1 s−1
+
+32
+
+
+
+
+k
+4
+
+109
+L mol−1 s−1
+
+32
+
+
+
+
+k
+w
+
+10−3
+mol L−1 s−1
+
+32
+
+
+
+
+
+
+
+Charge transfer reactions
+
+
+
+Π
+OER
+
+
+
+
+mV
+
+41
+
+
+
+
+Π
+HER
+
+
+
+
+mV
+Approximated
+
+
+
+Π
+COER
+
+
+
+
+mV
+Approximated
+
+
+
+
+
+
+Others
+
+
+
+h
+T,liquid
+
+104
+W m−2 K−1
+Assumed
+
+
+
+h
+T,gas
+
+103
+W m−2 K−1
+Assumed
+
+
+
+
+Homogeneous reactions, including bicarbonate buffer and water-dissociation reactions, occur in the ionomer and aqueous phases, (6) (7) (8) (9) (10)Here, Kn denotes the equilibrium constant for reaction n, calculated from van’t Hoff equation using the change of entropy, ΔSn, and the heat of reaction, ΔHn, listed in Table 1 (11)The kinetics of these reactions are described using the rate coefficients measured by Shultz et al. rounded to the nearest order of magnitude.32 Results by Divekar et al. suggest that these rate coefficients, as well as equilibrium constants, likely differ in an ionomer compared to those for an aqueous solution;33 however, to the best of our knowledge, the magnitudes of these differences have not been established, and are likely to vary with membrane hydration, counterion identity, etc.34,35 Such investigation is beyond the scope of the current efforts. The effects of varying the rate of reaction for eqn (8) are discussed in the ESI† (Fig. S2).
+The CL and DM are both porous structures. The solid fraction of the CL is composed of Ag nanoparticles in an ionomer binder, and the DM is a hydrophobic carbon-fiber structure. We assume that the thickness of the anionic ionomer coating the Ag nanoparticles within the CL is 10 nm, which is sufficient to provide an ionic pathway for anions between the catalyst nanoparticles and the membrane.36 The DM is assumed to remain liquid free, which is reasonable considering its hydrophobic nature and existence of a temperature gradient discussed later.
+The MEA model is built upon framework of the GDE model we reported previously.37 The governing equations and a list of parameters are summarized in Tables 2–4. The model describes five main physical phenomena: transport of neutral and ionic species (including diffusion, migration, and convection), fluid flow through a porous medium, current and (over)potential distribution, chemical (homogeneous) and electrochemical (heterogeneous) reactions, and heat transfer. The model applies conservation of mass, momentum, charge, and energy to solve for the following state variables: mole fractions of gaseous species CO2, H2O, CO, and H2 in the cathode GDE, concentrations of dissolved CO2 and H2O in the membrane and ionomer, concentrations of ionic species K+, H+, OH−, HCO3−, CO=3 in the membrane and ionomer, gas-phase velocity in the cathode GDE, potentials of the solid-phase electrode and ionic-phase electrolyte, and temperature of the MEA. Fig. 1 provides an overview of the boundary conditions imposed. Below, we discuss in further detail relevant equations used to obtain effective parameter values, the source terms in each phase, and the boundary conditions for the three cases studied in this paper: full-MEA, 0.5 M KHCO3 exchange-MEA, and 0.5 M KOH exchange-MEA.
+Table 2 Governing equations (see nomenclature for symbol definitions)
+
+
+
+
+Solid phase variable: ϕs
+
+
+
+
+
+
+
+(12)
+
+
+
+i
+s = −σeffs∇ϕs
+(13)
+
+
+
+
+
+
+Aqueous phase variables: ωj, j = CO2(l), K+, H+, OH−, HCO3−, CO=3, H2O; ϕl
+
+
+
+
+∇·nj = RCT,j + RB,j + RPT,j
+(14)
+
+
+
+
+
+(15)
+
+
+
+
+
+(16)
+
+
+
+
+
+(17)
+
+
+
+
+
+
+Gas phase variables: ωi, i = CO2(g), CO, H2, H2O; pG
+
+
+
+
+∇·ni = RCT,i + RB,i + RPT,i
+(18)
+
+
+
+n
+
+i
+ = ji + ρiug
+(19)
+
+
+
+
+
+(20)
+
+
+
+
+
+(21)
+
+
+
+
+
+(22)
+
+
+
+
+
+
+Energy variable: T
+
+
+
+
+∇·q = QCT + QB + QJ
+(23)
+
+
+
+q = −kT,m∇T
+(24)
+
+
+
+
+Table 3 Model parameter equations (see nomenclature for symbol definitions)
+
+
+
+
+
+
+
+(25)
+
+
+
+
+
+(26)
+
+
+
+
+
+(27)
+
+
+
+
+
+(28)
+
+
+
+
+
+(29)
+
+
+
+
+Table 4 Source terms (see nomenclature for symbol definitions)
+
+
+
+
+
+
+
+(30)
+
+
+
+
+
+(31)
+
+
+
+
+
+(32)
+
+
+
+
+
+
+Species
+
+R
+CT
+
+
+R
+B
+
+
+R
+PT
+
+
+
+
+
+CO2(g)
+—
+—
+Gas/ionomer
+
+
+H2O(g)
+—
+—
+Gas/ionomer
+
+
+CO(g)
+COER
+—
+—
+
+
+H2(g)
+HER
+—
+—
+
+
+CO2(l)
+COER
+
+Eqn (6) and (8)
+
+Gas/ionomer
+
+
+H2O(l)
+OER, HER, COER
+
+Eqn (6), (9) and (10)
+
+Gas/ionomer
+
+
+K+
+—
+—
+—
+
+
+H+
+OER, HER
+
+Eqn (6), (7) and (10)
+
+—
+
+
+OH−
+OER, HER, COER
+
+Eqn (8)–(10)
+
+—
+
+
+HCO3−
+—
+
+Eqn (6)–(9)
+
+—
+
+
+CO=3
+—
+
+Eqn (7) and (9)
+
+—
+
+
+
+
+Electrolyte/ionomer membrane equilibrium
+The fixed background charge of an ionomer membrane leads to an electric potential difference at the membrane (ϕMl)/exchange solution (ϕEl) interface, the Donnan potential: ΔϕD = ϕMl − ϕEl. At equilibrium, the electrochemical potential of each species in the two phases must be equal, resulting in the following relationship between species concentration in the membrane, cMi, and in the exchange solution, cEi, (33)The Donnan potential can then be determined by enforcing electroneutrality in the membrane, taking into consideration the background charge. ΔϕD is positive for an AEM, due to its fixed positive background charge. This creates an extra energy barrier for cations to enter the membrane (zi > 0, so the exponential term is less than unity), but does not necessarily completely exclude cations from the membrane. For simplicity, species concentration and the ionic potential in the membrane will be denoted as ci and ϕl, respectively, for the remainder of the paper.
+Electron transport and charge transfer reactions
+The solid-phase electronic potential, ϕs, is described by charge conservation, eqn (12), and Ohm's law, eqn (13). Charge-transfer reactions occur at the electrode/electrolyte interface, and can be described by the Tafel equation for overpotentials greater than 0.2 V (with less than 0.01% error compared to Butler–Volmer equation),48 (34)Here, γk is the reaction order with respect to some reactant, αc,k is the cathodic transfer coefficient, and ηk is the overpotential for reaction k. The exchange current density, io,k, depends on the pre-exponential factor, Ak, and the apparent activation energy, Ea,k, according to the Arrhenius equation, (35)Studies have shown that the activation energy for the HER is pH-dependent, with a slope of approximately 1 (kJ mol−1)/pH.49–55 For the OER, we also assumed a linear dependence of Ea on pH and obtained a slope of, coincidentally, 1 (kJ mol−1)/pH from a fit to the experimental data reported by Kuo et al.56 Designing electrocatalysts that lower the energy barrier for CO2R products and improve CO2R activity is an area of active research; the effects of io,COER on MEA performance are described in the ESI.† We note that such rate expressions are used empirically to capture the pH-dependence observed in experiments. The pre-exponential factors were fit to the exchange current densities reported in the references listed in Table 5; all kinetic parameters, including the standard electrode potential relative to the standard hydrogen electrode (SHE) of reaction k, Uok, are summarized in Table 5.
+Table 5 Kinetic parameters for charge transfer reactions
+
+
+
+
+
+
+
+U
+o
+k
+ (V)
+
+A
+
+k
+ (mA cm−2)
+
+E
+a (kJ mol−1)
+
+α
+a/c
+
+
+
+
+Ref.
+
+
+
+
+Anode
+
+
+OER acid
+1.23
+9.40 × 10−7
+11 + 1 × pH
+1.5
+—
+
+56–58
+
+
+
+OER base
+1.23 × 10−4
+[OH−]/(1 M)
+
+
+
+
+
+
+Cathode
+
+
+HER acid
+0
+2.77 × 1019
+83 + 1 × pH
+0.44
+[H+]/(1 M)
+
+49–55
+
+
+
+HER base
+8.84 × 106
+—
+
+
+COER
+−0.11
+7.25 × 108
+100
+1
+([CO2]/(1 M))1.5
+
+26, 27 and 59
+
+
+
+
+
+Charge-transfer reactions contribute to source terms, RCT,i, as listed in eqn (30); they apply to aqueous species CO2, OH−, and H+, and for gaseous species CO and H2. The electronic potential is set to ϕs = 0 at the cathode boundary, and varied from 2 to 4 V (cell voltage) at the anode boundary.
+Ionic and neutral species transport and acid/base reactions in the ionomer
+Mass conservation, eqn (14), and the Nernst–Planck equation, eqn (15), govern the transport of ionic and neutral species and the electrolyte potential profile, ϕl, in the ionomer. Commonly, Stefan–Maxwell diffusion is used to capture species/species interaction that become significant under non-dilute conditions. However, using the Stefan–Maxwell approach would introduce 28 additional degrees of freedom, and require that composition-dependent diffusion coefficients be determined (frictional interactions between six species, water, and membrane). Since this would considerably increase the uncertainty and the complexity of our numerical model, we resort to using Nernst–Planck equation for our system even though we are not necessarily under dilute conditions. For water, electro-osmosis replaces migration, represented by the second term on the right side of eqn (16), and thus some of the coupling between frictional forces is maintained. The electro-osmotic coefficients for water carried by ionic species i (ξi) have not been well characterized for AEMs in the presence of CO2. Therefore, we adopt a value of one for the electro-osmotic coefficients, consistent with what is commonly used for a vapor-equilibrated CEM and close to the experimentally measured 0.61 ± 0.12 for a vapor-equilibrated, OH− form of the Tokuyama A201 membrane.60,61 The electro-osmotic coefficient tends to be higher for a liquid-equilibrated membrane, and has been reported to range from 2 to 7 for a KOH-equilibrated AEM.30,62 We note that our model proved not to be strongly dependent on the value of the electro-osmotic coefficient (see Fig. S3, ESI†), so a value of one was used for all scenarios.
+The effective diffusion coefficient for species other than H2O in the membrane, Deffj,M, is calculated using eqn (25) in Table 3 following Grew et al.63,64 The water mole fraction, xw, and water volume fraction in the ionomer, εL, are defined as (36)and (37)respectively, where VM = 1/(IEC·ρM) and Vw are the molar volume of the membrane and water, respectively. ζi describes the ratio of species-water and species-membrane interaction and is approximated from kinetic theory to be65 (38)where  is the reduced molar mass. Water diffusivity in the membrane, Dw,M, is a function of ionomer water activity, aw, as measured by Peng et al., and fit to the expression listed in Table 1.29 Finally, source terms due to homogeneous bulk reactions, RB,j, eqn (31) in Table 4, are calculated using apparent rate coefficients (Table 1), which were approximated based on values reported by Schulz et al. rounded to the nearest order of magnitude.32 Water activity instead of water concentration is used for homogeneous reactions involving water to ensure that equilibrium can be established at the electrolyte/ionomer membrane interface. RB,j applies to aqueous species involved in reactions listed in eqn (6)–(10). Other source terms for aqueous species include charge-transfer reactions, eqn (30), discussed in the previous section, and phase-transfer reactions, eqn (32), discussed in the following section.
+The flux for all species is set to zero at the CL/DM boundary at the cathode. At the anode boundary, CO2 and H2O are taken to be in equilibrium with the anode feed gas (inert gas N2 with 100% RH). The flux for all ionic species is set to zero for the full-MEA case, and for the exchange-MEA cases, all species are taken to be in equilibrium with the exchange solution, which is assumed to be at constant concentration. The anode boundary condition assumes fresh exchange solution being circulated at a high flowrate in the anode channel.
+Gas-phase species transport
+Concentration profiles for gaseous species are determined within the CL and DM domains. The Stefan–Maxwell equation, eqn (20) and Darcy's law, eqn (21) are used to describe the diffusion and convection terms, respectively. The effective diffusivity is an average of the Stefan–Maxwell diffusivity, DSMi, and Knudsen diffusivity, DKi (assuming both forms of diffusion occur in parallel) and is corrected for the porosity, εm, and the tortuosity, τm, of medium m using Bruggeman's relationship, eqn (26)–(28). The binary gas-phase diffusion coefficients are calculated using the equation derived by Fuller et al., eqn (29), where vp,i is the diffusion volume of species i, listed in Table 1.43
+The source terms for gaseous species occur in the CL domain. They include the charge transfer reactions producing H2 and CO, eqn (30), and the adsorption/desorption of CO2 and H2O into/out of the ionomer, RPT,i, eqn (32). The volumetric rate of gas dissolution into the ionomer phase is estimated using Fick's law, where cgj is the concentration of species i in equilibrium with its gas-phase concentration. For H2O, cgw = cMλg, where λg corresponds to the water content in equilibrium with water activity aw = pGyw/pvap, obtained using the isotherm reported by Peng et al.;29 for CO2,  where HCO2 is the temperature-dependent Henry's constant for CO2, listed in Table 1. It should be noted that the ionomer and salinity effects of the water vapor pressure are not accounted for, since these are estimated to be small. H2 and CO are neglected in the ionomer phase based on their limited solubility in water, an order of magnitude lower than CO2.44 The fluxes of all gaseous species are set to zero at the membrane/CL boundary, and their mass fractions set to the cathode feed gas composition at the GDL/gas channel boundary.
+Energy transport
+There are three sources of heat generation in the system: heat generated from charge-transfer reactions at the two electrodes, QCT, the heat of reaction from homogeneous bulk bicarbonate buffer reactions, QB, and Joule heating, QJ. QCT consists of both irreversible losses and reversible heat generation,48 (39)where Πk is the Peltier coefficient for reaction k, listed in Table 1. ΠCOER was approximated from the change in entropy for the overall reaction 2CO2 ⇔ 2CO + O2.41,48 (40)The term QB results from the change in enthalpy, ΔHn, for homogeneous reactions listed in eqn (6)–(10), (41)Finally, Joule heating due to electrical resistance is determined by, (42a)or (42b)for the solid and ionomer phase, respectively. The ionomer-phase conductivity is derived from the Nernst–Planck equation,48 (43)A Robin boundary condition is set at the two boundaries using a heat transfer coefficient, hT, to describe the heat flux, driven by the difference between the cell temperature at that boundary and room temperature, T0. qT = −hT(T − T0)(44)
+Numerical method
+The governing equations are solved using the MUMPS general solver in COMSOL Multiphysics 5.3a with a relative tolerance of 0.001. The modelling domain has a maximum element size of 0.01 μm. Element sizes were decreased to 0.001 μm near the boundaries to capture sharp concentration gradients. The base-case model has been provided in the ESI.†
+Results and discussion
+Dependence of the ohmic drop on cell configuration
+An order-of-magnitude improvement in the CO2R current density occurs in moving from a planar cathode to a GDE cathode configuration due to the increased active surface area and decreased mass-transfer resistances associated with the latter configuration.37 Simply substituting the planar cathode with a GDE cathode (aqueous GDE cell shown in Fig. 2) results in an order-of-magnitude increase in the ohmic drop when the total current density is increased from 10 to 100 mA cm−2, rendering such cell designs impractical for industrial application. By comparison, both the full-MEA and exchange-MEA eliminate the large ohmic drop by removing the electrolyte compartments and significantly decreasing the anode–cathode distance, allowing the cell to maintain the 100 mA cm−2 current density with a 44% reduction in the applied cell voltage. The values in Fig. 2 are first-order approximations and do not include effects such as concentration polarization, temperature changes, membrane dehydration, etc.; additional details on the approximation method are included in the ESI.† A mesh-like structure or GDE is required for the anode in the full-MEA and exchange-MEA designs where OER occurs to prevent layer delamination caused by the evolution of oxygen bubbles.
+ Fig. 2  Graphical illustration for various cell designs and a breakdown of the applied voltage. There is a 44% reduction in applied voltage for MEA compared to the aqueous GDE cell at the same total current density. 
+While the full-MEA and exchange-MEA minimize the ohmic loss across the cell, reactant and product crossover becomes a concern due to the small distance between the two electrodes. For an Ag cathode, almost no liquid product is produced and the CO solubility is low, limiting the CO crossover current density to approximately 1 mA cm−2 at room temperature (estimated using Fick's law and the solubility and diffusivity of CO in water). It should be noted though that the aqueous GDE cells can serve diagnostic purposes due to their isolation of a single electrode and easier implementations of a reference electrode for interrogation possibilities.13 The GDE type designs though are efficiency and performance cells due to the reasons above.
+Applied voltage breakdown and precipitation issues for a full-MEA and exchange-MEAs
+
+Fig. 3 shows the (a) total current density (TCD) and (b) CO FE for the three cases considered: full-MEA, 0.5 M KHCO3 exchange-MEA, and 0.5 M KOH exchange-MEA. The exchange-MEA's produce a higher TCD and CO FE than the full-MEA at the same applied cell potential, with the KOH exchange-MEA achieving the highest performance. The variance in CO FE for the three cases can be explained by the cathode pH: the alkalinity at the cathode increases in the order MEA < KHCO3 exchange-MEA < KOH exchange-MEA because of the exchange solution, as well as the higher TCD producing OH− at a higher rate at the cathode.
+ Fig. 3  (a) The total current density and (b) the CO faradaic efficiency (FE) for the four cases considered and their applied voltage breakdown (AVB), (c) full-MEA, (d) H2O-MEA, (e) KHCO3 exchange-MEA, and (f) KOH exchange-MEA. Dashed line in (a) represent current densities at which salt precipitations and batch operation is required. Cathode feed composition is 97 mol% CO2 and 3 mol% H2O. 
+To understand the trend observed for the TCD, we plot the applied voltage breakdown (AVB) for the three cases (Fig. 3c, e and f). The applied voltage is comprised of the thermodynamic potential, the kinetic overpotential, and the transport overpotential (Nernstian plus ohmic components). The thermodynamic potential depends on the species concentrations near the two electrodes at the open circuit. Assuming that all gaseous species are at normal conditions, the thermodynamic potential, ηth, for a cell performing OER at the anode and COER at the cathode can be calculated as (45)where  and  refers to the OH− concentration at the cathode and anode, respectively. The Nernstian overpotential is defined as the potential developed due to the change in OH− concentration at the electrode relative to that at open circuit, (46)The sign on the right side is negative for the anode and positive for the cathode. Therefore, a higher OH− concentration at the anode during operation would result in a negative (more favorable) Nernstian overpotential, while a higher OH− concentration at the cathode leads to a positive (less favorable) Nernstian overpotential. The applied voltage is broken down for OER and COER, since CO is the product of interest, and the CO FE reaches almost 100% for all cases above a cell potential of 2.5 V. The voltage contributions to the OER and HER can be calculated analogously.
+Comparing the AVB for the three cases, it is clear that the exchange-MEAs substantially minimize two overpotential sources observed in the full-MEA case: the anode Nernstian potential and the ohmic drop. The anode Nernstian potential is eliminated in the exchange-MEAs because the local environment at the anode is maintained by the circulating exchange solution. In contrast, sharp concentration gradients develop in the full-MEA and increase with increasing TCD, as shown in Fig. 4a. The exchange solution also improves membrane hydration, and, consequently, its conductivity, thereby decreasing the ohmic drop across the cell. For a full-MEA, the membrane water content decreases with increasing current density (Fig. 5a) because the water concentration in the gas channel is limited to its vapor pressure and water is transported and consumed in the reactions. Furthermore, as the temperature of the cell increases (Fig. 5d), the gas-phase RH decreases (Fig. 5b) even though the partial pressure of water increases (Fig. 5c), causing water in the CL ionomer to evaporate. Finally, the KOH exchange solution reduces the thermodynamic potential of the system due to the OH− concentration gradient that develops: the anode remains at the concentration of the circulating KOH solution, while the OH− concentration is lower near the cathode as the CO2 feed at the cathode gas channel neutralizes the OH− (Fig. 4b). The concentration profile where the anode OH− concentration is higher than that at the cathode is opposite to the one established for the full-MEA and KHCO3 exchange-MEA, resulting in a lower thermodynamic potential, or a negative (more favorable) Nernstian potential. A higher OH− concentration at the anode compared to the cathode makes the second term on the right side of eqn (45) negative, thereby decreasing the thermodynamic overpotential for the KOH exchange-MEA (Fig. 3f).
+ Fig. 4  Hydroxide concentration across (a) a full-MEA at 60, 100, 500 and 1000 mA cm−2; and (b) at 500 mA cm−2 comparing full-MEA, KHCO3 exchange-MEA, and KOH exchange-MEA. The hydroxide concentration across the full-MEA increases with increasing current density, creating significant concentration (Nernstian) overpotentials. In the case of KOH exchange-MEA, the hydroxide concentration is reversed due to the bicarbonate buffer reactions at the cathode side, resulting in a negative Nernstian overpotential. 
+ Fig. 5  (a) Water content in the membrane, (b) gas phase RH, (c) water partial pressure in the gas phase, and (d) the temperature for a full-MEA at 60, 100, 500, and 1000 mA cm−2. The gas phase RH decreases with increasing current density because of the increase in vapor pressure as the cell heats up. Cathode feed composition is 97 mol% CO2 and 3 mol% H2O (water vapor pressure at 25 °C). 
+The main limitation for the exchange-MEAs is the precipitation of K2CO3 at the cathode. Driven by both the chemical and electric potential gradients, K+ exchanges with H+ produced at the anode and moves to the cathode. Eventually, at ∼750 mA cm−2, the concentration of K2CO3 exceeds its solubility limit and it precipitates at the cathode (indicated by the red crosses in Fig. 3a). Therefore, batch operation with salt removal is required to operate exchange-MEAs at current densities above that where precipitation can occur. It is possible to offset this precipitation limit by feeding liquid water to the anode in order to provide better hydration. A H2O-MEA improves the total current density (but not the CO FE) of the full-MEA due to better membrane hydration, but does not provide the same advantageous as an exchange-MEA with dissolved salt (Fig. 3d) because of its inability to exchange ions. Thus, exchange-MEAs exhibit low voltage for a given current density but the full-MEA allows achievement of higher current densities without consideration of additional engineering controls.
+Ion transport and the charge-carrying species in a full-MEA
+At equilibrium, an OH− form AEM exposed to CO2 will convert to HCO3−/CO=3 form due to bicarbonate buffer reactions (6)–(9). The ratio of HCO3−/CO=3 depends on the partial pressure of CO2 in contact with the membrane and has been measured experimentally for an AEM exposed to 400 ppm CO2.33,67Fig. 6 shows the distribution of anion fraction (|zici|/cM) across the MEA for low, medium, and high current densities. As the current density increases, the membrane gradually converts to the CO=3 form, and eventually to the OH− form starting from the cathode side. This occurs because OH− is produced by the COER and HER (see eqn (4) and (5)) at the cathode. OH− reacts with the HCO3− initially in the membrane to form CO=3; OH− also reacts with dissolved CO2 to form HCO3− and eventually CO=3. The CO=3 then transports from the cathode to the anode, driven by its concentration gradient (diffusion), and the potential gradient (migration). At the anode, bicarbonate buffer reactions drive the conversion of CO=3 to HCO3− and eventually back to CO2, which is released into the anode gas channel. As the current density increases, the rate of OH− production at the cathode also rises, eventually exceeding the homogeneous reaction rates, resulting in accumulation of OH− at 500 mA cm−2 and 1 A cm−2, as shown in Fig. 6c and d.
+ Fig. 6  Anion distribution in the membrane and cathode CL across a full-MEA cell at (a) 60 mA cm−2, (b) 100 mA cm−2, (c) 500 mA cm−2, and (d) 1 A cm−2. CO2 is converted to CO=3 at the cathode by the OH− produced from COER, transported as CO=3 to the anode, and released by the H+ produced from OER. Cathode feed composition is 97 mol% CO2 and 3 mol% H2O. 
+Regarding the transport and distribution of species across the MEA: (1) CO=3 is the main charge carrying species for a full-MEA with an AEM performing CO2R, consistent with experimental observations reported by Liu et al.68 The HCO3− diffusion flux from anode to cathode is larger than its migration flux from cathode to anode, which means HCO3− is moving against the flow of current. OH− begins to accumulate at high current densities and the membrane will eventually return to the OH− form as the charge-transfer rate exceeds the homogeneous reaction rates. (2) A portion of the CO2 fed at the cathode is transported as CO=3 and eventually released as CO2 at the anode for a full-MEA. CO2 in the anode gas outlet has also been observed by Liu et al. and Pătru et al.68,69 For KHCO3 exchange-MEA and KOH exchange-MEA, CO2 can be flushed out as HCO3−/CO=3 by the exchange solution. While helpful in terms of performance, this becomes a source of inefficiency for the system as discussed below.
+CO2 utilization efficiency and observed limitations
+The CO2 losses need to be defined and quantified as a function of operating conditions because a portion of the CO2 is consumed homogeneously at the cathode, transported to and released at the anode (i.e., electrochemically pumped in a similar fashion as that observed in AEM fuel cells70), as expected from reactions (6)–(10) and the transport equations in Table 2. Using the gaseous species fluxes obtained from the model and assuming a 50 sccm CO2 feed at 100% RH (97 mol% CO2), the CO2 consumption (the percentage of CO2 feed that is consumed either electrochemically or by homogeneous reactions) and the CO2 conversion (the percentage of CO2 feed that is converted to CO) as a function of the TCD (Fig. 7a) is derived. More specifically,  and  The CO2 conversion for the three cases deviates slightly from each other at low TCD due to differences in the CO FE (not visible in figure), and eventually converges as CO FE approaches 100% for all three cases. At 100% CO FE, the CO2 conversion scales linearly with the TCD (which is equal to the partial CO current density), as expected. CO2 consumption is higher for the KOH exchange-MEA case at low TCD because CO2 constantly reacts with the OH− from the exchange solution, resulting in a lower CO2 utilization efficiency (defined as the ratio of CO2 conversion to consumption), shown in Fig. 7b. For the full-MEA and KHCO3 exchange-MEA, since the membrane is in the HCO3− form (and does not consume CO2 as the OH− does) for TCD close to zero, the utilization efficiency starts at a higher value than that for a KOH exchange-MEA, and decreases with increasing TCD as more OH− is produced. As the TCD increases, the OH− concentration in the CL becomes comparable for a KHCO3 exchange-MEA and a KOH exchange-MEA, but remains slightly lower for a full-MEA (Fig. 4b). The lower OH− concentration in the full-MEA CL means less CO2 consumption by homogeneous reactions, as shown in Fig. 7a, as well as a higher CO2 utilization efficiency (Fig. 7b). The utilization efficiency for KHCO3 exchange-MEA and KOH exchange-MEA converges to 50% for TCD > 500 mA cm−2, a result that can be explained by considering the stoichiometry of the electrochemical and homogeneous reactions, listed in Fig. 7c. The reaction stoichiometry also suggests a 1:2 O2 to CO2 ratio at the anode gas outlet, consistent with measurements by Liu et al.68 To increase the utilization efficiency for exchange-MEAs, the consumption of CO2 by OH− needs to be reduced, which could be achieved by a lower rate coefficient for the homogeneous reaction of CO2 and OH− (Fig. S2, ESI†). However, this would also result in a more rapid pH change near the cathode, and a larger Nernstian overpotential. Understanding such tradeoffs is crucial to fine-tuning the cell design and maximizing efficiency.
+ Fig. 7  (a) CO2 consumption (dotted) and conversion (dashed) calculated for a 50 sccm CO2 feed at 100% RH (97 mol% CO2, 3 mol% H2O), room temperature. (b) CO2 utilization efficiency defined as the fraction of CO2 consumed that converts to CO. (c) Stoichiometric balance of the electrochemical and homogenous reactions across the cell showing only half of the CO2 consumed is converted to CO. 
+In the model, the gas-channel composition is assumed to remain constant at the feed composition, which is valid only under conditions of low feed consumption (e.g., high feed flowrate). Note that CO2 concentration varies in the CL, and its profile is plotted in Fig. S1 (ESI†). In practice, however, CO2 consumption can be as high 30% for a feed flowrate of 50 sccm and 1 A cm−2, as shown above. This means that the gas composition in the cathode gas channel will vary based on the rate of consumption of CO2 and H2O, and the rate of production of CO and H2. Assuming that the gas channel is well-mixed, we estimate its composition from a simple mass balance: (47)where yGC,i is the mol fraction of gaseous species i in the gas channel; NF and NR are the total molar flowrate of the feed gas going into and out of the gas chamber into the GDL, respectively; NF,i and NR,i are the molar flowrate of species i in the feed gas going into and out of the gas chamber, respectively. Fig. 8 shows the resulting gas chamber composition for the full-MEA (Fig. 8a) and the KOH exchange-MEA (Fig. 8b). At zero TCD, the gas composition in the cathode gas channel for the full-MEA is close to its feed composition since there are minimal reactions and crossover occurring. For the KOH exchange-MEA case, however, the CO2 mole fraction is much lower than that in the feed (0.97) because CO2 will be consumed by OH− anions in the CL ionomer; the H2O mole fraction is higher due to diffusion of H2O from the anode chamber. The CO mole fraction increases steadily and the H2 mole fraction is close to zero, as expected from the partial current densities. However, two issues become apparent regarding water management. For the full-MEA, the H2O mole fraction first increases slightly due to the temperature increase in the CL, as discussed in Fig. 5, and then drops to zero at approximately 750 mA cm−2, indicating that the full-MEA becomes limited by the supply of water before it is limited by the supply of CO2. On the other hand, the partial pressure for H2O in the gas channel of the KOH exchange-MEA is significantly above its vapor pressure at ambient temperature (∼0.03 atm), suggesting that flooding is likely to occur at the cathode GDE as water diffuses from the anode. Flooding in the cathode GDE will increase CO2 mass-transport resistances significantly and decrease catalyst utilization.37Fig. 8 suggests a need for a higher-dimensional, integrated multiphase model to capture changes in the gas-channel composition, as well as additional physics to capture water condensation and multiphase flow in the GDE; studies of these effects are currently in progress.
+ Fig. 8  Gas mol fraction in the cathode gas channel calculated assuming 50 sccm CO2 feed with 100% RH (97 mol% CO2, 3 mol% H2O) at room temperature for (a) full-MEA and (b) KOH exchange-MEA. The vapor pressure at 298 K is 0.03 atm. Full-MEA becomes water-limited at approximately 750 mA cm−2, and KOH-MEA is likely to be flooded. 
+Water management: temperature and membrane-thickness effects
+To address issues concerning full-MEA dehydration and exchange-MEA flooding, we studied the effects of increasing the operating temperature and changing membrane thickness. In terms of the operating temperature, the water vapor pressure is ∼0.46 atm at 80 °C, compared to ∼0.03 atm at 25 °C. Thus, operating at 80 °C, a higher TCD can be achieved with more rapid kinetics (see eqn (35)), but the CO FE decreases below a cell potential of 3 V due to the lower solubility of CO2 at elevated temperatures (Fig. 9a and b). The gas-channel composition shown in Fig. 9c also indicates that a current density of 1 A cm−2 lies below the CO2- or H2O-limited current densities for a full-MEA. It should be noted that to obtain the same molar flowrate of CO2 at 80 °C as at 25 °C for a feed flowrate of 50 sccm, the feed flowrate needs to be raised to 105 sccm in order to compensate for the higher vapor pressure of water. However, Fig. 9c shows that the full-MEA can operate up to 1 A cm−2 even at a third of the CO2 molar flowrate provided at 80 °C. This observation reinforces our finding that the cell is operating in a low CO2 utilization regime up to 1 A cm−2 at 50 sccm feed (Fig. 7).
+ Fig. 9  (a) Total current density, (b) CO faradaic efficiency, (c) gas channel composition, and (d) CO2 utilization analysis for a full-MEA at 80 °C with CO2 feed at 100% RH (54 mol% CO2, 46 mol% H2O). Operating the cell at higher temperature increases the exchange current density, as well as water feed to the system. However, CO2 solubility is compromised, resulting in lower CO faradaic efficiencies. 
+The operating temperature can also affect CO2 utilization, as it changes the reactions rates of electrochemical reactions and homogeneous reactions, as well as the equilibrium constants of the bicarbonate and water reactions. Since limited data is available for the buffer reaction rate constants in an ionomer, we show results assuming the same forward rate constants at 80 °C as at 25 °C for reactions (6)–(10). The equilibrium constant will vary based on eqn (11), as well as the reverse rate constant (k−n = kn/Kn). As shown in Fig. 9d, better CO2 utilization can be achieved at higher temperatures when operating below approximately 600 mA cm−2 TCD, but the reverse is true when operating at higher TCDs. This effect is a consequence of increased diffusivity of ionic and neutral species, the shifted equilibria for reactions (6)–(10), and the relative rates of the homogeneous consumption of CO2 and its electrochemical conversion at 80 °C. We note that the results shown here are based on the assumed temperature dependence of the various rate constants, which will vary based on the ionomer used. These results demonstrate the importance of studying homogenous reaction rates of the bicarbonate buffer system in different ionomer environments under various temperatures; manipulation of the bicarbonate buffer reaction rates is a potential route to increase CO2 utilization of CO2R systems.
+Finally, as noted, one can also decrease the membrane thickness to help alleviate the dehydration issue in full-MEAs (although perhaps not the flooding issue in exchange-MEAs). Fig. 10 shows the effects of membrane thickness on the full-MEA performance. As expected, the TCD increases with a thinner membrane, with the difference becoming more significant with higher cell potentials due to both enhanced water transport as well as less ohmic losses, thereby reinforcing the finding that the full-MEA is ohmic-limited. Unlike changing temperature, the CO FE is not strongly impacted. Of course, decreasing the membrane thickness will result in increased crossover and worse CO2 utilization. This is another tradeoff to consider, and is more prominent when producing aqueous products that have high solubility in the membrane.
+ Fig. 10  (a) Total current density, (b) CO faradaic efficiency for the full-MEA case simulated with a 25 μm membrane (red), 50 μm membrane (base case, blue), and 100 μm membrane (green). 
+Summary
+A multiphysics model describing the effects of species transport, heat transfer, and the kinetics of all electrode and electrolyte reactions occurring in an MEA was developed and used to explore the electrochemical reduction of CO2 to CO over Ag. As the current density rises above 100 mA cm−2, MEAs become advantageous relative to planar cells containing an aqueous electrolyte or an aqueous GDL cell because they minimize the ohmic drop across the cell. Full-MEAs with gaseous feeds to both the anode and cathode gas channels can achieve a current density of 100 mA cm−2, with approximately 40% reduction in the cell potential compared to an aqueous GDE cell, a consequence of their lower ohmic potential drop. However, such cells suffer from concentration polarization and membrane dehydration. Circulating an exchange solution through the anode channel enables an exchange-MEA to better maintain the local environment at the anode, and hydrate the membrane. With a KOH-exchange-solution feed, a reverse OH− concentration gradient develops across the cell, lowering the thermodynamic potential that needs to be overcome. The alkaline environment created by KOH also suppresses the HER. For exchange-MEAs, cation transport down the potential gradient limits the current density due to precipitation of the salt used in the exchange solution. It should also be noted that flooding is likely to occur in the cathode GDE of an exchange-MEA, as water diffuses from anode to cathode. High-temperature operation of a full-MEA allows introduction of more water vapor into the system, thereby overcoming the water limitations observed at room temperature; this also improves the charge transfer kinetics, although the reduction in CO2 solubility and the changes in the homogeneous reaction rates and reaction equilibria can affect the CO FE and the CO2 utilization efficiency of the cell. It is also possible to minimize flooding in an exchange-MEA by increasing the temperature at the cathode GDE in order to evaporate condensed water.
+List of symbols
+Roman
+
+
+a
+v
+Specific surface area, m−1
+
+a
+
+i
+
+Activity of species i
+
+A
+
+k
+
+Pre-exponential factor for reaction k, mA cm−2
+
+c
+
+i
+
+Concentration of species i, mol m−3
+
+D
+
+i
+
+Diffusivity of species i, m2 s−1
+
+E
+a,k
+Activation energy for reaction k, kJ mol−1
+
+F
+Faraday's constant, C mol−1
+
+H
+
+i
+
+Henry's constant of species i, M atm−1
+ΔHnChange of enthalpy for reaction n, kJ mol−1
+
+i
+
+k
+
+Current density for reaction k, mA cm−2
+
+i
+l
+Electrolyte current density, mA cm−2
+
+i
+o,k
+Exchange current density of reaction k, mA cm−2
+
+i
+s
+Electrode current density, mA cm−2
+IECIon-exchange capacity, mmol g−1
+
+j
+
+i
+
+Diffusive mass flux of species i, g m−2 s−1
+
+k
+
+n
+
+Rate constant for homogeneous reaction n, s−1 or L mol−1 s−1
+
+k
+T,m
+Heat transfer coefficient of medium m, W m−1 K−1
+
+K
+
+n
+
+Equilibrium constant for reaction n
+
+M
+
+i
+
+Molar mass of species i, g mol−1
+
+M
+
+n
+
+Average molar mass of gaseous mixture, g mol−1
+
+n
+
+i
+
+Mass flux of species i, g m−2 s−1
+
+n
+
+k
+
+Number of electrons transferred in reaction k
+
+p
+α
+Total pressure in phase α, atm
+
+p
+vap
+Vapor pressure, atm
+
+q
+Heat flux, J m−2
+
+q
+l
+Electrolyte flow rate, ml min−1
+
+r
+p,m
+Pore radius in medium m,
+
+R
+Gas constant, J mol−1 K−1
+
+R
+β,i
+Volumetric rate of reaction of species i from bulk reaction β, g m−3 s−1
+
+s
+
+i,k
+Stoichiometric coefficient of species i in reaction k
+ΔSnChange of entropy for reaction n, J mol−1 K−1
+
+T
+Temperature, K
+
+u
+β
+Mass-averaged fluid velocity of fluid β, m s−1
+
+u
+
+i
+
+Mobility of species i, s mol kg−1
+
+U
+o
+k
+
+Reference potential of reaction k, V
+
+v
+p,i
+Diffusion volume of species i
+
+V
+
+i
+
+Molar volume of species i, ml mol−1
+
+x
+
+j
+
+Mole fraction of aqueous species j
+
+y
+
+i
+
+Mole fraction of gaseous species i
+
+z
+
+i
+
+Charge of species i
+
+Greek
+
+
+α
+
+k
+
+Transfer coefficient of reaction k
+
+γ
+
+k
+
+Reaction order of reaction k
+
+δ
+TF
+Electrolyte thin film thickness
+
+ε
+
+m
+
+Porosity of medium m
+
+ζ
+
+i
+
+Species-water to species-membrane interaction ratio
+
+η
+
+k
+
+Surface overpotential of reaction k, V
+
+κ
+
+m
+
+Permeability of medium m, m2
+
+λ
+Water content
+
+μ
+β
+Viscosity of fluid β, Pa s
+
+ξ
+Electro-osmotic coefficient
+
+ρ
+
+i
+
+Mass density of species i, g cm−3
+
+σ
+
+m
+
+Electronic conductivity in medium m, S m−1
+
+τ
+
+m
+
+Tortuosity of medium m
+
+ϕ
+α
+Electric potential of phase α, V
+
+ω
+
+i
+
+Mass fraction of species i
+
+Π
+
+k
+
+Peltier coefficient of reaction k, V
+
+Subscript
+
+BBulk
+CTCharge transfer
+gGaseous mixture
+
+i
+Gaseous species
+
+j
+Aqueous species
+
+k
+Reaction
+lLiquid phase
+
+n
+Homogeneous reaction number
+pPore
+PTPhase transfer
+sSolid
+TFElectrolyte thin film
+wWater
+
+Superscript
+
+oIntrinsic value or standard state
+refReference
+effEffective
+EElectrolyte
+KKnudsen
+
+m
+Mass-averaged
+MMembrane
+
+Acronyms
+
+AEMAnion-exchange membrane
+CLCatalyst layer
+CO2RCO2 reduction
+COERCO evolution reaction
+CTCharge transfer
+DMDiffusion medium
+HERH2 evolution reaction
+MEAMembrane-electrode assembly
+OEROxygen evolution reaction
+RHRelative humidity
+
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+This material is based upon work performed by the Joint Center for Artificial Photosynthesis, a DOE Energy Innovation Hub, supported through the Office of Science of the U.S. Department of Energy under Award Number DE-SC0004993.
+References
+O. S. Bushuyev, P. De Luna, C. T. Dinh, L. Tao, G. Saur, J. van de Lagemaat, S. O. Kelley and E. H. Sargent, Joule, 2018, 2, 825–832 CrossRef CAS .
+J. W. Ager and A. A. Lapkin, Science, 2018, 360, 707–708 CrossRef CAS PubMed .
+S. Verma, B. Kim, H. R. Jhong, S. Ma and P. J. Kenis, ChemSusChem, 2016, 9, 1972–1979 CrossRef CAS PubMed .
+D. Higgins, C. Hahn, C. X. Xiang, T. F. Jaramillo and A. Z. Weber, ACS Energy Lett., 2019, 4, 317–324 CrossRef CAS .
+R. L. Cook, R. C. Macduff and A. F. Sammells, J. Electrochem. Soc., 1990, 137, 607–608 CrossRef CAS .
+K. Hara and T. Sakata, Bull. Chem. Soc. Jpn., 1997, 70, 571–576 CrossRef CAS .
+K. Hara, N. Sonoyama and T. Sakata, Stud. Surf. Sci. Catal., 1998, 114, 577–580 CrossRef CAS .
+K. Ogura, H. Yano and F. Shirai, J. Electrochem. Soc., 2003, 150, D163–D168 CrossRef CAS .
+S. Ma, R. Luo, S. Moniri, Y. C. Lan and P. J. A. Kenis, J. Electrochem. Soc., 2014, 161, F1124–F1131 CrossRef CAS .
+S. Verma, X. Lu, S. Ma, R. I. Masel and P. J. Kenis, Phys. Chem. Chem. Phys., 2016, 18, 7075–7084 RSC .
+C. T. Dinh, T. Burdyny, M. G. Kibria, A. Seifitokaldani, C. M. Gabardo, F. P. G. de Arquer, A. Kiani, J. P. Edwards, P. De Luna, O. S. Bushuyev, C. Q. Zou, R. Quintero-Bermudez, Y. J. Pang, D. Sinton and E. H. Sargent, Science, 2018, 360, 783–787 CrossRef CAS PubMed .
+D. M. Weekes, D. A. Salvatore, A. Reyes, A. Huang and C. P. Berlinguette, Acc. Chem. Res., 2018, 51, 910–918 CrossRef CAS PubMed .
+B. Endrodi, G. Bencsik, F. Darvas, R. Jones, K. Rajeshwar and C. Janaky, Prog. Energy Combust. Sci., 2017, 62, 133–154 CrossRef .
+S. Gottesfeld, D. R. Dekel, M. Page, C. Bae, Y. Yan, P. Zelenay and Y. S. Kim, J. Power Sources, 2018, 375, 170–184 CrossRef CAS .
+N. R. d. Tacconi, W. Chanmanee, B. H. Dennis and K. Rajeshwar, J. Mater. Res., 2017, 32, 1727–1734 CrossRef .
+R. L. Cook, R. C. Macduff and A. F. Sammells, J. Electrochem. Soc., 1988, 135, 1470–1471 CrossRef CAS .
+Y. Hori, H. Ito, K. Okano, K. Nagasu and S. Sato, Electrochim. Acta, 2003, 48, 2651–2657 CrossRef CAS .
+C. Delacourt, P. L. Ridgway, J. B. Kerr and J. Newman, J. Electrochem. Soc., 2008, 155, B42–B49 CrossRef CAS .
+D. A. Salvatore, D. M. Weekes, J. He, K. E. Dettelbach, Y. C. Li, T. E. Mallouk and C. P. Berlinguette, ACS Energy Lett., 2017, 3, 149–154 CrossRef .
+S. R. Narayanan, B. Haines, J. Soler and T. I. Valdez, J. Electrochem. Soc., 2011, 158, A167–A173 CrossRef CAS .
+Y. C. Li, D. Zhou, Z. Yan, R. H. Gonçalves, D. A. Salvatore, C. P. Berlinguette and T. E. Mallouk, ACS Energy Lett., 2016, 1, 1149–1153 CrossRef CAS .
+S. M. A. Kriescher, K. Kugler, S. S. Hosseiny, Y. Gendel and M. Wessling, Electrochem. Commun., 2015, 50, 64–68 CrossRef CAS .
+G. Wang, J. Pan, S. P. Jiang and H. Yang, J. CO2 Util., 2018, 23, 152–158 CrossRef CAS .
+M. Ni, J. Power Sources, 2012, 202, 209–216 CrossRef CAS .
+V. Menon, Q. X. Fu, V. M. Janardhanan and O. Deutschmann, J. Power Sources, 2015, 274, 768–781 CrossRef CAS .
+J. Rosen, G. S. Hutchings, Q. Lu, S. Rivera, Y. Zhou, D. G. Vlachos and F. Jiao, ACS Catal., 2015, 5, 4293–4299 CrossRef CAS .
+M. Ma, K. Liu, J. Shen, R. Kas and W. A. Smith, ACS Energy Lett., 2018, 3, 1301–1306 CrossRef CAS PubMed .
+J. Shen, R. Kortlever, R. Kas, Y. Y. Birdja, O. Diaz-Morales, Y. Kwon, I. Ledezma-Yanez, K. J. Schouten, G. Mul and M. T. Koper, Nat. Commun., 2015, 6, 8177 CrossRef PubMed .
+J. Peng, A. L. Roy, S. G. Greenbaum and T. A. Zawodzinski, J. Power Sources, 2018, 380, 64–75 CrossRef CAS .
+Y. S. Li, T. S. Zhao and W. W. Yang, Int. J. Hydrogen Energy, 2010, 35, 5656–5665 CrossRef CAS .
+Q. Duan, S. Ge and C.-Y. Wang, J. Power Sources, 2013, 243, 773–778 CrossRef CAS .
+K. G. Schulz, U. Riebesell, B. Rost, S. Thoms and R. E. Zeebe, Mar. Chem., 2006, 100, 53–65 CrossRef CAS .
+A. G. Divekar, A. M. Park, Z. R. Owczarczyk, S. Seifert, B. S. Pivovar and A. M. Herring, ECS Trans., 2017, 80, 1005–1011 CrossRef CAS .
+D. B. Spry and M. D. Fayer, J. Phys. Chem. B, 2009, 113, 10210–10221 CrossRef CAS PubMed .
+S. J. Sondheimer, N. J. Bunce, M. E. Lemke and C. A. Fyfe, Macromolecules, 1986, 19, 339–343 CrossRef CAS .
+F. C. Cetinbas, R. K. Ahluwalia, N. Kariuki, V. De Andrade, D. Fongalland, L. Smith, J. Sharman, P. Ferreira, S. Rasouli and D. J. Myers, J. Power Sources, 2017, 344, 62–73 CrossRef CAS .
+L. C. Weng, A. T. Bell and A. Z. Weber, Phys. Chem. Chem. Phys., 2018, 20, 16973–16984 RSC .
+A. El-Kharouf, T. J. Mason, D. J. L. Brett and B. G. Pollet, J. Power Sources, 2012, 218, 393–404 CrossRef CAS .
+C. Y. Du, P. F. Shi, X. Q. Cheng and G. P. Yin, Electrochem. Commun., 2004, 6, 435–440 CrossRef CAS .
+I. V. Zenyuk, E. Medici, J. Allen and A. Z. Weber, Int. J. Hydrogen Energy, 2015, 40, 16831–16845 CrossRef CAS .
+A. Z. Weber and J. Newman, J. Electrochem. Soc., 2006, 153, A2205–A2214 CrossRef CAS .
+S. Thiele, T. Fürstenhaupt, D. Banham, T. Hutzenlaub, V. Birss, C. Ziegler and R. Zengerle, J. Power Sources, 2013, 228, 185–192 CrossRef CAS .
+E. N. Fuller, P. D. Schettle and J. C. Giddings, Ind. Eng. Chem., 1966, 58, 18–27 CrossRef CAS .
+
+CRC handbook of chemistry and physics, CRC Press, Cleveland, Ohio,  1977 Search PubMed .
+
+          N. A. Lange and J. G. Speight, Lange's handbook of chemistry, McGraw-Hill, New York, 16th edn,  2005 Search PubMed .
+T. S. Light, S. Licht, A. C. Bevilacqua and K. R. Morash, Electrochem. Solid-State Lett., 2005, 8, E16–E19 CrossRef CAS .
+R. E. Zeebe, Geochim. Cosmochim. Acta, 2011, 75, 2483–2498 CrossRef CAS .
+
+          J. S. Newman and K. E. Thomas-Alyea, Electrochemical systems, J. Wiley, Hoboken, N.J., 3rd edn,  2004 Search PubMed .
+W. Sheng, Z. Zhuang, M. Gao, J. Zheng, J. G. Chen and Y. Yan, Nat. Commun., 2015, 6, 5848 CrossRef CAS PubMed .
+W. Sheng, M. Myint, J. G. G. Chen and Y. S. Yan, Energy Environ. Sci., 2013, 6, 1509–1512 RSC .
+W. Sheng, H. A. Gasteiger and Y. Shao-Horn, J. Electrochem. Soc., 2010, 157, B1529–B1536 CrossRef CAS .
+J. Durst, A. Siebel, C. Simon, F. Hasché, J. Herranz and H. A. Gasteiger, Energy Environ. Sci., 2014, 7, 2255–2260 RSC .
+J. Durst, C. Simon, F. Hasche and H. A. Gasteiger, J. Electrochem. Soc., 2014, 162, F190–F203 CrossRef .
+J. Zheng, W. Sheng, Z. Zhuang, B. Xu and Y. Yan, Sci. Adv., 2016, 2, e1501602 CrossRef PubMed .
+T. Cheng, L. Wang, B. V. Merinov and W. A. Goddard, 3rd, J. Am. Chem. Soc., 2018, 140, 7787–7790 CrossRef CAS PubMed .
+D. Y. Kuo, J. K. Kawasaki, J. N. Nelson, J. Kloppenburg, G. Hautier, K. M. Shen, D. G. Schlom and J. Suntivich, J. Am. Chem. Soc., 2017, 139, 3473–3479 CrossRef CAS PubMed .
+E. Nurlaela, T. Shinagawa, M. Qureshi, D. S. Dhawale and K. Takanabe, ACS Catal., 2016, 6, 1713–1722 CrossRef CAS .
+L. Giordano, B. Han, M. Risch, W. T. Hong, R. R. Rao, K. A. Stoerzinger and Y. Shao-Horn, Catal. Today, 2016, 262, 2–10 CrossRef CAS .
+T. Hatsukade, K. P. Kuhl, E. R. Cave, D. N. Abram and T. F. Jaramillo, Phys. Chem. Chem. Phys., 2014, 16, 13814–13819 RSC .
+T. A. Zawodzinski, J. Davey, J. Valerio and S. Gottesfeld, Electrochim. Acta, 1995, 40, 297–302 CrossRef CAS .
+X. H. Wang, J. P. McClure and P. S. Fedkiw, Electrochim. Acta, 2012, 79, 126–132 CrossRef CAS .
+T. Yamanaka, T. Takeguchi, H. Takahashi and W. Ueda, J. Electrochem. Soc., 2009, 156, B831–B835 CrossRef CAS .
+K. N. Grew, X. M. Ren and D. Chu, Electrochem. Solid-State Lett., 2011, 14, B127–B131 CrossRef CAS .
+K. N. Grew and W. K. S. Chiu, J. Electrochem. Soc., 2010, 157, B327–B337 CrossRef CAS .
+P. Choi, N. H. Jalani and R. Datta, J. Electrochem. Soc., 2005, 152, E123–E130 CrossRef CAS .
+C. C. McCrory, S. Jung, J. C. Peters and T. F. Jaramillo, J. Am. Chem. Soc., 2013, 135, 16977–16987 CrossRef CAS PubMed .
+H. Yanagi and K. Fukuta, ECS Trans., 2008, 16, 257–262 CAS .
+Z. C. Liu, H. Z. Yang, R. Kutz and R. I. Masel, J. Electrochem. Soc., 2018, 165, J3371–J3377 CrossRef CAS .
+A. Patru, T. Binninger, B. Pribyl and T. J. Schmidt, J. Electrochem. Soc., 2019, 166, F34–F43 CrossRef CAS .
+H.-S. Shiau, I. V. Zenyuk and A. Z. Weber, J. Electrochem. Soc., 2017, 164, E3583–E3591 CrossRef CAS .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: 10.1039/c9ee00909dThis journal is © The Royal Society of Chemistry 2019
+Table Content:
+
+Broader context
+CO2 electrolyzers powered by solar energy, either directly or indirectly, have become increasingly attractive as solar prices decline and atmospheric CO2 levels rise. The product formed by CO2 reduction can be used as fuel or as precursors to fuel or chemical industry, thereby enabling the storage of intermittent solar radiation in chemical bonds. For CO2 electrolyzers to be commercially viable, high current densities must be achieved with good selectivity at relatively low power inputs. The design and optimization of such devices require understanding the underlying physics, which includes transport phenomena, electrochemistry, heat transfer, and reaction kinetics. The work presented here describes a numerical model that accounts for the aforementioned physical phenomena occurring in membrane electrode assemblies (MEAs). The model reveals intrinsic tradeoffs and limitations of MEAs for the electrochemical reduction of CO2, and establishes design and operating criteria for such systems. The model also confirms that ohmic losses in MEAs are low because charge transport through a liquid electrolyte is eliminated.
+
+
+ 	Fig. 1  Schematic of modeling framework and boundary conditions.	 
+2H2O → O2 + 4H+ + 4e−	(1)
+4OH− → O2 + 2H2O + 4e−	(2)
+2H+ + 2e− → H2	(3)
+2H2O + 2e− → H2 + 2OH−	(4)
+CO2 + H2O + 2e− → CO + 2OH−	(5)
+
+Membrane
+
+L
+M
+	5 × 10−5	M	
+
+IEC	1.7	mmol g−1	
+29
+
+
+ρ
+M
+	1.2	g ml−1	
+29
+
+
+
+DM
+
+L
+DM
+	10−4	M	
+
+
+ε
+DM
+	0.8	
+	
+
+
+r
+p,DM
+	7.33 × 10−7	M	
+38
+
+
+σ
+DM
+	220	S m−1	
+39
+
+
+κ
+osat,DM
+	1.72 × 10−11	m2	
+40
+
+
+k
+T,DM
+	0.015	W m−1 K−1	
+41
+
+
+
+CL
+
+L
+CL
+	5 × 10−6	M	
+
+
+ε
+CL
+	0.5	
+	
+
+
+r
+p,CL
+	25 × 10−7	M	
+38
+
+
+a
+v
+	107	m−1	
+42
+
+
+σ
+CL
+	100	S m−1	
+39
+
+
+κ
+osat,CL
+	8 × 10−16	m2	
+40
+
+
+k
+T,CL
+	0.003	W m−1 K−1	
+41
+
+
+
+Gas species properties
+
+v
+p,H2
+	7.07	
+	
+43
+
+
+v
+p,H2O
+	12.7	
+	
+43
+
+
+v
+p,CO
+	18.9	
+	
+43
+
+
+v
+p,CO2
+	26.9	
+	
+43
+
+
+p
+vap
+	
+
+	mmHg	
+44
+
+
+H
+CO2
+	
+
+	mM atm−1	
+44
+
+
+
+Aqueous species properties
+
+D
+K+
+	
+
+	cm2 s−1	
+45
+
+
+D
+H+
+	
+
+	cm2 s−1	
+46
+
+
+D
+OH−
+	
+
+	cm2 s−1	
+46
+
+
+D
+HCO3−
+	
+
+	cm2 s−1	
+47
+
+
+D
+CO3−
+	
+
+	cm2 s−1	
+47
+
+
+D
+CO2
+	
+
+	cm2 s−1	
+44
+
+
+D
+w
+	9 × 10−17exp(5.9aw)	cm2 s−1	
+29
+
+
+
+Homogeneous reactions
+
+S
+1
+	−96.31	J mol−1 K−1	
+44
+
+
+S
+2
+	−148.1	J mol−1 K−1	
+44
+
+
+S
+w
+	−80.66	J mol−1 K−1	
+44
+
+
+H
+1
+	7.64	kJ mol−1	
+44
+
+
+H
+2
+	14.85	kJ mol−1	
+44
+
+
+H
+w
+	55.84	kJ mol−1	
+44
+
+
+k
+1
+	10−2	s−1	
+32
+
+
+k
+2
+	102	s−1	
+32
+
+
+k
+3
+	103	L mol−1 s−1	
+32
+
+
+k
+4
+	109	L mol−1 s−1	
+32
+
+
+k
+w
+	10−3	mol L−1 s−1	
+32
+
+
+
+Charge transfer reactions
+
+Π
+OER
+	
+
+	mV	
+41
+
+
+Π
+HER
+	
+
+	mV	Approximated
+
+Π
+COER
+	
+
+	mV	Approximated
+
+
+Others
+
+h
+T,liquid
+	104	W m−2 K−1	Assumed
+
+h
+T,gas
+	103	W m−2 K−1	Assumed
+	(6)
+	(7)
+	(8)
+	(9)
+	(10)
+	(11)
+
+
+
+	(12)
+
+i
+s = −σeffs∇ϕs	(13)
+
+∇·nj = RCT,j + RB,j + RPT,j	(14)
+
+
+	(15)
+
+
+	(16)
+
+
+	(17)
+
+∇·ni = RCT,i + RB,i + RPT,i	(18)
+
+n
+
+i
+ = ji + ρiug	(19)
+
+
+	(20)
+
+
+	(21)
+
+
+	(22)
+
+∇·q = QCT + QB + QJ	(23)
+
+q = −kT,m∇T	(24)
+
+
+	(25)
+
+
+	(26)
+
+
+	(27)
+
+
+	(28)
+
+
+	(29)
+
+
+	(30)
+
+
+	(31)
+
+
+	(32)
+
+CO2(g)	—	—	Gas/ionomer
+H2O(g)	—	—	Gas/ionomer
+CO(g)	COER	—	—
+H2(g)	HER	—	—
+CO2(l)	COER	
+Eqn (6) and (8)
+	Gas/ionomer
+H2O(l)	OER, HER, COER	
+Eqn (6), (9) and (10)
+	Gas/ionomer
+K+	—	—	—
+H+	OER, HER	
+Eqn (6), (7) and (10)
+	—
+OH−	OER, HER, COER	
+Eqn (8)–(10)
+	—
+HCO3−	—	
+Eqn (6)–(9)
+	—
+CO=3	—	
+Eqn (7) and (9)
+	—
+	(33)
+	(34)
+	(35)
+
+Anode
+OER acid	1.23	9.40 × 10−7	11 + 1 × pH	1.5	—	
+56–58
+
+OER base	1.23 × 10−4	[OH−]/(1 M)
+
+
+Cathode
+HER acid	0	2.77 × 1019	83 + 1 × pH	0.44	[H+]/(1 M)	
+49–55
+
+HER base	8.84 × 106	—
+COER	−0.11	7.25 × 108	100	1	([CO2]/(1 M))1.5	
+26, 27 and 59
+
+	(36)
+	(37)
+	(38)
+	(39)
+	(40)
+	(41)
+	(42a)
+	(42b)
+	(43)
+qT = −hT(T − T0)	(44)
+
+ 	Fig. 2  Graphical illustration for various cell designs and a breakdown of the applied voltage. There is a 44% reduction in applied voltage for MEA compared to the aqueous GDE cell at the same total current density.	 
+
+ 	Fig. 3  (a) The total current density and (b) the CO faradaic efficiency (FE) for the four cases considered and their applied voltage breakdown (AVB), (c) full-MEA, (d) H2O-MEA, (e) KHCO3 exchange-MEA, and (f) KOH exchange-MEA. Dashed line in (a) represent current densities at which salt precipitations and batch operation is required. Cathode feed composition is 97 mol% CO2 and 3 mol% H2O.	 
+	(45)
+	(46)
+
+ 	Fig. 4  Hydroxide concentration across (a) a full-MEA at 60, 100, 500 and 1000 mA cm−2; and (b) at 500 mA cm−2 comparing full-MEA, KHCO3 exchange-MEA, and KOH exchange-MEA. The hydroxide concentration across the full-MEA increases with increasing current density, creating significant concentration (Nernstian) overpotentials. In the case of KOH exchange-MEA, the hydroxide concentration is reversed due to the bicarbonate buffer reactions at the cathode side, resulting in a negative Nernstian overpotential.	 
+
+ 	Fig. 5  (a) Water content in the membrane, (b) gas phase RH, (c) water partial pressure in the gas phase, and (d) the temperature for a full-MEA at 60, 100, 500, and 1000 mA cm−2. The gas phase RH decreases with increasing current density because of the increase in vapor pressure as the cell heats up. Cathode feed composition is 97 mol% CO2 and 3 mol% H2O (water vapor pressure at 25 °C).	 
+
+ 	Fig. 6  Anion distribution in the membrane and cathode CL across a full-MEA cell at (a) 60 mA cm−2, (b) 100 mA cm−2, (c) 500 mA cm−2, and (d) 1 A cm−2. CO2 is converted to CO=3 at the cathode by the OH− produced from COER, transported as CO=3 to the anode, and released by the H+ produced from OER. Cathode feed composition is 97 mol% CO2 and 3 mol% H2O.	 
+
+ 		 
+
+ 		 
+
+ 	Fig. 7  (a) CO2 consumption (dotted) and conversion (dashed) calculated for a 50 sccm CO2 feed at 100% RH (97 mol% CO2, 3 mol% H2O), room temperature. (b) CO2 utilization efficiency defined as the fraction of CO2 consumed that converts to CO. (c) Stoichiometric balance of the electrochemical and homogenous reactions across the cell showing only half of the CO2 consumed is converted to CO.	 
+	(47)
+
+ 	Fig. 8  Gas mol fraction in the cathode gas channel calculated assuming 50 sccm CO2 feed with 100% RH (97 mol% CO2, 3 mol% H2O) at room temperature for (a) full-MEA and (b) KOH exchange-MEA. The vapor pressure at 298 K is 0.03 atm. Full-MEA becomes water-limited at approximately 750 mA cm−2, and KOH-MEA is likely to be flooded.	 
+
+ 	Fig. 9  (a) Total current density, (b) CO faradaic efficiency, (c) gas channel composition, and (d) CO2 utilization analysis for a full-MEA at 80 °C with CO2 feed at 100% RH (54 mol% CO2, 46 mol% H2O). Operating the cell at higher temperature increases the exchange current density, as well as water feed to the system. However, CO2 solubility is compromised, resulting in lower CO faradaic efficiencies.	 
+
+ 	Fig. 10  (a) Total current density, (b) CO faradaic efficiency for the full-MEA case simulated with a 25 μm membrane (red), 50 μm membrane (base case, blue), and 100 μm membrane (green).	 
+
+a
+v
+	Specific surface area, m−1
+
+a
+
+i
+
+	Activity of species i
+
+A
+
+k
+
+	Pre-exponential factor for reaction k, mA cm−2
+
+c
+
+i
+
+	Concentration of species i, mol m−3
+
+D
+
+i
+
+	Diffusivity of species i, m2 s−1
+
+E
+a,k
+	Activation energy for reaction k, kJ mol−1
+
+F
+	Faraday's constant, C mol−1
+
+H
+
+i
+
+	Henry's constant of species i, M atm−1
+ΔHn	Change of enthalpy for reaction n, kJ mol−1
+
+i
+
+k
+
+	Current density for reaction k, mA cm−2
+
+i
+l
+	Electrolyte current density, mA cm−2
+
+i
+o,k
+	Exchange current density of reaction k, mA cm−2
+
+i
+s
+	Electrode current density, mA cm−2
+IEC	Ion-exchange capacity, mmol g−1
+
+j
+
+i
+
+	Diffusive mass flux of species i, g m−2 s−1
+
+k
+
+n
+
+	Rate constant for homogeneous reaction n, s−1 or L mol−1 s−1
+
+k
+T,m
+	Heat transfer coefficient of medium m, W m−1 K−1
+
+K
+
+n
+
+	Equilibrium constant for reaction n
+
+M
+
+i
+
+	Molar mass of species i, g mol−1
+
+M
+
+n
+
+	Average molar mass of gaseous mixture, g mol−1
+
+n
+
+i
+
+	Mass flux of species i, g m−2 s−1
+
+n
+
+k
+
+	Number of electrons transferred in reaction k
+
+p
+α
+	Total pressure in phase α, atm
+
+p
+vap
+	Vapor pressure, atm
+
+q
+	Heat flux, J m−2
+
+q
+l
+	Electrolyte flow rate, ml min−1
+
+r
+p,m
+	Pore radius in medium m,
+
+R
+	Gas constant, J mol−1 K−1
+
+R
+β,i
+	Volumetric rate of reaction of species i from bulk reaction β, g m−3 s−1
+
+s
+
+i,k
+	Stoichiometric coefficient of species i in reaction k
+ΔSn	Change of entropy for reaction n, J mol−1 K−1
+
+T
+	Temperature, K
+
+u
+β
+	Mass-averaged fluid velocity of fluid β, m s−1
+
+u
+
+i
+
+	Mobility of species i, s mol kg−1
+
+U
+o
+k
+
+	Reference potential of reaction k, V
+
+v
+p,i
+	Diffusion volume of species i
+
+V
+
+i
+
+	Molar volume of species i, ml mol−1
+
+x
+
+j
+
+	Mole fraction of aqueous species j
+
+y
+
+i
+
+	Mole fraction of gaseous species i
+
+z
+
+i
+
+	Charge of species i
+
+α
+
+k
+
+	Transfer coefficient of reaction k
+
+γ
+
+k
+
+	Reaction order of reaction k
+
+δ
+TF
+	Electrolyte thin film thickness
+
+ε
+
+m
+
+	Porosity of medium m
+
+ζ
+
+i
+
+	Species-water to species-membrane interaction ratio
+
+η
+
+k
+
+	Surface overpotential of reaction k, V
+
+κ
+
+m
+
+	Permeability of medium m, m2
+
+λ
+	Water content
+
+μ
+β
+	Viscosity of fluid β, Pa s
+
+ξ
+	Electro-osmotic coefficient
+
+ρ
+
+i
+
+	Mass density of species i, g cm−3
+
+σ
+
+m
+
+	Electronic conductivity in medium m, S m−1
+
+τ
+
+m
+
+	Tortuosity of medium m
+
+ϕ
+α
+	Electric potential of phase α, V
+
+ω
+
+i
+
+	Mass fraction of species i
+
+Π
+
+k
+
+	Peltier coefficient of reaction k, V
+B	Bulk
+CT	Charge transfer
+g	Gaseous mixture
+
+i
+	Gaseous species
+
+j
+	Aqueous species
+
+k
+	Reaction
+l	Liquid phase
+
+n
+	Homogeneous reaction number
+p	Pore
+PT	Phase transfer
+s	Solid
+TF	Electrolyte thin film
+w	Water
+o	Intrinsic value or standard state
+ref	Reference
+eff	Effective
+E	Electrolyte
+K	Knudsen
+
+m
+	Mass-averaged
+M	Membrane
+AEM	Anion-exchange membrane
+CL	Catalyst layer
+CO2R	CO2 reduction
+COER	CO evolution reaction
+CT	Charge transfer
+DM	Diffusion medium
+HER	H2 evolution reaction
+MEA	Membrane-electrode assembly
+OER	Oxygen evolution reaction
+RH	Relative humidity
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/c9ee00909d
+
+This journal is © The Royal Society of Chemistry 2019

@@ -1,0 +1,246 @@
+Machine learning-assisted screening of effective passivation materials for P–I–N type perovskite solar cells   - Journal of Materials Chemistry C (RSC Publishing) DOI:10.1039/D3TC01140B View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D3TC01140B
+(Paper)
+J. Mater. Chem. C, 2023, 11, 9602-9610Machine learning-assisted screening of effective passivation materials for P–I–N type perovskite solar cells†
+
+        
+          
+            Di 
+            Huang
+          
+        
+      a, 
+      
+        
+          
+            Chaorong 
+            Guo
+          
+        
+      a, 
+      
+        
+          
+            Zhennan 
+            Li
+          
+        
+      a, 
+      
+        
+          
+            Haixin 
+            Zhou
+          
+        
+      a, 
+      
+        
+          
+            Xiaojie 
+            Zhao
+          
+        
+      a, 
+      
+        
+          
+            Zhimin 
+            Feng
+          
+        
+      a, 
+      
+        
+          
+            Rui 
+            Zhang
+          
+        
+      a, 
+      
+        
+          
+            Menglong 
+            Liu
+          
+        
+      a, 
+      
+        
+          
+            Jiaojiao 
+            Liang
+          
+        
+      *ab, 
+      
+        
+          
+            Ling 
+            Zhao
+          
+        
+      *c and 
+
+        
+          
+            Juan 
+            Meng
+          
+        
+      *d
+aCollege of Railway Transportation, Hunan University of Technology, Zhuzhou 412008, China
+bQinghai Provincial Key Laboratory of Nanomaterials and Nanotechnology, Qinghai Minzu University, Qinghai 810007, China
+cShandong Provinical Key Laboratory of Optical Communication Science and Technology, School of Physical Science and Information Technology, Liaocheng University, Liaocheng 252059, China
+dDepartment of physics, Guangxi Minzu University, Nanning, 530006, China
+Received 
+      31st March 2023
+    , Accepted 8th June 2023First published on 12th June 2023AbstractThe introduction of suitable passivation materials has led to a significant improvement in the power conversion efficiency (PCE) of perovskite solar cells (PSCs) in recent years. In this paper, the relationship between the molecular fingerprints of the passivation material and the PCE of p–i–n type PSCs is investigated using machine learning (ML). Data relating to around 100 passivation materials used to passivate the interfaces of perovskite/electron transport layers are collected. It is found that nitrogen atoms and acryloyl groups in the passivation material have the most influence on the PCE of p–i–n type PSCs. Therefore, a non-fullerene material, 3,9-bis(2-methylene-(3-(1,1-dicyanomethylene)-indanone)-5,5,11,11-tetralcis(4-hexylphenyl)-dithieno[2,3-d:2′,3′-d′]-s-indaceno[1,2-b:5,6-b′]-dithiophene (ITIC), which has both nitrogen atoms and acryloyl groups, is selected to passivate perovskite defects. Moreover, according to photoluminescence and time-resolved photoluminescence analyses, treatment with ITIC can enhance charge transport and diminish the defect density of the perovskite layer. Additionally, the Urbach energy of a perovskite film treated with ITIC is reduced from 127.1 meV to 96.8 meV, which reveals that the number of defects on the perovskite surface treated with ITIC is effectively reduced. More importantly, the introduction of ITIC dramatically improves the crystallinity and reduces the surface roughness of the perovskite films. Meanwhile, density-functional theory (DFT) calculations validate that incorporating ITIC into the anti-solvent effectively passivates the uncoordinated Pb2+ ions. In addition, compared with a non-treated PSC, the PCE of the ITIC-treated PSC shows a 20.97% enhancement. To sum up, ML has great application potential in the field of photovoltaics for choosing effective passivation materials in PSCs.
+Introduction
+Over the past decade, the remarkable progress has been made in the field of perovskite solar cells (PSCs) due to their outstanding optoelectronic properties, such as high charge carrier mobility, long carrier diffusion length, tunable bandgaps, elevated absorption coefficients, and so on.1–4 Normally, there are two types of device structure for PSCs, n–i–p type and p–i–n type. Compared with n–i–p type PSCs, p–i–n type PSCs have the advantages of having simple fabrication methods, being low cost and showing negligible hysteresis effects. It is worth noting that PSCs with the p–i–n type structure have significant potential for large-scale fabrication,5 and that the power conversion efficiency (PCE) of p–i–n type PSCs has already reached 25.37%.6 However, the fill factor (FF) and open circuit–voltage (Voc) of p–i–n type PSCs are still lower than the theoretical Shockley–Queisser limit.7,8 As is well-known, perovskite films fabricated using solution methods inevitably have defects, like intrinsic point defects, grain boundaries and crystal surface defects.9 To reduce the defects in the perovskite films, various passivation strategies have been proposed and significant achievements have been achieved utilizing passivation engineering for optimizing the performance of PSCs.10 Therefore, passivation engineering has been proven to be a useful strategy for improving the performance of PSCs.
+Various passivation materials, including metal cations, ammonium salts, fullerene materials, non-fullerene materials and so on,11 have been successfully introduced into p–i–n type PSCs to reduce perovskite defects and suppress ion migration in the perovskite film. In particular, non-fullerene materials can be applied as a single layer,12 an additive,13 an anti-solvent14 or an electron transport layer (ETL)15 for passivating the defects in perovskite films. Recently, Xinhui Luo et al. prepared an IT-Cl film passivation layer which can effectively suppress defects on the perovskite film in the p–i–n type device. Furthermore, the active defect sites decreased, thus optimizing the PCE and stability of the PSCs through the introduction of IT-Cl into the perovskite precursor solution.16 Yaxiong Guo et al. doped IT-4F into the anti-solvent to enhance the performance of PSCs.17 Other non-fullerene molecules, such as ITIC-Th,18 IDIC,19 and IDIS-Th20 were also successfully applied to passivate the perovskite film.21 Usually, to explore the new passivation materials for p–i–n type PSCs, expensive and time-consuming fabrication, characterization and device optimization has been undertaken. This results obtained from an extended iterative cycle do not always lead to high performance p–i–n type PSCs. Therefore, computer-assisted analysis of passivation materials for high performance p–i–n type PSCs is required. Currently, several computational approaches like machine learning (ML), density-functional theory (DFT)22 and molecular dynamics23 are used for screening materials. Since there is a large amount of experimental data on passivation materials for p–i–n type PSCs, ML is available to reduce the time and cost for discovering new effective passivation materials for high efficiency p–i–n type PSCs.
+ML that uses sufficient data has gradually become a useful tool in various fields to make up for the disadvantages of high cost, low efficiency and long cycles in traditional research methods.24 In the photovoltaics field, ML is applied to make predictions on the performance and stability of PSCs,25 screen the cover layers for perovskite films,26 simplify the guide framework for perovskite device fabrication,27 and optimize the fabrication parameters and the components of the perovskite films to obtain PSCs with high performance.28 In our recent work, ML was applied to establish a prediction model for successfully predicting the optimal third material doping ratio and the PCE of ternary organic solar cells.29 These results showed that ML can effectively gain insight into the complex laws and relationships between materials and devices, and the results of ML models are highly interpretable. Furthermore, recently, Wu Liu et al. adopted ML to screen perovskite/hole transport layer interface materials.30 This work demonstrated that ML can be effectively used to investigate passivation materials without knowledge of chemistry and resulted in reference functional groups for the synthesis of new passivation materials. However, guidelines for the screening of passivation materials in p–i–n type PSCs are still lacking.
+In this work, we aim to find effective passivation materials with suitable fingerprint fragments for p–i–n type PSCs. Five ML algorithms (k-nearest neighbor (KNN), extreme gradient boosting (XGBoost), random forest (RF), support vector machine (SVM), and gradient boosting decision tree (GBDT)) are proposed, and the XGBoost was found to provide the best prediction performance. Six types of molecular fingerprint with different lengths have been applied to analyze 95 passivation materials, and a total of 490 input features were obtained using Klekota–Roth fingerprints with pretreatment. Moreover, the input features were reasonably screened, and therefore the top 9 potential molecule fragments were selected. Based on the results, ITIC was chosen as the passivation material. To verify the capability of the ML model, we carried out experiments and DFT calculations to explain the prediction results. In the validation experiment, the non-fullerene passivation material of ITIC dissolved in chlorobenzene (CB) was dropped on the perovskite films as an anti-solvent, and the defects on the perovskite film were substantially decreased. Therefore, ML can effectively provide ideas for the selection of passivation materials and reduce experimental costs.
+Results and discussion
+To screen the effective passivation materials for p–i–n type PSCs using ML, a ML workflow was built and is shown in Fig. 1. This involves dataset creation, feature extraction, model selection, evaluation, and application, based on published literature data on passivation materials for perovskite layers and ETLs in p–i–n type PSCs. Since selecting the appropriate input features is critical for the performance of ML models, here we chose the perovskite component, passivation materials and PCE of unoptimized devices as the input features, and the optimized PCE as the output feature. The input features of the perovskite component include the ion ratios of the monovalent cation and halogen ions (AX), the ion ratios of the divalent metallic cation and halogen ions (PX) in the precursor solution, and the effective radii of the A-site cations (rA).31 The passivation material is captured as its molecular structural formula and is converted into the input feature by collecting the code of the Simplified Molecular Input Line Entry System (SMILES) in a unified way. A molecular fingerprint with a binary digital array is used to describe the molecular structure of the passivator materials, which can be treated as an effective input for the ML algorithm. Here, six types of molecular fingerprints with different lengths generated from the ChemDes platform are used, including E-state (79 bits), Substructure (307 bits), 2D Atom Pairs (780 bits), Pubchem (880 bits), CDK (1024 bits), and Klekota–Roth (4860 bits).32 To evaluate the performance of the molecular fingerprints, five ML algorithms were applied. The performance of the five ML algorithms are shown in Fig. S1 (ESI†) and the Klekota–Roth fingerprint (KRFP)33 was selected for the following research. Through the above investigation, more than 490 input features were obtained. However, these input features were too large compared with the dataset size. Moreover, having too many input features easily leads to overfitting for the subsequent model. Therefore, filtering and reduction of the dimensions for the input features was undertaken and a correlation analysis was used to reduce the dimensions of the input features for the ML prediction model. To effectively improve the performance of the p–i–n type PSCs, only input features with a correlation coefficient greater than 0.2 were considered. As a result, the primary 13 input features were selected, and a correlation matrix between these top 13 input features and the PCE of p–i–n type PSCs was constructed, as shown in Fig. S2 (ESI†). Detailed descriptions of the main 13 input features are displayed in Table 1.
+ Fig. 1  The ML workflow for screening passivation materials in p–i–n type PSCs. 
+Table 1 Descriptions of the main used 13 input features for ML screening of passivation materials
+
+
+
+
+Input feature
+Feature description
+
+
+
+
+C-PCE
+The control device's PCE without any optimization.
+
+
+rA, AX, PX
+The effective radii of A-site cations in the precursor solution, the molar ratio of the A-site cations, and molar ratio of Pb ions to halide ions (AX/PX), respectively.
+
+
+Fragments corresponding to the bits of the fingerprint
+
+
+
+
+
+
+
+
+
+
+
+
+To explore the correlations between the PCE of the p–i–n type PSCs and the main 13 input features, five ML algorithms, including RF, KNN, XGBoost, SVM, and GBDT, were utilized to establish models. Fig. 2a shows a comparison of the predicted PCE and the actual PCE based on a model made using XGBoost algorithms. It is worth mentioning that RF, XGBoost and GBDT are all tree-based ML algorithms, and can provide a good overall prediction performance because they reflect the made decisions by the vast majority of trees. Furthermore, the RF, XGBoost and GBDT models can reasonably predict the device performance when the PCE is in the range of 12.5% to 22%, however, the predicted PCEs are far from the true PCE when the PCE is lower than 12.5% or higher than 22%, showing large errors. This is mainly due to the lack of data points in the dataset in these ranges, thus resulting in prediction inaccuracy. In addition, to evaluate the performance of the five ML models, three metrics were used, the Pearson correlation coefficient (r), the coefficient of determination (R2), and the root mean square error (RMSE). The r value characterizes the correlation between the true PCE and the predicted PCE, and a good prediction model should have a r value close to 1. R2 exhibits the fitting degree of a prediction model. When R2 is closer to 1, the model has a good predictive ability. The RMSE reflects the error between the predicted and true values of PCE. There is no doubt that a low RMSE is a crucial characteristic of a good model. As shown in Fig. 2(b–d), after taking the average value of the evaluation index five times, it is clear that there is no excessive difference in the evaluation parameters of all models in either the train sets or the test sets. A comparison of the evaluation parameters from the five prediction models shows that the RF, XGBoost and GBDT models perform the best. In particular, the XGBoost model obtains the highest r (0.893), R2 (0.791) and the lowest RMSE (1.314%) for all the test sets. This result aligns well with the outcomes shown in Fig. 2a.
+ Fig. 2  (a) Comparison of the true PCE (performance coefficient of device) with the predicted PCE by the XGBoost model. Here, the red dotted line indicates where the true PCE is equal to the predicted PCE, the better the forecast, the closer the signs are to the actual lines. (b–d) Evaluation parameters (the average value of the evaluation parameters is taken five times) obtained for the training set and test set using the RF, XGBoost, GBDT, SVM, and KNN prediction models. 
+To evaluate the significance of the main 13 input features with regards the PCE of the p–i–n type PSCs, the Shapley Additive exPlanations (SHAP) method was employed to analyze and identify the crucial features for driving the prediction model. Since the tree-based ML models (RF, XGBoost, and GBDT) show good overall performance, a Polar Chart (Fig. S3(a), ESI†) was used to summarize the quantitative importance of each input feature for the three tree-based models. Additionally, an input feature importance analysis based on the XGBoost model was conducted (Fig. S3(b), ESI†) to clearly show the primary and secondary degree of the input features of the molecular fingerprint. Three input features (rA, AX and PX) represent the perovskite film and the large SHAP values obtained for rA, AX and PX indicate that improving the performance of the PSCs should focus on the perovskite film. For example, a relative excess of Pb2+ ions or an appropriate cation ratio would lead to the good device performance in p–i–n type PSCs, which is consistent with the results of a previous study.34 Aside from rA, AX and PX, the next most relevant fingerprint is KRFP4080, which represent the nitrogen atom (N). This finding indicates that the more N groups there are in the passivation material, the better the PCE of the resulting p–i–n type PSCs is. In addition, according to the Polar Chart, the KRFP3010, which represents acryloyl group fragments shows a secondary positive impact on the passivation material of the PCE of p–i–n type PSCs. The presence of acryloyl group fragments can enhance the performance of perovskite-based devices by absorbing electrons and reacting with the uncoordinated Pb2+ ions, thereby effectively passivating surface defects in the perovskite film.35 To verify the conclusions of the ML analysis, we selected the ITIC molecule, which has a suitable amount of the KRFP4080 and KRFP3010 fragments, as the passivation material to verity the feasibility of the screening features. ITIC was doped into chlorobenzene (CB), the perovskite anti-solvent. Fig. 3 presents the molecular structure of ITIC along with the fingerprint fragments that are most pertinent to the PCE.
+ Fig. 3  ITIC molecule structure with the effective molecular fingerprint fragments. 
+To verify the feasibility of ITIC for passivating perovskite surface defects, steady-state photoluminescence (PL) spectroscopy and time-resolved PL (TRPL) were employed, as presented in Fig. 4a and b. The results showed that the PL intensity of the ITIC-treated perovskite film was significantly lower than that of the pristine perovskite film, indicating that the ITIC treatment improved the electron-collection efficiency of the device. Meanwhile, the short blueshift in the PL spectra indicates that ITIC is an effective passivation material for reducing the surface traps of perovskite films.21,36 TRPL with a biexponential decay function is commonly used to explore the charge extraction ability of perovskite films. Fig. 4b shows that when ITIC is doped into a CB anti-solvent, the decay lifetimes of the perovskite films visibly decrease from 377 ns to 104 ns. The treated perovskite layer displayed shortened decay lifetimes, which reveals that the perovskite layer treated with ITIC can efficiently extract photogenerated excitons. To further investigate the perovskite surface defect inhibition ability of ITIC, the Urbach energy of the perovskite film was evaluated according to analysis of the slope of the Tauc plot in Fig. 4c.28 After ITIC treatment, the Urbach energy of the perovskite film was found to have decreased from 127.1 meV to 96.8 meV. The reduction of the Urbach energy of the perovskite film following ITIC treatment proves that ITIC can passivate defects of the perovskite film to reduce the interfacial recombination losses.
+ Fig. 4  a) Steady-state PL spectra, (b) TRPL decay traces, and (c) Tauc plots of a perovskite film and an ITIC-treated perovskite film on an ITO substrate. 
+To investigate how ITIC affects the quality of perovskite films, the perovskite films were analyzed using X-ray diffraction (XRD) and atomic force microscopy (AFM) with/without ITIC treatment. In Fig. 5a, the XRD patterns of the perovskite films are displayed, both with and without ITIC treatment. The peaks at 14.1°, 28.3°, and 31.9° are the most prominent and correspond to the crystal planes (110), (220), and (310) of the MAPbI3 perovskite.5,37 The perovskite films treated with ITIC show no diffraction shift or irrelevant diffraction peaks, which suggests that the addition of the ITIC molecules does not impact the perovskite lattices, and the ITIC molecules are primarily located on the surface of the perovskite films.38 More importantly, after adding ITIC into the CB anti-solvent, the (110) and (220) crystallinity of perovskite film is significantly improved, demonstrating that the introduction of ITIC improves the perovskite crystallinity. Moreover, in order to check the preferred crystal orientation of the perovskite films with/without ITIC treatment, the peak intensity ratios I(110)/I(310) and I(220)/I(310) in the XRD patterns were calculated.39 The I(110)/I(310) and I(220)/I(310) ratios of the pristine perovskite film are 1.60 and 1.32, respectively. After treatment with ITIC, I(110)/I(310) and I(220)/I(310) increase to 2.05 and 1.71, respectively. This reveals that the (110) and (220) crystal orientations of the perovskite film are the preferred crystal orientations following the introduction of ITIC. All the XRD results demonstrate that ITIC treatment improves the crystallinity and preferred crystalline orientation of the perovskite films.40,41 In addition, the AFM images of the perovskite film with/without ITIC treatment are exhibited in Fig. 5b and c, respectively. It is clear that with the introduction of ITIC, there is ITIC capping on the perovskite film, which is consistent with the XRD results. Furthermore, the roughness of the perovskite film surface decreases significantly from 11.8 nm to 8.7 nm after ITIC treatment. This means that smoother perovskite films are obtained after ITIC treatment, and these are more conducive to contact with the upper ETLs and promote effective charge transport to the ETLs.
+ Fig. 5  (a) The XRD patterns of the perovskite film and perovskite film treated with ITIC. (b and c) The AFM images for the untreated perovskite film and the ITIC-treated perovskite film, respectively. 
+Furthermore, in order to study the electronic characteristics of the interface structure between the perovskite and ITIC, the electronic properties of the ITIC molecules on the perovskite were analyzed utilizing DFT calculations. The ESI† provides a detailed explanation of the DFT calculation process. Fig. 6a is the electrostatic potential (ESP) diagram of ITIC. A large amount of negative charge was found to accumulate in regions where the N and O atoms with lone pairs of electrons are located, indicating that these charge-rich regions (blue regions) play a significant role in defect passivation of the ITIC molecule.16 In addition, we performed DFT calculations on the ITIC molecule on the surface of the MAPbI3 perovskite to investigate the interaction between the ITIC molecules and the perovskite surface. It is worth recalling that the perovskite used in the calculations has the same composition as that used in the experimental part of this study. Since the perovskite film usually has an exposed PbI2-rich surface,42,43 a highly undercoordinated Pb atom on the surface of perovskite film is constructed during modelling. The differential charge density diagram is shown in Fig. 6(b). The interaction between ITIC and the perovskites occurs via charge transfer where the electron-rich N and CO groups mainly interact with the electron-deficient Pb2+ surface atoms.44–46 All of these indicate that the defects on the surface of the perovskite film are effectively passivated by the interactions between ITIC and the perovskite.47
+ Fig. 6  (a) ESP diagram of the ITIC molecule, and (b) differential charge density diagram of the perovskite surface (the section coloured in yellow indicates the loss of electrons, while the region shaded in blue indicates the gain of electrons). 
+In order to prove that the N atoms and CO groups are responsible for passivating the surface defects of the perovskite film, X-ray photoelectron spectroscopy (XPS) was used to detect the change of the surface chemical states of the perovskite film before and after the introduction of ITIC, as shown in Fig. 7. The characteristic Pb 4f 5/2, Pb 4f 7/2, N 1s and O 1s peaks of the untreated perovskite film are found at 142.63, 137.87, 401.63, and 531.43 eV, respectively, while the corresponding peaks in the ITIC-treated perovskite film are found at 142.78, 137.93, 401.73, and 531.68 eV, respectively. After ITIC treatment, the characteristic Pb 4f 5/2, Pb 4f 7/2, N 1s and O 1s peaks all shift to higher binding energies.48 This reveals that the CO groups and N atoms in ITIC interact with the uncoordinated Pb2+ ions in the perovskite film, leading to the effective suppression of defects on the surface of the perovskite film.49,50 Moreover, it is found that a new peak appeared in the ITIC-treated perovskite film, which comes from the S atoms in ITIC, indicating that ITIC is present on the surface of the perovskite film. This finding is consistent with the results of the AFM study on the surface of the ITIC-treated perovskite film.
+ Fig. 7  XPS spectra of (a) Pb 4f (b) N 1s (c) O 1s (d) S 2p for perovskite films with and without ITIC treatment. 
+To finish our study, a successful fabrication of a p–i–n type PSC with an ITO/PEDOT:PSS/MAPbI3/PCBM/BCP/Ag structure was achieved (Fig. S4a, ESI†). More information about the PSC fabrication can be found in the ESI.† The current density–voltage (J–V) curves of the perovskite devices, before and after treatment with ITIC, are presented in Fig. S4b (ESI†). Of note is that the PCE of the treated device improved by 20.97% compared to the untreated PSC. The photovoltaic parameters of the devices are shown in Table S1 (ESI†). To explore the relevance of the fingerprint fragments obtained from the ML screening, ITIC-M was also selected for verification, and Fig. S5 (ESI†) displays the molecular structure of ITIC-M. Table S2 (ESI†) shows the specific photovoltaic parameters of the device before and after treatment with ITIC-M. When the ITIC-M concentration is 2 mg mL−1, the maximum PCE of the device was obtained. The device's PCE following the introduction of ITIC-M increased by 18.6% compared to the PSC without ITIC-M, confirming the effectiveness of the fingerprint fragments selected using ML. Notably, the Voc of the devices treated with ITIC and ITIC-M gain a significant enhancement. When ITIC-M was used as a passivation material, the Voc increased from 0.95 V to 1.02 V. In order to explore the reasons for the increase of the Voc, Kelvin probe force microscopy (KPFM) was employed to characterize the surface states by measuring the contact potential difference (CPD) between the sample and the tip (Fig. 8a and b). It is clear that an uneven potential distribution appears for the control perovskite (Fig. 8a). However, with the incorporation of ITIC-M, the overall CPD is slightly lowered by ∼0.047 mV and the spatial potential difference is much smaller (Fig. 8b), which is beneficial for reducing the electrical trap states.51 According to eqn (1), where Φtip is the working function of the tip, Φsample is the working function of the sample, and q is the electron quantity (q = −1.6 × 10−19), we can conclude that the surface working function of the perovskite modified with ITIC-M is upshifted by ∼0.047 eV (Fig. 8c and d). The upshift of the working function results in a larger fraction of occupied versus vacant traps and a reduction in the rate of trap-assisted recombination, which leads to the improvement of the Voc in the device treated with ITIC-M.52 Further explanation about the enhancement of the Voc is given in the ESI.† CPD = (Φtip − Φsample)/q(1)
+ Fig. 8  Surface potential images of (a) the untreated perovskite film and (b) the ITIC-M modified perovskite film. (c) The CPD distribution of the untreated perovskite and the ITIC-M modified perovskite, and (d) a schematic diagram of the energy level the different materials. 
+Conclusions
+In this work, we collect ca. 100 different passivation materials from the literature and screen their effectiveness as passivation materials in p–i–n type PSCs by obtaining the highest impact scores of the input factors from the ML model. The XGBoost model displays the best evaluation performance with the highest r (0.893), R2 (0.791) and lowest RMSE (1.314%) values. The main 13 input features are systematically analyzed by feature importance. Based on the most relevant fingerprint fragments, ITIC was selected as the passivation material for p–i–n type PSCs. The validation experiment proves that the surface defects of p–i–n type PSCs modified with ITIC are effectively passivated. The crystallinity and the preferred crystalline orientation of the perovskite films was remarkably improved with the introduction of ITIC. DFT calculations also show that the lone pair electrons in the ITIC molecules promote charge transfer and guide the crystallization of the perovskite film. The device's PCE is dramatically increased following ITIC treatment by 20.97%. More importantly, ITIC-M is also successfully applied as the passivation material in p–i–n type PSCs. All of these results confirm that ML is a useful method to screen passivation materials for perovskite films in p–i–n type PSCs.
+Author contributions
+The project was started by D. H., C. G., and J. M. The analysis was carried out by Z. L., H. Z., and X. Z. The experimental measurements were taken by C. G., Z. F., R. Z., and M. L. The interpretation and analysis of the results were done by C. G., D. H., J. M., and L. Z., and C. G. authored the paper while D. H., J. L., L. Z., and J. M. revised it.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+This work is supported by the Natural Science Foundation of Hunan Province (Grant No. 2021JJ40168), the Education Department of Hunan Province (Grant No. 22B0580 and 21B0534), the Open Fund Project of Qinghai Provincial Laboratory of Nanomaterials and Nanotechnology (Grant No. 2022-QHMD-PI-NM-03), the Scientific research and innovation Foundation of Hunan University of Technology (Grant No. cx2211). The authors also thank Dr Yao Lu from Beijing Jiaotong University for the DFT analysis.
+Notes and references
+J. Li, B. Pradhan, S. Gaur and J. Thomas, Predictions and Strategies Learned from Machine Learning to Develop High-Performing Perovskite Solar Cells, Adv. Energy Mater., 2019, 9, 1901891 CrossRef CAS .
+B. Li, X. Wu, H. Zhang, S. Zhang, Z. Li, D. Gao, C. Zhang, M. Chen, S. Xiao, A. K. Y. Jen, S. Yang and Z. Zhu, Efficient and Stable Tin Perovskite Solar Cells by Pyridine-Functionalized Fullerene with Reduced Interfacial Energy Loss, Adv. Funct. Mater., 2022, 32, 2205870 CrossRef CAS .
+G. Wu, R. Liang, M. Ge, G. Sun, Y. Zhang and G. Xing, Surface Passivation Using 2d Perovskites toward Efficient and Stable Perovskite Solar Cells, Adv. Mater., 2022, 34, e2105635 CrossRef PubMed .
+X. P. Zheng, Y. Deng, B. Chen, H. Wei, X. Xiao, Y. Fang, Y. Lin, Z. Yu, Y. Liu, Q. Wang and J. Huang, Dual Functions of Crystallization Control and Defect Passivation Enabled by Sulfonic Zwitterions for Stable and Efficient Perovskite Solar Cells, Adv. Mater., 2018, 30, e1803428 CrossRef PubMed .
+Y. Qi, K. A. Green, G. Ma, S. Jha, K. Gollinger, C. Wang, X. Gu, D. Patton, S. E. Morgan and Q. Dai, Passivation of Iodine Vacancies of Perovskite Films by Reducing Iodine to Triiodide Anions for High-Performance Photovoltaics, Chem. Eng. J., 2022, 438, 135647 CrossRef CAS .
+Q. Jiang, J. Tong, Y. Xian, R. A. Kerner, S. P. Dunfield, C. X. Xiao, R. A. Scheidt, D. Kuciauskas, X. Wang, M. P. Hautzinger, R. Tirawat, M. C. Beard, D. P. Fenning, J. J. Berry, B. W. Larson, Y. F. Yan and K. Zhu, Surface Reaction for Efficient and Stable Inverted Perovskite Solar Cells, Nature, 2022, 611, 278–283 CrossRef CAS .
+Y. Xie, Q. Yao, Z. Zeng, Q. Xue, T. Niu, R. Xia, Y. Cheng, F. Lin, S. W. Tsang, A. K. Y. Jen, H. L. Yip and Y. Cao, Homogeneous Grain Boundary Passivation in Wide-Bandgap Perovskite Films Enables Fabrication of Monolithic Perovskite/Organic Tandem Solar Cells with over 21% Efficiency, Adv. Funct. Mater., 2022, 32, 2112126 CrossRef CAS .
+A. Hassan, Z. Wang, Y. H. Ahn, M. Azam, A. A. Khan, U. Farooq, M. Zubair and Y. Cao, Recent Defect Passivation Drifts and Role of Additive Engineering in Perovskite Photovoltaics, Nano Energy, 2022, 101, 107579 CrossRef CAS .
+J. Jiang, Z. Jin, F. Gao, J. Sun, Q. Wang and S. F. Liu, Cspbcl(3)-Driven Low-Trap-Density Perovskite Grain Growth for >20% Solar Cell Efficiency, Adv. Sci., 2018, 5, 1800474 CrossRef .
+X. Liu, Z. Yu, T. Wang, K. L. Chiu, F. Lin, H. Gong, L. Ding and Y. Cheng, Full Defects Passivation Enables 21% Efficiency Perovskite Solar Cells Operating in Air, Adv. Energy Mater., 2020, 10, 2001958 CrossRef CAS .
+S.-P. Cho, H.-J. Lee, Y.-H. Seo and S.-I. Na, Multifunctional Passivation Agents for Improving Efficiency and Stability of Perovskite Solar Cells: Synergy of Methyl and Carbonyl Groups, Appl. Surf. Sci., 2022, 575, 151740 CrossRef CAS .
+D. Zhao, Z. Zhu, M. Y. Kuo, C. C. Chueh and A. K. Jen, Hexaazatrinaphthylene Derivatives: Efficient Electron-Transporting Materials with Tunable Energy Levels for Inverted Perovskite Solar Cells, Angew. Chem., Int. Ed., 2016, 55, 8999–9003 CrossRef CAS PubMed .
+S. Xiong, Z. Hou, S. Zou, X. Lu, X. Lu, J. Yang, T. Hao, Z. Zhou, J. Xu, Y. Zeng, W. Xiao, W. Dong, D. Li, X. Wang, Z. Hu, L. Sun, Y. Wu, X. Liu, L. Ding, Z. Sun, M. Fahlman and Q. Bao, Direct Observation on P- to N-Type Transformation of Perovskite Surface Region During Defect Passivation Driving High Photovoltaic Efficiency, Joule, 2021, 5, 467–480 CrossRef CAS .
+J. Yang, C. Liu, C. Cai, X. Hu, Z. Huang, X. Duan, X. Meng, Z. Yuan, L. Tan and Y. Chen, High-Performance Perovskite Solar Cells with Excellent Humidity and Thermo-Stability Via Fluorinated Perylenediimide, Adv. Energy Mater., 2019, 9, 1900198 CrossRef .
+Z. Cheng, C. Guo, J. Song, D. Ding, Y. Chen, J. Wang, D. Zhang, L. Chen, X. Wang, Z. Yang, F. Liu, H. Liu and W. Shen, Interfacial and Permeating Modification Effect of N-Type Non-Fullerene Acceptors toward High-Performance Perovskite Solar Cells, ACS Appl. Mater. Interfaces, 2021, 13, 40778–40787 CrossRef CAS .
+X. Luo, Z. Shen, Y. Shen, Z. Su, X. Gao, Y. Wang, Q. Han and L. Han, Effective Passivation with Self-Organized Molecules for Perovskite Photovoltaics, Adv. Mater., 2022, 34, e2202100 CrossRef .
+Y. Guo, J. Ma, H. Lei, F. Yao, B. Li, L. Xiong and G. Fang, Enhanced Performance of Perovskite Solar Cells Via Anti-Solvent Nonfullerene Lewis Base It-4f Induced Trap-Passivation, J. Mater. Chem. A, 2018, 6, 5919–5925 RSC .
+M. Qin, J. Cao, T. Zhang, J. Mai, T. Lau, S. Zhou, Y. Zhou, J. Wang, Y. Hsu, N. Zhao, J. Xu, X. Zhan and X. Lu, Fused-Ring Electron Acceptor Itic-Th: A Novel Stabilizer for Halide Perovskite Precursor Solution, Adv. Energy Mater., 2018, 8, 1703399 CrossRef .
+Y. Lin, L. Shen, J. Dai, Y. Deng, Y. Wu, Y. Bai, X. Zheng, J. Wang, Y. Fang, H. Wei, W. Ma, X. C. Zeng, X. Zhan and J. Huang, Pi-Conjugated Lewis Base: Efficient Trap-Passivation and Charge-Extraction for Hybrid Perovskite Solar Cells, Adv. Mater., 2017, 29, 1604545 CrossRef PubMed .
+C. Song, X. Li, Y. Wang, S. Fu, L. Wan, S. Liu, W. Zhang, W. Song and J. Fang, Sulfonyl-Based Non-Fullerene Electron Acceptor-Assisted Grain Boundary Passivation for Efficient and Stable Perovskite Solar Cells, J. Mater. Chem. A, 2019, 7, 19881–19888 RSC .
+X. Tang, S. Xiao, Q. Fu, Y. Chen and T. Hu, Incorporation of Two Electron Acceptors to Improve the Electron Mobility and Stability of Perovskite Solar Cells, J. Mater. Chem. C, 2019, 7, 8344–8349 RSC .
+W. Kohn and L. J. Sham, Self-Consistent Equations Including Exchange and Correlation Effects, Phys. Rev., 1965, 140, A1133–A1138 CrossRef .
+E. Mosconi, J. M. Azpiroz and F. De Angelis, Ab Initio Molecular Dynamics Simulations of Methylammonium Lead Iodide Perovskite Degradation by Water, Chem. Mater., 2015, 27, 4885–4892 CrossRef CAS .
+Y. Liu, W. Yan, S. Han, H. Zhu, Y. Tu, L. Guan and X. Tan, How Machine Learning Predicts and Explains the Performance of Perovskite Solar Cells, Sol. RRL, 2022, 6, 2101100 CrossRef CAS .
+Z. Li, Q. Xu, Q. Sun, Z. Hou and W. J. Yin, Thermodynamic Stability Landscape of Halide Double Perovskites Via High-Throughput Computing and Machine Learning, Adv. Funct. Mater., 2019, 29, 1807280 CrossRef .
+N. T. P. Hartono, J. Thapa., A. Tiihonen, F. Oviedo, C. Batali, J. J. Yoo, Z. Liu, R. Li, D. F. Marron, M. G. Bawendi, T. Buonassisi and S. Sun, How Machine Learning Can Help Select Capping Layers to Suppress Perovskite Degradation, Nat. Commun., 2020, 11, 4172 CrossRef CAS PubMed .
+Z. Liu, N. Rolston, A. C. Flick, T. W. Colburn, Z. Ren, R. H. Dauskardt and T. Buonassisi, Machine Learning with Knowledge Constraints for Process Optimization of Open-Air Perovskite Solar Cell Manufacturing, Joule, 2022, 6, 834–849 CrossRef CAS .
+Y. Lu, D. Wei, W. Liu, J. Meng, X. Hou, Y. Zhang, Z. Liang, B. Qiao, S. Zhao, D. Song and Z. Xu, Predicting the Device Performance of the Perovskite Solar Cells from the Experimental Parameters through Machine Learning of Existing Experimental Results, J. Energy Chem., 2022, 77, 200–208 CrossRef .
+C. Guo, Z. Li, K. Wang, X. Zhou, D. Huang, J. Liang and L. Zhao, Accelerated Exploration of Efficient Ternary Solar Cells with Ptb7:Pc(71)Bm:Smpv1 Using Machine-Learning Methods, Phys. Chem. Chem. Phys., 2022, 24, 22538–22545 RSC .
+W. Liu, Y. Lu, X. Hou, X. Huang, Y. Li, J. Meng, S. Zhao, B. Qiao, Z. Liang, Z. Xu and D. Song, Screening Interface Passivation Materials Intelligently through Machine Learning for Highly Efficient Perovskite Solar Cells, J. Mater. Chem. A, 2022, 10, 17782–17789 RSC .
+Y. Li, Y. Lu, X. Huo, D. Wei, J. Meng, J. Dong, B. Qiao, S. Zhao, Z. Xu and D. Song, Bandgap Tuning Strategy by Cations and Halide Ions of Lead Halide Perovskites Learned from Machine Learning, RSC Adv., 2021, 11, 15688–15694 RSC .
+J. Dong, D. S. Cao, H. Y. Miao, S. Liu, B. C. Deng, Y. H. Yun, N. N. Wang, A. P. Lu, W. B. Zeng and A. F. Chen, Chemdes: An Integrated Web-Based Platform for Molecular Descriptor and Fingerprint Computation, J. Cheminf., 2015, 7, 60 Search PubMed .
+J. Klekota and F. P. Roth, Chemical Substructures That Enrich for Biological Activity, Bioinformatics, 2008, 24, 2518–2525 CrossRef CAS PubMed .
+D. Song, P. Cui, T. Wang, D. Wei, M. Li, F. Cao, X. Yue, P. Fu, Y. Li, Y. He, B. Jiang and M. Trevor, Managing Carrier Lifetime and Doping Property of Lead Halide Perovskite by Postannealing Processes for Highly Efficient Perovskite Solar Cells, J. Phys. Chem. C, 2015, 119, 22812–22819 CrossRef CAS .
+J. W. Lee, S. H. Bae, Y. T. Hsieh, N. De Marco, M. K. Wang, P. Y. Sun and Y. Yang, A Bifunctional Lewis Base Additive for Microscopic Homogeneity in Perovskite Solar Cells, Chem, 2017, 3, 290–302 CAS .
+Y. Shao, Z. Xiao, C. Bi, Y. Yuan and J. Huang, Origin and Elimination of Photocurrent Hysteresis by Fullerene Passivation in Ch3nh3pbi3 Planar Heterojunction Solar Cells, Nat. Commun., 2014, 5, 5784 CrossRef CAS PubMed .
+G. Tumen-Ulzii, C. Qin, D. Klotz, M. R. Leyden, P. Wang, M. Auffray, T. Fujihara, T. Matsushima, J. Lee, S. Lee, Y. Yang and C. Adachi, Detrimental Effect of Unreacted Pbi(2) on the Long-Term Stability of Perovskite Solar Cells, Adv. Mater., 2020, 32, e1905035 CrossRef .
+J. Yang, X. Pu, T. Wang, S. Cheng, H. Chen, Q. Cao, Y. Zhang, I. Tojiboyev, L. Etgar, F. Ye and X. Li, Multifunctional Additive (L-4-Fluorophenylalanine) for Efficient and Stable Inverted Perovskite Solar Cells, Sol. RRL, 2022, 6, 2101101 CrossRef CAS .
+G. Jang, H. C. Kwon, S. Ma, S. C. Yun, H. Yang and J. Moon, Cold Antisolvent Bathing Derived Highly Efficient Large-Area Perovskite Solar Cells, Adv. Energy Mater., 2019, 9, 1901719 CrossRef .
+C. Peng, X. Xia, X. Wang, J. Peng, Z. Fan and F. Li, Role of Π-Conjugated-Length-Regulated Perovskite Intergrain Interconnecting in the Photovoltaic Performance of Perovskite Solar Cells, Appl. Surf. Sci., 2022, 585, 152670 CrossRef CAS .
+H. Wang, M. Zheng, C. Chen, W. Zhang, B. Wang, C. Yang, M. Zhai, H. Xu and M. Cheng, Electron Transport Interface Engineering with Pyridine Functionalized Perylene Diimide-Based Material for Inverted Perovskite Solar Cell, Chem. Eng. J., 2022, 438, 135410 CrossRef CAS .
+H. Zhong, X. Liu, M. Liu, S. Yin, Z. Jia, G. Fu, S. Yang and W. Kong, Suppressing the crystallographic disorders induced by excess PbI2 to achieve trade-off between efficiency and stability for PbI2-rich perovskite solar cells, Nano Energy, 2023, 105, 108014 CrossRef CAS .
+S. Chen, X. Wen, J. S. Yun, S. Huang, M. Green, N. J. Jeon, W. S. Yang, J. H. Noh, J. Seo, S. I. Seok and A. H. Baillie, Spatial Distribution of Lead Iodide and Local Passivation on Organo-Lead Halide Perovskite, ACS Appl. Mater. Inter., 2017, 9, 6072–6078 CrossRef CAS PubMed .
+R. Zhu, Q. Li and Z. Li, Nitrogen-substitution improves mobility and stability of electron transport materials for inverted perovskite solar cells, Nanoscale, 2018, 10, 17873–17883 RSC .
+M. Hao, W. Chi and Z. Li, Boron–nitrogen substituted planar cores: designing dopant-free hole-transporting materials for efficient perovskite solar cells, Nanoscale, 2021, 13, 4241–4248 RSC .
+L. Li, X. Xu, L. Xiao, W. Jiang, J. Zhao, X. Kong and G. Zou, Symmetrical Conjugated Molecular Additive for Defect Passivation and Charge Transfer Bridge in Perovskite Solar Cells, ACS Appl. Energy Mater., 2021, 4, 5935–5943 CrossRef CAS .
+L. Gao, H. Su, Z. Xu, Y. Hu, J. Zhang and S. Liu, Pyrenesulfonic Acid Sodium Salt for Effective Bottom Surface Passivation to Attain High Performance of Perovskite Solar Cells, Sol. RRL, 2021, 5, 2100416 CrossRef CAS .
+Y. Chen, D. Ma, Z. Wang, J. He, X. Gong and W. Wu, Tautomeric Dual-Site Passivation for Carbon-Based Printable Mesoscopic Perovskite Solar Cells, Adv. Mater. Interfaces, 2022, 9, 2200326 CrossRef CAS .
+C. Shi, Q. Song, H. Wang, S. Ma, C. Wang, X. Zhang, J. Dou, T. Song, P. Chen, H. Zhou, Y. Chen, C. Zhu, Y. Bai and Q. Chen, Molecular Hinges Stabilize Formamidinium-Based Perovskite Solar Cells with Compressive Strain, Adv. Funct. Mater., 2022, 32, 2201193 CrossRef CAS .
+J. Li, L. Xie, Z. Pu, C. Liu, M. Yang, Y. Meng, B. Han, S. Bu, Y. Wang, X. Zhang, T. Wang and Z. Ge, The Synergistic Effect of Pemirolast Potassium on Carrier Management and Strain Release for High-Performance Inverted Perovskite Solar Cells, Adv. Funct. Mater., 2023, 32, 2301956 CrossRef .
+D. Song, D. Wei, P. Cui, M. Li, Z. Duan, T. Wang, J. Ji, Y. Li, J. M. Mbengue, Y. Li, Y. He, M. Trevor and N. G. Park, Dual function interfacial layer for highly efficient and stable lead halide perovskite solar cells, J. Mater. Chem. A, 2016, 4, 6091–6097 RSC .
+D. Luo, W. Yang, Z. Wang, A. Sadhanala, Q. Hu, R. Su, R. Shivanna, G. F. Trindade, J. F. Watts, Z. Xu, T. Liu, K. Chen, F. Ye, P. Wu, L. Zhao, J. Wu, Y. Tu, Y. Zhang, X. Yang, W. Zhang, R. H. Friend, Q. Gong, H. J. Snaith and R. Zhu, Enhanced photovoltage for inverted planar heterojunction perovskite solar cells, Science, 2018, 360, 1442–1446 CrossRef CAS PubMed .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d3tc01140bThis journal is © The Royal Society of Chemistry 2023
+Table Content:
+
+ 	Fig. 1  The ML workflow for screening passivation materials in p–i–n type PSCs.	 
+
+C-PCE	The control device's PCE without any optimization.
+rA, AX, PX	The effective radii of A-site cations in the precursor solution, the molar ratio of the A-site cations, and molar ratio of Pb ions to halide ions (AX/PX), respectively.
+Fragments corresponding to the bits of the fingerprint	
+
+
+
+
+
+
+ 	Fig. 2  (a) Comparison of the true PCE (performance coefficient of device) with the predicted PCE by the XGBoost model. Here, the red dotted line indicates where the true PCE is equal to the predicted PCE, the better the forecast, the closer the signs are to the actual lines. (b–d) Evaluation parameters (the average value of the evaluation parameters is taken five times) obtained for the training set and test set using the RF, XGBoost, GBDT, SVM, and KNN prediction models.	 
+
+ 	Fig. 3  ITIC molecule structure with the effective molecular fingerprint fragments.	 
+
+ 	Fig. 4  a) Steady-state PL spectra, (b) TRPL decay traces, and (c) Tauc plots of a perovskite film and an ITIC-treated perovskite film on an ITO substrate.	 
+
+ 	Fig. 5  (a) The XRD patterns of the perovskite film and perovskite film treated with ITIC. (b and c) The AFM images for the untreated perovskite film and the ITIC-treated perovskite film, respectively.	 
+
+ 	Fig. 6  (a) ESP diagram of the ITIC molecule, and (b) differential charge density diagram of the perovskite surface (the section coloured in yellow indicates the loss of electrons, while the region shaded in blue indicates the gain of electrons).	 
+
+ 	Fig. 7  XPS spectra of (a) Pb 4f (b) N 1s (c) O 1s (d) S 2p for perovskite films with and without ITIC treatment.	 
+CPD = (Φtip − Φsample)/q	(1)
+
+ 	Fig. 8  Surface potential images of (a) the untreated perovskite film and (b) the ITIC-M modified perovskite film. (c) The CPD distribution of the untreated perovskite and the ITIC-M modified perovskite, and (d) a schematic diagram of the energy level the different materials.	 
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d3tc01140b
+
+This journal is © The Royal Society of Chemistry 2023

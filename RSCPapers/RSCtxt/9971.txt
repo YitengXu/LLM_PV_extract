@@ -1,0 +1,544 @@
+Optimizing accuracy and efficacy in data-driven materials discovery for the solar production of hydrogen   - Energy & Environmental Science (RSC Publishing) DOI:10.1039/D0EE02984J View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D0EE02984J
+(Paper)
+Energy Environ. Sci., 2021, 14, 2335-2348Optimizing accuracy and efficacy in data-driven materials discovery for the solar production of hydrogen†
+Yihuang Xiong‡
+*a, 
+Quinn T. Campbell‡b, 
+Julian Fanghanelac, 
+Catherine K. Baddingd, 
+Huaiyu Wanga, 
+Nicole E. Kirchner-Halla, 
+Monica J. Theibaultd, 
+Iurii Timrove, 
+Jared S. Mondscheinc, 
+Kriti Sethc, 
+Rowan R. Katzbaerc, 
+Andrés Molina Villarinod, 
+Betül Pamukf, 
+Megan E. Penroda, 
+Mohammed M. Khana, 
+Tiffany Riverac, 
+Nathan C. Smithg, 
+Xavier Quintanaa, 
+Paul Orbea, 
+Craig J. Fennief, 
+Senorpe Asem-Hiablieh, 
+James L. Youngi, 
+Todd G. Deutschi, 
+Matteo Cococcionij, 
+Venkatraman Gopalana, 
+Héctor D. Abruñad, 
+Raymond E. Schaakc and 
+Ismaila Daboah
+aDepartment of Materials Science and Engineering, and Materials Research Institute, The Pennsylvania State University, University Park, PA, USA. E-mail: yihuangxiong@psu.edu
+bSandia National Laboratories, Albuquerque, NM, USA
+cDepartment of Chemistry and Materials Research Institute, The Pennsylvania State University, University Park, PA, USA
+dDepartment of Chemistry and Chemical Biology, Cornell University, Ithaca, NY, USA
+eTheory and Simulation of Materials (THEOS) and National Centre for Computational Design and Discovery of Novel Materials (MARVEL), École Polytechnique Fédérale de Lausanne, CH-1015 Lausanne, Switzerland
+fSchool of Applied and Engineering Physics, Cornell University, Ithaca, NY, USA
+gDepartment of Materials Science and Engineering, Northwestern University, Evanston, IL, USA
+hInstitutes of Energy and the Environment, The Pennsylvania State University, University Park, PA, USA
+iNational Renewable Energy Laboratory, Golden, CO, USA
+jDepartment of Physics, University of Pavia, Pavia, Italy
+Received 
+16th September 2020
+, Accepted 10th March 2021First published on 11th March 2021AbstractThe production of hydrogen fuels, via water splitting, is of practical relevance for meeting global energy needs and mitigating the environmental consequences of fossil-fuel-based transportation. Water photoelectrolysis has been proposed as a viable approach for generating hydrogen, provided that stable and inexpensive photocatalysts with conversion efficiencies over 10% can be discovered, synthesized at scale, and successfully deployed (Pinaud et al., Energy Environ. Sci., 2013, 6, 1983). While a number of first-principles studies have focused on the data-driven discovery of photocatalysts, in the absence of systematic experimental validation, the success rate of these predictions may be limited. We address this problem by developing a screening procedure with co-validation between experiment and theory to expedite the synthesis, characterization, and testing of the computationally predicted, most desirable materials. Starting with 70150 compounds in the Materials Project database, the proposed protocol yielded 71 candidate photocatalysts, 11 of which were synthesized as single-phase materials. Experiments confirmed hydrogen generation and favorable band alignment for 6 of the 11 compounds, with the most promising ones belonging to the families of alkali and alkaline-earth indates and orthoplumbates. This study shows the accuracy of a nonempirical, Hubbard-corrected density-functional theory method to predict band gaps and band offsets at a fraction of the computational cost of hybrid functionals, and outlines an effective strategy to identify photocatalysts for solar hydrogen generation.
+
+Broader context
+Hydrogen (H2) is an energy carrier of high density that offers a compelling alternative to (nonrenewable and polluting) petroleum-based fuels for transportation. To date, the industrial production of H2 has been heavily reliant on natural gas reforming, an energy-intensive process whose ultimate byproduct is carbon dioxide. It is thus imperative to develop H2 generation by carbon-neutral means such as photocatalytic water splitting. While first-principles methods have been widely applied to the high-throughput screening of photocatalytic materials for water photoelectrolysis, the efficacy of these computational screening techniques has seldom been comprehensively assessed at the experimental level. Here, we demonstrate an effective procedure to maximize the success rate of high-throughput materials discovery for H2 photogeneration by conducting a systematic cross-validation of our theoretical calculations and experimental measurements; most of the compounds that were synthesized and tested using this screening protocol exhibited photocatalytic hydrogen evolution, and several of them showed favorable band gap and band edges for overall water splitting.
+
+1 Introduction
+Hybrid and plug-in electric vehicles have helped curtail the global consumption of petroleum-based fuels for personal transportation.1,2 Yet the development of electric power systems satisfying the performance requirements of freight transport and air travel has faced major technical hurdles.3,4 The global demand for transportation fuels has thus continued to increase at a rate of 1.2% per year,5 prompting efforts to advance renewable fuels such as hydrogen.6,7 While hydrogen can be converted into electricity without carbon emissions, conventional methods to obtain hydrogen mostly involve steam reforming, a process that releases carbon dioxide.8 Hence, there is a compelling need for a carbon-neutral supply of hydrogen, not only to develop sustainable transportation9 but also to minimize greenhouse gas emissions from various industries such as the production of ammonia fertilizers, which requires hydrogen feedstocks.10
+Photocatalysis offers a potential solution for the solar generation of hydrogen by electrochemically cleaving water.11 Feasibility analyses have shown that photoelectrolysis could be economically and technically viable to produce hydrogen industrially, with costs ranging from $1.6 to $3.2 per gasoline gallon equivalent, depending on the mode of photogeneration.12 Despite these prospects, the photoelectrochemical production of hydrogen has been hindered by the lack of stable and inexpensive materials with solar-to-hydrogen conversion efficiencies exceeding the estimated threshold of 10% for cost competitiveness.12
+Data-driven materials screening could expedite the discovery and development of efficient photocatalysts.13–20 As depicted in Fig. 1, high-throughput computational methods have been used to explore extensive databases of crystal structures in search for technological materials.21–25 Although Fig. 1 shows encouraging results in using first-principles calculations to identify candidate compounds in areas as diverse as electrochemistry, photovoltaics, optoelectronics, thermoelectrics, and piezoelectrics, only a fraction of these studies predicted materials that were experimentally confirmed with the notable exception of ref. 24, which focused on the computational and experimental discovery of vanadate-based oxides for photocatalytic oxygen evolution. This outcome is mainly due to the limited precision of conventional first-principles simulations, which rely on simplified descriptions of electronic interactions, and to existing collaborative barriers between experiment and theory. The goal of this work is to maximize the efficacy and success rate of first-principles methods for the data-driven discovery of water-splitting photocatalysts by providing a systematic experimental assessment of their predictive accuracy.
+ Fig. 1  Survey of peer-reviewed publications in high-throughput computational materials science (source: Web of Science; period: 2000–2020), organized into technological areas with the number of articles containing experimental validation indicated in orange and not containing experimental validation indicated in blue. Although not exhaustive, this survey is representative of the proportion (on the order of 20%) of high-throughput computational predictions that are accompanied with validation experiments (the criteria of this survey are explained in Fig. S1, ESI†). 
+2 Results and discussion
+2.1 Screening and synthesis
+The high-throughput screening procedure is depicted in Fig. 2. Starting from the Materials Project database,26 we carried out an initial parsing of 70150 compounds by retaining those whose enthalpy of formation ΔHf is predicted to be negative with respect to the reference states of their elements. We then identified the materials whose computed band gap εg was between 0.75 eV and 2 eV. While the solar-to-hydrogen conversion efficiency of photocatalytic cells is maximal for εg in the range of 1.5 to 2.5 eV,27 we rescaled this spectral window to account for the tendency of conventional density-functional theory (DFT)28,29 approximations to underestimate the band gaps of semiconductors by a typical margin of 20–50%,30 as detailed in Section S2, ESI.† Applying these criteria to enthalpies and band gaps from the Materials Project, we narrowed the list down to 12699 materials.
+ Fig. 2  Screening protocol with co-validation between experiment and theory to identify photocatalytic semiconductors for hydrogen generation (left panel). The criteria of selection are listed next to the corresponding tiers of the funnel (right panel). Starting with 70150 materials, 11 potential photocatalysts are selected by calculating their chemical stability, band gap, and band alignment, and by probing their phase purity. The Hubbard U parameters are determined without empirical fitting using linear-response theory. The enthalpy of formation, the band gap, the valence band edge, and the conduction band edge are denoted as ΔHf, εg, EVB, and ECB, respectively; LD50 stands for the median lethal dose of the constituent elements. 
+Next, we inspected the valence band edge EVB and conduction band edge ECB of the candidate semiconductors relative to the redox potentials of the H2O/O2 and H2/H+ couples, respectively. Although valence and conduction band edges can be predicted from first principles,31 these predictions require supercell slab calculations that are computationally demanding and must be repeated for a representative set of surface facets, terminations, and adsorbates. Additionally, it is unclear how the band edges calculated for specific surfaces would relate to those of a polycrystalline material. In contrast, estimating the electrode potential from the electronegativities of the constituent elements has been shown to be reasonably accurate in predicting band alignments,32 as will be further assessed and discussed in the next section.
+In explicit terms, band edges were calculated from the band gap εg and geometric mean 〈χ〉 of the Mulliken electronegativities of the constituent elements (which provides an estimate for the opposite Fermi energy εF and flatband potential EFB through EFB = −εF/e = 〈χ〉/e, where e is the fundamental charge of an electron). In the absence of Fermi-level pinning (and if the electron and hole effective masses are comparable in magnitude), one can evaluate the band edges as EVB= (〈χ〉 + εg/2)/e and ECB = (〈χ〉 − εg/2)/e.33 These calculations identified 1317 candidates fulfilling the conditions EVB > 0.575 V and ECB < 0.625 V on the reversible hydrogen electrode (RHE) scale (cf. Fig. S2, ESI† for the derivation of these band-edge criteria). The list was further pruned by examining the toxicity of the individual elements on the LD50 (median lethal dose) scale, and by taking into account their crustal abundance and radioactivity. In specific terms, we eliminated elements with an LD50 value lower than 250 mg kg−1,34 and those that are labeled as radioactive in the Evaluated Nuclear Structure and Decay database of the International Atomic Energy Agency.35 Rare-earth elements and transition metals with an abundance lower than that of gold (0.0004 ppm by mass) were also removed, yielding 1051 candidates.36
+In addition, we identified materials that were amenable to experimental synthesis. To this end, we referenced the 1051 compounds to the Crystallography Open Database,37 finding 452 materials that had been previously synthesized. A systematic search of the experimental literature enabled us to establish a list of materials potentially accessible through conventional synthesis techniques based on criteria of availability of the chemical precursors, sintering time, and likelihood of phase purity. We also incorporated high-level insights pertaining to reactivity and stability; for example, we eliminated compounds that are likely, based on their expected chemical reactivity, to be sensitive to air or water. This analysis ultimately led to a database of 162 materials whose synthesis steps are outlined in the Synthesizability section, ESI.† In parallel, we evaluated the performance of machine-learning algorithms in suggesting synthesis actions and chemical precursors.38–40 This preliminary evaluation indicates that machine learning may ultimately be used for assessing materials synthesizability. As machine-learning models continue to be developed, we will explore the possibility of incorporating these capabilities into data-driven screening protocols.
+From this list, we refined the electronic-structure predictions of the band gaps. Although the semilocal DFT approximation41 is generally apt at predicting the stability and reactivity of covalent materials, it is known to underestimate their band gap εg by a considerable margin.42 The limitations of conventional functionals for determining band gaps originate from self-interaction errors43,44 that cause electrons to delocalize and to thus become unphysically prone to optical excitation. Many-body perturbation theories45,46 and hybrid functionals47–49 are among the most accurate electronic-structure methods to predict the band gaps of semiconductors. These methods improve over conventional DFT approximations by capturing the spectral or nonlocal dependence of the single-electron potential,50 which may lead, however, to a significant increase in algorithmic complexity for unit cells with a few hundreds of valence electrons (typically, 50–100 atoms).103
+A widely used approach to determine band gaps while preserving computational efficiency consists of incorporating localization terms at atomic sites (the Hubbard U method),51–55 with the caveat that the magnitude of these terms is in general not known a priori. Thus, the Hubbard U parameters are frequently fitted to experimental band structures and thermodynamic energies. This approach yields U parameters that may not be transferable from one compound (or crystal phase) to another, and it may not guarantee that other properties (such as lattice parameters and magnetization) are in better agreement with experiments. In addition, this fitting strategy is not applicable to materials for which limited experimental data are available, precluding its use within first-principles workflows. To overcome these limitations, we exploit a newly developed computational procedure,56,104 which enables us to determine the on-site U parameters from linear-response theory57 with high efficiency and without relying on empirical fitting, as detailed in the Methods section. In this approach,56,104 density-functional perturbation theory (DFPT) is used to determine the on-site Hubbard parameters from the response of the system to a series of wavevector-modulated atomic potential shifts. This method offers several advantages compared to the previous implementation,57 among which high control on the numerical accuracy of the U parameters and full automation of their calculations, making it suitable for high-throughput screening.103
+The impact of this correction on εg, EVB and ECB can be directly appreciated by comparing our ab initio DFT+U calculations with the predictions from the Materials Project (DFT+UMP), which rely on constant U parameters, optimally tuned to reproduce experimental enthalpies of formation (Table S2, ESI†). Fig. 3 shows strong shifts in the distribution of the candidate materials, corresponding to a typical increase in the band gap of several eVs. It is seen that DFT+U predictions idenfity numerous potential photocatalysts in the water-splitting region. A complete list of the band gaps and band edges for the 162 candidates is provided in Tables S1 (DFT+U) and S2 (DFT+UMP), ESI.†
+ Fig. 3  Band edges of the 162 candidate photocatalysts (obtained by applying criteria of chemical stability, band gap, band alignment, elemental toxicity, crustal abundance, and compound synthesizability), calculated (a) with empirical Hubbard U parameters for transition-metal elements (DFT+UMP) and (b) with Hubbard U parameters determined from first principles for both transition-metal and light elements (DFT+U). In these diagrams, the rainbow region represents the visible optical range, where each colored, diagonal isoline corresponds to a constant band gap. Candidate photocatalytic materials occupy this domain. 
+Based on these results, we restricted the list of potential photocatalysts to 71 compounds by imposing the criteria EVB > 1.2 V vs. RHE and ECB < 0 V vs. RHE. Powder samples of a subset of these compounds were synthesized via solid-state reactions involving the mixing of precursors and calcining these at high temperatures for a given number of hours, as described in the Methods section. We focused on oxides, as these were able to be synthesized in a reasonable amount of time using standard furnace reactions. Fig. 4 shows the normalized experimental X-ray diffraction (XRD) patterns, which closely match the reference patterns in most cases, confirming the synthesis of the expected single phase. We note that sodium ferrite Na3Fe5O9 contained a small amount of a related secondary phase NaFe3O5, as well as a higher background (i.e. a comparatively lower signal to noise ratio) than the others, suggesting that part of the sample was amorphous. Also, CaIn2O4 was not found to be the expected cubic (Fdm) polymorph but instead to be orthorhombic (Pnma). We thus recalculated the band gap and edges of CaIn2O4 in the orthorhombic phase, finding moderate changes of 0.2 eV in the orbital energies, as reported in Table S1, ESI.† We then proceeded to the characterization of these compounds.
+ Fig. 4  Comparison of the reference and measured X-ray diffraction patterns for the 11 compounds that were screened and synthesized. The peaks labeled with asterisks (*) in the Na3Fe5O9 spectrum are due to a secondary NaFe3O5 phase. 
+2.2 Characterization and testing
+After synthesizing the candidate compounds, we compared their band gaps to computational predictions. As shown in Fig. 5, this comparison highlights two distinct trends. For the materials that do not contain elements with partially filled (e.g. d5) shells (namely, the Fe and Mn oxides considered here), experimental and theoretical band gaps are found to be in close agreement, with a DFT+U root mean squared error of 0.4 eV, which is considerably lower than the DFT error of 1.5 eV. The correspondence is quite remarkable for the alkaline-earth indates where the error does not exceed 0.3 eV. The largest DFT+U deviation is found to be 0.55 eV for Ba2PbO4, whereas the DFT underestimation exceeds −0.9 eV for this material (cf. Table S1, ESI†).
+ Fig. 5  Comparison of the band gaps computed with the DFT+U method to the experimental band gaps for the 11 single-phase compounds. The discrepancies observed for the 4 materials highlighted in grey can be ascribed to mid-gap defect levels and magnetic order due to open-shell d5 transition metals. Compounds that contain d5 cations are shown as white circles, while those that only contain d0 and d10 cations are shown as blue circles. Measurements of the band gaps are provided in Fig. S4, ESI,† with the exception of PbTiO3 whose band gap is from ref. 58. 
+At variance with this predictive accuracy, the band gaps of the Fe and Mn oxides are significantly overestimated by DFT+U calculations. These deviations possibly originate from an incorrect description of magnetic order in these compounds. For example, a literature search reveals that zinc ferrite ZnFe2O4 adopts low-symmetry ferromagnetic order at room temperature60 with one of the spin channels exhibiting semi-metallicity,61 which cannot be captured straightforwardly by our collinear DFT+U simulations. These magnetic characteristics complicate the accurate prediction of the band gap and the detailed interpretation of optical experiments—and is possibly at the origins of some observed inconsistencies. Yet the large discrepancy for Ba3MnNb2O9 and Na3Fe5O9 is more difficult to explain in terms of magnetism alone, and is instead likely due to the existence of mid-gap defects arising from the wide range of oxidation states that Mn and Fe can adopt. This interpretation is supported by the Tauc measurements, which show strong signatures of defect levels in the band gap, as it is apparent from the additional absorption peaks (the Kubelka–Munk function is proportional to absorption) within the main slope of the Tauc graphs reported in Fig. S4, ESI.†
+To address this complexity, we have estimated the band gap as the extrapolation of the highest linear portion of the Tauc plot inside the region of prevalent decline in absorbance. This approach allows us to ascribe any absorption peak in this range to other energy states, such as trap or defect levels. This assignment makes intuitive sense as any mid-gap trap or defect state must have an energy difference (relative to the valence band) smaller than that of the energy gap. One of the reasons why these materials could exhibit a high density of trap states is that they contain transition metals with partially filled d orbitals and variable oxidation states, which tend to produce energy levels within the band gap of a semiconductor. In fact, these effects are some of the known mechanisms whereby transition-metal-bearing materials acquire their colorful appearance. Although we are not discarding the creation of defect states caused by, e.g. vacancies and surface dangling bonds, these properties are seldom found in materials that do not contain open-shell transition metals. Accordingly, it is seen that there are far fewer disturbances in the Tauc plots of these compounds, which makes the analysis of the band gaps tractable and reliable within DFT+U at a fraction of the computational cost of, e.g. hybrid functionals and many-body perturbation theories. A notable exception to these trends is PbTiO3, for which we did not find conclusive agreement between the Tauc measurement (2.69 eV) and available experimental data.58 This discrepancy is possibly due to the polar nature of PbTiO3, which affects the interpretation of the optical response.58 We thus compared the DFT+U band gap of PbTiO3 to the polarization-dependent band gaps of 3.27–3.38 eV from ref. 58. Similarly, the flatband potential (−1.2 V vs. RHE) that we measured for PbTiO3 was unreasonably negative relative to previous experiments. Therefore, we compared the computed band edges to measurements from ref. 59, in accordance with the expected band gap (∼3.3 eV).
+Having determined the band gaps of the synthesized materials, we measured their band edges through Mott–Schottky plots to determine their flatband potentials. We monitored the reciprocal of the squared differential capacitance as a function of the applied potential and studied the linear region, following the Mott–Schottky equation (as exemplified for the case of an n-type semiconductor): 1/C2 = 2/(εsε0eN)((E − EFB) − (kBT)/e), where C is the capacitance of the electrode, εs is the dielectric constant of the semiconductor, ε0 is the vacuum permittivity, N is the dopant concentration and E − EFB is the applied potential relative to the flatband potential of the semiconductor. The Mott–Schottky plot of the majority of the compounds studied showed a single linear region, as shown in Fig. S5, ESI.† The horizontal intercept was used to determine the flatband potential. With the potential EFB and the band gap εg previously determined, we positioned the valence and conduction band edges on the redox scale in a manner identical to the computational evaluation: ECB = EFB − εg/(2e) and EVB = EFB + εg/(2e).
+The computational results compiled in Fig. 6 and Table 1 are in qualitative agreement with experimental trends; for the majority of the compounds, computational predictions are within a few tenths of a volt from the measured redox potentials. In particular, the DFT+U approach captures the anodic shifts in the conduction band edges as one moves down the alkaline-earth period for both the plumbate and indate series. Although these trends are correctly described, computational predictions appear to systematically overestimate the redox potentials, as it is clearly seen in the case of calcium orthoplumbate Ca2PbO4, calcium indate CaIn2O4, and lead titanate PbTiO3. In spite of these observations, all of the other calculated band edges are in close correspondence with experimental data, especially for SrIn2O4, where the predicted conduction and valence band edges are both within a mV from the measured potentials. Finally, we note that the largest deviation between theory and experiment is observed for CaIn2O4. This discrepancy may be indicative of negatively charged surface states, such as dangling bonds induced by oxygen vacancies, which can cause an increase in the Fermi energy (making it more negative on the redox scale). The possibility of surface states and their impacts on photocatalytic activity are examined below.
+ Fig. 6  Experimentally determined band alignment (orange) with respect to the redox potentials of water (dashed lines), compared with the electronic energies estimated from the DFT+U band gap for compounds with closed-shell (d0 or d10) elements (cf.Fig. 5). Measurements of the band edges are shown in Fig. S5, ESI,† with the exception of PbTiO3 whose band edges are from ref. 59. 
+Table 1 Band gap (εg), conduction and valence band edges (ECB and EVB, respectively), flatband potential (EFB), hydrogen production, and magnetic order (Y = yes, N = no) from electronic-structure calculations (DFT+U), and from optical and electrochemical experiments. Hydrogen production is examined under two different test conditions: (i) 0.1 M oxalic acid and (ii) 15% volume fraction of methanol in water. Hydrogen detection under conditions (i) and (ii) is indicated by a filled circle (⦿) on the left and on the right, respectively. Similarly, the absence of hydrogen is denoted by an empty circle (⦾). The cross symbol (⦻) indicates that the sample corrodes in the aqueous solution. Compounds whose electrochemical corrosion is not accompanied by a perceivable decrease in photocatalytic activity are indicated by a bar symbol (⦵). The experimental band edges of the four Fe and Mn oxides could not be reliably determined due to mid-gap states, which are expected to set the position of the Fermi level
+
+
+
+
+ 
+ 
+Space group
+Magnetism
+H2 production
+DFT+U (eV)
+Expt. (eV)
+
+
+ ε g 
+ eE CB 
+ eE VB 
+ ε g 
+ eE FB 
+ eE CB 
+ eE VB 
+
+
+
+
+ a Ref. 58. b Ref. 59. 
+
+
+
+
+1
+Ca2PbO4
+ Pbam 
+N
+⦻⦵
+2.47
+−0.79
+1.68
+2.94
+0.09
+−1.38
+1.56
+
+
+2
+Ba2PbO4
+ I4/mmm
+N
+⦻⦻
+2.05
+−0.46
+1.59
+1.45
+0.48
+−0.25
+1.21
+
+
+3
+NaInO2
+ Rm
+N
+⦿⦿
+4.22
+−1.76
+2.46
+3.85
+0.48
+−1.45
+2.41
+
+
+4
+CaIn2O4
+ Pnma 
+N
+◎◎
+4.10
+−1.58
+2.52
+3.88
+−0.54
+−2.48
+1.40
+
+
+5
+SrIn2O4
+ Pnma 
+N
+⦿◎
+3.93
+−1.51
+2.42
+3.67
+0.33
+−1.51
+2.17
+
+
+6
+BaIn2O4
+ P21/c
+N
+⦻◎
+3.09
+−0.96
+2.13
+2.80
+0.45
+−0.96
+1.84
+
+
+7
+PbTiO3
+ P4mm
+N
+⦿⦿
+3.45
+−0.46
+3.00
+3.3a
+0.5b
+−1.2b
+2.2b
+
+
+8
+ZnFe2O4
+ Fdm
+Y
+⦿⦿
+3.60
+−0.38
+3.22
+2.26
+0.01
+—
+—
+
+
+9
+Na3Fe5O9
+ C2/c
+Y
+⦿⦿
+3.57
+−0.93
+2.64
+0.77
+0.23
+—
+—
+
+
+10
+BaCaFe4O8
+ P1m
+Y
+⦻⦻
+3.52
+−0.87
+2.65
+2.04
+−0.44
+—
+—
+
+
+11
+Ba3MnNb2O9
+ Pm1
+Y
+◎◎
+3.04
+−0.70
+2.34
+0.72
+−0.42
+—
+—
+
+
+
+
+In an effort to evaluate photocatalytic activity in connection to surface state formation, we developed a gas chromatography setup to measure hydrogen photogeneration. In analyzing these measurements, it should be borne in mind that the oxygen evolution reaction is much more sluggish than the hydrogen reduction reaction, and often requires a cocatalyst to proceed.73 Although understanding the influence of cocatalysts on the photoactivity is of practical interest for optimizing solar-to-hydrogen conversion, this objective is beyond the scope of the present assessment whose goal is to examine the accuracy of intrinsic semiconductor properties within data-driven computational protocols. We thus restricted this analysis to the hydrogen reduction half-reaction by introducing sacrificial redox couples to circumvent the slow kinetics of oxygen evolution. The main outcome sought in these gas chromatography tests is to confirm the location of the conduction bands obtained from the Mott–Schottky measurements (i.e. ECB < 0 V vs. RHE) and to assess the extent to which surface states may suppress photocatalytic activity.
+Each gas chromatography test was performed by placing 10 mg of the synthesized crystalline powder into 5 mL of solution and exposing the system to illumination from a mercury arc lamp, providing light across the visible spectrum, with a fraction of ultraviolet contribution to also probe the wide-band optical response of some of the proposed materials. Gas concentrations were measured via a valve-controlled gas chromatography setup, as described in Section S6, ESI.† We examined two types of conditions: (i) acidic pH, with the addition of 0.1 M of oxalic acid, which tends to favor the generation of H2 (by increasing the activity of the protons) but may also cause the premature dissolution of the sample; (ii) neutral pH, corresponding to volume fractions of 15% of methanol and 85% of water. The magnitude of the H2 peak is then measured over time. The results of these series of experiments are presented in Table 1 with the full gas chromatography responses given in Fig. S6, ESI.† A systematically assessment of the electrochemical stability of the tested compounds was carried out by means of XRD measurements and Pourbaix analysis. The results of this comprehensive assessment are reported in Section S8, ESI† and are discussed below.
+A first observation is that both of the identified plumbates exhibited some H2 signal; however, the generation of H2 in both cases is accompanied with electrochemical corrosion. Interestingly, while the photoactivity of Ba2PbO4 decreases gradually due to electrodissolution, the rate of H2 production for Ca2PbO4 did not show any appreciable reduction, within the estimated experimental accuracy, over ∼100 h of testing under condition (ii). While Ca2PbO4 was previously identified theoretically,23 our study may be the first experimental validation of its photocatalytic proton-reduction activity and its favorable band alignment for water splitting.
+Regarding the indate series, we observed that NaInO2 was photoactive, yielding hydrogen under conditions (i) and (ii), and confirming previous literature evidence for wide-bang-gap hydrogen photocatalysis.74 SrIn2O4 also showed a significant H2 signal under condition (i), making it a potential lower-band-gap alternative to NaInO2. In contrast, CaIn2O4 did not exhibit any detectable photocatalytic activity, which provides further support to the possible formation of surface states that may promote charge recombination and affect interfacial charge transfer. In the same vein, we did not obtain a significant H2 response for BaIn2O4 under condition (ii) and observed that the production of hydrogen under acidic condition (i) was accompanied by surface corrosion (causing a change in the color of the sample). Upon surveying the literature, we found previous experimental confirmation of the photoactivity of SrIn2O475 for water splitting. The outcome of our gas-chromatograhy tests for NaInO2 and CaIn2O4 are nevertheless opposite to those reported in ref. 75, indicating that the mode of preparation and the potential occurrence of surface defects may be essential to the H2 photoactivity of this family of materials (in particular, the solid-state synthesis of CaIn2O4 may introduce surface states, as suggested by the Mott–Schottky measurements). Likewise, we found in the literature that BaIn2O4 could promote photocatalysis when loaded with a RuO2 cocatalyst.75 This result suggests that while some of the screened compounds were not confirmed to be photoactive (especially, due to corrosion in acidic environments), they may still be viable photocatalysts once combined with an auxiliary cocatalyst.
+For completeness, we carried out the same battery of tests for the four materials containing open-shell Fe and Mn cations, finding in general a significant cathodic shifts in the measured flatband potentials relative to theoretical predictions. This systematic trend is consistent with possible Fermi-level pinning by mid-gap electronic states. While this shift precludes photocatalytic oxygen evolution for these Fe and Mn oxides, it brings the flatband potential of ZnFe2O4 and Na3Fe5O9 in close alignment with the redox potential of the H2/H+ couple, yielding a large H2 signal in gas chromatography measurements. While the photocatalytic activity of ZnFe2O4 has recently been investigated and optimized,76 our literature search did not reveal previous computational or experimental evidence of the photocathodic activity of Na3Fe5O9. As for BaCaFe4O8 and Ba3MnNb2O9, the shift in the redox potential appears to be too pronounced to enable proton reduction.
+To sum up, experimental measurements indicate favorable redox alignment and steady hydrogen generation for 6 of the 11 synthesized compounds, belonging to the plumbate and indate families. The absence of hydrogen production is limited to compounds exhibiting surface states or susceptible to photocorrosion. While this joint computational and experimental study provides a conclusive validation of the performance of the DFT+U method without empirical fitting, it also calls for caution in considering magnetic order, defect levels, and surface passivation, especially in materials with open-shell transition metals.
+2.3 Materials recommendations
+We now close the data-driven screening cycle by refining the search criteria to make final materials recommendations. To this end, we examined the 71 materials initially screened (Fig. 2) with the exception of the 11 compounds that we already synthesized and tested. We then narrowed down this list by restricting the candidates to closed-shell ions (d0 or d10). We also did not retain halides due to their relatively poor aqueous stability compared with, e.g. oxides, nitrides or phosphides.77 We thus obtained 4 binaries, 13 ternaries, and 5 quaternaries.
+By examining these materials, it can be first noted that all of the proposed binaries, namely, GaN, PbO, MnO, In2O3, were previously used for water photoelectrolysis or photocatalytic hydrogen reduction,78–82 which suggests that the refined search criteria are reliable to identify photocatalytic semiconductors. Focusing next on the recommended ternaries and quaternaries, which are listed in Table 2, we observed that several of the identified materials are oxycuprates with a tendency to form layered structures due to the low coordination of their cuprous (Cu+) ions. These cuprous oxide compounds include SrCu2O2 and BaCu2O2, and CuAlO2 and CuGaO2 (which adopt the 3R-type delafossite structure, Rm). The DFT+U band gaps of these compounds are in agreement with experimental data (and consistent with the optical measurements presented in Fig. 5), at variance with DFT values, which are significantly underestimated. Other oxides of interest similarly combine p-block elements and group I–II metals, namely, mayenite 6CaO2–7Al2O3 (Ca12Al14O33), Na3BiO4, and Sr2PbO4.
+Table 2 Materials recommendations from the list of screened compounds. This list includes compounds with d0 and d10 transition-metal cations and main-group metal oxides which are not expected to induce mid-gap states and magnetic structures. The predicted band gaps are compared to experimental data, where available62–72
+
+
+
+
+ 
+Space group
+DFT εg (eV)
+DFT+U εg (eV)
+Expt. εg (eV)
+
+
+
+
+ a Ref. 62. b Ref. 63. c Ref. 64. d Ref. 65 (from reflectance peak at 470 nm). e Ref. 66 (from absorbance edge at 710 nm). f Ref. 67. g Ref. 68. h Ref. 69. i Ref. 70. j Ref. 71. k Ref. 72. 
+
+
+
+
+Oxides
+
+
+SrCu2O2
+ I41/amd
+1.81
+3.11
+3.3a
+
+
+BaCu2O2
+ I41/amd
+1.39
+3.22
+ 
+
+
+CuAlO2
+ Rm
+1.78
+3.07
+2.99b
+
+
+CuGaO2
+ Rm
+0.75
+2.46
+1.97b
+
+
+Ca12Al14O33
+ C2
+2.01
+3.73
+4.17c
+
+
+Na3BiO4
+ P2/c
+1.04
+2.21
+2.64d
+
+
+Sr2PbO4
+ Pbam 
+1.43
+2.31
+1.75e
+
+
+ 
+
+
+Sulfides
+
+
+Cu3SbS3
+ P212121
+1.06
+1.89
+ 
+
+
+Cu2WS4
+ P2m
+1.66
+2.06
+1.74f
+
+
+Cu3NbS4
+ P3m
+1.81
+1.97
+2.5g
+
+
+CuYS2
+ Pnma 
+1.63
+2.18
+ 
+
+
+ 
+
+
+Oxychalcogenides
+
+
+LaOCuS
+ P4/nmm
+1.70
+2.65
+3.1h
+
+
+LaOCuSe
+ P4/nmm
+1.48
+2.44
+2.82h
+
+
+La4O4Se3
+ Amm2
+2.01
+2.04
+1.9i
+
+
+Na2TeO4
+ P21/c
+1.39
+3.30
+ 
+
+
+ 
+
+
+Oxynitrides
+
+
+CaTaO2N
+ Pmc21
+1.67
+2.46
+2.6j
+
+
+LaTiO2N
+ I212121
+1.36
+2.42
+2.1k
+
+
+ 
+
+
+Others
+
+
+Na5CuO2(OH)2
+ Pnma 
+1.49
+3.64
+ 
+
+
+
+
+Beyond these oxides, the refined search enables us to identify 4 cuprous sulfides, one of them containing d10 Sb3+ ions (Cu3SbS3) and the other three involving a series of d0 early transition-metal ions W6+, Nb5+, and Y3+ (Cu2WS4, Cu3NbS4, CuYS2). In terms of crystal structure, it is worth noting that the latter compounds exhibit a gradual transition from a layered coordination (Cu2WS4) to a partially interconnected (sulvanite) structure (Cu3NbS4) to a three-dimensional covalent geometry (CuYS2), which are expected to influence their electronic bands. Despite these notable structural changes, all of these materials exhibit a covalently connected cuprous backbone, which may be at the origins of their narrow band gaps via the formation of hybridized electronic states of Cu-3d and S-3p character near the valence band maximum.83 This trend is captured by DFT+U calculations within half of an eV, suggesting that electron localization on the sulfur site may play a critical role for sulfides, notwithstanding significant improvement over DFT predictions (which instead underestimate the band gap by more than 1 eV). In addition, the refined criteria enable us to identify oxychalgonide and oxynitride compounds that feature d0 La3+ ions within covalently bonded layers. Of particular note are the oxynitrides LaTiO2N and CaTaO2N, which both exhibit a narrow band gap and have been shown to split water under visible light,78,84,85 providing further confirmation of the efficacy of the screening approach.
+By carrying out a systematic literature search for the 18 recommended compounds, we found that 7 of them, namely, SrCu2O2,86 CuGaO2,87 Sr2PbO4,63 Cu3SbS3,88 Cu3NbS4,89 CaTaO2N,90 LaTiO2N,91 have been experimentally identified as water-splitting photocatalysts, while CuAlO292 and Cu2WS493 has been shown to promote photocatalytic hydrogen evolution. Moreover, Ca12Al14O3394 and BaCu2O295 are known photocatalysts for the reduction of methylene blue and the oxidation of carbon monoxide, respectively. To the extent of our literature search, none of the other 7 candidates (Na3BiO4, CuYS2, LaOCuS, LaOCuSe, La4O4Se3, Na2TeO4, and Na5CuO2(OH)2) have yet been tested experimentally for photocatalytic water splitting.
+3 Conclusions
+We presented a comprehensive assessment of the reliability of data-driven materials screening for the discovery of water-splitting photocatalysts by comparing DFT+U predictions (where the U parameters were calculated using a fully automated, nonempirical linear-response method) to sensitive experimental measurements for 11 compounds out of an initial list of 70150 candidates. These compounds were characterized by Mott–Schottky analysis and tested by gas chromatography, with 6 of them exhibiting steady-rate photocatalytic hydrogen evolution. Our computational and experimental results suggested that Ca2PbO4 could be catalytic for overall water splitting, and that both Ba2PbO4 and Na3Fe5O9 could be efficient photocathodes in promoting the photocatalytic reduction of hydrogen. To the extent of our literature search, these three materials have so far received limited attention as potential photocatalysts. Further electrocorrosion analysis revealed that Ca2PbO4 undergoes some initial electrochemical dissolution, which appears to preserve and possibly enhance its photocatalytic activity. We also found that Na3Fe5O9 is stable in aqueous solution, while Ba2PbO4 is likely to be unstable in humid atmosphere and aqueous environment.
+At the computational level, our results point out that the reliability of electronic-structure predictions is critically dependent on the accurate description of the magnetic structure for open-shell transition-metal compounds. Beyond the importance of magnetic order, an additional level of complexity for this class of materials is their tendency to host mid-gap defect states that affect optical absorption and carrier lifetimes. At the practical level, our study highlights the primary relevance of d0 and d10 cations combined with alkali and alkaline-earth elements to develop water-splitting photocatalysts, and demonstrates the predictive performance of the proposed DFT+U for this promising class of compounds.
+Additionally, using refined screening criteria based on our validation experiments, we recommended 18 materials, which include cuprous oxides, sulfides, and oxychalcogenides. Among these candidates, 7 compounds (Na3BiO4, CuYS2, LaOCuS, LaOCuSe, La4O4Se3, Na2TeO4, Na5CuO2(OH)2) appear to not have been extensively studied as water-splitting photocatalysts and may deserve further theoretical and experimental consideration.
+4 Methods
+4.1 Electronic-structure calculations
+Electronic-structure calculations were performed using Quantum ESPRESSO.96–98 We employed the generalized gradient approximation (GGA) for the exchange–correlation functional with the Perdew–Burke–Ernzerhof (PBE) parameterization,41 and ultrasoft pseudopotentials from the GBRV library.99 Kinetic energy cutoffs of 90 Ry for the wave functions and 720 Ry for the charge density and potentials were used. The Brillouin zone was sampled using a Monkhorst–Pack100k-point mesh with a spacing of 0.04 Å−1. For all structures, atomic positions and lattice parameters were fully optimized at the GGA level, before any Hubbard correction. We performed DFT+U calculations using the simplified formulation of Dudarev and coworkers.53 The Hubbard correction was applied to the d (or f) states of transition-metal and rare-earth elements, and to the p orbitals of oxygen and nitrogen. Within linear-response theory, the Hubbard parameters are the elements of an effective interaction matrix, evaluated as the difference between the bare and screened inverse susceptibilities:57 
+UI = (χ0−1 − χ−1)II,
+(1)where I is the atomic site index. The susceptibilities χ0 and χ were computed from the response of atomic occupations to shifts in the potential acting (through projectors) simultaneously on the relevant orbitals of the isolated atom: , where  are atomic occupation matrices, αJ is the strength of the perturbation on the Jth site, m and m′ are magnetic quantum numbers associated with a specific angular momentum, and σ is the spin index. The response χ is evaluated at self-consistency (of the linear-response Kohn–Sham calculation), while χ0 is computed before the self-consistent re-adjustment of the Hartree and exchange–correlation potentials. Using DFPT, the response to isolated perturbations can be evaluated as the sum of monochromatic (q-specific) contributions, computed independently on a grid of q points of the Brillouin zone, from calculations on the primitive unit cell:56 
+(2)In this equation, I ≡ (l, s) and J ≡ (l′,s′), l and l′ label the unit cells, s and s′ label atoms in the unit cells, Rl and Rl′ are Bravais lattice vectors, and  represents the lattice-periodic response of atomic occupations to monochromatic perturbations constructed by modulating the shift to the potential of all the periodic replica of a given atom by a wavevector q. The quantities  were obtained by solving DFPT equations, independently for every q. In periodic systems, this approach allows to eliminate the need for supercells for computing U.56 The calculations of the U parameters using DFPT were performed with a single q-point. We ran convergence tests with denser q-point meshes of 2 × 2 × 2 and 4 × 4 × 4, and found the band gap value only changed by ∼0.1 eV, an acceptable loss in accuracy for the time savings in a high-throughput workflow. To construct the projectors of the DFT+U scheme, we used atomic orbitals that were orthogonalized by applying the Löwdin method.101,102
+4.2 Materials synthesis
+All samples were synthesized by finely grinding and pelletizing a mixture of powders using an agate mortar and pestle in the molar ratios described below. The samples were added to an alumina boat and heated in air either in a Mullite tube furnace or a Lindberg/Blue M tube furnace, as indicated for each sample below. The samples were heated at 5 °C min−1 and held at 400 °C and 800 °C for two hours prior to heating to the final temperature indicated for each sample, unless other parameters are explicitly mentioned. The samples were then cooled to room temperature inside the furnace.
+ Synthesis of Ca  2  PbO  4  powder: CaCO3 powder (Alfa Aesar, 99.99%) and PbO powder (Alfa Aesar, 99.999%) were combined in a 2:1 molar ratio of CaCO3:PbO and heated to 800 °C for 26 h in a Lindberg/Blue M tube furnace. Note that the PbO used to produce Ca2PbO4 had an orange color, likely due to Pb2O3 impurities; Pb2O3 was necessary for this phase to form in high yield. Synthesis of Ba2PbO4powder: BaCO3 powder (Alfa Aesar, 99.95%) and PbO powder (Alfa Aesar, 99.999%) were combined in a 2:1 molar ratio and heated to 1100 °C for 24 h in a Lindberg/Blue M tube furnace. Synthesis of NaInO2powder: Na2CO3 powder (EMD Chemicals, 99.9%) and In2O3 powder (Alfa Aesar, 99.99%) were combined in a 1:1 molar ratio and heated to 900 °C for 3 h in a Lindberg/Blue M tube furnace. Synthesis of CaIn2O4powder: CaCO3 powder (Alfa Aesar, 99.99%) and In2O3 powder (Alfa Aesar, 99.99%) were combined in a 1:1 molar ratio and heated to 1050 °C for 12 h in a Lindberg/Blue M tube furnace. Synthesis of SrIn2O4powder: SrCO3 powder (Alfa Aesar, 99.99%) and In2O3 powder (Alfa Aesar, 99.99%) were combined in a 1:1 molar ratio and heated to 1050 °C for 12 h in a Lindberg/Blue M tube furnace. Synthesis of BaIn2O4powder: BaCO3 powder (Alfa Aesar, 99.95%) and In2O3 powder (Alfa Aesar, 99.99%) were combined in a 1:1 molar ratio and heated to 1050 °C for 12 h in a Lindberg/Blue M tube furnace. Synthesis of PbTiO3powder: PbO powder (Alfa Aesar, 99.999%) and TiO2 powder (Alfa Aesar, 99.9%) were combined in a 1:1 molar ratio and heated to 900 °C for 12 h in a Lindberg/Blue M tube furnace. Synthesis of ZnFe2O4powder: ZnO powder (Sigma Aldrich, ≥99.0%) and Fe2O3 powder (Aldrich, Catalyst Grade) were combined in a 1:1 molar ratio and heated to 900 °C for 72 h in a Lindberg/Blue M tube furnace. Synthesis of Na3Fe5O9powder: Na2CO3 powder (EMD Chemicals, 99.9%) and Fe2O3 powder (Aldrich, catalyst grade) were combined in a 3:5 molar ratio and heated to 1100 °C for 48 h in a Mullite tube furnace. Synthesis of BaCaFe4O8powder: Ba(NO3)2 powder (Sigma-Aldrich, ≥99%), CaCO3 powder (Alfa Aesar, 99.99%), and FeO (Alfa Aesar, 99.95%) were combined in a 1:1:4 molar ratio and heated to 1100 °C for 48 h in a Lindberg/Blue M tube furnace. The sample was cooled to room temperature, reground, pelletized, and heated to 1100 °C for an additional 48 h. Synthesis of Ba3MnNb2O9powder: BaCO3 powder (Alfa Aesar, 99.95%), MnO2 powder (Sigma-Aldrich, ≥99%), and Nb2O5 powder (Sigma-Aldrich, 99.99%) were combined in a 6:2:1 molar ratio and heated to 1300 °C for two days in a Mullite tube furnace.
+4.3 Materials characterization
+X-ray diffraction. Powder X-ray diffraction (XRD) was performed on a Malvern PANalytical Empyrean (3rd gen.) X-ray Diffractometer for 2θ in the range of 20° to 80°. The pellets of each material were ground to powders prior to analysis. Reference XRD patterns were generated from either the Powder Diffraction File (PDF) card number or crystallographic data: Ca2PbO4: PDF 04-008-2917; Ba2PbO4: PDF 04-007-5957; NaInO2: PDF 04-008-3834; CaIn2O4: The CaIn2O4 structure was constructed by substituting Ca into the SrIn2O4 structure (PDF 04-013-8519) and adjusting the volume of the cell to match the experimental data using cell parameters (space group Pnma) of a = 9.68 Å, b = 11.30 Å, and c = 3.22 Å, with α = β = γ = 90 °C and a cell volume of 352.2 Å3; SrIn2O4: PDF 04-013-8519; BaIn2O4: PDF 04-013-8196; PbTiO3: PDF 04-006-5418; ZnFe2O4: PDF 04-002-2708; Na3Fe5O9: PDF 04-011-2582; BaCaFe4O8: PDF 00-018-0147; Ba3MnNb2O9: PDF 00-046-0998.
+Diffuse reflectance. The samples were ground in a mortar with ethanol, and then drops of this suspension were placed on glass slides and left to dry. Consecutive drops were added until a uniform, thick, and opaque film of the powders was observed (based on lack of light transmission through the film). A PerkinElmer lambda 950 was employed to measure diffuse reflectance spectra using a 150 mm integrating sphere collecting data from 250–2500 nm, taking 1 nm steps, and using a 4 nm slit width in diffuse reflection mode. The reference spectrum for total reflectance was measured against a Spectralon disc. A plot of the Kubelka–Munk function, raised to the power of ½ or 2 for indirect and direct semiconductors, respectively, as a function of energy (in nm) was constructed to obtain the band gaps. These band gaps were calculated using the derivative of the Kubelka–Munk plot, finding the linear region at the onset of absorption from high to low energy, and extrapolating the region to the intercept along the energy axis.
+Electrode preparation. The pellets were crushed into powders that were subsequently ball-milled (using high-density zirconium oxide balls) to improve their dispersion in an ethanol suspension for 24 h. Ethanol-powder inks normalized to 0.002 mmol mL−1 were deposited on 5 × 8 × 1.1 mm thick TEC7 Fluorine-doped tin oxide (FTO) conductive substrates. Two batches of electrodes were made, one with 100 μL of ink deposited and the other with 120 μL of ink deposited. The slides were then annealed at 400 °C for two hours. To construct the working electrodes, the FTO slides were placed on regular glass slides and ohmic contacts were made using silver paint between the slide and a piece of copper tape. The electrodes were then insulated and secured using epoxy.
+Mott–Schottky measurements. Measurements were carried out on a Biologic SP-300 potentiostat using the ‘Staircase Potentio Electrochemical Impedance Spectroscopy’ feature in a pH-8 aqueous sodium phosphate buffer. These measurements were done over a range of potentials at constant frequency. The typical analyses were obtained at 20000 Hz, 16666 Hz, 13333 Hz, and 9999 Hz with a sinus amplitude frequency of 7 mV. The voltage sweep range was chosen to be within 0.5 to 1.5 V of the expected flatband potential based on previous open circuit values. Both 100 μL and 120 μL dropcast film electrodes were tested in open-circuit conditions and under illumination.
+Gas chromatography. The hydrogen reduction reaction analysis was carried out using a self-built setup that contains a reaction chamber and a gas chromatograph. The setup is depicted in Section S6, ESI.† In each test, 10 mg of the synthesized powder was dispersed in 5 mL of aqueous solution (i) with the addition of 0.1 M of oxalic acid and (ii) with a volume fraction of 15% of methanol, under Argon flow with a partial pressure of 1 atm. The sample was finally illuminated with a 200 W arc lamp from ORIEL with a wavelength of 200–800 nm for a period of time. An 800 nm cutoff filter was applied to avoid heating. The generated gas was then pumped to the gas chromatograph HP 5890 series II using thermal conductivity detector under argon carrier gas. The results for each tested photocatalyst are shown in Fig. S5, ESI.†
+Author contributions
+Y. X. and Q. T. C. contributed equally, as first authors. Y. X., Q. T. C., and N. E. K. derived the criteria of the computational screening and implemented the software infrastructure. J. S. M. initiated the synthesizability analysis, which was finalized by J. F. and consolidated into a database by N. E. K., Q. T. C., N. C. S., and X. Q.; Q. T. C. and N. C. S. performed the preliminary high-throughput calculations, which were finalized, validated, and curated by Y. X., N. E. K., M. M. K., B. P., and P. O.; I. T. and M. C. developed and implemented the ab initio Hubbard U method, and ported it into the computational workflow. J. S. M. and K. S. carried out the initial synthesis and XRD analysis. J. F. optimized the phase uniformity of the synthesized materials, and characterized their structural and optical properties. R. R. K. and Y. X. carried out the comparative experimental and computational analysis of the electrochemical stability of the compounds. H. W. developed the gas chromatography setup and tested the photoactivity of the compounds. C. K. B. and A. M. V. performed the preliminary photoelectrochemical experiments. C. K. B. carried out the Mott–Schottky experiments at the National Renewable Energy Laboratory, which were then finalized by M. J. T. and C. K. B. at Cornell University. N. E. K., Y. X., and Q. T. C. surveyed the high-throughput computational literature and previous studies on the recommended materials. S. A.-H. and N. E. K. researched and developed quantitative criteria for the toxicology analysis, and implemented them in the screening protocol. C. J. F., S. A.-H., J. L. Y., T. G. D., M. C., V. G., H. D. A., R. E. S., and I. D. supervised the work. Y. X., Q. T. C., J. F., C. K. B., H. W., N. E. K., I. T., A. M. V., S. A.-H., M. C., V. G., H. D. A., R. E. S., and I. D. drafted the manuscript with contributions from each author. The manuscript was thoroughly revised by all the authors at each stage of its preparation.
+Data availability
+The data generated in this study are reported in the main text and in the ESI,† with references provided for all data that were obtained from the literature. Data and metadata are available in the Materials Cloud Archive (archive.materialscloud.org) and in the HydroGEN DataHub under Project NSF DMREF-PSU-PEC (datahub.h2awsm.org).
+Conflicts of interest
+The authors declare no competing financial interest.
+Acknowledgements This work was primarily supported by the DMREF and INFEWS programs of the National Science Foundation under Grant No. DMREF-1729338. I. T. acknowledges support from the Swiss National Science Foundation, through Grant No. 200021-179138, and its National Centre of Competence in Research (NCCR) MARVEL. I. T. and M. C. also acknowledge partial support from the EU-H2020 Research and Innovation Programme under Grant Agreement No. 654360 within the framework of the NFFA Europe Transnational Access Activity. B. P. and C. G. acknowledge partial support from the NSF Platform for the Accelerated Realization, Analysis, and Discovery of Interface Materials (PARADIM) under Cooperative Agreement No. DMR-1539918. I. D. acknowledges partial support for computational resources from the Corning Faculty Fellowship in Materials Science and Engineering. This work was authored in part by the National Renewable Energy Laboratory (NREL), operated by Alliance for Sustainable Energy, LLC, for the U.S. Department of Energy (DOE) under Contract No. DE-AC36-08GO28308. The views expressed in the article do not necessarily represent the views of the DOE or the U.S. Government. The U.S. Government and the publisher, by accepting the article for publication, acknowledge that the U.S. Government retains a nonexclusive, paid-up, irrevocable, worldwide license to publish or reproduce the published form of this work, or allow others to do so, for U.S. Government purposes. The authors acknowledge research support from the HydroGEN Advanced Water Splitting Materials Consortium, established as part of the Energy Materials Network under the U.S. Department of Energy, Office of Energy Efficiency and Renewable Energy, Fuel Cell Technologies Office, under Contract No. DE-AC36-8GO28308 to the NREL. This work was supported in part by the U.S. Department of Energy, Office of Science, Office of Workforce Development for Teachers and Scientists (WDTS) under the Science Undergraduate Laboratory Internships Program (SULI), and by the National Science Foundation through the Research Experiences for Undergraduates (REU) and Research Experiences for Teachers (RET) in Nanoscale Physics and Materials at Pennsylvania State University under Grant No. DMR-1851987. Calculations were performed on the Roar supercomputer of the Institute for Computational and Data Sciences (ICDS) at the Pennsylvania State University. The authors are deeply thankful to J. H. Golbeck, T. E. Mallouk, and N. Marzari for fruitful discussions.
+Notes and references            P. Cazzola, M. Gorner, L. Munuera, R. Schuitmaker and E. Maroney, Global EV Outlook: Two Million and Counting, International Energy Agency,  2017 Search PubMed .            M. Melaina, B. Bush, J. Eichman, E. Wood, D. Stright, V. Krishnan, D. Keyser, T. Mai and J. McLaren, National Economic Value Assessment of Plug-In Electric Vehicles, National Renewable Energy Laboratory,  2016 Search PubMed . B. Sarlioglu and C. T. Morris, IEEE Transactions on Transportation Electrification, 2015, 1, 54–64 Search PubMed . S. Sripad and V. Viswanathan, ACS Energy Lett., 2018, 4, 149–155 CrossRef .            Energy Information Administration, Annual Energy Outlook, U.S. Department of Energy, 2020. Y. Tachibana, L. Vayssieres and J. R. Durrant, Nat. Photonics, 2012, 6, 511 CrossRef . J. H. Montoya, L. C. Seitz, P. Chakthranont, A. Vojvodic, T. F. Jaramillo and J. K. Nørskov, Nat. Mater., 2017, 16, 70–81 CrossRef PubMed .            P. L. Spath and M. K. Mann, Life Cycle Assessment of Hydrogen Production via Natural Gas Steam Reforming, National Renewable Energy Laboratory,  2000 Search PubMed . G. J. Offer, D. Howey, M. Contestabile, R. Clague and N. Brandon, Energy Policy, 2010, 38, 24–29 CrossRef .            K. Sukalac, Fertilizers, Climate Change and Enhancing Agricultural Productivity Sustainably, International Fertilizer Industry Association,  2009 Search PubMed . T. Takata and K. Domen, ACS Energy Lett., 2019, 4, 542–549 CrossRef CAS . B. A. Pinaud, J. D. Benck, L. C. Seitz, A. J. Forman, Z. Chen, T. G. Deutsch, B. D. James, K. N. Baum, G. N. Baum and S. Ardo,              et al.           , Energy Environ. Sci., 2013, 6, 1983–2002 RSC . J. H. Montoya and K. A. Persson, npj Comput. Mater., 2017, 3, 14 CrossRef . W. Setyawan and S. Curtarolo, Comput. Mater. Sci., 2010, 49, 299–312 CrossRef . C. E. Calderon, J. J. Plata, C. Toher, C. Oses, O. Levy, M. Fornari, A. Natan, M. J. Mehl, G. Hart, M. Buongiorno Nardelli and S. Curtarolo, Comput. Mater. Sci., 2015, 108, 233–238 CrossRef CAS . T. Sohier, D. Campi, N. Marzari and M. Gibertini, Phys. Rev. Mater., 2018, 2, 114010 CrossRef CAS . R. Armiento, B. Kozinsky, M. Fornari and G. Ceder, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 84, 014103 CrossRef . Y. Liu, J. Fu and J. Wu, J. Phys. Chem. Lett., 2013, 4, 3687–3691 CrossRef CAS . L. A. Burton, F. Ricci, W. Chen, G. M. Rignanese and G. Hautier, Chem. Mater., 2018, 30, 7521–7526 CrossRef CAS . A. Jain, G. Hautier, C. J. Moore, S. P. Ong, C. C. Fischer, T. Mueller, K. A. Persson and G. Ceder, Comput. Mater. Sci., 2011, 50, 2295–2310 CrossRef CAS . I. E. Castelli, D. D. Landis, K. S. Thygesen, S. Dahl, I. Chorkendorff, T. F. Jaramillo and K. W. Jacobsen, Energy Environ. Sci., 2012, 5, 9034–9043 RSC . I. E. Castelli, T. Olsen, S. Datta, D. D. Landis, S. Dahl, K. S. Thygesen and K. W. Jacobsen, Energy Environ. Sci., 2012, 5, 5814–5819 RSC . I. E. Castelli, F. Hüser, M. Pandey, H. Li, K. S. Thygesen, B. Seger, A. Jain, K. A. Persson, G. Ceder and K. W. Jacobsen, Adv. Energy Mater., 2015, 5, 1400915 CrossRef . Q. Yan, J. Yu, S. K. Suram, L. Zhou, A. Shinde, P. F. Newhouse, W. Chen, G. Li, K. A. Persson and J. M. Gregoire,              et al.           , Proc. Natl. Acad. Sci. U. S. A., 2017, 114, 3040–3043 CrossRef CAS . J. J. de Pablo, N. E. Jackson, M. A. Webb, L.-Q. Chen, J. E. Moore, D. Morgan, R. Jacobs, T. Pollock, D. G. Schlom and E. S. Toberer,              et al.           , npj Comput. Mater., 2019, 5, 41 CrossRef . A. Jain, S. P. Ong, G. Hautier, W. Chen, W. D. Richards, S. Dacek, S. Cholia, D. Gunter, D. Skinner and G. Ceder,              et al.           , APL Mater., 2013, 1, 011002 CrossRef . M. Hanna and A. Nozik, J. Appl. Phys., 2006, 100, 074510 CrossRef . P. Hohenberg and W. Kohn, Phys. Rev., 1964, 136, B864 CrossRef . W. Kohn and L. Sham, Phys. Rev., 1965, 140, A1133 CrossRef . J. P. Perdew, Int. J. Quantum Chem., 1985, 28, 497–523 CrossRef . N. Hörmann, O. Andreussi and N. Marzari, J. Chem. Phys., 2019, 150, 041730 CrossRef . M. A. Butler and D. S. Ginley, J. Electrochem. Soc., 1978, 125, 228 CrossRef CAS . Y. Wu, P. Lazic, G. Hautier, K. Persson and G. Ceder, Energy Environ. Sci., 2013, 6, 157–168 RSC .            The National Institute for Occupational Safety and Health, Immediately Dangerous To Life or Health Values, Centers for Disease Control and Prevention, 2014.            M. R. Bhat, Evaluated Nuclear Structure Data File, Nuclear Data for Science and Technology, International Atomic Energy Agency,  2017 Search PubMed . A. Yaroshevsky, Geochem. Int., 2006, 44, 48–55 CrossRef . S. Gražulis, D. Chateigner, R. T. Downs, A. Yokochi, M. Quirós, L. Lutterotti, E. Manakova, J. Butkus, P. Moeck and A. Le Bail, J. Appl. Crystallogr., 2009, 42, 726–729 CrossRef . E. Kim, K. Huang, A. Tomala, S. Matthews, E. Strubell, A. Saunders, A. McCallum and E. Olivetti, Sci. Data, 2017, 4, 1–9 Search PubMed . E. Kim, K. Huang, A. Saunders, A. McCallum, G. Ceder and E. Olivetti, Chem. Mater., 2017, 29, 9436–9444 CrossRef CAS . Z. Jensen, E. Kim, S. Kwon, T. Z. Gani, Y. Roman-Leshkov, M. Moliner, A. Corma and E. Olivetti, ACS Cent. Sci., 2019, 5, 892–899 CrossRef CAS . J. P. Perdew, K. Burke and M. Ernzerhof, Phys. Rev. Lett., 1996, 77, 3865 CrossRef CAS PubMed . A. J. Cohen, P. Mori-Sánchez and W. Yang, Science, 2008, 321, 792–794 CrossRef CAS . J. Perdew and A. Zunger, Phys. Rev. B: Condens. Matter Mater. Phys., 1981, 23, 5048 CrossRef CAS . P. Mori-Sánchez, A. Cohen and W. Yang, J. Chem. Phys., 2006, 125, 201102 CrossRef . L. Hedin, Phys. Rev., 1965, 139, A796–A823 CrossRef . G. Onida, L. Reining and A. Rubio, Rev. Mod. Phys., 2002, 74, 601 CrossRef CAS . J. Heyd, G. E. Scuseria and M. Ernzerhof, J. Chem. Phys., 2003, 118, 8207–8215 CrossRef CAS . J. H. Skone, M. Govoni and G. Galli, Phys. Rev. B: Condens. Matter Mater. Phys., 2014, 89, 195112 CrossRef . J. H. Skone, M. Govoni and G. Galli, Phys. Rev. B, 2016, 93, 235106 CrossRef . A. Ferretti, I. Dabo, M. Cococcioni and N. Marzari, Phys. Rev. B: Condens. Matter Mater. Phys., 2014, 89, 195134 CrossRef . V. I. Anisimov, J. Zaanen and O. K. Andersen, Phys. Rev. B: Condens. Matter Mater. Phys., 1991, 44, 943–954 CrossRef CAS PubMed . V. I. Anisimov, A. I. Poteryaev, M. A. Korotin, A. O. Anokhin and G. Kotliar, J. Phys.: Condens. Matter, 1997, 9, 7359–7367 CrossRef CAS . S. L. Dudarev, G. A. Botton, S. Y. Savrasov, C. J. Humphreys and A. P. Sutton, Phys. Rev. B: Condens. Matter Mater. Phys., 1998, 57, 1505–1509 CrossRef CAS . H. Kulik, M. Cococcioni, D. Scherlis and N. Marzari, Phys. Rev. Lett., 2006, 97, 103001 CrossRef . H. Kulik and N. Marzari, J. Chem. Phys., 2008, 129, 134314 CrossRef . I. Timrov, N. Marzari and M. Cococcioni, Phys. Rev. B, 2018, 98, 085127 CrossRef . M. Cococcioni and S. de Gironcoli, Phys. Rev. B: Condens. Matter Mater. Phys., 2005, 71, 035105 CrossRef . S. Wemple, Phys. Rev. B: Solid State, 1970, 2, 2679 CrossRef . Y. Yang, Z. Liu, W. K. Ng, L. Zhang, H. Zhang, X. Meng, Y. Bai, S. Xiao, T. Zhang, C. Hu, K. S. Wong and S. Yang, Adv. Funct. Mater., 2019, 29, 1806506 CrossRef . B. Boucher, R. Buhl and M. Perrin, Phys. Status Solidi B, 1970, 40, 171–182 CrossRef CAS . S. Soliman, A. Elfalaky, G. H. Fecher and C. Felser, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 83, 085205 CrossRef . H. Ohta, M. Orita, M. Hirano, I. Yagi, K. Ueda and H. Hosono, J. Appl. Phys., 2002, 91, 3074–3078 CrossRef CAS . J. Pellicer-Porres, A. Segura, A. Gilliland, A. Munoz, P. Rodrguez-Hernández, D. Kim, M. Lee and T. Kim, Appl. Phys. Lett., 2006, 88, 181904 CrossRef . M. Rashad, A. Mostafa and D. Rayan, J. Mater. Sci.: Mater. Electron., 2016, 27, 2614–2623 CrossRef CAS . R. P. Diez, E. Baran, A. Lavat and M. Grasselli, J. Phys. Chem. Solids, 1995, 56, 135–139 CrossRef . D. Zhao, J.-F. Han, J.-Y. Cui, X. Zong and C. Li, J. Mater. Chem. A, 2015, 3, 12051–12058 RSC . F. Ozel, E. Aslan, A. Sarilmaz and I. Hatay Patir, ACS Appl. Mater. Interfaces, 2016, 8, 25881–25887 CrossRef CAS PubMed . T. Takayama, I. Tsuji, N. Aono, M. Harada, T. Okuda, A. Iwase, H. Kato and A. Kudo, Chem. Lett., 2017, 46, 616–619 CrossRef CAS . S. J. Clarke, P. Adamson, S. J. Herkelrath, O. J. Rutt, D. R. Parker, M. J. Pitcher and C. F. Smura, Inorg. Chem., 2008, 47, 8473–8486 CrossRef CAS . S. Strobel, A. Choudhury, P. K. Dorhout, C. Lipp and T. Schleid, Inorg. Chem., 2008, 47, 4936–4944 CrossRef CAS PubMed . S. H. Porter, Z. Huang and P. M. Woodward, Cryst. Growth Des., 2014, 14, 117–125 CrossRef CAS . S. H. Porter, Z. Huang, S. Dou, S. Brown-Xu, A. Golam Sarwar, R. C. Myers and P. M. Woodward, Chem. Mater., 2015, 27, 2414–2420 CrossRef CAS . J. Yang, D. Wang, H. Han and C. Li, Acc. Chem. Res., 2013, 46, 1900–1909 CrossRef CAS . J. Wang and T. Nonami, J. Mater. Sci., 2004, 39, 6367–6370 CrossRef CAS . J. Sato, N. Saito, H. Nishiyama and Y. Inoue, J. Phys. Chem. B, 2001, 105, 6061–6063 CrossRef CAS . J. H. Kim, J. H. Kim, J.-W. Jang, J. Y. Kim, S. H. Choi, G. Magesh, J. Lee and J. S. Lee, Adv. Energy Mater., 2015, 5, 1401933 CrossRef . J. Su, Y. Wei and L. Vayssieres, J. Phys. Chem. Lett., 2017, 8, 5228–5238 CrossRef CAS . S. Chen, T. Takata and K. Domen, Nat. Rev. Mater., 2017, 2, 1–17 Search PubMed . F. E. Osterloh, Chem. Mater., 2008, 20, 35–54 CrossRef CAS . G. Dayal, D. Jeong, K. Jin, H.-Y. Ahn, P. P. Boix, F. F. Abdi, N. Mathews, K. T. Nam and L. H. Wong, Adv. Mater. Interfaces, 2016, 3, 1600176 CrossRef . M. G. Lee, K. Jin, K. C. Kwon, W. Sohn, H. Park, K. S. Choi, Y. K. Go, H. Seo, J. S. Hong, K. T. Nam and H. W. Jang, Adv. Sci., 2018, 5, 1800727 CrossRef . D. Wang, Z. Zou and J. Ye, Chem. Mater., 2005, 17, 3255–3261 CrossRef CAS . T. Takata and K. Domen, Dalton Trans., 2017, 46, 10529–10544 RSC . T. Minegishi, N. Nishimura, J. Kubota and K. Domen, Chem. Sci., 2013, 4, 1120–1124 RSC . J. Xu, C. Pan, T. Takata and K. Domen, Chem. Commun., 2015, 51, 7191–7194 RSC . G. Y. Wang, C. C. Wu, B. J. Song and Y. J. Wang, Adv. Mater. Res., 2011, 239, 2914–2918 Search PubMed . Q.-M. Zhao, Z.-Y. Zhao, Q.-L. Liu, G.-Y. Yao and X.-D. Dong, J. Phys. D: Appl. Phys., 2020, 53, 135102 CrossRef CAS . U. V. Ghorpade, M. P. Suryawanshi, S. W. Shin, X. Wang, E. Jo, H. Bae, K. Park, J.-S. Ha, S. S. Kolekar and J. H. Kim, J. Mater. Chem. A, 2018, 6, 19798–19809 RSC . S. Ikeda, N. Aono, A. Iwase, H. Kobayashi and A. Kudo, ChemSusChem, 2019, 12, 1977–1983 CrossRef CAS . J. Xu, C. Pan, T. Takata and K. Domen, Chem. Commun., 2015, 51, 7191–7194 RSC . M. Matsukawa, R. Ishikawa, T. Hisatomi, Y. Moriya, N. Shibata, J. Kubota, Y. Ikuhara and K. Domen, Nano Lett., 2014, 14, 1038–1041 CrossRef CAS . N. Koriche, A. Bouguelia, A. Aider and M. Trari, Int. J. Hydrogen Energy, 2005, 30, 693–699 CrossRef CAS . I. H. Patir, E. Aslan, G. Yanalak, M. Karaman, A. Sarilmaz, M. Can, M. Can and F. Ozel, Int. J. Hydrogen Energy, 2019, 44, 1441–1450 CrossRef CAS . R. Liu, Y. Yan and C. Ma, Front. Chem., 2018, 6, 69 CrossRef PubMed . I. Halasz, A. Brenner, M. Shelef and K. S. Ng, Catal. Lett., 1990, 6, 349–360 CrossRef CAS . P. Giannozzi, S. Baroni, N. Bonini, M. Calandra, R. Car, C. Cavazzoni, D. Ceresoli, G. L. Chiarotti, M. Cococcioni, I. Dabo, A. Dal Corso, S. de Gironcoli, S. Fabris, G. Fratesi, R. Gebauer, U. Gerstmann, C. Gougoussis, A. Kokalj, M. Lazzeri, L. Martin-Samos, N. Marzari, F. Mauri, R. Mazzarello, S. Paolini, A. Pasquarello, L. Paulatto, C. Sbraccia, S. Scandolo, G. Sclauzero, A. P. Seitsonen, A. Smogunov, P. Umari and R. M. Wentzcovitch, J. Phys.: Condens. Matter, 2009, 21, 395502 CrossRef PubMed . P. Giannozzi, O. Andreussi, T. Brumme, O. Bunau, M. Buongiorno Nardelli, M. Calandra, R. Car, C. Cavazzoni, D. Ceresoli, M. Cococcioni, N. Colonna, I. Carnimeo, A. Dal Corso, S. de Gironcoli, P. Delugas, R. A. DiStasio Jr., A. Ferretti, A. Floris, G. Fratesi, G. Fugallo, R. Gebauer, U. Gerstmann, F. Giustino, T. Gorni, J. Jia, M. Kawamura, H.-Y. Ko, A. Kokalj, E. Kucukbenli, M. Lazzeri, M. Marsili, N. Marzari, F. Mauri, N. L. Nguyen, H.-V. Nguyen, A. Otero-de-la Roza, L. Paulatto, S. Ponce, D. Rocca, R. Sabatini, B. Santra, M. Schlipf, A. P. Seitsonen, A. Smogunov, I. Timrov, T. Thonhauser, P. Umari, N. Vast, X. Wu and S. Baroni, J. Phys.: Condens. Matter, 2017, 29, 465901 CrossRef CAS PubMed . P. Giannozzi, O. Baseggio, P. Bonfà, D. Brunato, R. Car, I. Carnimeo, C. Cavazzoni, S. de Gironcoli, P. Delugas, F. Ferrari Ruffino, A. Ferretti, N. Marzari, I. Timrov, A. Urru and S. Baroni, J. Chem. Phys., 2020, 152, 154105 CrossRef CAS PubMed . K. F. Garrity, J. W. Bennett, K. M. Rabe and D. Vanderbilt, Comput. Mater. Sci., 2014, 81, 446–452 CrossRef CAS . H. J. Monkhorst and J. D. Pack, Phys. Rev. B: Solid State, 1976, 13, 5188–5192 CrossRef . P. O. Löwdin, J. Chem. Phys., 1950, 18, 365–375 CrossRef . I. Mayer, Int. J. Quantum Chem., 2002, 90, 63–65 CrossRef CAS . N. E. Kirchner-Hall, W. Zhao, Y. Xiong, I. Timrov and I. Dabo, Appl. Sci., 2021, 11(5), 2395 CrossRef . I. Timrov, N. Marzari and M. Cococcioni, Phys. Rev. B, 2021, 103, 045141 CrossRef CAS . 
+Footnotes† Electronic supplementary information (ESI) available: Criteria of the literature survey, computed band gaps and band edges, optical and electrochemical measurements, synthesis references, and stability analysis. See DOI: 10.1039/d0ee02984j‡ These authors contributed equally.This journal is © The Royal Society of Chemistry 2021
+Table Content:
+
+Broader context
+Hydrogen (H2) is an energy carrier of high density that offers a compelling alternative to (nonrenewable and polluting) petroleum-based fuels for transportation. To date, the industrial production of H2 has been heavily reliant on natural gas reforming, an energy-intensive process whose ultimate byproduct is carbon dioxide. It is thus imperative to develop H2 generation by carbon-neutral means such as photocatalytic water splitting. While first-principles methods have been widely applied to the high-throughput screening of photocatalytic materials for water photoelectrolysis, the efficacy of these computational screening techniques has seldom been comprehensively assessed at the experimental level. Here, we demonstrate an effective procedure to maximize the success rate of high-throughput materials discovery for H2 photogeneration by conducting a systematic cross-validation of our theoretical calculations and experimental measurements; most of the compounds that were synthesized and tested using this screening protocol exhibited photocatalytic hydrogen evolution, and several of them showed favorable band gap and band edges for overall water splitting.
+
+
+ 	Fig. 1  Survey of peer-reviewed publications in high-throughput computational materials science (source: Web of Science; period: 2000–2020), organized into technological areas with the number of articles containing experimental validation indicated in orange and not containing experimental validation indicated in blue. Although not exhaustive, this survey is representative of the proportion (on the order of 20%) of high-throughput computational predictions that are accompanied with validation experiments (the criteria of this survey are explained in Fig. S1, ESI†).	 
+
+ 	Fig. 2  Screening protocol with co-validation between experiment and theory to identify photocatalytic semiconductors for hydrogen generation (left panel). The criteria of selection are listed next to the corresponding tiers of the funnel (right panel). Starting with 70150 materials, 11 potential photocatalysts are selected by calculating their chemical stability, band gap, and band alignment, and by probing their phase purity. The Hubbard U parameters are determined without empirical fitting using linear-response theory. The enthalpy of formation, the band gap, the valence band edge, and the conduction band edge are denoted as ΔHf, εg, EVB, and ECB, respectively; LD50 stands for the median lethal dose of the constituent elements.	 
+
+ 	Fig. 3  Band edges of the 162 candidate photocatalysts (obtained by applying criteria of chemical stability, band gap, band alignment, elemental toxicity, crustal abundance, and compound synthesizability), calculated (a) with empirical Hubbard U parameters for transition-metal elements (DFT+UMP) and (b) with Hubbard U parameters determined from first principles for both transition-metal and light elements (DFT+U). In these diagrams, the rainbow region represents the visible optical range, where each colored, diagonal isoline corresponds to a constant band gap. Candidate photocatalytic materials occupy this domain.	 
+
+ 	Fig. 4  Comparison of the reference and measured X-ray diffraction patterns for the 11 compounds that were screened and synthesized. The peaks labeled with asterisks (*) in the Na3Fe5O9 spectrum are due to a secondary NaFe3O5 phase.	 
+
+ 	Fig. 5  Comparison of the band gaps computed with the DFT+U method to the experimental band gaps for the 11 single-phase compounds. The discrepancies observed for the 4 materials highlighted in grey can be ascribed to mid-gap defect levels and magnetic order due to open-shell d5 transition metals. Compounds that contain d5 cations are shown as white circles, while those that only contain d0 and d10 cations are shown as blue circles. Measurements of the band gaps are provided in Fig. S4, ESI,† with the exception of PbTiO3 whose band gap is from ref. 58.	 
+
+ 	Fig. 6  Experimentally determined band alignment (orange) with respect to the redox potentials of water (dashed lines), compared with the electronic energies estimated from the DFT+U band gap for compounds with closed-shell (d0 or d10) elements (cf.Fig. 5). Measurements of the band edges are shown in Fig. S5, ESI,† with the exception of PbTiO3 whose band edges are from ref. 59.	 
+
+
+
+1	Ca2PbO4	 Pbam 	N	⦻⦵	2.47	−0.79	1.68	2.94	0.09	−1.38	1.56
+2	Ba2PbO4	 I4/mmm	N	⦻⦻	2.05	−0.46	1.59	1.45	0.48	−0.25	1.21
+3	NaInO2	 Rm	N	⦿⦿	4.22	−1.76	2.46	3.85	0.48	−1.45	2.41
+4	CaIn2O4	 Pnma 	N	◎◎	4.10	−1.58	2.52	3.88	−0.54	−2.48	1.40
+5	SrIn2O4	 Pnma 	N	⦿◎	3.93	−1.51	2.42	3.67	0.33	−1.51	2.17
+6	BaIn2O4	 P21/c	N	⦻◎	3.09	−0.96	2.13	2.80	0.45	−0.96	1.84
+7	PbTiO3	 P4mm	N	⦿⦿	3.45	−0.46	3.00	3.3a	0.5b	−1.2b	2.2b
+8	ZnFe2O4	 Fdm	Y	⦿⦿	3.60	−0.38	3.22	2.26	0.01	—	—
+9	Na3Fe5O9	 C2/c	Y	⦿⦿	3.57	−0.93	2.64	0.77	0.23	—	—
+10	BaCaFe4O8	 P1m	Y	⦻⦻	3.52	−0.87	2.65	2.04	−0.44	—	—
+11	Ba3MnNb2O9	 Pm1	Y	◎◎	3.04	−0.70	2.34	0.72	−0.42	—	—
+
+
+Oxides
+SrCu2O2	 I41/amd	1.81	3.11	3.3a
+BaCu2O2	 I41/amd	1.39	3.22	 
+CuAlO2	 Rm	1.78	3.07	2.99b
+CuGaO2	 Rm	0.75	2.46	1.97b
+Ca12Al14O33	 C2	2.01	3.73	4.17c
+Na3BiO4	 P2/c	1.04	2.21	2.64d
+Sr2PbO4	 Pbam 	1.43	2.31	1.75e
+ 
+Sulfides
+Cu3SbS3	 P212121	1.06	1.89	 
+Cu2WS4	 P2m	1.66	2.06	1.74f
+Cu3NbS4	 P3m	1.81	1.97	2.5g
+CuYS2	 Pnma 	1.63	2.18	 
+ 
+Oxychalcogenides
+LaOCuS	 P4/nmm	1.70	2.65	3.1h
+LaOCuSe	 P4/nmm	1.48	2.44	2.82h
+La4O4Se3	 Amm2	2.01	2.04	1.9i
+Na2TeO4	 P21/c	1.39	3.30	 
+ 
+Oxynitrides
+CaTaO2N	 Pmc21	1.67	2.46	2.6j
+LaTiO2N	 I212121	1.36	2.42	2.1k
+ 
+Others
+Na5CuO2(OH)2	 Pnma 	1.49	3.64	 
+
+UI = (χ0−1 − χ−1)II,
+	(1)
+
+	(2)
+Footnotes
+† Electronic supplementary information (ESI) available: Criteria of the literature survey, computed band gaps and band edges, optical and electrochemical measurements, synthesis references, and stability analysis. See DOI: 10.1039/d0ee02984j
+‡ These authors contributed equally.
+
+This journal is © The Royal Society of Chemistry 2021

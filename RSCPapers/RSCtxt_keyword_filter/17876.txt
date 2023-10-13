@@ -1,0 +1,698 @@
+Charge-transfer electronic states in organic solar cells: a TDDFT study   - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/D1CP00723H View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D1CP00723H
+(Paper)
+Phys. Chem. Chem. Phys., 2021, 23, 16806-16815Charge-transfer electronic states in organic solar cells: a TDDFT study†
+
+        
+          
+            Andres F. 
+            Marmolejo-Valencia
+          
+        
+      , 
+      
+        
+          
+            Zaahel 
+            Mata-Pinzón
+          
+        
+       and 
+
+        
+          
+            Carlos 
+            Amador-Bedolla
+          
+        
+      *
+      Facultad de Química, Universidad Nacional Autónoma de México, Av. Universidad 3000, Coyoacán, CDMX 04510, Mexico. E-mail: carlos.amador@unam.mx
+Received 
+      16th February 2021
+    , Accepted 5th July 2021First published on 29th July 2021AbstractThe prediction of new organic photovoltaic materials in organic solar cells (OSCs) must include a precise description of charge-transfer states because they are involved in electron-transfer processes such as charge separation and charge recombination which govern the device efficiency. Also, as the experimental performance of an optoelectronic device is measured for nonequilibrium nanostructures, computational approaches need models that can incorporate morphology effects. Usually, this aspect is treated by molecular dynamics simulation (MDS) methodologies; however, methodologies and formalisms to calculate the electron-transfer processes are still controversial and sometimes do not connect their information with the phase morphologies. In this work we propose a simple and fast characterization of electron-transfer processes to find the rate constants by analysing the distribution of vertical excitation energies of both local excitation (LE) and charge-transfer (CT) states using TD-DFT calculations in the donor–acceptor pair structures which were extracted from MDS. This proposal assumes that conformational changes are prevented and equilibria are not achieved while the electron-transfer events take effect, and thus the only pathway that connects the LE and CT states is their surface crossing point where an ideal distribution might exist. Different density functionals and dialectric models were tested. The results indicate a close relationship between the proposal and experimental data for electron-transfer events, suggesting the application of this method in the rational design of new photovoltaic materials.
+1 Introduction
+Characterization of electronic charge-transfer (CT) states in organic solar cells (OSCs) has received special attention in the last few years because they contain relevant information on how it is possible that an organic photovoltaic (OPV) material can generate or recombine charge through non-radiative mechanisms.1–5 An OPV material is an organic blend of two phases: one is an electron donor (eD) material and the other is an electron acceptor (eA) material which present specific frontier orbital energy differences to promote charge separation between these materials when one of them absorbs photons of certain energy. Now, it is well known that the energy difference must be HOMOeD > HOMOeA and LUMOeD > LUMOeA to assist hole and electron hopping at the eD–eA interphase, but the ideal values of HOMOeD–HOMOeA and LUMOeD–LUMOeA are still not well known and are currently being studied and discussed. Originally, a semiempirical value in the range of 0.2–0.3 eV for LUMOeD–LUMOeA was proposed for polymer (eD) and fullerene (eA) materials by studying several functioning OPV phases showing good efficiency.6,7 However, theoretical predictions of efficiencies in OPVs proposed a LUMOeD–LUMOeA difference smaller than 0.2 eV in order to obtain optimal energy conversions around 15%.8 This prediction has been challenged on the one hand by the current evidence that non-fullerene acceptor materials can have LUMOeD–LUMOeA values less than 0.3 eV without efficiency losses related to the modifications of the charge-transfer states, and on the other hand by evidence that small values of LUMOeD–LUMOeA are not present in other non-fullerene acceptors which nevertheless have reached values of more than 16% of power conversion efficiency (PCE).9–11
+Non-fullerene acceptors in OSCs showing better PCE values have also shown more intense absorbance than fullerene acceptors.12 This allows the possibility of reaching the charge-transfer states through the resulting excitation of the acceptor material via hole transfer pathways when small HOMOeD–HOMOeA differences are present.9,13 Additionally, as non-fullerene acceptors achieve better OSC crystallinity, small HOMO differences are better maintained, and thus the charge-transfer states are preserved.
+It is worth mentioning that at least three states are present in the electron transfer (ET) process: the ground state (GS), the local excited (LE) state (present in the material with the lowest gap, either the donor or the acceptor), and the excited CT state. The LE and CT states are two different diabatic surfaces electronically coupled by a crossing point 2Hij, allowing LE–CT hybridization,14–18 that can modify the charge separation process (CS) depending on the LE–CT states and the charge recombination (CR) process which involves the CT–GS states (Fig. 1). However, these processes are essentially more complicated to describe due to multiple CT states (hot and cold CT states).
+ Fig. 1  Illustration of the ground state (GS), donor or acceptor local excitation (LE), and the first charge-transfer state (CT1) involved in the CS and CR processes. Black points represent the ground state non-equilibrium conformations for the donor–acceptor pairs in the OPV phases. Red and blue points specify the vertical excitation energies for each such pair. The green square shows the LE–CT hybridization region while the black squares constitute the cross point areas. Blue and red Gaussian distributions represent the energy at the maximum of LE or CT absorption (Eabs,maxLE and Eabs,maxCT),19 respectively. 
+Due to LE–CT hybridization, new design rules for donor–acceptor OPVs were postulated to develop high-efficiency OSCs. Firstly, the optical gap of either the donor or the acceptor material should be minimized while retaining an optimal photoluminescence quantum yield; and secondly, the energy difference between either LUMOeD–LUMOeA or HOMOeD–HOMOeA should be minimized to promote better interaction between the LE and CT states.16,19 This explains the low conversion efficiency of polymer:fullerene OPVs as poly(3-hexylthiophene) and phenyl-C61-butyric acid methyl ester (P3HT/PC61BM) blends,20 where an electronic energy transfer happens from P3HT to PCBM (D* + A → D + A*) before the hole transfer from the excited PCBM back to P3HT in an ultrafast charge-transfer process (D + A* → D+ + A−) occurs.13 As the fullerene is the low-gap material in the blend (at 1.7–1.8 eV)21 with a weak light absorption (insufficient photoluminescence yield) and the difference between HOMOeD–HOMOeA is not minimized, the hybridized LE–CT state can decay easily by nonradiative processes increasing the voltage losses in this system. On the other hand, the fullerene PC71BM acceptor has more intense light absorption which promotes better conversion energy efficiencies when it is blended with this donor polymer.22,23
+The prediction of new donor or acceptor materials through rational design is a challenge that should include the accurate representation of charge-transfer state hybridization and packing morphology description. Molecular dynamics simulation (MDS) is used to build nano or microstructures depending on which morphological property is analyzed in the studies, the packing morphology or crystalline domains.24–29 The simulations are focused on the bulk heterojunction (BHJ) architectures30,31 that have shown the best open-circuit voltage (Voc) to short-circuit density current (Jsc) relation experimentally. The calculations are frequently performed with atomistic or coarse-grain models, ensuring the parameters in the force field are present, refitted, and verified. In many instances, the atomic charges, non-bonded atom models, and dihedral angles undergo refitting processes to guarantee a good description of π-stacking of aromatic rings and suitable electronic energy levels, in studies where they are needed. The MDS emulates the spin-coating solvent evaporation process in the BHJ phase formation by applying multiple simulation steps, where the influence of evaporation time, different side chains, or other variables are captured.
+The CT states in the donor–acceptor (eD–eA) interphase can be described using time-dependent density functional theory (TDDFT); however, the selection of the density functional is the most important factor to consider. The Coulomb interaction is not well described by the standard semilocal and hybrid functionals in the asymptotic range, so the Kohn–Sham orbitals do not correspond to the electron affinity (EA) and ionization potential (IP), resulting in the underestimation of the CT energies. This issue is overcome by the use of range-separated hybrid functionals (RSH) that correct the long-range Coulomb repulsion through an error function that splits the interaction into long- and short-range terms. Additionally, OPV is a solid phase characterized by electronic polarization and dielectric dependence affecting the electronic levels too, but the SRSH functionals can also introduce condensed phase corrections.32–35
+Very recently, one methodology36 combined range separation with Coulomb screening suggesting two optimization steps: firstly, in a gas phase condition, an optimal separation of long and short-range interactions is calculated by minimizing the differences between each frontier orbital with its respective coupled EA or IP. Secondly, intrinsic polarization is optimized concerning the dielectric constant, which decreases the fundamental and orbital gaps improving the CT state energies relative to the experimental data. The resulting density functional is called SRSH + PCM,36 and will be used in the present study.
+As mentioned earlier, the CT states are related to events of charge separation and charge recombination processes, where their rates are usually calculated using the Marcus theory formula,37 (1)
+Here, λ is the reorganization energy required to promote ET between the initial and final states. The potential energy curves of these states are two intersecting parabolic surfaces (linear response approximation, LRA), ΔG0 is the free energy difference between the minima of these parabolas, kB is the Boltzmann constant, and T is the temperature.
+In this work, we study the description of the LE–CT hybridized states from the previously calculated BHJ phases built using classical MDS.38 Also, we take advantage of the disorder of ΔELE–CT and ΔEGS–CT to propose a simple way to determine the ET rates that come from MDS inspired by Marcus,37 Hopfield,39 Warshel40 and Matyushov formalisms.41,42 Finally, results are compared with less expensive functionals as B3LYP that can be implemented in virtual screening to find new eD or eA materials in OPVs.
+2 Computational details
+2.1 Molecular systems to study
+Previously, a nanoscale BHJ architecture for P3HT/PC61BM was built computationally through virtual solvent evaporation steps of chlorobenzene, to obtain a 1:1 w/w final phase (40 molecules of PC61BM and 53 molecules of 4-3HT).38 The polymer P3HT was treated as an oligomer of four units of thiophene, 4-3HT (Fig. S1, ESI†). The force field parameters in the polymer were assigned by the general AMBER force field (GAFF),43,44 while dihedral parameters present in the rotatable bonds were fitted to reproduce the theoretical potential calculated using the density functional ω-B97XD and the basis set cc-pVTZ. On the other hand, the atom charges present in all molecules were calculated using the Hirshfeld iterative45 scheme. From the simulated BHJ phase, 65 different eD–eA pairs (found with distance ≤4.0 Å) are taken in the present work to estimate donor–acceptor electronic energy interactions.
+Additionally, to validate the analysis of kinetic constants we selected a donor material with a lower LE excitation as compared to P3HT (1.83 eV versus 2.2 eV).46 This donor has a larger and more complex structure, so the faster B3LYP functional was employed.
+This donor material, o-BDTdFBT (benzo[1,2-b:4,5-b]dithiophene-5,6-difluorobenzo[c][1,2,5] thiadiazole oligomer), was blended with the PC61BM acceptor in the same 1:1 w/w final proportion (Fig. S1, ESI†), finding 100 different eD–eA pairs. The MDS and the building process for this system are also reported in the previous work.38
+2.2 Performing the calculations of the SRSH + PCM functional
+The purpose of this approximation is to adjust the HOMO and LUMO values, calculated for the solid phase, to correspond to the −IP and −EA values, respectively, before the calculation of TDDFT excitations that will be used to predict the kinetic charge-transfer parameters. To do so, SRSH + PCM parameters will be optimized. These are the range-separation parameter in vacuum, ω, and the attenuating parameters in the short- and long-range Coulomb interaction, (α + β)/r ≈ 1/(εintr), relative to a dielectric constant provided by an implicit solvation model (εext). In this work, we are using the polarizable continuum model (PCM) to represent εext since good efficiency has been proved for the SRSH + PCM parametrizations.36
+Any system can be treated under both the gas phase and solid-state conditions with SRSH functionals by defining a shared-parameter ω47 that provides the separation of long-range and short-range in the partition of the Coulomb interaction, (2)
+The first term on the right-hand side of the equation is the long-range repulsion managed by Hartree–Fock exchange (α + β)/r and the second term is the short-range repulsion dominated by a semilocal DFT functional exchange. Parameters α and β are used to modulate the dielectric constant from its value for the gas phase (α + β = 1) to its value for the solid phase given by (3)
+In a new and more generalized potential (1/(εintr)),47 the amount of Hartree–Fock exchange (1/εint) can be optimized against a controlled environment with a dielectric value εext which is set to the experimental solid-state condition if this is known. As a consequence, εint is the adaptive non-empirical dielectric response (long-range term) that polarizes the electron density concerning the environment εext which only polarizes the electron density surface.
+The SRSH + PCM functional to be applied in the 4-3HT/PC61BM, followed a building process wherein the exchange–correlation PBE functional was selected in conjunction with the basis set 6-31G(d,p). The parameter α = 0.2 was fixed for both vacuum and condensed phase calculations, while the external dielectric parameter εext = 3 was selected as it represents experimental values for organic semiconductor under the solid-state conditions.48 The formalism to calculate the exchange–correlation energy is given by, (4)
+HF_X, DFT_X, DFT_C subscripts mean the Hartree–Fock exchange, density functional exchange, and density functional correlation energies, SR and LR superscripts refer to the short-range and long-range partition.
+Four random eD–eA pairs of 4-3HT/PC61BM were selected to perform the optimization of the frontier orbitals concerning the −IP and −EA energies, which determined the values of ω and εint. All calculations were carried out using the Q-Chem 5.0 package.49
+First, the system was treated in the gas phase (α + β = 1) to find the ideal range separation parameter ω,36 by minimizing the root mean square deviation (RMSD) following the expression, (5) (6)εHOMO is the molecular orbital energy of the highest occupied molecular orbital (HOMO) that should correspond to the negative value of IP (Eneutro − Ecation) and εLUMO is the molecular orbital energy of the lowest unoccupied molecular orbital (LUMO) that is compared with the negative value of EA (Eanion − Eneutro).
+In the second step, the optimum value of ω was fixed, the external condensed phase effect was introduced with PCM (εext = 3), while the parameter εint was optimized with the condition 0.2 + β = 1/εint and minimizing RMSD(1/εint) this time. Finally, the optimized functional was called O-SRSH + PCM.
+As mentioned above, this approximation will be used in the TDDFT calculations of kinetic parameters. However, the calculations using this functional are costly and thus we want to explore results from a faster methodology. Our first approach is to turn off the PCM environment but retain the ideal ω and εint parameters (see results called O-SRSH below). Additionally, calculations over B3LYP and B3LYP + PCM are carried out for studying the relevant improvements in the CT energy values and kinetic constant after the inclusion of an optimal dielectric environment found for B3LYP + PCM by optimizing RMSD(1/εext) for |IP + HOMO| and |EA + LUMO| differences, similar to the ones described. Results will show that these approximations can be used for the faster screening of potential candidates for donor molecules.
+2.3 Calculation of LE and CT excited states
+For O-SRSH + PCM, O-SRSH, B3LYP, and B3LYP + PCM schemes, time-dependent density functional theory (TDDFT) calculations were carried out over all the eD–eA pairs in the BHJ phase, selecting the first 15 excited state roots based on the Tamm–Dancoff approximation (TDA)50 and only considering single excitations with singlet multiplicity.
+The excited states were characterized as LE or CT according to the charges in the donor  and acceptor  fragments for i-state = j-state. The electronic coupling values |Hij| between the GS, LE and CT states were calculated using the fragment-charge difference (FCD) scheme51 based on a two-state approximation, (7) ΔQij = QDij − QAij(8) (9)
+The FCD scheme and the atom charges in both fragments are calculated by Mulliken population analysis implemented for excited densities in the Q-Chem 5.0 package. To obtain a good description of |Hij| in the two-state model, the sum of contributions (δ) of the diabatic states to the ET process must be greater than 0.85 and around 1,52 (10)where ΔQii = QDii − QAii is the charge difference between the charged fragments present in the state i or j. Table S1 (ESI†) collects δ values for all functionals and systems calculated in this work.
+To ensure that the distribution of δ was close to 1, we found that the excited states within |QDii| < 0.35 should be considered as the LE state whereas states within |QDii| > 0.85 (or |QDii| > 0.5 in a few cases when the first condition was not found) should be taken as the CT states. Subsequently, the LE excitation with the maximal oscillator strength and located in the lower gap material was selected. At the same time, two CT excitations were chosen: CT1 had the lowest energy value, while CT2 had the highest electron coupling with the representative LE state.
+2.4 Approaching the ET rates from energetic disorder and ideal phase
+Neighboring molecules that surround an excited molecule prevent relaxation and the conformational changes in these organic aggregates where the experimental optoelectronic performance is obtained with nonequilibrium nanostructures.53 A fast electron transfer process with reduced conformational space can lead to LRA failures54 and impedes the description of these mechanisms by means of Marcus theory.
+The energy at the maximum of CT absorption is related to Eabs,maxCT = hvmax = E0CT + λCT and, correspondingly, for the case of LE, Eabs,maxLE = E0LE + λLE (Fig. 1).19 The difference between Eabs,maxCT − Eabs,maxLE can be expressed as ΔEij = Ej − Ei and a simpler characterization is proposed in this work where there is a probability Pij(E) to find the energy difference between the initial state i (LE) and the final state j (CT) having the same coordinates. Pij(E) is distributed around 〈ΔEij〉 and has dispersion σij where λCT and λLE should be implicit because these can be defined from the fluctuations of the energy gap following the relation σ2 = 2λKBT.19,55,56 (11)
+Due to structural impediments, the only relation that connects these two states is their surface crossing, 〈ΔE0〉 = Ej − Ei ≈ 0, through tunneling as described by Matyushov.41,42 An ideal morphology should exist where 〈ΔEij〉 difference is distributed on the interstate crossing 〈ΔE0〉, with probability P0(E), allowing stronger LE–CT hybridization and maximal ET rates. Supposing the ideal phase has the same dispersion capability σ0 = σij, we can evaluate the convoluted function F(E) = {P0Pij}(E) for E = 0 to know the overlap between the calculated and ideal phases: (12) (13) (14)Fij(0) (eqn (13) and (14)) represents the i-state portion in the organic phase that can easily reach the state j with respect to their crossing point. As a consequence, the kinetic constant can be described in an analogous form to the Marcus formula,37 (15)
+The kinetic constant for backward direction can be expressed similarly to the Hopfield formalism39 for a thermally activated tunneling, (16)
+The electron-transfer directions represented by the eqn (15) and (16) are restricted to the condition Ei > Ej.
+Finally, in eqn (15) and (16) we are giving more relevance to the distribution of states than the structural changes to accomplish both reactions, which means the excitations prefer to reach a better surrounding molecule located in an ideal region to accomplish the reaction instead of generating energy losses. Also, giving less importance to structural changes we are sampling regions where the LE and CT states are degenerate, opening the possibility for the LE–CT hybridization to be described. Additionally, the activation energy in this procedure can be analyzed because the separation between Eabs,maxLE and Eabs,maxCT increases the energetic barrier while a large disorder makes it decrease. Fig. 2 shows this behavior, where the ET rates are still fast for separations of more than 1 eV and large disorders.
+ Fig. 2  The behavior of the electron-transfer rate predicted by eqn (15) and (16). Notice that the disorder affects the behavior for −ΔEij > 1 eV. 
+3 Discussion
+3.1 O-SRSH + PCM functional
+
+Table 1 reports the tuning results obtained for ω and εint using four eD–eA pairs obtained from the 4-3HT/PC61BM aggregate. Remarkably, ω average of 0.128 bohr−1 is comparable with the value of 0.135 bohr−1 calculated in the work of Zheng, et al.36 who introduced the optimization procedure. In the εint optimization, we decided to take the ω average for all four pairs, surprisingly leading to the same εint for all optimizations and close to εext = 3. Fig. 3(a and b) show the behavior of the first eD–eA pair with respect to HOMO, LUMO, EA and IP values when ω and εint are varied. Decrease of the |HOMO–LUMO| and |IP–EA| gaps is observed in the optimal solid-state condition with respect to the gas phase. In addition, HOMO and LUMO values show linear dependence to 1/εint, as predicted by Zheng et al.
+Table 1 Optimized ω and εint for the functional O-SRSH + PCM and final parameters to perform the solid-state calculations
+
+
+
+
+eD–eA pair
+4-3HT/PC61BM
+
+
+Optimization 1
+Optimization 2
+
+
+
+ω/bohr−1
+
+ε
+int
+
+
+
+
+
+
+
+
+a 
+ε
+int was calculated with the average of ω for each system. RMSD values in eV are included in parentheses.
+
+
+
+
+
+1
+0.135(0.05)
+2.5(0.03)
+
+
+2
+0.127(0.02)
+2.5(0.02)
+
+
+3
+0.127(0.02)
+2.5(0.02)
+
+
+4
+0.125(0.03)
+2.5(0.01)
+
+
+Average
+0.128
+2.5
+
+
+
+
+
+
+Conditions
+Gas phase
+Solid-state
+
+
+
+
+
+α
+
+0.2
+0.2
+
+
+
+β
+
+0.8
+0.2
+
+
+
+ω/bohr−1
+0.128
+0.128
+
+
+
+ε
+ext
+
+
+
+3.0
+
+
+
+
+ Fig. 3  (a) The optimization process of ω value in the screened functional SRSH + PCM applied to the first 4-3HT/PC61BM pair in Table 1 showing dependence of HOMO, LUMO, −IP and −EA energies. (b) Optimization of εint and linear dependence of canonical and frontier orbitals with respect to 1/εint variation for the SRSH + PCM functional. (c) Ideal environment εext optimization for the B3LYP + PCM scheme. 
+After varying εext in the B3LYP + PCM scheme (Fig. 3(c)), the results show that EA and IP have linear dependence to 1/εext and HOMO and LUMO are constant for any 1/εext value, contrary to εint optimization for O-SRSH + PCM. This effect was probably observed because the εext is sampled in B3LYP + PCM, while in O-SRSH + PCM is fixed. Finally, |HOMO − LUMO| and |IP − EA| gaps for B3LYP + PCM are lower in the ideal environment condition (εext = 9) than the O-SRSH + PCM method, but it is expected for higher dielectric values.
+3.2 Measuring hybridization between the LE and CT states in OPV aggregates from classical MDS
+Having established the O-SRSH + PCM tuning process and the effective B3LYP + PCM condition, we analyze the excited states for all eD–eA pairs with contacts ≤4.0 Å. The transition energies and oscillator strengths are collated in Table 2 for each excited state CT1, CT2, and LE. Both the CT states in 4-3HT/PC61BM were in accordance with the experimental energy range of 1.4–1.7 eV where B3LYP had the lowest CT energy values and O-SRSH + PCM the highest. As the material with the lowest LE state is the fullerene acceptor in 4-3HT/PC61BM (Fig. S2 and S3, ESI†), we obtained very weak oscillator strengths for the most probably LE as shown in the experimental absorption spectrum of PC61BM.21 The LE oscillator strengths are comparable with results of both the charge-transfer states. Although these oscillator strengths are weak, the total absorption intensity in a given range is also governed by the density of states of the excited states making LE transitions still possible.63–66 Also, the Dexter electron transfer mechanism D* + A → D + A*, in which an exciton is transferred from a donor molecule to an acceptor molecule can occur, allowing the formation of the LE states in the acceptor material before the charge separation processes. This is the most probable event happening when the orbital overlap between two molecules is enough or the distances between them are less than 10 Å.13 Please note, we did not observe the local excitation for the oligomer 4-3HT in these first 15 excitations.
+Table 2 Oscillator strength f and excitation energies calculated for the excited state absorptions involved in the ET processes
+
+
+
+
+Functional
+
+f
+CT1
+
+
+f
+CT2
+
+
+f
+LE
+
+
+E
+LE/eV
+
+E
+CT1/eV
+
+E
+CT2/eV
+
+
+
+
+As ECT = E0CT + λCT is considered, experimental CT energy values reported include the reorganization energy to the adiabatic CT energy.
+
+
+
+
+4-3HT/PC61BM
+
+
+O-SRSH + PCM
+0.003
+0.003
+0.005
+1.87 ± 0.33
+1.67 ± 0.27
+1.77 ± 0.25
+
+
+O-SRSH
+0.002
+0.002
+0.003
+1.92 ± 0.31
+1.51 ± 0.26
+1.70 ± 0.29
+
+
+B3LYP + PCM
+0.002
+0.002
+0.005
+1.83 ± 0.29
+1.52 ± 0.26
+1.67 ± 0.26
+
+
+B3LYP
+0.002
+0.002
+0.003
+1.82 ± 0.27
+1.30 ± 0.24
+1.47 ± 0.26
+
+
+Exp.3,21,57
+
+
+1.8 (PC61BM)
+1.4–1.7
+
+
+
+
+
+
+
+
+
+o-BDTdFBT/PC61BM
+
+
+
+
+
+
+B3LYP
+0.003
+0.003
+0.330
+1.77 ± 0.10
+1.44 ± 0.17
+1.54 ± 0.19
+
+
+Exp.46
+
+
+1.83 (o-BDTdFBT)
+
+
+
+
+
+
+
+
+
+
+
+
+By contrast, while the o-BDTdFBT/PC61BM system shows a larger oscillator strength for the selected LE transition, the material with the lowest LE transition is located in o-BDTdFBT (optical gap at 1.83 eV)46 eclipsing the acceptor excitation in agreement with the experimental data. The electron–hole pair localization is shown in Fig. S4 (ESI†) using natural transition orbital (NTO)68 calculations. Although the calculations on the o-BDTdFBT/PC61BM system were performed with the B3LYP functional, it can be distinguished from the 4-3HT/PC61BM system with the same functional not only for their oscillator strength but excitation energies and ET rates, which are discussed later.
+Distribution of the LE states did not present remarkable energy shifts among the implemented schemes in 4-3HT/PC61BM; furthermore, the distribution shape is well correlated with each other (Table 2 and Fig. S5, ESI†), while the distribution of the CT states (Fig. S6 and S7, ESI†) clearly shows energy shifts that can be associated with εext exclusion in O-SRSH and B3LYP or due to different dielectric values between B3LYP + PCM and O-SRSH + PCM.
+The energy difference ΔELE–CT1 is larger than ΔELE–CT2 (Table 3) in all cases as a consequence of the selected CT2 states which are energetically closer to the LE states and higher than the CT1 states. Due to the non-significant difference between electron coupling |HLE–CT1| and |HLE–CT2|, the LE–CT hybridization can have a greater dependence on these energetic values where small differences might contribute to the LE–CT hybridization thus extending the lifetimes of the CT states. In Fig. 4 it can be observed that ΔELE–CT1 distributions can be treated as a normal distribution although LE presented bimodal distribution (Fig. S5, ESI†) in the 4-3HT/PC61BM system; this behavior of ΔELE–CT1 can be explained by the CT state distribution shapes. Similar consequences were observed in the ΔELE–CT2 differences.
+Table 3 Electron coupling in the ET events and energy difference of the LE and CT states
+
+
+
+
+Functional
+|HLE–CT1|/meV
+|HLE–CT2|/meV
+ΔELE–CT1/eV
+ΔELE–CT2/eV
+|HCT1–GS|/meV
+|HCT2–GS|/meV
+
+
+
+
+4-3HT/PC61BM
+
+
+O-SRSH + PCM
+8.0
+10.0
+−0.20 ± 0.35
+−0.11 ± 0.35
+28.4
+29.6
+
+
+O-SRSH
+8.2
+12.2
+−0.41 ± 0.38
+−0.23 ± 0.36
+22.8
+20.2
+
+
+B3LYP + PCM
+6.5
+13.1
+−0.31 ± 0.35
+−0.13 ± 0.36
+20.2
+23.1
+
+
+B3LYP
+8.9
+12.3
+−0.52 ± 0.30
+−0.35 ± 0.29
+22.0
+21.0
+
+
+
+o-BDTdFBT/PC61BM
+
+
+B3LYP
+6.8
+9.9
+−0.33 ± 0.18
+−0.24 ± 0.20
+19.0
+20.7
+
+
+
+
+ Fig. 4  The ideal ΔE0 distribution (dashed green lines) where the ET rate is maximal, the real ΔEij distribution (red and blue bars) in the 4-3HT/PC61BM system with the functional O-SRSH + PCM. The Anderson–Darling test67 shows that ΔELE–CT1 and ΔECT1–GS have normal distribution. 
+To discuss and explain the hybridization in the CT–LE states, the ET rates were calculated (Table 4) using eqn (15) for direct ET and eqn (16) for the backward ET reaction. In the 4-3HT/PC61BM system, the ET rates calculated in the four schemes of LE–CT1 were in agreement with the experimental data for the lowest charge separation rate measured in the P3HT/PC61BM blends, while CT2 the most coupled state with LE leads to higher charge separation rates that can be associated with ultrafast electron transfer due to hot CT states experimentally.62
+Table 4 Forward and backward rates between states that promote the ET processes
+
+
+
+
+Functional
+(s−1)
+
+
+
+k
+LE–CT1
+
+
+k
+LE–CT2
+
+
+k
+CT1–LE
+
+
+k
+CT2–LE
+
+
+k
+CT1–GS
+
+
+
+
+k
+CT2–GS
+
+
+
+
+
+
+
+
+a Ultrafast electron transfer due to hot CT states.
+b Backward rates GS–CT1 and GS–CT2 were not collected because the values were less than 10−10 s−1.
+
+
+
+
+
+4-3HT/PC61BM
+
+
+O-SRSH + PCM
+4.5 × 1011
+7.6 × 1011
+1.7 × 108
+1.2 × 1010
+6.5 × 108
+3.0 × 107
+
+
+O-SRSH
+3.5 × 1011
+1.0 × 1012
+4.0 × 104
+1.6 × 108
+8.6 × 108
+8.7 × 108
+
+
+B3LYP + PCM
+2.7 × 1011
+1.2 × 1012
+1.9 × 106
+7.4 × 109
+6.7 × 108
+8.8 × 107
+
+
+B3LYP
+3.4 × 1011
+9.8 × 1011
+7.2 × 102
+1.1 × 106
+3.4 × 109
+1.7 × 109
+
+
+Exp.58–62
+4.0 × 1011, >5.0 × 1012a
+
+
+2.5–4.9 × 108
+
+
+
+
+
+
+
+
+
+
+
+o-BDTdFBT/PC61BM
+
+
+
+
+
+
+
+
+
+
+
+
+B3LYP
+3.0 × 1011
+9.3 × 1011
+8.6 × 105
+1.0 × 108
+1.3 × 105
+2.3 × 105
+
+
+
+
+Moreover, the CT1–GS rates in all schemes were more similar to experimental geminate recombination (before the diffusion of charge carriers) than the rates coming from CT2–GS. This information suggests that the CT2 and hot CT states might enhance the charge separation process as is mentioned in other theoretical works, while the CT1 states are more responsible for recombination and energy losses. The analysis of the backward ET rates helps to understand the hybridization process between the LE and CT states because the magnitude of the CT2–LE rates was greater than that of CT2–GS promoting a resonant condition that can enlarge lifetimes, while the CT1–LE rate was lower than that of CT1–GS leading to charge recombination. Even though a hybridization process in P3HT/PC61BM may be possible, the low LE oscillator strength makes it difficult to occur. On the contrary, the o-BDTdFBT/PC61BM system with the B3LYP scheme shows lower recombination rates for both the CT states, greater CT–LE backward rates, and better LE oscillator strength than the 4-3HT/PC61BM system. This can reflect better energy conversion efficiencies in the o-BDTdFBT/PC71BM system experimentally.46
+Concerning B3LYP + PCM, results suggest that this scheme can achieve good description in systems obtained from classical MDS without spending too much computational time in the optimization of ω and εint parameters for the O-SRSH + PCM functional and can be implemented if the experimental dielectric constant is not well known. While the use of the B3LYP functional, due to remarkable accuracy losses, may only be useful along with our ET rate proposal for the fast selection of relevant systems in the study of a large number of candidates.
+The success of eqn (15) and (16) in the description of the ET rates in this work will be verified with more systems that come from classical MDS evaporation and can have experimental evidence. Also, excitation states with triplet multiplicity can be included to investigate the non-geminate recombination (after the diffusion of charge carriers), and due to the implementation of non-fullerene acceptors in new generations of OPV, hybridization between LEeD–CT and LEeA–CT can be treated to explain the performance of non-fullerene acceptor, even though LUMOeD–LUMOeA differences are larger than 0.3 eV in some cases.
+4 Conclusions
+First, we have investigated the performance of O-SRSH + PCM and O-SRSH functionals to describe the energy levels and interactions between the LE state located in the material with the lowest excitation and CT states involved in hybridization processes. This was applied to multiple donor–acceptor pairs extracted from the classical molecular simulation of 4-3HT/PC61BM. The methodology can find the lowest LE state located in the fullerene material even though only small oscillator strengths are present in the first 15 excitations as calculated using TDDFT. The average energy value of the lowest CT state is consistent with the experimental data. Second, we compared the behavior of the B3LYP + PCM functional with that of the O-SRSH + PCM functional and observed that B3LYP can correct the energetic values of the CT states when an external dielectric (PCM) parameter is applied. The exclusion of an external dielectric parameter in the O-SRSH functional also suggests the relevance of this parameter due to energetic shifts in the CT states.
+Furthermore, we proposed a fast description of the electron transfer rate in organic solar cell phases that have nonequilibrium structures and geometrically restrained motions due to molecular vicinity. We took the statistical description of LE–CT energy differences and hypothesized that the organic phases might find an ideal morphology where the LE–CT energy difference is minimal but preserve their morphological disorder. The overlap between the real and ideal LE–CT energy differences defines the morphologies capable of promoting electron transfer between the two states. This description was successfully applied to the recombination processes involving the CT and GS states. Backward direction of the ET rates completes the LE–CT hybridization characterization. On the other hand, the ET rate in the B3LYP functional showed important inaccuracies that, however, may still allow its use to distinguish between the 4-3HT and o-BDTdFBT donors, suggesting that this functional can work as a filter of relevant combinations in rational design models. Eqn (15) and (16) need only single point TDDFT calculations, reducing the computational time compared to geometrical optimizations which requires different charges to be assigned in the same set of donor–acceptor pairs.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+The authors thank DGTIC-UNAM for the computational resources provided under projects SC16-1-IG-37 and LANCAD-UNAM-DGTIC-022. A. F. M.-V. thanks CONACyT for the graduate fellowship. This research was funded by CONACyT-SENER-Fondo de Sustentabilidad Energética under project 245754.
+Notes and references
+M. List, T. Sarkar, P. Perkhun, J. Ackermann, C. Luo and U. Würfel, Nat. Commun., 2018, 9, 3631 CrossRef PubMed .
+J.-L. Brédas, J. E. Norton, J. Cornil and V. Coropceanu, Acc. Chem. Res., 2009, 42, 1691–1699 CrossRef .
+K. Vandewal, K. Tvingstedt, A. Gadisa, O. Inganäs and J. V. Manca, Phys. Rev. B: Condens. Matter Mater. Phys., 2010, 81, 125204 CrossRef .
+C. Deibel, T. Strobel and V. Dyakonov, Adv. Mater., 2010, 22, 4097–4111 CrossRef CAS PubMed .
+M. H. Lee, J. Aragó and A. Troisi, J. Phys. Chem. C, 2015, 119, 14989–14998 CrossRef CAS .
+L. J. A. Koster, S. E. Shaheen and J. C. Hummelen, Adv. Energy Mater., 2012, 2, 1246–1253 CrossRef CAS .
+M. Scharber, D. Mühlbacher, M. Koppe, P. Denk, C. Waldauf, A. Heeger and C. Brabec, Adv. Mater., 2006, 18, 789–794 CrossRef CAS .
+B. Minnaert, M. Burgelman, A. De Vos and P. Veelaert, Solar Energy Mater. Solar Cells, 2010, 94, 1125–1131 CrossRef CAS .
+Q. Liu, Y. Jiang, K. Jin, J. Qin, J. Xu, W. Li, J. Xiong, J. Liu, Z. Xiao, K. Sun, S. Yang, X. Zhang and L. Ding, Sci. Bull., 2020, 65(272), 275 Search PubMed .
+Y. Cui, H. Yao, J. Zhang, T. Zhang, Y. Wang, L. Hong, K. Xian, B. Xu, S. Zhang, J. Peng, Z. Wei, F. Gao and J. Hou, Nat. Commun., 2019, 10, 2515 CrossRef PubMed .
+K. Jiang, Q. Wei, J. Y. L. Lai, Z. Peng, H. K. Kim, J. Yuan, L. Ye, H. Ade, Y. Zou and H. Yan, Joule, 2019, 3, 3020–3033 CrossRef CAS .
+P. Cheng, G. Li, X. Zhan and Y. Yang, Nat. Photonics, 2018, 12, 131–142 CrossRef CAS .
+A. R. S. Kandada, G. Grancini, A. Petrozza, S. Perissinotto, D. Fazzi, S. S. K. Raavi and G. Lanzani, Sci. Rep., 2013, 3, 2073 CrossRef PubMed .
+X.-K. Chen, V. Coropceanu and J.-L. Brédas, Nat. Commun., 2018, 9, 5295 CrossRef CAS PubMed .
+F. D. Eisner, M. Azzouzi, Z. Fei, X. Hou, T. D. Anthopoulos, T. J. S. Dennis, M. Heeney and J. Nelson, J. Am. Chem. Soc., 2019, 141, 6362–6374 CrossRef CAS PubMed .
+D. Qian, Z. Zheng, H. Yao, W. Tress, T. R. Hopper, S. Chen, S. Li, J. Liu, S. Chen, J. Zhang, X.-K. Liu, B. Gao, L. Ouyang, Y. Jin, G. Pozina, I. A. Buyanova, W. M. Chen, O. Inganäs, V. Coropceanu, J.-L. Bredas, H. Yan, J. Hou, F. Zhang, A. A. Bakulin and F. Gao, Nat. Mater., 2018, 17, 703–709 CrossRef CAS PubMed .
+Y. Xu, H. Yao, L. Ma, L. Hong, J. Li, Q. Liao, Y. Zu, J. Wang, M. Gao, L. Ye and J. Hou, Angew. Chem., Int. Ed., 2020, 59, 9004–9010 CrossRef CAS .
+W. Li, Y. Pan, L. Yao, H. Liu, S. Zhang, C. Wang, F. Shen, P. Lu, B. Yang and Y. Ma, Adv. Opt. Mater., 2014, 2, 892–901 CrossRef CAS .
+V. Coropceanu, X.-K. Chen, T. Wang, Z. Zheng and J.-L. Brédas, Nat. Rev. Mater., 2019, 4, 689–707 CrossRef .
+D. Chi, S. Qu, Z. Wang and J. Wang, J. Mater. Chem. C, 2014, 2, 4383–4387 RSC .
+W. C. Tsoi, S. J. Spencer, L. Yang, A. M. Ballantyne, P. G. Nicholson, A. Turnbull, A. G. Shard, C. E. Murphy, D. D. C. Bradley, J. Nelson and J.-S. Kim, Macromolecules, 2011, 44, 2944–2952 CrossRef CAS .
+
+          J. Hou and X. Guo, Organic Solar Cells, Springer, London,  2012, pp. 17–42 Search PubMed .
+F. Zhang, Z. Zhuo, J. Zhang, X. Wang, X. Xu, Z. Wang, Y. Xin, J. Wang, J. Wang, W. Tang, Z. Xu and Y. Wang, Sol. Energy Mater. Sol. Cells, 2012, 97, 71–77 CrossRef CAS .
+R. Alessandri, J. J. Uusitalo, A. H. de Vries, R. W. A. Havenith and S. J. Marrink, J. Am. Chem. Soc., 2017, 139, 3697–3705 CrossRef CAS .
+K. Do, M. K. Ravva, T. Wang and J.-L. Brédas, Chem. Mater., 2017, 29, 346–354 CrossRef CAS .
+P. Gemünden, C. Poelking, K. Kremer, K. Daoulas and D. Andrienko, Macromol. Rapid Commun., 2015, 36, 1047–1053 CrossRef PubMed .
+G. Han, X. Shen, R. Duan, H. Geng and Y. Yi, J. Mater. Chem. C, 2016, 4, 4654–4661 RSC .
+G. Han, Y. Yi and Z. Shuai, Adv. Energy Mater., 2018, 8, 1702743 CrossRef .
+C.-K. Lee and C.-W. Pao, ACS Appl. Mater. Interfaces, 2016, 8, 20691–20700 CrossRef CAS PubMed .
+G. Yu, J. Gao, J. C. Hummelen, F. Wudl and A. J. Heeger, Science, 1995, 270, 1789–1791 CrossRef CAS .
+M. Scharber and N. Sariciftci, Prog. Polym. Sci., 2013, 38(1929), 1940 Search PubMed .
+T. Kastinen, D. A. da Silva Filho, L. Paunonen, M. Linares, L. A. Ribeiro Junior, O. Cramariuc and T. I. Hukka, Phys. Chem. Chem. Phys., 2019, 21, 25606–25625 RSC .
+T. Sachse, T. J. Martínez and M. Presselt, J. Chem. Phys., 2019, 150, 174117 CrossRef PubMed .
+S. Bhandari and B. D. Dunietz, J. Chem. Theory Comput., 2019, 15, 4305–4311 CrossRef CAS PubMed .
+L. Kronik and S. Kümmel, Adv. Mater., 2018, 30, 1706560 CrossRef PubMed .
+Z. Zheng, D. A. Egger, J.-L. Brédas, L. Kronik and V. Coropceanu, J. Phys. Chem. Lett., 2017, 8, 3277–3283 CrossRef CAS PubMed .
+
+          R. A. Marcus, Electron Transfer Past and Future, John Wiley & Sons, Ltd,  2007, pp. 1–6 Search PubMed .
+A. F. Marmolejo-Valencia, Z. Mata-Pinzón, L. Dominguez and C. Amador-Bedolla, Phys. Chem. Chem. Phys., 2019, 21, 20315–20326 RSC .
+J. J. Hopfield, Proc. Natl. Acad. Sci. U. S. A., 1974, 71, 3640–3644 CrossRef CAS PubMed .
+A. Warshel, J. Phys. Chem., 1982, 86, 2218–2224 CrossRef CAS .
+D. V. Matyushov, J. Phys.: Condens. Matter, 2015, 27, 473001 CrossRef .
+R. Palmer, Adv. Phys., 1982, 31, 669–735 CrossRef .
+
+          D. Case, I. Ben-Shalom, S. Brozell, D. Cerutti, T. Cheatham, V. Cruzeiro, III, T. Darden, R. Duke, D. Ghoreishi, M. Gilson, H. Gohlke, A. Goetz, D. Greene, R. Harris, N. Homeyer, S. Izadi, A. Kovalenko, T. Kurtzman, T. Lee, S. LeGrand, P. Li, C. Lin, J. Liu, T. Luchko, R. Luo, D. Mermelstein, K. Merz, Y. Miao, G. Monard, C. Nguyen, H. Nguyen, I. Omelyan, A. Onufriev, F. Pan, R. Qi, D. Roe, A. Roitberg, C. Sagui, S. Schott-Verdugo, J. Shen, C. Simmerling, J. Smith, R. Salomon-Ferrer, J. Swails, R. Walker, J. Wang, H. Wei, R. Wolf, X. Wu, L. Xiao, D. York and P. Kollman, AMBER 2016, University of California, San Francisco,  2016 Search PubMed .
+J. Wang, R. M. Wolf, J. W. Caldwell, P. A. Kollman and D. A. Case, J. Comput. Chem., 2004, 25, 1157–1174 CrossRef CAS PubMed .
+P. Bultinck, C. Van Alsenoy, P. W. Ayers and R. Carbó-Dorca, J. Chem. Phys., 2007, 126, 144111 CrossRef .
+L. Yuan, Y. Zhao, J. Zhang, Y. Zhang, L. Zhu, K. Lu, W. Yan and Z. Wei, Adv. Mater., 2015, 27, 4229–4233 CrossRef CAS PubMed .
+S. Refaely-Abramson, S. Sharifzadeh, M. Jain, R. Baer, J. B. Neaton and L. Kronik, Phys. Rev. B: Condens. Matter Mater. Phys., 2013, 88, 081204 CrossRef .
+M. P. Hughes, K. D. Rosenthal, N. A. Ran, M. Seifrid, G. C. Bazan and T.-Q. Nguyen, Adv. Funct. Mater., 2018, 28, 1801542 CrossRef .
+Y. Shao, Z. Gan, E. Epifanovsky, A. T. Gilbert, M. Wormit, J. Kussmann, A. W. Lange, A. Behn, J. Deng, X. Feng, D. Ghosh, M. Goldey, P. R. Horn, L. D. Jacobson, I. Kaliman, R. Z. Khaliullin, T. Kuś, A. Landau, J. Liu, E. I. Proynov, Y. M. Rhee, R. M. Richard, M. A. Rohrdanz, R. P. Steele, E. J. Sundstrom, H. L. W. III, P. M. Zimmerman, D. Zuev, B. Albrecht, E. Alguire, B. Austin, G.
+J. O. Beran, Y. A. Bernard, E. Berquist, K. Brandhorst, K. B. Bravaya, S. T. Brown, D. Casanova, C.-M. Chang, Y. Chen, S. H. Chien, K. D. Closser, D. L. Crittenden, M. Diedenhofen, R. A. D. Jr., H. Do, A. D. Dutoi, R. G. Edgar, S. Fatehi, L. Fusti-Molnar, A. Ghysels, A. Golubeva-Zadorozhnaya, J. Gomes, M. W. Hanson-Heine, P. H. Harbach, A. W. Hauser, E. G. Hohenstein, Z. C. Holden, T.-C. Jagau, H. Ji, B. Kaduk, K. Khistyaev, J. Kim, J. Kim, R. A. King, P. Klunzinger, D. Kosenkov, T. Kowalczyk, C. M. Krauter, K. U. Lao, A. D. Laurent, K. V. Lawler, S. V. Levchenko, C. Y. Lin, F. Liu, E. Livshits, R. C. Lochan, A. Luenser, P. Manohar, S. F. Manzer, S.-P. Mao, N. Mardirossian, A. V. Marenich, S. A. Maurer, N. J. Mayhall, E. Neuscamman, C. M. Oana, R. Olivares-Amaya, D. P. ONeill, J. A. Parkhill, T. M. Perrine, R. Peverati, A. Prociuk, D. R. Rehn, E. Rosta, N. J. Russ, S. M. Sharada, S. Sharma, D. W. Small, A. Sodt, T. Stein, D. Stück, Y.-C. Su, A. J. Thom, T. Tsuchimochi, V. Vanovschi, L. Vogt, O. Vydrov, T. Wang, M. A. Watson, J. Wenzel, A. White, C. F. Williams, J. Yang, S. Yeganeh, S. R. Yost, Z.-Q. You, I. Y. Zhang, X. Zhang, Y. Zhao, B. R. Brooks, G. K. Chan, D. M. Chipman, C. J. Cramer, W. A. G. III, M. S. Gordon, W. J. Hehre, A. Klamt, H. F. S. III, M. W. Schmidt, C. D. Sherrill, D. G. Truhlar, A. Warshel, X. Xu, A. Aspuru-Guzik, R. Baer, A. T. Bell, N. A. Besley, J.-D. Chai, A. Dreuw, B. D. Dunietz, T. R. Furlani, S. R. Gwaltney, C.-P. Hsu, Y. Jung, J. Kong, D. S. Lambrecht, W. Liang, C. Ochsenfeld, V. A. Rassolov, L. V. Slipchenko, J. E. Subotnik, T. V. Voorhis, J. M. Herbert, A. I. Krylov, P. M. Gill and M. Head-Gordon, Mol. Phys., 2015, 113, 184–215 CrossRef CAS .
+S. Hirata and M. Head-Gordon, Chem. Phys. Lett., 1999, 302(375), 382 Search PubMed .
+A. A. Voityuk and N. Rösch, J. Chem. Phys., 2002, 117, 5607–5616 CrossRef CAS .
+A. A. Voityuk, J. Phys. Chem. C, 2013, 117, 2670–2675 CrossRef CAS .
+C. Müller, Chem. Mater., 2015, 27, 2740–2754 CrossRef .
+
+          A. de la Lande, F. Cailliez and D. R. Salahub, Simulating Enzyme Reactivity: Computational Methods in Enzyme Catalysis, The Royal Society of Chemistry,  2017, pp. 89–149 Search PubMed .
+Z. Zheng, N. R. Tummala, T. Wang, V. Coropceanu and J.-L. Brédas, Adv. Energy Mater., 2019, 9, 1803926 CrossRef .
+N. R. Tummala, Z. Zheng, S. G. Aziz, V. Coropceanu and J.-L. Brédas, J. Phys. Chem. Lett., 2015, 6, 3657–3662 CrossRef CAS PubMed .
+F. E. Osterloh, M. A. Holmes, J. Zhao, L. Chang, S. Kawula, J. D. Roehling and A. J. Moulé, J. Phys. Chem. C, 2014, 118, 14723–14731 CrossRef CAS .
+J. H. Choi, K.-I. Son, T. Kim, K. Kim, K. Ohkubo and S. Fukuzumi, J. Mater. Chem., 2010, 20, 475–482 RSC .
+I. A. Howard, R. Mauer, M. Meister and F. Laquai, J. Am. Chem. Soc., 2010, 132, 14866–14876 CrossRef CAS PubMed .
+X. Ai, M. C. Beard, K. P. Knutsen, S. E. Shaheen, G. Rumbles and R. J. Ellingson, J. Phys. Chem. B, 2006, 110, 25462–25471 CrossRef CAS .
+J. Guo, H. Ohkita, H. Benten and S. Ito, J. Am. Chem. Soc., 2010, 132, 6154–6164 CrossRef CAS PubMed .
+J. Piris, T. E. Dykstra, A. A. Bakulin, P. H. V. Loosdrecht, W. Knulst, M. T. Trinh, J. M. Schins and L. D. Siebbeles, J. Phys. Chem. C, 2009, 113, 14500–14506 CrossRef CAS .
+H. Ma and A. Troisi, Adv. Mater., 2014, 26, 6163–6167 CrossRef CAS PubMed .
+K. Vandewal, S. Albrecht, E. T. Hoke, K. R. Graham, J. Widmer, J. D. Douglas, M. Schubert, W. R. Mateker, J. T. Bloking, G. F. Burkhard, A. Sellinger, J. M. J. Fréchet, A. Amassian, M. K. Riede, M. D. McGehee, D. Neher and A. Salleo, Nat. Mater., 2014, 13, 63–68 CrossRef CAS .
+H. Bässler and A. Köhler, Phys. Chem. Chem. Phys., 2015, 17, 28451–28462 RSC .
+D. Fazzi, M. Barbatti and W. Thiel, J. Phys. Chem. Lett., 2017, 8, 4727–4734 CrossRef CAS PubMed .
+
+          T. W. Anderson, in Anderson–Darling Tests of Goodness-of-Fit, ed. M. Lovric, Springer Berlin Heidelberg, Berlin, Heidelberg,  2011, pp. 52–54 Search PubMed .
+R. L. Martin, J. Chem. Phys., 2003, 118, 4775–4777 CrossRef CAS .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1cp00723hThis journal is © the Owner Societies 2021
+Table Content:
+
+ 	Fig. 1  Illustration of the ground state (GS), donor or acceptor local excitation (LE), and the first charge-transfer state (CT1) involved in the CS and CR processes. Black points represent the ground state non-equilibrium conformations for the donor–acceptor pairs in the OPV phases. Red and blue points specify the vertical excitation energies for each such pair. The green square shows the LE–CT hybridization region while the black squares constitute the cross point areas. Blue and red Gaussian distributions represent the energy at the maximum of LE or CT absorption (Eabs,maxLE and Eabs,maxCT),19 respectively.	 
+	(1)
+	(2)
+	(3)
+	(4)
+	(5)
+	(6)
+	(7)
+ΔQij = QDij − QAij	(8)
+	(9)
+	(10)
+	(11)
+	(12)
+	(13)
+	(14)
+	(15)
+	(16)
+
+ 	Fig. 2  The behavior of the electron-transfer rate predicted by eqn (15) and (16). Notice that the disorder affects the behavior for −ΔEij > 1 eV.	 
+
+
+
+
+1	0.135(0.05)	2.5(0.03)
+2	0.127(0.02)	2.5(0.02)
+3	0.127(0.02)	2.5(0.02)
+4	0.125(0.03)	2.5(0.01)
+Average	0.128	2.5
+
+
+α
+	0.2	0.2
+
+β
+	0.8	0.2
+
+ω/bohr−1	0.128	0.128
+
+ε
+ext
+	
+	3.0
+
+ 	Fig. 3  (a) The optimization process of ω value in the screened functional SRSH + PCM applied to the first 4-3HT/PC61BM pair in Table 1 showing dependence of HOMO, LUMO, −IP and −EA energies. (b) Optimization of εint and linear dependence of canonical and frontier orbitals with respect to 1/εint variation for the SRSH + PCM functional. (c) Ideal environment εext optimization for the B3LYP + PCM scheme.	 
+
+
+4-3HT/PC61BM
+O-SRSH + PCM	0.003	0.003	0.005	1.87 ± 0.33	1.67 ± 0.27	1.77 ± 0.25
+O-SRSH	0.002	0.002	0.003	1.92 ± 0.31	1.51 ± 0.26	1.70 ± 0.29
+B3LYP + PCM	0.002	0.002	0.005	1.83 ± 0.29	1.52 ± 0.26	1.67 ± 0.26
+B3LYP	0.002	0.002	0.003	1.82 ± 0.27	1.30 ± 0.24	1.47 ± 0.26
+Exp.3,21,57	
+	1.8 (PC61BM)	1.4–1.7	
+	
+	
+
+
+o-BDTdFBT/PC61BM
+
+
+B3LYP	0.003	0.003	0.330	1.77 ± 0.10	1.44 ± 0.17	1.54 ± 0.19
+Exp.46	
+	1.83 (o-BDTdFBT)	
+	
+	
+	
+
+
+4-3HT/PC61BM
+O-SRSH + PCM	8.0	10.0	−0.20 ± 0.35	−0.11 ± 0.35	28.4	29.6
+O-SRSH	8.2	12.2	−0.41 ± 0.38	−0.23 ± 0.36	22.8	20.2
+B3LYP + PCM	6.5	13.1	−0.31 ± 0.35	−0.13 ± 0.36	20.2	23.1
+B3LYP	8.9	12.3	−0.52 ± 0.30	−0.35 ± 0.29	22.0	21.0
+
+o-BDTdFBT/PC61BM
+B3LYP	6.8	9.9	−0.33 ± 0.18	−0.24 ± 0.20	19.0	20.7
+
+ 	Fig. 4  The ideal ΔE0 distribution (dashed green lines) where the ET rate is maximal, the real ΔEij distribution (red and blue bars) in the 4-3HT/PC61BM system with the functional O-SRSH + PCM. The Anderson–Darling test67 shows that ΔELE–CT1 and ΔECT1–GS have normal distribution.	 
+
+
+
+4-3HT/PC61BM
+O-SRSH + PCM	4.5 × 1011	7.6 × 1011	1.7 × 108	1.2 × 1010	6.5 × 108	3.0 × 107
+O-SRSH	3.5 × 1011	1.0 × 1012	4.0 × 104	1.6 × 108	8.6 × 108	8.7 × 108
+B3LYP + PCM	2.7 × 1011	1.2 × 1012	1.9 × 106	7.4 × 109	6.7 × 108	8.8 × 107
+B3LYP	3.4 × 1011	9.8 × 1011	7.2 × 102	1.1 × 106	3.4 × 109	1.7 × 109
+Exp.58–62	4.0 × 1011, >5.0 × 1012a	
+	2.5–4.9 × 108	
+	
+	
+
+
+	
+o-BDTdFBT/PC61BM	
+	
+	
+	
+	
+
+B3LYP	3.0 × 1011	9.3 × 1011	8.6 × 105	1.0 × 108	1.3 × 105	2.3 × 105
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1cp00723h
+
+This journal is © the Owner Societies 2021

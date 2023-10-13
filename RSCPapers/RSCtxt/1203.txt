@@ -1,0 +1,1693 @@
+Machine learning for algal biofuels: a critical review and perspective for the future  - Green Chemistry (RSC Publishing) DOI:10.1039/D3GC00389B View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D3GC00389B
+(Critical Review)
+Green Chem., 2023, 25, 3354-3373Machine learning for algal biofuels: a critical review and perspective for the future
+
+        
+          
+            Ahmet 
+            Coşgun
+          
+        
+      a, 
+      
+        
+          
+            M. Erdem 
+            Günay
+          
+        
+      b and 
+
+        
+          
+            Ramazan 
+            Yıldırım
+          
+        
+      *a
+aDepartment of Chemical Engineering, Boğaziçi University, 34342, Bebek, Istanbul, Turkey. E-mail: yildirra@boun.edu.tr
+bDepartment of Energy Systems Engineering, Istanbul Bilgi University, 34060, Eyupsultan, Istanbul, Turkey
+Received 
+      2nd February 2023
+    , Accepted 5th April 2023First published on 6th April 2023AbstractIn this work, machine learning (ML) applications in microalgal biofuel production are reviewed. First, the basic steps of algal biofuel production are summarized followed by a bibliometric analysis to demonstrate the major research trends in the field. Also, the major challenges related to the commercialization of technology are identified. Then, ML applications for various steps in the value chain are reviewed and analyzed systematically. Finally, a future perspective on the contribution of ML in the field is provided. Our analysis indicates that ML applications should focus on screening and selecting suitable strains, preferably together with some other value-added products, requiring close collaborations among the researchers in the field to construct an extensive microalgal strain database. Optimization of cultivation conditions appears to be another area where ML can be helpful. Although most published ML works on cultivation are not usually suitable to extract generalizable knowledge (due to the nonstandard nature of strains, wastewater, and irradiation), standard testing and methodologies related to reporting protocols should also be built through collaboration to build comparable and generalizable ML models.
+1. Introduction
+As a new-generation feedstock for the production of biofuels, microalgae offer tremendous potential due to their rapid growth and flexibility of cultivation on terrains that are not suitable for agriculture. Microalgae are one of the microorganisms that can be utilized to produce a wide range of biofuels and bioproducts in a sustainable manner.1 While the photosynthetic pathway for the production of sustainable bioproducts makes microalgae ideal agents for CO2 emission mitigation, their ability to grow in even polluted waters makes them useful for wastewater treatment.2,3 Moreover, microalgae can be used to produce biofuel,1,4 nutritious food supplements, and animal food5 and can also be used for wastewater treatment and CO2 sequestration.6 In addition, high-value bioproducts that find widespread application in the pharmaceutical and cosmetic industries can be manufactured.7 However, the growth of algae involves numerous stages and requires the optimization of a vast number of variables such as light-related parameters, temperature, pH, and nutrients. In addition to cultivation and biomass conversion to biofuels, the steps like harvesting, drying, and extraction need to be also improved for economically feasible algal biofuel production. The feasibility can be improved further by producing value-added co-products as the popular biorefinery strategy implies. As a result, a number of obstacles must be overcome for the successful commercialization of this potentially important technology.8 In addition to inevitable experimental works to be performed, computer-aided technologies can contribute to this as they are used in various bio-production industries, including strain selection and the optimization of different production steps.9,10
+Kinetic modeling and data-driven machine learning (ML) are two basic approaches that have been used to model biological systems.6 Traditionally, kinetic models (e.g., Monod, the Droop, and the logistic models) are used to simulate the bio-production systems.11 Modeling, optimization, and state estimation of fed-batch systems have been successfully performed using kinetic models.12 However, the predictive capacities of these models are usually low due to the reduction of a vast number of metabolic reactions into a few parameters and small sets of differential equations; any changes in the base conditions may have significant effects on model accuracy.10 Data based models have been used as an alternative to kinetic based models in recent years because they can better predict a wide range of untested conditions than kinetic models because they use larger datasets that are valid for a wider spectrum of operating conditions and more variables for better description of the characteristics and behavior of the process.10
+In recent years, some review papers were published on data-driven modeling of biofuel production.13–16 For instance, Ning et al. reviewed the performance of ML algorithms used in microalgae species identification and monitoring and also summarized their advantages and disadvantages.15 Wang et al., on the other hand, presented a comprehensive review on ML application in bioenergy, microalgae cultivation, and biofuel conversion processes without any particular focus on microalgae applications.16 Ascher et al. focused on the application of ML in the thermochemical conversion methods of various biomass sources including microalgae and waste,14 while Aghbashlo et al. systematically reviewed biodiesel production from various biomass sources, their certification, and engine application.13 Sundui et al. reviewed ML applications in biological wastewater treatment using algae–bacteria consortia.17 These publications partially cover microalgal biofuel production as well; however, as far as we know, there is no review paper that covers ML applications in all steps of algal biofuel production together with potential improvement areas and courses of action that can be taken.
+This paper fills this gap by examining the basic processes, the current state of research, and the opportunities and challenges of microalgae growth for biofuel production. Then, it reviews and analyzes the use of ML in microalgal biofuels. Finally, it provides a future perspective for potential contributions of ML to the field considering the developments and challenges for successful commercialization of algal biofuels.
+2. Current state of microalgal biofuel research
+Algae can grow in a variety of habitats, including open and closed ponds, photobioreactors, sewage and wastewater, desert, marine and seawater, and CO2-generating power plants.18 Microalgal biomass is primarily made up of carbohydrates and lipids, and is generated by photosynthesis with carbon dioxide and nutrients like nitrogen, phosphorus and potassium.19 These lipid and carbohydrate components are raw materials that can be utilized in the production of a wide variety of biofuels as shown in Fig. 1. Microalgae can be converted into biofuels by either biochemical or thermochemical processes depending on the type of energy or product to be produced as well as economic considerations.20 The triglyceride (i.e., lipid) component of the algae can be converted to fatty acid esters (biodiesel) and glycerin in the presence of the addition of a short-chain alcohol and a catalyst by the transesterification process.21 After the lipids are taken out of microalgal biomass, the carbohydrate content can be turned into biogas by anaerobic digestion.22 Through the process of fermentation, the cellulose or starch content can be transformed into bioethanol.23 The pyrolysis process, in which biomass is thermally decomposed in the absence of oxygen, yields char, bio-oil, and other gas products.24 Finally, bio-hydrogen can be produced from microalgae since they can produce hydrogen by fixing photosynthetic CO2 in the presence of sunlight and subsequently fermenting and degrading stored organic molecules.25 In addition to biofuel production, the algal biomass also contains molecules that can be converted to a variety of value-added products such as food, cosmetics, pharmaceutical additives, fertilizers and other chemicals.24
+ Fig. 1  Biofuels and coproducts that can be produced from algal biomass. 
+2.1. Basic steps and processes
+Biofuel production from microalgae involves a number of stages, including cultivation, harvesting, drying, lipid extraction, and conversion to biofuels; biodiesel production is presented in Fig. 2 as an example. Growing algal strains with high lipid productivity is crucial for industrial applications. Apart from the selection of suitable strain, the cultivation of microalgae is affected by a number of factors like reactor type, growth method, properties of light, carbon source, nitrogen source, phosphorus source and operating conditions (e.g., temperature, pH and salinity) as shown in Table 1.26,27 Increasing the biomass and lipid product yield by optimizing microalgal growth conditions is a practical strategy that has been adopted frequently. In the majority of instances, increasing the concentration of nutrients and CO2 results in an increase in biomass productivity up to a certain level; however, exceeding this level causes stress, which in turn results in a reduction in growth and can even lead to the death of the cell.26 On the other hand, microalgae tend to accumulate lipids when grown under stressful environments28 creating a difficult optimization problem to solve; the lipid content of fast-growing algae tends to be very low, whereas the lipid contents of slow-growing species are generally high. For this reason, environmental stress is applied as a strategy to stimulate lipid production.29 Chemical stress (i.e., nutrient deficiency, salinity, pH) and physical stress (i.e., temperature, light intensity) are two common types of environmental stress applied.26 To improve lipid production, a two-stage cultivation procedure is frequently used; first, maximum biomass productivity is reached, and then a stress environment is generated to favor lipid synthesis.
+ Fig. 2  Process diagram of biodiesel production from microalgae. Reproduced from ref. 26 with permission from Elsevier, copyright 2021. 
+Table 1 Main conditions to be optimized for algal growth
+
+
+
+
+Variables
+Properties
+
+
+
+
+Reactor type
+Raceway open pond, flat-plate type photobioreactor, inclined tubular type photobioreactor, and horizontal/continuous type photobioreactor
+
+
+Growth method
+Photoautotrophic, heterotrophic, and mixotrophic
+
+
+Light related variables
+Light intensity, light wavelength, and photoperiod time
+
+
+Carbon source
+Inorganic (CO2 or carbonates) or organic (sugars)
+
+
+Nitrogen source
+Nitrate (NO3−), nitrite (NO2−), ammonium (NH4+), and urea (CH4N2O)
+
+
+Phosphorus source
+Polyphosphates, orthophosphates, and organic phosphates
+
+
+Operating conditions
+Temperature, pH, salinity, and flow rate
+
+
+
+
+Before proceeding with the extraction of lipids, the microalgal biomass must be harvested and dried to increase the biomass concentration. However, microalgae are in the range of 3–30 micrometers in diameter making them cost-effective and their efficient harvesting difficult.30,31 Some methods used in harvesting are screening, flocculation, filtration, gravity sedimentation, flotation and centrifugation.32 Although centrifugation and microfiltration are utilized in the majority of laboratories, their high energy and capital costs make them infeasible for large-scale procedures.31,33,34 Gravity sedimentation and flocculation are the most common ways to harvest on a large scale because they are easy to implement and have lower costs; however, they are not very effective, and they may cause biomass deterioration.35 Then, the biomass is dried to reduce the intracellular water content, which creates a mass transfer barrier during the following lipid extraction step. Although the lipid content does not vary with the method of drying,36,37 the high temperatures attained in drying operations adversely affect the lipid quality.38 In freeze-drying, pressure is used to reduce the water content without altering the quality of the lipids, and it is one of the most frequently used techniques on a laboratory scale. The process of drying demands a substantial amount of energy, which accounts for the majority of the total amount of energy required for the synthesis of biofuel from microalgae.39,40 Although solar drying is one of the most cost-effective approaches, it is also significantly slower compared to oven and freeze-drying processes. There are also published studies on the direct extraction of lipids from wet microalgae for more cost-effective biofuel manufacturing.41
+The common methods used for lipid extraction can be categorized as solvent accelerated fluid and supercritical fluid extraction.42 The primary consideration in extraction is to avoid environmentally harmful solvents such as chloroform and methanol43 and use less harmful alternatives like ethyl acetate and CO2 (in supercritical fluid extraction).44–47 Also, since the lipid contents of most microalgae species are not too high (i.e., 15–30%), lipids must be recovered almost completely to be economical.46 Furthermore, the solvent should be selective to the desired lipid fractions.48–50 Pretreatment methods such as mechanical or non-mechanical cell disruption prior to lipid extraction can also be used to improve the efficiency of the extraction process.51
+2.2. Bibliometric analysis of microalgae studies in the literature
+In order to have a comprehensive understanding of the current developments in the field of microalgae research, a keyword search was carried out over the scientific literature. For this purpose, 7316 articles from the Web of Science database were used with the search term microalgae. Author keywords with respect to publication years were used to find the trends in the microalgae research area; the duplicated and synonym keywords were combined. For better comprehension, the related keywords were grouped into seven major categories: general/concepts, cultivation, microalgae, products, conversion, modeling and metabolic; the general/concept category contains the keywords representing the basic concepts or issues in the fields. The results are summarized in Fig. 3. To eliminate the fluctuations in years and to see the trends more clearly, data obtained from 2011 to 2022 were presented as a three-year moving average.
+ Fig. 3  Current developments in the field of microalgae research through the years: (a) total number of articles and frequency of main keywords, (b) frequency of keywords related to process variables and growth methods, (c) frequency of keywords related to products, (d) frequency of keywords related to general trends. 
+As clearly observable in Fig. 3a, the number of papers increases with time (2022 bar contains data until November 4, 2022) while the frequency of concept and conversion (also modeling and metabolic) keywords, which are more likely to represent the recent trends, are increased as expected; the percent values represent the percent of articles containing a keyword related to that category in microalgae papers published in those years (hence, they do not have to be 100 in total). Fig. 3a shows the change in the frequency of cultivation and conversion related keywords as the indicators of the trends in these major processes. Two stage cultivation appeared more frequently in recent years even though the total number is as not high as the single step processes yet. Although hydrothermal liquefaction is the most frequently appeared process together with lipid extraction, which is mostly linked with transesterification, the attention to pyrolysis and fermentation processes seemed to have increased more in recent years as shown in Fig. 3b. On the product side, the frequency of the FA/FAME/TAG group does not change anymore even though they are still the most frequently reported products (Fig. 3c); the frequency of bioethanol, biohydrogen and bio-oil, on the other hand, steadily increased in recent years while some other value added products such as carotenoids and metabolites also appeared more frequently.
+In addition to those related to processes and products, some keywords are also worth mentioning to see the general trends as given in Fig. 3d. For example, wastewater, biorefinery and circular economy keywords appear quite frequently in the author keywords; while the frequency of the wastewater keyword seems to be declining even though the number of articles increases, the popularity of the biorefinery concept, which includes biomass conversion, extraction, and separation of bioproducts and bioenergy,52 appears quite often. The circular economy concept seemed to have been also in the center of microalgae studies in recent years.53 Additionally, the appearance of the open pond keyword is decreasing while that of machine learning together with metabolic related keywords is increasing.
+2.3. Current performance and major challenges
+Biofuel production from microalgae appears to be one of the best renewable energy alternatives because microalgae can grow at a faster rate than most of the other bioresources and it does not compete with the food chain. However, the potential of algae biofuels, as a replacement for fossil fuels, is not that obvious yet; although the works reporting techno-economic assessment of algal biofuels are usually optimistic,54,55 they rely on various (and often dissimilar) assumptions because the technology and market are not established yet. For instance, the report by Klein and Davis from NREL, based on the data from Arizona Center for Algae Technology and Innovation (open pond), estimated a minimum fuel selling price of $5.90 gasoline equivalent for the fuel obtained.56 On the other hand, Xin et al. reported that the selling price of bio-oil would be $1.85 per gallon with a payback period in the range of 9.05 to 7.47 years assuming an integrated system having biofuel production, wastewater treatment improvement, tax credits, carbon credit, and co-product utilization.57 In another recent work, Hossain et al. calculated the price of $2.51 per gallon with a payback period of 11 years.58 Despite the existing uncertainties, the technology is progressing fast as was also indicated by the NREL report mentioned above; significant improvements in almost all cost items as well as yield and annual productivity are projected for the year 2030. For example, the net biomass yield increased from 12.4 ton AFDW/acre-year in 2015 to 25.5 AFDW/acre-year in 2021 and expected to grow to 37.2 AFDW/acre-year in 2030; similarly, the annual average cultivation productivity (g m−2 day−1) values were 8.5 and 17.6 for 2015 and 2021, respectively, while it was projected as 25 (g m−2 day−1) for 2030.56 The progress may speed up in future with the new genetic modifications as Subramanian and Sayre argued that it is possible to have a three fold improvement in the algal biomass yield by genetic modification of wild strains.59
+However, for a bright future, significant challenges that exist in almost all steps like strain isolation, nutrient sources, harvesting, fuel extraction and conversion have to be resolved.60 Producing low-cost algal biofuel is difficult with the current state of the art because a great deal of energy and resources, including water, are needed for cultivating algae, recirculating the nutrients and drying the biomass.61 For example, microalgae can grow in both open ponds and close reactors with their own benefits and drawbacks (Fig. 4).62 Closed systems consume more energy and are costlier to make; on the other hand, open systems are relatively affordable but they are vulnerable to uncontrolled contamination and fluctuations in light, nutrients, salt and temperature.63 Similarly, there are various options for harvesting and conversion of algal biomass to be selected and optimized.
+ Fig. 4  Photobioreactors used in growing microalgae: (a) raceway open pond, (b) flat-plate type photobioreactor, (c) inclined tubular type photobioreactor, (d) horizontal/continuous type photobioreactor. Reproduced from ref. 62 with permission from Elsevier, copyright 2011. 
+In addition to the improvements that can be made in individual steps, two major courses of action, which are highly related, are frequently suggested through the literature for the successful commercialization of algal biofuels: selection and optimization of microalgal strain and production of other chemicals in addition to the biofuel. It was argued that there are more than 30000 known microalgae species, and less than a hundred have been studied;64 the total number of microalgae strains changes depending on the sources and reaches an estimated value of over a million.65 Each microalgae has different characteristics and can synthesize different products in different yields depending on the process conditions. The use of one strain instead of others or utilization of multiple strains may be more advantageous making the selection and identification of the culture composition a very important task.3 Not only the lipid and carbohydrate content of different strains but also their growth may be different under different cultivation conditions. For instance, Nagarajan et al. argued that differences in the COD/BOD, nitrogen and phosphorus levels in different wastewater sources as well as the toxic effects of ammonia, anti-inflammatory agents, antibiotics, anti-depressants and anti-epileptics in pharmaceutical waste and heavy metals such as lead, copper, chromium, mercury and zinc have to be considered, and the microalgae strain suitable for the wastewater must be chosen accordingly.66 Production of additional chemicals, as also related to the popular biorefinery concept, also requires the judicious selection of algal strains complicating the problem more.
+3. Application of machine learning on microalgae-based biofuels
+3.1. Machine learning basics
+ML is a branch of artificial intelligence that creates programs and can automatically learn from large datasets using statistics and some algorithms; it performs some functions like prediction, classification, clustering and association to analyze the data, recognize patterns, make predictions or extract rules.67 Implementation of ML can be divided into four major steps: data gathering, pre-processing, model development and evaluation and utilization of the model. In the data gathering step, preferentially a large dataset correlating descriptors (input variables) and desired performance (or outcome) is created. Both the quality and the quantity of the data are crucial at this stage; high quality is needed to avoid biases and incorrect conclusions while a significantly large number of data (relative to the number of descriptors) is needed for the high generalization ability of the model created. Both experimental and computational (like DFT created) data are used for ML models while the source of the data may be also different (like creating in house, collecting from the literature, or extracting from databases).68 For example, the Materials Project Database (MPD), as one of the recently created material databases, contains physical/chemical properties of more than 530000 nanoporous materials and 124000 inorganic compounds; it also provides tools to analyze the data.69 However, such databases are mostly for relatively simple inorganic materials, and field specific databases for complex systems like biofuel production are not that common.
+In the pre-processing step, the data are formatted to a machine-readable form while the missing information is completed if it is possible (otherwise incomplete data points are removed). The potential descriptors should be analyzed and their numbers should be reduced as much as possible (dimensionality reduction) because the smaller models (for a given dataset) are more robust.70 This could be achieved by eliminating the descriptors that are not significant for the output or highly correlated with other variables (feature selection) as well as creating new but fewer descriptors using techniques like principal component analysis (feature extraction).
+Then, the model development step can be implemented by starting with selecting the algorithms to be used (highly dependent on the purpose of the research and characteristic of the data); regression is the most common task performed through algorithms like simple regression, artificial neural networks (and deep learning networks), support vector machines, regression trees, and gradient boosting trees.71Classification is another frequently implemented task (usually for categorical variables) through the algorithms such as decision trees (DTs), support vector machines (SVMs) and logistic regression (LogR).72 The common practice in model building is that the dataset is divided into two parts, namely training (model building) and testing (verification of model performance); the training is performed using the first set together with a validation procedure (like k-fold cross-validation) to select the best model (i.e. to determine the model hyperparameters). Finally, the selected model is tested using the testing data due to its ability to predict the data not seen during model development. In the evaluation and utilization of model stage, the results are interpreted and utilized for various purposes such as making predictions, selection of materials or methods for a specific purpose, understanding the effects and interaction of descriptors and developing heuristic rules or guidelines for future works.
+3.2. General ML trends in microalgae-based biofuels
+In this section of work, research articles involving the analysis of microalgal biofuels using ML are reviewed in detail. For this purpose, the scientific literature was searched through academic databases (e.g., Web of Science, Scopus, and Google Scholar) with keywords of microalgae together with machine learning and data mining (as well as algorithms like artificial neural networks), and 41 articles were identified to represent the subject well. Then, these articles were categorized with respect to the process involved as well as the ML tasks and algorithms applied. As expected, most of the studies have been published in the last few years (top panel in Fig. 5). The information about the nature of works reported in these publications is also presented in Fig. 5. For instance, most of the publications were related to the cultivation step while microalgae classification was also frequently studied. The most common ML task performed was regression; neural network (NN) is the most widely employed method with the contribution from other techniques such as support vector machine (SVM) and extreme gradient boosting machine (XGB).
+ Fig. 5  Summary of the machine learning articles in the microalgae study. 
+The works published on the subject so far indicate that artificial neural networks (ANNs) worked well in most regression tasks performed in the fields, and they were used frequently to optimize the cultivation medium, which may be a good case to demonstrate the potential contribution of ML. In general, response surface methodology (RSM) is frequently (and effectively) used for this purpose. However, Condor et al., Hossain et al., and Srivastava et al. compared ANNs with RSM, and all found that ANNs perform the given tasks better;73–75 this observation was also stated by Desai et al. and attributed to the higher generalization capacity of ANNs than RSM.76 Apparently, the ability of ANNs to handle highly nonlinear systems (and flexibility in data structures compared to RSM, which require a rigid statistical experimental design) makes it a better candidate to perform regression tasks in cultivation.
+For classification tasks, the main method of choice is the decision tree (DT). In state optimization ANNs, hybrids, long short-term memory (LSTM) and GP are all used. Together with neural networks, tree-based methods such as XGB, random forest (RF), and DT are also frequently used. Zhang et al. stated that tree-based algorithms were successfully used in classification and regression tasks of the thermal conversion process in the biomass valorization domain.77
+
+Tables 2–4 present the details of all 41 ML articles on microalgae biofuels. It is worth mentioning that there are other ML related studies in the microalgae research area even though they are not included in the tables (and the bibliometric analysis presented above) because they are not directly related to biofuels. For example, Panahi et al. studied the transcriptomes of Dunaliella salina and Dunaliella tertiolecta species using machine-learning algorithms and RNA-seq meta-analysis.78 Similarly, Kuo et al. reviewed big data analysis, and ML applications on the discovery of objective traits and genes in metabolic pathways.52 Pozzobon et al. studied the dual staining procedure and introduced ML processing of flow cytometry readings to the microalgal biotechnology community79 while Levasseur et al. studied the effects of light intensity, duty cycle, and cycle duration on the microalgal performances using ML.9 We limit our discussion on non-biofuel applications with these examples and focus only on the biofuel related papers in the tables and the rest of the discussions.
+Table 2 Summary of machine learning on microalgae monitoring and identification (superscript codes: a: train, b: test, c: validation, d: prediction, e: MRE)
+
+
+
+
+Machine learning task
+Aim/target variable
+ML method
+Feedstock
+Data size
+Descriptors (# of descriptors)
+Performance measures
+Ref.
+
+
+
+
+Classification
+Characterization of the culture composition
+ANN
+
+Scenedesmus almeriensis and Chlorella vulgaris
+289705
+Sample images (32)
+Training error did not exceed 4% and validation error 6.5%
+
+3
+
+
+
+Classification
+Identification of microorganisms
+LogReg
+Microorganisms
+600 images and 32779 instances
+—
+Accuracy = 24.9%
+
+80
+
+
+
+k-NN
+Accuracy = 96.1%
+
+
+SVM
+Accuracy = 97.2%
+
+
+ANN
+Accuracy = 31.2%
+
+
+QDA
+Accuracy = 26.8%
+
+
+Classification
+Binary classification of living and dead microalgae
+NB
+
+Chlorella vulgaris
+
+—
+5 morphological and 9 fluorescence features (14)
+Accuracy = 68.8%
+
+81
+
+
+
+k-NN
+Accuracy = 74.3%
+
+
+QDA
+Accuracy = 74.3%
+
+
+DT
+Accuracy = 77.4%
+
+
+AB
+Accuracy = 77.4%
+
+
+RF
+Accuracy = 77.7%
+
+
+ANN
+Accuracy = 75.9%
+
+
+Classification
+Identification of living and dead microalgae
+DT
+
+Prorocentrum Lima
+
+1000
+Digital holography microscopy (10)
+Accuracy = 94.2%
+
+81
+
+
+
+LogReg
+Accuracy = 94.5%
+
+
+SVM
+Accuracy = 94.8%
+
+
+k-NN
+Accuracy = 89.7%
+
+
+Classification
+Classification of Cyanobacteria and Chlorophyta groups
+CNN
+Cyanobacteria and Chlorophyta
+472
+Inverted microscope images
+Accuracy = 98.81%
+
+82
+
+
+
+CNN-SVM
+Accuracy = 99.66%
+
+
+Classification
+Classification of microalgae
+CNN
+Microalgae
+29000
+Low resolution images acquired using a particle analyzer
+Accuracy = 88.59%
+
+83
+
+
+
+Classification
+Classification of microalgae
+SVM
+35 categories of marine microalgae
+1000 records for one polarization state of each sample
+Polarized light scattering data
+15 categories of microalgae identified with an accuracy greater than 80%
+
+84
+
+
+
+Classification
+Microalgae species distribution
+CNN
+Microalgae monocultures
++100000
+Optical properties of different microalgae groups
+Accuracy = 95%b
+
+85
+
+
+
+Microalgae pairwise mixtures
+Accuracy = 100%b
+
+
+Regression
+Biomass prediction
+Microalgae monocultures
+MAE = 22%b
+
+
+Microalgae pairwise mixtures
+MAE = 24%b
+
+
+Classification
+Classification of microalgae
+PCA-SVM
+
+Phaeocystis, Chlamydomonas and Chaetoceros
+180 (60 × 3)
+Hyperspectral imaging
+Accuracy = 94.4%
+
+86
+
+
+
+Regression
+Estimation of the growth stage
+RF
+MAE = 0.781; R2 = 0.98; accuracy = 98.1%
+
+
+Regression
+Description of monoalgal and mixed algal cultures
+ANN
+
+Nostoc sp., Scenedesmus almeriensis, Spirulina platensis and Chorella vulgaris
+550 samples
+Light absorption measurements (31)
+
+R
+2 = 0.951 to 0.970
+
+8
+
+
+
+
+
+Table 3 Summary of machine learning on microalgae cultivation and harvesting & drying processes (superscript codes: a: train, b: test, c: validation, d: prediction, e: MRE)
+
+
+
+
+Machine learning task
+Aim/target variable
+ML method
+Feedstock
+Data size
+Descriptors (# of descriptors)
+Performance measures
+Ref.
+
+
+
+
+
+Microalgae cultivation
+
+
+
+Classification
+Effect of toxicity on algal growth
+GBDT
+
+Phaeodactylum tricornutum
+
+165 datasets
+Microplastic concentrations, polymer sizes, algal cell sizes, algal species, the ratio of polymer size/cell size, polymer species, and exposure time (7)
+False negativity and false positivity were 0.1 and 0.19
+
+87
+
+
+
+Classification
+Biomass productivity
+DT
+Microalgae
+4356
+(17)
+Accuracy = 89.3%a, 88.5%b
+
+26
+
+
+
+Lipid content
+2022
+Accuracy = 81.5%a, 80.3%b
+
+
+Classification
+Nitrogen removal efficiency
+DT
+Chlorodendrophyceae, Chlorophyceae, Consortium, Cyanophycean, Eustigmatophyceae, Trebouxiophyceae Xanthophyceae
+231
+Microalgae type, pre-cultivation stage deciding factors, nutrient content of wastewater, and operating variables (16)
+Accuracy = 76.08%
+
+88
+
+
+
+Phosphorus removal efficiency
+229
+Accuracy = 77.7%
+
+
+Biomass production
+221
+Accuracy = 84.09%
+
+
+Classification
+Nitrogen removal efficiency
+DT
+Trebouxiophyceae
+239
+Pre-cultivation stage deciding factors, operating variables, and initial nutrient concentration (13)
+Accuracy = 72.34%
+
+89
+
+
+
+Phosphorus removal efficiency
+239
+Accuracy = 72.5%
+
+
+Biomass production
+214
+Accuracy = 78.57%
+
+
+Nitrogen removal efficiency
+Chlorophyceae
+200
+Accuracy = 73.91%
+
+
+Phosphorus removal efficiency
+204
+Accuracy = 80%
+
+
+Biomass production
+206
+Accuracy = 73.17%
+
+
+Regression
+Light distribution pattern
+SVM
+Microalgae
+—
+—
+
+R
+2 = 0.993
+
+90
+
+
+
+Growth rate
+—
+—
+
+R
+2 = 0.992
+
+
+Regression
+Relative variation of the growth rate
+RF
+Green microalgae
+761
+Incident light intensity, ratio between the light and the dark period of the cycle, and total cycle time
+Around 90% of the maximum explained variance
+
+9
+
+
+
+Regression
+Early prediction of the final biomass yield
+RidReg
+
+Spirulina platensis
+
+42
+OD, pH
+MAE = 0.144e g L−1; R2 = 0.754
+
+91
+
+
+
+Regression
+Microalgae biomass concentration
+ANN
+Five dominant microalgae species in polyculture: Desmodesmus sp., Scenedesmus sp., Dictyosphaerium sp., Kleibsormidium sp., and Micractinium sp.
+553
+Initial algal concentration, harvesting period, hydraulic retention time, addition of sodium acetate, solar radiation, temperature, NO3− concentration, and pH (8)
+
+R
+2 = 0.95a, 0.96c, 0.94b, and 0.95
+
+92
+
+
+
+Regression
+Biomass concentration
+GP
+
+Desmodesmus sp. F51
+—
+Incident light intensity and nitrate inflow rate
+GPs comparable to ANNs for long-term dynamic bioprocess modeling
+
+6
+
+
+
+Nitrate concentration
+
+
+Lutein concentration
+
+
+Regression
+Carbohydrate content
+RSM
+
+Chlorella vulgaris FSP-E
+20
+Light intensity, initial nitrogen concentration, and nitrogen starvation duration (3)
+
+R
+2 = 0.9873 (0.9329d)
+
+73
+
+
+
+ANN
+27
+
+R
+2 = 0.9959 (0.9752b)
+
+
+
+
+
+
+Machine learning task
+Aim/target variable
+ML method
+Feedstock
+Data size
+Descriptors (# of descriptors)
+Performance measures
+Ref.
+
+
+
+
+
+Microalgae cultivation
+
+
+
+Regression
+Carbohydrate content
+ANN
+Mixed consortium
+108
+(18)
+RMSE = 0.0655; R2 = 0.8403
+
+93
+
+
+
+CNN
+RMSE = 0.0529; R2 = 0.8966
+
+
+LSTM
+RMSE = 0.06; R2 = 0.8648
+
+
+k-NN
+RMSE = 0.0921; R2 = 0.6831
+
+
+RF
+RMSE = 0.0678; R2 = 0.8286
+
+
+Regression
+N removal (%)
+RSM
+
+Chlorella kessleri
+
+—
+Temperature, light–dark cycle, and nitrate-to-phosphate ratio (3)
+RMSE = 14.5112; MAE = 11.5189; R2 = 0.8653
+
+74
+
+
+
+ANN
+RMSE = 1.1881; MAE = 0.7869; R2 = 0.9994
+
+
+SVM
+RMSE = 0.7819; MAE = 0.5079; R2 = 0.9996
+
+
+P removal (%)
+RSM
+RMSE = 10.88967; MAE = 9.80447; R2 = 0.8293
+
+
+ANN
+RMSE = 7.847; MAE = 4.8057; R2 = 0.9122
+
+
+SVM
+RMSE = 5.35345; MAE = 1.8936; R2 = 0.9592
+
+
+Regression
+Chlorophyll-a concentration
+PSO-SVM
+
+Spirulina platensis
+
+2340
+pH, optical density, oxygen concentration, NO−3 concentration, PO4 concentration, salinity, water temperature and irradiance (8)
+
+R
+2 = 0.99
+
+94
+
+
+
+State/dynamic optimization
+Lutein production
+ANN
+
+Desmodesmus sp. F51
+8 datasets
+Biomass, nitrate, and lutein concentrations, incident light intensity, and nitrate inflow rate (5)
+40–50% increase of total lutein production.
+
+12
+
+
+
+State/dynamic optimization
+Fed–batch lutein production
+Hybrid
+
+Desmodesmus sp. F51
+—
+—
+Final lutein yields of 5.0 mg L−1
+
+10
+
+
+
+State/dynamic optimization
+Carbon biofixation rate
+GP
+
+Chlorella vulgaris (ISC-23)
+83
+Temperature, light intensity, carbon concentration, aeration rate, pH, and time (6)
+RMSE = 0.2372a, 0.0820b; MAE = 0.0814a, 0.0542b; R2 = 0.8791a, 0.9393b
+
+53
+
+
+
+State/dynamic optimization
+Dry-weight yield
+LSTM
+
+Spirulina sp. HH
+20 day measurement
+Light intensity
+17% higher than traditional cultivation method, 10% higher than threshold-based method
+
+95
+
+
+
+ 
+
+
+
+Harvesting and drying
+
+
+
+Regression
+Delta moisture (%)
+ANN
+
+Chlorococcum infusionum
+
+19515 generated data
+Temperature, pressure, and delta moisture (3)
+RMSE = 0.0437
+
+96
+
+
+
+SVM
+RMSE = 0.0500
+
+
+XGB
+RMSE = 0.0308
+
+
+Regression
+Flocculation efficiency
+ANN
+
+Chlorella vulgaris
+
+∼195
+Time and flocculation parameters (2)
+
+R
+2 = ∼0.98
+
+97
+
+
+
+
+
+Table 4 Summary of machine learning on transesterification, biodiesel properties, pyrolysis and hydrothermal liquefaction (superscript codes: a: train, b: test, c: validation, d: prediction, e: MRE)
+
+
+
+
+Machine learning task
+Aim/target variable
+ML method
+Feedstock
+Data size
+Descriptors (# of descriptors)
+Performance measures
+Ref.
+
+
+
+
+
+Transesterification
+
+
+
+Regression
+% conversion of oil to FAME
+RSM
+
+Chlorella CG12
+20
+Temperature, time, and oil to methanol ratio (3)
+RMSE = 1.53; R2 = 0.97
+
+75
+
+
+
+ANN
+RMSE = 0.92; R2 = 0.99
+
+
+Regression
+Biodiesel yield
+ANN
+Microalgae oil
+30
+Catalyst dose, oil to methanol molar ratio, temperature, and time (4)
+RMSE = 0.0614: MAE = 0.0328; R2 = 0.965d
+
+98
+
+
+
+SVM
+RMSE = 0.0408; MAE = 0.0396; R2 = 0.984d
+
+
+ 
+
+
+
+Biodiesel properties
+
+
+
+Regression
+Performance, emission, and combustion behaviours
+ANN
+
+Spirulina sp.
+80
+Loading levels, blending ratios, and fuel injection pressure yields (3)
+
+R
+2 = 0.9608
+
+99
+
+
+
+Regression
+Cetane number
+MLR
+Biodiesel
+202
+C12:0, C14:0, C16:1, C18:0, C18:1, C18:2, C18:3, C20:0, C20:1, and C22:1 (10)
+
+R
+2 = 0.52b
+
+100
+
+
+
+SVM
+
+R
+2 = 0.77b
+
+
+RF
+
+R
+2 = 0.88b
+
+
+XGB
+
+R
+2 = 0.89b
+
+
+
+
+Cold filter plugging point
+MLR
+
+
+267
+C12:0, C14:0, C16:0, C16:1, C18:0, C18:1, C18:2, C18:3, C20:0, C20:1, and C22:1 (11)
+
+R
+2 = 0.77b
+
+
+
+
+SVM
+
+R
+2 = 0.75b
+
+
+RF
+
+R
+2 = 0.91b
+
+
+XGB
+
+R
+2 = 0.87b
+
+
+Classification
+Oxidation stability
+LogReg
+
+
+227
+C14:0, C16:0, C18:1, C18:2, C18:3, C20:1, and C22:1 (7)
+Accuracy = 89%
+
+
+
+
+k-NN
+Accuracy = 84%
+
+
+SVM
+Accuracy = 93%
+
+
+DT
+Accuracy = 91%
+
+
+ 
+
+
+
+Pyrolysis
+
+
+
+Regression
+Weight loss
+ANN
+
+Chlorella vulgaris
+
+∼5000
+Heating rate and temperature (2)
+
+R
+2 = ∼0.8
+
+101
+
+
+
+Regression
+Biochar yield
+XGB
+Microalgae
+64
+Ratios of elemental compositions (H/C, N/C), ash content, pyrolysis temperature, and residence time (5)
+
+R
+2 = 0.9974a, 0.8440b
+
+102
+
+
+
+Regression
+Pyrolytic activation energies
+RF
+Algae/biodegradable waste/cellulose/fossil/lignocellulose
+281 datasets
+Type and properties of raw materials and the applied model-free method (10)
+RMSE = 8.4668; R2 = 0.9964
+
+103
+
+
+
+
+
+
+
+Machine learning task
+Aim/target variable
+ML method
+Feedstocks
+Data size
+Descriptors (# of descriptors)
+Performance measures
+Ref.
+
+
+
+
+
+Hydrothermal liquefaction (HTL)
+
+
+
+Regression
+Bio-oil yield
+GBR
+Microalgae
+310
+Elemental composition (C, H, O, N and S), the atomic ratio of elements (H/C, O/C, and N/C), the biochemical composition of algae (protein, lipid, carbohydrate, and ash), and HTL operating conditions (temperature, residence time, and solid content of algae) (15)
+RMSE = 4.69b; MAE = 3.56b; R2 = 0.90b
+
+77
+
+
+
+Oxygen content
+RMSE = 1.68b; MAE = 1.23b; R2 = 0.90b
+
+
+Nitrogen content
+RMSE = 0.68b; MAE = 0.53b; R2 = 0.90b
+
+
+Bio-oil yield
+RF
+RMSE = 5.72b; MAE = 4.34b; R2 = 0.87b
+
+
+Oxygen content
+RMSE = 1.91b; MAE = 1.43b; R2 = 0.87b
+
+
+Nitrogen content
+RMSE = 0.74b; MAE = 0.56b; R2 = 0.88b
+
+
+Regression
+Bio-oil yield
+DT
+Biomass (e.g., algae, sludge, manure, and food waste)
+448
+Elemental composition, process conditions, and solvent characteristics (18)
+RMSE = 2.89a, 8.07b; R2 = 0.97a, 0.82b
+
+104
+
+
+
+RF
+RMSE = 3.66a, 6.17b; R2 = 0.95a, 0.89b
+
+
+GBR
+RMSE = 3.74a, 6.14b; R2 = 0.95a, 0.90b
+
+
+Multi-task; bio-oil yield, nitrogen content in bio-oil, and energy recovery from biomass
+RF
+229
+Elemental and biochemical compositions, and process conditions (12)
+RMSE = 3.07a, 4.69b; R2 = 0.92a, 0.80b
+
+
+Regression
+Biocrude yield
+RF
+
+Chlorella sp.
+—
+Biochemical composition (i.e., protein, lipid, and carbohydrates), HTL process conditions (i.e., temperature, reaction time, and initial solid concentration) (6)
+RMSE = 6.29b; R2 = 0.81b
+
+105
+
+
+
+Biocrude energy yield
+RMSE = 2.14b; R2 = 0.84b
+
+
+Regression
+Biocrude yield
+XGB
+Wet biomass (i.e., macro and microalgae, food waste, animal manure, sewage sludge, and wastewater) and waste
+325
+Feedstock characteristics (biological and elemental properties) and operating conditions (17)
+RMSE = 5.4137; R2 = 0.8711
+
+106
+
+
+
+RF
+RMSE = 6.0073; R2 = 0.8425
+
+
+KRR
+RMSE = 6.3053; R2 = 0.8201
+
+
+SVM
+RMSE = 5.9615; R2 = 0.8457
+
+
+Higher heating value
+XGB
+RMSE = 1.9846; R2 = 0.8194
+
+
+RF
+RMSE = 2.2857; R2 = 0.7353
+
+
+KRR
+RMSE = 2.5142; R2 = 0.6567
+
+
+SVM
+RMSE = 2.4259; R2 = 0.7134
+
+
+Regression
+Predictions of biocrude yields
+SVM
+Algae, lignocellulosic biomass, and model compounds
+570
+Feedstock type, biochemical composition, solids loading, reaction temperature, reaction time, heating rate, organic biocrude extraction solvent, reactor type, reactor size, and yields of char, gas, and aqueous phase (18)
+RMSE = 9.4b
+
+107
+
+
+
+DT
+RMSE = 10.24b
+
+
+ANN
+RMSE = 9.02b
+
+
+RF
+RMSE = 8.34b
+
+
+XGB
+RMSE = 8.57b
+
+
+
+
+3.3. Microalgae monitoring and identification
+As we discussed briefly above, there are tens of thousands of microalgae strains but only less than a hundred have been studied.64 This is also true for ML applications, and most of the ML works related to microalgae strains are involved in classification. For example, Reimann et al. studied the binary classification of dead and living microalgae using seven ML algorithms, and found that the random forest classification achieved a highest overall model accuracy of 77.7%;81 a similar analysis was also performed by Wang et al.108 Other ML studies in this field had various aims such as characterization of culture composition,3 identification of microorganisms,80 classification of Cyanobacteria and Chlorophyta microalgae groups,82 classification of monoalgal and mixed algal cultures,8 microalgae species distribution and biomass prediction85 and estimation of the growth stage.86 Details of the ML works on monitoring and identification are summarized in Table 2.
+3.4. Cultivation, harvesting and drying
+As presented in Fig. 5, cultivation is the most frequently ML implemented step in algal biofuel research. For example, Condor et al. studied the carbohydrate concentration in Chlorella vulgaris using ANNs with the light intensity, initial nitrogen concentration, and nitrogen starvation period as input variables. They found the R2 value for prediction to be 0.975, which was higher than that of the one obtained using the RSM method.73 Similarly, Supriyanto et al. investigated the effect of the cultivation conditions (i.e., initial algal concentration, harvesting period, hydraulic retention time, the addition of sodium acetate, solar radiation, temperature, NO3− concentration, and pH) on the biomass concentration using the ANN regression model with 553 data points, and found that the results were quite satisfactory, as shown in Fig. 6.92
+ Fig. 6  Machine learning analysis for biomass concentration using the ANN model: (a) training set, (b) validation set, (c) test set, and (d) all data. Reproduced from ref. 92 with permission from Elsevier, copyright 2019. 
+The other ML studies related to the cultivation step can be summarized as biomass prediction,6,26,88,89,91,92,95 carbohydrate prediction,73 carbon bio-fixation rate prediction,53 chlorophyll-a concentration prediction,94 effects of toxicity on growth and lipid production,87 growth rate prediction,9,90 light distribution pattern prediction,9 lipid content prediction,26 lutein content prediction,6,10,12 N and P removal rate prediction74,88,89 and nitrate concentration prediction.6 A relatively higher frequency of ML works on cultivation can be attributed to the significance of the carbohydrate, lipid, and lutein contents of microalgae as they stand as the precursors of biofuels and value added biochemicals. Carbohydrate is the only substrate required for the production of bioethanol, biobutanol, and biohydrogen from algal biomass.90 Lipid is the key molecule for biodiesel production while lutein is a primary carotenoid, which has received great attention in several industries, and is a high value product.12 The carbon bio-fixation rate, chlorophyll-a concentration and cell growth rate are also indicators of biomass production and their accurate assessment are important for microalgae biotechnology and environmental monitoring.85 The preferable microalgae strains should have a high CO2 utilization rate, low nutrient requirements, and high lipid and carbohydrate productivity together with high value added biochemicals.53 Efficient prediction of light distribution patterns, toxicity level of the cultivation medium, N and P removal rate and nitrate concentration are also important considering that insufficient irradiation and poor cultivation medium are the factors decreasing the product yield and therefore hindering the commercialization of algal biofuel.90 The cultivation related ML works are summarized in Table 3.
+Harvesting and drying are energy-intensive yet necessary parts of algal biofuel production; hence they may limit the commercialization potential of microalgae biofuel.97,109 Several ML works involving these steps were also reported (Table 3); for example, Ching et al. investigated the vacuum drying process by modeling changes in the moisture content (%) with three ML methods: ANN, SVM, and XGB, as XGB yielded the lowest RMSE. Temperature, pressure, and delta moisture values of 19515 data are used for model construction.96 Similarly, Suparmaniam et al. modeled the bio-flocculation efficiency as a microalgae harvesting technology using the ANN algorithm on Chlorella vulgaris.97
+3.5. Biofuel production
+Various methods can be used for biofuel production from microalgae while these methods can be also utilized for other biomass sources. Hence, we had to limit our review to ML applications in which at least some of the data were from algal biomass; however, it should be kept in mind that the works involving the processing of other biomass using the same technology may also be relevant for algal biofuel production.
+As we show in the bibliometric analysis above, the most commonly employed biofuel production route is lipid extraction followed by transesterification even though some new technologies have gained significant attention in recent years. As an example, Srivastava et al. investigated oil conversion to FAME by ANNs with temperature, time and oil to methanol molar ratio as inputs75 while Sultana et al. modeled biodiesel yields from microalgae oil using ANN and SVM models with RMSE values of 0.0614 and 0.0408, respectively.98 On the other hand, Salam and Verma99 modeled the important parameters of biodiesel for its commercial use in engines; the properties included performance, emission, and combustion behaviors such as specific fuel combustion, brake thermal efficiency, indicated efficiency, and scavenging efficiency. Suvarna et al.100 also modeled cetane number, cold filter plugging point and oxidation stability using biodiesel samples. Representative examples of ML analysis for transesterification to biodiesel and the property estimation of products are presented in Table 4.
+Microalgae biomass produces important products such as fatty acids, carbohydrates, and pigments that can be directly used in the production of high value bioproducts;110 however, a large amount of algal residue also creates significant waste.111 Hence, thermochemical routes such as pyrolysis, hydrothermal liquefaction, and carbonization have been increasingly popularized in recent years for utilizing algal residues;102 this is also true for ML applications (Table 4). For instance, Bong et al. modeled weight loss in pyrolysis,101 while Pathy et al. examined the biochar production yield;102 in another work, Wang et al. evaluated the pyrolytic activation energy using ML.103
+Transesterification is an easy and established process to produce bio-oil from microalgae; however, it requires the energy intensive drying step to achieve high bio-oil yields. Some methods, such as hydrothermal liquefaction (HTL), on the other hand, do not need a drying step;112 hence, they may have higher potential. Indeed, several ML works have also been performed over HTL technology as well (Table 4). For example, Zhang et al. modeled bio-oil yields, and oxygen and nitrogen contents in bio-oil77 while Li et al. predicted bio-oil yields together with the nitrogen content in bio-oil (%) and energy recovery from biomass (%) in a multitask modeling approach using random forest regression.104 Katongtung et al.106 and Cheng et al.107 performed ML analysis for the prediction of the biocrude yield from hydrothermal liquefaction.
+4. Outlook and future perspectives
+As with most of the other fields of scientific research, one of the biggest challenges of ML in algal fuel production is to construct a dataset suitable for the knowledge to be extracted. ML relies on the data that represent the physical problem well; the information content of the data should be suitable for the problem at hand while the accuracy should be sufficiently high. In addition, the dataset should be sufficiently large for statistical significance, and typically very large datasets (as the related term of big data indicates) are required for complex systems with a large number of interdependent descriptors (i.e., input variables). Building large datasets is relatively easy in material discovery and selection; desired properties or functions can be linked to more fundamental physical and chemical structures that can be determined experimentally (e.g., spectroscopic characterization) and computationally (e.g., DFT simulations) even though their effectiveness can be questioned. Indeed, a very large number of material related databases such as Material Project,113 OQMD,114 AFLOWLIB,115 Computational Material Repository,116 and AiiDA117 have been developed or extended in recent years with the consideration that these databases can be used to discover, select or analyze functional materials (e.g., catalysts, semiconductors, absorbers, membranes, etc.). While the numbers and sizes of such databases are growing, the accuracy of their data content has increased as well thanks to the continuous development in experimental and computational technologies. Furthermore, these databases are also becoming easier to use with the available workflow management programs such as AFLOW,115 Firework,118 Atomate119 and Pymatgen.120 However, there are two major problems that should be considered. First, most of the current material databases contain information related to the general properties of the materials; hence, they are not suitable for field specific applications. The development of field related databases is also underway;they are relatively much smaller in their numbers and sizes due to the specificity of the data needed and the smaller number of contributors for the construction of databases. Increasing efforts to develop new algorithms that can be used with smaller datasets may ease the problem.121 However, the need for large datasets will always exist; it almost comes with the territory. Second, the qualities and performances of individual materials or components do not always reflect their performance in larger systems, where the interactions between the elements are also critical. The data for the system level performance are mostly available in the published papers, and only a few groups (including us) utilize them in ML applications because not only the data extraction is tedious and time consuming but also the dataset constructed from multiple sources contains a significant level of noise and mismatches.
+Unfortunately, the lack of sufficient data seems to be a more serious problem for ML applications in algal biofuel production than in many other fields. First of all, algal biofuel production is not a single process; it is a collection of steps that are dissimilar in their goals, parameters and challenges each requiring a different dataset with different descriptors. For example, the selection of algae, cultivation, harvesting and converting biomass contents into more valuable products, including biofuel requires completely different technologies. Luckily, some steps overlap with other technologies; for example, cultivation should have some similarities with the cultivation of other biological agents while the parameters and problems in the transesterification of algal lipids to biodiesels should not be much different from those applicable to the lipids derived from other sources. The experience in similar fields always eases the implementation of ML in algal research (and vice versa); transfer learning, which refers to the use of knowledge gained from a specific area to analyze/model another similar area122 may be applicable as well, even though it may be easy to say than actually doing it. However, a significant amount of data specific to each process in the algal value chain will be always required; this need is especially important for algal strain selection and cultivation.
+As summarized above, the biomass content, potential to produce specific value-added products and suitability to wastewater to be used may differ significantly for different microalgae strains; hence, the selection and optimization of strains are among the most critical tasks for the successful commercialization of algal biofuels. In addition to the diversity of microalgae strains in nature, the genetically modified algal strains have also proven to enhance the photosynthetic efficiency and improve the lipid content of the microalgae increasing the number of strain alternatives further.123 It should be also noted that the characteristic of stress conditions will be highly dependent on the location (due to the locality of wastewater) and time (due to the changes in wastewater as a result of changes in habits and regulations); hence, the selection of optimum strains will be not only a critical task for the commercialization, but it will also be an ongoing job that has to be repeated in various places and times.
+This just sounds like a perfect playground for ML as long as we have descriptors that will link the strain properties (including genomic information) with performance measures such as the lipid content, and data including a sufficiently large number of different strains. In principle, the relationships between the structure and properties and function and performance can be established.123 However, to the best of our knowledge, there is no such comprehensive work on screening a large number of potential strains by ML, apperantly because the data ara not available for most of these strains. Indeed, the published ML articles of this nature are limited to the selection of the best alternative among a few already known strains for a specific performance measure in a specific set of cultivation conditions. The large datasets, however, may have an enormous impact on the potential contribution of ML to the commercialization of algal biofuels; it will not only improve the biofuel production efficiency, but also help to control the production of additional value-added chemicals, which are highly dependent on the algal strain used. Furthermore, the understanding of the structure (including genomic information) and activity relationship will ease the genetic modification of microalgae for the production of specific value-added products. On the other hand, it does not seem to be an easy task to generate such large datasets for a person or institution; it may require close collaborations among researchers and some forms of organizations to create self-sustaining databases as those that have emerged in other fields of science in recent years.
+
+Explainable machine learning or artificial intelligence,124,125 as a recently popularized trend in ML application may also be relevant to algal biofuel production research. As occasionally criticized, most of the ML algorithms end up with black box models that give little insight into the nature of descriptor-target variable relations. Explainable machine learning algorithms are aimed to overcome this weakness and maximize the learning from ML models. Indeed, ML applications similar to the algal strain selection problem can benefit from the interpretability significantly. Differences in the structures and properties of the strains determine their effectiveness to produce lipids and other desirable products through some metabolic pathways; more information deduced for these pathways and intermediate compounds will make ML more valuable for future works, especially those involving genetic modification.
+Cultivation is another step that may be improved significantly using ML tools. Indeed, most of the ML works on algal biofuel production so far have been aimed to analyze and optimize the variables in the cultivation step process (Fig. 6). This is an expected result because, regardless of the cultivation type (open or closed system), it is difficult to determine the optimal conditions for biomass growth or lipid production using conventional approaches; instead, ML tools can be quite useful in detecting major patterns that are difficult to see with the naked eye, as well as determining the ideal combination of process variables for microalgal biomass production.26 The clarity of target variables (e.g., biomass growth or lipid production) and descriptors (i.e., clearly defined medium compositions and operational variables) as well as the vast experience with ML analysis in the cultivation of various biological agents also makes this field highly suitable for such analysis. However, the nonstandard and noisy nature of the process creates a big challenge for the full utilization of ML models in the field. First of all, the composition of the cultivation is inherently nonstandard; wastewaters from different sources have different nutrition and contamination while there may be also differences with respect to time as we briefly discussed above. This significantly reduces the generalizability of ML models and limits learning from the data. Secondly, solar irradiation is quite nonstandard even for the works performed in laboratories under solar simulators; the type and brand of the light source, distance and angle of irradiation, the material of transparent bioreactor and the composition of medium will change the amount of light received by microalgae. Needless to say, the situation is much worse for the tests performed under actual solar radiation due to the continuously changing climatic conditions. We can also add the evaporation of water and other noise factors in open pond cultivation. On the one hand, standardizing experimental conditions can only be achieved on a laboratory scale, and it definitely creates a scale up problem due to the uncounted factors under actual conditions. On the other hand, the experimental data generated under actual conditions will have significant noises, which is not desirable for ML models, and unique variables (e.g., specific metals or chemicals that exist only in certain types of waste), which is much worse than noise for ML applications. Nevertheless, the development and use of the standard testing and reporting procedure for microalgal cultivation, as in other technologies like solar cells,126 seem to be the best choice to be able to extract generalizable knowledge despite the disadvantages mentioned above; needless to say, this will also require close collaboration among the researchers in the field. This will not only improve the effectiveness of ML analysis in algal cultivation but also improve knowledge accumulation via systematic comparison of the results under similar conditions.
+Finally, we will discuss the limitations of ML and potential pitfalls and traps that should be avoided during its implementation. One of the most important limitations of ML is that it relies on the past data and the model developed should be valid within the limits of the datasets; hence, it may not provide or suggest breakthrough solutions, which usually come from unexplored areas. However, it makes significant contributions to understanding the physical phenomena and guiding the experimental research into more promising areas. Another potential problem is that most of the ML algorithms (as the statistics in general) are more accurate in deductions involving the materials, methods or process conditions that have a large number of repeats in the database; it is quite possible that some new alternatives may be ignored due to its very small number of appearance in the dataset (too small for generalization) or decided to be insignificant due to the initial (immature) poor performances even though they may have great potential for the future like many great innovations.
+There are also pitfalls that are not inherited in ML or its algorithms but they are related to implementation. For example, sometimes ML algorithms are not selected by considering the purpose of research or structure of the data as normally should be; instead, they are selected based on their popularity at that time without providing any real benefit. Another common problem in ML applications is that the ML model developed may be actually over-fitted (especially if the available data is limited) because the criteria for over-fitting for some ML algorithms are as not well defined (or obvious to observe) as those in linear regression. Similarly, the use of highly correlated descriptors may not be always avoided even though it is problematic in some ML algorithms. Consequently, ML models should be used with care and supported by other tools and observations.
+5. Conclusions
+Microalgae have huge potential for biofuel production as a biomass source that can be cultivated without directly competing with the food chain while helping in utilizing CO2 and cleaning wastewater. However, the biofuel produced from microalgae will be likely costlier than the other alternatives and will not be feasible with the current state of practice. Three courses of action frequently appeared in the literature to improve the commercial feasibility of the technology: selection of better strains, production of additional chemicals together with biofuels and minimization of energy consumption with alternative processes. The production of value-added chemicals is also highly dependent on the selection of suitable strains. Although a significant number of ML works have been published in recent years, there are few works involving the selection of suitable strains from a few (i.e., a few tens) alternatives even though thousands of strains are believed to exist in nature. Considering that different strains have different biomass contents and different performances in different wastewater sources, they should be carefully screened, selected, and optimized to enhance the production of biofuel and other value-added products. This could be done using ML if an extensive algal database is constructed requiring close collaborations of the researchers in the field. Another area for improvement seems to be the optimization of the cultivation medium. Indeed, most of the ML works on algal biofuel production so far have been on this area; however, the nonstandard nature of the strain, cultivation medium (i.e., wastewater), and cultivation conditions (especially irradiation) significantly reduce the generalizability of ML models and limit learning from data. The development and use of standard testing and reporting protocols for microalgal cultivation may improve the effectiveness of ML analysis as well as allow systematic comparisons of the results for better progress in the field. As a result, close collaborations of players in the field to create an extensive microalgae database and the development of standard testing and reporting protocols seem to be vital to utilize ML more effectively for the feasibility of microalgal biofuels.
+Abbreviations
+
+ABAdaptive boosting
+ADAnaerobic digestion
+ANNArtificial neural network
+BODBiochemical oxygen demand
+CNNConvolutional neural network
+CNN-SVMConvolutional neural network in combination with support vector machine
+CODChemical oxygen demand
+DRTDecision regression tree
+DTDecision tree
+GBDTGradient boosting decision tree
+GBRGradient boosting regression
+GPGenetic programming
+HTCHydrothermal carbonization
+HTLHydrothermal liquefaction
+hybridHybrid physics-based and data-driven modeling
+k-NNk-Nearest neighbor
+KRRKernel ridge regression
+LogRegLogistic regression
+LSTMLong short-term memory network
+MLPMultilayer perceptron
+MLRMulti-linear regression
+NBNaive Bayes
+PCA-SVMPrincipal component analysis in combination with support vector machine
+PSO-SVMParticle swarm optimization in combination with support vector machine
+QDAQuadratic discriminant analysis
+RFRandom forest
+RidRegRidge regression
+RSMResponse surface methodology
+SVCSupport vector classifier
+SVMSupport vector machine
+SVRSupport vector regression
+XGBExtreme gradient boosting machine
+
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+There are no acknowledgements to declare.
+References
+D. Zhang, P. Dechatiwongse, E. A. Del-Rio-Chanona, K. Hellgardt, G. C. Maitland and V. S. Vassiliadis, Chem. Eng. Sci., 2015, 128, 130–146 CrossRef CAS .
+N. Abdel-Raouf, A. A. Al-Homaidan and I. B. Ibraheem, Saudi J. Biol. Sci., 2012, 19, 257–275 CrossRef CAS PubMed .
+P. Otálora, J. L. Guzmán, F. G. Acién, M. Berenguel and A. Reul, Algal Res., 2021, 55, 102256 CrossRef .
+L. Brennan and P. Owende, Renewable Sustainable Energy Rev., 2010, 14, 557–577 CrossRef CAS .
+L. Gouveia, A. E. Marques, J. M. Sousa, P. Moura and N. M. Bandarra, Food Sci. Tech. Bull. Funct. Foods, 2010, 7, 21–37 CrossRef .
+E. Bradford, A. M. Schweidtmann, D. Zhang, K. Jing and E. A. del Rio-Chanona, Comput. Chem. Eng., 2018, 118, 143–158 CrossRef CAS .
+O. Pulz and W. Gross, Appl. Microbiol. Biotechnol., 2004, 65, 635–648 CrossRef CAS PubMed .
+B. M. Franco, L. M. Navas, C. Gómez, C. Sepúlveda and F. G. Acién, Algal Res., 2019, 38, 101419 CrossRef .
+W. Levasseur, V. Pozzobon and P. Perré, J. Appl. Phycol., 2021, 34, 135–158 CrossRef .
+D. Zhang, E. A. Del Rio-Chanona, P. Petsagkourakis and J. Wagner, Biotechnol. Bioeng., 2019, 116, 2919–2930 CrossRef CAS PubMed .
+I. Vatcheva, H. de Jong, O. Bernard and N. J. I. Mars, Artif. Intell., 2006, 170, 472–506 CrossRef .
+E. A. Del Rio-Chanona, N. R. Ahmed, J. Wagner, Y. Lu, D. Zhang and K. Jing, Biotechnol. Bioeng., 2019, 116, 2971–2982 CrossRef CAS PubMed .
+M. Aghbashlo, W. Peng, M. Tabatabaei, S. A. Kalogirou, S. Soltanian, H. Hosseinzadeh-Bandbafha, O. Mahian and S. S. Lam, Prog. Energy Combust. Sci., 2021, 85, 100904 CrossRef .
+S. Ascher, I. Watson and S. You, Renewable Sustainable Energy Rev., 2022, 155, 111902 CrossRef CAS .
+H. Ning, R. Li and T. Zhou, Front. Mar. Sci., 2022, 9, 947394 CrossRef .
+Z. Wang, X. Peng, A. Xia, A. A. Shah, Y. Huang, X. Zhu, X. Zhu and Q. Liao, Bioresour. Technol., 2022, 343, 126099 CrossRef CAS PubMed .
+B. Sundui, O. A. Ramirez Calderon, O. M. Abdeldayem, J. Lázaro-Gil, E. R. Rene and U. Sambuu, Clean Technol. Environ. Policy, 2021, 23, 127–143 CrossRef CAS .
+S. P. Singh and P. Singh, Renewable Sustainable Energy Rev., 2014, 38, 172–179 CrossRef CAS .
+M. Kumar, Y. Sun, R. Rathour, A. Pandey, I. S. Thakur and D. C. W. Tsang, Sci. Total Environ., 2020, 716, 137116 CrossRef CAS PubMed .
+
+          L. Rani, A. L. Srivastav, J. Kaushal, A. S. Grewal, A. K. Dubey, A. Kumar and S. K. Narang, in Artificial Intelligence for Renewable Energy Systems,  2022, pp. 173–187,  DOI:10.1016/b978-0-323-90396-7.00012-2 .
+T. Suganya, M. Varman, H. H. Masjuki and S. Renganathan, Renewable Sustainable Energy Rev., 2016, 55, 909–941 CrossRef CAS .
+J. Trivedi, M. Aila, D. P. Bangwal, S. Kaul and M. O. Garg, Renewable Sustainable Energy Rev., 2015, 47, 295–307 CrossRef CAS .
+O. K. Lee and E. Y. Lee, Biomass Bioenergy, 2016, 92, 70–75 CrossRef CAS .
+O. M. Adeniyi, U. Azimov and A. Burluka, Renewable Sustainable Energy Rev., 2018, 90, 316–335 CrossRef .
+Y. Joon Sung, B. Sun Yu, H. Eun Yang, D. Hoon Kim, J. Yeon Lee and S. Jun Sim, Bioresour. Technol., 2022, 364, 128134 CrossRef PubMed .
+A. Coşgun, M. E. Günay and R. Yıldırım, Renewable Energy, 2021, 163, 1299–1317 CrossRef .
+F. Han, H. Pei, W. Hu, M. Song, G. Ma and R. Pei, Energy Convers. Manage., 2015, 90, 315–322 CrossRef CAS .
+
+          H.-W. Yen, I.-C. Hu, C.-Y. Chen and J.-S. Chang, in Biofuels from Algae, ed. A. Pandey, D.-J. Lee, Y. Chisti and C. R. Soccol, Elsevier,  2014, ch. 2, pp. 23–45,  DOI:10.1016/B978-0-444-59558-4.00002-4 .
+N. Pushpakumari Kudahettige, J. Pickova and F. G. Gentili, Front. Energy Res., 2018, 6, 132 CrossRef .
+M. J. Griffiths, R. P. van Hille and S. T. L. Harrison, J. Appl. Phycol., 2011, 24, 989–1001 CrossRef .
+N. Sanyano, P. Chetpattananondh and S. Chongkhong, Bioresour. Technol., 2013, 147, 471–476 CrossRef CAS PubMed .
+
+          K.-Y. Show and D.-J. Lee, in Biofuels from Algae,  2014, pp. 85–110,  DOI:10.1016/b978-0-444-59558-4.00005-x .
+M. L. Gerardo, S. Van Den Hende, H. Vervaeren, T. Coward and S. C. Skill, Algal Res., 2015, 11, 248–262 CrossRef .
+T. M. Mata, A. A. Martins and N. S. Caetano, Renewable Sustainable Energy Rev., 2010, 14, 217–232 CrossRef CAS .
+A. I. Barros, A. L. Gonçalves, M. Simões and J. C. M. Pires, Renewable Sustainable Energy Rev., 2015, 41, 1489–1500 CrossRef .
+R. K. Balasubramanian, T. T. Yen Doan and J. P. Obbard, Chem. Eng. J., 2013, 215–216, 929–936 CrossRef CAS .
+A. Guldhe, B. Singh, I. Rawat, K. Ramluckan and F. Bux, Fuel, 2014, 128, 46–52 CrossRef CAS .
+A. Widjaja, C.-C. Chien and Y.-H. Ju, J. Taiwan Inst. Chem. Eng., 2009, 40, 13–20 CrossRef CAS .
+
+          J. Ferrell and V. Sarisky-Reed, National Algal Biofuels Technology Roadmap, United States,  2010 Search PubMed .
+H. Taher, S. Al-Zuhair, A. H. Al-Marzouqi, Y. Haik and M. Farid, Biomass Bioenergy, 2014, 66, 159–167 CrossRef CAS .
+G. Yoo, Y. Yoo, J.-H. Kwon, C. Darpito, S. K. Mishra, K. Pak, M. S. Park, S. G. Im and J.-W. Yang, Green Chem., 2014, 16, 312–319 RSC .
+M. Mubarak, A. Shaija and T. V. Suchithra, Algal Res., 2015, 7, 117–123 CrossRef .
+W. M. A. Wan Mahmood, C. Theodoropoulos and M. Gonzalez-Miquel, Green Chem., 2017, 19, 5723–5733 RSC .
+R. Halim, B. Gladman, M. K. Danquah and P. A. Webley, Bioresour. Technol., 2011, 102, 178–185 CrossRef CAS PubMed .
+Y. Li, F. Ghasemi Naghdi, S. Garg, T. C. Adarme-Vega, K. J. Thurecht, W. A. Ghafor, S. Tannock and P. M. Schenk, Microb. Cell Fact., 2014, 13, 14 CrossRef PubMed .
+K. Ramluckan, K. G. Moodley and F. Bux, Fuel, 2014, 116, 103–108 CrossRef CAS .
+L. Soh and J. Zimmerman, Green Chem., 2011, 13, 1422–1429 RSC .
+W. Lu, Z. Wang and Z. Yuan, Bioresour. Technol., 2015, 191, 433–437 CrossRef CAS PubMed .
+M. D. Macías-Sánchez, C. Mantell, M. Rodríguez, E. Martínez de la Ossa, L. M. Lubián and O. Montero, J. Supercrit. Fluids, 2007, 39, 323–329 CrossRef .
+J. Wu, M. A. Alam, Y. Pan, D. Huang, Z. Wang and T. Wang, J. Taiwan Inst. Chem. Eng., 2017, 71, 323–329 CrossRef CAS .
+M. Mubarak, A. Shaija and T. V. Suchithra, Resour.-Effic. Technol., 2016, 2, 126–132 Search PubMed .
+E. Y. Kuo, R. Y. Yang, Y. Y. Chin, Y. L. Chien, Y. C. Chen, C. Y. Wei, L. J. Kao, Y. H. Chang, Y. J. Li, T. Y. Chen and T. M. Lee, Biotechnol. J., 2022, 17, e2100603 CrossRef PubMed .
+A. Azari, H. Tavakoli, B. D. Barkdoll and O. B. Haddad, Algal Res., 2020, 47, 101843 CrossRef .
+A. Doshi, S. Pascoe, L. Coglan and T. J. Rainey, Renewable Sustainable Energy Rev., 2016, 64, 329–337 CrossRef .
+J. Hoffman, R. C. Pate, T. Drennen and J. C. Quinn, Algal Res., 2017, 23, 51–57 CrossRef .
+
+          B. Klein and R. Davis, Algal Biomass Production via Open Pond Algae Farm Cultivation: 2021 State of Technology and Future Research,  2022 Search PubMed .
+C. Xin, M. M. Addy, J. Zhao, Y. Cheng, Y. Ma, S. Liu, D. Mu, Y. Liu, P. Chen and R. Ruan, Bioresour. Technol., 2018, 250, 523–531 CrossRef CAS PubMed .
+N. Hossain, T. M. I. Mahlia, J. Zaini and R. Saidur, Environ. Prog. Sustainable Energy, 2019, 38, 13157 CrossRef .
+S. Subramanian and R. T. Sayre, Front. Energy Res., 2022, 10, 979747 CrossRef .
+M. Hannon, J. Gimpel, M. Tran, B. Rasala and S. Mayfield, Biofuels, 2010, 1, 763–784 CrossRef CAS PubMed .
+S. R. Chia, S. Nomanbhay, K. W. Chew, H. S. H. Munawaroh, A. H. Shamsuddin and P. L. Show, Chemosphere, 2022, 287, 131944 CrossRef CAS PubMed .
+J. P. Bitog, I. B. Lee, C. G. Lee, K. S. Kim, H. S. Hwang, S. W. Hong, I. H. Seo, K. S. Kwon and E. Mostafa, Comput. Electron. Agric., 2011, 76, 131–147 CrossRef .
+M. Fayyaz, K. W. Chew, P. L. Show, T. C. Ling, I. S. Ng and J. S. Chang, Biotechnol. Adv., 2020, 43, 107554 CrossRef CAS PubMed .
+
+          K. Heimann and R. Huerlimann, in Handbook of Marine Microalgae, ed. S.-K. Kim, Academic Press,  2015, pp. 25–41,  DOI:10.1016/B978-0-12-800776-1.00003-0 .
+M. Mofijur, S. M. Ashrafur Rahman, L. N. Nguyen, T. M. I. Mahlia and L. D. Nghiem, Bioresour. Technol., 2022, 345, 126408 CrossRef CAS PubMed .
+D. Nagarajan, D. J. Lee, C. Y. Chen and J. S. Chang, Bioresour. Technol., 2020, 302, 122817 CrossRef CAS PubMed .
+
+          D. T. Larose and C. D. Larose, Discovering Knowledge in Data: An Introduction to Data Mining, Wiley, Hoboken, New Jersey, 2nd edn,  2014 Search PubMed .
+M. E. Günay and R. Yıldırım, Catal. Rev., 2020, 63, 120–164 CrossRef .
+A. Jain, S. P. Ong, G. Hautier, W. Chen, W. D. Richards, S. Dacek, S. Cholia, D. Gunter, D. Skinner, G. Ceder and K. A. Persson, APL Mater., 2013, 1, 011002 CrossRef .
+
+          E. Alpaydin, Introduction to Machine Learning, The MIT Press, 4th edn,  2020 Search PubMed .
+
+          M. Awad and R. Khanna, Efficient Learning Machines, in Theories, Concepts, and Applications for Engineers and System Designers, ApressBerkeley, CA, 1st edn,  2015 Search PubMed .
+
+          V. N. Vapnik, The Nature of Statistical Learning Theory, Springer, New York, NY, 2nd edn,  2000 Search PubMed .
+B. E. Condor, M. D. G. de Luna, R. R. M. Abarca, Y. H. Chang, Y. K. Leong, C. Y. Chen, P. T. Chen, D. J. Lee and J. S. Chang, Int. J. Energy Res., 2022, 46, 19300–19312 CrossRef CAS .
+S. M. Z. Hossain, N. Sultana, M. S. Jassim, G. Coskuner, L. M. Hazin, S. A. Razzak and M. M. Hossain, J. Water Process. Eng., 2022, 45, 102490 CrossRef .
+G. Srivastava, A. K. Paul and V. V. Goud, Energy Convers. Manage., 2018, 156, 269–278 CrossRef CAS .
+K. M. Desai, S. A. Survase, P. S. Saudagar, S. S. Lele and R. S. Singhal, Biochem. Eng. J., 2008, 41, 266–273 CrossRef CAS .
+W. Zhang, J. Li, T. Liu, S. Leng, L. Yang, H. Peng, S. Jiang, W. Zhou, L. Leng and H. Li, Bioresour. Technol., 2021, 342, 126011 CrossRef CAS PubMed .
+B. Panahi, M. Frahadian, J. T. Dums and M. A. Hejazi, Front. Genet., 2019, 10, 752 CrossRef CAS PubMed .
+V. Pozzobon, W. Levasseur, E. Viau, E. Michiels, T. Clément and P. Perré, J. Appl. Phycol., 2020, 32, 2967–2976 CrossRef .
+A. Dhindsa, S. Bhatia, S. Agrawal and B. S. Sohi, Entropy, 2021, 23, 257 CrossRef PubMed .
+R. Reimann, B. Zeng, M. Jakopec, M. Burdukiewicz, I. Petrick, P. Schierack and S. Rödiger, Algal Res., 2020, 48, 101908 CrossRef .
+M. E. Sonmez, N. Eczacıoglu, N. E. Gumuş, M. F. Aslan, K. Sabanci and B. Aşikkutlu, Algal Res., 2022, 61, 102568 CrossRef .
+
+          I. Correa, P. Drews, S. Botelho, M. S. de Souza and V. M. Tavano, Presented in part at the 2017 16th IEEE International Conference on Machine Learning and Applications (ICMLA),  2017.
+Z. Zhuo, H. Wang, R. Liao and H. Ma, Appl. Sci., 2022, 12, 3422 CrossRef CAS .
+P. Salmi, M. Calderini, S. Pääkkönen, S. Taipale and I. Pölönen, J. Appl. Phycol., 2022, 34, 1565–1575 CrossRef CAS .
+Z. Xu, Y. Jiang, J. Ji, E. Forsberg, Y. Li and S. He, Opt. Express, 2020, 28, 30686–30700 CrossRef CAS PubMed .
+Y. Guo, W. Ma, J. Li, W. Liu, P. Qi, Y. Ye, B. Guo, J. Zhang and C. Qu, Environ. Pollut., 2020, 257, 113628 CrossRef CAS PubMed .
+V. Singh and V. Mishra, Biochem. Eng. J., 2021, 174, 108129 CrossRef CAS .
+V. Singh and V. Mishra, Water Res., 2022, 213, 118165 CrossRef CAS PubMed .
+B. Long, B. Fischer, Y. Zeng, Z. Amerigian, Q. Li, H. Bryant, M. Li, S. Y. Dai and J. S. Yuan, Nat. Commun., 2022, 13, 541 CrossRef CAS PubMed .
+P. M. L. Ching, A. P. Mayol, J. L. G. S. Juan, R. H. Y. So, C. L. Sy, E. Mandia, A. T. Ubando and A. B. Culaba, Clean Technol. Environ. Policy, 2022, 24, 2283–2293 CrossRef .
+Supriyanto, R. Noguchi, T. Ahamed, D. S. Rani, K. Sakurai, M. A. Nasution, D. S. Wibawa, M. Demura and M. M. Watanabe, Biosyst. Eng., 2019, 177, 122–129 CrossRef .
+H. Rodríguez-Rángel, D. M. Arias, L. A. Morales-Rosales, V. Gonzalez-Huitron, M. Valenzuela Partida and J. García, Energies, 2022, 15, 2500 CrossRef .
+P. J. García Nieto, E. García-Gonzalo, J. R. Alonso Fernández and C. Díaz Muñiz, J. Comput. Appl. Math., 2016, 291, 293–303 CrossRef .
+Y. T.-T. Doan, M.-T. Ho, H.-K. Nguyen and H.-D. Han, J. Appl. Phycol., 2021, 33, 2733–2744 CrossRef CAS .
+P. M. L. Ching, A. P. Mayol, J. L. G. San Juan, A. M. Calapatia, R. H. Y. So, C. L. Sy, A. T. Ubando and A. B. Culaba, Process Integr., 2021, 5, 247–256 Search PubMed .
+U. Suparmaniam, N. B. Shaik, M. K. Lam, J. W. Lim, Y. Uemura, S. H. Shuit, P. L. Show, I. S. Tan and K. T. Lee, J. Water Process. Eng., 2022, 47, 102808 CrossRef .
+N. Sultana, S. M. Z. Hossain, M. Abusaad, N. Alanbar, Y. Senan and S. A. Razzak, Fuel, 2022, 309, 122184 CrossRef CAS .
+S. Salam and T. N. Verma, Energy Convers. Manage., 2019, 180, 496–510 CrossRef CAS .
+M. Suvarna, M. I. Jahirul, W. H. Aaron-Yeap, C. V. Augustine, A. Umesh, M. G. Rasul, M. E. Günay, R. Yildirim and J. Janaun, Renewable Energy, 2022, 189, 245–258 CrossRef CAS .
+J. T. Bong, A. C. M. Loy, B. L. F. Chin, M. K. Lam, D. K. H. Tang, H. Y. Lim, Y. H. Chai and S. Yusup, Energy, 2020, 207, 118289 CrossRef CAS .
+A. Pathy, S. Meher and B. P, Algal Res., 2020, 50, 102006 CrossRef .
+S. Wang, Z. Shi, Y. Jin, I. N. Zaini, Y. Li, C. Tang, W. Mu, Y. Wen, J. Jiang, P. G. Jönsson and W. Yang, Energy Convers. Manage., 2022, 260, 115613 CrossRef CAS .
+J. Li, W. Zhang, T. Liu, L. Yang, H. Li, H. Peng, S. Jiang, X. Wang and L. Leng, Chem. Eng. J., 2021, 425, 130649 CrossRef CAS .
+F. Cheng and H. Luo, Bioresour. Technol. Rep., 2022, 17, 100901 CrossRef CAS .
+T. Katongtung, T. Onsree and N. Tippayawong, Bioresour. Technol., 2022, 344, 126278 CrossRef CAS PubMed .
+F. Cheng, E. R. Belden, W. Li, M. Shahabuddin, R. C. Paffenroth and M. T. Timko, Chem. Eng. J., 2022, 442, 136013 CrossRef CAS .
+Y. Wang, P. Ju, S. Wang, J. Su, W. Zhai and C. Wu, Mar. Pollut. Bull., 2021, 163, 111927 CrossRef CAS PubMed .
+C.-L. Chen, J.-S. Chang and D.-J. Lee, Drying Technol., 2015, 33, 443–454 CrossRef CAS .
+B. Bharathiraja, M. Chakravarthy, R. Ranjith Kumar, D. Yogendran, D. Yuvaraj, J. Jayamuthunagai, R. Praveen Kumar and S. Palani, Renewable Sustainable Energy Rev., 2015, 47, 634–653 CrossRef CAS .
+H. L. Bryant, I. Gogichaishvili, D. Anderson, J. W. Richardson, J. Sawyer, T. Wickersham and M. L. Drewery, Algal Res., 2012, 1, 185–193 CrossRef .
+H.-j. Huang and X.-z. Yuan, Prog. Energy Combust. Sci., 2015, 49, 59–80 CrossRef .
+A. Jain, G. Hautier, S. P. Ong and K. Persson, J. Mater. Res., 2016, 31, 977–994 CrossRef CAS .
+S. Kirklin, J. E. Saal, B. Meredig, A. Thompson, J. W. Doak, M. Aykol, S. Rühl and C. Wolverton, npj Comput. Mater., 2015, 1, 1–15 Search PubMed .
+S. Curtarolo, W. Setyawan, S. Wang, J. Xue, K. Yang, R. H. Taylor, L. J. Nelson, G. L. Hart, S. Sanvito and M. Buongiorno-Nardelli, Comput. Mater. Sci., 2012, 58, 227–235 CrossRef CAS .
+D. D. Landis, J. S. Hummelshøj, S. Nestorov, J. Greeley, M. Dułak, T. Bligaard, J. K. Nørskov and K. W. Jacobsen, Comput. Sci. Eng., 2012, 14, 51–57 Search PubMed .
+S. P. Huber, S. Zoupanos, M. Uhrin, L. Talirz, L. Kahle, R. Häuselmann, D. Gresch, T. Müller, A. V. Yakutovich and C. W. Andersen, Sci. Data, 2020, 7, 1–18 CrossRef PubMed .
+Q. Zhang, Q. Zhang, W. Shi and H. Zhong, IEEE Trans. Parallel Distrib. Syst., 2018, 29, 2004–2017 Search PubMed .
+K. Mathew, J. H. Montoya, A. Faghaninia, S. Dwarakanath, M. Aykol, H. Tang, I.-h. Chu, T. Smidt, B. Bocklund, M. Horton, J. Dagdelen, B. Wood, Z.-K. Liu, J. Neaton, S. P. Ong, K. Persson and A. Jain, Comput. Mater. Sci., 2017, 139, 140–152 CrossRef .
+S. P. Ong, W. D. Richards, A. Jain, G. Hautier, M. Kocher, S. Cholia, D. Gunter, V. L. Chevrier, K. A. Persson and G. Ceder, Comput. Mater. Sci., 2013, 68, 314–319 CrossRef CAS .
+Y. Zhang and C. Ling, npj Comput. Mater., 2018, 4, 25 CrossRef .
+M. Kaya and S. Hajimirza, Sci. Rep., 2019, 9, 5034 CrossRef PubMed .
+R. P. Rastogi, A. Pandey, C. Larroche and D. Madamwar, Renewable Sustainable Energy Rev., 2018, 82, 2946–2969 CrossRef CAS .
+
+          S. Cohen, E. Ruppin and G. Dror, Presented in part at the Proceedings of the Nineteenth International Joint Conference on Artificial Intelligence, Edinburgh, Scotland, UK, July 30-August 5, 2005,  2005.
+
+          C. Molnar, Interpretable Machine Learning: A Guide For Making Black Box Models Explainable, Independently published, 2nd edn,  2022 Search PubMed .
+M. V. Khenkin, E. A. Katz, A. Abate, G. Bardizza, J. J. Berry, C. Brabec, F. Brunetti, V. Bulović, Q. Burlingame, A. Di Carlo, R. Cheacharoen, Y.-B. Cheng, A. Colsmann, S. Cros, K. Domanski, M. Dusza, C. J. Fell, S. R. Forrest, Y. Galagan, D. Di Girolamo, M. Grätzel, A. Hagfeldt, E. von Hauff, H. Hoppe, J. Kettle, H. Köbler, M. S. Leite, S. Liu, Y.-L. Loo, J. M. Luther, C.-Q. Ma, M. Madsen, M. Manceau, M. Matheron, M. McGehee, R. Meitzner, M. K. Nazeeruddin, A. F. Nogueira, Ç. Odabaşı, A. Osherov, N.-G. Park, M. O. Reese, F. De Rossi, M. Saliba, U. S. Schubert, H. J. Snaith, S. D. Stranks, W. Tress, P. A. Troshin, V. Turkovic, S. Veenstra, I. Visoly-Fisher, A. Walsh, T. Watson, H. Xie, R. Yıldırım, S. M. Zakeeruddin, K. Zhu and M. Lira-Cantu, Nat. Energy, 2020, 5, 35–49 CrossRef .
+
+This journal is © The Royal Society of Chemistry 2023
+Table Content:
+
+ 	Fig. 1  Biofuels and coproducts that can be produced from algal biomass.	 
+
+ 	Fig. 2  Process diagram of biodiesel production from microalgae. Reproduced from ref. 26 with permission from Elsevier, copyright 2021.	 
+
+Reactor type	Raceway open pond, flat-plate type photobioreactor, inclined tubular type photobioreactor, and horizontal/continuous type photobioreactor
+Growth method	Photoautotrophic, heterotrophic, and mixotrophic
+Light related variables	Light intensity, light wavelength, and photoperiod time
+Carbon source	Inorganic (CO2 or carbonates) or organic (sugars)
+Nitrogen source	Nitrate (NO3−), nitrite (NO2−), ammonium (NH4+), and urea (CH4N2O)
+Phosphorus source	Polyphosphates, orthophosphates, and organic phosphates
+Operating conditions	Temperature, pH, salinity, and flow rate
+
+ 	Fig. 3  Current developments in the field of microalgae research through the years: (a) total number of articles and frequency of main keywords, (b) frequency of keywords related to process variables and growth methods, (c) frequency of keywords related to products, (d) frequency of keywords related to general trends.	 
+
+ 	Fig. 4  Photobioreactors used in growing microalgae: (a) raceway open pond, (b) flat-plate type photobioreactor, (c) inclined tubular type photobioreactor, (d) horizontal/continuous type photobioreactor. Reproduced from ref. 62 with permission from Elsevier, copyright 2011.	 
+
+ 	Fig. 5  Summary of the machine learning articles in the microalgae study.	 
+
+Classification	Characterization of the culture composition	ANN	
+Scenedesmus almeriensis and Chlorella vulgaris	289705	Sample images (32)	Training error did not exceed 4% and validation error 6.5%	
+3
+
+Classification	Identification of microorganisms	LogReg	Microorganisms	600 images and 32779 instances	—	Accuracy = 24.9%	
+80
+
+k-NN	Accuracy = 96.1%
+SVM	Accuracy = 97.2%
+ANN	Accuracy = 31.2%
+QDA	Accuracy = 26.8%
+Classification	Binary classification of living and dead microalgae	NB	
+Chlorella vulgaris
+	—	5 morphological and 9 fluorescence features (14)	Accuracy = 68.8%	
+81
+
+k-NN	Accuracy = 74.3%
+QDA	Accuracy = 74.3%
+DT	Accuracy = 77.4%
+AB	Accuracy = 77.4%
+RF	Accuracy = 77.7%
+ANN	Accuracy = 75.9%
+Classification	Identification of living and dead microalgae	DT	
+Prorocentrum Lima
+	1000	Digital holography microscopy (10)	Accuracy = 94.2%	
+81
+
+LogReg	Accuracy = 94.5%
+SVM	Accuracy = 94.8%
+k-NN	Accuracy = 89.7%
+Classification	Classification of Cyanobacteria and Chlorophyta groups	CNN	Cyanobacteria and Chlorophyta	472	Inverted microscope images	Accuracy = 98.81%	
+82
+
+CNN-SVM	Accuracy = 99.66%
+Classification	Classification of microalgae	CNN	Microalgae	29000	Low resolution images acquired using a particle analyzer	Accuracy = 88.59%	
+83
+
+Classification	Classification of microalgae	SVM	35 categories of marine microalgae	1000 records for one polarization state of each sample	Polarized light scattering data	15 categories of microalgae identified with an accuracy greater than 80%	
+84
+
+Classification	Microalgae species distribution	CNN	Microalgae monocultures	+100000	Optical properties of different microalgae groups	Accuracy = 95%b	
+85
+
+Microalgae pairwise mixtures	Accuracy = 100%b
+Regression	Biomass prediction	Microalgae monocultures	MAE = 22%b
+Microalgae pairwise mixtures	MAE = 24%b
+Classification	Classification of microalgae	PCA-SVM	
+Phaeocystis, Chlamydomonas and Chaetoceros	180 (60 × 3)	Hyperspectral imaging	Accuracy = 94.4%	
+86
+
+Regression	Estimation of the growth stage	RF	MAE = 0.781; R2 = 0.98; accuracy = 98.1%
+Regression	Description of monoalgal and mixed algal cultures	ANN	
+Nostoc sp., Scenedesmus almeriensis, Spirulina platensis and Chorella vulgaris	550 samples	Light absorption measurements (31)	
+R
+2 = 0.951 to 0.970	
+8
+
+
+
+Microalgae cultivation
+
+Classification	Effect of toxicity on algal growth	GBDT	
+Phaeodactylum tricornutum
+	165 datasets	Microplastic concentrations, polymer sizes, algal cell sizes, algal species, the ratio of polymer size/cell size, polymer species, and exposure time (7)	False negativity and false positivity were 0.1 and 0.19	
+87
+
+Classification	Biomass productivity	DT	Microalgae	4356	(17)	Accuracy = 89.3%a, 88.5%b	
+26
+
+Lipid content	2022	Accuracy = 81.5%a, 80.3%b
+Classification	Nitrogen removal efficiency	DT	Chlorodendrophyceae, Chlorophyceae, Consortium, Cyanophycean, Eustigmatophyceae, Trebouxiophyceae Xanthophyceae	231	Microalgae type, pre-cultivation stage deciding factors, nutrient content of wastewater, and operating variables (16)	Accuracy = 76.08%	
+88
+
+Phosphorus removal efficiency	229	Accuracy = 77.7%
+Biomass production	221	Accuracy = 84.09%
+Classification	Nitrogen removal efficiency	DT	Trebouxiophyceae	239	Pre-cultivation stage deciding factors, operating variables, and initial nutrient concentration (13)	Accuracy = 72.34%	
+89
+
+Phosphorus removal efficiency	239	Accuracy = 72.5%
+Biomass production	214	Accuracy = 78.57%
+Nitrogen removal efficiency	Chlorophyceae	200	Accuracy = 73.91%
+Phosphorus removal efficiency	204	Accuracy = 80%
+Biomass production	206	Accuracy = 73.17%
+Regression	Light distribution pattern	SVM	Microalgae	—	—	
+R
+2 = 0.993	
+90
+
+Growth rate	—	—	
+R
+2 = 0.992
+Regression	Relative variation of the growth rate	RF	Green microalgae	761	Incident light intensity, ratio between the light and the dark period of the cycle, and total cycle time	Around 90% of the maximum explained variance	
+9
+
+Regression	Early prediction of the final biomass yield	RidReg	
+Spirulina platensis
+	42	OD, pH	MAE = 0.144e g L−1; R2 = 0.754	
+91
+
+Regression	Microalgae biomass concentration	ANN	Five dominant microalgae species in polyculture: Desmodesmus sp., Scenedesmus sp., Dictyosphaerium sp., Kleibsormidium sp., and Micractinium sp.	553	Initial algal concentration, harvesting period, hydraulic retention time, addition of sodium acetate, solar radiation, temperature, NO3− concentration, and pH (8)	
+R
+2 = 0.95a, 0.96c, 0.94b, and 0.95	
+92
+
+Regression	Biomass concentration	GP	
+Desmodesmus sp. F51	—	Incident light intensity and nitrate inflow rate	GPs comparable to ANNs for long-term dynamic bioprocess modeling	
+6
+
+Nitrate concentration
+Lutein concentration
+Regression	Carbohydrate content	RSM	
+Chlorella vulgaris FSP-E	20	Light intensity, initial nitrogen concentration, and nitrogen starvation duration (3)	
+R
+2 = 0.9873 (0.9329d)	
+73
+
+ANN	27	
+R
+2 = 0.9959 (0.9752b)
+
+
+Microalgae cultivation
+
+Regression	Carbohydrate content	ANN	Mixed consortium	108	(18)	RMSE = 0.0655; R2 = 0.8403	
+93
+
+CNN	RMSE = 0.0529; R2 = 0.8966
+LSTM	RMSE = 0.06; R2 = 0.8648
+k-NN	RMSE = 0.0921; R2 = 0.6831
+RF	RMSE = 0.0678; R2 = 0.8286
+Regression	N removal (%)	RSM	
+Chlorella kessleri
+	—	Temperature, light–dark cycle, and nitrate-to-phosphate ratio (3)	RMSE = 14.5112; MAE = 11.5189; R2 = 0.8653	
+74
+
+ANN	RMSE = 1.1881; MAE = 0.7869; R2 = 0.9994
+SVM	RMSE = 0.7819; MAE = 0.5079; R2 = 0.9996
+P removal (%)	RSM	RMSE = 10.88967; MAE = 9.80447; R2 = 0.8293
+ANN	RMSE = 7.847; MAE = 4.8057; R2 = 0.9122
+SVM	RMSE = 5.35345; MAE = 1.8936; R2 = 0.9592
+Regression	Chlorophyll-a concentration	PSO-SVM	
+Spirulina platensis
+	2340	pH, optical density, oxygen concentration, NO−3 concentration, PO4 concentration, salinity, water temperature and irradiance (8)	
+R
+2 = 0.99	
+94
+
+State/dynamic optimization	Lutein production	ANN	
+Desmodesmus sp. F51	8 datasets	Biomass, nitrate, and lutein concentrations, incident light intensity, and nitrate inflow rate (5)	40–50% increase of total lutein production.	
+12
+
+State/dynamic optimization	Fed–batch lutein production	Hybrid	
+Desmodesmus sp. F51	—	—	Final lutein yields of 5.0 mg L−1	
+10
+
+State/dynamic optimization	Carbon biofixation rate	GP	
+Chlorella vulgaris (ISC-23)	83	Temperature, light intensity, carbon concentration, aeration rate, pH, and time (6)	RMSE = 0.2372a, 0.0820b; MAE = 0.0814a, 0.0542b; R2 = 0.8791a, 0.9393b	
+53
+
+State/dynamic optimization	Dry-weight yield	LSTM	
+Spirulina sp. HH	20 day measurement	Light intensity	17% higher than traditional cultivation method, 10% higher than threshold-based method	
+95
+
+ 
+
+Harvesting and drying
+
+Regression	Delta moisture (%)	ANN	
+Chlorococcum infusionum
+	19515 generated data	Temperature, pressure, and delta moisture (3)	RMSE = 0.0437	
+96
+
+SVM	RMSE = 0.0500
+XGB	RMSE = 0.0308
+Regression	Flocculation efficiency	ANN	
+Chlorella vulgaris
+	∼195	Time and flocculation parameters (2)	
+R
+2 = ∼0.98	
+97
+
+
+
+Transesterification
+
+Regression	% conversion of oil to FAME	RSM	
+Chlorella CG12	20	Temperature, time, and oil to methanol ratio (3)	RMSE = 1.53; R2 = 0.97	
+75
+
+ANN	RMSE = 0.92; R2 = 0.99
+Regression	Biodiesel yield	ANN	Microalgae oil	30	Catalyst dose, oil to methanol molar ratio, temperature, and time (4)	RMSE = 0.0614: MAE = 0.0328; R2 = 0.965d	
+98
+
+SVM	RMSE = 0.0408; MAE = 0.0396; R2 = 0.984d
+ 
+
+Biodiesel properties
+
+Regression	Performance, emission, and combustion behaviours	ANN	
+Spirulina sp.	80	Loading levels, blending ratios, and fuel injection pressure yields (3)	
+R
+2 = 0.9608	
+99
+
+Regression	Cetane number	MLR	Biodiesel	202	C12:0, C14:0, C16:1, C18:0, C18:1, C18:2, C18:3, C20:0, C20:1, and C22:1 (10)	
+R
+2 = 0.52b	
+100
+
+SVM	
+R
+2 = 0.77b
+RF	
+R
+2 = 0.88b
+XGB	
+R
+2 = 0.89b
+
+	Cold filter plugging point	MLR	
+	267	C12:0, C14:0, C16:0, C16:1, C18:0, C18:1, C18:2, C18:3, C20:0, C20:1, and C22:1 (11)	
+R
+2 = 0.77b	
+
+SVM	
+R
+2 = 0.75b
+RF	
+R
+2 = 0.91b
+XGB	
+R
+2 = 0.87b
+Classification	Oxidation stability	LogReg	
+	227	C14:0, C16:0, C18:1, C18:2, C18:3, C20:1, and C22:1 (7)	Accuracy = 89%	
+
+k-NN	Accuracy = 84%
+SVM	Accuracy = 93%
+DT	Accuracy = 91%
+ 
+
+Pyrolysis
+
+Regression	Weight loss	ANN	
+Chlorella vulgaris
+	∼5000	Heating rate and temperature (2)	
+R
+2 = ∼0.8	
+101
+
+Regression	Biochar yield	XGB	Microalgae	64	Ratios of elemental compositions (H/C, N/C), ash content, pyrolysis temperature, and residence time (5)	
+R
+2 = 0.9974a, 0.8440b	
+102
+
+Regression	Pyrolytic activation energies	RF	Algae/biodegradable waste/cellulose/fossil/lignocellulose	281 datasets	Type and properties of raw materials and the applied model-free method (10)	RMSE = 8.4668; R2 = 0.9964	
+103
+
+
+
+Hydrothermal liquefaction (HTL)
+
+Regression	Bio-oil yield	GBR	Microalgae	310	Elemental composition (C, H, O, N and S), the atomic ratio of elements (H/C, O/C, and N/C), the biochemical composition of algae (protein, lipid, carbohydrate, and ash), and HTL operating conditions (temperature, residence time, and solid content of algae) (15)	RMSE = 4.69b; MAE = 3.56b; R2 = 0.90b	
+77
+
+Oxygen content	RMSE = 1.68b; MAE = 1.23b; R2 = 0.90b
+Nitrogen content	RMSE = 0.68b; MAE = 0.53b; R2 = 0.90b
+Bio-oil yield	RF	RMSE = 5.72b; MAE = 4.34b; R2 = 0.87b
+Oxygen content	RMSE = 1.91b; MAE = 1.43b; R2 = 0.87b
+Nitrogen content	RMSE = 0.74b; MAE = 0.56b; R2 = 0.88b
+Regression	Bio-oil yield	DT	Biomass (e.g., algae, sludge, manure, and food waste)	448	Elemental composition, process conditions, and solvent characteristics (18)	RMSE = 2.89a, 8.07b; R2 = 0.97a, 0.82b	
+104
+
+RF	RMSE = 3.66a, 6.17b; R2 = 0.95a, 0.89b
+GBR	RMSE = 3.74a, 6.14b; R2 = 0.95a, 0.90b
+Multi-task; bio-oil yield, nitrogen content in bio-oil, and energy recovery from biomass	RF	229	Elemental and biochemical compositions, and process conditions (12)	RMSE = 3.07a, 4.69b; R2 = 0.92a, 0.80b
+Regression	Biocrude yield	RF	
+Chlorella sp.	—	Biochemical composition (i.e., protein, lipid, and carbohydrates), HTL process conditions (i.e., temperature, reaction time, and initial solid concentration) (6)	RMSE = 6.29b; R2 = 0.81b	
+105
+
+Biocrude energy yield	RMSE = 2.14b; R2 = 0.84b
+Regression	Biocrude yield	XGB	Wet biomass (i.e., macro and microalgae, food waste, animal manure, sewage sludge, and wastewater) and waste	325	Feedstock characteristics (biological and elemental properties) and operating conditions (17)	RMSE = 5.4137; R2 = 0.8711	
+106
+
+RF	RMSE = 6.0073; R2 = 0.8425
+KRR	RMSE = 6.3053; R2 = 0.8201
+SVM	RMSE = 5.9615; R2 = 0.8457
+Higher heating value	XGB	RMSE = 1.9846; R2 = 0.8194
+RF	RMSE = 2.2857; R2 = 0.7353
+KRR	RMSE = 2.5142; R2 = 0.6567
+SVM	RMSE = 2.4259; R2 = 0.7134
+Regression	Predictions of biocrude yields	SVM	Algae, lignocellulosic biomass, and model compounds	570	Feedstock type, biochemical composition, solids loading, reaction temperature, reaction time, heating rate, organic biocrude extraction solvent, reactor type, reactor size, and yields of char, gas, and aqueous phase (18)	RMSE = 9.4b	
+107
+
+DT	RMSE = 10.24b
+ANN	RMSE = 9.02b
+RF	RMSE = 8.34b
+XGB	RMSE = 8.57b
+
+ 	Fig. 6  Machine learning analysis for biomass concentration using the ANN model: (a) training set, (b) validation set, (c) test set, and (d) all data. Reproduced from ref. 92 with permission from Elsevier, copyright 2019.	 
+AB	Adaptive boosting
+AD	Anaerobic digestion
+ANN	Artificial neural network
+BOD	Biochemical oxygen demand
+CNN	Convolutional neural network
+CNN-SVM	Convolutional neural network in combination with support vector machine
+COD	Chemical oxygen demand
+DRT	Decision regression tree
+DT	Decision tree
+GBDT	Gradient boosting decision tree
+GBR	Gradient boosting regression
+GP	Genetic programming
+HTC	Hydrothermal carbonization
+HTL	Hydrothermal liquefaction
+hybrid	Hybrid physics-based and data-driven modeling
+k-NN	k-Nearest neighbor
+KRR	Kernel ridge regression
+LogReg	Logistic regression
+LSTM	Long short-term memory network
+MLP	Multilayer perceptron
+MLR	Multi-linear regression
+NB	Naive Bayes
+PCA-SVM	Principal component analysis in combination with support vector machine
+PSO-SVM	Particle swarm optimization in combination with support vector machine
+QDA	Quadratic discriminant analysis
+RF	Random forest
+RidReg	Ridge regression
+RSM	Response surface methodology
+SVC	Support vector classifier
+SVM	Support vector machine
+SVR	Support vector regression
+XGB	Extreme gradient boosting machine
+
+This journal is © The Royal Society of Chemistry 2023

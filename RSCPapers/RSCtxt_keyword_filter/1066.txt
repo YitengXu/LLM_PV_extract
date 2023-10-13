@@ -1,0 +1,261 @@
+Machine learning with quantum chemistry descriptors: predicting the solubility of small-molecule optoelectronic materials for organic solar cells   - Journal of Materials Chemistry A (RSC Publishing) DOI:10.1039/D2TA03728A View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2TA03728A
+(Paper)
+J. Mater. Chem. A, 2022, 10, 15999-16006Machine learning with quantum chemistry descriptors: predicting the solubility of small-molecule optoelectronic materials for organic solar cells†
+
+        
+          
+            Chuang 
+            Yao‡
+*abc, 
+      
+        
+          
+            Xin 
+            Li‡
+d, 
+      
+        
+          
+            Yezi 
+            Yang
+          
+        
+      *a, 
+      
+        
+          
+            Lei 
+            Li
+          
+        
+      a, 
+      
+        
+          
+            Maolin 
+            Bo
+          
+        
+      a, 
+      
+        
+          
+            Cheng 
+            Peng
+          
+        
+      a and 
+
+        
+          
+            Jinshan 
+            Wang
+          
+        
+      *e
+aChongqing Key Laboratory of Extraordinary Bond Engineering and Advance Materials Technology (EBEAM), School of Materials Science and Engineering, Yangtze Normal University, Chongqing 408100, P. R. China. E-mail: yaochuang@yznu.cn
+bSchool of Materials Science and Engineering, Chongqing University, Chongqing 408100, P. R. China
+cSchool of Materials Science and Engineering, Yancheng Institute of Technology, Yancheng, 224051, P. R. China
+dJinan Institute of Quantum Technology, Jinan, Shandong 250101, China
+eSchool of Materials Science and Engineering, Yancheng Institute of Technology, Yancheng 224051, P. R. China. E-mail: wangjinshan@ycit.cn
+Received 
+      9th May 2022
+    , Accepted 5th July 2022First published on 5th July 2022AbstractSolubility prediction is important in developing high-performance optoelectronic materials for organic solar cells, and can assist the synthetic route and chemical process design of optoelectronic materials, and control the morphology of bulk-heterojunctions. Here we report a successful approach that can effectively predict the solubility of optoelectronic materials in any solvents by using a combination of machine learning and quantum chemistry descriptors. Temperature combined with quantum chemistry calculated molecular vdW surface area (area), positive electrostatic potential (ESP) variance (σ+2) and negative ESP variance (σ−2) were used as a small set of descriptors containing only 7 bits of data. It is the smallest set of descriptors currently used and shows good predictive performance to predict the solubility. This small set of descriptors enables us to predict the solubility of any small molecule in various solvents with a small number of quantum chemical calculations. The solubility of PCBM and Y6 in 42 common solvents used in organic chemistry was predicted, and 10 solvents with the highest solubility are screened out from the dataset. This model can be applied to other small-molecule systems to rapidly predict their solubility in any solvent and provide an important parameter for designing promising high-performance optoelectronic materials for organic solar cells.
+Introduction
+Bulk-heterojunction organic solar cells (OSCs), a promising next-generation technology for solar energy conversion, have attracted much attention in recent years because of their unique features of lightweight, mechanical flexibility, and solution processing.1,2 OSCs usually include a photoactive layer composed of electron donor and electron acceptor materials. Benefiting from the development of new donor and acceptor materials, the power conversion efficiency (PCE) of OSCs has increased substantially in the past few years. For instance, the emergence of non-fullerene acceptors3,4 like ITIC5,6 and Y67–9 has greatly improved the performance of OSCs. With the proposal of a multi-component (ternary or quaternary) photoactive layer,10–14 the PCE of OSCs has been further improved by more than 19%.15
+Since the Frenkel excitons formed in the photoactive layer are tightly bonded by coulombic force, their diffusion length is only limited to 5–14 nm.16,17 Therefore, the domain size of the donor and acceptor materials in the photoactive layer should be limited to 5–30 nm to ensure the excitons reach the donor/acceptor interface and then effectively dissociate into free charges. The morphology of the photoactive layer will affect the domain size of donor and acceptor materials. If it is larger than 50 nm, a large number of excitons will recombine before reaching the donor and acceptor interface. Therefore, the generation of free charges will be reduced and the current density will be reduced too. Thus, the morphology will have a great influence on the short-circuit current density (JSC) of OSCs. At the same time, the open-circuit voltage (VOC) and fill factor (FF) are also related to the morphology of the photoactive layer, such as the donor/acceptor interface area, microstructure, molecular orientation, domain purity, vertical phase separation, etc.18,19 And the PCE of OSCs is the product of JSC, VOC, and FF. Therefore, the ideal photoactive layer morphology is the key factor to realizing high-performance OSCs. Further improving the performance of OSCs requires fine-tuning of the morphologies of photoactive layers.
+Ternary organic solar cells have attracted great attention in recent years.20–22 There exist at least three kinds of optoelectronic materials in the active layer, so the compatibility of these materials has an important effect on the morphology of ternary organic solar cells. It is well known that the morphology of the photoactive layer is mainly determined by the solubility, crystallinity, and miscibility of donors and acceptors.23 Layer-by-layer OSCs exhibit great potential in achieving high PCE as reported by Zhang et al.24,25 It is well known that the solubility of optoelectronic materials is important for fabricating layer-by-layer OSCs, and will affect the interface morphology between different layers. Therefore, solubility is a critical physical property of donor and acceptor materials, and should be considered during the design of new high-performance donors and acceptors.
+Due to the importance of environmental predictions, biochemistry, and agrochemical and drug design, solubility prediction has been investigated in these fields.26 Previous solubility prediction approaches include first principles ab initio calculation (COSMO-RS),27 thermodynamic parameters (e.g., Hansen and Hildebrandt solubility parameters)28,29 and fragment-based semi-empirical methods (e.g., general solubility equation30). Recently, statistical analysis and machine learning techniques have been used to predict the solubility of drugs.31,32 This method often uses a large number of descriptors (>100),33 which makes it difficult to interpret and reasonably improve prediction models.34 Some models considered the solubility prediction only under single solute or solvent conditions,27,35 which is not applicable to other systems such as optoelectronic materials. At present, there is no specific research and suitable model for predicting the solubility of general optoelectronic materials. Therefore, accurate prediction of solubility based on a smaller set of descriptors and building more universal models remain major scientific challenges.
+In this work, we report a new approach to the general solubility prediction of any small-molecule material in various solvents by using a combination of machine learning and quantum chemistry descriptors. In contrast to previous studies (the minimum number of descriptors currently used is 14 bits),35 a small set of descriptors, containing only 7 bits of data, was used to predict the solubility. It is the smallest set of descriptors currently reported to predict general solubility. Combined with the Random Forest regression algorithm, the logarithms of mole fraction solubility, log(mol × 104) (mol: mole fraction), were predicted for an external test set of 2228 samples and exhibited a high accuracy with a coefficient of determination R2 = 0.90 and mean square error MSE = 0.33 log(mol × 104) units. Consequently, a general solubility prediction model, which reproduces the relationships between solubility and molecular surface properties, with excellent accuracy was developed. Furthermore, this model successfully predicted the solubility of PCBM and Y6 in 42 common solvents used in organic chemistry, and 10 solvents with the highest solubility in the dataset were screened out. Our work established a general solubility prediction mode, which can be used to predict the solubility of any small molecule in various solvents. It can provide important parameters for the design of novel and promising high-performance optoelectronic materials for organic solar cells.
+Computational method
+Dataset and surface descriptors
+In this work, a solubility dataset with 11141 samples for a single solvent system was chosen from the IUPAC-NIST Solubility Database, Version 1.1, NIST Standard Reference Database 106.36 In this dataset, there are 473 substances, which are formed by water and common organic solutes and solvents. The structures of these 473 substances were geometrically optimized by the ORCA Revision 5.0.1 program37 at the theoretical level of B3LYP/def2-TZVP with the dispersion correction D3BJ.38 The surface descriptors were calculated by Multiwfn39 based on the wavefunction generated by the single point energy calculations with the B3LYP/def2-TZVPD theoretical level. The calculated surface descriptors of 473 substances are summarized in Table S1.†
+Machine learning algorithm
+The random forest (RF) regression algorithm was used to establish the relationship of the surface descriptors with the solubility. The parameters of n estimators and max features were optimized to be 90 and 7, respectively. The model was tested by the regression score function R2 (coefficient of determination) and Mean-Square-Error (MSE). Examples of python scripts for establishing the prediction mode and using a mode to predict solubility are depicted in Scripts S1 and S2, respectively, as shown in the ESI.†
+Results and discussion
+Dataset analysis
+Solubility datasets were collected from the IUPAC-NIST Solubility Database as described in the Experimental Section, and only solubility data of neutral solutes in single component solvents were collected. Here, we obtained a dataset containing 11141 samples, which contains the information of solute and solvent name, mole fraction solubility, and experimental temperature. To make the solubility more expressive, the unit was converted to log(mol × 104), where mol represents the mole fraction solubility.
+The solubility distribution of this dataset is depicted in Fig. 1(a), which shows that the range for the value of log(mol × 104) is −6 to 7, and more than 85% ranges around 0 to 4. The temperature distribution of this dataset was also investigated as shown in Fig. 1(b), which indicated that almost 75% of the samples have a temperature around 297 to 370 K. Therefore, we recommend setting the temperature between 297 and 370 K when using the model trained with this dataset to predict solubility. There are some data with temperature larger than 500 K, which correspond to the case under high pressure. At the same time, we analyzed the molecular weight of the 473 substances used in this dataset, as shown in Fig. 1(c). It is obvious that small molecules with molecular weight distribution between 60 and 200 are the main substances. Almost all kinds of organic solvents such as water, alkane, alcohol, aromatic hydrocarbon, and haloalkanes are located in this region. Thus, the model trained with this dataset will be universal for small-molecule systems. The substances used in this dataset are all neutral molecules. Therefore, this model may be not appropriate for predicting the solubility of charged molecules and ionic compounds.
+ Fig. 1  Distribution of the solubility (a) and temperature (b) of the 11141 data obtained from the IUPAC-NIST Solubility Dataset. Distribution of the molecular weight of the 473 substances. 
+Descriptor development
+In order to develop predictive models for solubility in different solvents, a small set of molecular descriptors was selected. It was known that the strength and orientation of weak interactions, including such as hydrogen bonding, dihydrogen bonding, and halogen bonding, can be well predicted and explained by analyzing the magnitude and positions of minima and maxima of molecular electrostatic potential (ESP, V(r)) on the van der Waals (vdW) surface.40 Therefore, we used the quantitative properties generated by analyzing the molecular ESP on the vdW surface of solute and solvent as descriptors, including molecular vdW surface area (area), positive ESP variance (σ+2), negative ESP variance (σ−2), total ESP variance (σtot2) and degree of charge balance (ν). The descriptions of σ+2, σ−2, σtot2 and υ are shown in Table 1, and the definitions are as follows: (1) (2) (3) (4)where i and j are indices of sampling points in positive and negative regions, respectively, and m and n are indices of the number of sampling points in positive and negative regions, respectively.
+Table 1 List of descriptors based on molecular ESP on the vdW surface, properties and their descriptions
+
+
+
+
+No.
+Name
+Description
+
+
+
+
+1
+Area
+Molecular vdW surface area (Å2) calculated by Multiwfn based on the B3LYP/def2-TZVPD calculation level
+
+
+2
+
+σ
++
+2
+
+Positive ESP variance when analyzing the distribution of ESP on the vdW surface generated by Multiwfn based on the B3LYP/def2-TZVPD calculation level, which is in (kcal mol−1)2
+
+
+3
+
+σ
+−
+2
+
+Negative ESP variance when analyzing the distribution of ESP on the vdW surface generated by Multiwfn based on the B3LYP/def2-TZVPD calculation level, which is in (kcal mol−1)2
+
+
+4
+
+σ
+tot
+2
+
+Total ESP variance is defined as the sum of positive and negative parts, which is in (kcal mol−1)2
+
+
+5
+
+ν
+
+Degree of charge balance defined as σ+2σ−2/(σtot2)2
+
+
+
+
+To better understand the definition of these descriptors, the ESP distribution and area percentage of a representative solvent 1,2-dichlorobenzene were investigated as shown in Fig. 2. It can be seen from Fig. 2(a) that the red and blue surfaces represent the positive (V(ri)) and negative (V(rj)) ESP regions, respectively. By analyzing the ESP distribution on this surface, the area percentage along the electrostatic potential was obtained as shown in Fig. 2(b). The area of this surface is 160.76 Å2, of which the positive area accounts for 46% and the negative area accounts for 54%. Combined with eqn (1) and (2), we obtained the σ+2 and σ−2 values of 1,2-dichlorobenzene as 42.20 and 15.64 (kcal mol−1)2, respectively. Then the σtot2 and ν can be calculated according to eqn (3) and (4) to be 57.83 and 0.20 (kcal mol−1)2, respectively. Based on this method, these five descriptors of 473 substances used in the dataset were calculated, as shown in Table S1.† The detailed calculation methods are described in the Methods section. Currently, we have obtained a 12 × 11141 dataset, which contained the descriptors (area, σ+2, σ−2, σtot2 and ν) of solute and solvent, the experimental temperature, and mole fraction solubility (log(mol×104)).
+ Fig. 2  Electrostatic potential distribution (a) and area percentage (b) of a representative solvent 1,2-dichlorobenzene. 
+Quantitative prediction of models
+It is known that the Random Forest (RF)41 regression model predicted aqueous solubility more accurately than other algorithms, including MLR (Multiple Linear Regression), PLS (Partial Least Square), SVM (Support Vector Machine), and ANN (Artificial Neural Network).33,35 Therefore, we chose the RF regression algorithm to learn the relationship between a set of quantum chemical calculated descriptors and the solubility. First, we built five models to test each descriptor obtained above. The input of each model contains only one of the five descriptors (area, σ+2, σ−2, σtot2 and ν) of solute and solvent, temperature, and solubility. Therefore, the independent variable only contains 3 bits composed of one solute descriptor, one solvent descriptor, and temperature. During the machine learning process, the dataset was split into the training dataset and testing dataset in the proportion of 8:2. The common practice in machine learning relies on the regression score function R2 (coefficient of determination) and Mean-Square-Error (MSE). Here, we tested five models based on the testing dataset by using R2 and MSE, as shown in Fig. 3. Model a represents using a set of descriptors containing 3 bits of data: area of solute, area of solvent, and temperature. Model b represents using a set of descriptors containing 3 bits of data: σ+2 of solute, σ+2 of solvent, and temperature. Model c represents using a set of descriptors containing 3 bits of data: σ−2 of solute, σ−2 of solvent, and temperature. Model d represents using a set of descriptors containing 3 bits of data: σtot2 of solute, σtot2 of solvent, and temperature. Model e represents using a set of descriptors containing 3 bits of data: ν of solute, ν of solvent, and temperature. The R2 and MSE of models a to e range around 0.876–0.892 and 0.367–0.422, respectively. This indicated that the ESP surface descriptors calculated above are suitable for predicting solubility. The R2 values of models b and c are larger than that of model a, and the MSE values of models b and c are smaller than that of model a, which shows that descriptors σ+2 and σ−2 are better than the descriptor of area, when used to predict solubility. Model d exhibited the largest R2 (0.892) and smallest MSE (0.367), which was mainly due to the descriptor used here (σtot2) being able to reflect the influence of σ+2 and σ−2 at the same time, as shown in eqn (3).
+ Fig. 3  
+R
+2 (a) and MSE (b) of the testing dataset for different descriptors based on surface properties with the Random Forest Regressor algorithm. 
+To further improve the accuracy of the predicting model, another four models (f to i) were developed by increasing the descriptors. Model f represents using a set of descriptors containing 5 bits of data: area of solute and solvent, σ+2 of solute and solvent, and temperature. Model g represents using a set of descriptors containing 7 bits of data: area of solute and solvent, σ+2 of solute and solvent, σ−2 of solute and solvent, and temperature. Model h represents using a set of descriptors containing 9 bits of data: area of solute and solvent, σ+2 of solute and solvent, σ−2 of solute and solvent, σtot2 of solute and solvent, and temperature. Model i represents using a set of descriptors containing 11 bits of data: area of solute and solvent, σ+2 of solute and solvent, σ−2 of solute and solvent, σtot2 of solute and solvent, ν of solute and solvent, and temperature. The R2 and MSE of models a and f to e are shown in Fig. 4. Compared with model a, model f shows that when the area and σ+2 of solute and solvent are used as descriptors at the same time, the accuracy of the model is effectively improved (R2 = 0.900 MSE = 0.338). Adding σ−2 to the descriptors, the R2 is further improved to 0.903 and MSE decreased to 0.328, which reflects the further improvement of the accuracy of model g. However, when σtot2 and ν are added to the descriptors, the prediction accuracy of models h and i has not been improved significantly. This may be because σtot2 and ν are composed of σ+2 and σ−2, and they have been introduced in model g, as shown in eqn (3) and (4). Therefore, a small set of descriptors, containing 7 bits of data composed of three solute descriptors (area, σ+2 and σ2), three solvent descriptors (area, σ+2 and σ2) and temperature, was enough to build a high accuracy solubility prediction model.
+ Fig. 4  
+R
+2 (a) and MSE (b) of the testing dataset for different descriptors based on surface properties with the Random Forest Regressor algorithm. 
+Based on model g, we analyzed the predicted values versus experimental data for the training and testing dataset, as shown in Fig. 5(a and b). There are 8913 and 2228 samples in the training and testing datasets, respectively. It is obvious that these data exhibited a good linear relationship around the line of x = y. The R2 values of the training and testing set are 0.96 and 0.90, respectively. To further investigate the predicted errors, the distributions of errors for the training and testing dataset are shown in Fig. 5(c and d). The MSE for the training dataset is 0.10 log(mol × 104), and the predicted data with an error less than 0.1 log(mol × 104) are more than 60%. For the testing dataset, the MSE increased to 0.33 log(mol × 104), and the predicted data with an error less than 0.3 log(mol × 104) are more than 65%. This reflects that although the accuracy of the testing dataset is decreased, it still has high reliability. Therefore, using the RF machine learning algorithm combined with a small set of descriptors (7 bits of data) can obtain a highly accurate solubility prediction model (model g), which has been uploaded to the software sharing website GitHub and can be download from this link: https://github.com/yaochuang123/Solubility-prediction/tree/V1.0.0.
+ Fig. 5  Predicted results of solubility (log(mol × 104)) with the RF model for the training (a) and testing (b) dataset, respectively. Distributions of predicted errors for the training (c) and testing (d) dataset, and the mean square error (MSE) was inserted in the appropriate place. 
+Predicting the solubility of PCBM and Y6
+Solubility is a critical physical property of donor and acceptor materials for OSCs and it should be considered during the design stage. To investigate the applicability of model g to predict the solubility of optoelectronic materials, two kinds of acceptor materials, PCBM and Y6, were used to test the accuracy of this model. As shown in Fig. 6, the mole fraction solubility (log(mol × 104)) of PCBM in 42 solvents commonly used in organic chemistry was predicted using model g. It indicated that PCBM will have good solubility in DMF, 2-butanone, chloroform, 1,4-dioxane, DMSO, and pyridine with log(mol × 104) larger than 1.45. The predicted solubility of PCBM in chloroform and toluene is 1.49 and 1.20, respectively, which are in agreement with the experimental results42 1.82 and 1.25, respectively. The solubility (log(mol × 104)) of Y6 in 42 common solvents is shown in Fig. 7, which illustrated that Y6 will have good solubility in chloroform, 1,4-dioxane, benzene, and DMF with log(mol × 104) larger than 1.70. The solubility of Y6 in chloroform was predicted to be 1.38, which is in good agreement with the experimental result 1.34.43 As PCBM and Y6 represent two kinds of widely used acceptors, fullerene and non-fullerene acceptor materials, these results can demonstrate that model g is suitable for predicting the solubility of optoelectronic materials. Therefore, model g obtained above can play an important role in the design stage for developing high-performance optoelectronic materials.
+ Fig. 6  Predicted solubility (log(mol × 104)) of PCBM in 42 common solvents at 298 K. Solvent molecular structures with solubility larger than 1.4 were added in it, and the solubility in parentheses was taken from experimental results. 
+ Fig. 7  Predicted solubility (log(mol × 104)) of Y6 in 42 common solvents at 298 K. Solvent molecular structures with solubility larger than 1.5 were added in it. 
+To screen out the solvents that can highly dissolve PCBM and Y6, we used model g to predict the solubility of PCBM and Y6 in the whole dataset, which contains 473 substances and nearly all solvents. The molecular structures of 10 solvents in which PCBM and Y6 have the highest mole fraction solubility were screened out from the dataset, as shown in Fig. 8. It is obvious that PCBM and Y6 have the largest solvability in 1-iodopropane, and their mole fraction solubilities are 1.62 and 1.91 log(mol × 104), respectively. The solubility of PCBM and Y6 in chlorobenzene, one of the most widely used solvents for fabricating the active layer in the manufacturing process of OCS, was predicted to be 1.49 and 1.80 log(mol × 104), respectively. These results indicate that non-fullerene acceptor Y6 exhibits better solubility than that of fullerene acceptor PCBM, which is in agreement with the experimental consensus. These results further demonstrate the accuracy of model g and indicate that the solubility of optoelectronic materials can be reliably predicted by it. Therefore, it can be seen that model g can be used to assist the synthetic route and chemical process design of optoelectronic materials, and to control the phase and morphology of bulk-heterojunctions by choosing different solvents.
+ Fig. 8  Molecular structures of 10 solvents in which PCBM and Y6 have the highest mole fraction solubility were selected from the dataset; the predicted solubility (log(mol × 104)) was attached under the structure. 
+Conclusions
+We developed a general solubility prediction model based on a small set of descriptors only containing 7 bits of data, which is the smallest one reported by now. It consists of quantum chemically calculated descriptors (area, σ+2 and σ−2) of solvent and solute, and temperature. In addition to using the smallest set of descriptors at present, model g exhibited high accuracy. The predicted solubility of the external test set of 2228 samples exhibited a coefficient of determination R2 = 0.90 and mean square error MSE = 0.33 log(mol × 104) units. Furthermore, this model successfully predicted the solubility of PCBM and Y6 in 42 solvents commonly used in organic chemistry, and the results are in good agreement with the experimental data. Finally, 10 solvents in which PCBM and Y6 have the highest solubility were screened out from the dataset. These results can be used to control the phase and morphology of bulk-heterojunctions by choosing different solvents. This work established a rapid solubility prediction model with the smallest set of descriptors, which can predict the solubility of any small molecule in various solvents. This model can be used to assist the synthetic route and chemical process design of optoelectronic materials. Simultaneously, it can be used to assist solvent selection to turn the phase and morphology of bulk-heterojunctions in OSCs.
+Conflicts of interest
+There are no conflicts to declare.
+Data availability
+The data and model that support the findings of this study are available from the corresponding author and this link: https://github.com/yaochuang123/Solubility-prediction/tree/V1.0.0. Citations should refer directly to this manuscript.
+Acknowledgements
+This work was supported by the Science and Technology Research Program of the Chongqing Education Commission of China (KJQN202001431 and KJQN202101412) and the Scientific Research Grants of Yangtze Normal University (2017XJQN04).
+References
+F. C. Krebs, N. Espinosa, M. Hösel, R. R. Søndergaard and M. Jørgensen, Adv. Mater., 2014, 26, 29–39 CrossRef CAS PubMed .
+G. Zhang, X. K. Chen, J. Xiao, P. C. Y. Chow, M. Ren, G. Kupgan, X. Jiao, C. C. S. Chan, X. Du, R. Xia, Z. Chen, J. Yuan, Y. Zhang, S. Zhang, Y. Liu, Y. Zou, H. Yan, K. S. Wong, V. Coropceanu, N. Li, C. J. Brabec, J. L. Bredas, H. L. Yip and Y. Cao, Nat. Commun., 2020, 11, 3943 CrossRef CAS PubMed .
+W. Chen and Q. Zhang, J. Mater. Chem. C, 2017, 5, 1275–1302 RSC .
+H. Sun, X. Song, J. Xie, P. Sun, P. Gu, C. Liu, F. Chen, Q. Zhang, Z.-K. Chen and W. Huang, ACS Appl. Mater. Interfaces, 2017, 9, 29924–29931 CrossRef CAS PubMed .
+Y. Lin, J. Wang, Z.-G. Zhang, H. Bai, Y. Li, D. Zhu and X. Zhan, Adv. Mater., 2015, 27, 1170–1174 CrossRef CAS PubMed .
+Y. Yang, Z.-G. Zhang, H. Bin, S. Chen, L. Gao, L. Xue, C. Yang and Y. Li, J. Am. Chem. Soc., 2016, 138, 15011–15018 CrossRef CAS PubMed .
+J. Yuan, Y. Zhang, L. Zhou, G. Zhang, H.-L. Yip, T.-K. Lau, X. Lu, C. Zhu, H. Peng, P. A. Johnson, M. Leclerc, Y. Cao, J. Ulanski, Y. Li and Y. Zou, Joule, 2019, 3, 1140–1151 CrossRef CAS .
+L. Hong, H. Yao, Z. Wu, Y. Cui, T. Zhang, Y. Xu, R. Yu, Q. Liao, B. Gao, K. Xian, H. Y. Woo, Z. Ge and J. Hou, Adv. Mater., 2019, 1903441 CrossRef PubMed .
+Y. Wang, J. Lee, X. Hou, C. Labanti, J. Yan, E. Mazzolini, A. Parhar, J. Nelson, J.-S. Kim and Z. Li, Adv. Energy Mater., 2021, 11, 2003002 CrossRef CAS .
+Q. Ma, Z. Jia, L. Meng, J. Zhang, H. Zhang, W. Huang, J. Yuan, F. Gao, Y. Wan, Z. Zhang and Y. Li, Nano Energy, 2020, 78, 105272 CrossRef CAS .
+N. Gasparini, A. Salleo, I. McCulloch and D. Baran, Nat. Rev. Mater., 2019, 4, 229–242 CrossRef .
+J. Song, C. Li, L. Zhu, J. Guo, J. Xu, X. Zhang, K. Weng, K. Zhang, J. Min, X. Hao, Y. Zhang, F. Liu and Y. Sun, Adv. Mater., 2019, 31, 1905645 CrossRef CAS PubMed .
+P. Bi and X. Hao, Sol. RRL, 2019, 3, 1800263 CrossRef .
+A. A. Mohapatra, R. Shivanna, S. Podapangi, A. Hinderhofer, M. I. Dar, N. Maity, F. Schreiber, A. Sadhanala, R. H. Friend and S. Patil, ACS Appl. Energy Mater., 2020, 3, 12025–12036 CrossRef CAS .
+Y. Cui, Y. Xu, H. Yao, P. Bi, L. Hong, J. Zhang, Y. Zu, T. Zhang, J. Qin, J. Ren, Z. Chen, C. He, X. Hao, Z. Wei and J. Hou, Adv. Mater., 2021, 33, 2102420 CrossRef CAS PubMed .
+D. E. Markov, E. Amsterdam, P. W. M. Blom, A. B. Sieval and J. C. Hummelen, J. Phys. Chem. A, 2005, 109, 5266–5274 CrossRef CAS PubMed .
+M. Theander, A. Yartsev, D. Zigmantas, V. Sundström, W. Mammo, M. R. Andersson and O. Inganäs, Phys. Rev. B, 2000, 61, 12957–12963 CrossRef CAS .
+N. K. Elumalai and A. Uddin, Energy Environ. Sci., 2016, 9, 391–410 RSC .
+B. C. Thompson and J. M. J. Fréchet, Angew. Chem., Int. Ed., 2008, 47, 58–77 CrossRef CAS PubMed .
+X. Ma, C. Tang, Y. Ma, X. Zhu, J. Wang, J. Gao, C. Xu, Y. Wang, J. Zhang, Q. Zheng and F. Zhang, ACS Appl. Mater. Interfaces, 2021, 13, 57684–57692 CrossRef CAS PubMed .
+C. Xu, X. Ma, Z. Zhao, M. Jiang, Z. Hu, J. Gao, Z. Deng, Z. Zhou, Q. An, J. Zhang and F. Zhang, Sol. RRL, 2021, 5, 2100175 CrossRef CAS .
+S. Zhang, X. Ma, C. Xu, W. Xu, S. Y. Jeong, H. Y. Woo, Z. Zhou, X. Zhang and F. Zhang, Macromol. Rapid Commun., 2022, 2200345 CrossRef PubMed .
+F. Zhao, C. Wang and X. Zhan, Adv. Energy Mater., 2018, 8, 1703147 CrossRef .
+X. Ma, Q. Jiang, W. Xu, C. Xu, S. Young Jeong, H. Young Woo, Q. Wu, X. Zhang, G. Yuan and F. Zhang, Chem. Eng. J., 2022, 442, 136368 CrossRef .
+W. Xu, X. Zhu, X. Ma, H. Zhou, X. Li, S. Y. Jeong, H. Y. Woo, Z. Zhou, Q. Sun and F. Zhang, J. Mater. Chem. A, 2022, 10, 13492–13499 RSC .
+J. S. Delaney, Drug Discovery Today, 2005, 10, 289–295 CrossRef CAS PubMed .
+A. Klamt, F. Eckert, M. Hornig, M. E. Beck and T. Bürger, J. Comput. Chem., 2002, 23, 275–281 CrossRef CAS PubMed .
+
+          C. M. Hansen, Hansen solubility parameters: a user's handbook, CRC press,  2007 Search PubMed .
+
+          J. H. Hildebrand and R. L. ScottThe solubility of nonelectrolytes, Dover Publications,  1964 Search PubMed .
+Y. Ran and S. H. Yalkowsky, J. Chem. Inf. Comput. Sci., 2001, 41, 354–357 CrossRef CAS PubMed .
+A. Lusci, G. Pollastri and P. Baldi, J. Chem. Inf. Model., 2013, 53, 1563–1575 CrossRef CAS PubMed .
+T. Deng and G.-z. Jia, Mol. Phys., 2020, 118, e1600754 CrossRef .
+D. S. Palmer, N. M. O'Boyle, R. C. Glen and J. B. Mitchell, J. Chem. Inf. Model., 2007, 47, 150–158 CrossRef CAS PubMed .
+C. Rudin, Nat. Mach. Intell., 2019, 1, 206–215 CrossRef PubMed .
+S. Boobier, D. R. J. Hose, A. J. Blacker and B. N. Nguyen, Nat. Commun., 2020, 11, 5753 CrossRef CAS PubMed .
+
+          I. N. S.
+          Database,  2010 Search PubMed.
+F. Neese, Wires Comput. Mol. Sci., 2012, 2, 73–78 CrossRef CAS .
+S. Grimme, S. Ehrlich and L. Goerigk, J. Comput. Chem., 2011, 32, 1456–1465 CrossRef CAS PubMed .
+T. Lu and F. Chen, J. Comput. Chem., 2012, 33, 580–592 CrossRef CAS PubMed .
+A. N. Isaev, Comput. Theor. Chem., 2018, 1142, 28–38 CrossRef CAS .
+V. Svetnik, A. Liaw, C. Tong, J. C. Culberson, R. P. Sheridan and B. P. Feuston, J. Chem. Inf. Comput. Sci., 2003, 43, 1947–1958 CrossRef CAS PubMed .
+F. Machui, S. Langner, X. Zhu, S. Abbott and C. J. Brabec, Sol. Energy Mater. Sol. Cells, 2012, 100, 138–146 CrossRef CAS .
+L. Wang, C. Guo, X. Zhang, S. Cheng, D. Li, J. Cai, C. Chen, Y. Fu, J. Zhou, H. Qin, D. Liu and T. Wang, Chem. Mater., 2021, 33, 8854–8862 CrossRef CAS .
+
+Footnotes† Electronic supplementary information (ESI) available. See https://doi.org/10.1039/d2ta03728a‡ These authors contributed equally to this work.This journal is © The Royal Society of Chemistry 2022
+Table Content:
+
+ 	Fig. 1  Distribution of the solubility (a) and temperature (b) of the 11141 data obtained from the IUPAC-NIST Solubility Dataset. Distribution of the molecular weight of the 473 substances.	 
+	(1)
+	(2)
+	(3)
+	(4)
+
+1	Area	Molecular vdW surface area (Å2) calculated by Multiwfn based on the B3LYP/def2-TZVPD calculation level
+2	
+σ
++
+2
+	Positive ESP variance when analyzing the distribution of ESP on the vdW surface generated by Multiwfn based on the B3LYP/def2-TZVPD calculation level, which is in (kcal mol−1)2
+3	
+σ
+−
+2
+	Negative ESP variance when analyzing the distribution of ESP on the vdW surface generated by Multiwfn based on the B3LYP/def2-TZVPD calculation level, which is in (kcal mol−1)2
+4	
+σ
+tot
+2
+	Total ESP variance is defined as the sum of positive and negative parts, which is in (kcal mol−1)2
+5	
+ν
+	Degree of charge balance defined as σ+2σ−2/(σtot2)2
+
+ 	Fig. 2  Electrostatic potential distribution (a) and area percentage (b) of a representative solvent 1,2-dichlorobenzene.	 
+
+ 	Fig. 3  
+R
+2 (a) and MSE (b) of the testing dataset for different descriptors based on surface properties with the Random Forest Regressor algorithm.	 
+
+ 	Fig. 4  
+R
+2 (a) and MSE (b) of the testing dataset for different descriptors based on surface properties with the Random Forest Regressor algorithm.	 
+
+ 	Fig. 5  Predicted results of solubility (log(mol × 104)) with the RF model for the training (a) and testing (b) dataset, respectively. Distributions of predicted errors for the training (c) and testing (d) dataset, and the mean square error (MSE) was inserted in the appropriate place.	 
+
+ 	Fig. 6  Predicted solubility (log(mol × 104)) of PCBM in 42 common solvents at 298 K. Solvent molecular structures with solubility larger than 1.4 were added in it, and the solubility in parentheses was taken from experimental results.	 
+
+ 	Fig. 7  Predicted solubility (log(mol × 104)) of Y6 in 42 common solvents at 298 K. Solvent molecular structures with solubility larger than 1.5 were added in it.	 
+
+ 	Fig. 8  Molecular structures of 10 solvents in which PCBM and Y6 have the highest mole fraction solubility were selected from the dataset; the predicted solubility (log(mol × 104)) was attached under the structure.	 
+Footnotes
+† Electronic supplementary information (ESI) available. See https://doi.org/10.1039/d2ta03728a
+‡ These authors contributed equally to this work.
+
+This journal is © The Royal Society of Chemistry 2022

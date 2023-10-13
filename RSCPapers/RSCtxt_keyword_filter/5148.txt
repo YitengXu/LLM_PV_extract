@@ -1,0 +1,821 @@
+A comparison of sizing methods for a long-term renewable hybrid system. Case study: Galapagos Islands 2031  - Sustainable Energy & Fuels (RSC Publishing) DOI:10.1039/D1SE00078K View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D1SE00078K
+(Paper)
+Sustainable Energy Fuels, 2021, 5, 1548-1566A comparison of sizing methods for a long-term renewable hybrid system. Case study: Galapagos Islands 2031
+
+        
+          
+            A. 
+            Cano
+          
+        
+      , 
+      
+        
+          
+            Paul 
+            Arévalo
+          
+        
+       and 
+
+        
+          
+            F. 
+            Jurado
+          
+        
+      *
+      Department of Electrical Engineering, University of Jaén, EPS Linares, 23009 Jaén, Spain. E-mail: fjurado@ujaen.es
+Received 
+      17th January 2021
+    , Accepted 4th February 2021First published on 4th February 2021AbstractThis research compared different sizing methods to improve the current autonomous hybrid system in the Galapagos Islands in 2031, analyzing the loss of power supply probability (LPSP). Firstly, the energy that will be consumed in islands in 2031 was obtained using artificial neural networks (ANN) with Matlab according to fundamental parameters in the design of a multilayer perceptron neural network model. Secondly, methods used for sizing the system were HOMER Pro and Simulink Design Optimization (SDO). The dynamic models of the different components of the hybrid system were created in MATLAB/Simulink. The proposed hybrid system was composed of photovoltaic (PV) and wind (WT), and lead–acid batteries, hydraulic pumping, and a diesel generator as the storage and support systems. Then, to design a sustainable system, a hybrid system was dimensioned with renewable energy sources of an appropriate size. The LPSP values obtained were below 0.09% and 0.22%, which showed that the system was optimally dimensioned. In addition, a cost analysis was carried out, and values obtained from NPC and COE according to HOMER Pro were $183810067 and 0.26$ per kW h, and $233385656 and 0.25$ per kW h and using SDO $148523110 and 0.25$ per kW h, $189576556 and 0.24$ per kW h for strategies I and II, respectively, of the proposed hybrid system. The data obtained showed that the Latin hypercube algorithm of SDO achieved better optimization compared to HOMER Pro.
+1. Introduction
+1.1. Context and motivation
+Environmental sustainability is presently an aspect that has become a challenge in the electricity sector. The depletion of fossil fuels, air pollution and climate change are driving the development of renewable hybrid systems, especially in isolated systems.1 In communities located on islands, supplying the electrical load through renewable systems will radically reduce the cost of transporting diesel fuel and avoid tons of polluting gas emissions, where the adequate energy control of renewable sources and energy storage systems is a main factor.2–4
+Islands have promising potential to reduce carbon emissions considering that the present cost of renewable energy technology (RE) hybrid systems are the most profitable solution for these territories.5 Hybrid renewable systems can promote local investment capacity, mechanisms and business models to implement RE projects, local human resources and collective awareness about the use of energy.5
+Several projects around the world have studied hybrid systems in islands such as the Canary Islands,6 where authors carried out an analysis of potential renewable technologies available locally, presenting a scenario in 2050 for the supply of 100% RE in Canary Islands. Eras-Almeida et al.7 presented the optimization of a renewable hybrid system for Galapagos Islands with the aim of reducing diesel fuel consumption and electricity generation costs. In recent years, only the islands of developed countries have reached a high proportion of renewable energy, and thus the islands of developing countries such as the Pacific and India need to strengthen their local capacities to achieve sustainable development.5 Therefore, proper long-term planning together with novel energy optimization and control of hybrid systems and storage systems hold promise for the development of these Islands.
+1.2. Literature review
+The optimization and planning of a renewable hybrid system have been highly studied in the literature, where many researchers use computational tools, which are increasingly being used due to their reliability,8 such as HOMER Pro, software used in the optimization of hybrid systems renewable, especially in off-grid applications.9–11
+Ramesh et al.12 presented optimization strategies for a hybrid renewable system (HRES), which were based on the performance analysis of the HRES for a remote rural area of India using HOMER Pro, considering two different types of storage systems (batteries of lithium ion and lead–acid). Similarly, in ref. 12, the feasibility of an HRES composed of a PV-wind-pumping storage system for applications in coastal mini-grids was analyzed, where the authors have compared the results in (HOMER Pro, MATLAB® and Excel®); however, these studies did not consider future demand growth, where the optimization results presented can vary substantially.
+A techno-economic optimization study and annual demand forecast using HOMER Pro for an off-grid HRES in India was presented in13, where the authors highlighted the advantage of using a renewable system compared with grid extension, but the maximum demand forecast time in the study was one year, without considering others optimization methods, which can disprove or confirm their results. In addition, the horizon proposed in this study did not consider growth in demand greater than one year. The study presented in ref. 6 focused on the availability of renewable resources on an island in 2050, but did not perform an optimization of the renewable system.
+A method for optimizing the dimensioning of a novel renewable hybrid system based on pattern search is presented in ref. 14 and 15, where the authors have developed the method in Matlab Simulink Design Optimization (SDO) using three algorithms (Latin hypercube, genetic algorithm and Nelder–Mead), and the system was composed of a photovoltaic system (PV), hydrokinetic turbines (HKT), lead–acid batteries and a diesel generator (DG). The authors expanded their analysis in ref. 16, and then in ref. 17, including several storage technologies and comparing the results in SDO, HOMER Pro and HOGA (optimization software), showing that the Nelder–Mead algorithm optimally decreases the penetration of DG. Again, the effect of demand growth over time has not yet been analysed.
+Briefly, medium and long-term demand forecasting techniques are very useful tools considering that the demand for electrical energy is subject to a large number of factors, such as the month, day, time, temperature environment, humidity, rainfall, and even user habits of consumption. The use of time series, as in the study by Capozzoli et al.,17 proposes a methodology for the characterization of energy consumption in buildings and the identification of unexpected energy consumption patterns. Serrano-Guerrero et al.18 presented a statistical methodology to evaluate the changes in the consumption profile of a facility, where the consumption patterns were obtained from a historical database of a predefined interval according to the type of day, and an index was proposed, which evaluates the changes in the electricity consumption profile. Statistical methods can be used to analyze the input data, and accordingly19 compared a model of a neural network using statistical and analytical methods with a group of neural network models designed taking advantage of a multi-objective genetic algorithm. Sideratos et al.20 introduced a fuzzy grouping method of input data to create a prediction and applied a new regression approach to locally model the load forecast. Serrano-Guerrero et al.21 proposed a new time series method, which significantly improved the ability to obtain patterns and detect anomalies in electricity consumption profiles. Although in these studies demand forecasts were made using various methods (statistical and neural network methods) of HRES, a hybrid optimization problem was not considered, ignoring various optimization methods that can improve the presented results.
+1.3. Contributions and organization of this paper
+Sustainable development in islands depends on the correct use of their renewable energy sources, and for this, several aspects must be considered, e.g., future growth of demand, optimization of renewable hybrid systems through various methods and algorithms that demonstrate the validity of the result, demand forecast based on real databases and variability of certain indices, and study of various energy storage technologies. A hybrid analysis that considers all these important parameters is promising, filling the research gaps found to date.
+According to our literature search, no study was found that compares the results of the optimization of a renewable hybrid system using demand forecasting through neural networks between the pattern search method in (Matlab – SDO) and HOMER Pro and their analysis under certain technical, economic and environmental indices. Thus, the main objective herein is to reduce the operation of the diesel generator and improve the efficiency of the current HRES in the Baltra and Santa Cruz Islands using the following analyses.
+In summary, the main contributions of this article are as follows:
+(1) Two optimization methods (four control energy algorithms) are proposed for a new renewable system in the Baltra and Santa Cruz Islands (HOMER Pro and SDO) to improve their current HRES.
+(2) A hybrid analysis of an HRES was carried out, considering sizing optimization and energy planning with the aim of reducing the operation of diesel generators by 2031, improving the current system in these islands.
+(3) The demand forecast was carried out using a multilayer perceptron neural network model, and based on historical data of power, temperature, holidays, population growth, the electricity demand was calculated for 2031.
+(4) Two scenarios are proposed, the first includes the participation of a diesel generator and the second is a 100% renewable system.
+(5) A pumped storage system is included as an alternative to the current system, consisting of lead–acid batteries.
+(6) An LPSP analysis considering the values obtained from NPC and COE for the HOMER Pro and SDO values.
+Herein, we propose an improvement of the current hybrid renewable system (PV-WT-DG) with a horizon towards 2031 through a study of demand forecasting using neural networks. As part of this upgrade, a new storage system (pumped hydroelectric storage) was included. Finally, the optimization of two new systems proposed based on the current one was performed using a method based on the search for patterns, involving a simulation of the hybrid system in SDO, which included 3 optimization algorithms (Latin hypercube, genetic algorithm and Nelder–Mead) and HOMER Pro software.
+Firstly, the problem description is discussed in Section 2.1, a description of the current renewable hybrid system in these islands is presented in Section 2.2, and the current renewable resources (wind speed and solar radiation) are explained in Section 2.3. Section 2.4 describes the proposed method for calculating the demand for 2031 based on neural networks. Then, Section 2.5 presents the two proposed configurations, and the simulation of each component is explained in Simulink based on the mathematical model of the renewable sources currently installed in the islands in Section 2.6. In Sections 2.7 and 2.8, the methods are developed in HOMER Pro and SDO, respectively. Later, Section 2.9 presents the cost analysis. The results and discussion are presented in Section 3. Finally, Section 4 presents the conclusions of this study.
+2. Problem description and methodology
+2.1. Problem description
+The necessary power forecast was studied for the Baltra and Santa Cruz Islands within the Galapagos Islands for 2031, considering the current data of electric consumption. Accordingly, existing renewable sources were studied and hydraulic pumping was also included to obtain a 100% sustainable system. The Ecuadorian national government launched the Zero Fossil Fuel Initiative in 2008. Thus, the Ministry of Energy and Non-Renewable Natural Resources (MERNNR), in cooperation with donor governments, has developed RE projects to reduce the consumption of fossil fuels and emissions of CO2 and to avoid the risk of fuel spills due to maritime transport. However, this initiative lacks a clear guide for environmental implementation and conservation. In Santa Cruz, which is the island that experiences the most tourism, 61% of the archipelago's population resides there.7 The current energy situation in the Galapagos Islands is as shown in Table 1.7 Tourism is the most important economic activity in these islands, but this activity has resulted in unsustainable development in the islands due to the primary energy, which depends on diesel, and thus the future growth of the population will be linked to the tourism sector. The main economic activities related to tourism include accommodation, food services and trade. However, the current model of economic growth based on tourism has become unsustainable due to not having enough renewable generation in the islands that are located at the coordinates (−0.452839, −90.266079). Thus, the future load scenario depends largely on the renewable resources present in the islands, complying with the government plan (PME 2016-205).7 Therefore, complying with the plan of the national government of Ecuador, it is essential to develop a future renewable hybrid system that meets the energy conditions demanded by the islands at a reasonable cost and with the smallest amount of polluting gas emissions.
+Table 1 Hybrid power system in Baltra and Santa Cruz islands
+
+
+
+
+Place
+Diesel (MW)
+Wind (MW)
+PV (MWp)
+Batteries (MW h)
+Total (MW)
+
+
+
+
+Santa Cruz–Baltra
+13.9
+2.25
+1.57
+4.3
+17.72
+
+
+
+
+2.2. Current electrical system
+The Baltra–Santa Cruz renewable hybrid mini-grid (two interconnected islands) is located in the Galapagos archipelago, 1000 km off the Ecuadorian coast in the Pacific Ocean. Around 82% of their electricity is generated by a diesel power plant, which represents 7.9 million liters of diesel consumption.22 The renewable source share is only 18% and the annual growth rate of electricity demand is, on average, 7% (2007–2018).23 The location of the Baltra and Santa Cruz islands is shown in Fig. 1.24
+ Fig. 1  Location of the Baltra and Santa Cruz islands (Galapagos). 
+The current HRES in Santa Cruz has a 1.5 MWp photovoltaic power system and a 13.9 MW diesel power plant conformed of 11 DGs. Baltra has a 67 kWp photovoltaic system, a 2.5 MW wind farm and a 4.3 MW h battery system capacity.25 The battery bank is hybrid, the lead–acid batteries (4.03 MW h) store the excess energy generated by renewable energy systems and the lithium-ion batteries (0.268 MW h) regulate the energy fluctuations of the wind farm.26 In 2018, the electricity consumption in the Baltra and Santa Cruz islands was 32 GW h per year and the maximum power demand was 7.26 MW.27 In Galapagos, according to the Ecuadorian Electricity Regulation and Control Agency (ARCONEL), the cost of electricity service is 38.84 USc per kW h.28
+2.3. Renewable resources
+The renewable resources present in the islands that can be used for generating electricity are wind speed and solar radiation. Fig. 2 presents the monthly average wind speed for one year. It can be observed that there is a greater resource from May to September with an average of 7 m s−1, whereas during the cold season and from February to April the resource is lower, with an average of 4.5 m s−1 during the dry season. Throughout the year, the average wind speed is 6.36 m s−1.7 The wind data was measured by ELECGALAPAGOS from 2009 to 2018 in Baltra.22
+ Fig. 2  Average monthly wind speed in (m s−1). 
+Solar radiation in the Islands is a promising resource, and Fig. 3 shows that during the months of February to April, the solar resource is higher with an average of 7.3 kW h per m2 per day during the dry season. From July to September, during the cold season, this resource decreases with an average of 4.6 kW h per m2 per day. The average daily radiation during 2018 was 5.70 kW h per m2 per day.7 The solar data was measured by ELECGALAPAGOS from 2015 to 2016 in Santa Cruz.22
+ Fig. 3  Average monthly solar radiation. 
+2.4. Architecture neural network
+Some authors have carried out short-term studies using neural networks, where Azadeh et al.29 carried out an algorithm to predict the monthly consumption of electrical energy based on an artificial neural network (ANN) to predict the effects of probabilistic distribution on monthly electricity consumption. Escrivá-Escrivá et al.30 presented an ANN for the short-term prediction of total energy consumption in buildings, which was based on the forecast of total consumption based on end uses and appropriate selection of the training data set to simplify the architecture of the ANN. Serrano-Guerrero et al.31 used a method based on backpropagation neural networks and the choice of key variables as inputs, which optimized the number of neurons in the hidden layer for short-term demand prediction. Also, Serrano-Guerrero et al.32 used evolutionary clustering for daily load data analysis and dealing with the situation when data changes dramatically in a short period.
+In ref. 33, the authors used an optimized evolutionary grouping algorithm based on daily energy consumption, where behaviour would not abruptly change significantly, and thus the groups would progressively change and remain similar in adjacent periods, except in an emergency. The study in ref. 34 used two methods, where one stacked autocoders (SAE) to extract the energy consumptions of a building, and in the other LME extreme machine learning was used to obtain more accurate prediction results.
+To carry out forecasting studies with renewable sources, Zhang et al.35 also presented prediction models with renewable energy resources, that is, wind, solar and geothermal energy, where the demand for electrical load was considered for the forecast analysis and used for predictions. They also reported to accuracy of spatial and temporal predictions and relevance to policy and planning objectives. Ahmad et al.36 presented plans for renewable energy, wind, solar and geothermal energy resources and electrical load demand using machine learning algorithms, ensemble-based approaches, and artificial neural network analysis. The study in ref. 37 proposed a systematic and integrative approach for decision making for efficient planning and evaluation of hybrid renewable energy-based microgrid systems (HRE-MG) in Egypt.
+Somu et al.38 developed memory networks with an optimization algorithm for the precise and robust forecasting of the energy consumption of buildings in the short and long term. Talaat et al.39 presented a proposed model for the forecast of the load in the medium and short term (MTLF and STLF, respectively), which can be used to forecast loads at different times and on different days of each month, using a hybrid model of a multilayer feeding neural network (MFFNN) and the optimization algorithm (GOA). Wen et al.40 proposed a more precise long-term load forecast using a neural network with a fuzzy model, with a series of data pre-processing procedures, the selection of a meteorological station and a combination of widely used and efficient temperature series for the prediction at long and very long term. For short and very short-term predictions, machine learning algorithms such as artificial neural networks, support vector machines, and time series analysis (including autoregressive integrated moving average (ARIMA) and autoregressive moving average (ARMA)) are favoured.16
+In summary, the artificial neuron consists of inputs, bias, weights, output and an activation function. A typical neuron j with the number of n inputs is depicted in Fig. 4. According to the shape of the activation function, the output can be construed as the intensity of the reaction or the turn-on probability of the neuron.
+ Fig. 4  Architecture of an artificial network. 
+This section details the characteristics of the ANN used in the proposed method for forecasting demand.
+The first phase is difficult when developing a neural network, which is related to the selection of information to feed the ANN during the training phase. Input variables are selected as follows. To carry out the decision of the variables to be used as input in the neural network, the correlation between the variables is verified to eliminate those that contain the same information or those that have very little correlation with energy consumption.
+The factors of load consumption on the islands considered as input variables are discussed below:
+– Climatic conditions: The variables to consider in this category are wind speed, cloud cover, rain, temperature, etc.
+– Calendar: Obviously, the load curve depends on the months, days and the hour for which the forecast is made.
+– Population and tourism: these are parameters are related to the energy consumption curves within the island.
+The ANN was adjusted for each month of the year. Consequently, the predictions were calculated to obtain the monthly forecast for the load curve of the islands for 2031.
+The ANN with the backpropagation algorithm has 3 layers, the input layer, the hidden layer, the output layer. Its architecture can be seen in Fig. 5. The input layer contains all the mentioned parameters, in total 15. The hidden layer has 20 neurons, and finally the output layer has one neuron, which is the value of the electrical energy consumption expected for 2031. The interval of this type of neural networks is 6 years (by preliminary computational experiments); therefore, the total input data results from 15 parameters within 6 years, 1080 samples or 15 × 72 months (6 years).
+ Fig. 5  ANN used in the proposed method. 
+To enter the data in the neural network, it must be normalized considering that it is real data, and the measurement errors must be corrected as maximum or minimum peaks, and thus the Cubic Spline tool from Matlab was used.
+
+2.4.1. Training mode. 
+Two modes can be used, namely batch mode in which all changes are made to the weights of all data sets at the end of each training cycle, and the sequential mode, in which the weights change in each input data set. A learning algorithm called backpropagation (BP) was applied in this work in sequential mode, which has been widely used in the literature.18–20 Because historical data was recorded from 2008 to 2019, and the number of inputs of the multilayer perceptron neural network must be equal to the output. As the first step, the historical input data (2008–2013) was used, and the output data corresponds to the demand forecast for the period 2014–2019. Thus, the neural network training was carried out correctly. Fig. 6 shows a comparison of the demand prediction using the neural network and the real data for the period 2014–2019,23 where it can observed that the error is minimal.
+ Fig. 6  Comparison between the real energy demand (2014–2019) and the values obtained by the annual neural network (2014–2019). 
+
+
+2.4.2. Demand forecast. 
+Once the neural network was trained, the output data (2014–2019) was used as the input data and the corresponding demand forecast (2020–2025) was obtained. Repeating this process over a period of 6 years, it managed to calculate the demand for the period 2026–2031, from which the data for 2031 was filtered and the normalized values per unit of network were converted to values in kW, which is the objective of this section. Fig. 7 shows the demand forecast for the period 2026–2031.
+ Fig. 7  Forecast of demand for the period 2026–2031 in (p.u.). 
+The data initially conditioned us to use an interval of 6 years, that is, 2008–2019 (source data). It was used from 2008–2013 as the (input data) and from 2014–2019 as the (target data). This allowed us to carry out the training with the data for the first 6 years, with the condition (input data) = (target data), and it allowed us to obtain a neural network with an adjustment of 98.98%.
+Once the neural network for the 6 year forecast was obtained, the first forecast of demand was made from (2020–2025) and later it is used as input data (2020–205) to obtain the forecast (2026–2031).
+Normalizing the values from p.u. to kW, and filtering the result for the year 2031, Fig. 8 shows the average monthly demand for the Baltra and Santa Cruz Islands.
+ Fig. 8  Forecasting demand in 2031. 
+The maximum power demand was 13254 kW with an average consumption of 70 GW h per year in 2031 compared to 2018, which had a power peak demand of 7260 kW with an average consumption of 32 GW h per year.7
+
+2.5. Proposed hybrid systems
+To supply the electricity demand in 2031, two renewable hybrid systems are proposed, where case 1 is shown in Fig. 9.
+ Fig. 9  Case 1. Proposed hybrid system, which includes a backup diesel generator. 
+
+2.5.1. Case 1. 
+The renewable sources currently installed have solar and wind, which are maintained for this study, the lead–acid batteries are part of the energy storage system and the diesel generator serves to support the RES in the event that there are not enough renewable resources. The hydraulic pumped storage (PH) system is included as a new element in a way that when there is a surplus of renewable energy, it is used to pump water from the lower reservoir to the upper reservoir, and when the renewable power is insufficient to supply the demand, the hydraulic turbine will generate electricity through an electric generator, as shown in Fig. 9.
+
+
+2.5.2. Case 2. 
+The hybrid system proposed in case 1 does not have a support diesel generator, and thus the renewable sources and the storage system must be able to supply the demand permanently. The hybrid system proposed for case 2 is shown in Fig. 10.
+ Fig. 10  Case 2. Proposed hybrid system without a backup diesel generator. 
+In this system, the components must be dimensioned considering the random nature of renewable resources and demand.
+
+2.6. Simulation based on mathematical models of the components
+This section explains the mathematical modelling of each component of the hybrid system, which is same one that was used based on the components currently installed in the Islands. Starting from the mathematical model, the simulation was carried out in Matlab Simulink® Design Optimization.41
+
+2.6.1. Photovoltaic system modelling. 
+The PV power varies depending on the incident solar radiation on the module and on environmental factors (e.g., ambient temperature and humidity). The power of the PV system can be calculated using eqn (1).42,43 (1)where PPV is the photovoltaic array power output in (kW), YPV is the rated capacity of the photovoltaic array in (kW), fPV is the photovoltaic derating factor measured in percent (%), IT is the photovoltaic current generated by the incident radiation in the cell (A), IS is the reverse saturation diode current (A), αP is the temperature coefficient of power (% °C−1), TC is the cell temperature in the photovoltaic array (°C), and TS is the cell temperature under the standard test conditions (°C). Fig. 11 shows the Simulink model of the photovoltaic system. Humidity alters the irradiance in a non-linear way and the irradiance itself causes small variations in Voc in a non-linear way and large variations in Isc linearly. Eqn (2) expresses the conversion efficiency of solar cells.44 (2)where Isc,max is the maximum short-circuit current of the solar cell, Voc,max expresses the maximum open circuit voltage in the solar cell, (irradiance level) is the global solar radiation, and Ac is the effective area of the solar cell.
+ Fig. 11  Model photovoltaic device. 
+When the light hits the water droplets, three cases can occur. It can be refracted, reflected or diffracted. These effects lower the reception level of the direct component of solar radiation. The humidity degrades Isc but has a negligible effect on the power output, Voc, and thus the efficiency drops.44 According to this analysis, with a much higher relative humidity in tropical countries such as Galapagos, there will be a disappointingly more pronounced drop in the irradiance level.
+This behavior of humidity is related to the non-linear variation of the Voc of the photovoltaic module with irradiance. When investigating the variation in humidity with solar irradiation, a non-linear relationship was observed. This is consistent with the non-uniform distribution and random sizes of water vapor particles in the atmosphere.45 Humidity alters irradiance in a non-linear way and the irradiance itself causes small variations in Voc in a non-linear way and large variations in Isc in a linear way. For moisture, it is know that humidity degrades Isc but it has negligible effect on Voc, and thus the power output and efficiency decrease.44 Irradiance attenuation (GA) is defined as: (3)where Gi is the initial irradiance and Gf is the final irradiance.
+Solar irradiance attenuates with respect to relative humidity in a non-linear way, which can be expressed by eqn (4). GA = 0.0015RH2 − 0.125RH + 2.56, for 40 ≤ RH ≤ 90(4)where RH is the relative humidity (%).
+The variation in irradiance with respect to humidity in Galapagos is shown in Fig. 12.23,46
+ Fig. 12  Relative humidity with respect to irradiance in Galapagos. 
+The irradiance with respect to the average ambient temperature in Galapagos is shown in Fig. 13.
+ Fig. 13  Ambient temperature with respect to irradiance in Galapagos. 
+
+
+2.6.2. Wind turbine modelling. 
+The power output of a wind turbine is represented by eqn (5) as follows:42,43 (5)where PWT is the wind turbine output power (kW), ηrec is the wind system rectifier efficiency (%), Cp,max is the maximum power coefficient, ρ is the air density (kg m−3), R is the blade radius of a wind turbine (m), and v is the wind speed (m s−1). Fig. 14 shows the Simulink model of the wind turbine.
+ Fig. 14  Model wind turbine. 
+
+
+2.6.3. Battery modelling. 
+The lead–acid battery is represented by the kinetic battery model (KiBaM).47 In the KiBaM model, the battery is represented by an internal voltage source (E) in series with an internal resistance (R0). The internal resistance is assumed to be constant, and the internal voltage varies with the state of charge. Then, the terminal voltage (V) is given by V = E − R0I(6)
+The internal voltage source is modelled as two tanks of electric charges separated by a conductance. The first tank contains the energy that is available immediately by the load. The second tank contains the “bound energy”, that is, the energy that is not immediately available. The width of tank 1 “available” is c, and that of tank 2 “bound” is (1−c). The mathematical model of this system is described as follows: (7)where q1 is the charge in the available tank; q2 is the charge in the bound tank; k is a constant refers the conductance between tanks; and I is the current withdraw from the battery. Eqn (8) can be solved with the Laplace transforms as follows: (8)where q1,0 and q2,0 are the amount of available and bound charge, respectively, at the beginning of the calculation, and q0 = q1,0 + q2,0. Fig. 15 shows the Simulink model of the lead–acid batteries.
+ Fig. 15  Model KiBaM batteries. 
+
+
+2.6.4. Pumped-storage hydropower modelling. 
+The generic hydraulic pumping (PH) in HOMER Pro used has a tank with a capacity of 1000 m3 of water, which can be discharged over a period of 12 h for an effective height of 100 m and a generator efficiency of 90%, and the power and energy stored of the PH system can be calculated by applying eqn (9) and (10).48 EPH = 9.81ρωVreshheadηPH(9) PPH = 9.81ρωhheadηPHQPH(10)where EPH is the energy stored by a pumping hydroelectric plant in (kW h) during emptying. ρω is the water density, which is approximately 997 kg m−3, Vres is the reservoir volume in m3, hhead is the net height of the water reservoir in m, ηPH is the pumping hydroelectric system plant efficiency, PPH is the output electric power of PH system and QPH is the water flow in m3.
+To store sea water in the upper reservoir, the pump requires 14.8 h to complete storage with a flow rate of 0.019 m3 s−1 and consumes 302.7 kW h of electrical energy. A 22 kW of electrical power generator coupled to a hydraulic turbine was considered, which generates 245 kW h with a storage of 1000 m3. The 245 kW h block serves as the basis for optimizing this energy storage system and was used with this capacity given that it is the default block in HOMER Pro.
+
+Fig. 16 shows the Simulink model of the pumped-storage hydropower.
+ Fig. 16  Model pumped-storage hydropower. 
+
+
+2.6.6. Diesel generator modelling. 
+The output electric power of DG is represented by eqn (11). EDG = PDGηDGt(11)where EDG is the output energy of the DG (kW h), PDG is the power rating of the DG (kW), ηDG is the diesel generator efficiency (%). Therefore, the efficiency is 33.9% at full load (PDG = 100%), 28.2% at 50% load, 18.8% at 20% load, and 7.0% at 5% load. The efficiency curve is shown in Fig. 17,49 where t is time (h). The fuel consumption to produce electricity was calculated according to eqn (12).50 F = F0,DGYDG + F1,DGPDG(12)where F0,DG is the intercept coefficient of the fuel curve (0.000205 m3 h−1), F1,DG is the slope of the fuel curve (0.00025 m3 h−1 kW−1), YDG (kW) is the rated capacity of the generator and PDG (kW) is the electrical power. The lowest calorific value of diesel fuel is 43.2 MJ kg−1 with a density of 820 kg m−3.50Fig. 18 shows the Simulink model of the DG.
+ Fig. 17  Diesel generator efficiency curve. 
+ Fig. 18  Model diesel generator. 
+
+2.7. Proposed energy control algorithms in HOMER Pro
+HOMER Pro has several energy dispatch control strategies including cycle charging and load following, which are done the simulation considering all dispatch strategies to obtain the optimal solution results from load following control. To explain this dispatch of the energy system in case 1, the algorithm presented in Fig. 19 was included.
+ Fig. 19  Energy dispatch for the hybrid system in case 1. 
+Where PPV, PWT, PPH, PBAT, PDG, and PLoad are the photovoltaic, wind turbine, pumped storage, battery, diesel generator and load output electric power, respectively. SOCPH, and SOCBAT are the state of charge of the pumped storage and batteries, respectively. According to the literature review, SOCmin in PH is considered 0%, and for lead–acid batteries between 40% to 60%, and thus in this study 50% was considered the average.10,51–53
+Then, the energy dispatch algorithm for case 2 is shown in Fig. 20.
+ Fig. 20  Energy dispatch for the hybrid system in case 2. 
+As shown in Fig. 20, the conditions are similar to case 1, where the difference is that in case 2, there is no backup diesel generator.
+As it does not have a DG, the demand could not be supplied at this moment given this condition. In this case, the HOMER Pro cycle charging and load following strategies gave the same result. Therefore, the challenge in this case is the ability of the control algorithms to optimize the size of the system avoiding these scenarios. There must be sufficient energy reserve in PH and BAT to support renewable sources, and this the index (loss of power supply probability) is analysed later. However, a notable advantage in case 2 is that the system is 100% renewable without CO2 emissions.
+2.8. Pattern search method in SDO
+For estimating the parameters, an optimization problem was formulated using SDO. The solution of the optimization problem was the established estimated parameter values, as shown in Fig. 21.
+ Fig. 21  Flowchart of pattern search method in Simulink design optimization (SDO). 
+The optimization solver adjusts the values of the design variables to satisfy the specified objectives and constraints. The exact formulation of the optimization depends on the optimization method you use.
+In the initial random values, PPV is the photovoltaic base power (60 kW), PWT is the wind base power (750 kW), PBAT is the base power of the 1 kW h batteries, PPH is the base pump power (20 kW) and PDG is the base power of the diesel generator (100 kW).
+In the restrictions, NPV is the number of PV, NWT is the number of wind turbines, NBAT is the number of batteries, NPH is the number of pump generators, and NDG is the diesel generator number.
+
+2.8.1. Latin hypercube. 
+The Latin hypercube method is a statistical method to generate an almost random sample of parameter values from a multidimensional dimension, where the advantage of this method is that it has a lower computational cost than other optimization techniques. This algorithm works formally as presented below.54,55 Let {πk}, k = 1, …, n the independent random permutation of {1, …} in which all the points are distributed over N possible combinations. The random sampling points are in the interval [0,1].
+
+
+2.8.2. Genetic algorithm. 
+One of the optimization algorithms in renewable systems most used in the literature is the genetic algorithm (GA),56 and using multi-objective GA to optimize the diesel consumption of a generator diesel or reduce the size of the battery, different weights should be set according to the importance of each objective, transforming the multi-objective optimization problem into a simple single objective optimization problem.57
+Where f1, f2, …,fk are the optimization aims; gi(x) is a constraint function; ω1, ω2,…,ωk are the corresponding weight, and the total sum of the weights is 1.
+
+
+2.8.3. Nelder–Mead. 
+The Nelder–Mead algorithm is a method in which a top-down simplex method is used to find a local extreme (minimum or maximum) of an objective function in multidimensional space. Unlike previous methods, with this technique it is possible to optimize the size of a renewable system by converging the system under certain conditions. This process generates a sequence of triangles in which the objective function becomes smaller until it is within the range accepted by the user, the algorithm finds a point of reflection, expansion, and contraction until finding the optimal minimum of the given objective function.55
+
+2.9. Cost analysis
+For the cost analysis, two important indices were studied, namely the net present cost (NPC) and cost of energy (COE), where the NPC can be calculated using eqn (13).43 (13)where CRF is the recovery factor, TAC is the total annual cost of the system, n is the time to pay the loan in (years), and i is the annual interest rate, which for this project is 11%.5
+CRF and TAC can be calculated using eqn (14) and (15), respectively. (14) (15)where Cacap is the capital cost ($), CO&M is the annual cost of operation and maintenance ($), Cf is the fuel cost ($), which in this case is 0.8$ per l,7 and CR is the replacement cost ($).
+The cost of energy (COE) ($ per kW h), which defined as the average cost of one kW h of energy, can be calculated as follows:43 (16)
+The cost parameters of the components are shown in Table 2. These results were used to economically evaluate the system using HOMER Pro and SDO, as presented in the Results section.
+Table 2 Cost of each component.7,58,59
+
+
+
+
+Component
+Capital cost
+Replacement cost
+O&M cost
+
+
+
+
+PV
+1210 ($ per kWp)
+484 ($ per kWp)
+15 ($ per kWp per year)
+
+
+WT
+1500 ($ per kW)
+1200 ($ per kW)
+19 ($ per kW per year)
+
+
+DG
+323 ($ per kW)
+323 ($ per kW)
+3.68 ($ per kW per h)
+
+
+PH
+1000 ($ per kW h)
+500 ($ per kW h)
+9.09 ($ per kW per year)
+
+
+BAT
+300 ($ per kW h)
+240 ($ per kW h)
+3.75 ($ per kW per year)
+
+
+
+
+3. Results
+This section presents the optimization and improvement results of the newly proposed HRES, which were classified in two case studies. Case 1 is made up of PV/WT/PH/BAT/GD and case 2 of PV/WT/PH/BAT, and the energy optimization, reliability (LPSP) and economic results are discussed below.
+3.1. Sizing optimization
+
+3.1.1. Case 1: PV/WT/PH/BAT/GD. 
+Based on the demand forecast result presented in Section 2.3.2, the peak demand is 13254 kW with an annual consumption of 70 GW h per year for 2031. The system proposed as case 1 was analyzed (see Fig. 9), and the optimization results using HOMER Pro and SDO are shown in Table 3. The results managed to substantially decrease the power of the DG with respect to ref. 7, where the result of the power of the DG is 13.9 MW. This optimization in the DG result is attributed to the introduction of new energy storage (PH) technology.
+Table 3 Sizing optimization results of the PV-WT-PH-BAT-DG system
+
+
+
+
+Parameter
+HOMER Pro
+Simulink design optimization
+
+
+Latin hypercube
+Genetic algorithm
+Nelder–Mead
+
+
+
+
+PV (MW)
+15.390
+12.752
+12.778
+12.871
+
+
+WT (MW)
+2.250
+2.250
+2.250
+2.250
+
+
+PH (MW)
+6.900
+6.943
+6.970
+7.009
+
+
+BAT (MW)
+1.360
+0.282
+0.283
+0.286
+
+
+DG (MW)
+8.960
+6.529
+6.535
+6.590
+
+
+
+
+In the studies in ref. 16 and 60, where the results obtained by SDO and HOMER Pro of a hydrokinetic-photovoltaic-diesel-battery system were compared, the Nelder–Mead algorithm found the minimum optimization of the size of renewable sources and HOMER Pro the minimum capacity of the batteries. However, by including two storage systems simultaneously, the results of HOMER Pro are not optimal as in this case. In Table 3, the Latin hypercube algorithm gave the minimum power values with respect to the other proposed controls, followed by the genetic algorithm, Nelder–Mead, and finally HOMER Pro, which achieved high powers from the renewable components and diesel generator. These results demonstrate that the pattern search method is capable of converging the optimal global minima compared to HOMER Pro, which converges on the most economical value.
+
+Table 4 shows the energy contribution during 2031 from each component of the system, where again the Latin hypercube algorithm finds the optimal solution by reducing the operation of PV-WT and especially the DG. In this case, HOMER Pro finds the optimal solution for the energy storage system (BAT and PH) similar to ref. 60, despite the fact that the energy contribution of DG is high in HOMER Pro with respect to SDO.
+Table 4 Energy produced. Results of PV-WT-PH-BAT-DG system
+
+
+
+
+Parameter
+HOMER Pro
+Simulink design optimization
+
+
+Latin hypercube
+Genetic algorithm
+Nelder–Mead
+
+
+
+
+PV (MW h y−1)
+154.8
+128.9
+129.35
+129.81
+
+
+WT (MW h y−1)
+10.25
+9.809
+9.809
+9.809
+
+
+PH (MW h y−1)
+23.50
+23.78
+23.95
+24.08
+
+
+BAT (MW h y−1)
+4.90
+6.289
+6.305
+6.381
+
+
+DG (MW h y−1)
+5.15
+3.785
+3.792
+3.802
+
+
+Load (MW h y−1)
+72.58
+72.58
+72.58
+72.58
+
+
+
+
+These values were obtained for the HRES of case 1 and the electrical load in 2021. Fig. 22(a) shows the operation of the renewable system with respect to the load throughout the year, where it is notable that the capacity of the photovoltaic system is greater than the wind power. Fig. 22(b) shows the DG operation when the load requires it, and although there are many starts, the proposed system managed to reduce them considerably. Fig. 22 shows the data obtained with the software HOMER Pro.
+ Fig. 22  Case 1. (a) Electric power provided by renewable sources with respect to electric load. (b) Diesel generator output power: annual hourly data (MW per year). 
+
+Fig. 23 shows the graphs obtained with the SDO software. Fig. 23(a) shows the operation of the renewable system with respect to the load throughout the year, adjusting the hours of operation of the PV and WT to supply the load. Fig. 23(b) shows the DG operation when the load requires it, decreasing the number of diesel generator operating hours. By applying this type of control (SDO), the number of DG starts is less than that from HOMER Pro.
+ Fig. 23  Case 1. (a) Electric power provided by renewable sources versus load. (b) Diesel generator output power: annual hourly data (MW per year). 
+The state of charge in PH and BAT for case 1 is shown in Fig. 24(a). By having two storage systems, the operability of the DG decreases more with respect to just one.7 The CO2 emissions shown in Fig. 24(b) are directly proportional to the DG starts in Fig. 22(b). Therefore, if DG penetration decreases, significant amounts of CO2 emissions are eliminated. The state of charge (SOC) shown in Fig. 24(a) correctly follows the algorithm in Fig. 19, demonstrating the validity of this method. Moreover, the PH system has depths of discharge greater than BAT, operating as base storage in the system and BAT as the backup storage system.
+ Fig. 24  Homer (a) state of charge in PH and BAT considering case 1 and (b) CO2 emissions produced by the DG in case 1. 
+The minimum state of charge of BAT was imposed under the control with SDO of 60% with the aim of lengthening the lifetime, while the depth of discharge in PH was 100%, and the results of the simulation are shown in Fig. 25(a). Similar to the results presented in Fig. 23(b), this type of control allows reducing the number of DG starts to optimal values with respect to HOMER Pro and limiting the DG power to that required by the load without recharging the BAT.
+ Fig. 25  SDO (a) state of charge in PH and BAT considering case 1 and (b) CO2 emissions produced by the DG in case 1. 
+
+
+3.1.2. Case 2: PV/WT/PH/BAT. 
+In this case, the DG of HRES was eliminated, and the results are promising given that to compensate for the power of the DG, the algorithms increased the power of PV, PH and BAT. Once again, the Latin hypercube algorithm reaches optimal values and HOMER Pro converges on values greater than SDO, as shown in Table 5. These results completely mitigated the CO2 emissions generated in case 1 and in ref. 7.
+Table 5 Sizing optimization results of the PV-WT-PH-BAT-system
+
+
+
+
+Parameter
+HOMER Pro
+Simulink design optimization
+
+
+Latin hypercube
+Genetic algorithm
+Nelder–Mead
+
+
+
+
+PV (MW)
+20.36
+18.970
+19.024
+19.080
+
+
+WT (MW)
+2.250
+2.250
+2.250
+2.250
+
+
+PH (MW)
+18.36
+13.124
+13.176
+13.212
+
+
+BAT (MW h)
+1.5
+0.475
+0.476
+0.478
+
+
+
+
+The energy result for 2031 is shown in Table 6, whereas in the optimization of the size, the Latin hypercube found the optimal solution with respect to the other algorithms; however, HOMER Pro could converge in a capacity lower BAT than the other methods, which could be a result of the increase in energy delivered by PH and PV.
+Table 6 Energy results of the PV-WT-PH-BAT-system
+
+
+
+
+Parameter
+HOMER Pro
+Simulink design optimization
+
+
+Latin hypercube
+Genetic algorithm
+Nelder–Mead
+
+
+
+
+PV (MW h y−1)
+204.28
+160.70
+161.25
+161.82
+
+
+WT (MW h y−1)
+10.70
+9.809
+9.809
+9.809
+
+
+PH (MW h y−1)
+31.85
+22.77
+22.98
+23.12
+
+
+BAT(MW h y−1)
+5.7
+11.31
+11.75
+12.08
+
+
+Load MW h
+72.58
+72.58
+72.58
+72.58
+
+
+
+
+
+Fig. 26 shows the simulation result of case 2 in HOMER Pro. Fig. 26(a) shows the output power of renewable sources and the load, while Fig. 26(b) shows the state of charge of PH and BAT, where for the control in HOMER Pro, similar to case 1, the maximum discharge depth of the BAT and PH is 100%.
+ Fig. 26  Case 2 (a) electrical power from RES and (b) state of charge of the PH and BAT systems. 
+
+Fig. 27 show the obtained result using SDO. Fig. 27(a) shows the power from renewable sources necessary to supply the load during the whole year, together with the PH and BAT energy storage systems, with SOC from 100% and 0% and between 60% and 100%, respectively, as shown in Fig. 27(b).
+ Fig. 27  SDO (a) electrical power from RES and (b) state of charge of the PH and BAT systems. 
+
+3.2. Economic results
+
+Table 7 shows the economic results of the proposed systems, where in the two proposed cases, the SDO method was analyzed based on the optimal algorithm presented in Section 3.1 (Latin hypercube). The advantage over the HOMER Pro method is more notable in case 2, saving $43809100, and in case 1 the SDO saving with respect to HOMER Pro is $35286957. Regarding the COE, it is similar for both cases and methods, which is because of the size optimization and fuel economy provided by the SDO algorithm.
+Table 7 Economic result of the proposed systems using the HOMER Pro and SDO methods
+
+
+
+
+Parameter
+Case 1
+Case 2
+
+
+HOMER Pro
+SDO
+HOMER Pro
+SDO
+
+
+
+
+NPC (M$)
+183.81
+148.52
+233.38
+189.57
+
+
+COE ($ per kW h)
+0.26
+0.25
+0.25
+0.24
+
+
+
+
+3.3. Loss of power supply probability
+In case 2, the loss of power supply probability (LPSP) was calculated using eqn (17) and (18) (17) (18)where HLOLE represents the number of hours during which the generators and energy storage systems (Gi) cannot meet the load demand (Li) in a given period each hour i, and n is the total number of hours of the given period (8760). Pi = 0 if the load demand is lower than the power supply and Pi = 1 in other conditions.61
+LPSP was used to find the optimal point of the size of the renewable sources and the energy storage system, which was 0.09%. Fig. 28 shows the variation of the capacity of the renewable system with respect to the LPSP with HOMER Pro. It is observed that by varying the capacity of the PV system, the LPSP varied less with respect to WT and PH, with the latter having a considerable impact on the reliability of the system given that by not having a DG, it decreases the energy storage capacity, and the system is increasingly dependent on PV and WT sources that have intermittent renewable resources. Case 1 always presents an LPSP of 0 due to the continuous availability of the DG.
+ Fig. 28  Loss of power supply probability according to the installed renewable capacity, with HOMER Pro results as a reference. 
+The LPSP resulting from SDO is shown in Fig. 29, with the results obtained with HOMER Pro (Fig. 28), and the LPSP being zero for case 1. However, for case 2, the LPSP is 0.22% for the optimal sizing with ODS, as shown in Table 4, given that it modifies the installed capacity of each energy source and storage system. Fig. 29 shows a similar behavior of LPSP to Fig. 28 when the installed capacity of PV is modified. The WT source features a considerably higher LPSP with SDO than HOMER Pro, demonstrating a greater reliance on WT using SDO. BATs with SDO show a stable behavior with 18% LPSP by reducing their installed capacity from 1 to 0.92 p.u., and with HOMER Pro it has a greater dependency. Also, PH presents a lower LPSP in SDO than HOMER Pro, and similarly less variability.
+ Fig. 29  Loss of power supply probability according to the installed renewable capacity, with the SDO results as a reference. 
+The LPSP results indicate that SDO is capable of optimizing the renewable hybrid system a way that it is more robust than HOMER Pro, presenting greater stability by varying its energy sources and energy storage systems independently.
+3.4. Payback time
+The payback time varies with respect to the LPSP, where in case 2, the results obtained with both HOMER Pro and SDO presented variations (see Fig. 30). SDO presented a greater increase due to the fact that the size of its energy sources is close to demand consumption; however, HOMER Pro, presented higher paybacks for all LPSP levels. Case 1 has no variations given that when trying to vary LPSP, the DG will take the unattended load.
+ Fig. 30  Payback time variation with respect to LPSP. 
+3.5. Sensitivity analysis with respect to COE
+An important factor when analyzing the feasibility of a system is the cost of energy, which can vary depending on the LPSP. For the proposed case 1, in Fig. 31, it can be observed that the COE increases considerably with respect to the LPSP with the data obtained with HOMER Pro. The greater the probability of loss of supply, the diesel generator will have to provide more energy by consuming diesel by increasing the COE, and according to SDO this variation is less given that the sizing proposed by the Latin hypercube algorithm causes less dependence on the DG.
+ Fig. 31  Variation of the COE with respect to LPSP as proposed in case 1. 
+3.6. Sensitivity analysis of relative humidity
+Based on eqn (4), the attenuation of solar irradiance with respect to relative humidity is shown in Fig. 32.
+ Fig. 32  Attenuation of solar irradiance with respect to relative humidity. 
+The annual average relative humidity in Galapagos is approximately 78%, where for this value, Fig. 32 indicates a parameter of attenuation of solar irradiance of 2.3.
+Irradiance affects the short-circuit current, Isc, and the open-circuit voltage, Voc, of a solar cell differently, and this dependence is shown in Fig. 33.44
+ Fig. 33  Relationship of relative humidity with respect to short circuit current and open circuit voltage in a solar cell. 
+As the current has greater variation than the voltage, according to Fig. 33, the variation of Isc with respect to irradiation can be represented by eqn (19) as follows: y = −3E−7X2 + 0.0023X − 0.0688(19)
+The maximum power output produced by a solar cell can also be represented by eqn (20). Pmax = ImVm = (FF)(Isc)(Voc)(20)
+As the output power of a solar cell depends on Isc and Voc, and in turn these variables depend on the irradiance, which attenuates with the increase in relative humidity, the PV power output will be affected by relative humidity.
+3.7. Sensitivity analysis of ambient temperature
+The photovoltaic power output varies with respect to the temperature of the solar cell (Tc) according to eqn (1). In turn, the variation in the temperature of the solar cell varies with respect to the ambient temperature and can be calculated using eqn (21). (21)where NOCT is the cell temperature when operating at open circuit, ambient temperature of 20 °C at AM 1.5 and irradiance of G = 0.8 kW m−2 (45 °C for this case7).
+In the literature, the impact on photovoltaic power and ambient temperature has been widely studied, where the higher the ambient temperature, the higher the temperature of the solar cell (as shown in Fig. 34). Therefore, the photovoltaic output power is reduced.
+ Fig. 34  Variation of the temperature of the solar cell with respect to the ambient temperature in Galapagos. 
+4. Conclusions
+Herein, we presented a hybrid optimization study to improve the current HRES in the Baltra and Santa Cruz Islands by 2031. Firstly, the demand forecast with neural networks based on historical data was studied, and then two renewable systems were proposed (case 1 PV-WT-PH-BAT-DG) and (case 2 PV-WT-PH-BAT), which were analyzed under four algorithms proposed in HOMER Pro and in Matlab SDO (Latin hypercube, genetic algorithm and Nelder–Mead). The indices used for this analysis focused on sizing optimization, energy management, reliability and economics. The results indicated that by applying the new control methods, the operation of the diesel generator decreases considerably, and it is even possible to eliminate it while still supplying the islands completely by 2031. The details are explained below.
+In reference to case 1 proposed, the Latin hypercube algorithm developed in Matlab SDO gave the optimal values with respect to the other controls, and despite the fact that HOMER Pro operates with discharge depths of PH and BAT of 100%, the software does not converge on the optimal values like SDO. Therefore, the operability of the DG is less applying the Latin hypercube algorithm.
+Proposed case 2 is novel, where the diesel generator was eliminated; however, the proposed new storage technology (PH) supports renewable sources (PV–WT) to cover the energy of the missing DG. Therefore, with this newly proposed system, the emissions of polluting gases from the DG were completely eliminated, improving on case 1 and the system presented in ref. 7, and once again, the Latin hypercube algorithm achieved the optimal values with respect to the others controls discussed herein.
+The economic advantages of the method in SDO were clearly identified, where the values obtained from NPC and COE according to HOMER Pro were $183810067 and 0.26$ per kW h, and $233385656 and 0.25$ per kW h for case 1 and 2, respectively. According to the SDO data, the NPC and COE for case 1 are $148523110 and 0.25$ per kW h, and for case 2 $189576556 and 0.24$ per kW h, respectively. This indicates that in case 2, using the Latin Hypercube algorithm with SDO is more suitable for the energy management of the hybrid system. This means that the energy cost for 2031 in Baltra and Santa Cruz will be 0.24$ per kW h and CO2 emissions will be completely mitigated, potentially improving the current HRES. Moreover, it was observed that the recovery time depends on the LPSP, mostly with the data obtained from HOMER Pro, as well as the COE, where the higher the LPSP, the cost of energy increases, although this was minor for SDO. In this regard, it can be concluded that SDO (Latin hypercube algorithm) is capable of achieving better dimensioning of the proposed systems and the cost of energy does not grow sharply with respect to higher LPSP values.
+An important aspect that must be considered above all in 100% renewable systems is reliability (LPSP). The LPSP values obtained with HOMER Pro were below 0.09% and for SDO less than 0.22%. However, the data obtained with SDO showed greater stability and lower LPSP when varying the installed capacity of the energy sources and energy storage systems. These results demonstrate that the designed hybrid system ensures a reliable power supply for the autonomous application of the Galapagos Islands.
+On the other hand, it was shown that the irradiance varies with respect to humidity in a non-linear way; therefore, the photovoltaic power output is affected by humidity, and the photovoltaic power output power decreases with an increase in the ambient temperature.
+The hybrid feasibility analysis presented showed that it is possible to improve the current HRES of the Galapagos Islands from an economic, environmental and technical point of view by applying the Latin hypercube algorithm (SDO), as well as the demand forecasting technique with neural networks help to relate consumer patterns, achieving the future scenario for 2031. The energy policies to be applied in this future scenario should be based on zero carbon and low energy cost in these islands in exchange for a possible high investment that ensures long-term sustainable development.
+Acronyms
+
+ANNArtificial neural networks
+LPSPLoss of power supply probability
+SDOSimulation design optimization
+PVPhotovoltaic
+WTWind turbine
+PHHydraulic pumped
+DGDiesel generator
+BATBatteries
+KiBaMKinetic battery model
+HRESHybrid renewable energy system
+NPCNet present cost
+COECost net of energy
+CFRCost of capital recovery
+GAGenetic algorithm
+HRESHybrid renewable electrical system
+SOCState of charge
+LPSPLoss of power supply probability
+COECost of energy
+NPCNet present cost
+HLOLEHourly loss of load expectation
+
+Conflicts of interest
+There are no conflicts to declare.
+References
+P. Bertheau and P. Blechinger, Resilient solar energy island supply to support SDG7 on the Philippines: Techno-economic optimized electrification strategy for small islands, Util. Policy, 2018, 54, 55–77,  DOI:10.1016/j.jup.2018.07.005 .
+S. Cross, D. Padfield, R. Ant-Wuorinen, P. King and S. Syri, Benchmarking island power systems: Results, challenges, and solutions for long term sustainability, Renewable Sustainable Energy Rev., 2017, 80, 1269–1291,  DOI:10.1016/j.rser.2017.05.126 .
+Y. Kuang, Y. Zhang, B. Zhou, C. Li, Y. Cao and L. Li, 
+            et al., A review of renewable energy utilization in islands, Renewable Sustainable Energy Rev., 2016, 59, 504–513,  DOI:10.1016/j.rser.2016.01.014 .
+D. Al Katsaprakakis and M. Voumvoulakis, A hybrid power plant towards 100% energy autonomy for the island of Sifnos, Greece. Perspectives created from energy cooperatives, Energy, 2018, 161, 680–698,  DOI:10.1016/j.energy.2018.07.198 .
+A. A. Eras-Almeida and M. A. Egido-Aguilera, Hybrid renewable mini-grids on non-interconnected small islands: Review of case studies, Renewable Sustainable Energy Rev., 2019, 116, 109417,  DOI:10.1016/j.rser.2019.109417 .
+H. C. Gils and S. Simon, Carbon neutral archipelago – 100% renewable energy supply for the Canary Islands, Appl. Energy, 2017, 188, 342–355,  DOI:10.1016/j.apenergy.2016.12.023 .
+A. A. Eras-Almeida, M. A. Egido-Aguilera, P. Blechinger, S. Berendes, E. Caamaño and E. García-Alcalde, Decarbonizing the Galapagos Islands: Techno-economic perspectives for the hybrid renewable mini-grid Baltra-Santa Cruz, Sustainability, 2020, 12, 2282,  DOI:10.3390/su12062282 .
+K. Anoune, M. Bouya, A. Astito and A. B. Abdellah, Sizing methods and optimization techniques for PV-wind based hybrid renewable energy system: A review, Renewable Sustainable Energy Rev., 2018, 93, 652–673,  DOI:10.1016/J.RSER.2018.05.032 .
+S. Sinha and S. S. Chandel, Review of software tools for hybrid renewable energy systems, Renewable Sustainable Energy Rev., 2014, 32, 192–205,  DOI:10.1016/j.rser.2014.01.035 .
+S. Bahramara, M. P. Moghaddam and M. R. Haghifam, Optimal planning of hybrid renewable energy systems using HOMER: A review, Renewable Sustainable Energy Rev., 2016, 62, 609–620,  DOI:10.1016/J.RSER.2016.05.039 .
+HOMER Pro – Microgrid Software for Designing Optimized Hybrid Microgrids, https://www.homerenergy.com/products/pro/index.html, accessed  November 24, 2020 .
+M. Ramesh and R. P. Saini, Dispatch strategies based performance analysis of a hybrid renewable energy system for a remote rural area in India, J. Cleaner Prod., 2020, 259, 120697,  DOI:10.1016/j.jclepro.2020.120697 .
+HOMER Pro, https://www.homerenergy.com/products/pro/docs/latest/index.html, accessed  May 2, 2020 .
+J. Lata-Garcia, F. Jurado-Melguizo, H. Sanchez-Sainz, C. Reyes-Lopez and L. Fernandez-Ramirez, Optimal sizing hydrokinetic-photovoltaic system for electricity generation in a protected wildlife area of Ecuador, Turkish J. Electr. Eng. Comput. Sci., 2018, 26, 1103–1114,  DOI:10.3906/elk-1706-23 .
+
+          J. Lata-Garcìa, C. Reyes-Lopez, F. Jurado, L. M. Fernández-Ramírez and H. Sanchez, Sizing optimization of a small hydro/photovoltaic hybrid system for electricity generation in Santay Island, Ecuador by two methods, 2017 Chil. Conf. Electr. Electron. Eng. Inf. Commun. Technol. CHILECON 2017 - Proc., vol. 2017– January, Institute of Electrical and Electronics Engineers Inc.,  2017, pp. 1–6,  DOI:10.1109/CHILECON.2017.8229539 .
+P. A. Cordero, J. L. García and F. Jurado, Optimization of an off-grid hybrid system using lithium ion batteries, Acta Polytech. Hungarica, 2020, 17, 185–206,  DOI:10.12700/APH.17.3.2020.3.10 .
+A. Capozzoli, M. S. Piscitelli, S. Brandi, D. Grassi and G. Chicco, Automated load pattern learning and anomaly detection for enhancing energy management in smart buildings, Energy, 2018, 157, 336–352,  DOI:10.1016/j.energy.2018.05.127 .
+X. Serrano-Guerrero, G. Escrivá-Escrivá and C. Roldán-Blay, Statistical methodology to assess changes in the electrical consumption profile of buildings, Energy Build., 2018, 164, 99–108,  DOI:10.1016/j.enbuild.2017.12.059 .
+H. R. Khosravani, M. D. M. Castilla, M. Berenguel, A. E. Ruano and P. M. Ferreira, A comparison of energy consumption prediction models based on neural networks of a bioclimatic building, Energies, 2016, 9, 57,  DOI:10.3390/en9010057 .
+G. Sideratos, A. Ikonomopoulos and N. D. Hatziargyriou, A novel fuzzy-based ensemble model for load forecasting using hybrid deep neural networks, Electr. Power Syst. Res., 2020, 178 DOI:10.1016/j.epsr.2019.106025 .
+X. Serrano-Guerrero, G. Escrivá-Escrivá, S. Luna-Romero and J. M. Clairand, A time-series treatment method to obtain electrical consumption patterns for anomalies detection improvement in electrical consumption profiles, Energies, 2020, 13, 1046,  DOI:10.3390/en13051046 .
+
+          Elecgalapagos, Electricity Company Elecgalapagos, Electricity Balance, unpublished, institutional information, Galápagos,  2018 Search PubMed .
+
+          Elecgalapagos, Electricity Company Elecgalapagos, Monthly and Annual Electricity Demand, unpublished, institutional information, Galápagos,  2018 Search PubMed .
+0°38′58.0′′S 90°19′56.8′′W – Google Maps, https://www.google.com/maps/place/0°38’58.0%22S+90°19’56.8%22W/@-0.6602726,-90.4153687,10.21z/data=!4m14!1m7!3m6!1s0x9aaa5f3c9454fba5:0x900d7fee5795677f!2sIsla+Santa+Cruz!3b1!8m2!3d-0.6393592!4d-90.3371889!3m5!1s0x0:0x0!7e2!8m2!3d-0.6494363!4d-90.3324331, accessed  January 16, 2021.
+
+          A. A. Eras-Almeida and M. A. Egido-Aguilera, Quality Control Applied to the Photovoltaic Systems of the Galapagos Islands: The Case of Baltra and Santa Cruz,  2018 Search PubMed .
+
+          D. Zorrilla, E. Albornoz and United Nations Development Programme (UNDP), Green Energy for Galapagos, Inexhaustible, Clean and Safe, UNDP, Quito, Ecuador,  2016, Green Energy for Galapagos 2016:13 Search PubMed .
+
+          Elecgalapagos. Electricity Company ELECGALAPAGOS, Statistics: Electricity demand of Baltra and Santa Cruz, unpublished, institutional information, Galápagos,  2018 Search PubMed.
+
+          ARCONEL. Agency for Regulation and Control of Electricity (ARCONEL), Cost of Electricity Service—Galapagos, unpublished, institutional information, Galápagos,  2019 Search PubMed .
+A. Azadeh, S. F. Ghaderi and S. Sohrabkhani, A simulated-based neural network algorithm for forecasting electrical energy consumption in Iran, Energy Policy, 2008, 36, 2637–2644,  DOI:10.1016/j.enpol.2008.02.035 .
+G. Escrivá-Escrivá, C. Álvarez-Bel, C. Roldán-Blay and M. Alcázar-Ortega, New artificial neural network prediction method for electrical consumption forecasting based on building end-uses, Energy Build., 2011, 43, 3112–3119,  DOI:10.1016/j.enbuild.2011.08.008 .
+
+          X. Serrano-Guerrero, R. Prieto-Galarza, E. Huilcatanda, J. Cabrera-Zeas and G. Escriva-Escriva, Election of variables and short-term forecasting of electricity demand based on backpropagation artificial neural networks, 2017 IEEE Int. Autumn Meet. Power, Electron. Comput. ROPEC 2017, vol. 2018– January, Institute of Electrical and Electronics Engineers Inc.,  2018, pp. 1–5,  DOI:10.1109/ROPEC.2017.8261630 .
+X. Serrano-Guerrero, L. F. Siavichay, J. M. Clairand and G. Escrivá-Escrivá, Forecasting Building Electric Consumption Patterns Through Statistical Methods, Adv. Intell. Syst. Comput., 2020, 1067, 164–175,  DOI:10.1007/978-3-030-32033-1_16 .
+R. Lin, Z. Ye and Y. Zhao, OPEC: Daily load data analysis based on optimized evolutionary clustering, Energies, 2019, 12 DOI:10.3390/en12142668 .
+C. Li, Z. Ding, D. Zhao, J. Yi and G. Zhang, Building Energy Consumption Prediction: An Extreme Deep Learning Approach, Energies, 2017, 10, 1525,  DOI:10.3390/en10101525 .
+W. Zhang, A. Maleki and M. A. Rosen, A heuristic-based approach for optimizing a small independent solar and wind hybrid power scheme incorporating load forecasting, J. Cleaner Prod., 2019, 241, 117920,  DOI:10.1016/j.jclepro.2019.117920 .
+T. Ahmad, H. Zhang and B. Yan, A review on renewable energy and electricity requirement forecasting models for smart grid and buildings, Sustain. Cities Soc., 2020, 55, 102052,  DOI:10.1016/j.scs.2020.102052 .
+M. R. Elkadeem, S. Wang, A. M. Azmy, E. G. Atiya, Z. Ullah and S. W. Sharshir, A systematic decision-making approach for planning and assessment of hybrid renewable energy-based
+microgrid with techno-economic optimization: A case study on an urban community in Egypt, Sustain. Cities Soc., 2020, 54, 102013,  DOI:10.1016/j.scs.2019.102013 .
+N. Somu, M. Gauthama and K. Ramamritham, A hybrid model for building energy consumption forecasting using long short term memory networks, Appl. Energy, 2020, 261, 114131,  DOI:10.1016/j.apenergy.2019.114131 .
+M. Talaat, M. A. Farahat, N. Mansour and A. Y. Hatata, Load forecasting based on grasshopper optimization and a multilayer feed-forward neural network using regressive approach, Energy, 2020, 196, 117087,  DOI:10.1016/j.energy.2020.117087 .
+Z. Wen, L. Xie, Q. Fan and H. Feng, Long term electric load forecasting based on TS-type recurrent fuzzy neural network model, Electr. Power Syst. Res., 2020, 179, 106106,  DOI:10.1016/j.epsr.2019.106106 .
+Simulink Design Optimization - MATLAB & Simulink, https://la.mathworks.com/products/sl-design-optimization.html, accessed  September 16, 2020.
+M. Belouda, M. Hajjaji, H. Sliti and A. Mami, Bi-objective optimization of a standalone hybrid PV–Wind–battery system generation in a remote area in Tunisia, Sustain. Energy, Grids Netw., 2018, 16, 315–326,  DOI:10.1016/j.segan.2018.09.005 .
+P. Arévalo, D. Benavides, J. Lata-García and F. Jurado, Energy control and size optimization of a hybrid system (photovoltaic-hidrokinetic) using various storage technologies, Sustain. Cities Soc., 2020, 52, 101773,  DOI:10.1016/j.scs.2019.101773 .
+S. Mekhilef, R. Saidur and M. Kamalisarvestani, Effect of dust, humidity and air velocity on efficiency of photovoltaic cells, Renewable Sustainable Energy Rev., 2012, 16, 2920–2925,  DOI:10.1016/j.rser.2012.02.012 .
+B. A. L. Gwandu and D. J. Creasey, Humidity: A factor in the appropriate positioning of a photovoltaic power station, Renewable Energy, 1995, 6, 313–316,  DOI:10.1016/0960-1481(95)00073-S .
+El Clima en Galápagos, Ecuador, https://www.datosmundial.com/america/ecuador/clima-galapagos.php, accessed  January 28, 2021.
+J. F. Manwell and J. G. McGowan, Lead acid battery storage model for hybrid energy systems, Sol. Energy, 1993, 50, 399–405,  DOI:10.1016/0038-092X(93)90060-2 .
+E. N. Nyeche and E. O. Diemuodeke, Modelling and optimisation of a hybrid PV-wind turbine-pumped hydro storage energy system for mini-grid application in coastline communities, J. Cleaner Prod., 2020, 250, 119578,  DOI:10.1016/j.jclepro.2019.119578 .
+HOMER Calculations, https://www.homerenergy.com/products/pro/docs/3.11/homers_calculations.html, accessed  February 8, 2019.
+P. Arévalo, D. Benavides, J. Lata-García and F. Jurado, Energy control and size optimization of a hybrid system (photovoltaic-hidrokinetic) using various storage technologies, Sustainable Cities and Society, 2020, 52, 101773,  DOI:10.1016/j.scs.2019.101773 .
+F. A. Canales and A. Beluco, Modeling pumped hydro storage with the micropower optimization model (HOMER), J. Renewable Sustainable Energy, 2014, 6, 043131,  DOI:10.1063/1.4893077 .
+S. Mandal, B. K. Das and N. Hoque, Optimum sizing of a stand-alone hybrid energy system for rural electrification in Bangladesh, J. Cleaner Prod., 2018, 200, 12–27,  DOI:10.1016/j.jclepro.2018.07.257 .
+M. S. Javed, A. Song and T. Ma, Techno-economic assessment of a stand-alone hybrid solar-wind-battery system for a remote island using genetic algorithm, Energy, 2019, 176, 704–717,  DOI:10.1016/J.ENERGY.2019.03.131 .
+M. Abyani and M. R. Bahaari, A comparative reliability study of corroded pipelines based on Monte Carlo Simulation and Latin Hypercube Sampling methods, Int. J. Pressure Vessels Piping, 2020, 181, 104079,  DOI:10.1016/j.ijpvp.2020.104079 .
+A. Navid, S. Khalilarya and M. Abbasi, Diesel engine optimization with multi-objective performance characteristics by non-evolutionary Nelder–Mead algorithm: Sobol sequence and Latin hypercube sampling methods comparison in DoE process, Fuel, 2018, 228, 349–367,  DOI:10.1016/j.fuel.2018.04.142 .
+Z. Z. Wang and A. Sobey, A comparative review between Genetic Algorithm use in composite optimisation and the state-of-the-art in evolutionary computation, Compos. Struct., 2020, 233, 111739,  DOI:10.1016/j.compstruct.2019.111739 .
+X. Lü, Y. Wu, J. Lian, Y. Zhang, C. Chen and P. Wang, 
+            et al., Energy management of hybrid electric vehicles: A review of energy optimization of fuel cell hybrid power system based on genetic algorithm, Energy Convers. Manage., 2020, 205, 112474,  DOI:10.1016/j.enconman.2020.112474 .
+F. A. Canales and A. Beluco, Modeling pumped hydro storage with the micropower optimization model (HOMER), J. Renewable Sustainable Energy, 2014, 6, 043131,  DOI:10.1063/1.4893077 .
+Pumped Hydropower - Energy Storage Association,https://energystorage.org/why-energy-storage/technologies/pumped-hydropower/, accessed  November 18, 2020.
+A. Cano, F. Jurado, H. Sánchez, L. M. Fernández and M. Castañeda, Optimal sizing of stand-alone hybrid systems based on PV/WT/FC by using several methodologies, J. Energy Inst., 2014, 87, 330–340,  DOI:10.1016/j.joei.2014.03.028 .
+N. Shi and Y. Luo, Energy Storage System Sizing Based on a Reliability Assessment of Power Systems Integrated with Wind Power, Sustainability, 2017, 9, 395,  DOI:10.3390/su9030395 .
+
+This journal is © The Royal Society of Chemistry 2021
+Table Content:
+
+Santa Cruz–Baltra	13.9	2.25	1.57	4.3	17.72
+
+ 	Fig. 1  Location of the Baltra and Santa Cruz islands (Galapagos).	 
+
+ 	Fig. 2  Average monthly wind speed in (m s−1).	 
+
+ 	Fig. 3  Average monthly solar radiation.	 
+
+ 	Fig. 4  Architecture of an artificial network.	 
+
+ 	Fig. 5  ANN used in the proposed method.	 
+
+ 	Fig. 6  Comparison between the real energy demand (2014–2019) and the values obtained by the annual neural network (2014–2019).	 
+
+ 	Fig. 7  Forecast of demand for the period 2026–2031 in (p.u.).	 
+
+ 	Fig. 8  Forecasting demand in 2031.	 
+
+ 	Fig. 9  Case 1. Proposed hybrid system, which includes a backup diesel generator.	 
+
+ 	Fig. 10  Case 2. Proposed hybrid system without a backup diesel generator.	 
+	(1)
+	(2)
+
+ 	Fig. 11  Model photovoltaic device.	 
+	(3)
+GA = 0.0015RH2 − 0.125RH + 2.56, for 40 ≤ RH ≤ 90	(4)
+
+ 	Fig. 12  Relative humidity with respect to irradiance in Galapagos.	 
+
+ 	Fig. 13  Ambient temperature with respect to irradiance in Galapagos.	 
+	(5)
+
+ 	Fig. 14  Model wind turbine.	 
+V = E − R0I	(6)
+	(7)
+	(8)
+
+ 	Fig. 15  Model KiBaM batteries.	 
+EPH = 9.81ρωVreshheadηPH	(9)
+PPH = 9.81ρωhheadηPHQPH	(10)
+
+ 	Fig. 16  Model pumped-storage hydropower.	 
+EDG = PDGηDGt	(11)
+F = F0,DGYDG + F1,DGPDG	(12)
+
+ 	Fig. 17  Diesel generator efficiency curve.	 
+
+ 	Fig. 18  Model diesel generator.	 
+
+ 	Fig. 19  Energy dispatch for the hybrid system in case 1.	 
+
+ 	Fig. 20  Energy dispatch for the hybrid system in case 2.	 
+
+ 	Fig. 21  Flowchart of pattern search method in Simulink design optimization (SDO).	 
+	(13)
+	(14)
+	(15)
+	(16)
+
+PV	1210 ($ per kWp)	484 ($ per kWp)	15 ($ per kWp per year)
+WT	1500 ($ per kW)	1200 ($ per kW)	19 ($ per kW per year)
+DG	323 ($ per kW)	323 ($ per kW)	3.68 ($ per kW per h)
+PH	1000 ($ per kW h)	500 ($ per kW h)	9.09 ($ per kW per year)
+BAT	300 ($ per kW h)	240 ($ per kW h)	3.75 ($ per kW per year)
+
+
+PV (MW)	15.390	12.752	12.778	12.871
+WT (MW)	2.250	2.250	2.250	2.250
+PH (MW)	6.900	6.943	6.970	7.009
+BAT (MW)	1.360	0.282	0.283	0.286
+DG (MW)	8.960	6.529	6.535	6.590
+
+
+PV (MW h y−1)	154.8	128.9	129.35	129.81
+WT (MW h y−1)	10.25	9.809	9.809	9.809
+PH (MW h y−1)	23.50	23.78	23.95	24.08
+BAT (MW h y−1)	4.90	6.289	6.305	6.381
+DG (MW h y−1)	5.15	3.785	3.792	3.802
+Load (MW h y−1)	72.58	72.58	72.58	72.58
+
+ 	Fig. 22  Case 1. (a) Electric power provided by renewable sources with respect to electric load. (b) Diesel generator output power: annual hourly data (MW per year).	 
+
+ 	Fig. 23  Case 1. (a) Electric power provided by renewable sources versus load. (b) Diesel generator output power: annual hourly data (MW per year).	 
+
+ 	Fig. 24  Homer (a) state of charge in PH and BAT considering case 1 and (b) CO2 emissions produced by the DG in case 1.	 
+
+ 	Fig. 25  SDO (a) state of charge in PH and BAT considering case 1 and (b) CO2 emissions produced by the DG in case 1.	 
+
+
+PV (MW)	20.36	18.970	19.024	19.080
+WT (MW)	2.250	2.250	2.250	2.250
+PH (MW)	18.36	13.124	13.176	13.212
+BAT (MW h)	1.5	0.475	0.476	0.478
+
+
+PV (MW h y−1)	204.28	160.70	161.25	161.82
+WT (MW h y−1)	10.70	9.809	9.809	9.809
+PH (MW h y−1)	31.85	22.77	22.98	23.12
+BAT(MW h y−1)	5.7	11.31	11.75	12.08
+Load MW h	72.58	72.58	72.58	72.58
+
+ 	Fig. 26  Case 2 (a) electrical power from RES and (b) state of charge of the PH and BAT systems.	 
+
+ 	Fig. 27  SDO (a) electrical power from RES and (b) state of charge of the PH and BAT systems.	 
+
+
+NPC (M$)	183.81	148.52	233.38	189.57
+COE ($ per kW h)	0.26	0.25	0.25	0.24
+	(17)
+	(18)
+
+ 	Fig. 28  Loss of power supply probability according to the installed renewable capacity, with HOMER Pro results as a reference.	 
+
+ 	Fig. 29  Loss of power supply probability according to the installed renewable capacity, with the SDO results as a reference.	 
+
+ 	Fig. 30  Payback time variation with respect to LPSP.	 
+
+ 	Fig. 31  Variation of the COE with respect to LPSP as proposed in case 1.	 
+
+ 	Fig. 32  Attenuation of solar irradiance with respect to relative humidity.	 
+
+ 	Fig. 33  Relationship of relative humidity with respect to short circuit current and open circuit voltage in a solar cell.	 
+y = −3E−7X2 + 0.0023X − 0.0688	(19)
+Pmax = ImVm = (FF)(Isc)(Voc)	(20)
+	(21)
+
+ 	Fig. 34  Variation of the temperature of the solar cell with respect to the ambient temperature in Galapagos.	 
+ANN	Artificial neural networks
+LPSP	Loss of power supply probability
+SDO	Simulation design optimization
+PV	Photovoltaic
+WT	Wind turbine
+PH	Hydraulic pumped
+DG	Diesel generator
+BAT	Batteries
+KiBaM	Kinetic battery model
+HRES	Hybrid renewable energy system
+NPC	Net present cost
+COE	Cost net of energy
+CFR	Cost of capital recovery
+GA	Genetic algorithm
+HRES	Hybrid renewable electrical system
+SOC	State of charge
+LPSP	Loss of power supply probability
+COE	Cost of energy
+NPC	Net present cost
+HLOLE	Hourly loss of load expectation
+
+This journal is © The Royal Society of Chemistry 2021

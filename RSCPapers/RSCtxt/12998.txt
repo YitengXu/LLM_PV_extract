@@ -1,0 +1,1070 @@
+Risk-based uncertainty assessment to identify key sustainability hurdles for emerging CO 2 utilization technologies   - Green Chemistry (RSC Publishing) DOI:10.1039/D2GC00514J View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2GC00514J
+(Paper)
+Green Chem., 2022, 24, 4588-4605Risk-based uncertainty assessment to identify key sustainability hurdles for emerging CO2 utilization technologies†
+
+        
+          
+            Jeehwan S. 
+            Lee
+          
+        
+      a, 
+      
+        
+          
+            Juyeong 
+            Jung
+          
+        
+      a, 
+      
+        
+          
+            Kosan 
+            Roh
+          
+        
+      b, 
+      
+        
+          
+            Seongmin 
+            Heo
+          
+        
+      c, 
+      
+        
+          
+            Ung 
+            Lee
+          
+        
+      d and 
+
+        
+          
+            Jay H. 
+            Lee
+          
+        
+      *a
+aDepartment of Chemical and Biomolecular Engineering, Korea Advanced Institute of Science and Technology (KAIST), 291 Daehak-ro, Yuseong-gu, Daejeon 34141, Republic of Korea. E-mail: jayhlee@kaist.ac.kr
+bDepartment of Chemical Engineering and Applied Chemistry, Chungnam National University, Daejeon 34141, Republic of Korea
+cDepartment of Chemical Engineering, Dankook University, Yongin 16890, Republic of Korea
+dClean Energy Research Center, Korea Institute of Science and Technology (KIST), Seoul 02792, Republic of Korea
+Received 
+      8th February 2022
+    , Accepted 16th May 2022First published on 17th May 2022AbstractThe development of carbon dioxide utilization (CDU) technologies is heavily influenced by policy priorities such as access to renewable energy resources and the country's economic structure. At the same time, most conversion-based CDU technologies are early-stage technologies characterized by significant uncertainties due to a nascent knowledgebase and limited available data. Consequently, identifying major sustainability hurdles and hotspots is crucial in ensuring effective allocations of R&D resources in technology upgrading and upscaling. In this study, we formulate the task of identifying sustainability hurdles as assessing and ranking key sources of risk that influence whether a given CDU technology is sustainable or not. To this end, we propose a novel methodology for risk-based uncertainty assessment through classification based on stakeholder-set sustainability decision rules. Risk is subsequently quantified by comparing the class likelihoods. For multiple sustainability criteria scenarios, additional stakeholder input in the form of joint conditional probabilities is implemented in the decision rules. We demonstrate the methodology by applying it to the CO2 hydrogenation to formic acid process employing heterogeneous Ru/bpyTN-30-CTF catalysts, being developed as part of the ongoing Carbon-to-X R&D initiative in South Korea. The proposed methodology is most applicable to CDU technologies with TRLs between 3 and 5 in which the core utilization concepts have already been experimentally validated and the conceptual design process has started.
+Introduction
+In 2018, the Intergovernmental Panel on Climate Change (IPCC) set a maximum global warming target of 1.5 °C to policy makers worldwide. Achieving this goal would require drastic reductions in anthropogenic greenhouse gas (GHG) emissions to the point of ‘net zero’ by 2050.1,2 As much as 33% of current global emissions can be attributed to the industrial sector, of which about one third are indirect emissions in the form of energy consumption.3 In order to address the need to reduce this high carbon footprint, a diverse portfolio of carbon dioxide utilization (CDU) technologies have been proposed for the manufacturing of CO2-based products. In CDU, CO2 captured from either a process stream, flow gas, or ambient air is utilized directly (such as in urea manufacturing and enhanced oil recovery) or converted via thermo-catalytic,4 electrochemical,5–7 photo-catalytic,8,9 biological,10,11 mineral carbonization,12,13 or co-polymerization14,15 mechanisms. The principle is to achieve emission mitigation in two ways: (1) by replacing existing industrial processes with less carbon-intensive ones and (2) sequestration via circulation of CO2 within a product life cycle. At the same time, economic value is generated through the sale of value-added products.
+According to the Global CO2 Roadmap,16 the carbon utilization industry can reach a total market value of 800 billion USD by 2030 and has the potential to reduce more than 10% of annual emissions by utilizing 7 gigatons of CO2. This comes under the assumption that CDU technologies have access to renewable energy and are deployed at full scales.16,17 Direct utilization technologies are more mature, but their scope is limited to niche applications.4,18,19 Conversion-based CDU technologies, on the other hand, possess more viable routes to achieve large-scale emission reductions through the transformation to fuels, chemicals, and materials.
+Excluding front-running technologies such as CO2-to-methanol20,21 and CO2 methanation,22,23 however, the vast majority of conversion-based CDU concepts remain at an early stage in development. Early stage concepts are characterized by weak knowledge bases,24 with experimental data often being limited to a narrow range of operating conditions.25,26 Consequently, technological uncertainties are high and sustainability with respect to technical, economic, environmental and social criteria cannot be guaranteed. This poses a significant risk to decision makers when selecting where to invest limited R&D resources.27,28 Identifying key uncertainties in early-stage evaluation is therefore critical for the assessment and reduction of development risk. Since development costs increase substantially with technology readiness level (TRL), high-risk projects should be terminated as early as possible.29 Alternatively, main risk contributors function as ‘hotspots’ for the prioritization of subsequent R&D in addressing major sustainability hurdles.24
+One key distinction between ‘risk’ and ‘uncertainty’ is the participation of stakeholders as decision makers. Stakeholders can hold subjective opinions on what conditions deem a technology sustainable for further R&D to be warranted. Preferences and biases towards certain decision objectives (e.g. economic viability, GHG emission reduction) can influence the amount of risk that a stakeholder perceives from each technological uncertainty. Previous studies have demonstrated that CDU technology development is shaped by policy priorities that reflect regional access to renewable energy resources, economic structure, and political climate.30–32 For example, technologies for algae-based biofuels in the United States are primarily economics driven.33 The ultimate goal of the Department of Energy's Targeted Algal Biofuels and Bioproducts (TABB) research program is to achieve $3 per gallon of gas equivalent (GGE) by 2030 through technology improvements and co-product valorization.34 Therefore, uncertainties that primarily influence biorefinery profitability, such as nutrient prices,35,36 are attributed a relatively higher development risk. For countries that import the majority of their fossil fuels, biofuels development may be propelled by achieving energy security. This is the case for South Korea and Japan, which imports more than 95% of its fossil fuels.37,38 Consequently, factors that significantly influence sustained productivity, such as natural variabilities39 and the robustness of growth rate prediction models,40 pose relatively higher development risks.
+In the analysis and decomposition of technological uncertainties, the current convention is to perform global sensitivity analysis (GSA) with respect to decision metrics. GSA has been recommended in recent works such as Zimmermann et al.29 and Müller et al.41 for the identification of significant uncertainties as R&D hotspots. In Van Schoubroeck et al.,42 sensitivity analysis was proposed as part of a techno-sustainability assessment framework to compare the relative importance of input parameters. Among different GSA methods, the method of I. M. Sobol43 is widely practiced because Monte Carlo simulations for the propagation of uncertainty is also used to estimate ANalysis Of VAriance (ANOVA) terms. However, a pitfall of GSA methods is that they are strictly variance-based and thus are not able to reflect specific, policy-oriented criteria for sustainability decisions. Consider a simple numerical example involving the model y = x1 − x2 + 10x3 where a decision is made based on the value of y. The inputs are defined by the distributions x1 = Beta(8, 2), x2 = Beta(2, 8), and x3 = Norm(1, 0.05) which represent the prior probabilistic uncertainties (Fig. 1). The GSA scores for these inputs calculated with total Sobol indices are 0.05, 0.05 and 0.90, respectively. If the decision boundary is set near the mean value, e.g. y = 10.5, the relative influences of the probabilistic inputs follow the GSA scores; since E[x1 − x2] = 0.6and 10·E[x3] = 10, the decision outcome is predominantly determined by the value of x3. On the other hand, if the decision boundary is set near the tails of the output distribution, e.g. y = 9.3, the relative importance of x3 over x1 or x2 is reduced roughly proportionally to its coefficient. In this case representing a potential risk-averse scenario, the uncertainties of x1 and x2 become more significant as the value of x1 − x2 has an increased sway over the decision outcome. In both situations the GSA scores for the uncertain inputs remain the same.
+ Fig. 1  Illustration of the numerical example involving three separate inputs to the model y = x1 − x2 + 10x3. Two arbitrary decision boundaries are displayed as vertical lines. 
+Motivated by this, we propose a methodology for the assessment of risk-based uncertainties to identify key sustainability hurdles. Through addressing major sources of risk, the intent is to provide a tool to guide specific, policy-driven development of emerging CDU technologies. Stakeholders’ sustainability criteria are implemented as decision rules from which technological uncertainties are distinguished into either positive (satisfies the criteria) or negative (fails to satisfy the criteria) outcomes. We apply principles of naïve Bayes classification with kernel density estimation (KDE)44–46 to classify the uncertainties and to construct class likelihood distributions. A subsequent analysis of the class likelihood distributions allows one to quantify the influence that each uncertainty has on the decision outcome, i.e., “For given criteria, is the technology sustainable? Or is it not?”. We subsequently scale this method to two or more sustainability criteria through the integration with Bayesian decision networks. In the case of CDU, minimal sustainability requirements at each stage-gate evaluation require the technology to be both economically feasible and have a lower carbon footprint compared to its reference process,47 making sustainability decisions a multi-criteria problem by default.
+Our paper is organized as follows: In the next section, we present the methodology for risk-based uncertainty assessment and the related mathematical manipulations in a step-by-step manner. Afterwards, we demonstrate the methodology by applying it to an on-going R&D project in South Korea for CDU technology development. The last section discusses the applicability of the proposed methodology within the scope of emerging CDU technologies. Possible challenges and limitations as well as future works are also addressed.
+Methodology for risk-based uncertainty assessment to identify sustainability hurdles
+The proposed methodology for the assessment of risk-based uncertainties builds upon existing Monte Carlo methods for numerical uncertainty analysis, whereby stakeholder's criteria for sustainability are implemented to update the input uncertainty distributions into more decision-relevant class likelihoods. It consists of six execution steps and a final interpretation step as illustrated in Fig. 2.
+ Fig. 2  Methodological overview for the risk-based uncertainty assessment of CDU technologies. 
+Step 1: Selection of sustainability aspects and performance indicators
+The first step is the selection of sustainability aspects for the assessment of the CDU technology. Once the assessment scope and criteria are defined, sustainability can be measured with relevant indicators that convey technological performance to stakeholders. Sustainability can be broadly classified into technical, economic, environmental and social aspects.42 Considering the core principles of CDU, economic and environmental sustainability are evaluated by default to demonstrate that the technology is indeed market-competitive while resulting in reduced GHG emissions.47–49 In recent literature, technical measures such as exergy,50 have also been considered to assess the efficiency of CO2 conversion. At later development stages, human and ecological safety (e.g. maximum allowed concentrations for heavy metals) become increasingly relevant and need to be strictly satisfied.51 Within the scope of emerging technologies, however, the key considerations in the selection process should involve the following questions:
+ (1) Is the sustainability aspect critical in the development screening process?
+ (2) Is there adequate data to apply the assessment models to measure the relevant performance indicators?
+Any decision metrics that can be measured from technical data can function as a performance indicator. Common indicators used in apples-to-apples comparisons include cost of goods manufactured (COGM), minimum selling price (MSP) and net present value (NPV) for economic sustainability and carbon footprint per functional unit, and specific GHG emission reduction for environmental sustainability. The selection of indicators is dependent on the maturity of the technology due to different estimation methodologies and data requirements.25 For example, COGM is estimated with standard techno-economic analysis models through the accounting of operating and capital expenses. On the other hand, MSP and NVP are profitability measures which require additional data such as market size and selling price and are estimated with discounted cash flow analyses.52 Without adequate prerequisite data, the incorporation of the latter indicators may introduce unnecessary, difficult-to-quantify risk-based uncertainties.
+Step 2: Numerical simulation environment for uncertainty propagation
+The propagated effect of technological uncertainties on the outcome of the performance indicators is calculated numerically with Monte Carlo simulations (Fig. 3). Uncertainties, which are either endogenous (e.g. error bars of kinetic parameters due to measurement error and/or data-model mismatch) or exogenous (e.g. emission factors for raw materials, electricity prices), need to be identified and defined a priori in the simulation model as probability density functions (PDF). Ideally, sufficient data is available to facilitate the construction of sampling distributions for all the uncertain inputs. In cases where available data is limited, kernel density estimation (KDE) can be used to empirically estimate the PDF.53,54 The KDE method first assumes a structure for the true, unobservable distribution, then subsequently places non-negative kernel functions at each data point. When aggregated, the kernel functions form the empirical density function. Alternatively, if interpretability of the distribution is desired, bootstrapping55,56 can be performed to generate the additional data that is necessary for the construction of a parametric PDF.
+ Fig. 3  The Monte Carlo simulation model for the propagation of technological uncertainties on the performance indicators. Green arrows represent endogenous data. Orange arrows represent exogenous data. 
+The simulation environment illustrated in Fig. 3 consists of both the process model and the sustainability assessment model. The process model is a mathematical representation of the CDU technology which includes equations for key phenomena such reaction kinetics and thermodynamic interaction parameters. The process model generates technical information for sustainability assessment in the form of material and energy balances. These balances are used to establish an inventory of flows from which data such as emission factors and raw material prices can be applied to measure the performance indicators. Techno-economic analysis (TEA) and CO2 life cycle assessment (LCA) are performed by default to assess economic feasibility and GHG reduction potential of the CDU technology. Based on the selected set of indicators in Step 1, additional assessment models may need to be incorporated.
+Step 3: Specification of sustainability criteria as decision rules
+Each Monte Carlo simulation generates an independent data set of performance indicators. Let yri be a performance indicator representing a sustainability aspect r evaluated at the i-th Monte Carlo instance, where i = 1, 2,…, N for N total simulations. For each aspect r, we denote the corresponding stakeholder-defined sustainability criterion as Sr. As a consequence of endogenous and exogenous uncertainties, the evaluated indicators in a given Monte Carlo instance may or may not satisfy this criterion. We represent this phenomenon with a Boolean decision model fr(Xi) = Yr as follows: (1)Xi = (xi,1, xi,2, …, xi,j, …, xi, J)T is the vector of J inputs whose values were randomly sampled from their respective PDFs in the ith Monte Carlo iteration. The role of the decision function fr(Xi) is to take in the vector of sampled uncertain inputs and output a class label Yr ← Lc ∈ [Ls, Lf] based on the decision outcome. The class labels Ls and Lf represent “success” (i.e. evaluated performance indicator satisfies stakeholder's sustainability criterion) and “failure” (i.e. evaluated indicator fails to satisfy the stakeholder's sustainability criterion), respectively. While the classification needs not be limited to two outcomes, doing so mimics the binary go/no go decision policy in project management.57 The value(s) of each Sr and the signs of the inequalities in eqn (1) can be changed according to how each indicator's criterion is defined. For example, manufacturing cost and GHG emissions are specified with an upper threshold, above which the technology is too costly or too carbon-intensive to be considered sustainable. Indicators such as CO2 utilization efficiency58 and energy efficiency, on the other hand, must satisfy a minimum target criterion. For these indicators, the decision rule flips to become Yr ← Ls iff yri ≥ Sr and Yr ← Lf iff yri < Sr for all r. If the value of the performance indicator must fall within a specific range to be sustainable, the decision rule can be established as follows: (2)
+Step 4: Risk-based uncertainty assessment for individual criteria
+Based on the decision rules for each criterion in Step 3, we define “sustainability risk” as the effect of each input's uncertainty on the probability of decision outcomes. An input xj contributes significant sustainability risk if the decision outcome is highly dependent on the uncertain value of xj. To assess the risk, we first update the PDF of xj into two class likelihood functions each of which corresponds to a class label, i.e., P(xj|Ls) and P(xj|Lf). Comparing the class likelihood functions then allows us to visualize the differences in the sustainability outcome probabilities as the value of xj changes. As illustrated in Fig. 4 (left), for a low-risk input, P(xj|Ls) and P(xj|Lf) are nearly identical along the entire range of values, implying that the variability of xj does not significantly alter the probability of one outcome being higher than the other. Note that the total area under the curve must be equal to 1 for both class likelihood functions. Thus, for a high-risk input, large differences in P(xj|Ls) and P(xj|Lf) are observed and there is less overlap between the class likelihoods. For these inputs, there are some values of xj where P(xj|Ls) is noticeably greater than P(xj|Lf) and vice versa. The sustainability risk score, RSj, is a measure that quantifies the degree of overlap (or lack thereof) and is defined as the area of the difference of the class likelihood functions as follows: (3)
+ Fig. 4  The class likelihood functions for a hypothetical low-risk input xj (left) and a high-risk input xj (right). The instantaneous probability difference is represented by the red curve with the area under the curve corresponding to the sustainability risk score, RSj. Absolute risk scores for the low-risk input and high-risk input are 0.03 and 0.82, respectively. For the high-risk input, an intersection occurs at xj = 45 where P(xj|Lf) > P(xj|Ls) and vice versa. 
+For numerical computation of the integral in eqn (3), the trapezoidal method can be used.
+In Step 3, N Monte Carlo simulations were performed for the uncertainty propagation, which also generated a N × J sampled parameter space of input values (herein referred to as M0N×J). To condition the PDF with the decision outcome and derive xj|Lc, we create two empty parameter spaces: MSN×J (“success” space) and MFN×J (“failure” space). At the end of each i-th Monte Carlo simulation, a categorization algorithm checks if the evaluated performance indicator satisfies the sustainability criteria, then depending on the outcomes, populates the row of either MSN×J or MFN×J with the values corresponding to the i-th row of M0N×J. This is demonstrated in Fig. 5 with a single indicator example involving CO2 utilization efficiency (COE).
+ Fig. 5  Classification of uncertainties for a single sustainability requirement scenario, demonstrated with minimum CO2 utilization efficiency (COE). In each Monte Carlo instance, the evaluated indicator is compared with the stakeholder-defined sustainability criterion (COE ≥ 87%), then according to the decision rule, the corresponding uncertain input values are categorized into either MSN×J or MFN×J for meeting or failing to meet the criterion, respectively. 
+The class likelihood functions for each xj can then be estimated empirically with KDE using the column values of MSN×J and MFN×J as the kernel data points. Let Vcj (c = s, f) be a vector of non-empty values corresponding to column j of either MSN×J or MFN×J and let Wc (c = s, f) be a scalar that represents the number of elements in Vcj. For density estimation with Gaussian kernels, the class likelihood functions can be estimated as follows: (4)
+The optimal bandwidth, hcj, is determined using Silverman's rule of thumb,59 which assumes that the true f(xj|Lc) is Gaussian and adjusts hcj to minimize the error between (xj|Lc) and f(xj|Lc). The selection of the kernel function depends on the form of the original characteristic PDF of each input. In many cases, the unimodal Gaussian is assumed due to its smoothness and statistical significance with respect to the central limit theorem. There are exceptions, however. Utility prices, such as those of industrial steam and natural gas, often vary from pre-determined prices set for off-peak, mid-peak, and on-peak hours,60 which can result in a triple-modal distribution (Table S9†). These prices exhibit short-term randomness and volatility, but revert to pre-determined baseline prices in the long-term. In such multi-modal distributions, the mode and width for each peak correspond to the baseline price and the magnitude of volatility, respectively. Consequently, the optimal bandwidth is calculated for each density peak. In the case of heuristic parameters such as equipment cost scaling factors, the uniform kernel function may be more appropriate over the Gaussian distribution.61
+The decision rule in Step 3 and the numerical procedures in Step 4 broadly follow the principles of naïve Bayes classification (NBC). In NBC, the goal of training is to generate an accurate-enough class likelihood function for each feature xj by applying the conditional independence assumption. Then, when a new set of feature values X = (x1, x2,…,xj,…, xJ) is observed, the classifier outputs the class label with the highest probability, i.e., . The relationship is further elaborated in section 2 of the ESI.†
+Step 5: Calculation of stakeholders’ joint conditional probabilities for different sustainability scenarios
+Since a CDU technology must at least be both economically feasible and GHG emission reducing, determining sustainability is a multi-criteria problem. Evaluating the sustainability risk of each criterion individually, however, can overlook potential trade-off relationships. For example, indicators for economic and environmental sustainability are generally counter-correlated, requiring the approximation of a Pareto frontier.62,63 To estimate key uncertainties considering multiple criteria, we expand the decision rule in Step 3 with a Bayesian decision network (Fig. 6).
+ Fig. 6  A Bayesian decision network for the multi-criteria classification of uncertainties and estimation of sustainability risk measures. D is a Boolean variable representing two ultimate decision outcomes: “Is sustainable under multiple satisfaction criteria” or “Is not sustainable”. 
+The decision network is a graph model that maps the relationship between the uncertain inputs, the performance indicators and the sustainability classification nodes. Directed edges from the uncertain input nodes to each performance indicator node maps the probability of each indicator's sustainability criterion being satisfied for a set of sampled inputs X. To specify the connections between the indicator nodes and the final sustainability decision D (D = “S” (sustainable), “F” (not sustainable)), the joint conditional probabilities of different scenarios of sustainability criteria satisfaction need to be defined. For R number of criteria, there are 2R different scenarios each represented by a joint conditional probability. Two scenarios: P(D = “S”|Yr ← Ls, ∀r) and P(D = “S”|Yr ← Lf, ∀r) can be considered trivial as these are cases where all performance indicators have satisfied or failed to satisfy their respective criteria. Their probabilities should be 1 and 0, respectively. On the other hand, the probabilities of the remaining 2R–2 scenarios depend on the decision makers’ prioritization of satisfying certain sustainability requirements over others. Table 1 illustrates for a case of two criteria three hypothetical sets of joint conditional probabilities, each of which reflect a particular stakeholders’ disposition.
+Table 1 Joint conditional probabilities for three types of stakeholder dispositions demonstrated with two sustainability criteria: maximum cost of goods manufactured (COGM) (yr=COGM ≤ SCOGM) and minimum greenhouse gas (GHG) emission reduction (yr=GHG > SGHG)
+
+
+
+
+ 
+ 
+Joint conditional probability
+
+
+Uncompromising Stakeholder
+Compromising Stakeholder
+Compromising Stakeholder
+
+
+No bias
+Economic bias
+GHG reducibility bias
+
+
+
+
+Both COGM and GHG Reduction criteria satisfied
+
+P(D = “S”|YCOGM ← Ls, YGHG ← Ls)
+1
+1
+1
+
+
+Only COGM criteria satisfied
+
+P(D = “S”|YCOGM ← Ls, YGHG ← Lf)
+0
+0.7
+0
+
+
+Only GHG Reduction criteria satisfied
+
+P(D = “S”|YCOGM ← Lf, YGHG ← Ls)
+0
+0.2
+0.7
+
+
+Failed to satisfy both criteria
+
+P(D = “S”|YCOGM ← Lf, YGHG ← Lf)
+0
+0
+0
+
+
+
+
+An uncompromising stakeholder treats each sustainability requirement as a hard constraint. The CDU technology is only considered sustainable if and only if all performance indicators satisfy their respective criteria targets. As such, 0% joint conditional probabilities are assigned to all non-trivial scenarios. On the other hand, stakeholders who are willing to compromise could potentially assign non-zero values for P(D = “S”|Yr) when one or more performance indicators fail to meet their sustainability targets. Partiality is expressed by assigning a higher probability to scenarios in which the more important criteria are satisfied. As the number of stakeholder's joint conditional probabilities scale exponentially with the number of criteria, the parsimonious selection of decision-relevant indicators is critical. This issue has also been addressed in previous works such as Zimmermann et al.,48 Singh et al.,64 and Van Schoubroeck et al.42
+Step 6: Multi-criteria risk-based uncertainty assessment
+To estimate risk measures under multiple sustainability criteria, decision rules in Step 2 are updated with the stakeholder's joint conditional probabilities in Step 5. A lookup table of joint conditional probabilities will return specific P(D = “S”|Yr) for each sustainability scenario (Fig. 7). This is the probability that the classification algorithm in Step 4 categorizes the ith row vector of M0N×J in to MSN×J. After repeating this procedure for N simulations, KDE is performed to construct the class likelihood functions. The risk score is subsequently calculated using eqn (3).
+ Fig. 7  Decision rule and uncertainty classification for single-criteria sustainability risk scores (Step 4) and multi-criteria sustainability risk scores (Step 5). 
+Decision: Revise decision rules?
+Since class likelihood functions must be constructed to quantify sustainability risk with respect to the tested input factors, each decision outcome must occur at least once. In other words, there must be at least one instance of ‘success’ and ‘failure’. Risk scores cannot be measured when all the evaluated indicators are assigned to the same class, resulting in either a 100% sustainable or 0% sustainable assessment outcome. For these cases it is necessary to revise the decision rules in Step 2 and/or increase the number of Monte Carlo simulations. A 0% probability of sustainability occurs when the requirements for the performance indicator(s) are too strict and unachievable under the range of input values defined by the PDFs. The opposite scenario involving 100% probability of sustainability should also be taken with scrutiny as it could mean that the uncertainty priors were not adequately defined or the stage gate requirements were set too low compared to current technology performance. In addition, sufficient Monte Carlo simulations should be performed to explore the entirety of the input parameter space. Igos et al.65 and Müller et al.41 recommended 10000 simulations as the lower bound for LCA uncertainty propagation. Assessments should be performed at various simulation numbers to determine the value of N at which either P(D = “S”) or RSj converges. However, Monte Carlo convergence cannot always be guaranteed,66 so it is advisable to perform as many simulations as possible under a reasonable computational timeframe.
+Interpretation
+Significant uncertainties as hotspots can be identified by ranking all the varied inputs by their risk scores. A priority of subsequent R&D may then be to address and mitigate the top contributors of sustainability risk. If a single CDU technology is being evaluated, normalizing the scores  to calculate the percentage risk contribution can serve as a more intuitive measure. For apples-to-apples comparisons, absolute scores should be used to identify technologies with greater nominal risk. In addition to these measures, a “probability of sustainability” can be calculated via the class prior. The class prior for multi-criteria sustainability is: (5)
+To deem the CDU technology at its current state as “sustainable”, a P(D = “S”) corresponding to 1 − α confidence level is desired. Commonly used alpha significance levels are 0.01, 0.05 and 0.10 corresponding to >99%, >95%, and >90%, respectively.
+Case study: Application to CO2-based formic acid in South Korea
+Background
+In this section, we apply the proposed methodology to evaluate the sustainability of a technology for converting CO2 to formic acid. Formic acid is regarded as a viable hydrogen carrier due to its high volumetric energy density,67,68 making it suitable for high-powered applications such as automobile fuel cells.69 Alternatively, it can function as an elementary C1 feedstock for the production of commodity chemicals.70 Proposed technologies for CO2 conversion to formic acid can broadly be classified into two types: catalytic hydrogenation and electrochemical reduction.71 Both concepts are at low maturity, with technology readiness levels ranging between 3 and 5.72 Here, we specifically focus on the CO2 hydrogenation route employing heterogeneous ruthenium catalysts (Ru/bpyTN-30-CTF) as described in Park et al.73 A key advantage of this heterogeneous hydrogenation is that it removes the need for any downstream catalyst removal, reducing capital costs and simplifying future scale-up efforts.
+Formic acid is currently considered as a platform CDU product within South Korea's carbon neutrality policy, with the Ru/bpyTN-30-CTF technology being developed as part of the government-funded Carbon-to-X (CtX) R&D initiative. The goal of the CtX initiative is to scale-up constituent CDU technologies up to the pilot scale plant over the course of 5 years (2020–2024), from which commercial deployment can be carried out by industry partners. Industry stakeholders tend to have very specific performance targets with respect to key sustainability aspects since following a technology transfer, they must bear all subsequent development risks. On the other hand, these performance targets are subject to change and are influenced by a variety of factors, including the current carbon trading price, the degree in which previously set targets were met, and the maturity of technology. With regards to the last, stakeholders can be expected to be more risk-averse as development progresses.74 This is reflected by gradually more stringent targets (e.g. requiring greater economic incentives in the form of lower cost of production) and lower risk thresholds.
+The current TRL of the Ru/bpyTN-30-CTF hydrogenation process is 3. Table 2 details the relevant performance indicators and sustainability targets that reflect the consensus of CtX stakeholders. Only the two basic sustainability aspects, i.e., economic feasibility and GHG emission reducibility, were considered. Each aspect was evaluated using a single representative performance indicator. Economic sustainability was measured with the unit COGM indicator, which calculates the total costs of production, including fixed operating expenses and interest payments on plant capital, divided by the total yearly manufactured volume of the functional unit. The functional unit was defined as 1 ton of >99 mol% formic acid. The target criteria was set based on unit production costs of conventional formic acid involving methyl formate, which is estimated to be around 550 USD per ton FA.71 For the GHG emission reducibility aspect, the specific carbon footprint per functional unit was selected. This indicator measures ‘cradle-to-gate’ emissions as a result of formic acid production, including any indirect emissions from energy and raw material production. A baseline emission of 2.2 ton-CO2eq per ton FA71 was assumed for conventional formic acid production from which the sustainable cutoff of 1.12 ton-CO2eq per ton FA was established based on the 2030 emission reduction targets. A further breakdown of how each indicator was measured is provided in section 3.3 of the ESI.†
+Table 2 Performance indicators and stakeholder's sustainability criteria for the CO2 hydrogenation to formic acid using Ru/bpyTN-30-CTF catalysts
+
+
+
+
+ 
+Economic sustainability
+Environmental sustainability
+
+
+
+
+
+a Current carbon trading prices according to the KAU21 index range between 20–30 USD per ton-CO2eq.
+b Based on GHG footprint estimate of 2.2 ton-CO2eq per ton71,75 for conventional FA.
+c South Korea's 2030 emission reduction target assuming a maximum 20% FA mix for hydrogen fuel cells.
+
+
+
+
+
+Performance indicator
+Unit COGM (r = uCOGM) (USD per ton FA)
+Specific carbon footprint (r = CF) (ton-CO2eq per ton FA)
+
+
+Target stakeholders’ criteria for sustainability
+<550 USD per ton FA
+<1.12 ton-CO2eq per ton FA
+
+
+Satisfaction Priority
+High
+Absolute
+
+
+Justification
+Cost of production estimate for conventional formic acid using methyl formate. The higher purity (>99 mol%) of the CtX formic acid, and the current exclusion of potential carbon creditsa serve as incentives.
+A reduction of 1.08 ton-CO2eq per ton FA in comparison with conventional formic acidb, in order to meet the emission reduction target of 42 ktons-CO2eqc by 2030 set by the South Korean government.
+
+
+
+
+Technology and process description
+The flow diagram of the CtX formic acid process is depicted in Fig. 8. As hydrogen is hardly a natural raw feedstock, the process of producing hydrogen for the hydrogenation will have a big impact on the outcome. As today's hydrogen is largely supplied by the reforming of methane, the steam methane reforming (SMR) process was simulated in tandem with the formic acid process. Methane is converted with steam (CH4 + H2O ↔ CO + 3H2) in a high temperature reformer (R-11) to produce hydrogen. CO is further converted to hydrogen in a series of two water gas shift (WGS) reactors (R-12, R-13) and the waste heat from the reformer and the WGS reactors is subsequently exchanged with process water to generate steam.
+ Fig. 8  Process flow diagram of steam methane reforming (SMR) and CO2 hydrogenation processes for the production of high purity (>99 mol%) formic acid. 
+Hydrogenation of CO2 in the gas phase is thermodynamically unfavorable with a positive ΔrG.76 As such, a strong base is often used to lower the overall activation energy and to assist in catalytic hydrogenolysis. In the CtX process, a 4 M amine solution of triethylamine (TREA) was used, which results in the formation of the TREA-formate adduct. CO2(g) + H2(g) + TREA → TREAH+HCOO−(6)Water is introduced to the system from the amine solution and forms an azeotropic mixture with formate at 78% formate to 22% water. However, to maximize energy density and prevent catalyst deactivation in fuel cells, the concentration of formic acid needs to be >99 mol%.77 In addition, TREA has a boiling point of 89 °C and the separation from formate is highly energy intensive due to the ionic liquid-like behavior of the adduct.73 To address these issues simultaneously, amine exchange with n-butyl imidazole (nBIM) is performed: TREAH+HCOO− + nBIM → nBIMH+HCOO− + TREA(7)The higher boiling point of nBIM (257–304 °C) means that water can be more readily removed to meet high concentration targets. Formic acid is finally recovered from the nBIM adduct via distillation: nBIMH+HCOO− → HCOOH + nBIM(8)
+In the conceptual process, excess hydrogen is first recovered via flash (F-2) and the TREA-formate adduct is separated from the bulk of the water via distillation (C-21). Amine exchange with nBIM and the recovery of TREA occur in the reactive distillation column C-22. Formic acid is subsequently recovered in column C-23. Since both TREA and nBIM are sensitive to thermal decomposition, columns C-21, C-22, and C-23 are operated at low pressures (∼250 mmHg). Still, a small amount of amine loss occurs during the amine exchange and formic acid recovery processes. As the current production capacity of the pilot plant is less than 100 kg FA per day, we simulated a scaled-up scenario of 30 ktons FA per yr. This volume satisfies approximately 70% of the South Korea's formic acid demand for hydrogen carrying according to the 2030 forecasts. AspenPlus™ v10 was used to simulate both the SMR and CtX formic acid processes. The VLE data for estimating the activity coefficients for amine-formate separations were generated using the software COSMO-RS™ and subsequently validated with experimental data (Fig. S4†).
+Uncertainty characterization and propagation (Step 1 & 2)
+The effects of various technological uncertainties on the sustainability of CtX formic acid were evaluated with respect to unit COGM and specific carbon footprint indicators (R = 2). A total of 14 inputs (J = 14) composed of 3 endogenous process parameters, 6 economic parameters (Korean market prices for raw materials and process utilities), and 5 CO2 emission factors (global warming potentials, GWP) were considered at a TRL 3-appropriate evaluation. To determine a sufficient Monte Carlo simulation number, 40 assessments were performed for each value of N = {500, 5000, 50000, 500000} (Fig. S5†). The convergence criterion was set as the coefficient of variation for P(D = “S”) being less than or equal to 1%, which was achieved at N = 500000. The PDFs for the inputs were defined via the KDE method using experimental and historical data for the endogenous and exogenous inputs, respectively. Kernel data for the price uncertainties were generated by Monte Carlo sampling from the historical data. The lists of the data and references for each input are detailed in Table S9.†
+Decision rules for sustainability criteria (Step 3 & 5)
+Sustainability requirements for both performance indicators were defined as maximum threshold criteria using the stakeholder targets in Table 2. The corresponding decision rules are as follows: (9) (10)For the multi-criteria classification, the joint conditional probabilities in Table 3 were applied. At TRL 3, CtX stakeholders were willing to compromise by allowing 50% chance of sustainability even if the unit COGM exceeded 550 USD per ton, provided the specific carbon footprint target was achieved. This is due to the expectation of future cost decreases from plant scale-ups and potential carbon credits from the emission trading.
+Table 3 Joint conditional probabilities for the multi-criteria sustainability of formic acid process by CtX stakeholders
+
+
+
+
+ 
+ 
+Joint conditional probability
+
+
+
+
+Both unit COGM and specific carbon footprint criteria satisfied
+
+P(D = “S”|YuCOGM ← Ls, YCF ← Ls)
+1
+
+
+Only unit COGM criteria satisfied
+
+P(D = “S”|YuCOGM ← Ls, YCF ← Lf)
+0
+
+
+Only specific carbon footprint criteria satisfied
+
+P(D = “S”|YuCOGM ← Lf, YCF ← Ls)
+0.5
+
+
+Failed to satisfy both sustainability criteria
+
+P(D = “S”|YuCOGM ← Lf, YCF ← Lf)
+0
+
+
+
+
+Risk-based uncertainty assessment (Step 4 & 6)
+The sustainability risk scores for the individual and multi-criteria scenarios are displayed in Table 4. For comparison, the GSA scores were also calculated for the individual criteria cases by computing total Sobol indices (STotj). The GSA scores were subsequently normalized by dividing each STotj by the sum, . Risk scores were also normalized by dividing each score by the sum . The sum of the total Sobol indices were 1.013 and 1.001 for unit COGM and specific carbon footprint, respectively, which indicated little to no correlation among the uncertainties.
+Table 4 Sustainability risk scores for the unit COGM criteria (representing economic sustainability) and the specific carbon footprint criteria (representing environmental sustainability) based on target criteria set by CtX stakeholders. Normalized total Sobol indices have also been calculated for comparison
+
+
+
+
+Uncertainties
+Unit COGM criteria
+Specific carbon footprint criteria
+Multi-criteria
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Endogenous
+
+
+
+
+x
+
+j=1
+
+Hydrogenation CO2 conversion
+30.0%
+69.5%
+14.1%
+10.8%
+15.0%
+
+
+
+x
+2
+
+TREA degradation
+1.2%
+Negligible
+0.7%
+Negligible
+0.8%
+
+
+
+x
+3
+
+
+nBIM degradation
+1.5%
+0.1%
+0.7%
+Negligible
+0.6%
+
+
+
+Exogenous: Economic
+
+
+
+
+x
+4
+
+Korean grid mix electricity price (industrial, high V)
+13.3%
+5.6%
+0.7%
+0%
+1.9%
+
+
+
+x
+5
+
+Korean steam price – (industrial, >43000 GJ per yr)
+30.2%
+18.5%
+1.0%
+0%
+3.6%
+
+
+
+x
+6
+
+Korean natural gas price
+1.8%
+0.1%
+1.1%
+0%
+1.3%
+
+
+
+x
+7
+
+Cost of CO2 capture(from power plants)
+17.2%
+6.0%
+0.9%
+0%
+2.9%
+
+
+
+x
+8
+
+TREA price
+0.7%
+Negligible
+0.8%
+0%
+0.9%
+
+
+
+x
+9
+
+
+nBIM price
+2.1%
+0.1%
+1.1%
+0%
+0.7%
+
+
+
+Exogenous: Environmental
+
+
+
+
+x
+10
+
+GWP of Captured CO2 as feedstock
+0.3%
+0%
+7.7%
+0.6%
+6.8%
+
+
+
+x
+11
+
+GWP of Korean grid mix electricity production
+0.3%
+0%
+3.7%
+0.2%
+3.5%
+
+
+
+x
+12
+
+GWP of industrial steam production
+0.3%
+0%
+53.9%
+85.4%
+49.8%
+
+
+
+x
+13
+
+GWP of Korean natural gas production
+0.9%
+0%
+12.8%
+2.9%
+11.6%
+
+
+
+x
+14
+
+GWP of Korean process water production
+0.4%
+0%
+0.7%
+Negligible
+0.7%
+
+
+
+
+At current maturity, the CtX formic acid process showed a 19% chance of satisfying both stakeholders’ sustainability criteria. The probability of achieving economic feasibility was 83%, with the greatest risk contributors being the price of industrial steam (30.2%) and the CO2 conversion in the hydrogenation process (30.0%) followed by the cost of CO2 capture (17.2%) and the price of grid mix electricity (13.3%). The price uncertainties for utilities, i.e., grid mix electricity, steam, and natural gas, altogether accounted for 45% of the economic sustainability risk. The probability of achieving the GHG emission reduction target was much lower at 21%, with the greatest risk contributors being the GWPs of steam production (53.9%) and natural gas production (12.8%) followed by the CO2 conversion during the hydrogenation (14.1%). This was due to the high energy requirements in both the SMR and FA processes. The FA process requires large amounts of reboiling heat to remove significant quantities of water from the amine solution. Likewise, natural gas serves as a heat source to maintain the SMR reactor temperature at 950 °C as well as being the primary hydrogen source and secondary CO2 source (CO2 from the furnace is also routed to the trickle-bed reactor). We note that although the GWPs of steam and natural gas production were defined as independent parameters in the assessment model, they are ultimately correlated as the vast majority of industrial boilers utilize natural gas.78
+The endogenous uncertainty of CO2 conversion ranked 2nd in both the economic criterion (30.0%) and the environmental criterion (14.1%) as well as the multi-criteria (15.0%) scenarios. The significance of the CO2 conversion parameter comes from its influence on the size of the hydrogenation reactor. A lower conversion has to be compensated by a larger reactor, which increases the catalyst packing volume and the loading amounts of amines. Reducing the CO2 conversion from the baseline of 35% to 25% would require 40% more TREA solution by volume. At 15% conversion, 130% more TREA solution by volume is required. A larger volume of amine per amount of formate means higher heat duties at the C-21, C-22, C-23 reboilers, which consequently results in additional indirect GHG emissions from the energy consumption.
+Looking at the GSA scores, parameter significance tended to be less evenly distributed and the vast majority of the contribution was attributed to CO2 conversion (69.5% of global sensitivity) and the GWP of steam production (85.4% of global sensitivity) for the economic and environmental criterion, respectively. Rankings for risk and GSA scores also differed for each criterion. In the case of the environmental sustainability, the distribution of the risk scores and rankings of the uncertain factors were more or less similar to the GSA scores. The economic sustainability, on the hand, had more noticeable discrepancies. In general, the risk was more evenly spread between the top contributing uncertainties. The price of industrial steam, which had the highest economic risk score at 30.2%, contributed to just 18.5% of the global sensitivity. Likewise, the uncertainties for the CO2 capture cost and the grid mix electricity price displayed only marginal GSA scores, both contributing only 6%.
+Interpretation and recommendations for future development
+Since the CtX stakeholders were biased towards achieving environmental sustainability, GWP uncertainties were more dominant in the multi-criteria assessment scenario. The top 4 risk-based uncertainties accounting for 83% of the multi-criteria risk were the GWPs of steam production (49.8%), CO2 conversion in the hydrogenation (15.0%), the GWP of natural gas production (11.6%) and the GWP of CO2 capture (6.8%). In the case of steam production, the probability of multi-criteria sustainability improved dramatically when the GWP fell below 0.076 ton-CO2eq per GJsteam (Fig. 9). Korean industrial steam production is more costly and bears higher GWP compared to countries such as the US and China due to virtually all of natural gas being imported.79 While cost and GWP uncertainties are not directly reducible by stakeholders, their risk contributions can be mitigated by reducing the net usage of raw materials and utilities. For example, natural gas consumption for maintaining the SMR temperature can be reduced by using waste heat or green electrical heat. An alternative process scheme could be to combine the TREA recovery column (C-21) with the amine exchange column (C-22) so that water and TREA are removed at the top distillate while the nBIM-formate adduct is removed from the bottom simultaneously. Water can then be removed subsequently from TREA via liquid–liquid phase separation (Fig. 10).80 By curtailing the number of distillation columns with a decanter, this scheme has the potential for reducing both the reboiler heat duty and capital expenditure. As shown in Fig. 11, the probability of satisfying the GHG reducibility criterion increases roughly linearly with the reduction in the process heat consumption. When the steam consumption is reduced by 25%, the probability of achieving the environmental and multi-criteria sustainability improves to 59%. For the purpose of reducing the heat consumption, another area of further research could be to investigate novel and/or alternate amines that require lower separation energy from formate.
+ Fig. 9  The class likelihood distributions for the GWP of steam production (x12) for multi-criteria uncertainty classification. The curves intersect at 0.076 ton-CO2eq per GJsteam. 
+ Fig. 10  An alternative process scheme for the downstream with a reduced number of distillation columns. 
+ Fig. 11  Probabilities of achieving GHG reducibility criteria and multi-criteria sustainability for the CtX formic acid process at different reductions in process heat consumption. 
+Endogenous uncertainties accounted for a smaller fraction of the overall risk (16%), but were still significant, especially with regards to the economic sustainability for which 32% of the total risk was endogenous. Uncertainties in process models can be further categorized into statistical and epistemic uncertainties. While the former (e.g. instrument error) is generally unavoidable and often persists as Gaussian noises in parameter estimations, the latter can be reduced through additional data collection and greater understanding of the underlying system phenomena. Currently at TRL 3, hydrogenation of CO2 and the performance of the Ru/bpyTN-30-CTF catalyst are represented with a single parameter: CO2 conversion. A stoichiometric reactor does not fully capture the rate dependence on temperature and the mass and energy transport in the multi-phase region. Consequently, future efforts should be made to better characterize the trickle bed by implementing kinetic and mass transfer models. Mass transfer is especially crucial for capturing the multi-phase phenomena between the solid catalyst platform and the liquid/gaseous feed. In addition to further decomposing the risk, a white box model of the trickle bed will allow finer tuning and optimization of the key conversion process.
+Sustainability risk for alternate stakeholder with economic bias
+To demonstrate the effect of changing decision criteria on perceived sustainability risk, we assess risk-based uncertainties for a hypothetical stakeholder with an economic bias. Economic bias is represented with a stricter unit COGM criteria of 500 USD per ton FA, where the 50 USD per ton difference serves as a further hedging against unexpected future development costs. The GHG reducibility criterion is also lowered from <1.12 ton-CO2eq per ton FA to <1.2 ton-CO2eq per ton FA, thus requiring a minimum of 1 ton-CO2eq per ton FA of mitigated emissions. Lastly, P(D = “S”|YuCOGM ← Ls, YCF ← Lf) is assigned a probability of 60% with all other joint conditional probabilities remaining the same (Table 5).
+Table 5 Sustainability criteria for an economically-biased stakeholder
+
+
+
+
+ 
+ 
+Joint conditional probability
+
+
+
+
+Both unit COGM and specific carbon footprint criteria satisfied
+
+P(D = “S”|YuCOGM ← Ls, YCF ← Ls)
+1
+
+
+Only unit COGM criteria satisfied
+
+P(D = “S”|YuCOGM ← Ls, YCF ← Lf)
+0.6
+
+
+Only specific carbon footprint criteria satisfied
+
+P(D = “S”|YuCOGM ← Lf, YCF ← Ls)
+0.5
+
+
+Failed to satisfy both sustainability criteria
+
+P(D = “S”|YuCOGM ← Lf, YCF ← Lf)
+0
+
+
+
+
+The sustainability risk scores for the alternate stakeholder are displayed in Table 6. Due to the stricter COGM requirement, the probability of satisfying the economic criteria was lower at 16.3%, while the probability of achieving environmental and multi-criteria sustainability were 28.7% and 19.1%, respectively. Compared with the CtX stakeholder scenario, uncertainties for the steam price and CO2 capture cost ranked first and second, accounting for 56% of the economic sustainability risk while the risk contributed by the uncertainty of CO2 conversion fell to 17%. This tells us that at the lower decision boundary of 500 USD per ton FA, the steam price becomes more influential than the CO2 conversion in satisfying the economic sustainability criteria. Consequently, an even greater emphasis is now placed on reducing the process steam consumption as the related exogenous uncertainties account for 64% of the multi-criteria sustainability risk.
+Table 6 Sustainability risk scores for the unit COGM criteria and the specific carbon footprint criteria for the economically-biased stakeholder
+
+
+
+
+Uncertainties
+Unit COGM criteria
+Specific carbon footprint criteria
+Multi-criteria
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Endogenous
+
+
+
+
+x
+
+j=1
+
+Hydrogenation CO2 conversion
+17.1%
+69.6%
+14.0%
+10.8%
+11.4%
+
+
+
+x
+2
+
+TREA degradation
+0.7%
+Negligible
+0.4%
+Negligible
+0.6%
+
+
+
+x
+3
+
+
+nBIM degradation
+2.5%
+0.1%
+0.5%
+Negligible
+0.8%
+
+
+
+Exogenous: Economic
+
+
+
+
+x
+4
+
+Korean grid mix electricity price (industrial, high V)
+13.9%
+5.6%
+0.5%
+0%
+3.7%
+
+
+
+x
+5
+
+Korean steam price – (industrial, >43000 GJ per yr)
+35.9%
+18.4%
+0.7%
+0%
+21.1%
+
+
+
+x
+6
+
+Korean natural gas price
+3.2%
+0.1%
+0.8%
+0%
+1.0%
+
+
+
+x
+7
+
+Cost of CO2 capture(from power plants)
+20.7%
+6.0%
+0.6%
+0%
+5.8%
+
+
+
+x
+8
+
+TREA price
+0.6%
+Negligible
+0.8%
+0%
+0.5%
+
+
+
+x
+9
+
+
+nBIM price
+3.0%
+0.1%
+0.6%
+0%
+1.1%
+
+
+
+Exogenous: Environmental
+
+
+
+
+x
+10
+
+GWP of Captured CO2 as feedstock
+0.3%
+0%
+7.3%
+0.6%
+3.1%
+
+
+
+x
+11
+
+GWP of Korean grid mix electricity production
+0.3%
+0%
+3.8%
+0.2%
+1.8%
+
+
+
+x
+12
+
+GWP of industrial steam production
+0.4%
+0%
+56.8%
+85.4%
+43.1%
+
+
+
+x
+13
+
+GWP of Korean natural gas production
+1.1%
+0%
+12.5%
+2.9%
+5.6%
+
+
+
+x
+14
+
+GWP of Korean process water production
+0.4%
+0%
+0.6%
+Negligible
+0.4%
+
+
+
+
+Discussion and conclusion
+Early-stage technologies are characterized by significant uncertainties due to a nascent knowledgebase and limited available data. Consequently, identifying major sustainability hurdles and hotspots is crucial in ensuring effective allocations of R&D resources in technology upgrading and upscaling. Such allocation decisions are ultimately made by human stakeholders who may hold certain preferences and biases towards different sustainability objectives. When assessing the degree in which these sustainability objectives are met, stakeholders may also set specific performance targets that reflect the state of technology and current policy initiatives. In the case of CO2 utilization, such policies can be shaped by factors such as local availability of renewable energy, public attitude (NIMBY), and national development priorities.
+In this study, we formulated the task of identifying hotspots as assessing and ranking key sources of risk that influence sustainability decision outcomes. This differs from conventional methods which mostly utilize global sensitivity measures that strictly analyze variance contributions. Risk stems from uncertainties that either originate from within the system (endogenous) or from uncontrollable external sources (exogenous). To this end, we proposed a novel methodology for risk assessment through classification based on sustainability decision rules and the subsequent comparison of the class likelihoods. For multiple sustainability criteria scenarios, additional stakeholder input in the form of joint conditional probabilities are implemented to the decision rules to allow the stakeholders’ preferences in generating an overall risk measure.
+We demonstrated the methodology by applying it to the CO2 hydrogenation to formic acid process employing heterogeneous Ru/bpyTN-30-CTF catalysts, being developed as part of the ongoing Carbon-to-X R&D initiative in Korea. Doing so required coordination with technology developers and decision makers who also disclosed their performance targets. Oftentimes however, stakeholders may not be so willing to share such information due to early-stage confidentiality. Furthermore, disagreements between different stakeholders may arise. For example, a plant engineer stakeholder who is biased towards operational safety may be inclined to use more expensive equipment and implement contingency measures where possible. To a profit-driven investor, such can be viewed as unnecessary plant expenses. In these situations, a compromise is necessary and consensus values for target criteria have to be used. Accordingly, estimating and mitigating technological risk considering multiple sustainability criteria and multiple decision makers is an area of further academic exploration.
+We believe the proposed methodology is most applicable to technologies with TRLs between 3 and 5 in which the core utilization concepts have already been experimentally validated and conceptual design process has started. Sustainability target criteria for performance indicators are often set on the basis of product or process substitution by comparing the CDU technology with a reference process.47,81 This requires a basic understanding of what raw materials, solvents, products and byproducts are involved. If the technology is at the concept stage (TRL 1–2) there is little proof-of-concept, and the development focus is on determining the feasibility of key reactions using first principles, such as thermodynamics.25 At TRLs 3 and above, practitioners may still be faced with data limitations which can make the characterization of uncertainty priors challenging. Our methodology however, does not address the epistemic risk that potentially exists from the issue of “uncertainty of uncertainties”.
+Applying the proposed methodology requires a mathematical model of the CDU process and parametrizations of system inputs. The decomposition and quantification of sustainability risk subsequently enables stakeholders and decision makers to make systematic and informed technology development decisions. A source of risk that is not currently covered is natural variability. We note that biological CDU technologies, such as outdoor microalgae cultivation, can be particularly sensitive to variations in solar intensity, humidity, and temperature. These variations directly influence the instantaneous cell growth rate, which is analogous to the rate constant in chemical kinetics. A potential future work is to expand the current framework to account for natural variability by implementing second-order Monte Carlo as suggested in papers such as Wu and Tsang,82 and Burmaster and Wilson.83
+Author contributions
+Jeehwan S. Lee: Conceptualization, methodology, software, formal analysis, data curation, visualization, writing – original draft. Juyeong Jung: Software, validation, data curation, writing – review & editing. Kosan Roh: Methodology, supervision, writing – review & editing. Seongmin Heo: Investigation, supervision, writing – review & editing. Ung Lee: Validation, resources, writing – review & editing. Jay H. Lee: Project administration, supervision, writing – review & editing.
+Conflicts of interest
+We declare no conflicts of interest.
+Acknowledgements
+This work was financially supported by the Carbon-to-X (CtX) R&D project (project number 2020M3H7A1096361) sponsored by the National Research Foundation (NRF) of the Ministry of Science, ICT & Future Planning. We thank Dr Kwang-Deog Jung at the Korea Institute of Science and Technology (KIST) for disclosing the stakeholder information on the CtX formic acid process and collaborating with the industry partners to provide us with the sustainability targets. We also thank Dr Jinjoo An of the Korean Research Institute of Chemical Technology (KRICT) for providing us with the Korean emission factors for formic acid process utilities and raw materials.
+References
+
+          IPCC, Global Warming of 1.5 °C, World Meteorological Organization, Geneva, Switzerland,  2018 Search PubMed .
+
+          IPCC, Climate Change 2014: Mitigation of Climate Change, Cambridge University Press, Cambridge, UK/New York, NY,  2014 Search PubMed .
+
+          OECD/IEA, The role of CCUS in low-carbon power systems,  2020 Search PubMed .
+Q. Zhu, Developments on CO2-utilization technologies, Clean Energy, 2019, 3, 85–100 CrossRef .
+F. Quan, G. Zhan, H. Shang, Y. Huang, F. Jia, L. Zhang and Z. Ai, Highly efficient electrochemical conversion of CO2 and NaCl to CO and NaClO, Green Chem., 2019, 21, 3256–3262 RSC .
+H. Yang, J. J. Kaczur, S. D. Sajjad and R. I. Masel, Electrochemical conversion of CO2 to formic acid utilizing Sustainion™ membranes, J. CO2 Util., 2017, 20, 208–217 CrossRef CAS .
+L. A. Diaz, N. Gao, B. Adhikari, T. E. Lister, E. J. Dufek and A. D. Wilson, Electrochemical production of syngas from CO2 captured in switchable polarity solvents, Green Chem., 2018, 20, 620–626 RSC .
+Y. N. Kavil, Y. A. Shaban, R. K. A. Farawati, M. I. Orif, M. Zobidi and S. U. M. Khan, Photocatalytic conversion of CO2 into methanol over Cu-C/TiO2 nanoparticles under UV light and natural sunlight, J. Photochem. Photobiol., A, 2017, 347, 244–253 CrossRef CAS .
+Z. Fu, Q. Yang, Z. Liu, F. Chen, F. Yao, T. Xie, Y. Zhong, D. Wang, J. Li, X. Li and G. Zeng, Photocatalytic conversion of carbon dioxide: From products to design the catalysts, J. CO2 Util., 2019, 34, 63–73 CrossRef CAS .
+Y. J. Sung, J. S. Lee, H. K. Yoon, H. Ko and S. J. Sim, Outdoor cultivation of microalgae in a coal-fired power plant for conversion of flue gas CO2 into microalgal direct combustion fuels, Syst. Microbiol. Biomanuf., 2021, 1, 90–99 CrossRef .
+
+          D. Simakov, Renewable Synthetic Fuels and Chemicals from Carbon Dioxide: Fundamentals, Catalysis, Design Considerations and Technological Challenges,  2017 Search PubMed .
+J. Lee, K. H. Ryu, H. Y. Ha, K.-D. Jung and J. H. Lee, Techno-economic and environmental evaluation of nano calcium carbonate production utilizing the steel slag, J. CO2 Util., 2020, 37, 113–121 CrossRef CAS .
+H.-J. Ho, A. Iizuka, E. Shibata, H. Tomita, K. Takano and T. Endo, CO2 Utilization via Direct Aqueous Carbonation of Synthesized Concrete Fines under Atmospheric Pressure, ACS Omega, 2020, 5, 15877–15890 CrossRef CAS PubMed .
+S. Inoue, H. Koinuma and T. Tsuruta, Copolymerization of carbon dioxide and epoxide with organometallic compounds, Makromol. Chem., 1969, 130, 210–220 CrossRef CAS .
+M. Tamura, K. Ito, M. Honda, Y. Nakagawa, H. Sugimoto and K. Tomishige, Direct Copolymerization of CO2 and Diols, Sci. Rep., 2016, 6, 24038 CrossRef .
+
+          ICEF, Global Roadmap for Implementing CO2 Utilization, CO2 Sciences and The Global CO2 Initiative, United States,  2016 Search PubMed .
+A. Kätelhön, R. Meys, S. Deutz, S. Suh and A. Bardow, Climate change mitigation potential of carbon capture and utilization in the chemical industry, Proc. Natl. Acad. Sci. U. S. A., 2019, 116, 11187–11194 CrossRef PubMed .
+K. Novak Mavar, N. Gaurina-Međimurec and L. Hrnčević, Significance of Enhanced Oil Recovery in Carbon Dioxide Emission Reduction, Sustainability, 2021, 13, 1800 CrossRef .
+
+          OECD/IEA, Putting CO2 to Use- Creating value from emissions,  2019 Search PubMed .
+G. A. Olah, Towards Oil Independence Through Renewable Methanol Chemistry, Angew. Chem., Int. Ed., 2013, 52, 104–107 CrossRef CAS .
+D. S. Marlin, E. Sarron and Ó. Sigurbjörnsson, Process Advantages of Direct CO2 to Methanol Synthesis, Front. Chem., 2018, 6, 446 CrossRef CAS PubMed .
+M. Younas, L. Loong Kong, M. J. K. Bashir, H. Nadeem, A. Shehzad and S. Sethupathi, Recent Advancements, Fundamental Challenges, and Opportunities in Catalytic Methanation of CO2, Energy Fuels, 2016, 30, 8815–8831 CrossRef CAS .
+M. Thema, F. Bauer and M. Sterner, Power-to-Gas: Electrolysis and methanation status review, Renewable Sustainable Energy Rev., 2019, 112, 775–787 CrossRef CAS .
+
+          Office of Fossil Energy and Carbon Management, Accelerating Breakthrough Innovation in Carbon Capture, Utilization, and Storage,  2017 Search PubMed .
+K. Roh, A. Bardow, D. Bongartz, J. Burre, W. Chung, S. Deutz, D. Han, M. Heßelmann, Y. Kohlhaas, A. König, J. S. Lee, R. Meys, S. Völker, M. Wessling, J. H. Lee and A. Mitsos, Early-stage evaluation of emerging CO2 utilization technologies at low technology readiness levels, Green Chem., 2020, 22, 3842–3859 RSC .
+D. Ravikumar, D. Zhang, G. Keoleian, S. Miller, V. Sick and V. Li, Carbon dioxide utilization in concrete curing or mixing might not produce a net climate benefit, Nat. Commun., 2021, 12, 855 CrossRef CAS .
+F. S. Anand, M. J. Realff and J. H. Lee, A Risk based Approach to Estimate Key Uncertainties, IFAC Proc. Vol., 2010, 43, 583–588 CrossRef .
+S. P. Philbin, Critical Analysis and Evaluation of the Technology Pathways for Carbon Capture and Utilization, Clean Technol., 2020, 2, 492–512 CrossRef .
+A. W. Zimmermann, G. A. Buchner and R. Schomäcker, Apples and Apples: A Shortcut Assessment Framework for Early-Stage Carbon Capture and Utilization Technologies Based on Efficiency, Feasibility, and Risk, Energy Technol., 2021, 2000691 CrossRef .
+F. Johnsson, D. Reiner, K. Itaoka and H. Herzog, Stakeholder attitudes on Carbon Capture and Storage—An international comparison, Int. J. Greenhouse Gas Control, 2010, 4, 410–418 CrossRef CAS .
+P. Tcvetkov, A. Cherepovitsyn and S. Fedoseev, Public perception of carbon capture and storage: A state-of-the-art overview, Heliyon, 2019, 5, e02845 CrossRef .
+C. Bataille, C. Guivarch, S. Hallegatte, J. Rogelj and H. Waisman, Carbon prices across countries, Nat. Clim. Change, 2018, 8, 648–650 CrossRef .
+L. N. Gerber, J. W. Tester, C. M. Beal, M. E. Huntley and D. L. Sills, Target Cultivation and Financing Parameters for Sustainable Production of Fuel and Feed from Microalgae, Environ. Sci. Technol., 2016, 50, 3333–3341 CrossRef CAS PubMed .
+
+          Target Algal Biofuels and Bioproducts (TABB), Funding Opportunity Announcement (FOA) DE-FOA-0001162, US Department of Energy, Washington, DC,  2014 Search PubMed .
+N. Hossain, T. M. I. Mahlia, J. Zaini and R. Saidur, Techno-economics and Sensitivity Analysis of Microalgae as Commercial Feedstock for Bioethanol Production, Environ. Prog. Sustainable Energy, 2019, 38, 13157 CrossRef .
+Y. Zhu, S. B. Jones, A. J. Schmidt, K. O. Albrecht, S. J. Edmundson and D. B. Anderson, Techno-economic analysis of alternative aqueous phase treatment methods for microalgae hydrothermal liquefaction and biocrude upgrading system, Algal Res., 2019, 39, 101467 CrossRef .
+
+          US Energy Information Administration, Country Analysis Brief: Japan,  2018 Search PubMed .
+
+          US Energy Information Administration, Country Analysis Brief: South Korea,  2018 Search PubMed .
+I. López Muñoz and O. Bernard, Modeling the Influence of Temperature, Light Intensity and Oxygen Concentration on Microalgal Growth Rate, Processes, 2021, 9, 496 CrossRef .
+T. Weise, C. Grewe and M. Pfaff, Experimental and Model-Based Analysis to Optimize Microalgal Biomass Productivity in a Pilot-Scale Tubular Photobioreactor, Front. Bioeng. Biotechnol., 2020, 8, 453–453 CrossRef PubMed .
+L. J. Müller, A. Kätelhön, M. Bachmann, A. Zimmermann, A. Sternberg and A. Bardow, A Guideline for Life Cycle Assessment of Carbon Capture and Utilization, Front. Energy Res., 2020, 8, 15 CrossRef .
+S. Van Schoubroeck, G. Thomassen, S. Van Passel, R. Malina, J. Springael, S. Lizin, R. A. Venditti, Y. Yao and M. Van Dael, An integrated techno-sustainability assessment (TSA) framework for emerging technologies, Green Chem., 2021, 23, 1700–1715 RSC .
+I. M. Sobol, Global sensitivity indices for nonlinear mathematical models and their Monte Carlo estimates, Math. Comput. Simul., 2001, 55, 271–280 CrossRef .
+H. Ji, S. Huang, X. Lv, Y. Wu and Y. Feng, Empirical Studies of a Kernel Density Estimation Based Naive Bayes Method for Software Defect Prediction, IEICE Transactions on Information and Systems, 2019, E102.D, 75–84 CrossRef .
+
+          T. B. Sasongko, O. Arifin and H. A. Fatta, Optimization of Hyper Parameter Bandwidth on Naïve Bayes Kernel Density Estimation for the Breast Cancer Classification, 2019 International Conference on Information and Communications Technology (ICOIACT),  2019.
+J. Gu, S. Zhang and B. Wang, Monte Carlo Analysis for Significant Parameters Ranking in RLV Flight Evaluation, Procedia Eng., 2015, 99, 1082–1088 CrossRef .
+K. Roh, J. H. Lee and R. Gani, A methodological framework for the development of feasible CO2 conversion processes, Int. J. Greenhouse Gas Control, 2016, 47, 250–265 CrossRef CAS .
+
+          A. Zimmermann, J. Wunderlich, G. Buchner, L. Müller, K. Armstrong, S. Michailos, A. Marxen, H. Naims, F. Mason, G. Stokes and E. Williams, Techno-Economic Assessment and Life-Cycle Assessment Guidelines for CO2 Utilization, University of Michigan Library, Ann Arbor, MI, 157,  2018 Search PubMed .
+A. W. Zimmermann, J. Wunderlich, L. Müller, G. A. Buchner, A. Marxen, S. Michailos, K. Armstrong, H. Naims, S. McCord, P. Styring, V. Sick and R. Schomäcker, Techno-Economic Assessment Guidelines for CO2 Utilization, Front. Energy Res., 2020, 8, 5 CrossRef .
+I. L. Wiesberg, G. V. Brigagão, O. d. Q. F. Araújo and J. L. de Medeiros, Carbon dioxide management via exergy-based sustainability assessment: Carbon Capture and Storage versus conversion to methanol, Renewable Sustainable Energy Rev., 2019, 112, 720–732 CrossRef CAS .
+H. Cao, S. Liu and X. Wang, Environmentally benign metal catalyst for the ring-opening copolymerization of epoxide and CO2: State-of-the-art, opportunities, and challenges, Green Chem. Eng., 2022, 3, 111–124 CrossRef .
+G. Faber, C. Mangin and V. Sick, Life Cycle and Techno-Economic Assessment Templates for Emerging Carbon Management Technologies, Front. Sustainability, 2021, 2, 93 Search PubMed .
+D. Losada, A. Al-Sumaiti and S. Rivera, Uncertainty Cost Functions in Climate-Dependent Controllable Loads in Commercial Environments, Energies, 2021, 14, 2885 CrossRef .
+T. P. Burke, B. C. Kiedrowski and W. R. Martin, Kernel Density Estimation of Reaction Rates in Neutron Transport Simulations of Nuclear Reactors, Nucl. Sci. Eng., 2017, 188, 109–139 CrossRef .
+R. M. Hirsch, S. A. Archfield and L. A. De Cicco, A bootstrap method for estimating uncertainty of water quality trends, Environ. Model. Softw., 2015, 73, 148–166 CrossRef .
+M. H. Lee, J. S. Lee, J. Y. Lee, Y. H. Kim, Y. S. Park and K. M. Lee, Uncertainty Analysis of a GHG Emission Model Output Using the Block Bootstrap and Monte Carlo Simulation, Sustainability, 2017, 9, 1522 CrossRef .
+
+          J. R. Schuyler, Risk and Decision Analysis in Projects, 3.1 Edition, Planning Press, Aurora, Colorado, USA,  2018 Search PubMed .
+M. Lin, L. Han, M. R. Singh and C. Xiang, An Experimental-
+and Simulation-Based Evaluation of the CO2 Utilization Efficiency of Aqueous-Based Electrochemical CO2 Reduction Reactors with Ion-Selective Membranes, ACS Appl. Energy Mater., 2019, 2, 5843–5850 CrossRef CAS .
+
+          B. W. Silverman, Density Estimation for Statistics and Data Analysis, Chapman and Hall, London,  1986 Search PubMed .
+
+          KEPCO, Electric Rates History, https://cyber.kepco.co.kr/ckepco/front/jsp/CY/E/E/CYEEHP00375.jsp (accessed 16 October 2021).
+P. Cheali, K. V. Gernaey and G. Sin, Uncertainties in Early-Stage Capital Cost Estimation of Process Design – A Case Study on Biorefinery Design, Front. Energy Res., 2015, 3, 3 Search PubMed .
+G. Thomassen, M. Van Dael, F. You and S. Van Passel, A multi-objective optimization-extended techno-economic assessment: exploring the optimal microalgal-based value chain, Green Chem., 2019, 21, 5945–5959 RSC .
+H. Taghdisian, M. R. Pishvaie and F. Farhadi, Multi-objective optimization approach for green design of methanol plant based on CO2-efficeincy indicator, J. Cleaner Prod., 2015, 103, 640–650 CrossRef CAS .
+B. Singh, R. Reijers, M. W. van der Spek, W. B. Schakel, R. Skagestad, H. A. Haugen, A. Ramirez, N. H. Eldrup, E. G. Hertwich and A. H. Strømman, Environmental Due Diligence of CO2 Capture and Utilization Technologies – Framework and application, Energy Procedia, 2014, 63, 7429–7436 CrossRef CAS .
+E. Igos, E. Benetto, R. Meyer, P. Baustert and B. Othoniel, How to treat uncertainties in life cycle assessment studies?, Int. J. Life Cycle Assess., 2019, 24, 794–807 CrossRef .
+W. Wei, P. Larrey-Lassalle, T. Faure, N. Dumoulin, P. Roux and J.-D. Mathias, Using the Reliability Theory for Assessing the Decision Confidence Probability for Comparative Life Cycle Assessments, Environ. Sci. Technol., 2016, 50, 2272–2280 CrossRef CAS PubMed .
+S.-M. Lu, Z. Wang, J. Li, J. Xiao and C. Li, Base-free hydrogenation of CO2 to formic acid in water with an iridium complex bearing a N,N′-diimine ligand, Green Chem., 2016, 18, 4553–4558 RSC .
+A. Iturmendi, M. Iglesias, J. Munarriz, V. Polo, V. Passarelli, J. J. Pérez-Torrente and L. A. Oro, A highly efficient Ir-catalyst for the solventless dehydrogenation of formic acid: the key role of an N-heterocyclic olefin, Green Chem., 2018, 20, 4875–4879 RSC .
+J. Eppinger and K.-W. Huang, Formic Acid as a Hydrogen Energy Carrier, ACS Energy Lett., 2017, 2, 188–195 CrossRef CAS .
+M. G. Mura, L. D. Luca, G. Giacomelli and A. Porcheddu, Formic Acid: A Promising Bio-Renewable Feedstock for Fine Chemicals, Adv. Synth. Catal., 2012, 354, 3180–3186 CrossRef CAS .
+M. Pérez-Fortes, J. C. Schöneberger, A. Boulamanti, G. Harrison and E. Tzimas, Formic acid synthesis using CO2 as raw material: Techno-economic and environmental evaluation and market potential, Int. J. Hydrogen Energy, 2016, 41, 16444–16462 CrossRef .
+S. M. Jarvis and S. Samsatli, Technologies and infrastructures underpinning future CO2 value chains: A comprehensive review and comparative analysis, Renewable Sustainable Energy Rev., 2018, 85, 46–68 CrossRef CAS .
+K. Park, G. H. Gunasekar, S.-H. Kim, H. Park, S. Kim, K. Park, K.-D. Jung and S. Yoon, CO2 hydrogenation to formic acid over heterogenized ruthenium catalysts using a fixed bed reactor with separation units, Green Chem., 2020, 22, 1639–1649 RSC .
+G. J. Ruiz-Mercado, R. L. Smith and M. A. Gonzalez, Sustainability Indicators for Chemical Processes: II. Data Needs, Ind. Eng. Chem. Res., 2012, 51, 2329–2353 CrossRef CAS .
+M. Rumayor, A. Dominguez-Ramos and A. Irabien, Formic Acid Manufacture: Carbon Dioxide Utilization Alternatives, Appl. Sci., 2018, 8, 914 CrossRef .
+K. Rohmann, J. Kothe, M. W. Haenel, U. Englert, M. Hölscher and W. Leitner, Hydrogenation of CO2 to Formic Acid with a Highly Active Ruthenium Acriphos Complex in DMSO and DMSO/Water, Angew. Chem., Int. Ed., 2016, 55, 8966–8969 CrossRef CAS PubMed .
+R. van Putten, T. Wissink, T. Swinkels and E. A. Pidko, Fuelling the hydrogen economy: Scale-up of an integrated formic acid-to-power system, Int. J. Hydrogen Energy, 2019, 44, 28533–28541 CrossRef CAS .
+
+          INNOPOLIS Foundation, Market for industrial boilers [Translated title], https://www.innopolis.or.kr/fileDownload?titleId=177023&fileId=1, (accessed 5 October 2021).
+
+          Korean Statistical Information Service, Natural gas production and consumption [Translated title], https://kosis.kr/statHtml/statHtml.do?orgId=101&tblId=DT_2KAAE04, (accessed 7 December 2021).
+J. R. Prado and S. Vyazovkin, Phase separation of triethylamine and water in native and organically modified silica nanopores, J. Chem. Phys., 2017, 147, 114508 CrossRef PubMed .
+K. Roh, R. Frauzem, T. B. H. Nguyen, R. Gani and J. H. Lee, A methodology for the sustainable design and implementation strategy of CO2 utilization processes, Comput. Chem. Eng., 2016, 91, 407–421 CrossRef CAS .
+F.-C. Wu and Y.-P. Tsang, Second-order Monte Carlo uncertainty/variability analysis using correlated model parameters: application to salmonid embryo survival risk assessment, Ecol. Model., 2004, 177, 393–414 CrossRef .
+D. E. Burmaster and A. M. Wilson, An introduction to second–order random variables in human health risk assessments, Human and Ecological Risk Assessment: An International Journal, 1996, 2, 892–919 CrossRef .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2gc00514jThis journal is © The Royal Society of Chemistry 2022
+Table Content:
+
+ 	Fig. 1  Illustration of the numerical example involving three separate inputs to the model y = x1 − x2 + 10x3. Two arbitrary decision boundaries are displayed as vertical lines.	 
+
+ 	Fig. 2  Methodological overview for the risk-based uncertainty assessment of CDU technologies.	 
+
+ 	Fig. 3  The Monte Carlo simulation model for the propagation of technological uncertainties on the performance indicators. Green arrows represent endogenous data. Orange arrows represent exogenous data.	 
+	(1)
+	(2)
+	(3)
+
+ 	Fig. 4  The class likelihood functions for a hypothetical low-risk input xj (left) and a high-risk input xj (right). The instantaneous probability difference is represented by the red curve with the area under the curve corresponding to the sustainability risk score, RSj. Absolute risk scores for the low-risk input and high-risk input are 0.03 and 0.82, respectively. For the high-risk input, an intersection occurs at xj = 45 where P(xj|Lf) > P(xj|Ls) and vice versa.	 
+
+ 	Fig. 5  Classification of uncertainties for a single sustainability requirement scenario, demonstrated with minimum CO2 utilization efficiency (COE). In each Monte Carlo instance, the evaluated indicator is compared with the stakeholder-defined sustainability criterion (COE ≥ 87%), then according to the decision rule, the corresponding uncertain input values are categorized into either MSN×J or MFN×J for meeting or failing to meet the criterion, respectively.	 
+	(4)
+
+ 	Fig. 6  A Bayesian decision network for the multi-criteria classification of uncertainties and estimation of sustainability risk measures. D is a Boolean variable representing two ultimate decision outcomes: “Is sustainable under multiple satisfaction criteria” or “Is not sustainable”.	 
+
+
+
+Both COGM and GHG Reduction criteria satisfied	
+P(D = “S”|YCOGM ← Ls, YGHG ← Ls)	1	1	1
+Only COGM criteria satisfied	
+P(D = “S”|YCOGM ← Ls, YGHG ← Lf)	0	0.7	0
+Only GHG Reduction criteria satisfied	
+P(D = “S”|YCOGM ← Lf, YGHG ← Ls)	0	0.2	0.7
+Failed to satisfy both criteria	
+P(D = “S”|YCOGM ← Lf, YGHG ← Lf)	0	0	0
+
+ 	Fig. 7  Decision rule and uncertainty classification for single-criteria sustainability risk scores (Step 4) and multi-criteria sustainability risk scores (Step 5).	 
+	(5)
+
+
+Performance indicator	Unit COGM (r = uCOGM) (USD per ton FA)	Specific carbon footprint (r = CF) (ton-CO2eq per ton FA)
+Target stakeholders’ criteria for sustainability	<550 USD per ton FA	<1.12 ton-CO2eq per ton FA
+Satisfaction Priority	High	Absolute
+Justification	Cost of production estimate for conventional formic acid using methyl formate. The higher purity (>99 mol%) of the CtX formic acid, and the current exclusion of potential carbon creditsa serve as incentives.	A reduction of 1.08 ton-CO2eq per ton FA in comparison with conventional formic acidb, in order to meet the emission reduction target of 42 ktons-CO2eqc by 2030 set by the South Korean government.
+
+ 	Fig. 8  Process flow diagram of steam methane reforming (SMR) and CO2 hydrogenation processes for the production of high purity (>99 mol%) formic acid.	 
+CO2(g) + H2(g) + TREA → TREAH+HCOO−	(6)
+TREAH+HCOO− + nBIM → nBIMH+HCOO− + TREA	(7)
+nBIMH+HCOO− → HCOOH + nBIM	(8)
+	(9)
+	(10)
+
+Both unit COGM and specific carbon footprint criteria satisfied	
+P(D = “S”|YuCOGM ← Ls, YCF ← Ls)	1
+Only unit COGM criteria satisfied	
+P(D = “S”|YuCOGM ← Ls, YCF ← Lf)	0
+Only specific carbon footprint criteria satisfied	
+P(D = “S”|YuCOGM ← Lf, YCF ← Ls)	0.5
+Failed to satisfy both sustainability criteria	
+P(D = “S”|YuCOGM ← Lf, YCF ← Lf)	0
+
+
+
+Endogenous
+
+
+x
+
+j=1
+	Hydrogenation CO2 conversion	30.0%	69.5%	14.1%	10.8%	15.0%
+
+x
+2
+	TREA degradation	1.2%	Negligible	0.7%	Negligible	0.8%
+
+x
+3
+	
+nBIM degradation	1.5%	0.1%	0.7%	Negligible	0.6%
+
+Exogenous: Economic
+
+
+x
+4
+	Korean grid mix electricity price (industrial, high V)	13.3%	5.6%	0.7%	0%	1.9%
+
+x
+5
+	Korean steam price – (industrial, >43000 GJ per yr)	30.2%	18.5%	1.0%	0%	3.6%
+
+x
+6
+	Korean natural gas price	1.8%	0.1%	1.1%	0%	1.3%
+
+x
+7
+	Cost of CO2 capture(from power plants)	17.2%	6.0%	0.9%	0%	2.9%
+
+x
+8
+	TREA price	0.7%	Negligible	0.8%	0%	0.9%
+
+x
+9
+	
+nBIM price	2.1%	0.1%	1.1%	0%	0.7%
+
+Exogenous: Environmental
+
+
+x
+10
+	GWP of Captured CO2 as feedstock	0.3%	0%	7.7%	0.6%	6.8%
+
+x
+11
+	GWP of Korean grid mix electricity production	0.3%	0%	3.7%	0.2%	3.5%
+
+x
+12
+	GWP of industrial steam production	0.3%	0%	53.9%	85.4%	49.8%
+
+x
+13
+	GWP of Korean natural gas production	0.9%	0%	12.8%	2.9%	11.6%
+
+x
+14
+	GWP of Korean process water production	0.4%	0%	0.7%	Negligible	0.7%
+
+ 	Fig. 9  The class likelihood distributions for the GWP of steam production (x12) for multi-criteria uncertainty classification. The curves intersect at 0.076 ton-CO2eq per GJsteam.	 
+
+ 	Fig. 10  An alternative process scheme for the downstream with a reduced number of distillation columns.	 
+
+ 	Fig. 11  Probabilities of achieving GHG reducibility criteria and multi-criteria sustainability for the CtX formic acid process at different reductions in process heat consumption.	 
+
+Both unit COGM and specific carbon footprint criteria satisfied	
+P(D = “S”|YuCOGM ← Ls, YCF ← Ls)	1
+Only unit COGM criteria satisfied	
+P(D = “S”|YuCOGM ← Ls, YCF ← Lf)	0.6
+Only specific carbon footprint criteria satisfied	
+P(D = “S”|YuCOGM ← Lf, YCF ← Ls)	0.5
+Failed to satisfy both sustainability criteria	
+P(D = “S”|YuCOGM ← Lf, YCF ← Lf)	0
+
+
+
+Endogenous
+
+
+x
+
+j=1
+	Hydrogenation CO2 conversion	17.1%	69.6%	14.0%	10.8%	11.4%
+
+x
+2
+	TREA degradation	0.7%	Negligible	0.4%	Negligible	0.6%
+
+x
+3
+	
+nBIM degradation	2.5%	0.1%	0.5%	Negligible	0.8%
+
+Exogenous: Economic
+
+
+x
+4
+	Korean grid mix electricity price (industrial, high V)	13.9%	5.6%	0.5%	0%	3.7%
+
+x
+5
+	Korean steam price – (industrial, >43000 GJ per yr)	35.9%	18.4%	0.7%	0%	21.1%
+
+x
+6
+	Korean natural gas price	3.2%	0.1%	0.8%	0%	1.0%
+
+x
+7
+	Cost of CO2 capture(from power plants)	20.7%	6.0%	0.6%	0%	5.8%
+
+x
+8
+	TREA price	0.6%	Negligible	0.8%	0%	0.5%
+
+x
+9
+	
+nBIM price	3.0%	0.1%	0.6%	0%	1.1%
+
+Exogenous: Environmental
+
+
+x
+10
+	GWP of Captured CO2 as feedstock	0.3%	0%	7.3%	0.6%	3.1%
+
+x
+11
+	GWP of Korean grid mix electricity production	0.3%	0%	3.8%	0.2%	1.8%
+
+x
+12
+	GWP of industrial steam production	0.4%	0%	56.8%	85.4%	43.1%
+
+x
+13
+	GWP of Korean natural gas production	1.1%	0%	12.5%	2.9%	5.6%
+
+x
+14
+	GWP of Korean process water production	0.4%	0%	0.6%	Negligible	0.4%
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2gc00514j
+
+This journal is © The Royal Society of Chemistry 2022

@@ -1,0 +1,338 @@
+A computational survey of semiconductors for power electronics   - Energy & Environmental Science (RSC Publishing) DOI:10.1039/C9EE01529A View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C9EE01529A
+(Paper)
+Energy Environ. Sci., 2019, 12, 3338-3347A computational survey of semiconductors for power electronics†
+
+        
+          
+            Prashun 
+            Gorai
+          
+        
+      *ab, 
+      
+        
+          
+            Robert W. 
+            McKinney
+          
+        
+      a, 
+      
+        
+          
+            Nancy M. 
+            Haegel
+          
+        
+      b, 
+      
+        
+          
+            Andriy 
+            Zakutayev
+          
+        
+      ab and 
+
+        
+          
+            Vladan 
+            Stevanovic
+          
+        
+      *ab
+aColorado School of Mines, Golden, CO 80401, USA. E-mail: pgorai@mines.edu; vstevano@mines.edu
+bNational Renewable Energy Laboratory, Golden, CO 80401, USA. E-mail: andriy.zakutayev@nrel.gov
+Received 
+      11th May 2019
+    , Accepted 29th July 2019First published on 29th July 2019AbstractPower electronics (PE) are used to control and convert electrical energy in a wide range of applications from consumer products to large-scale industrial equipment. While Si-based power devices account for the vast majority of the market, wide band gap semiconductors such as SiC, GaN, and Ga2O3 are starting to gain ground. However, these emerging materials face challenges due to either non-negligible defect densities, high synthesis and processing costs, or poor thermal properties. Here, we report on a broad computational survey aimed to identify promising materials for future power electronic devices beyond SiC, GaN, and Ga2O3. We consider 863 oxides, sulfides, nitrides, carbides, silicides, and borides that exhibit finite calculated band gaps. We utilize ab initio methods in conjunction with models for intrinsic carrier mobility, and critical breakdown field to compute the widely used Baliga figure of merit. We also compute the lattice thermal conductivity and use it as an additional screening parameter. In addition to correctly identifying known PE materials, our survey has revealed a number of promising candidates exhibiting the desirable combination of high figure of merit and high lattice thermal conductivity, which we propose for further experimental investigations.
+
+Broader context
+Advances in computing and informatics has aided in theory-guided discovery of novel materials and molecules for energy applications. High-throughput computations have been quite successful in identifying promising candidate materials for photovoltaics, thermoelectrics, and batteries, among other energy applications. In contrast, only a handful of materials have been theoretically assessed for power electronics, and even fewer are used in practical devices. This is surprising because power electronics are ubiquitous in a multitude of energy harvesting, conversion, transmission, and storage technologies that involve electricity. Examples include inverters for photovoltaics and converters for wind turbines, as well as variable frequency drives for industrial motors and electric vehicles. Given their widespread usage, even modest improvements in the efficiency of power electronic devices can lead to enormous global energy savings. In this work, we report a computational survey of semiconductors for power electronics. Our calculations recover the known wide band gap power electronic materials (SiC, GaN and Ga2O3), and predict 30 additional candidates, including 9 carbides, 7 nitrides, and 14 oxides. In addition to power electronics, some of these candidate materials may have applications in other environmental technologies, such as electronic devices for high-temperature and other applications under extreme operating conditions.
+
+1. Introduction
+Power electronics (PE) enable conversion and control of energy in a wide range of applications, including consumer products, electricity generation from wind and solar energy, electric vehicles, and long-distance communications. For instance, rectifiers used in mobile chargers, inverters and converters of electricity generated from solar and wind energy, and variable-frequency drives in electric vehicles and industrial motors all employ power electronics.1,2 It is estimated that the global market for power electronics will swell to >$50 billion by 2023.3 Despite their diverse applications, only a handful of materials, including Si, SiC, and GaN, account for the vast majority of the PE market.1,2 Silicon is the incumbent material – cheap and compatible with existing fabrication technology but not efficient.4 In particular, silicon-based PE devices are not suitable for high-power applications because of a trade-off: low breakdown field at low on-state resistance, or high on-state resistance at high breakdown field.5 Low breakdown field limits the range of possible applications, and high on-state resistance reduces the efficiency of power conversion. Despite these drawbacks, Si presently constitutes ∼95% of the PE devices.4 SiC and GaN address this trade off but their non-negligible defect densities and high synthesis costs have been a limiting factor for large-scale applications. More recently, Ga2O3 has emerged as a low-cost6,7 alternative, but its poor thermal properties have been a critical impediment.8 Materials such as diamond-C,9 cubic-BN,10 AlN,11 ZnO11 have also been considered, but power electronic devices based on these compounds either have not been attempted or have not reached their full potential. Some of these PE materials are highlighted in Fig. 1, in addition to 10600 stoichiometric and ordered structures reported in the Inorganic Crystal Structure Database (ICSD) spanning oxide, sulphide, nitride, carbide, silicide, and boride chemistries. Presently employed PE materials constitute only a miniscule fraction of known materials, as illustrated in Fig. 1, which is the key reason to explore for alternatives beyond the handful of materials that dominate current power electronics.87
+ Fig. 1  Stoichiometric and ordered structures (10600) from the ICSD, comprising oxides, sulphides, nitrides, carbides, silicides, and borides, are represented by the number of atoms in the primitive cell and the standard deviation in Pauling electronegativity of the constituent elements. Si, SiC, GaN, and Ga2O3 are prominent power electronic (PE) materials while diamond-C and AlN have been considered in lab-scale studies. For SiC, 2H–8H denote polytypes. 
+One potential approach to such exploration is a broad computational search to identify novel materials for power electronics. Computations have proven to be a powerful tool in accelerating materials discovery beyond the conventional trial-and-error approach. With continued improvements in ab initio methods and software, and the rapid advances in computational resources, high-throughput (HT) computations have become a viable tool to explore large material spaces and identify promising candidates.12 Such HT computational approaches rely on material descriptors and/or figures of merit that can be rapidly determined from first-principles calculations and from simplified models.12,13 To expedite searches, often various approximations are employed without overly sacrificing accuracy. Assumptions such as those related to material dopability i.e. whether a semiconductor can be doped with a desired charge carrier type and concentration, may also be needed for computational tractability. In spite of the assumptions and approximations, HT computations have been quite successful in unravelling novel materials for solid-state batteries,14,15 thermoelectrics,13,16 photovoltaics etc.14,17 The deployment of HT computations in materials discovery has also popularized the public sharing of data and development of open-access materials databases,18–21 including properties necessary to enable materials discovery for a wide variety of applications. In spite of the promise of computations, surprisingly, no such efforts exist within power electronics.
+Here, we computationally screen materials from the ICSD and compute the Baliga figure of merit (FOM) of 863 materials with finite calculated band gaps. Since the Baliga FOM does not account for heat dissipation as a performance factor, we also explicitly calculate the lattice thermal conductivity (κL) as a screening parameter in our search. As such, we focus on the performance of the pristine material that depends on the intrinsic properties; extrinsic factors such as doping would have to be appropriately tuned for the most promising candidates that are identified from the screening. To compute the parameters that determine the Baliga FOM and lattice thermal conductivity, we utilized ab initio methods in conjunction with semi-empirical models of transport properties and phenomenological model of critical breakdown field. Our computational search has revealed several promising candidates that exhibit the desirable combination of high figure of merit and high lattice thermal conductivity. Candidates include 9 oxides, 4 nitrides, and 3 carbides with n-type Baliga FOMs and lattice thermal conductivities larger than that of Ga2O3. We propose the identified materials as candidates for further experimental and computational investigations.
+2. Figures of merit
+Figures of merit have been derived for thermoelectrics,16 topological insulators,22 photovoltaics,17 power electronics etc.23 As mentioned in the Introduction, FOMs can serve as practical material descriptors in HT computational searches, provided that the input material parameters can be rapidly and reliably determined with computational methods and models. In this section, we briefly review the desirable traits of materials for power electronics, the various FOMs that are cast in terms of the desirable properties, and the computational models to determine the input parameters.
+2.1. Desirable traits of materials for power electronics
+Most critically, the semiconductor must possess a large breakdown field (Eb), which depends on intrinsic as well as extrinsic factors.5 Typically, semiconductors with wide (Eg > 3 eV) to ultra-wide (Eg > 5 eV) band gaps, large dielectric constants (εstatic > 10), and strong electron–phonon coupling (as described in the electron avalanche theory by Hippel,24 Fröhlich25) exhibit large intrinsic breakdown field. Next, the semiconductor must support large current densities (J), especially for high-power devices. Since J is directly proportional to the electrical conductivity σ = μne (where μ is the charge carrier mobility, n the concentration of charge carriers, and e the fundamental electronic charge), materials with high carrier mobilities and large carrier concentrations are desirable.4 While μ can be treated as an intrinsic material property, n is typically controlled by extrinsic doping. Finally, the material must efficiently dissipate the thermal energy produced by Joule heating in the device26 – a high lattice thermal conductivity (κL) is, therefore, advantageous.
+2.2. Power electronic figures of merit
+Several FOMs have been used to quantify the intrinsic performance of materials for power electronics, including those proposed by Johnson,27 Baliga,23,28 Kim,29 and Huang.30 These FOMs are generally applicable to unipolar switching power devices. Baliga proposed FOMs for low-frequency23 and high-frequency28 power electronic devices. The widely used low-frequency Baliga FOM (BFOM) is given by BFOM = εμEb3. The BFOM is derived assuming that the power losses are solely due to power dissipation in the on-state of the device. Thus, the BFOM applies to materials operating at lower frequencies, where the conduction losses are dominant.23 Given its widespread usage, we consider only the low-frequency BFOM for the computational search in this work.
+Efficient thermal management i.e. heat dissipation, is necessary to avoid overheating and consequently, mechanical failure of the power electronic material and associated contacts and interfaces. The BFOM does not take into account the role of thermal conductivity that is critical for dissipation of Joule heating. In this study, we explicitly calculate the lattice thermal conductivity and consider it as one of the screening parameters along with the BFOM. Carrier concentrations in power electronic materials are generally low enough (non-degenerate) so the electronic component of thermal conductivity can be neglected.
+2.3. Models for evaluating FOM parameters
+To computationally evaluate the Baliga FOM of a material, we need to determine the dielectric constant, charge carrier mobility, and the critical breakdown field. Dielectric constant (ε), including both ionic and electronic contributions, is calculated with first-principles density functional theory perturbation theory,5 as described in detail in the Methods section.
+In doped semiconductors, depending on the temperature, both electron–phonon and ionized impurity scattering limit carrier mobility.31 Here, we focus on the intrinsic, phonon-limited carrier mobility because it represents the upper limit of mobility. The intrinsic mobility (μ) can be directly calculated with ab initio methods by computing the electron–phonon coupling matrix.5,32 However, these calculations are computationally intensive and have so far been demonstrated only for simple elemental and binary semiconductors.5 To circumvent the challenges associated with direct calculation of μ, we have previously developed a computationally-tractable, semi-empirical model of μ by combining measured room-temperature μ and density functional theory (DFT) calculations for a range of materials.16 Motivated by the relationships describing electron–phonon scattering in band conductors, the charge carrier mobility is modelled as: μ = ABs(mb*)−t(1)where B is the bulk modulus, mb* the band effective mass, and A, s, and t are fitted constants. To compute the electron and hole mobilities using the semi-empirical model (eqn (1)), one needs to compute B, and mb* of conduction (electron) and valence (hole) bands. mb* is obtained from the density-of-states (DOS) effective mass mDOS* and band degeneracy (Nb) as mDOS* = Nb2/3mb*, assuming parabolic carrier pockets and isotropic transport. B is determined by fitting the Birch–Murnaghan equation of state to a set of energies and volumes computed with DFT.33,34 We have demonstrated that this model predicts the room temperature μ within half an order of magnitude of the measured values.16 Knowing that even measured μ can exhibit orders of magnitude variations depending on the synthesis conditions and sample preparation, the prediction accuracy of the semi-empirical model is acceptable for rapid screening of intrinsic properties of large number of materials.
+We also need to evaluate the critical breakdown field (Eb) to determine BFOM. Like μ, it is possible to directly compute Eb with ab initio methods but this involves the computationally intensive calculations of electron–phonon coupling matrices,5 which makes it computationally intractable for broad searches. Empirical models that solely depend on the band gap of the material have been developed to estimate Eb.35,36 These empirical models were fitted to a small number of materials belonging to specific material families; extrapolation to other materials may not be as accurate. A more general and accurate phenomenological model of Eb has been recently proposed by fitting material parameters such as band gaps and phonon frequencies to critical breakdown fields calculated from fully ab initio calculations.5,32 The fitted model for Eb is: (2)where, Eg is the band gap in eV, ωmax is the phonon cutoff frequency in THz, and Eb is the breakdown field in MV m−1. The band gap is related to the electronic excitations and the cutoff frequency to the scattering of excited electrons by phonons. Eg is calculated with DFT-GGA functional and generally underestimated (see Methods for computational details). Here, the cut off frequency ωmax is taken as the frequency of the highest optical mode at Γ (see Methods for details). It must be noted that both the empirical and phenomenological models of Eb ignore the effects of impurity doping that can lower the breakdown field. Here, we focus on evaluating the performance of the intrinsic material. As is typically done in broad computational searches, extrinsic factors can be assessed in detail on a case-by-case basis via follow-up computational and experimental investigations.
+We estimated the lattice thermal conductivity (κL) with a computationally tractable semi-empirical model that we have previously developed,37 and is expressed as (3)where, M is the average atomic mass, vs is the speed of sound, V is the volume per atom, n is the number of atoms in the primitive cell, γ is the Gruneisen parameter, T is the temperature, and A1, A2, x, y, and z are fitted parameters. The speed of sound is approximated from the bulk modulus (B) and the density (d), as . This model predicts κL within an average factor of 1.5 of the experimental value, over 4 orders of magnitude in κL.37
+3. Results
+We performed the computational search among materials documented in the Inorganic Crystal Structure Database (ICSD). In this search, we considered only stoichiometric, and ordered compounds with less than 50 atoms in the unit cell. Additionally, we limited the search to oxides, sulphides, nitrides, carbides, silicides, and borides for the following reasons: (1) known power electronic materials (Fig. 1) span these chemistries, and (2) they are generally expected to exhibit larger band gaps and higher lattice thermal conductivities compared to other pnictides (P, As, Sb, Bi), and chalcogenides (Se, Te). Even though halides are typically wide band gap materials, doping is known to be quite challenging. For this reason, we excluded halides from this search. Compounds containing transition metals (except Sc, Y, Ti, Zr, Hf, Cu, Zn, Cd, Ag, Au, Hg) are also not included in this search – the ground-state structure of these materials may be magnetic i.e. exhibit magnetic ordering. At typical operational temperatures, magnetic disorder can deteriorate carrier transport,38 which is detrimental for power electronic applications.
+Based on these restrictions, in total we considered 863 materials from the ICSD that have finite DFT-calculated band gaps in their lowest-energy crystal structures (based on total energies reported in NREL Materials Database, http://materials.nrel.gov). For some compounds, we found that the DFT-calculated total energies to be equal in two different structures. In such cases, we considered both structures in our search. Note that the well-known underestimation of band gaps in DFT-based methods can lead to erroneous closing of band gap. However, this does not pose significant problems here because it usually occurs in relatively small band gap materials, typically with Eg < 1 eV, which are not of interest in this study. To be clear, this analysis does not include stability against decomposition into competing phases, but such decomposition can be avoided because the materials are reported in ICSD (mostly experimental). The complete list of the 863 materials along with their computed properties and BFOM are provided in the ESI.†
+3.1. Trends in figure of merit and material properties
+The performance of power electronic materials, as quantified by the figure of merit, depends on several inter-dependent material properties. It is, therefore, instructive to examine the trends in these material properties to understand the composition–property–performance relations.
+The calculated critical breakdown fields (Eb) as a function of band gap (Eg) of the 863 materials are shown in Fig. 2. Known power electronic materials such as diamond-C, Si, SiC, GaN, and Ga2O3 are marked for reference. The predicted Eb are in fairly good agreement with experimentally measured values. For instance, calculated Eb for diamond-C is 1.3 × 107 V cm−1; in comparison, the measured value9 is 1–3 × 107 V cm−1. The calculated Eb of Si is 6.4 × 105 V cm−1, which is in good agreement with the upper bound of measured Eb (6 × 105 V cm−1).32 The computed Eb shown in Fig. 2 span 2.5 orders of magnitude (∼0.2–250 × 106 V cm−1). While previous empirical models of Eb depend solely on the band gap, the phenomenological model32 used here provides additional nuance by including features of the phonon dispersion, through the cutoff frequency (ωmax). While Eb still correlates with the band gap, the effect of the phonon frequency contribution is quite evident in Fig. 2. For a given band gap, Eb can vary over 1.5 orders of magnitude because of the differences in the cutoff frequency. Materials with ωmax > 200 meV (48.4 THz), consisting of carbides and nitrides, exhibit unusually large breakdown fields. Since materials with higher cutoff frequency are expected to be stiffer, ωmax may be correlated to the bulk modulus (B).
+ Fig. 2  Critical breakdown field (Eb) of 863 materials calculated with a phenomenological model, given by eqn (2). In this model, Eb depends on the band gap Eg (x-axis) and the phonon cutoff frequency ωmax (color). Eb strongly depends on both Eg and ωmax. Known power electronic materials are labelled for reference. Marker labels: d-C = diamond-C, h-C = lonsdaleite C, SiC(3C) = cubic SiC. Symbols within parenthesis denote the polytype. 
+In Fig. 3, the Baliga FOMs of the 863 materials are compared if the materials are doped n-type (y-axis) and p-type (x-axis). Whether a material can be actually doped with the desired charge carriers and to the necessary concentrations will depend on the defect and dopant formation energetics, as discussed in more detail in Section 4. We observe in Fig. 3 that more materials lie in the upper triangle above the dotted line (represents equal FOM of n- and p-type) – the Baliga FOM of most n-type doped materials is higher than that of p-type doped. The differences in n- and p-type Baliga FOM arise from the differences in electron and hole mobilities (ε, Eb are same for both doping types). Electron mobilities are generally higher than hole mobilities,16,18 which result in higher n-type Baliga FOM for most materials.
+ Fig. 3  A comparison of the computed Baliga figure of merit (FOM) of 863 materials, assuming the materials are doped n-type (y-axis) and p-type (x-axis). The Baliga FOMs are normalized with the FOM of n-type Si, a widely used power electronic material. Marker colours denote the lattice thermal conductivity. Materials in the upper (lower) triangle i.e. above (below) the y = x line, have higher n-type (p-type) Baliga FOM. For most materials considered in this study, the n-type FOM is higher because electron mobilities are generally higher than hole mobilities. 
+Materials that lie on or near the dotted y = x line in Fig. 3 and have high BFOM are particularly promising: (1) if a material is ambipolar i.e. can be doped both n- and p-type, junction devices can be fabricated with the same material, and (2) if the material is unipolar doped, i.e. only n- or p-type, it still leads to the identification of high-performing materials for specific doping types.
+Commercially used power devices utilize n-type Si, SiC, and GaN.4 Therefore, it is useful to focus on n-type doped materials for future power electronics for two reasons: (1) they will likely exhibit a higher FOM compared to their p-type doped counterparts, and (2) provide replacement for the n-type material in existing power device architectures. In the following sections, we focus on materials assuming only n-type doping. We also identify and discuss some of the promising p-type candidates in Section 3.4.
+3.2. Validation of computational approach
+While the predicted breakdown fields (Eb) are in good agreement with measured values, we must also validate the computational approach by assessing if the computed FOMs correctly identify and appropriately rank the known power electronic materials. In Fig. 4(a), the n-type Baliga FOM, normalized by the FOM of n-type Si, is plotted as a function of the lattice thermal conductivity. The marker colours denote the intrinsic electron mobilities. For power electronics, materials with high FOM and high lattice thermal conductivity are desirable. Materials in the upper right quadrant of Fig. 4(a) exhibit these traits. We find that all known power electronic materials, that are either used in commercial devices (Si, SiC, GaN) or have been considered (Ga2O3, BN, AlN, ZnO), fall inside the shaded upper right quadrant in Fig. 4(a), which provides credence to the computational approach utilized in this work. The shaded region is extended in a way to include Si, which has the lowest normalized Baliga FOM of 1, and Ga2O3 with the lowest lattice thermal conductivity of ∼20 W m−1 K−1 among the materials in this validation set.
+ Fig. 4  (a) Calculated Baliga figure of merit (normalized with the FOM of n-type Si) of 863 materials shown in relation to the computed lattice thermal conductivity (κL) and assumed to be doped n-type. The colour schema represents the electron mobility. Known power electronic materials, bounded by the grey shaded region, are labelled for reference. (b) Zoomed-in view of the shaded region. A selected list of candidate materials is labelled. Known power electronic materials are marked by grey squares. Marker labels: d-C = diamond-C, h-C = lonsdaleite C, h-BN = hexagonal BN, c-BN = cubic BN, SiC(3C) = cubic SiC. Symbols within parenthesis denote the polytype. 
+The computed FOM of known power electronic materials seem to capture the general performance expectations expressed in the experimental literature (Table 1). For instance, the FOMs of all other well-known power electronic materials are higher than that of Si. Diamond-C has the highest computed FOM as well as lattice thermal conductivity (Table 1). This material has been long recognized and pursued as one of the most promising power electronic materials9 but growth of large single crystals remains a major bottleneck. Both n- and p-type doping of diamond has been experimentally demonstrated in CVD-grown diamond thin films.45 While n-type Ga2O3 has a similar or higher FOM compared to SiC and GaN, the lattice thermal conductivity is much lower, which is known to present challenges for thermal management of Ga2O3-based devices.7
+Table 1 Computed and measured lattice thermal conductivity (κL) in W m−1 K−1 and computed Baliga FOM of known power electronic materials. SG denotes the space group number. The Baliga FOM values are normalized by the Baliga FOM of n-type Si, a widely used power electronic material
+
+
+
+
+Material
+SG
+
+κ
+L (calc.)
+
+κ
+L (exp.)
+FOM (n)
+FOM (p)
+
+
+
+
+
+a 
+Ref. 39.
+b 
+Ref. 40.
+c 
+Ref. 41.
+d 
+Ref. 42.
+e 
+Ref. 43.
+f 
+Ref. 44.
+
+
+
+
+
+Si
+227
+130
+130a
+1 × 100
+4.9 × 10−1
+
+
+4H-SiC
+186
+235
+330b
+1.1 × 105
+6.0 × 103
+
+
+GaN
+186
+60
+130c
+1.2 × 104
+6.1 × 101
+
+
+β-Ga2O3
+12
+21
+14d
+1.8 × 104
+8.3 × 100
+
+
+d-C
+227
+1106
+1050e
+8.8 × 106
+9.2 × 106
+
+
+AlN
+186
+153
+285f
+2.0 × 106
+2.2 × 104
+
+
+
+
+Unlike thermoelectric materials,13 both high carrier mobilities and high lattice thermal conductivities are desirable for power electronics. In general, materials that exhibit high carrier mobilities tend to also have high lattice thermal conductivities.16,18Fig. 4(a) illustrates this trend – materials with high κL (on the right side) also generally have higher μ.
+3.4 Emerging candidates for power electronics
+To identify promising n-type candidates, we focus on the materials that reside inside the shaded region in Fig. 4(a). In Fig. 4(b), we present a zoomed-in view of only the shaded region. For clarity, the known power electronic materials are shown in Fig. 4(b) as grey squares. We observe that there are a large number of materials with FOMs and lattice thermal conductivities that surpass those of Si, and even SiC, GaN, and Ga2O3. The top 30 n-type candidates identified from this search are listed in Table S1 (ESI†) in the descending order of their normalized n-type Baliga FOM, and the full list of screened materials and their properties is also provided in the ESI.† The top candidates are dominated by oxides (14 out 30) comprising primarily silicates and germanates, followed by carbides (9/30) and nitrides (7/30), with chemistries spanning binaries to quaternaries.
+
+Oxides. 
+Among the candidate binary oxides, ZnO has been extensively considered for various applications,46 including photovoltaics, and transparent electronics (thin-film transistors). ZnO is also an interesting material for high-temperature, high-power electronics.11,47,48 In particular, good n-type dopability and reasonable electron mobility of ZnO are favourable for power electronics, but its lack of stable p-type doping is less desirable compared to SiC and GaN, and the presently available single-crystal fabrication procedures49 are more complicated than for Ga2O3.50,51 Other binary oxides that emerge as candidate materials are MgO, CaO, and Al2O3, which are all insulators; MgO exhibits low hole conductivity only at elevated temperatures.52 Among the ternary oxides, IVA–IVB oxides such as HfGeO4, HfSiO4, and ZrGeO4 are identified as promising candidates. Silicates with 2-2-7 chemistries (Y2Si2O7, In2Si2O7, Sc2Si2O7) and their derivatives (CaZrSi2O7) are the other notable ternary oxide candidates. Both of these oxide classes are studied as scintillator host materials.53,54 Ba2ZrO4, Al2MgO4, ZnSiO3, and Al4CaO7 are the other oxides among the top 30 n-type candidates (Table S1, ESI†). While we have identified a number of candidate oxides, we must be cognizant of the fact that extrinsic doping of wide-gap oxides is often challenging. It is possible that many of these candidate oxides are insulators and cannot be suitably doped to introduce sufficient charge carriers. The role of dopability of materials in realizing the predicted power electronic performance is discussed in more detail in Section 4.
+
+
+Carbides. 
+SiC derivates – GeC and SnC, emerge as the most promising binary carbides, if they can be doped n-type. While GeC, that has been studied for tribological and mechanical coatings,55 may not be an economically viable candidate due to the high cost of Ge, SnC is composed of earth-abundant elements. However, the breakdown field (Eb) of SnC is lower than SiC, primarily due to its smaller band gap. Other promising binary carbides include B4C, Be2C, and its ternary derivate BeB2C. Both B4C and Be2C are known for their superior mechanical properties.56,57 Interestingly, Sc3C4 is identified as a p-type candidate while Al3C4 as n-type; the Baliga FOM of p-type Sc3C4 is comparable to the best n-type candidates (Table S2, ESI†). Among the best candidate ternary carbides are the two polymorphs of ScAl3C3, which are derivatives of their binary counterpart Al4C3.
+
+
+Nitrides. 
+Hexagonal and cubic BN have been previously considered as promising materials for high-power electronics,10 although not routinely discussed in the power electronics literature. We identify both polymorphs of BN as candidate materials in our search. Both polymorphs exhibit Baliga FOM higher than that of SiC, GaN, and Ga2O3. Fabrication of cubic-BN is known to be quite challenging because of the high synthesis temperatures and pressures;58–60 it is more practical to consider the ground-state hexagonal-BN as a candidate material for power electronics. The predicted breakdown fields of BN polymorphs are comparable to that of diamond-C and therefore, can be considered for high-performance applications. Spinel-type group IV nitrides, including the two polymorphs of Si3N4, and Ge3N4 are among the predicted candidate binary nitrides. Both Si3N4 and Ge3N4 have been previously investigated for application to light emitting diodes (LEDs)61 and photoelectrochemical water splitting.62 Ternary II–IV-N2 materials related to III-N compounds, such as ZnGeN2 and MgSiN2 are identified as promising n-type candidates;63 ZnGeN2 is an emerging material for optoelectronic applications.64 Other notable candidates are silico-nitrides such as Ca2Si5N8, which have also been studied for application in LEDs.65
+Decomposition into competing phases is an important consideration for material synthesis. To assess the stability of the candidate materials, we extracted the first-principles calculated stability and the energy above the convex hull (ΔEhull) from the data available in computational databases, including the NREL Materials database (materials.nrel.gov) and the Materials Project database (materialsproject.org).19 ΔEhull are reported in Tables S1 and S2 (ESI†) for the n- and p-type candidate materials, respectively. We find that out of the 30 candidate materials in Table S1 (ESI†), 5 carbides and 2 oxides lie above the convex hull – these materials are predicted to be unstable against decomposition into competing phases. All 5 materials in Table S2 (ESI†) lie on the convex hull and are stable.
+
+4. Discussion
+The purpose of the computational search presented in this work is to perform down selection of candidate materials from a large search space of thousands of materials to a few tens of promising candidates. So that the search is computationally tractable, we focus on the performance of the pristine material that depends on the intrinsic material properties; however, additional factors related to defects and doping of the material that can influence the performance need to be considered. Subsequent to the down selection, these additional factors can be evaluated for the candidate materials with detailed calculations and experiments. Here, we discuss three such critical factors.
+4.1. Minimizing deep defects states by single-crystal growth
+The phenomenological model (as well the empirical models) of breakdown field (eqn (2)) depends only on intrinsic material properties, such as band gap and phonon frequency. However, the breakdown field of a material may be lowered by the presence of appreciable concentrations of deep defects with mid-gap states, which facilitate carrier hopping. Deep levels can arise from both native defects as well as extrinsic impurities. Identifying materials with only shallow native defects69 or adopting synthesis routes to fabricate single crystals with low concentrations of deep defects can mitigate the detrimental effect of deep levels. In particular, materials that lend themselves to simple and inexpensive crystal growth methods can produce high-quality crystals of particular interest. As an example from established power electronic semiconductors, large-size, high-quality Ga2O3 wafers can be fabricated by crystal growth from the melt,50,51 whereas far more complicated methods are required for GaN (ammonothermal synthesis)66 and SiC (physical vapor transport).67 Besides lower defect density and large wafer size, such melt-grown methods are projected to be less expensive (e.g. 3–5× less for Ga2O3 compared to SiC),6 leading to lower cost and broader adoption of wide gap power electronics.
+4.2. Selecting defect-tolerant materials from electronic structure and defect calculations
+Another approach to deal with deep defects is to avoid them all together by identifying “defect-tolerant” materials68–70 that contain only shallow defect levels. The concept of defect tolerance has been explored primarily in the context of searching for novel photovoltaic absorbers,68 where the absence of deep levels is beneficial in suppressing Shockley–Read–Hall recombination rates.71,72 Since the absence of deep levels is also beneficial for power electronics, “defect-tolerant” materials are suitable candidates provided they possess the desired intrinsic properties i.e. high Baliga FOM and high κL. Defect concentrations can be estimated through state-of-the-art first-principles defect calculations.73–75 These defect calculations will also reveal the presence/absence of deep defect levels such that the “defect tolerance” of a material can be assessed. While defect calculations are computationally expensive, recent methodological advances73 and emergence of software for defect calculations74 has enabled assessment of defect properties of larger number of materials.
+4.3. Tuning carrier concentrations by doping
+High-power electronics necessitate high carrier mobility as well as high electrical conductivity. Since electrical conductivity depends on both the carrier mobility as well as the carrier concentrations, extrinsic doping is typically employed to enhance the carrier concentrations. For sufficient electrical conductivity, it is imperative that the material can be at least moderately doped, typically higher than ∼1017 cm−3. Whether a material can be actually doped with the desired charge carriers and to the necessary concentrations is dictated by the native defect and dopant formation energetics. In this work, we assume that the materials can be doped. However, material dopability needs to be additionally assessed on a case-by-case basis. First-principles defect calculations can be used to gauge material dopability and reliably estimate defect/dopant and carrier concentrations of the candidate materials. The success of first-principles defect calculations in assessing dopability has been extensively demonstrated in thermoelectrics, photovoltaics etc.73,76
+We performed initial computational assessment of the dopability of three candidate materials from Table S1 (ESI†) with high Baliga FOM, namely, HfGeO4, MgSiN2, and Y2Si2O7. The calculated formation energetics of native defects in these materials are shown in Fig. S1–S3 (ESI†), respectively. Details of the computational methodology for the defect calculations are also provided in the ESI.† We predict the existence of low formation energy native donor and acceptor defects with deep transition levels in HfGeO4 and MgSiN2. The equilibrium Fermi energy is pinned around mid-gap suggesting these candidate materials will be insulators, like MgO and Al2O3. The existence of low formation energy native donors and acceptors also limits the possibility of extrinsic n- or p-type doping.
+In Y2Si2O7 (Fig. S3, ESI†), the native defect energetics is such that the equilibrium Fermi energy is pinned closer to the conduction band under Y-rich, Si-rich, and O-poor growth conditions. As a result, Y2Si2O7 is predicted to be natively lightly n-type under these growth conditions. Furthermore, the native defect energetics allows for extrinsic doping. We estimate that under equilibrium conditions, approximately 1017 cm−3 free electron concentration could be achieved provided an effective extrinsic dopant is identified. The doping challenges of wide to ultra-wide band gap materials are well known and the calculated defect energetics of HfGeO4, MgSiN2, and Y2Si2O7 further emphasize the historical trends. To overcome the doping limits of wide band gap semiconductors, it may be necessary to use non-equilibrium growth techniques. For example, p-type doping of GaN for blue light emitting diodes (LEDs) was achieved by non-equilibrium hydrogen passivation.77,78 For other materials, recent studies have shown that non-equilibrium growth techniques for thin film fabrication can produce defect concentrations, and presumably, carrier concentrations that are orders of magnitude larger than expected from thermodynamic equilibrium.79 Resolving the doping challenge holds the key to realizing the predicted performance of the candidate materials.
+5. Conclusions
+Utilizing ab initio methods in conjunction with semi-empirical and phenomenological models, we undertook a broad computational survey to identify novel semiconducting materials for future power electronic devices. Through this search, we re-discover materials such as SiC, GaN and Ga2O3 that are being currently investigated for power electronics applications, and reemphasize the promise of a few related compounds such as ZnO and BN. More importantly, we identify several novel oxides, carbides, and nitrides that are promising candidates based on their Baliga FOMs and lattice thermal conductivities. Future efforts will have to include first-principles defect calculations in conjunction with experiments to assess the material dopability. Some of the identified candidate materials have ternary chemical compositions, which may offer additional chemical knobs to tune the material properties compared to the well-known binary semiconductors. We hope that our computational survey will inspire both deeper investigations and broader searches to discover novel power electronic materials.
+6. Methods
+The computational workflow is schematically presented in Fig. 5. The crystal structures from the Inorganic Crystal Structure Database (ICSD)80 were relaxed with the generalized gradient approximation (GGA) of Perdew–Burke–Ernzerhof (PBE)81 in the projector augmented wave (PAW) formalism82 as implemented in the plane-wave Vienna Ab initio Simulation Package (VASP).83 A plane-wave cut-off energy of 340 eV was used. A suitable on-site correction in the form of Hubbard U in the rotationally invariant form84 was applied for transition elements, following the methodology in ref. 85 The dense k-grid, density functional perturbation theory (DFPT), and equation of state calculations were all performed for the relaxed structures.
+ Fig. 5  Workflow for the calculation of Baliga figure of merit (FOM) and lattice thermal conductivity (κL). Nb denotes band degeneracy, mDOS* the density of states effective mass, Eg the band gap, and μ the carrier mobility, ωmax the phonon cutoff frequency at Γ, ε the dielectric constant, Eb the critical breakdown field, B the bulk modulus, N the number of atoms in the primitive cell, V the primitive cell volume, and d the density. SE stands for semi-empirical, DFPT for density functional perturbation theory. The Baliga FOM and κL are used as screening parameters to identify candidate power electronic materials. 
+Calculation of the band degeneracy (Nb), density of states (DOS) effective mass (mDOS*), and band gap (Eg) were all undertaken on a dense k-point grid with a fixed number of k-points per atom, as determined by the equation N × nkpts = 8000, where N is the number of atoms in the primitive cell and nkpts are the number of k-points. The k-point grid is equivalent to a 14 × 14 × 14 k-point grid for diamond Si, which is sufficiently dense for determining effective masses and band degeneracy. The DOS effective mass was determined from the electronic density of states within the parabolic band approximation16 such that the equivalent parabolic band reproduces the same number of states as the computed DOS within a 100 meV energy window from the relevant band edges. An energy window of 100 meV is chosen in this study because the same energy range is used in ref. 16 to fit the semi-empirical model to measured room-temperature carrier mobilities (eqn (1)). To provide insights into how the calculated electronic structure properties vary with the choice of the energy window, we report the DOS and band effective masses and band degeneracies for the 6 known power electronic materials listed in Table 1 for different energy windows (100 meV, 150 meV, 200 meV). The results are provided in Table S4 of the ESI.† Ultimately, the band effective mass (mb*) is the key electronic structure parameter that determines carrier mobility (eqn (1)). For the choice of different energy windows, we observe relatively small (factor of 2 or less) changes in mb*; consequently, the predicted mobilities are not expected to change appreciably.
+For the DFPT calculations, the structures were further relaxed with stricter energy and force convergence criteria by using larger plane-wave cut-off energies (540 eV), and denser k-point grids (N × nkpts ∼ 1000). Bulk modulus (B) was calculated by fitting the Birch–Murnaghan equation of states [c] to a set of total energies computed at different volumes. The number of atoms in the primitive cell (N), volume (V), and density (d) were obtained from directly computed from the relaxed structure.
+The calculated electronic structure properties (band gaps, effective masses) and therefore, the predicted performance of the candidate materials may be sensitive to the choice of the computational methodology. To further refine our predictions, we calculated the electronic structure of 7 n-type candidate materials (Table S1, ESI†) with more accurate many-body GW method. GW calculations are performed with VASP using the set of PAW pseudopotentials supplied with the VASP. Following the methodology in ref. 86, we use DFT wavefunctions as inputs to the GW calculations. The GW eigen-energies are iterated to self-consistency to remove the dependency of the G0W0 result on the initial DFT single-particle energies. The input DFT wavefunctions kept constant during the GW calculations, which allows interpretation of the GW quasi-particle energies in terms of shifts relative to the DFT Kohn–Sham single particle energies. In defect calculations, this allows the correction of the underestimated band gap by applying individual band edge shifts, as demonstrated in ref. 86. For the 7 candidate materials listed in Tables S3 (ESI†), we find that, compared to PBE values, the GW-calculated band gaps are significantly larger, relevant density-of-states effective masses are smaller, and the band degeneracies remain unchanged, except for HfSiO4 (increases). Consequently, the calculated critical breakdown fields will be larger (eqn (2)) and the carrier mobilities higher (eqn (1)), and overall, the Baliga FOM will be even larger for those candidate materials. This provides further confidence in the robustness of the predicted performance of the candidates.
+Conflicts of interest
+There are no conflicts of interest to declare.
+Acknowledgements
+This work was authored by the National Renewable Energy Laboratory (NREL), operated by Alliance for Sustainable Energy, LLC, for the U.S. Department of Energy (DOE) under Contract No. DE-AC36-08GO28308. Funding provided by the Laboratory Directed Research and Development (LDRD) Program at NREL. The research was performed using computational resources sponsored by the Department of Energy's Office of Energy Efficiency and Renewable Energy and located at the National Renewable Energy. The views expressed in the article do not necessarily represent the views of the DOE or the U.S. Government.
+References
+
+          M. H. Rashid, Power Electronics Handbook, Butterworth-Heinemann,  2017 Search PubMed .
+
+          R. W. Erickson and D. Maksimovic, Fundamentals of power electronics, Springer Science & Business Media,  2007 Search PubMed .
+
+          http://www.marketsandmarkets.com/Market-Reports/power-electronics-market-204729766.html
+        .
+H. Okumura, MRS Bull., 2015, 40, 439 CrossRef CAS .
+Y. Sun, S. A. Boggs and R. Ramprasad, Appl. Phys. Lett., 2012, 101, 132906 CrossRef .
+S. B. Reese, T. Remo, J. Green and A. Zakutayev, Joule, 2019, 3, 903 CrossRef .
+M. Higashiwaki, K. Sasaki, A. Kuramata, T. Masui and S. Yamakoshi, Phys. Status Solidi A, 2014, 211, 21 CrossRef CAS .
+M. A. Mastro, A. Kuramata, J. Calkins, J. Kim, F. Ren and S. J. Pearton, ECS J. Solid State Sci. Technol., 2017, 6, P356 CrossRef CAS .
+C. J. H. Wort and R. S. Balmer, Mater. Today, 2008, 11, 22 CrossRef CAS .
+R. F. Davis, Proc. IEEE, 1991, 79, 702 CrossRef CAS .
+T. P. Chow and R. Tyagi, IEEE Trans. Electron Devices, 1994, 41, 1481 CrossRef CAS .
+S. Curtarolo, G. L. W. Hart, M. B. Nardelli, N. Mingo, S. Sanvito and O. Levy, Nat. Mater., 2013, 12, 191 CrossRef CAS PubMed .
+P. Gorai, V. Stevanović and E. S. Toberer, Nat. Rev. Mater., 2017, 2, 17053 CrossRef CAS .
+G. Ceder, G. Hautier, A. Jain and S. P. Ong, MRS Bull., 2011, 36, 185 CrossRef CAS .
+G. Ceder, MRS Bull., 2010, 35, 693 CrossRef CAS .
+J. Yan, P. Gorai, B. Ortiz, S. Miller, S. A. Barnett, T. Mason, V. Stevanović and E. S. Toberer, Energy Environ. Sci., 2015, 8, 983 RSC .
+L. Yu and A. Zunger, Phys. Rev. Lett., 2012, 108, 068701 CrossRef PubMed .
+P. Gorai, D. Gao, B. Ortiz, S. Miller, S. A. Barnett, T. Mason, Q. Lv, V. Stevanović and E. S. Toberer, Comput. Mater. Sci., 2016, 112, 368 CrossRef .
+A. Jain, S. P. Ong, G. Hautier, W. Chen, W. D. Richards, S. Dacek, S. Cholia, D. Gunter, D. Skinner, G. Ceder and K. A. Persson, APL Mater., 2013, 1, 011002 CrossRef .
+S. Curtarolo, W. Setyawan, G. L. W. Hart, M. Jahnatek, R. V. Chepulskii, R. H. Taylor, S. Wang, J. Xue, K. Yang, O. Levy, M. J. Mehl, H. T. Stokes, D. O. Demchenko and D. Morgan, Comput. Mater. Sci., 2012, 58, 218 CrossRef CAS .
+J. E. Saal, S. Kirklin, M. Aykol, B. Meredig and C. Wolverton, JOM, 2013, 65, 1501 CrossRef CAS .
+K. Yang, W. Setyawan, S. Wang, M. Buongiorno Nardelli and S. Curtarolo, Nat. Mater., 2012, 11, 614 CrossRef CAS PubMed .
+B. J. Baliga, J. Appl. Phys., 1982, 53, 1759 CrossRef CAS .
+A. V. Hippel, J. Appl. Phys., 1937, 8, 815 CrossRef .
+H. Fröhlich and F. M. Nevill, Proc. R. Soc. London, Ser. A, 1937, 160, 230 CrossRef .
+A. L. Moore and L. Shi, Mater. Today, 2014, 17, 163 CrossRef CAS .
+E. Johnson, IRE Int. Conv. Rec., 1966, 13, 27 Search PubMed .
+B. J. Baliga, IEEE Electron Device Lett., 1989, 10, 455 Search PubMed .
+I.-J. Kim, S. Matsumoto, T. Sakai and T. Yachi, Proc. Int. Symp. Power Semicond. Devices ICs, 1995, 309 Search PubMed .
+A. Q. Huang, IEEE Electron Device Lett., 2004, 25, 298 CrossRef CAS .
+
+          M. Cardona and Y. Y. Peter, Fundamentals of semiconductors, Springer,  2005 Search PubMed .
+C. Kim, G. Pilania and R. Ramprasad, Chem. Mater., 2016, 28, 1304–1311 CrossRef CAS .
+F. Birch, Phys. Rev., 1947, 71, 809–824 CrossRef CAS .
+F. D. Murnaghan, Am. J. Math., 1937, 59, 235–260 CrossRef .
+J. L. Hudgins, G. S. Simin, E. Santi and M. A. Khan, IEEE Trans. Power Electron., 2003, 18, 907–914 CrossRef .
+S. M. Sze and G. Gibbons, Appl. Phys. Lett., 1966, 8, 111–113 CrossRef CAS .
+S. A. Miller, P. Gorai, B. R. Ortiz, A. Goyal, D. Gao, S. A. Barnett, T. O. Mason, G. J. Snyder, Q. Lv, V. Stevanović and E. S. Toberer, Chem. Mater., 2017, 29, 2494–2501 CrossRef CAS .
+P. Gorai, E. S. Toberer and V. Stevanović, Phys. Chem. Chem. Phys., 2016, 18, 31777–31786 RSC .
+H. R. Shanks, P. D. Maycock, P. H. Sidles and G. C. Danielson, Phys. Rev., 1963, 130, 1743–1748 CrossRef CAS .
+
+          G. L. Harris, Properties of silicon carbide, IET,  1995 Search PubMed .
+E. K. Sichel and J. I. Pankove, J. Phys. Chem. Solids, 1977, 38, 330 CrossRef CAS .
+Z. Guo, A. Verma, X. Wu, F. Sun, A. Hickman, T. Masui, A. Kuramata, M. Higashiwaki, D. Jena and T. Luo, Appl. Phys. Lett., 2015, 106, 111909 CrossRef .
+R. Berman, P. R. W. Hudson and M. Martinez, J. Phys. C: Solid State Phys., 1975, 8, L430–L434 CrossRef CAS .
+G. A. Slack, R. A. Tanzilli, R. O. Pohl and J. W. Vandersande, J. Phys. Chem. Solids, 1987, 48, 641–647 CrossRef CAS .
+R. Kalish, Carbon, 1999, 37, 781–785 CrossRef CAS .
+A. Janotti and C. G. Van de Walle, Rep. Prog. Phys., 2009, 72, 126501 CrossRef .
+
+          P. Siddiqua, W. A. Hadi, M. S. Shur and S. K. O’Leary, MRS Online Proc. Libr., 2015, 1805, mrss15-2133804.
+M. Benlamri, B. D. Wiltshire, Y. Zhang, N. Mahdi, K. Shankar and D. W. Barlage, ACS Appl. Electron. Mater., 2019, 1, 13–17 CrossRef CAS .
+E. Ohshima, H. Ogino, I. Niikura, K. Maeda, M. Sato, M. Ito and T. Fukuda, J. Cryst. Growth, 2004, 260, 166–170 CrossRef CAS .
+H. Aida, K. Nishiguchi, H. Takeda, N. Aota, K. Sunakawa and Y. Yaguchi, Jpn. J. Appl. Phys., 2008, 47, 8506–8509 CrossRef CAS .
+Z. Galazka, R. Uecker, K. Irmscher, M. Albrecht, D. Klimm, M. Pietsch, M. Brützam, R. Bertram, S. Ganschow and R. Fornari, Cryst. Res. Technol., 2010, 45, 1229–1236 CrossRef CAS .
+M. M. Tardío, R. Ramírez, R. González and Y. Chen, Phys. Rev. B: Condens. Matter Mater. Phys., 2002, 66, 134202 CrossRef .
+D. D. Tuschel and P. M. Lambert, Chem. Mater., 1997, 9, 2852–2860 CrossRef CAS .
+P. Zhou, X. Yu, L. Yang, S. Yang and W. Gao, J. Lumin., 2007, 124, 241–244 CrossRef CAS .
+C. Q. Hu, W. T. Zheng, J. J. Li, Q. Jiang, H. W. Tian, X. Y. Lu, J. W. Liu, L. Xu and J. B. Wang, Appl. Surf. Sci., 2006, 252, 8135–8138 CrossRef CAS .
+W. H. Gust and E. B. Royce, J. Appl. Phys., 1971, 42, 276–295 CrossRef CAS .
+J. L. Corkill and M. L. Cohen, Phys. Rev. B: Condens. Matter Mater. Phys., 1993, 48, 17138–17144 CrossRef CAS PubMed .
+P. B. Mirkarimi, K. F. McCarty and D. L. Medlin, Mater. Sci. Eng., R, 1997, 21, 47–100 CrossRef .
+R. H. Wentorf, J. Chem. Phys., 1961, 34, 809–812 CrossRef CAS .
+V. L. Solozhenko, O. O. Kurakevych and Y. Le Godec, Adv. Mater., 2012, 24, 1540–1544 CrossRef CAS PubMed .
+T. D. Boyko, A. Hunt, A. Zerr and A. Moewes, Phys. Rev. Lett., 2013, 111, 097402 CrossRef CAS PubMed .
+C. M. Caskey, J. A. Seabold, V. Stevanović, M. Ma, W. A. Smith, D. S. Ginley, N. R. Neale, R. M. Richards, S. Lany and A. Zakutayev, J. Mater. Chem. C, 2015, 3, 1389–1396 RSC .
+A. D. Martinez, A. N. Fioretti, E. S. Toberer and A. C. Tamboli, J. Mater. Chem. A, 2017, 5, 11418–11435 RSC .
+S. Limpijumnong, S. N. Rashkeev and W. R. L. Lambrecht, MRS Internet J. Nitride Semicond. Res., 1999, 4, 600–605 CrossRef .
+K. Van den Eeckhout, P. F. Smet and D. Poelman, J. Lumin., 2009, 129, 1140–1143 CrossRef CAS .
+R. Dwiliński, R. Doradziński, J. Garczyński, L. P. Sierzputowski, A. Puchalski, Y. Kanbara, K. Yagi, H. Minakuchi and H. Hayashi, J. Cryst. Growth, 2008, 310, 3911–3916 CrossRef .
+P. Wellmann, G. Neubauer, L. Fahlbusch, M. Salamon and N. Uhlmann, Cryst. Res. Technol., 2015, 50, 2–9 CrossRef CAS .
+R. E. Brandt, V. Stevanović, D. S. Ginley and T. Buonassisi, MRS Commun., 2015, 5, 265–275 CrossRef CAS .
+R. C. Kurchin, P. Gorai, T. Buonassisi and V. Stevanović, Chem. Mater., 2018, 30, 5583–5592 CrossRef CAS .
+A. Zakutayev, C. M. Caskey, A. N. Fioretti, D. S. Ginley, J. Vidal, V. Stevanovic, E. Tea and S. Lany, J. Phys. Chem. Lett., 2014, 5, 1117–1125 CrossRef CAS PubMed .
+W. Shockley and W. T. Read, Phys. Rev., 1952, 87, 835–842 CrossRef CAS .
+R. N. Hall, Phys. Rev., 1952, 87, 387 CrossRef CAS .
+C. G. Van de Walle and J. Neugebauer, J. Appl. Phys., 2004, 95, 3851–3879 CrossRef CAS .
+A. Goyal, P. Gorai, H. Peng, S. Lany and V. Stevanović, Comput. Mater. Sci., 2017, 130, 1–9 CrossRef .
+P. Gorai, B. R. Ortiz, E. S. Toberer and V. Stevanović, J. Mater. Chem. A, 2018, 6, 13806–13815 RSC .
+A. Goyal and V. Stevanović, Phys. Rev. Mater., 2018, 2, 084603 CrossRef CAS .
+S. Nakamura, T. Mukai and M. Senoh, Appl. Phys. Lett., 1994, 64, 1687–1689 CrossRef CAS .
+S. Nakamura, T. Mukai and M. Senoh, J. Appl. Phys., 1994, 76, 8189–8191 CrossRef CAS .
+A. Zakutayev, N. H. Perry, T. O. Mason, D. S. Ginley and S. Lany, Appl. Phys. Lett., 2013, 103, 232106 CrossRef .
+M. Hellenbrandt, Crystallogr. Rev., 2004, 10, 17–22 CrossRef CAS .
+J. P. Perdew, K. Burke and M. Ernzerhof, Phys. Rev. Lett., 1996, 77, 3865–3868 CrossRef CAS PubMed .
+P. E. Blöchl, Phys. Rev. B: Condens. Matter Mater. Phys., 1994, 50, 17953–17979 CrossRef PubMed .
+G. Kresse and J. Furthmüller, Phys. Rev. B: Condens. Matter Mater. Phys., 1996, 54, 11169–11186 CrossRef CAS PubMed .
+S. L. Dudarev, G. A. Botton, S. Y. Savrasov, C. J. Humphreys and A. P. Sutton, Phys. Rev. B: Condens. Matter Mater. Phys., 1998, 57, 1505–1509 CrossRef CAS .
+V. Stevanović, S. Lany, X. Zhang and A. Zunger, Phys. Rev. B: Condens. Matter Mater. Phys., 2012, 85, 115104 CrossRef .
+H. Peng, D. O. Scanlon, V. Stevanovic, J. Vidal, G. W. Watson and S. Lany, Phys. Rev. B: Condens. Matter Mater. Phys., 2013, 88, 115201 CrossRef .
+
+          https://www.federalregister.gov/documents/2019/07/12/2019-14869/request-for-information-basic-research-initiative-for-microelectronics
+        .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: 10.1039/c9ee01529aThis journal is © The Royal Society of Chemistry 2019
+Table Content:
+
+Broader context
+Advances in computing and informatics has aided in theory-guided discovery of novel materials and molecules for energy applications. High-throughput computations have been quite successful in identifying promising candidate materials for photovoltaics, thermoelectrics, and batteries, among other energy applications. In contrast, only a handful of materials have been theoretically assessed for power electronics, and even fewer are used in practical devices. This is surprising because power electronics are ubiquitous in a multitude of energy harvesting, conversion, transmission, and storage technologies that involve electricity. Examples include inverters for photovoltaics and converters for wind turbines, as well as variable frequency drives for industrial motors and electric vehicles. Given their widespread usage, even modest improvements in the efficiency of power electronic devices can lead to enormous global energy savings. In this work, we report a computational survey of semiconductors for power electronics. Our calculations recover the known wide band gap power electronic materials (SiC, GaN and Ga2O3), and predict 30 additional candidates, including 9 carbides, 7 nitrides, and 14 oxides. In addition to power electronics, some of these candidate materials may have applications in other environmental technologies, such as electronic devices for high-temperature and other applications under extreme operating conditions.
+
+
+ 	Fig. 1  Stoichiometric and ordered structures (10600) from the ICSD, comprising oxides, sulphides, nitrides, carbides, silicides, and borides, are represented by the number of atoms in the primitive cell and the standard deviation in Pauling electronegativity of the constituent elements. Si, SiC, GaN, and Ga2O3 are prominent power electronic (PE) materials while diamond-C and AlN have been considered in lab-scale studies. For SiC, 2H–8H denote polytypes.	 
+μ = ABs(mb*)−t	(1)
+	(2)
+	(3)
+
+ 	Fig. 2  Critical breakdown field (Eb) of 863 materials calculated with a phenomenological model, given by eqn (2). In this model, Eb depends on the band gap Eg (x-axis) and the phonon cutoff frequency ωmax (color). Eb strongly depends on both Eg and ωmax. Known power electronic materials are labelled for reference. Marker labels: d-C = diamond-C, h-C = lonsdaleite C, SiC(3C) = cubic SiC. Symbols within parenthesis denote the polytype.	 
+
+ 	Fig. 3  A comparison of the computed Baliga figure of merit (FOM) of 863 materials, assuming the materials are doped n-type (y-axis) and p-type (x-axis). The Baliga FOMs are normalized with the FOM of n-type Si, a widely used power electronic material. Marker colours denote the lattice thermal conductivity. Materials in the upper (lower) triangle i.e. above (below) the y = x line, have higher n-type (p-type) Baliga FOM. For most materials considered in this study, the n-type FOM is higher because electron mobilities are generally higher than hole mobilities.	 
+
+ 	Fig. 4  (a) Calculated Baliga figure of merit (normalized with the FOM of n-type Si) of 863 materials shown in relation to the computed lattice thermal conductivity (κL) and assumed to be doped n-type. The colour schema represents the electron mobility. Known power electronic materials, bounded by the grey shaded region, are labelled for reference. (b) Zoomed-in view of the shaded region. A selected list of candidate materials is labelled. Known power electronic materials are marked by grey squares. Marker labels: d-C = diamond-C, h-C = lonsdaleite C, h-BN = hexagonal BN, c-BN = cubic BN, SiC(3C) = cubic SiC. Symbols within parenthesis denote the polytype.	 
+
+
+Si	227	130	130a	1 × 100	4.9 × 10−1
+4H-SiC	186	235	330b	1.1 × 105	6.0 × 103
+GaN	186	60	130c	1.2 × 104	6.1 × 101
+β-Ga2O3	12	21	14d	1.8 × 104	8.3 × 100
+d-C	227	1106	1050e	8.8 × 106	9.2 × 106
+AlN	186	153	285f	2.0 × 106	2.2 × 104
+
+ 	Fig. 5  Workflow for the calculation of Baliga figure of merit (FOM) and lattice thermal conductivity (κL). Nb denotes band degeneracy, mDOS* the density of states effective mass, Eg the band gap, and μ the carrier mobility, ωmax the phonon cutoff frequency at Γ, ε the dielectric constant, Eb the critical breakdown field, B the bulk modulus, N the number of atoms in the primitive cell, V the primitive cell volume, and d the density. SE stands for semi-empirical, DFPT for density functional perturbation theory. The Baliga FOM and κL are used as screening parameters to identify candidate power electronic materials.	 
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/c9ee01529a
+
+This journal is © The Royal Society of Chemistry 2019

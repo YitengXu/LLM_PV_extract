@@ -1,0 +1,896 @@
+A bi-cyclic co-optimization method for sizing of electricity-hydrogen hybrid energy storage microgrid  - Sustainable Energy & Fuels (RSC Publishing) DOI:10.1039/D2SE00556E View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2SE00556E
+(Paper)
+Sustainable Energy Fuels, 2022, 6, 4048-4061A bi-cyclic co-optimization method for sizing of electricity-hydrogen hybrid energy storage microgrid
+
+        
+          
+            Ying 
+            Han
+          
+        
+      a, 
+      
+        
+          
+            Luoyi 
+            Li
+          
+        
+      *a, 
+      
+        
+          
+            Weirong 
+            Chen
+          
+        
+      a, 
+      
+        
+          
+            Yujing 
+            Hou
+          
+        
+      a and 
+
+        
+          
+            Jiefu 
+            Zhang
+          
+        
+      b
+aSchool of Electrical Engineering, Southwest Jiaotong University, Chengdu 611756, China. E-mail: lly_liluoyi@163.com
+bMeasurement Center of State Grid Sichuan Power Company, Chengdu 610000, China
+Received 
+      21st April 2022
+    , Accepted 22nd July 2022First published on 22nd July 2022AbstractAn AC/DC microgrid (MG) integrating renewable energy sources and an electric-hydrogen hybrid energy storage system (HESS) can play a vital role in the future low-carbon society. Due to the nonlinear and strong coupling relationships between the sizing parameters of the microgrid components and the operation strategy parameters, research on these two problems in a coupled manner for an electricity-hydrogen hybrid energy storage microgrid is essential. This paper proposes a bi-cyclic co-optimization method for optimally sizing the microgrid components cost-effectively. Based on the proposed co-optimization framework, a MILP-based scheduling algorithm works as an inner optimization cycle to determine the best operational scheduling, and a PSO-based sizing algorithm works as an outer optimization cycle to search for the best size of each component. Finally, we discuss the characteristics of the demand response and the superiority of the proposed method over a rule-based operating strategy. In addition, a 1 h rolling horizon simulation and technical evaluation metrics are used to illustrate the validity of the sizing results.
+1 Introduction
+To limit fuel reduction and the environmental crisis, renewable energy sources (RESs), such as photovoltaic panels (PVs) and wind turbines (WTs), are being more and more commonly used to generate electricity.1 However, the highly stochastic nature and intermittency of RESs would cause power fluctuations, requiring combination with energy storage systems for stable power support. Energy storage systems (ESSs) are diverse.2 A battery storage system is more suitable for short-term storage due to its low energy density and high self-discharge rate.3 While hydrogen storage systems, with the easy storage characteristics of hydrogen, are used for long-term energy storage, such as seasonal energy storage. Ref. 4 compares the operational performance of hydrogen energy systems with that of electric energy storage systems in long-term operation. Therefore, a hybrid energy storage system (HESS) combining the former has complementary characteristics and is considered a promising solution.5,6
+Microgrids are effective means to achieving large-scale integration of RESs and ESSs. Hybrid AC/DC microgrids are attracting attention as future distribution systems due to the merged advantages of both AC and DC microgrids.7 The AC sub-grid provides a connection between a hybrid microgrid and the utility, enabling power support in grid-connected modes. The coexistence of a DC sub-grid helps to significantly improve overall efficiency by reducing power conversion loss when interconnected with DC sources and loads. These components have different costs and characteristics, so proper sizing is vital to ensure a reliable and cost-effective power supply.8
+In this work, we focus on optimal sizing to ensure adequate supply at minimum cost. Costs are divided into O&M costs, capital costs, fuel costs, purchase costs, replacement costs, and emission penalties for different sizes of techno-economic analysis.9 In addition to these multiple costs, power loss rates, energy autonomy, and other technical indicators can provide further economic recommendations for sizing.10 For the solution of this optimal sizing problem, various objectives and approaches have been presented in ref. 11. The study in ref. 12 introduced a two-objective two-level problem, finding the optimum planning of parallel interlinking converters to minimize the annualized investment cost and reliability index costs. Similarly, Çetinbas et al.13 presented the Harris Hawks Optimization algorithm to optimize and design the size of an AC microgrid. Furthermore, Hamed et al.14 integrated the power supply probability, total energy lost, and other values as a cost object function for the optimal sizing of hybrid renewable energy systems. At system level, four energy storage system (ESS) configuration scenarios have been simulated.15
+It is not difficult to see that the above articles usually consider simple rule-based scheduling strategies when calculating size optimization: when there is surplus power, the excess energy is stored in the ESS, and when there is a shortage of power, the ESS discharges, or controllable generators are turned on. However, the economics of microgrid design entail two crucial aspects: optimal capacity sizing and optimal scheduling.16 And these segregated sizing strategies often lead to sub-optimality in the overall systems, such as undercapacity or overcapacity sizing of the system components, and high operation costs. This sub-optimality tends to emanate from the failure of long-timescale sizing models to meet the practical conditions of short-timescale scheduling.17 Specifically, the capacity scheme determines reliability and dispatch flexibility. On the other hand, an optimal operation strategy matches renewable generation and load demand, reducing unnecessary expenditure on capacity investment.
+Hence, there is a growing body of literature that recognizes that the combination of sizing and scheduling is essential. Rémy et al.18 studied the relationship between sizing and operation optimization and then presented possible optimization frameworks for microgrids. Generally, the dispatch optimization is solved in an inner loop, considering operation costs, while the sizing optimization is solved at an upper level to minimize the life cycle cost. A combined sizing and energy management methodology is formulated as a leader–follower problem, solving the follower's energy management problem under the optimal size, i.e., the leader's results.19 Siddharth et al.20 treated sizing and scheduling as nested optimization.1,17,21 Develop co-optimization approaches to sequentially solve the sizing and operation problem for a high renewable standalone microgrid. Nevertheless, these works address stand-alone microgrids, but ignore the optimal sizing under grid-connected conditions. That is to say, the impact of incentives given by time-of-use tariffs on optimal sizing is not investigated in the literature.22,23 Soumya et al.10 designed the optimal size of a PV/battery microgrid while considering the feed-in tariff incentive, but the composition was simple. In particular, Eriksson et al.24 summarized solutions concerning the sizing of fuel cell systems when adding them to an HESS.
+In an electricity-hydrogen hybrid energy storage microgrid, the integration of electricity-hydrogen HESSs increases the system complexity and flexibility. However, the co-optimization of diverse and multiple timescales for an electricity-hydrogen hybrid energy storage microgrid and the incentive of time-of-use tariffs will greatly increase the complexity of the optimal sizing problem. This paper focuses on the optimal sizing of a grid-connected electricity-hydrogen hybrid energy storage microgrid consisting of WT, PV, HESS, and electronics converters. A bi-cyclic co-optimization method is proposed to decompose the optimal sizing problem into bi-cyclic optimization problems. Based on the proposed co-optimization framework, a MILP-based scheduling algorithm works as an inner optimization cycle to determine the best operational scheduling, and a PSO-based sizing algorithm works as an outer optimization cycle to search for the best size for each component. Finally, the results are compared with a rule-based strategy commonly used in the literature, to further evaluate the performance of the proposed method.
+The remainder of this paper has the following structure. The structure of the electricity-hydrogen hybrid energy storage microgrid with demand response is presented in Sections 2 and 3 provides the bi-cyclic co-optimization method; the optimization results and analysis are described in Section 4; finally, the main conclusions are discussed in Section 5.
+2 Structure of the hybrid electric-hydrogen AC/DC microgrid
+The proposed system configuration of the electricity-hydrogen hybrid energy storage microgrid comprises PV, WT, battery (BAT), hydrogen energy system, AC/DC loads and electronic converters, as shown in Fig. 1. To maximize the consumption of renewable energy, the PV and WT are given priority to supply the load. When they cannot meet the load demand, the battery and fuel cell systems operate to maintain the balance of supply and demand. When the PV and WT generate more power than the load, the excess power can not only charge the battery, but also drive the electrolyzer to produce hydrogen and store it in the hydrogen storage tank as long-term backup energy. The AC–DC bidirectional power converter (BPC) is designed to ensure that power can flow in both directions between the AC and DC sub-grids. Demand response (DR) is considered on the load side, minimizing the mismatch between renewable energy output and load. This reduces the configuration of energy storage systems, saves investment costs and improves the economics.
+ Fig. 1  Topology of electricity-hydrogen hybrid energy storage microgrid. 
+2.1 Modelling of the PV system
+The power output of the PV is related to the installed capacity, ambient temperature, and irradiance, which can be expressed as follows:25 (1)where Ppv(t) is the output power of PV at time t; Rpv is the rated power of PV; Iirr(t) is the irradiance at time t; Istd is the standard temperature of PV; αT is the temperature coefficient which is equal to −3.7 × 10−3/°C; T(t) is the ambient temperature; Tstd is the standard temperature of PV; and ηPVdcdc is the efficiency of the converter.
+2.2 Modelling of the WT system
+The output power of the WT is calculated as follows, affected by the wind speed.26 (2)where v(t) is the wind speed at time t; vcin is the cut-in speed of WT; vr is the rating speed of WT; and vcout is the cut-out speed.
+2.3 Modelling of the BAT system
+The battery system operating characteristics are described by capacity, charging and discharging power and efficiency: (3)where Ebat(t) is the stored energy at time t; Ebat(t − 1)is the stored energy at time t − 1; σ is the self-discharge factor; Δt is the time interval between t − 1 and t; Pbat(t) is the power (positive for discharging and negative for charging); ηch and ηdch are the charging and discharging efficiency, respectively; ηdch is the efficiency of the converter; SOC(t) is the state of charge of the BAT; and Ebat_max is the capacity of the BAT in kW h.
+2.4 Modelling of the hydrogen storage system
+
+2.4.1 Modeling of the fuel cell. 
+Fuel cells consume H2 and oxygen to produce electricity and water.27 A simple electrical model is used to describe the characteristic voltage curve of the FC:28 Vfc_cell = Eoc − Vact_fc − Vohm_fc − Vcon_fc(4)where Vfc_cell is the cell voltage; Eoc denotes the thermodynamic electromotive force; Vact_fc is the activation overvoltage; Vohm_fc is the ohmic overvoltage; and Vcon_fc is the concentration overvoltage.
+The efficiency can be written as:6 (5)where ηfc and ηstack are the system electrical efficiency and stack efficiency, respectively; Efc is the electrical efficiency; ηf represents the hydrogen utilization rate; Vfc_cell stands for the output voltage of the stack; Ifc is the cell output current; ΔHLHV is known as the lower heating value; and Pstack and Paux denote the power of the fuel cell stack and auxiliary system, respectively.
+
+
+2.4.2 Modelling of the electrolyzer. 
+Electrolyzers are used to produce hydrogen (H2) from electricity. The cell voltage in a PEM electrolyzer cell can be expressed as the sum of the reversible potential and its over-potentials:29 Vel_cell = Vref_el + ηact_el + ηohm_el + ηcon_el(6)where Vrev_el is the reversible potential; ηact_el, ηohm_el, and ηcon_el are the activation, ohmic and concentration over-potentials.
+The production rate of hydrogen by the electrolyzer is then given by Faraday's law: (7)where ηel is the electrical efficiency; Nel is the number of cells; iel denotes the current; and F is the Faraday constant. (8)where VH denotes the thermo-neutral potential and vel is the cell voltage.
+
+
+2.4.3 Modelling of the hydrogen storage tank. 
+Similar to the battery, the modelling of the hydrogen storage tank can be expressed as follows: (9)where Etank(t) is the stored energy at time t; Pel(t − 1) and Pfc(t − 1) are the charge power of the electrolyzer and the discharge power of the fuel cell at time (t − 1); ηel, ηfc and ηtank are the working conversion efficiency of the electrolyzer, fuel cell and hydrogen storage tank, respectively; ηdcdcel and ηdcdcfc are the efficiencies of the converter of the electrolyzer and fuel cell; SOHC is the storage of hydrogen charge; and Etank_max is the maximum capacity.
+In previous work, we modeled the fuel cell and electrolyzer in detail, with parameters referenced to ref. 6.
+
+2.5 Modelling of demand response
+Demand response aims to motivate and influence electricity consumer to reshape their energy demand in response to attractive benefits offered by the utilities.30 There are two types of demand response programs: price-based DR and incentive-based DR. Considering that the stochasticity and volatility of the RESs will exist all the time, the incentive-based DR strategy is used in this paper for DR modeling. It should be emphasized that only part of the loads can be shifted to track the renewable energy output, whereas total consumed energy over the planning horizon is fixed.31 The participation of incentive-based DR will maximize the direct consumption of renewable energy generation and reduce the configuration of energy storage systems, thus saving investment costs and improving the economics. The corresponding optimization problem is formulated as follows: (10)subject to (11) (12)where T is the scheduling cycle (24 h); PDG(t) is the output power of the RES at time t; Ldr(t) and Lload(t) denote the load before and after DR at time t, respectively; Ldr_in(t) and Ldr_out(t) are the load transferred in and out at time t, respectively; mdr(t) and Mdr refer to the actual load transfer at time t and maximum load transferable capacity. (13)
+3 Bi-cyclic co-optimization method
+The optimal sizing in this paper aims to achieve economic sizing and operation, that is, minimize the equivalent total cost (ETC) of the microgrid. The optimization problem is divided into two objectives: optimal sizing and optimal scheduling. Moreover, the latter is nested in the former (Fig. 2) and uses the bi-cyclic co-optimization method to solve the nested optimization problem.
+ Fig. 2  Schematic diagram of the proposed framework. 
+The bi-cyclic co-optimization method aims to find the optimal size results that satisfy both the optimal operational scheduling and the minimum ETC. The outer cycle takes minimizing ETC as the optimization objective to obtain the optimal size of each system; the inner cycle takes minimizing the daily operation cost to obtain the optimal scheduling plan for one day. First, the potential size schemes (outer cycle) are determined; then the capacity information is input into the inner cycle to operate scheduling optimization. Second, calculation is undertaken to obtain the operating schedule and operating cost of multiple devices for each period, and they are returned to the outer cycle. Then, iterative operations are performed, to continuously update the optimization results and finally obtain the optimal capacity.
+3.1 Optimal objective of sizing
+The main objective is to minimize the equivalent total cost (ETC) over the project duration, which considers equivalent annual value of the investment, replacement and operating costs: minCETC = (CIV_ETC + CRP_ETC + CRU_ETC) × CRF(r,Y)(14) (15)where CETC represents equivalent annual value of the total cost of the microgrid; CIV_TEC represents the total investment cost; CRP_TEC represents the total replacement cost; CRU_TEC represents the total operating cost; r is the discount rate; and Y is the lifetime of the project.
+The total investment cost is shown as follows: (16)where Cinv_pv, Cinv_wt, Cinv_bat, Cinv_fc, Cinv_el, Cinv_hst, Cinv_acdc are the investment costs of PV, WT, BAT, FC, EL, HST and BPC, respectively. Npv, Nwt, Nbat, Nfc, Nel, Nhst, and Nacdc are the numbers of each system.
+The total replacement cost is shown as follows: (17)where Ys denotes the lifetime of the system.
+The total operating cost is shown as follows: CRU_ETC = Com_ETC + Cgc_ETC + Cad_ETC + Cdr_ETC(18)with (19)where Com_TEC represents the O&M cost; Cgc_TEC represents the trading tariffs between the microgrid and the grid; Cad_TEC is the power conversion cost between AC and DC; Cdr_TEC denotes the subsidy cost of DR; Ppv(t), Pwt(t), Pbat(t), Pfc(t), Pel(t) and Pacdc(t) are the power of PV, WT, battery, fuel cell, electrolyzer and bidirectional power converter at time t; λpv, λwt, λbat, λfc, λel, and λad are the O&M coefficients of PV, WT, battery, fuel cell, electrolyzer and bidirectional power converter; kbu(t) and kse(t) are the buying and selling electricity prices; Pg(t) is the exchange power between the microgrid and the grid; Rmg(t) refers to the unit power generation cost at time t; ηacdc is the efficiency of the bidirectional power converter; and kdr is the subsidy factor for DR.
+3.2 Optimal objective of scheduling
+Consider designing the scheduling scheme with the optimization goal of minimizing the one-day operating cost: (20) (21) (22) (23) (24)
+3.3 Constraints
+
+3.3.1 Capacity constraints. 
+
+ 
+
+usN
+
+s,min ≤ usNs ≤ usNs,max, s ∈ PV, WT, BAT, FC, EL, HST, BPC
+(25)where s denotes the system components, which are PV, WT, battery, fuel cell, electrolyzer, hydrogen storage tank and bidirectional power converter; Ns is the actual number; us is the rated power of each system; usNs,min represents the lower limit of the capacity of the s-th system, which is taken to be 0; usNs,max represents the upper limit of the capacity of the s-th system.
+
+
+3.3.2 Power balance constraints. 
+The total power generated by WT, PV, battery, hydrogen energy system and grid should always meet the load demand for all considered scenarios: (26)where Ldr_dc and Ldr_ac are the DC and AC side load power after DR, respectively.
+
+
+3.3.3 Renewable energy systems constraints. 
+Since PV and WT cannot exceed their maximum output power in the actual operation process, the constraints are as follows: (27)where uPV and uWT are the rated power.
+
+
+3.3.4 Battery system constraints. 
+Overcharging and discharging will affect the battery's life and increase the replacement cost, so SOC must be within the maximum and the minimum values, as must the power: (28)where SOCmin and SOCmax denote the minimum and maximum SOC; and Pmch and Pmdch are the maximum charging and discharging power.
+
+
+3.3.5 Hydrogen energy system constraints. 
+Similar to the battery system, SOHC and the power are constrained: (29)where SOHCmin and SOHCmax denote the minimum and maximum SOHC; and Pelmax and Pfcmax are the maximum charging of the electrolyzer and maximum discharging power of the fuel cell.
+
+
+3.3.6 Exchange power constraints. 
+Excessive commutation losses will harm the microgrid, so the power is bounded by the upper Pmacdc limit: (30)where uBPC is the rated power of each BPC.
+Moreover, too much power drawn from the main grid may be harmful, so a constraint is needed: Pgird(t) ≤ μPsmc(31)where μ is the limit ratio, which in this paper takes the value of 0.5; and Psmc denotes the maximum system power, which in this paper takes the value of 1000.
+
+3.4 Technical evaluation indicators
+In order to analyze more effectively the results of the optimal configuration of the electric-hydrogen coupled AC–DC microgrid, the following technical evaluation indicators are introduced: energy autonomy rate, electricity consumption satisfaction rate and customer satisfaction rate.
+
+3.4.1 Energy autonomy rate. 
+The energy autonomy rate (EAR) is a metric to measure the self-sufficiency or energy independence of the microgrid design. It is calculated as: (32)where Egrid_buy is energy bought from the grid; and Eload denotes the total load demand.
+
+
+3.4.2 Electricity consumption satisfaction rate. 
+The electricity consumption satisfaction rate (ECSR) is a metric to characterize customer satisfaction with load shifting after the introduction of demand response: (33)where Eshift is the amount of load shifted in a year.
+
+
+3.4.3 Customer satisfaction rate. 
+ESR and ECSR are integrally evaluated in this study to illustrate the customer satisfaction rate (CSR) of the demand response-based microgrid design: RCSR = αREAR + βRECSR(34)where α and β are the evaluation factors. First of all, it should be clear that the values of α and β, as technical evaluation indicators, do not affect the size results for the microgrid. Customer satisfaction rate is a quantitative indicator used to objectively analyze the goodness of the size results. Since the energy autonomy rate and electricity consumption satisfaction rate are used to analyze the optimal size and optimal operation results in terms of reliability and satisfaction, respectively, this paper takes α = β = 0.5 to weight these two indicators in a fair way.
+
+
+3.4.4 Total conversion loss. 
+A hybrid AC/DC microgrid contains an AC bus and a DC bus, connecting different types of loads and power sources, so there is power interaction between the DC bus and the AC bus. The BPC causes conversion loss when balancing microgrid power. The smaller the loss, the better the energy saving of the microgrid. The total conversion loss (TCL) is calculated as follows: (35)
+
+3.5 Solution process
+The MILP-based scheduling algorithm and the PSO-based sizing algorithm are combined to obtain the optimal sizing for the system. A set of capacities Ns = {NPV, NWT, Nbat, Ncon, Nfc, Ntank, Nel} is selected in the outer cycle and held constant while solving the inner schedule problem. The IPSO terminates upon finding the optimal scheduling in the inner loop and transmits the optimal dispatch to the outer cycle. Then the outer cycle calculates the annual cost for the corresponding size combination and dispatch plans. Finally, the problem is repeated for a new set of sizes until the sizing problem termination condition is reached. The solving process is shown in Fig. 3:
+ Fig. 3  The flowchart for the bi-cyclic co-optimization framework. 
+Step 1: Input solar radiation, wind speed data, AC and DC load data.
+Step 2: Initialize population B with a population size of 30 and the maximum iteration (Gmax = 100).
+Step 3: Randomly generate sizing schemes Ns within the allowed range of sizing under the set population size.
+Step 4: Input the alternative sizing schemes of the populations into the inner cycle of the MILP to solve the scheduling problem (eqn (20)), obtaining daily optimal schedule and daily operating costs. If no solution is feasible, then a new candidate solution is generated.
+Step 4: Calculate the ETC (the PSO fitness function value) and compare it with the optimal result at the previous moment. If the result is better than one of these results, replace the results with the current calculation results and update the optimal result; if not, discard.
+Step 5: The process continues until the stopping criterion for the number of iterations is met.
+4 Case study
+This paper compares the conventional rule-based approach32,33 with the proposed method and analyzes the results, illustrating that the proposed framework can provide economic guidance for the system sizes.
+4.1 Case parameters
+The solar radiation, wind speed and AC/DC load data in this paper are referenced from ref. 34–36, as shown in (Fig. 4). And the time-of-use tariffs are from ref. 37 and 38, as shown in Tables 1 and 2.
+Table 1 System economic parameters
+
+
+
+
+
+
+Parameters
+Value
+
+
+
+
+PV
+
+C
+inv_pv (¥/kW)
+8800
+
+
+
+Y
+pv (year)
+20
+
+
+
+u
+pv (kW)
+1
+
+
+WT
+
+u
+wt (kW)
+10
+
+
+
+C
+inv_wt (¥/kW)
+12000
+
+
+
+Y
+wt (year)
+20
+
+
+BAT
+
+C
+inv_bat (¥/kW h)
+1000
+
+
+
+Y
+bat (year)
+—
+
+
+
+u
+bat (Ah)
+85
+
+
+BPC
+
+u
+BPC (kW)
+1
+
+
+
+C
+inv_bpc (¥/kW)
+2000
+
+
+
+Y
+bpc (year)
+10
+
+
+FC
+
+C
+inv_fc (¥/kW)
+14000
+
+
+
+Y
+fc (year)
+10
+
+
+
+u
+FC (kW)
+1
+
+
+HST
+
+u
+HST (Nm3)
+1
+
+
+
+C
+inv_hst (¥/Nm3)
+1800
+
+
+
+Y
+hst (year)
+20
+
+
+EL
+
+u
+EL (kW)
+1
+
+
+
+C
+inv_el (¥/kW)
+20000
+
+
+
+Y
+el (year)
+10
+
+
+
+
+Table 2 Time-of-use tariffs
+
+
+
+
+Time period
+Hours
+Buying electricity price (kbu)/¥ (kW h)−1
+Selling electricity price (kse)/¥ (kW h)−1
+
+
+
+
+Off-peak
+00:00–08:00
+0.37
+0.28
+
+
+Shoulder
+08:00–12:00, 17:00–21:00
+0.87
+0.72
+
+
+Peak
+12:00–17:00, 21:00–24:00
+0.69
+0.53
+
+
+
+
+The economic parameters are obtained from ref. 1 (Table 3).
+Table 3 Economic parameters
+
+
+
+
+Parameters
+Value
+Parameters
+Value
+
+
+
+
+
+λ
+pv
+
+0.0096
+
+λ
+wt
+
+0.0108
+
+
+
+λ
+bat
+
+0.0275
+
+λ
+fc
+
+0.07
+
+
+
+λ
+el
+
+0.07
+
+λ
+ad
+
+0.058
+
+
+
+R
+mg
+
+
+k
+bu/kse
+
+k
+dr
+
+0.2
+
+
+
+
+4.2 Characteristics of HESS and DR
+To discuss the importance/requirement for a HESS in energy systems and the superiority of DR mechanisms, we categorize whether to consider hydrogen storage system and whether to consider DR into three operational modes; see Table 4.
+Table 4 Operational modes
+
+
+
+
+Operation mode
+Hydrogen storage system
+DR
+
+
+
+
+A
+×
+×
+
+
+B
+√
+×
+
+
+C
+√
+√
+
+
+
+
+
+Tables 5 and 6 show that the introduction of the hydrogen storage system significantly reduces the battery capacity, resulting in lower equivalent total cost (ETC) and lower total commutation loss. At the same time, it decreases the energy interaction with the grid and improves the energy autonomy rate (EAR) of the system while slightly increasing the customer satisfaction rate (CSR).
+Table 5 Sizing results in cases without and with DR
+
+
+
+
+Case
+PV/kW
+WT/kW
+BAT/kW h
+BPC/kW
+FC/kW
+HST/kW h
+EL/kW
+
+
+
+
+A
+575
+710
+211
+723
+0
+0
+0
+
+
+B
+594
+870
+112
+704
+3
+25
+3
+
+
+C
+537
+740
+81
+649
+2
+4
+2
+
+
+
+
+Table 6 Indicator results in cases without and with DR
+
+
+
+
+Case
+
+I
+SYS ×104/¥
+TCL/MW
+EAR/%
+ECSR/%
+CSR/%
+
+
+
+
+A
+315.37
+142.57
+76.52
+100
+88.26
+
+
+B
+314.49
+141.22
+80.12
+100
+90.06
+
+
+C
+312.99
+139.60
+82.46
+91.43
+86.95
+
+
+
+
+ Fig. 4  Annual solar radiation, wind speed and AC/DC load data. 
+We use a rule-based operation method to analyze the characteristics of DR. The outline of the algorithm is shown in Fig. 5. The principle is to use the battery first, and if it is unavailable, to use the hydrogen storage system. Fig. 6 shows that the DR minimizes the mismatch between the generation and the load demand profile effectively, increasing the system flexibility. And Tables 5 and 6 show decreases in capacities and the total annual cost and an increase in ECSR. Thus, the adoption of DR becomes an essential tool for effective and economical sizing of the system components and increases the self-consumption of RES. However, load shifting significantly reduces electricity consumption satisfaction, decreasing the customer satisfaction slightly by 3.11%. Overall, DR within a reasonable range helps to improve the economics and reliability in the microgrid.
+ Fig. 5  The flowchart of the rule-based operation method. 
+ Fig. 6  Comparison of typical daily AC and DC load responses. 
+Table 7 Scenario definitions
+
+
+
+
+Weather
+Scenario number
+
+
+
+
+Sunny + gale
+Scenario I
+
+
+Sunny + windy
+Scenario II
+
+
+Cloudy + gale
+Scenario III
+
+
+Cloudy + windy
+Scenario IV
+
+
+
+
+4.3 Comparison with a rule-based operating strategy
+To better analyze the superiority of the proposed framework, this paper compares the obtained results with a rule-based operating strategy. The results are summarized in Tables 8 and 9. Compared with a rule-based operating strategy, the proposed framework reduces the energy interaction with the distribution network by increasing the storage capacity of the battery and hydrogen power generation system. That is to say, it absorbs the excess power during low load and releases it during high load to satisfy the demand in time. Thus, the energy autonomy rate of the microgrid increases by 4.3%. On the other hand, the proposed method slightly increases the installed capacity of RESs while ensuring the overall optimal economy, so the electricity consumption satisfaction rate (ECSR) has improved by 6.38%. Meanwhile, the capacity of the BPC has decreased by 168 kW, indicating that the energy interaction between the AC and DC sides has reduced, thus reducing the total commutation loss.
+Table 8 Optimal results
+
+
+
+
+Method
+PV/kW
+WT/kW
+BAT/kW h
+BPC/kW
+FC/kW
+HT/kW h
+EL/kW
+
+
+
+
+Rule-based method
+537
+740
+81
+649
+2
+4
+2
+
+
+Proposed method
+540
+780
+303
+481
+9
+32
+9
+
+
+
+
+Table 9 Indicator results
+
+
+
+
+Method
+
+I
+SYS ×104/¥
+TCL/MW
+EAR/%
+ECSR/%
+CSR/%
+
+
+
+
+Rule-based method
+312.99
+139.60
+82.46
+91.43
+86.95
+
+
+Proposed method
+307.64
+129.80
+86.76
+97.81
+92.28
+
+
+
+
+From the size results, the proposed system indeed has a higher capacity and correspondingly higher investment costs. However, the proposed bi-cyclic co-optimization method achieves optimal scheduling; therefore, the daily operating cost will be less than the rule-based operating cost. Meanwhile, the reduced capacity of the BPC indicates that there is less interaction between the AC and DC sub-grids, which in turn reduces the interaction costs. The increase in the energy autonomy rate of the microgrid indicates a reduction in the power purchase cost from the grid. When calculating the ETC, we are calculating the operating cost, interaction costs, and power purchase cost for 365 days a year, leading to accumulation of cost savings to achieve a lower ETC in the end.
+4.4 Scheduling results
+To better analyze the characteristics of DR and the superiority of operational optimization, four typical scenarios are selected in this chapter based on the climatic conditions of a region.34–36 Four possible weather conditions are considered in this paper, as shown in Table 7. The optimal scheduling is presented under the optimal size results of the proposed method. And the following parts will describe the scheduling results in detail. Positive values are used for power purchase from the grid and system discharge, while negative values are used for power sales to the grid and system charging.
+The first typical day has strong renewable energy output, especially for the WT (Fig. 7). At night, the output of WT assumes the responsibility of supplying the DC load; while as the intensity increases, PV gradually assumes part of the responsibility for the AC load. Before 08:00, since the RES output is still abundant and the selling price is low, priority is given to charging the battery and electrolyzer and then selling electricity to the grid. However, at the peak of the electricity sales price (08:00–13:00), there is a preference to sell electricity to the grid to earn profits. The period 17:00–22:00, the trough of the RES output and the peak of load demand, requires the battery and fuel cell to discharge and purchase electricity from the grid to achieve a supply-demand balance.
+ Fig. 7  Optimal dispatch results under typical scenario I. 
+
+Fig. 8 shows the dispatch results when the output of WT is small while that of PV is large. Since the power generated by WT cannot meet both DC and AC loads from 0:00 to 08:00, the tendency is to purchase power from the grid to balance demand and charge the battery and electrolyzer in the time of low purchase prices. In this way, the increased storage level will allow the battery and fuel cell to compensate for load demand more often, improving microgrid economics (09:00 and 17:00–20:00).
+ Fig. 8  Optimal dispatch results under typical scenario II. 
+In contrast to scenario II, the production of WT is higher during scenario III (Fig. 9). The microgrid prefers to charge the hybrid storage system because of the low selling price. However, it sells electricity to the grid at a high selling price between 09:00 and 15:00, increasing its revenue. Between 10:00 and 21:00, except for battery and fuel cell discharging, it also has to purchase electricity from the grid to meet the peak load. The scheduling results in the last scenario are similar to the previous ones (Fig. 10).
+ Fig. 9  Optimal dispatch results under typical scenario III. 
+ Fig. 10  Optimal dispatch results under typical scenario IV. 
+The results indicate that the hybrid electric-hydrogen storage system can adjust the working mode according to the real-time electricity price and load conditions, shifting peak load to off-peak periods and improving the economic performance. Simulations also show that the hybrid AC–DC microgrid structure can maximize the consumption of wind and solar resources by BPC, achieving complementary advantages.
+
+Fig. 11 and 12 show that SOC and SOHC do not exceed the limits (0.1–0.9).
+ Fig. 11  SOC results. 
+ Fig. 12  SOHC results. 
+5 Conclusions
+In this paper, a bi-cyclic co-optimization method is proposed for an electricity-hydrogen hybrid energy storage microgrid. The overall control objective is to minimize the annual value costs to obtain the optimal system size. Under the bi-cyclic co-optimization framework, the optimal sizing problem is transformed into a combination of an optimal sizing and an optimal scheduling problem. And a co-optimization method composed of PSO and MILP algorithms is used to search for the best sizing scheme. The simulation results are as follows.
+(1) Demand response and tariff incentives effectively address the mismatch between renewable energy output and load, reducing allocation size and thus improving the economics. Although it slightly reduces user satisfaction, it is still within the acceptable range.
+(2) The proposed method can more flexibly use an electric-hydrogen storage system to cooperate, improving the economy of the AC/DC microgrid. Compared with a rule-based operating strategy, the nested optimal scheduling and optimal sizing scheme saves 53500 ¥ and improves the energy autonomy rate by 4.3%.
+Author contributions
+Ying Han: conceptualization, methodology, writing – original draft, project administration, supervision. Luoyi Li: validation, writing – original draft, conceptualization, methodology. Weirong Chen: funding acquisition, supervision. Yujing Hou: validation, writing – reviewing & editing. Jiefu Zhang: resources, writing – original draft.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+The authors would like to thank the reviewers for their helpful suggestions. This work was supported by the National Natural Science Foundation of China (52007157, 51977181, 52077180), the China Postdoctoral Science Foundation (2021M692684), the Natural Science Foundation of Sichuan (2022NSFSC0269), and the Fok Ying-Tong Education Foundation of China (171104).
+Notes and references
+B. Li, R. Roche and A. Miraoui, Microgrid sizing with combined evolutionary algorithm and MILP unit commitment, Appl. Energy, 2017, 188, 547–562 CrossRef .
+L. Li, W. Chen, Y. Han, Q. Li and Y. Pu, A Stability Enhancement Method Based on Adaptive Virtual Resistor for Electric-hydrogen Hybrid DC Microgrid Grid-connected Inverter Under Weak Grid, Electr. Power Syst. Res., 2021, 191, 106882 CrossRef .
+G. Cau, D. Cocco, M. Petrollese, S. K. Kaer and C. Milan, Energy management strategy based on short-term generation scheduling for a renewable microgrid using a hydrogen storage system, Energy Convers. Manage., 2014, 87, 820–831 CrossRef .
+A. Monforti Ferrario, F. Vivas, F. Segura Manzano, J. Andújar, E. Bocci and L. Martirano, Hydrogen vs. Battery in the Long-term Operation. A Comparative Between Energy Management Strategies for Hybrid Renewable Microgrids, Electronics, 2020, 9, 698 CrossRef .
+B. Thilo, Hybrid Energy Storage Systems for Renewable Energy Applications, Energy Procedia, 2015, 73, 103–111 CrossRef .
+L. Li, Y. Han, Q. Li, Y. Pu, C. Sun and W. Chen, Event-triggered decentralized coordinated control method for economic operation of an islanded electric-hydrogen hybrid DC microgrid, Journal of Energy Storage, 2022, 45, 103704 CrossRef .
+Y. Xia, W. Wei, M. Yu, Y. Peng and J. Tang, Decentralized Multi-Time Scale Power Control for a Hybrid AC/DC Microgrid with Multiple Subgrids, IEEE Trans. Power Electron., 2017, 1 Search PubMed .
+P. Li, R. Li, Y. Cao, D. Li and G. Xie, Multiobjective Sizing Optimization for Island Microgrids Using a Triangular Aggregation Model and the Levy-Harmony Algorithm, IEEE Trans Industr. Inform., 2018, 14, 3495–3505 Search PubMed .
+A. S. Rana, F. Iqbal, A. S. Siddiqui and M. S. Thomas, Hybrid methodology to analyse reliability and techno-economic evaluation of microgrid configurations, IET Gener. Transm. Distrib., 2019, 13, 4778–4787 CrossRef .
+S. Bandyopadhyay, G. R. C. Mouli, Z. Qin, L. R. Elizondo and P. Bauer, Techno-Economical Model Based Optimal Sizing of PV-Battery Systems for Microgrids, IEEE Trans Sustain. Energy, 2020, 11, 1657–1668 Search PubMed .
+Z. Wei, C. Lou, Z. Li, L. Lin and H. Yang, Current status of research on optimum sizing of stand-alone hybrid solar–wind power generation systems, Appl. Energy, 2010, 87, 380–389 CrossRef .
+M. R. Estabragh, A. Dastfan and M. Rahimiyan, Parallel AC-DC interlinking converters in the proposed grid-connected hybrid AC-DC microgrid; planning, Electr. Power Syst. Res., 2021, 200, 107476 CrossRef .
+I. Çetinbaş, B. Tamyürek and M. Demirtaş, Sizing optimization and design of an autonomous AC microgrid for commercial loads using Harris Hawks Optimization algorithm, Energy Convers. Manage., 2021, 245, 114562 CrossRef .
+H. Bakhtiari and R. A. Naghizadeh, Multi-criteria optimal sizing of hybrid renewable energy systems including wind, photovoltaic, battery, and hydrogen storage with ε-constraint method, IET Renew. Power Gener., 2018, 12, 883–892 CrossRef .
+A. Monforti Ferrario, A. Bartolini, F. Segura Manzano, F. J. Vivas, G. Comodi, S. J. McPhail and J. M. Andujar, A model-based parametric and optimal sizing of a battery/hydrogen storage of a real hybrid microgrid supplying a residential load: towards island operation, Advances in Applied Energy, 2021, 3, 100048 CrossRef .
+M. K. Kiptoo, O. B. Adewuyi, M. E. Lotfy, T. Amara and T. Senjyu, Assessing the Techno-Economic Benefits of Flexible Demand Resources Scheduling for Renewable Energy-Based Smart Microgrid Planning, Future Internet, 2019, 11, 219 CrossRef .
+M. K. Kiptoo, M. E. Lotfy, O. B. Adewuyi, A. Conteh and T. Senjyu, Integrated approach for optimal techno-economic planning for high renewable energy-based isolated microgrid considering cost of energy storage and demand response strategies, Energy Convers. Manage., 2020, 215, 112917 CrossRef .
+R. Rigo-Mariani, S. O. Chea Wae, S. Mazzoni and A. Romagnoli, Comparison of optimization frameworks for the design of a multi-energy microgrid, Appl. Energy, 2020, 257, 113982 CrossRef .
+A. Roy, J. Olivier, F. Auger, B. Auvity, E. Schaeffer, S. Bourguet, J. Schiebel and J. Perret, A combined optimization of the sizing and the energy management of an industrial multi-energy microgrid: application to a harbour area, Energy Convers. Manage.: X, 2021, 12, 100107 Search PubMed .
+S. Swaminathan, G. S. Pavlak and J. Freihaut, Sizing and dispatch of an islanded microgrid with energy flexible buildings, Appl. Energy, 2020, 276, 115355 CrossRef .
+B. Li, R. Roche, D. Paire and A. Miraoui, Sizing of a stand-alone microgrid considering electric power, cooling/heating, hydrogen loads and hydrogen storage degradation, Appl. Energy, 2017, 205, 1244–1259 CrossRef CAS .
+J. Moshövel, K. Kairies, D. Magnor, M. Leuthold, M. Bost, S. Gährs, E. Szczechowicz, M. Cramer and D. U. Sauer, Analysis of the maximal possible grid relief from PV-peak-power impacts by using storage systems for increased self-consumption, Appl. Energy, 2015, 137, 567–575 CrossRef .
+R. Atia and N. Yamada, Sizing and Analysis of Renewable Energy and Battery Systems in Residential Microgrids, IEEE Trans. Smart Grid, 2016, 7, 1204–1213 Search PubMed .
+E. L. V. Eriksson and E. M. Gray, Optimization and integration of hybrid renewable energy hydrogen fuel cell energy systems – a critical review, Appl. Energy, 2017, 202, 348–364 CrossRef .
+Z. Wang, Z. Xu, Y. Zhang and M. Xie, Optimal Cleaning Scheduling for Photovoltaic Systems in the Field Based on Electricity Generation and Dust Deposition Forecasting, IEEE J. Photovolt., 2020, 10, 1126–1132 Search PubMed .
+A. Dwi and S. Hwachang, Coordination Control Strategy for AC/DC Hybrid Microgrids in Stand-Alone Mode, Energies, 2016, 9, 469 CrossRef .
+T. Lajnef, S. AbId and A. Ammous, Modeling, Control, and Simulation of a Solar Hydrogen/Fuel Cell Hybrid Energy System for Grid-Connected Applications, Adv. Power Electron., 2013, 352765.1–352765.9 Search PubMed .
+Y. Han, Q. Li, T. Wang, W. Chen and L. Ma, Multisource Coordination Energy Management Strategy Based on SOC Consensus for a PEMFC–Battery–Supercapacitor Hybrid Tramway, IEEE Trans. Veh. Technol., 2018, 1 Search PubMed .
+Á. Hernández-Gómez, V. Ramirez and D. Guilbert, Investigation of PEM electrolyzer modeling: Electrical domain, efficiency, and specific energy consumption, Int. J. Hydrogen Energy, 2020, 45, 14625–14639 CrossRef .
+
+          M. H. Albadi and E. F. El-Saadany, Demand Response in Electricity Markets: An Overview, in 2007 IEEE Power Engineering Society General Meeting Tampa, : IEEE, FL, USA,  2007 Search PubMed .
+A. N. Ghalelou, A. P. Fakhri, S. Nojavan, M. Majidi and H. Hatami, A stochastic self-scheduling program for compressed air energy storage (CAES) of renewable energy sources (RESs) based on a demand response mechanism, Energy Convers. Manage., 2016, 120, 388–396 CrossRef .
+M. Uzunoglu, O. C. Onar and M. S. Alam, Modeling, control and simulation of a PV/FC/UC based hybrid power generation system for stand-alone applications, Renewable Energy, 2009, 34, 509–520 CrossRef CAS .
+M. Castaneda, A. Cano, F. Jurado, H. Sanchez and L. M. Fernandez, Sizing optimization, dynamic modeling and energy management strategies of a stand-alone PV/hydrogen/battery-based hybrid system, Int. J. Hydrogen Energy, 2013, 38, 3830–3845 CrossRef CAS .
+M. Sugimura, M. M. Gamil, H. Akter, N. Krishna and T. Senjyu, Optimal sizing and operation for microgrid with renewable energy considering two types demand response, J. Renewable Sustainable Energy, 2020, 12, 065901 CrossRef .
+R. Wang, Multi-objective configuration optimization method for a diesel-based hybrid energy system, Energy Rep., 2020, 6, 2146–2152 CrossRef .
+
+          K. Hein, Y. Xu, W. Gary and A. K. Gupta, Robustly coordinated operational scheduling of a grid connected seaport microgrid under uncertainties, IET Generation, Transmission & Distribution,  2021, vol. 15 Search PubMed .
+H. Wang, T. Wang, X. Xie, Z. Ling, G. Gao and X. Dong, Optimal Capacity Configuration of a Hybrid Energy Storage System for an Isolated Microgrid Using Quantum-Behaved Particle Swarm Optimization, Energies, 2018, 11, 454 CrossRef .
+H. Aki, I. Sugimoto, T. Sugai, M. Toda, M. Kobayashi and M. Ishida, Optimal operation of a photovoltaic generation-powered hydrogen production system at a hydrogen refueling station, Int. J. Hydrogen Energy, 2018, 43, 14892–14904 CrossRef CAS .
+
+This journal is © The Royal Society of Chemistry 2022
+Table Content:
+
+ 	Fig. 1  Topology of electricity-hydrogen hybrid energy storage microgrid.	 
+	(1)
+	(2)
+	(3)
+Vfc_cell = Eoc − Vact_fc − Vohm_fc − Vcon_fc	(4)
+	(5)
+Vel_cell = Vref_el + ηact_el + ηohm_el + ηcon_el	(6)
+	(7)
+	(8)
+	(9)
+	(10)
+	(11)
+	(12)
+	(13)
+
+ 	Fig. 2  Schematic diagram of the proposed framework.	 
+minCETC = (CIV_ETC + CRP_ETC + CRU_ETC) × CRF(r,Y)	(14)
+	(15)
+	(16)
+	(17)
+CRU_ETC = Com_ETC + Cgc_ETC + Cad_ETC + Cdr_ETC	(18)
+	(19)
+	(20)
+	(21)
+	(22)
+	(23)
+	(24)
+
+
+usN
+
+s,min ≤ usNs ≤ usNs,max, s ∈ PV, WT, BAT, FC, EL, HST, BPC
+	(25)
+	(26)
+	(27)
+	(28)
+	(29)
+	(30)
+Pgird(t) ≤ μPsmc	(31)
+	(32)
+	(33)
+RCSR = αREAR + βRECSR	(34)
+	(35)
+
+ 	Fig. 3  The flowchart for the bi-cyclic co-optimization framework.	 
+
+PV	
+C
+inv_pv (¥/kW)	8800
+
+Y
+pv (year)	20
+
+u
+pv (kW)	1
+WT	
+u
+wt (kW)	10
+
+C
+inv_wt (¥/kW)	12000
+
+Y
+wt (year)	20
+BAT	
+C
+inv_bat (¥/kW h)	1000
+
+Y
+bat (year)	—
+
+u
+bat (Ah)	85
+BPC	
+u
+BPC (kW)	1
+
+C
+inv_bpc (¥/kW)	2000
+
+Y
+bpc (year)	10
+FC	
+C
+inv_fc (¥/kW)	14000
+
+Y
+fc (year)	10
+
+u
+FC (kW)	1
+HST	
+u
+HST (Nm3)	1
+
+C
+inv_hst (¥/Nm3)	1800
+
+Y
+hst (year)	20
+EL	
+u
+EL (kW)	1
+
+C
+inv_el (¥/kW)	20000
+
+Y
+el (year)	10
+
+Off-peak	00:00–08:00	0.37	0.28
+Shoulder	08:00–12:00, 17:00–21:00	0.87	0.72
+Peak	12:00–17:00, 21:00–24:00	0.69	0.53
+
+
+λ
+pv
+	0.0096	
+λ
+wt
+	0.0108
+
+λ
+bat
+	0.0275	
+λ
+fc
+	0.07
+
+λ
+el
+	0.07	
+λ
+ad
+	0.058
+
+R
+mg
+	
+k
+bu/kse	
+k
+dr
+	0.2
+
+A	×	×
+B	√	×
+C	√	√
+
+A	575	710	211	723	0	0	0
+B	594	870	112	704	3	25	3
+C	537	740	81	649	2	4	2
+
+A	315.37	142.57	76.52	100	88.26
+B	314.49	141.22	80.12	100	90.06
+C	312.99	139.60	82.46	91.43	86.95
+
+ 	Fig. 4  Annual solar radiation, wind speed and AC/DC load data.	 
+
+ 	Fig. 5  The flowchart of the rule-based operation method.	 
+
+ 	Fig. 6  Comparison of typical daily AC and DC load responses.	 
+
+Sunny + gale	Scenario I
+Sunny + windy	Scenario II
+Cloudy + gale	Scenario III
+Cloudy + windy	Scenario IV
+
+Rule-based method	537	740	81	649	2	4	2
+Proposed method	540	780	303	481	9	32	9
+
+Rule-based method	312.99	139.60	82.46	91.43	86.95
+Proposed method	307.64	129.80	86.76	97.81	92.28
+
+ 	Fig. 7  Optimal dispatch results under typical scenario I.	 
+
+ 	Fig. 8  Optimal dispatch results under typical scenario II.	 
+
+ 	Fig. 9  Optimal dispatch results under typical scenario III.	 
+
+ 	Fig. 10  Optimal dispatch results under typical scenario IV.	 
+
+ 	Fig. 11  SOC results.	 
+
+ 	Fig. 12  SOHC results.	 
+
+This journal is © The Royal Society of Chemistry 2022

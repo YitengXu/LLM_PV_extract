@@ -1,0 +1,251 @@
+Screening interface passivation materials intelligently through machine learning for highly efficient perovskite solar cells   - Journal of Materials Chemistry A (RSC Publishing) DOI:10.1039/D2TA04788H View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2TA04788H
+(Paper)
+J. Mater. Chem. A, 2022, 10, 17782-17789Screening interface passivation materials intelligently through machine learning for highly efficient perovskite solar cells†
+
+        
+          
+            Wu 
+            Liu
+          
+        
+      ab, 
+      
+        
+          
+            Yao 
+            Lu
+          
+        
+      ab, 
+      
+        
+          
+            Dong 
+            Wei
+          
+        
+      *c, 
+      
+        
+          
+            Xiaomin 
+            Huo
+          
+        
+      ab, 
+      
+        
+          
+            Xiaofeng 
+            Huang
+          
+        
+      ab, 
+      
+        
+          
+            Yaoyao 
+            Li
+          
+        
+      ab, 
+      
+        
+          
+            Juan 
+            Meng
+          
+        
+      ab, 
+      
+        
+          
+            Suling 
+            Zhao
+          
+        
+      ab, 
+      
+        
+          
+            Bo 
+            Qiao
+          
+        
+      ab, 
+      
+        
+          
+            Zhiqin 
+            Liang
+          
+        
+      ab, 
+      
+        
+          
+            Zheng 
+            Xu
+          
+        
+      *ab and 
+
+        
+          
+            Dandan 
+            Song
+          
+        
+      *ab
+aKey Laboratory of Luminescence and Optical Information, Beijing Jiaotong University, Ministry of Education, Beijing 100044, China. E-mail: ddsong@bjtu.edu.cn; zhengxu@bjtu.edu.cn
+bInstitute of Optoelectronics Technology, Beijing Jiaotong University, Beijing 100044, China
+cCollege of Physics and Energy, Fujian Normal University, Fuzhou, 350117, China. E-mail: q397983012@126.com
+Received 
+      16th June 2022
+    , Accepted 9th August 2022First published on 9th August 2022AbstractIntelligently screening passivation materials is critical for improving the power conversion efficiency (PCE) values of perovskite solar cells (PSCs), which are still lacking. Herein, machine learning is employed to map the correlations between the PCE and interface passivation material at the atomic level, enabling intelligent material screening. The dataset includes around 100 interface materials used at the perovskite/hole transport layer interface. The random forest model best predicts the PCE, with a root mean square error of 0.7%. High-throughput predictions are further made and rationalized using density functional theory calculations. It is revealed that a material with a high binding energy with the [PbI4]2− surface promotes strong passivation effects, and small organic cations with an NH3+ terminal have high potential. Experimental validation using methylammonium iodide and phenethylammonium iodide as the interface materials reveals the reliability of the predictions. Our work enables the high-throughput and rapid screening/design of interface materials for highly efficient PSCs, and it also provides general screening rules for interface materials at the atomic level.
+Introduction
+Metal halide perovskite solar cells (PSCs) have exhibited impressive power conversion efficiency (PCE) values in the past decade, making them one of the most promising forms of photovoltaic technology.1–3 The certified PCE value of a single-junction PSC has reached 25.7%, surpassing those of other thin-film solar cells.4 The high PCEs originate from the excellent optoelectronic properties of perovskites. However, the existence of defects has kept the PCEs of PSCs much lower than the Shockley–Queisser limit.5,6 Many point defects (e.g., uncoordinated Pb2+ and transported I−) exist at grain boundaries and/or interfaces of the perovskite film,7 trapping photogenerated carriers and lowering device performance. These defects mainly originate from the polycrystalline and soft structure of the perovskite.
+To passivate these defects, researchers have proposed two general pathways. One is introducing appropriate interface materials (like phenethylammonium iodide (PEAI)) on top of the perovskite layer,8–10 and the other is adding suitable additives to the perovskite precursor solution (represented here as bulk passivation).11,12 Significantly, an interface material can reduce surface defects at the interface, and it can also penetrate the perovskite film and passivate defects at grain boundaries.13–15 The interface material may also modify the energetics at the perovskite/transport layer interface, promoting carrier extraction.16,17 The performance improvements carried out on more than 200 previously reported highly efficient nip-type PSCs via different passivation strategies are shown in Fig. S1 in the ESI.† In general, an interface material is beneficial for improving the open-circuit voltage (VOC), while bulk passivation with additives is prone to increasing the short-circuit current (JSC) and fill factor (FF). Nevertheless, the PCE can be effectively increased by either passivation strategy.
+Therefore, numerous interface materials and additives have been reported for modifying perovskites in the past few years.18–21 Several mechanisms have been proposed to explain their functioning, including functional group interaction with uncoordinated Pb2+,18,19 the formation of wide-bandgap two-dimensional (2D) perovskites,20,21etc. These mechanisms help researchers to make qualitative judgments about the function of interface material; however, general guidelines for intelligent material screening/design are still lacking. For instance, researchers may expect that a material with an NH3+ terminal, like PEAI, will improve device performance, but they cannot judge if it is more or less effective than PEAI. Meanwhile, it is hard to compare the efficacies of different functional groups. Therefore, researchers need to carry out lots of trial-and-error experiments to find the most suitable interface material or additive, which consumes much time and many materials. Hence, in the process of finding high-performance interface materials and additives, it would be meaningful to establish the relationship between the chemical structures of materials/additives and the photovoltaic properties of the resulting PSCs even before they are synthesized.
+Nowadays, machine learning is used in the fields of energy materials and solar cells to map the correlations between variables and the results; it can learn from past results and provide fast predictions of unknown results. It has been used to understand perovskite properties based on the structures/compositions and to develop new perovskites,22,23 select the capping layer for perovskite films,24 explore suitable perovskites for use in highly efficient PSCs,25 screen candidates for use in organic solar cells,26 and identify the key factors governing the device performances of Cu(In,Ga)Se2 solar cells.27 These previous attempts reveal the power of machine learning in processing the complex relationships between materials and material/device performance. Therefore, it is also possible that machine learning could be used to help intelligently screen organic additives or interface materials for use in highly efficient PSCs, mapping correlations, but such an attempt is still lacking.
+Herein, taking the perovskite/hole transport layer (HTL) interface of PSCs as an example, we employ machine learning algorithms to map the relationships between the chemical structures of the interface materials and device performance. The algorithms present high accuracy in predicting the PCEs of the PSCs based on the interface material features, the perovskite precursor composition, and the PCEs of control PSCs. Therefore, based on a machine learning model, one can predict the performances of various interface material candidates before doing experiments, which will significantly accelerate the development of interface materials for use in highly efficient PSCs.
+Results and discussion
+The workflow of machine learning is depicted in Fig. 1. In the first step, a dataset is established via summarizing experimental reports on utilizing interface materials at the perovskite/2,2,7,7-tetrakis[N,N-di(4-methoxyphenyl)amino]-9,9-spirobifluorene (Spiro-OMeTAD) HTL interface, which includes 105 data points (Table S1†) and around 100 molecules (Fig. S2†). Comparing the PCE values of the modified devices and control devices, as shown in Fig. S3,† it is revealed that the PCE can be increased by roughly 1.5% upon introducing an interface material. Hence, interface materials are critical for getting high device efficiencies.
+ Fig. 1  The workflow of the machine learning approach used in this work. 
+Different features are extracted before machine learning. Deciding which features to use to represent these materials is critical for achieving a good and reasonable model based on machine learning algorithms. Here, we use features extracted from the interface material, the perovskite, and standard device performance. Detailed procedures and standards are described in the ESI.†
+(i) Features from the interface material include the E-state index and cheminformatics. The electrotopological-state (E-state) index of an atom encodes the unification of electronic and topological attribute information within a given chemical environment. An atom's E-state index value is strongly correlated with intermolecular interactions, e.g., electrostatic and hydrogen bonding strength.28,29 A detailed description of the E-state index can be found in the literature.30 The interactions between the perovskite and interface material generally involve bonding effects resulting from their different electron donation/withdrawal abilities, so the E-state index can describe the interactions between the perovskite and the interface material. Cheminformatics includes common features (like the molecular complexity, the topological surface area, etc.) and unique features (like the chi-chain index).31,32 These features describe the material from different aspects. Other special features of interface materials, like chirality features,33,34 are not considered due to limited reports.
+(ii) The perovskite features include the ion ratio in the precursor solution, rather than the proposed ratio in the film. This is because the precursor solution ratio is sometimes different from the stoichiometric ratio. Excess ions in the precursor solution will modify the crystallization process and defect circumstances.35,36 Hence, defect passivation may rely more on the precursor solution than the stoichiometric ratio. Meanwhile, the ion types (A site ions and X ions) of the perovskites are also critical and used as input features.
+(iii) To minimize the effects of a standard device and to clearly show the role of interface materials, we also use control device performance (control PCE) as an input feature.
+
+Fig. 2a–d and Table S2† compare the prediction performances of random forest (RF) models based on different combinations of input features, revealing that the above three kinds of features are essential for good model performance. As the total number of these features (more than 300) is too high compared to the size of the dataset, we utilized the SHapley Additive exPlanations (SHAP) value (Fig. S4†),37 feature importance, and correlation analysis to reduce the variable dimension to 15 for further machine learning. The SHAP value and feature importance analysis were used to reflect the influence of a feature on the result. Correlation analysis reflected the linear correlation between two variables. We ranked the more than initial 300 features based on the SHAP value, feature importance, and correlation analysis. We then screened the most critical 15 features from the more than 300 features based on perovskite features, interface material features, and basic device performance parameters. A detailed description of these 15 features is given in Table 1.
+ Fig. 2  (a–d) A comparison of the predicted PCEs using RF models with the true values reported in the literature based on different combinations of features based on the interface material, perovskite material, and control device performance. The red dashed lines represent the condition where the predicted PCE equals the true PCE. (e) A correlation matrix of the PCE and extracted features. Here, the value in the figure represents the Pearson correlation coefficient, which is large for strong correlation. The sign (±) of the value means positive (+) or negative (−) correlation. 
+Table 1 The 15 screened features for machine learning
+
+
+
+
+Input feature
+Feature description
+
+
+
+
+C_PCE
+The PCE of the control device
+
+
+
+rA, A2X, P2X
+The effective radii of A-site cations and the molar ratios of A-site cations or Pb ions to halide ions (A2X/P2X) in the precursor solutions, respectively
+
+
+
+SHBd, SwHBa, SHsNH3p, SHCsats
+The sums of E-states of hydrogen (H) bond donors, weak H-bond acceptors, H-bonds from NH3+, and H bonded to saturated C, respectively
+
+
+
+meanI, gmax, gmin, hmax, hmin, DELS
+Mean intrinsic E-state I, maximum/minimum E-state (gmax/gmin), maximum/minimum H E-state (hmax/hmin), and the sum of all atom intrinsic state differences, respectively
+
+
+
+fragC
+
+The complexity of the material
+
+
+
+
+The correlation matrix of these features and the PCE is shown in Fig. 2e. The PCE of the modified device (PCE) has reasonably strong positive correlation (0.84) with the control device PCE (C_PCE). PCE also has positive correlation with the sum of E-states of H-bonds from NH3+ (SHsNH3p) and the minimum H E-state (hmin). hmin has strong negative correlation (−0.70) with the sum of E-states of H bonded to saturated C (SHCats), and it is high in materials with fewer saturated C bonds. These results indicate that NH3+ and fewer saturated C bonds in a material can improve the PCE. The PCE is negatively correlated with the sum of E-states of weak H-bond acceptors (SwHBa), implying that increasing the number of benzene rings will lower the PCE. The correlation matrix also shows that the PCE is positively correlated with P2X, whereas it is negatively correlated with A2X. This means that excess Pb2+ ions in the precursor support a high PCE, while excess A-site ions hamper device performance. The dependence of the PCE on the precursor solution derives from two aspects: one is the intrinsic electronic properties, i.e., excess Pb2+ ions lead to the formation of an n-type perovskite that promotes high PCEs,38 and the other is the crystallization kinetics.39
+To map the correlation between the PCE and the 15 screened features, we use four machine learning algorithms: linear regression (LR), random forest (RF), extreme gradient boosting (XGBoost), and neural network (NN) models. The hyperparameters of the algorithms were optimized via 10-fold cross-validation. After establishing the machine learning models, their regression (prediction) performances are evaluated based on the root mean square error (RMSE) and Pearson correlation coefficient (r). A good model should have low RMSE and high r. The details of the machine learning settings are shown in the ESI.† The performances of the different machine learning models toward the training and test sets are depicted in Fig. 3a–c. Comparisons of the predicted and true values are shown in Fig. 3d–g.
+ Fig. 3  (a–c) The prediction performances of different models toward the training and test datasets. The accuracy is defined by the fraction of accurate values (PCE derivation ≤ 1.0%) in the entire test set. (d–g) Comparisons of the predicted and true values for the training and test sets based on different models. The red dashed line describes the condition where the predicted value equals the true value. (h) The importance of the input features in the RF model. 
+Upon comparing the four different models, it is clear that the RF model performs best, with the lowest RMSE (0.64%) and highest r (0.90) values when using the test set. From Fig. 3d–g, it can be seen that the RF model predicts accurately, especially in the PCE range of 18–21%. The amount of learning data in the ultra-high-efficiency range (>22%) is lower than in the moderate-efficiency range, so the learning results for ultra-high efficiencies are not as good as at moderate efficiencies. The NN model also performs well, with reasonably low RMSE (0.80%) and high r (0.87) values toward the test set. It generally predicts accurately at all efficiency scales, which indicates the advantage of the NN algorithm in processing complex systems with many features and relatively small datasets. The LR model is simple and not able to process such a complex system; herein, the model performance is poor. The XGBoost model is overfitted, performing excellently on the training set but poorly on the test set. The relatively small dataset and numerous features cause this issue, which hyperparameter optimization cannot resolve.
+As the RF model performs best on the whole, it is used to analyze the importance of different features. As shown in Fig. 3h, the top 6 critical features are C_PCE, SHsNH3p, A2X, P2X, SHCsats, and SwHBa. C_PCE is the most crucial feature in determining the PCE, consistent with the correlation analysis shown in Fig. 2e. Combining the importance and correlation analysis results, we can conclude that a high C_PCE, excess Pb2+ and fewer A-site cations in the perovskite precursor solution, and more NH3+ and fewer saturated C bonds/benzene rings in the interface material can lead to a high PCE. Researchers report that many other functional groups (e.g., –NH2, –S–, –COOH, etc.) can also increase the PCE,40–42 and this is also incorporated into our learning data. However, these are not as efficient as NH3+. Different groups modify the values of some input features (like SHBd, gmax, and hmax), but changes to these features have smaller effects on the PCE. A single trial comparing the functions of different groups may reach a different conclusion; however, on the whole, NH3+ is the best choice as a functional group.
+As the RF model performs well on data outside the training set, we use it to predict the corresponding PCEs of devices using different interface materials. 115 interface materials were generated, including the most commonly used material PEAI and many unreported materials, which have one NH3+ group, a varied number of saturated C bonds (obtained via changing the C chain length and number of benzene rings), and other functional groups (–F, –O–, and –S–). C_PCE, A2X, and P2X are 21%, 0.318 (A-site cation deficient), and 0.34 (excess Pb2+), respectively. The predicted PCE values vary from 21.60% to 22.17%. The corresponding PCE of a device based on PEAI is 21.67%. Fig. 4 shows the molecular structures of some representative interface materials and their corresponding relative predicted PCEs. Various materials enable higher PCEs than PEAI. Interface materials with long C chains are less efficient than those with short ones. In addition, interface materials with one or more benzene rings are generally less efficient than those without benzene rings. Introducing additional functional groups (–F, –O–, and –S–) affects the PCE less than varying the benzene ring number or C-chain length. Moreover, it does not matter if a 2D perovskite phase is formed by the interface material; materials with small organic cations, like EA+ and MA+, are more efficient than those with large organic cations.
+ Fig. 4  Relative predicted PCEs of different interface materials and the DFT calculation results based on several representative materials. 
+To explain why these features are so important in determining the device PCE, we use density functional theory (DFT) calculations to model the interactions between the perovskite surface and the interface materials. Details relating to the DFT calculation settings are given in the ESI.† As shown in Fig. 4 and summarized in Table S3,† interface materials with high PCEs undergo strong interactions (high binding energies) with the perovskite surface (Pb2+-rich surface). The intense interactions between the interface material and the perovskite surface allow effective defect passivation and stabilize the grain boundaries/interface. Therefore, the results predicted by the machine learning model are reasonable. This also cross-validates that employing materials that have high binding energies with the perovskite surface is essential for getting high PCEs.
+MAI enables the highest device performance among these materials, revealing its high potential as an interface material. We carried out experimental validation to verify these predictions, and the results are presented in Fig. 5. The mean values of the photovoltaic parameters are listed in Table S4.† It is clear that MAI or PEAI modification leads to notable increases in VOC and FF, leading to significant increases in the PCE. A suitable concentration of MAI raises the mean VOC by 93 mV, leading to an increase of 3.16% in the mean PCE. The PEAI concentration was pre-optimized, with the mean VOC and PCE values increasing by 80 mV and 2.70%, respectively. Fig. S5† shows the performances of the best-performing control device and MAI-modified device, revealing that the PCE is significantly increased from 19.80% to 22.63% upon MAI modification. The experimental results follow the prediction results obtained via machine learning, showing the reliability of the machine learning models proposed here.
+ Fig. 5  Device performances of PSCs with and without interface modification: (a) current density–voltage (J–V) curves of the best-performing devices under 100 mW cm−2 illumination and (b) statistical PCEs of multiple devices fabricated from the same batch. Here, the number following MAI represents its relative concentration in solution. (c) Nyquist plots of control, MAI-treated, and PEAI-treated devices. The inset shows the equivalent circuit, where RS, Rrec, and CPE represent the series resistance, the recombination resistance, and the corresponding constant phase angle element, respectively. Plots of (d) −dV/dJ versus (JSC + J)−1 and (e) ln(JSC + J) versus (V + RSJ) extracted from J–V curves. The straight lines show linear fitting. (f) J–V curves from SCLC measurements based on FTO/perovskite (with/without interface modification)/Au device architecture. An SEM image of the perovskite layer is shown in Fig. S6.† 
+
+Fig. 5c shows the Nyquist plots of the PSCs. It can be seen that the MAI-treated device exhibits the largest recombination resistance (Rrec) compared to the control device and PEAI-treated device, indicating the existence of minimized carrier recombination in the MAI-treated device, which should be responsible for improved FF and VOC. To further understand the underlying mechanisms governing the different performances of the PSCs with/without interface modification, we extracted and analyzed the device parameters from the J–V curves shown in Fig. 5a. The device parameters of the PSCs, including the ideality factor of the diode (m), the series resistance (RS), and the reverse saturation current (J0) of the PSCs, can be calculated according to the method described in the ESI.† Plots of dV/dJ versus (JSC + J)−1 and of ln(JSC + J) versus (V − J × RS) are shown in Fig. 5d and e, respectively, and the extracted values can be found in Table S5.† PSCs with MAI and PEAI modification exhibit comparable RS values to the control device (1.76, 1.90, and 1.43 Ω cm2, respectively), corresponding to their similar JSC values. The J0 values of the control PSC and PSCs with MAI and PEAI modification are 2.88 × 10−6, 4.27 × 10−9, and 4.40 × 10−9 mA cm−2, respectively. J0 is directly related to the recombination rate,43 and a decreased J0 value after MAI or PEAI modification implies reduced recombination loss in the corresponding PSC. According to the relationship VOC = (mKBT/e)ln((JSC/J0) + 1), a smaller J0 value leads to larger VOC value. Hence, PSCs with MAI interface modification have larger VOC values than those without interface modification. We also evaluated changes in the trap-state density in the perovskite films via space-charge-limited current (SCLC) measurements. The trap-state density can be determined from the trap-filled limit voltage (VTFL) (as described in the ESI†), and a smaller VTFL value indicates a lower trap-state density. As shown in Fig. 5f, the measured VTFL values were 1.01 V, 0.82 V, and 0.55 V for control, PEAI-treated, and MAI-treated devices, respectively. The corresponding Ntrap values are 2.1 × 1016, 1.7 × 1016, and 1.1 × 1016 cm−3, respectively. The above results cross-validate that the trap density is notably decreased upon MAI modification, which suppresses carrier recombination and reduces VOC loss, leading to improved VOC and FF values. In this work, it is necessary to declare that the output of the prediction model focuses only on the photovoltaic parameters of the device and it does not include a prediction of device stability. During actual device fabrication, researchers can choose a more stable material that performs better than MAI for thin-film optimization, instead of being limited to MAI. High-throughput screening and the prediction of modification materials in this work can provide more options (like the other modification materials in the red dashed boxes in Fig. 4).
+Based on the above results and discussion, we can conclude three essential rules for the screening/design of interface materials: (1) the material should have at least one NH3+ terminal; (2) it is better to have a short C chain and no benzene ring; and (3) other functional groups are not as efficient as NH3+. These findings are supported by the experimental results listed in the dataset; however, deep insights into the underlying mechanisms behind these findings should be further obtained via systematic experiments and specific characterization methods. Moreover, these findings are obtained from a machine learning model based on device PCE; the results would probably be different if we considered other device performance metrics (like stability, cost, and so on). More machine learning models related to other device performance metrics are essential for screening materials for real-world applications. Despite this, it is clear that a machine learning approach is quite powerful for helping with intelligent material screening/design. It can provide general rules for material screening/design and predict almost-exact results before experiments. This will significantly accelerate the development of new interface materials and reduce the material costs and time consumption.
+Conclusions
+In summary, we employ a data-driven approach to analyze reported results and explore a quantitative model based on machine learning algorithms with a focus on how interface materials affect device efficiency. Based on the model, we propose general rules for the intelligent design/screening of interface materials and rationalize these rules via density functional theory calculations. We use the model to predict the device efficiencies of more than 100 interface materials; among these, MAI performs best. We validated the results experimentally using MAI and commonly used PEAI as interface materials, respectively, revealing the superiority of MAI. Our manuscript provides an efficient workflow for the machine-learning-assisted intelligent design/screening of interface materials for use in PSCs, and this can also be applied to other materials used in PSCs. Furthermore, our work also reveals the critical role of machine learning in the high-throughput design/screening of materials, and this could significantly promote the industrialization of PSCs via accelerating the exploration of efficient materials/techniques with low fabrication costs.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+The authors express thanks to the National Natural Science Foundation of China under Grant No. 62075006 and 52002070, the Natural Science Foundation of Fujian under Grant No. 2020J01197, and the Educational Research Project of Young and Middle-Aged Teachers in Fujian Province under Grant No. JAT190072.
+References
+Y. Cheng, Y. Peng, A. K. Y. Jen and H. L. Yip, Sol. RRL, 2022, 6, 2100545 CrossRef CAS .
+R. Wang, T. Huang, J. Xue, J. Tong, K. Zhu and Y. Yang, Nat. Photonics, 2021, 15, 411 CrossRef CAS .
+Z. Li, T. R. Klein, D. H. Kim, M. Yang, J. J. Berry, M. F. A. M. van Hest and K. Zhu, Nat. Rev. Mater., 2018, 3, 18017 CrossRef CAS .
+
+          NREL, Best Research Cell Efficiencies, https://www.nrel.gov/pv/cell-efficiency.html, accessed May 2022 Search PubMed.
+J. Chen and N. G. Park, Adv. Mater., 2019, 31, 1803019 CrossRef CAS PubMed .
+B. Ehrler, E. Alarcón-Lladó, S. W. Tabernig, T. Veeken, E. C. Garnett and A. Polman, ACS Energy Lett., 2020, 5, 3029 CrossRef CAS .
+Y. Lei, Y. Xu, M. Wang, G. Zhu and Z. Jin, Small, 2021, 17, 2005495 CrossRef CAS PubMed .
+Q. Jiang, Y. Zhao, X. Zhang, X. Yang, Y. Chen, Z. Chu, Q. Ye, X. Li, Z. Yin and J. You, Nat. Photonics, 2019, 13, 460 CrossRef CAS .
+J. Zhuang, P. Mao, Y. Luan, X. Yi, Z. Tu, Y. Zhang, Y. Yi, Y. Wei, N. Chen, T. Lin, F. Wang, C. Li and J. Wang, ACS Energy Lett., 2019, 4, 2913 CrossRef CAS .
+R. Wang, J. Xue, K.-L. Wang, Z.-K. Wang, Y. Luo, D. Fenning, G. Xu, S. Nuryyeva, T. Huang, Y. Zhao, J. Lee Yang, J. Zhu, M. Wang, S. Tan, I. Yavuz, K. N. Houk and Y. Yang, Science, 2019, 366, 1509 CrossRef CAS PubMed .
+X. Zheng, Y. Hou, C. Bao, J. Yin, F. Yuan, Z. Huang, K. Song, J. Liu, J. Troughton, N. Gasparini, C. Zhou, Y. Lin, D. J. Xue, B. Chen, A. K. Johnston, N. Wei, M. N. Hedhili, M. Wei, A. Y. Alsalloum, P. Maity, B. Turedi, C. Yang, D. Baran, T. D. Anthopoulos, Y. Han, Z. H. Lu, O. F. Mohammed, F. Gao, E. H. Sargent and O. M. Bakr, Nat. Energy, 2020, 5, 131 CrossRef CAS .
+I. S. Yang and N. G. Park, Adv. Funct. Mater., 2021, 31, 2100396 CrossRef CAS .
+E. Ochoa-Martinez, M. Ochoa, R. D. Ortuso, P. Ferdowsi, R. Carron, A. N. Tiwari, U. Steiner and M. Saliba, ACS Energy Lett., 2021, 6, 2626 CrossRef CAS .
+D. Ma, W. Li, X. Chen, Z. Yang, J. Zhao, Z. Yang, Y. Zhang and Z. Chi, Small, 2021, 17, 2100678 CrossRef CAS PubMed .
+S. Song, E. Y. Park, B. S. Ma, D. J. Kim, H. H. Park, Y. Y. Kim, S. S. Shin, N. J. Jeon, T. S. Kim and J. Seo, Adv. Energy Mater., 2021, 11, 2003382 CrossRef CAS .
+D. Song, D. Wei, P. Cui, M. Li, Z. Duan, T. Wang, J. Ji, Y. Li, J. M. Mbengue, Y. Li, Y. He, M. Trevor and N. G. Park, J. Mater. Chem. A, 2016, 4, 6091 RSC .
+S. Xiong, Z. Hou, W. Dong, D. Li, J. Yang, R. Bai, Y. Wu, D. Li, H. Wu, Z. Ma, J. Xu, X. Liu and Q. Bao, Adv. Energy Mater., 2021, 11, 2101394 CrossRef CAS .
+X. Li, W. Sheng, X. Duan, Z. Lin, J. Yang, L. Tan and Y. Chen, ACS Appl. Mater. Interfaces, 2022, 14, 34161 CrossRef CAS PubMed .
+R. Ma, J. Zheng, Y. Tian, C. Li, B. Lyu, L. Lu, Z. Su, L. Chen, X. Gao, J. X. Tang and W. C. H. Choy, Adv. Funct. Mater., 2022, 32, 2105290 CrossRef CAS .
+C. Luo, G. Zheng, F. Gao, X. Wang, Y. Zhao, X. Gao and Q. Zhao, Joule, 2022, 6, 240 CrossRef CAS .
+F. Zhang, S. Yeon Park, C. Yao, H. Lu, S. P. Dunfield, C. Xiao, S. Uličná, X. Zhao, L. du Hill, X. Chen, X. Wang, L. E. Mundt, K. H. Stone, L. T. Schelhas, G. Teeter, S. Parkin, E. L. Ratcliff, Y.-L. Loo, J. J. Berry, M. C. Beard, Y. Yan, B. W. Larson and K. Zhu, Science, 2022, 375, 71 CrossRef CAS PubMed .
+Y. Li, Y. Lu, X. Huo, D. Wei, J. Meng, J. Dong, B. Qiao, S. Zhao, Z. Xu and D. Song, RSC Adv., 2021, 11, 15688 RSC .
+P. Priya and N. R. Aluru, npj Comput. Mater., 2021, 7, 1 CrossRef .
+N. T. P. Hartono, J. Thapa, A. Tiihonen, F. Oviedo, C. Batali, J. J. Yoo, Z. Liu, R. Li, D. F. Marrón, M. G. Bawendi, T. Buonassisi and S. Sun, Nat. Commun., 2020, 11, 1 CrossRef .
+W. Yan, Y. Liu, Y. Zang, J. Cheng, Y. Wang, L. Chu, X. Tan, L. Liu, P. Zhou, W. Li and Z. Zhong, Nano Energy, 2022, 99, 107394 CrossRef CAS .
+C. Kunkel, J. T. Margraf, K. Chen, H. Oberhofer and K. Reuter, Nat. Commun., 2021, 12, 1 CrossRef PubMed .
+C. Zhu, W. Liu, Y. Li, X. Huo, H. Li, K. Guo, B. Qiao, S. Zhao, Z. Xu, H. Zhao and D. Song, Sol. Energy, 2021, 228, 45 CrossRef CAS .
+L. H. Hall and L. B. Kier, J. Chem. Inf. Comput. Sci., 2000, 40, 784 CrossRef CAS PubMed .
+L. H. Hall, B. Mohney and L. B. Kier, J. Chem. Inf. Comput. Sci., 1991, 31, 76 CrossRef CAS .
+L. B. Kier and L. H. Hall, Pharm. Res., 1990, 7, 801 CrossRef CAS PubMed .
+C. W. Yap, J. Comput. Chem., 2011, 32, 1466 CrossRef CAS PubMed .
+R. Olivares-Amaya, C. Amador-Bedolla, J. Hachmann, S. Atahan-Evrenk, R. S. Sánchez-Carrera, L. Vogt and A. Aspuru-Guzik, Energy Environ. Sci., 2011, 4, 4849 RSC .
+G. Long, R. Sabatini, M. I. Saidaminov, G. Lakhwani, A. Rasmita, X. Liu, E. H. Sargent and W. Gao, Nat. Rev. Mater., 2020, 5, 423 CrossRef .
+G. Long, C. Jiang, R. Sabatini, Z. Yang, M. Wei, L. N. Quan, Q. liang, A. Rasmita, M. Askerka, G. Walters, X. Gong, J. Xing, X. Wen, R. Quintero-Bermudez, H. Yuan, G. Xing, X. R. Wang, D. Song, O. Voznyy, M. Zhang, S. Hoogland, W. Gao, Q. Xiong and E. H. Sargent, Nat. Photonics, 2018, 12, 528 CrossRef CAS .
+J. Zhang, X. Li, L. Wang, J. Yu, S. Wageh and A. A. Al-Ghamdi, Appl. Surf. Sci., 2021, 564, 150464 CrossRef CAS .
+M. Yang, D. H. Kim, Y. Yu, Z. Li, O. G. Reid, Z. Song, D. Zhao, C. Wang, L. Li, Y. Meng, T. Guo, Y. Yan and K. Zhu, Mater. Today Energy, 2018, 7, 232 CrossRef .
+S. Gong, S. Wang, T. Zhu, X. Chen, Z. Yang, M. J. Buehler, Y. Shao-Horn and J. C. Grossman, JACS Au, 2021, 1, 1904 CrossRef CAS PubMed .
+D. Song, P. Cui, T. Wang, D. Wei, M. Li, F. Cao, X. Yue, P. Fu, Y. Li, Y. He, B. Jiang and M. Trevor, J. Phys. Chem. C, 2015, 119, 22812 CrossRef CAS .
+C. Ran, Y. Wang, W. Gao, Y. Xia, Y. Chen and W. Huang, Sol. RRL, 2021, 5, 2100665 CrossRef CAS .
+D. Bi, X. Li, J. v. Milić, D. J. Kubicki, N. Pellet, J. Luo, T. LaGrange, P. Mettraux, L. Emsley, S. M. Zakeeruddin and M. Grätzel, Nat. Commun., 2018, 9, 1 CrossRef CAS PubMed .
+B. Liu, H. Bi, D. He, L. Bai, W. Wang, H. Yuan, Q. Song, P. Su, Z. Zang, T. Zhou and J. Chen, ACS Energy Lett., 2021, 6, 2526 CrossRef CAS .
+X. Li, C. C. Chen, M. Cai, X. Hua, F. Xie, X. Liu, J. Hua, Y. T. Long, H. Tian and L. Han, Adv. Energy Mater., 2018, 8, 1800715 CrossRef .
+J. You, Z. Hong, T. bin Song, L. Meng, Y. Liu, C. Jiang, H. Zhou, W. H. Chang, G. Li and Y. Yang, Appl. Phys. Lett., 2014, 105, 183902 CrossRef .
+
+Footnote† Electronic supplementary information (ESI) available. See https://doi.org/10.1039/d2ta04788hThis journal is © The Royal Society of Chemistry 2022
+Table Content:
+
+ 	Fig. 1  The workflow of the machine learning approach used in this work.	 
+
+ 	Fig. 2  (a–d) A comparison of the predicted PCEs using RF models with the true values reported in the literature based on different combinations of features based on the interface material, perovskite material, and control device performance. The red dashed lines represent the condition where the predicted PCE equals the true PCE. (e) A correlation matrix of the PCE and extracted features. Here, the value in the figure represents the Pearson correlation coefficient, which is large for strong correlation. The sign (±) of the value means positive (+) or negative (−) correlation.	 
+
+C_PCE	The PCE of the control device
+
+rA, A2X, P2X	The effective radii of A-site cations and the molar ratios of A-site cations or Pb ions to halide ions (A2X/P2X) in the precursor solutions, respectively
+
+SHBd, SwHBa, SHsNH3p, SHCsats	The sums of E-states of hydrogen (H) bond donors, weak H-bond acceptors, H-bonds from NH3+, and H bonded to saturated C, respectively
+
+meanI, gmax, gmin, hmax, hmin, DELS	Mean intrinsic E-state I, maximum/minimum E-state (gmax/gmin), maximum/minimum H E-state (hmax/hmin), and the sum of all atom intrinsic state differences, respectively
+
+fragC
+	The complexity of the material
+
+ 	Fig. 3  (a–c) The prediction performances of different models toward the training and test datasets. The accuracy is defined by the fraction of accurate values (PCE derivation ≤ 1.0%) in the entire test set. (d–g) Comparisons of the predicted and true values for the training and test sets based on different models. The red dashed line describes the condition where the predicted value equals the true value. (h) The importance of the input features in the RF model.	 
+
+ 	Fig. 4  Relative predicted PCEs of different interface materials and the DFT calculation results based on several representative materials.	 
+
+ 	Fig. 5  Device performances of PSCs with and without interface modification: (a) current density–voltage (J–V) curves of the best-performing devices under 100 mW cm−2 illumination and (b) statistical PCEs of multiple devices fabricated from the same batch. Here, the number following MAI represents its relative concentration in solution. (c) Nyquist plots of control, MAI-treated, and PEAI-treated devices. The inset shows the equivalent circuit, where RS, Rrec, and CPE represent the series resistance, the recombination resistance, and the corresponding constant phase angle element, respectively. Plots of (d) −dV/dJ versus (JSC + J)−1 and (e) ln(JSC + J) versus (V + RSJ) extracted from J–V curves. The straight lines show linear fitting. (f) J–V curves from SCLC measurements based on FTO/perovskite (with/without interface modification)/Au device architecture. An SEM image of the perovskite layer is shown in Fig. S6.†	 
+Footnote
+† Electronic supplementary information (ESI) available. See https://doi.org/10.1039/d2ta04788h
+
+This journal is © The Royal Society of Chemistry 2022

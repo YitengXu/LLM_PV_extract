@@ -1,0 +1,785 @@
+Donor and acceptor levels of organic photovoltaic compounds from first principles  - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/C2CP43491A View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C2CP43491A
+(Paper)
+Phys. Chem. Chem. Phys., 2013, 15, 685-695Show CompoundsShow Chemical TermsDonor and acceptor levels of organic photovoltaic compounds from first principles
+
+        
+          
+            Ismaila 
+            Dabo
+          
+        
+      *a, 
+      
+        
+          
+            Andrea 
+            Ferretti
+          
+        
+      b, 
+      
+        
+          
+            Cheol-Hwan 
+            Park
+          
+        
+      cd, 
+      
+        
+          
+            Nicolas 
+            Poilvert
+          
+        
+      e, 
+      
+        
+          
+            Yanli 
+            Li
+          
+        
+      f, 
+      
+        
+          
+            Matteo 
+            Cococcioni
+          
+        
+      g and 
+
+        
+          
+            Nicola 
+            Marzari
+          
+        
+      c
+aUniversité Paris-Est, CERMICS, Project-team INRIA Micmac, 6 & 8 avenue Blaise Pascal, 77455 Marne-la-Vallée, France. E-mail: daboi@cermics.enpc.fr
+bCentro S3, CNR–Istituto Nanoscienze, I-41125 Modena, Italy
+cTheory and Simulations of Materials, École Polytechnique Fédérale de Lausanne, Station 12, 1015 Lausanne, Switzerland
+dDepartment of Physics and Astronomy, Seoul National University, Seoul, Korea
+eRowland Institute at Harvard, Cambridge, USA
+fDepartment of Physics, Xiamen University, Xiamen 361005, Republic of China
+gDepartment of Chemical Engineering and Materials Science, University of Minnesota, Minneapolis, MN, USA
+Received 
+      30th June 2012
+    , Accepted 1st November 2012First published on 5th November 2012AbstractAccurate and efficient approaches to predict the optical properties of organic semiconducting compounds could accelerate the search for efficient organic photovoltaic materials. Nevertheless, predicting the optical properties of organic semiconductors has been plagued by the inaccuracy or computational cost of conventional first-principles calculations. In this work, we demonstrate that orbital-dependent density-functional theory based upon Koopmans' condition [Phys. Rev. B, 2010, 82, 115121] is apt for describing donor and acceptor levels for a wide variety of organic molecules, clusters, and oligomers within a few tenths of an electron-volt relative to experiment, which is comparable to the predictive performance of many-body perturbation theory methods at a fraction of the computational cost.
+I. Introduction
+Despite the positive attributes of organic materials for next-generation photovoltaics, the effective deployment of organic photovoltaic (OPV) cells poses fundamental problems at the molecular scale. Besides enhancing the durability of organic compounds, the central requisite to the mass-market viability of OPV modules is to raise their power conversion efficiency (PCE) beyond 10–15%.1 Comparatively, the efficiency of current OPV architectures (Fig. 1) barely exceeds 9–10% PCE under standard test conditions.2 Nevertheless, the margin for improvement is vast due to the exceptional chemical versatility of organic materials,3 and accurate approaches to predict the charge-transfer and optical properties of new compounds could allow for extensive screening of promising semiconducting organics.4
+ Fig. 1  Schematics of an organic solar cell showing a bilayered donor–acceptor heterojunction (top). Bilayered, nanopatterned, and mixed-phase heterojunctions with typical power conversion efficiencies (bottom). 
+However, conventional density-functional theory approximations in their static (DFT) and time-dependent (TDDFT) formulations5–7 suffer from severe limitations in predicting the electronic structure of semiconducting materials,8 precluding the quantitative and even qualitative elucidation of relevant photovoltaic mechanisms. Notably, conventional DFT and TDDFT approximations tend to systematically destabilize occupied states and overstabilize unoccupied states in organic and organometallic complexes, leading in particular to the incorrect description of the electronic properties (charged excitations) and optical properties (neutral excitations) of donor–acceptor dyads, extended polymer molecules, and heavy-metal sensitizing dyes.9–12 To overcome DFT limitations, one privileged route has been to resort to many-body approaches, namely, to many-body perturbation theory approximations such as GW.13,14 The GW method, while accurate in predicting electronic spectra, is much more expensive than DFT although considerable progress has been achieved in reducing the cost of GW calculations.15–19
+In parallel to many-body perturbation theory, less expensive orbital-dependent density-functional theories (OD-DFTs) represent promising alternatives.20 At present, the most widely used OD-DFT methods are hybrid density-functional theory approximations.21 Hybrid functionals in their linear-admixture or range-separated forms have been shown to improve upon conventional DFT in predicting electronic properties.20,22–24 Alternatively, self-interaction corrections to density-functional theory approximations25 represent a second category of OD-DFT methods that are now rapidly growing in recognition due to their improved accuracy and lower computational cost. In self-interaction-corrected approaches, the total energy of the system is expressed explicitly in terms of individual orbital densities to rectify nonphysical errors inherent in orbital-independent DFT. Successful applications of advanced self-interaction corrections have appeared with an accuracy potentially approaching that of many-body methods in predicting electronic levels and electrical responses.26–29
+In this work, we highlight the predictive accuracy of the recently developed self-interaction correction based upon Koopmans' theorem (Koopmans-compliant OD-DFT)28,29 in capturing the electronic levels of OPV compounds. Electronic levels represent reliable PCE indicators3 and have successfully served as fundamental inputs for first-principles combinatorial screening of organic semiconductors.1,4 We demonstrate that Koopmans-compliant OD-DFT is apt for describing donor levels within 0.1–0.4 eV and acceptor levels within 0.2–0.6 eV relative to experiment, which is comparable to the precision of the GW method. In its simplest formulation, the method can be trivially implemented in conventional electronic-structure codes with an algorithmic cost potentially lower than that of hybrid-DFT functionals as it does not require evaluating exchange terms. Furthermore, the method holds promise for accurate time-dependent extensions based upon the improved description of the underlying electronic spectrum.
+This work is organized as follows. First, we underscore the significance of Koopmans' theorem in understanding the charge-transfer behavior of donor–acceptor complexes. Second, we outline existing electronic-structure approaches that aim at enforcing Koopmans' theorem. Third, we present the Koopmans-compliant OD-DFT method to correct the nonphysical tendency of conventional DFT approximations to destabilize occupied states and overstabilize unoccupied states. Last, we demonstrate the efficiency and accuracy of the method for families of organic compounds of interest to photovoltaics.
+II. Methods
+A. Koopmans' theorem
+Koopmans-compliant functionals aim at imposing Koopmans' theorem in DFT approximations. Koopmans' theorem enables one to equate orbital energies (that is, the expectation values of the effective Hamiltonian) with total energy differences, which correspond to withdrawing an electron from a stationary electron state.
+The relevance of Koopmans' theorem on the accuracy of effective-potential theories in predicting electronic spectra has been recognized in several theoretical and computational studies.1,24,30–35 In addition, Koopmans' theorem is the central condition to correctly describe electron transfer within donor–acceptor pairs. To illustrate this fact, we consider a positively charged pentacene–fullerene dyad in the limit of infinite intermolecular separation where electronic interactions between the two molecules can be neglected.
+
+Fig. 2 depicts the energies of the isolated pentacene oligomer and fullerene cluster. The total energy of the infinitely separated molecular pair as a function of the transferred charge q is also reported. Within the local spin-density approximation (LSDA), [Fig. 2(a)], the three curves exhibit a marked nonlinear dependence on q, reflecting the fact that LSDA violates Koopmans' theorem. In other words, the derivative of the energy dE(Xq)/dq of an individual fractionally charged cation Xq, which corresponds to the opposite energy of its highest occupied orbital, departs significantly from the finite energy difference E(X+) − E(X), which corresponds to the ionization potential of the neutral molecule X. More precisely, the dependence of the energies is found to be convex, causing the dyad to be most stable at a fractional charge qmin close to ⅔. This observation is in qualitative contradiction to the expectation that the charge should fully localize onto the strongest electron acceptor (namely, fullerene). In contrast to this nonphysical behavior, Koopmans-compliant energy curves are linear [Fig. 2(b)] as a result of Koopmans' condition dE(Xq)/dq = E(X+) − E(X), leading to the expected stabilization of the fully transferred charge (qmin = 1).
+ Fig. 2  Energy of a positively charged pentacene–fullerene dyad in the infinite separation limit (black) and energies of the isolated fractionally charged pentacene Pq (light blue) and fullerene C601−q molecules (dark blue) as a function of the transferred charge q within the LSDA and Koopmans-compliant descriptions. (Energies are given relative to the fully ionized individual molecules.) 
+Similar observations would be made for other donor–acceptor complexes. Moreover, at finite separation where electronic coupling between the two molecules must be taken into account, LSDA would also significantly underestimate the transferred charge. These results highlight the central importance of imposing Koopmans' theorem on the individual subsystems to correctly describe charge transfer in donor–acceptor pairs.
+B. Existing methods
+At present, there exist different DFT-based methods that aim at imposing Koopmans' theorem.24,30,36–40 The self-interaction correction of Perdew and Zunger25 can be regarded as one of the earliest approaches to restore the physical interpretation of orbital energies as ionization energies. In this approach, the Kohn–Sham density functional EKS is augmented with corrections that remove the self-interaction of the electronic wave functions in the one-electron limit. In explicit terms, the Perdew–Zunger (PZ) correction to the Kohn–Sham DFT functional reads , where ρiσ stands for the density of the one-electron state ψiσ and EKSHxc denotes the Hartree plus exchange-correlation component of the Kohn–Sham functional. The PZ approach is more expensive than local and semilocal DFT approximations but appreciably less costly than hybrid-DFT approximations. It rectifies the tendency of local and semilocal DFT to destabilize occupied orbitals in atoms but overcorrects the error for molecules, leading to an overestimation of ionization energies of up to 1–2 eV. Also, the PZ correction leaves the energies of empty levels unchanged, meaning that acceptor levels remain largely underestimated (that is, excessively negative). Furthermore, the lack of balance in the PZ correction of occupied and unoccupied orbitals leads to the underestimation of the total energies of molecules and the underestimation of interatomic distances.
+A solution to the lack of balance in the PZ correction has been proposed by Baer et al. in the form of a range-separated hybrid functional [the Baer–Neuhauser–Livshits (BNL) functional] in which long-range interactions are treated at the explicit-exchange level, whereas short-range interactions are described at the semilocal density-functional level.26,41 In order to impose Koopmans' theorem within BNL, the original empirical parameter γ that determines the range of the electrostatic separation (1/r = erf(γr)/r + erfc(γr)/r) is optimally tuned to impose the agreement between orbital energies and ionization energies for the frontier orbitals of the system,30,37 leading to considerable improvement in predicting electronic and optical spectra.24,40 In terms of computational cost, BNL calculations are as expensive as hybrid-DFT calculations.
+A recently proposed approach that targets minimal computational cost is the method of Lany and Zunger,38,39 which consists of rectifying deviations from Koopmans' theorem through on-site projection terms that shift the electronic levels in order to impose the correspondence between orbital energies and ionization energies. Because it only relies on the calculation of on-site occupations, the Lany–Zunger method does not cause any noticeable increase in computational cost relative to the underlying DFT approximation. However, it requires to preselect atomic orbitals to construct the on-site projectors, making its application less systematic than the PZ correction and optimally tuned BNL method.
+C. Present method
+The Koopmans-compliant method that we have introduced in ref. 28 provides a promising alternative to existing approaches. The method is systematic and allies conceptual simplicity, computational performance, and predictive accuracy, thereby permitting the precise and efficient electronic-structure description of a wide variety of compounds.
+The motivation for introducing the Koopmans-compliant method originates from the practical observation that determining ionization potentials (IPs) of molecules as differences of ground-state energies IN = EN−1 − EN (where IN and EN denote the IP and total energy of the system of N electrons) yields predictions in very good agreement with experiment within conventional DFT approximations, namely, the LSDA approach and semilocal generalized-gradient approximations (GGAs)—in the literature, the procedure that consists of evaluating ionization energies from differences of DFT total energies is commonly known as the ΔSCF method.42 For electron affinities (EAs), ΔSCF predictions AN = EN − EN+1 are also found to be in agreement with experiment with the central caveat that ΔSCF predictions for EAs are only possible insofar as the system can accommodate the added electron within the approximation used; this condition on the stability of anionic states is necessary to calculate the ground-state energy of negatively charged systems. In practical terms, failure to stabilize anions is frequent within approximate DFT43 and arises from spurious self-interaction whereby an electron can interact with itself through the nonphysical contribution from its own charge density to the effective Kohn–Sham Hamiltonian.25
+Therefore, in order to obtain reliable predictions for orbital levels (especially, for frontier donor and acceptor levels that determine the charge-transfer properties of the system), it is crucial to satisfy the following conditions: (a) the correspondence between the effective orbital levels and ΔSCF total-energy differences must be imposed; (b) the established accuracy of ΔSCF energies must be preserved; and (c) the calculations must circumvent the inability of approximate functionals to stabilize negatively charged systems. Fulfilling these requirements is the objective of the non-Koopmans OD-DFT correction that is described below.
+In presenting the non-Koopmans correction, it is important to distinguish between electronically adiabatic (i.e., unrelaxed) ionization processes, whereby orbitals are kept frozen upon ionizing the system, and diabatic (i.e., relaxed) ionization processes, whereby orbitals are allowed to rearrange self-consistently. For adiabatic ionization, the correspondence between orbital energies and total energies is referred to as the restricted Koopmans' theorem, whereas for diabatic ionization, it is termed the generalized Koopmans' theorem.44 In what follows, we consider the adiabatic case before addressing the diabatic case.
+Bearing in mind this distinction, the starting point of the method consists of defining an adiabatic measure of the deviation from Koopmans' theorem in terms of an orbital-dependent energy functional. We thus consider for the moment an unrelaxed process that corresponds to depleting the stationary state ψiσ. For this process, the energy measure that monitors deviations from the restricted Koopmans' theorem can be written as the non-Koopmans energy (1)first introduced by Perdew and Zunger in discussing the nonlinear behavior of the DFT total energy upon ionization.25 In eqn (1), the superscript notation {·}u indicates that the orbitals are kept unrelaxed along the ionization path, fiσ denotes the initial occupation of the ionized orbital, and εuiσ stands for the expectation value of the effective Kohn–Sham Hamiltonian for the ionized state ψiσ along the unrelaxed curve. In other words, εuiσ equals the derivative of the unrelaxed total energy Euiσ as a function of the occupation of the ionized state (the restricted Janak theorem). Alternatively, the unrelaxed non-Koopmans energy can be written in explicit terms as Πuiσ(f) = fiσ(2f − fiσ)EH[niσ] + Exc[ρ − ρiσ] − Exc[ρ] + ∫drvxc,σ(r;[ρ + (f − fiσ)niσ])ρiσ(r),(2)where ρiσ(r) stands for the orbital density, niσ(r) = ρiσ(r)/∫dr′ρiσ(r′) denotes the normalized density, Exc and EH represent the exchange-correlation and Hartree energy functionals, and vxc,σ is the exchange-correlation potential.
+The pictorial interpretation of the non-Koopmans energy is simple. Graphically, the unrelaxed non-Koopmans energy Πuiσ(f) corresponds to the error made in approximating the ionization curve connecting the initial state (I) to the final state (F) by a straight line whose slope is the derivative of the total energy at the transition point (Tf) (Fig. 3). In fact, if the adiabatic Koopmans' theorem were satisfied, that is, if the energy εuiσ(f) were constant and equal to the ΔSCF energy difference Euiσ(fiσ) − Euiσ(0), the ionization curve would be exactly linear and the non-Koopmans deviation Πuiσ(f) would vanish for any occupation f between 0 and fiσ.
+ Fig. 3  Diagram of the non-Koopmans energy Πu2p, which quantifies departure from linearity for the adiabatic ionization curve of the 2p state of carbon within LSDA. 
+With the non-Koopmans measure in hand, it becomes possible to impose Koopmans' theorem, as shown in ref. 28. Here, for the purpose of outlining the method, the non-Koopmans-corrected (NKC) functional can be described simply as a sum of weighted orbital constraints that are added to the Kohn–Sham total energy functional to penalize deviations from Koopmans' theorem: (3)In eqn (3), the terms Πu,KSiσ are the adiabatic non-Koopmans deviations that correspond to the chosen Kohn–Sham approximation, the coefficients αNKiσ represent the weights of the non-Koopmans penalties, which must be calculated self-consistently to equate orbital energies with ΔSCF energy differences [condition (a)] and the coefficients fNKiσ stand for the reference occupations, which must be fixed to preserve the accuracy of ΔSCF energies [condition (b)], as explained further below.
+At this point, it is important to note that Kohn–Sham density-functional theory is a ground-state theory, which is originally not intended to predict excited-state energies. As a consequence, only the non-Koopmans energies of the highest occupied and lowest unoccupied molecular orbitals can be rigorously defined within DFT since they correspond to ionization processes that take the N-electron ground state into the ground states with N − 1 and N + 1 electrons, respectively. In contrast, the ionization of other electron orbitals ends up into non-Aufbau states whose non-Koopmans energies are in principle not defined within DFT.
+As a consequence, the OD-DFT penalty sum that appears in eqn (3) should be rigorously restricted to the frontier highest occupied and lowest unoccupied states. Despite this recognized limitation, it is realized in practical computations that ΔSCF based upon local and semilocal DFT functionals predict accurate excitation energies provided that orbitals do not delocalize nonphysically.12,42 These computational observations indicate that generalizing non-Koopmans penalties to the full orbital spectrum in eqn (3) should yield a Koopmans-compliant OD-DFT method able to predict electronic structures with good accuracy. In practice, it is found that this generalization provides spectral predictions in very good agreement with experimental data.28,29
+To complete the presentation of the Koopmans-compliant functional, it remains to explain the determination of the penalty coefficients αNKiσ and reference occupations fNKiσ. The analytical determination of αNKiσ has already been presented.28 In this analysis, it has been shown that, starting from convex-energy local and semilocal DFT functionals, there always exists a value of αNKiσ lying between 0 and 1 that equalizes the slope of the ionization curve (i.e., the orbital energies) at the initial point (I) and that at the final point (F). Furthermore, the value of αNKiσ that fulfills this condition can be calculated straightforwardly through the secant-method recursion: (4)where ΔNKiσ(α) denotes the difference of orbital energies from (I) to (F) for the penalty coefficient αNKiσ = α. At that precise value, the energy curve is closely linear and Koopmans' theorem is satisfied.
+To illustrate this fact, we depict the influence of αNKiσ on the linearity of the energy curve upon ionization of the 2p state of carbon in Fig. 4. Considering first the adiabatic case [Fig. 4(a)], it is seen that the linearity of the ionization energy, that is, the fulfilment of the adiabatic Koopmans' theorem, is achieved for αNK2p = 1. This result remains valid for any adiabatic process, as demonstrated by analyzing non-Koopmans residual errors.28
+ Fig. 4  Occupation dependence of the non-Koopmans-corrected total energy upon ionization of the 2p state of carbon as a function of the penalty coefficient αNK2p in the (a) unrelaxed and (b) relaxed cases. The underlying Kohn–Sham approximation is LSDA. The reference occupation is fNK2p = ½. 
+Instead, in the diabatic case, the value of αNKiσ that satisfies the generalized Koopmans' theorem is found to be lower than 1. As a matter of fact, for relaxed ionization of the 2p state of carbon, it is shown in Fig. 4(b) that linearity is achieved for αNK2p close to ⅘. Precisely, the converged value of the penalty coefficient that is determined after 2 recursion steps [eqn (4)] is 0.85. More generally, it has been shown that αNKiσ can be regarded as a relaxation coefficient that measures the stability of the final ionized state. Thus, for systems that consist of a lone electron around a closed shell (e.g., alkali-metal atoms), the outer-shell penalty coefficient equals 1. In contrast, αNKiσ becomes lower than 1 upon withdrawing an electron from a filled or partly filled shell (cf. Fig. 9 in ref. 28).
+After explaining the calculation of the penalty coefficients, we now turn our attention to the determination of the reference occupation. Based upon Slater's theorem and the sum rule satisfied by the exchange-correlation hole, it can be shown that fNKiσ should be set to ½ in order to preserve the accuracy of the underlying Kohn–Sham functional in predicting total-energy differences.28 This fact is illustrated in Fig. 5 where it can be seen that the Koopmans-compliant energy difference matches the Kohn–Sham ΔSCF energy difference at half reference occupation for diabatic ionization of the 2p state of carbon. Therefore, at the reference occupation fNK2p = 0.5 and with the relaxation parameter αNK2p = 0.85 that has been determined from eqn (4), the Koopmans-compliant functional yields an orbital energy εNK2p = 11.83 eV on par with the accuracy of the ΔSCF prediction (11.72 eV) and experimental IP (11.26 eV).
+ Fig. 5  Occupation dependence of the non-Koopmans-corrected total energy upon relaxed ionization of the 2p state of carbon as a function of the reference occupation fNK2p. The underlying Kohn–Sham approximation is LSDA. The penalty coefficient is set to be αNK2p = 0.85, as calculated recursively from eqn (4). 
+These results demonstrate the possibility of rectifying the nonlinear behavior of the ionization curve and restoring Koopmans' theorem [condition (a)] while preserving the accuracy of total-energy predictions [condition (b)] within Koopmans-compliant OD-DFT. In addition, Koopmans compliance presents the central advantage of avoiding to treat negatively charged molecular states [condition (c)] for both the evaluation of non-Koopmans penalties and the calculation of orbital levels, thereby allowing us to determine accurate acceptor levels straightforwardly, as shown in Section III.B.
+Further details on the implementation of one Koopmans-compliant method (the αNKC0 computational approach) are presented in the Appendix.
+III. Results
+We now assess the predictive ability of Koopmans-compliant functionals in describing the donor–acceptor properties of a range of organic molecules relevant to OPV molecular junctions, first focusing on donor levels in Section III.A and then examining the problem of acceptor levels in Section III.B.
+A. Donor levels
+The initial benchmark that is depicted in Fig. 6 consists of a representative set of molecules, which has been studied in ref. 17. These molecules constitute elemental components for relevant photovoltaic organics and allow us to assess the accuracy of the self-interaction method in capturing the electronic structure of organic materials across a representative sample of chemical compositions and molecular sizes.
+ Fig. 6  Representative sample of organic molecules (ref. 17) for benchmarking the performance of electronic-structure methods. 
+Koopmans-compliant calculations are carried out at the αNKC0 level. We employ conventional norm-conserving pseudopotentials to represent atomic cores with a cutoff energy of 60 Ry in expanding wave functions. All of our calculations take into account spin polarization. Employing auxiliary-function correction,59 a vacuum separation of 9 Å is sufficient to achieve convergence of the electronic structure within 0.15 eV, even for the large PTCDA and phthalocyanine molecules. In all cases, less than two recursions of eqn (4) are needed in converging the penalty coefficient α of the highest occupied state of the molecule, and the same penalty weight is imposed on the full spectrum (as justified by the sensitivity analysis presented in the Appendix). Damped electronic dynamics is used in optimizing electronic degrees of freedom with the inner-loop procedure described in ref. 60 and with a convergence threshold of 10−5 Ha on the electron-dynamics kinetic energy. Regarding the experimental literature, it is important to mention that all of the measurements that are reported here correspond to molecules isolated in the gas phase. Therefore, environmental effects arising from a surrounding solvent or from an embedding bulk need not be included in our calculations.
+LSDA and αNKC0 predictions for the frontier donor levels (i.e., the absolute energy of the highest occupied orbital) of benchmark molecules are reported and compared with experiment in Fig. 7. (Here and throughout the comparative assessment, we focus on LSDA results rather than on GGA predictions due to the fact that αNKC0 is applied to LSDA; this permits to directly resolve the effective influence of αNKC0 on the underlying functional. Note that GGA orbital energies would be very close to the LSDA results on the scale of the self-interaction error.)
+ Fig. 7  LSDA and αNKC0 donor levels compared with experiment (cf. references in Table 1) for the organic molecules listed in Fig. 5. 
+First, we observe a marked underestimation of absolute donor levels within LSDA. The underestimation is above 1 eV for porphyrin complexes and reaches 2.5–3 eV for strong aromatic donors. This incorrect trend is rectified by αNKC0 that reduces the error down to a few tenths of an eV. Furthermore, the accuracy of αNKC0 compares favorably with that of the original self-interaction correction (PZ)25 and GW approximation. Indeed, data reported in Table 1 reveal that PZ provides some improvement over LSDA, reducing the mean absolute error from 2.20 eV to 1.43 eV. Much better agreement with experiment is achieved within self-consistent GW79 with a mean absolute error as low as 0.32 eV and a standard deviation of the error of 0.15 eV. Despite the very good performance of GW calculations,80 the Koopmans-compliant αNKC0 method is found here to be more precise in predicting the highest donor levels with an error of 0.16 eV and a low standard deviation of 0.11 eV.
+Table 1 Absolute donor levels of benchmark organic molecules within LSDA, PZ, αNKC0, and GW compared with experimental vertical ionization energies (cf.ref. 45 and references below)
+
+
+
+
+ 
+Donor levels (eV)
+
+
+LSDA
+PZ
+
+αNKC0
+GWa
+Expt.
+
+
+
+
+
+a 
+Ref. 17.
+b 
+Ref.46.
+c 
+Ref. 47.
+d 
+Ref. 48.
+e 
+Ref. 49.
+f 
+Ref. 50.
+g 
+Ref. 51.
+h 
+Ref. 52.
+i 
+Ref. 53.
+j 
+Ref. 54.
+
+
+
+
+
+Benzothiadiazole
+6.40
+10.29
+9.03
+8.56
+9.15b
+
+
+Benzothiazole
+6.20
+9.66
+8.64
+8.48
+8.85c
+
+
+Fluorene
+5.64
+8.69
+7.51
+7.64
+7.91d
+
+
+PTCDA
+6.32
+9.66
+8.12
+7.68
+8.2e
+
+
+Phthalocyanine
+5.21
+8.31
+6.54
+6.10
+6.41f
+
+
+Porphine
+5.24
+8.34
+6.66
+6.70
+6.9g
+
+
+Tetraphenylporphyrin
+4.89
+8.10
+6.21
+6.20
+6.39h
+
+
+Thiadiazole
+7.13
+11.73
+10.10
+9.89
+10.11i
+
+
+Thiophene
+6.02
+10.97
+8.76
+8.63
+8.85j
+
+
+MAD
+2.20
+1.43
+0.16
+0.32
+
+
+
+
+RMS
+0.64
+0.45
+0.11
+0.15
+
+
+
+
+
+
+After highlighting the remarkable precision of αNKC0 across a variety of chemical compositions, we now assess its ability to capture the influence of molecular size on the electronic structure. For this complementary benchmark, we consider two important families of organic molecules, namely, acene oligomers and fullerene clusters. We employ the same calculation parameters as those above—with the exception of the plane-wave cutoff that can be reduced to 40 Ry without altering numerical convergence.
+For oligoacenes (Fig. 8), we observe that LSDA is in error of 2.8 eV for the donor level of benzene. The error decreases gradually with the length of the chain but is still as large as 2 eV for hexacene. In terms of relative errors, the LSDA underestimation fluctuates in the narrow range 29–31%. Applying αNKC0 restores the agreement between electronic-structure calculations and experiment, reducing the error to less than 0.2 eV regardless of the length of the chain. Similarly, for fullerenes (Fig. 9), αNKC0 brings about some considerable improvement in capturing the delicate influence of cluster size. Indeed, despite the fact that the LSDA error varies in a much wider range than for acene oligomers (22–28%) and that the dependence of the highest occupied level as a function of the molecular size is clearly nonmonotonic, the αNK0 error never exceeds 0.2 eV compared to available experimental data, providing further confirmation of the predictive precision of the Koopmans-compliant method in describing subtle electronic-structure trends.
+ Fig. 8  LSDA and αNKC0 donor levels compared with experiment for benzene (ref. 55) and oligoacenes (ref. 56). 
+ Fig. 9  LSDA and αNKC0 donor levels compared with experiment for fullerenes. Experimental vertical ionization potentials are from ref. 57 for C50, C60, and C80 (D5d) and from ref. 58 for C70. 
+In addition, an important advantage of the αNKC0 method lies in its moderate computational cost. In fact, converging the full electronic spectrum of an extended PTCDA molecule with a large plane-wave cutoff of 60 Ry on a conventional 16-processor machine requires half of a CPU day, whereas the same calculation within HF and hybrid-DFT is 3 times more costly using comparable implementations. Indeed, as explained previously, although conventional self-interaction corrections and hybrid-DFT both scale quartically [O(N4)] with the size of the electronic system, the algorithmic prefactor of self-interaction methods is lower than that of hybrid-DFT since the former do not require to evaluate pairwise exchange contributions.
+B. Acceptor levels
+After validating the αNKC0 method for occupied donor levels, we now concentrate on the prediction of unoccupied acceptor levels. As already mentioned, acceptor levels represent a central difficulty for ΔSCF predictions due to the inability of conventional DFT methods to properly stabilize negatively charged states. In what follows, we demonstrate that αNKC0 provides a solution to this important methodological limitation.
+In calculating acceptor levels, we use the same computational parameters as those of donor-level calculations. In particular, the αNK0 penalty weights remain unchanged. First-principles predictions for benchmark organic compounds are reported in Table 2. Our results clearly confirm the poor performance of LSDA and PZ in predicting acceptor levels; both methods overstabilize acceptor states by several eVs relative to GW due to self-attraction. In contrast, αNKC0 and GW predictions are found to be in close agreement. In quantitative terms, the discrepancy between αNKC0 and GW is as low as 0.15 eV for porphine and is at most of 0.6–0.7 eV for benzothiadiazole. It should also be noted that our comparison reveals that αNKC0 acceptor levels are always more stable than their GW counterparts. Additionally, although experimental data for benchmark molecules are scarce, comparison with the measured vertical electron affinity of tetraphenylporphyrin suggests that the predictive accuracy of αNKC0 is comparable with the accuracy of GW predictions.
+Table 2 Absolute acceptor levels of benchmark organic molecules within LSDA, PZ, αNKC0, and GW compared with available experimental data
+
+
+
+
+ 
+Acceptor levels (eV)
+
+
+LSDA
+PZ
+
+αNKC0
+GWa
+Expt.
+
+
+
+
+
+a 
+Ref. 17.
+b 
+Ref. 61.
+
+
+
+
+
+Benzothiadiazole
+3.52
+3.42
+1.07
+0.42
+—
+
+
+Benzothiazole
+2.35
+2.20
+<0
+<0
+—
+
+
+Fluorine
+2.05
+2.00
+<0
+<0
+—
+
+
+PTCDA
+4.80
+4.81
+3.19
+2.68
+—
+
+
+Phthalocyanine
+3.79
+3.82
+2.34
+2.07
+—
+
+
+Porphine
+3.28
+3.19
+1.53
+1.39
+—
+
+
+Tetraphenylporphyrin
+3.07
+3.04
+1.68
+1.49
+1.69(10)b
+
+
+Thiadiazole
+2.95
+2.78
+<0
+<0
+—
+
+
+Thiophene
+1.59
+1.38
+0.04
+<0
+—
+
+
+
+
+To gain further insight into the performance of first-principles methods in predicting acceptor levels, we concentrate on the lowest unoccupied state for acenes (Table 3) and for fullerenes (Table 4). For weak acene acceptors, the first notable feature is the propensity of LSDA to overestimate absolute acceptor levels. This expected nonphysical tendency is rectified to a large extent by αNKC0, which reduces the mean absolute error from 2.19 to 0.59 eV relative to vertical ionization experiments. Nevertheless, it is seen that GW performs significantly better than αNKC0, bringing the error down to 0.13 eV. In the same vein, we note that the naphthalene acceptor level is predicted to be stable within αNKC0 in contradiction to experiment. In fact, among all of our benchmark calculations, acenes represent the only instance where GW performs better than αNKC0, suggesting that GW should be preferred over αNKC0 in capturing shallow acceptor levels.
+Table 3 Absolute acceptor levels of acene chains of increasing length within LSDA, αNKC0, and GW compared with experimental data
+
+
+
+
+ 
+Acceptor levels (eV)
+
+
+LSDA
+
+αNKC0
+GWa
+Expt.
+
+
+
+
+
+a 
+Ref. 17.
+b 
+Ref. 62.
+c 
+Ref. 63.
+
+
+
+
+
+Benzene
+1.38
+0.03
+—
+—
+
+
+Naphthalene
+2.27
+0.49
+—
+—
+
+
+Anthracene
+2.85
+1.16
+0.29
+0.53b
+
+
+Tetracene
+3.22
+1.60
+0.93
+1.07c
+
+
+Pentacene
+3.48
+1.98
+1.36
+1.39c
+
+
+Hexacene
+3.68
+2.18
+—
+—
+
+
+Octacene
+4.27
+2.48
+—
+—
+
+
+MAD
+2.19
+0.59
+0.13
+
+
+
+
+RMS
+0.09
+0.04
+0.09
+
+
+
+
+
+
+Table 4 Absolute acceptor levels of fullerene clusters of increasing size within LSDA, αNKC0, QMC (quantum Monte-Carlo), GW0 (nonself-consistent), scGWf (self-consistent with vertex corrections) compared with experimental data
+
+
+
+
+ 
+Acceptor levels (eV)
+
+
+LSDA
+
+αNKC0
+QMCa
+GW0a
+scGWfa
+Expt.
+
+
+
+
+
+a 
+Ref. 64.
+b 
+Ref. 65.
+c 
+Ref. 66.
+d 
+Ref. 67.
+e 
+Ref. 68.
+
+
+
+
+
+C20
+4.24
+2.19
+1.76(11)
+3.55
+2.36
+2.25b
+
+
+C24
+5.06
+2.88
+2.57(11)
+4.19
+2.88
+—
+
+
+C50
+5.20
+3.49
+3.52(14)
+4.75
+3.73
+3.10c
+
+
+C60
+4.27
+2.64
+2.23(19)
+3.87
+2.98
+2.69d
+
+
+C70
+4.10
+2.61
+2.46(11)
+3.98
+2.83
+2.76e
+
+
+C80 (D5d)
+5.00
+3.91
+3.25(10)
+4.62
+3.88
+3.70c
+
+
+C80 (Ih)
+4.56
+2.99
+3.90(11)
+5.17
+4.38
+—
+
+
+MAD
+1.66
+0.18
+0.42
+1.25
+0.26
+
+
+
+
+RMS
+0.32
+0.12
+0.06
+0.26
+0.21
+
+
+
+
+
+
+Despite this fact, the scenario is entirely different for strong acceptors. Indeed, as shown in Table 4, αNKC0 yields acceptor levels in close agreement with experimental data for fullerene clusters with a mean absolute deviation of 0.18 eV, which is significantly lower than that found for many-body quantum Monte-Carlo (0.42 eV), nonself-consistent many-body perturbation theory (1.25 eV), and self-consistent many-body perturbation theory (0.26 eV). These results suggest us to employ Koopmans-compliant αNKC0 to describe the electronic properties of the strong acceptor compounds relevant to photovoltaic applications.
+Overall, the systematic comparison of electronic-structure methods offers a clear validation of αNKC0 as an accurate and efficient method to describe the donor and acceptor levels of relevant OPV compounds. This remarkable performance allows us to access the electronic structure of novel organics and provides a reliable starting point to address the charge-transfer and optical properties of donor–acceptor photovoltaic junctions.
+IV. Conclusion
+In order to overcome the predictive deficiency of conventional DFT methods in capturing the donor and acceptor levels of molecular complexes, we have presented a correction procedure that enables one to eliminate the nonphysical curvature of the total energy upon withdrawing (injecting) electrons from (into) the molecular system. When applied to LSDA, the procedure yields an orbital-dependent functional that fulfills the generalized Koopmans' theorem, thereby restoring or imposing the agreement between frontier orbital levels and ΔSCF energy differences, and overcoming central limitations in applying ΔSCF techniques to predict acceptor levels. Specifically, the αNKC0 formulation of the Koopmans-compliant method has been applied to OPV compounds spanning a wide range of chemical compositions and molecular sizes, thereby highlighting the conceptual simplicity and computational performance of the method with an accuracy comparable to that of many-body perturbation theory.
+Although the study has essentially focused on determining frontier donor and acceptor levels, the non-Koopmans corrective procedure can be straightforwardly extended to compute the full electronic spectrum of molecular systems in a single first-principles calculation.29 For future studies, we plan to apply the Koopmans-compliant method to other relevant families of photovoltaic compounds, including metallic porphyrins and phthalocyanines, and to generalize the approach to describe strongly interacting dyads and bulk organic semiconducting materials at both the electronic and excitonic levels.
+Appendix A: computational details
+In this appendix, we present the computational implementation of the Koopmans-compliant method in the CP (Car–Parrinello) code69 of the Quantum-ESPRESSO open-source project.70 Specifically, we describe the calculation of contributions to the total energy and effective Hamiltonian that arise from the non-Koopmans correction, we explain algorithmic choices in optimizing the electronic structure, and we detail the evaluation of the penalty coefficients.
+Before proceeding to the calculation of non-Koopmans contributions, it should be noted that CP is a plane-wave code. Adopting a plane-wave representation here allows us to envision applications to relevant periodic molecular structures, such as semiconducting polymers and bulk materials. Despite the benefit of the plane-wave approach, the evaluation of electrostatic contributions to the non-Koopmans energies [eqn (2)] in the context of plane waves requires to correct periodic-image errors that arise from the use of the supercell approximation in describing nonperiodic systems. To eliminate artificial periodic-image interactions, we employ auxiliary-function corrections that consist of removing singularities in the reciprocal-space summation of electrostatic terms through the addition of regularizing auxiliary functions to the point-charge electrostatic kernel.59 The choice of this reciprocal-space scheme is motivated by the fact that it allows us to use fast-Fourier-transform (FFT) techniques, thereby minimizing the computational burden associated with the repeated calculations of the electrostatic energy and potential for each orbital of the system; without this correction the calculation would be prohibitively expensive.
+The second difficulty in calculating non-Koopmans terms lies in the assessment of the second-order functional derivatives that appear in the expression of the variational contributions to the effective potential, namely, the wKSref,iσ and wKSxd,iσ terms defined in ref. 28. To address the calculation of these terms, we employ the computational subroutines written by Dal Corso and de Gironcoli in the context of the DFPT (density-functional perturbation theory) calculation of phonon dispersions.71 These subroutines are based upon explicit expressions of second-order derivative contributions and also employ finite-difference techniques. Similar subroutines distributed as independent libraries (e.g., the LibXC module of the OCTOPUS code)72,73 can be conveniently ported to compute second-order terms.
+Overall, the calculation of non-Koopmans contributions to the total energy and effective Hamiltonian is already less expensive than that of exchange contributions in hybrid-DFT functionals.21 Nevertheless, in order to gain further computational performance, it is necessary to reduce the computational burden associated with the calculation of wKSref,iσ and wKSxd,iσ. To this end, a successful strategy consists of not updating the reference density ρNKiσ(r) = ρ(r) + (fNKiσ − fiσ)niσ(r) that appears in the expression of non-Koopmans energies at every iteration of the self-consistent electronic-structure optimization but only periodically for each given number of iterations, thereby avoiding to calculate wKSref,iσ and wKSxd,iσ at each self-consistent step. This computational approach that consists of neglecting the wKSref,iσ and wKSxd,iσ contributions to the self-consistent OD-DFT potential is referred to as the NKC0 method.
+Remarkably, it is found that relaxing self-consistency via the NKC0 method preserves and actually improves the accuracy of predicted electronic properties relative to NKC for difficult molecular complexes due to its increased localization strength, with the caveat that only orbital properties and not total energies can be evaluated using NKC0.28 Variational alternatives to NKC0, endowed with a comparable localization strength can be derived at the cost of increased sophistication. A preliminary discussion of variational non-Koopmans self-interaction corrections is presented in ref. 74. In the present study, we focus on nonvariational NKC0 due to its simplicity and accuracy in describing individual organic donors and acceptors. Admittedly, more work would be necessary for the variational description of systems where strong electronic delocalization prevails.
+Regarding computational implementation, NKC0 is straightforward to program since it simply relies on substituting the DFT Kohn–Sham potential with the OD-DFT potential written below: (A1)where vKSHxc denotes the sum of the Hartree and exchange-correlation potentials and ρNKiσ has been defined above. Once the subroutines that calculate vKSHxc are identified, this modification can be performed with some minimal coding experience.
+We now turn our attention to the optimization of the electronic structure. In this regard, we first note that only few of the conventional minimization algorithms applicable to DFT can be employed in the context of the OD-DFT corrections. In particular, conventional iterative diagonalization would represent a very poor choice since eigenfunctions of different Hamiltonians would have to be calculated, thereby considerably increasing computational complexity. Instead, direct-minimization approaches, such as conjugate-gradient or damped-dynamics techniques, are more suited to OD-DFT calculations. Additionally, since OD-DFT self-interaction corrections lead to energy functionals that are variant with respect to unitary rotation of the orbital manifold contrary to DFT, it is also necessary to consider unitary-rotation degrees of freedom in minimizing the energy. Several approaches have been proposed and can be used to this end.60,75–78
+The final hurdle in implementing the Koopmans-compliant method pertains to evaluating the penalty coefficients αNKiσ.
+Here, one first source of computational savings springs from the fact that αNKiσ is much less sensitive to the resolution of the plane-wave grid than orbital-level predictions. In quantitative terms, in the case of furan (Fig. 10), reducing the cutoff from 60 Ry to 15 Ry causes the relaxation coefficient to vary by 3%, whereas such a low plane-wave cutoff in expanding wave functions would be intolerably low for the description of orbital levels. Therefore, since αNKiσ can be evaluated on coarse plane-wave grids, the preliminary determination of the weights of the non-Koopmans penalty αNKiσ represents a marginal fraction of the computational cost associated with the calculation of orbital levels.
+ Fig. 10  Non-Koopmans penalty coefficient for the highest occupied molecular orbital [1a2(π3)] of furan as a function of wave-function cutoff energy. 
+The second important source of cost reduction in practical calculations is the fact that the relaxation coefficient αNKiσ varies in a limited range, typically, between 0.5 and 1. To illustrate this fact, we report the value of the coefficients αNKiσ for the electronic states of carbon in Fig. 11. On the basis of these calculations, we can assess the sensitivity of electronic-level predictions as a function of the αNKiσ's. Indeed, LSDA is typically in error of Δ = 40% in predicting the electronic levels of atoms and molecules. As a consequence, a simple sensitivity estimate reveals that an error of α − αNKiσ in the determination of the self-consistent penalty coefficient translates into an error of  in the electronic level relative to the exact Koopmans-compliant estimate (that is, relative to the ΔSCF energy difference). Thus, in the case of carbon, making the approximation of equating all of the penalty coefficients to that of the highest occupied 2p state (i.e., α = 0.85), we obtain errors as low as 2% for the spin-up 2s state and lower than 14% for the spin-down 1s state, which in both cases represents a significant reduction of the LSDA error relative to ΔSCF predictions.
+ Fig. 11  Penalty coefficients αNKiσ that quantify orbital relaxation upon ionization for the orbitals of carbon in the spin-up and spin-down channels. 
+This sensitivity analysis provides a clear justification for the αNKC0 method that consists of setting the penalty coefficients αNKiσ to be all equal to the same value, thereby avoiding in particular to treat negatively charged states. In explicit terms, αNKC0 consists of performing the following substitution in lieu of eqn (A1): (A2)To complete the presentation of αNKC0, it is relevant to discuss the size consistency of the method. Within αNKC0, size consistency may be lost when considering a molecular system composed of separate fragments; in this situation, the α coefficient calculated for the global system may differ from the α coefficients that correspond to each of its subparts. (The same problem is known to arise in range-separated hybrid-DFT approaches where a single optimally tuned parameter γ is employed to impose Koopmans' theorem.) An immediate solution to address this problem is to resort to NKC0, which preserves the size consistency of the underlying local or semilocal functional owing to the orbital-specific coefficients αNKiσ. Note that other simple solutions may be employed, such as the approach that consists of using a different α for each separate molecular fragment. Following this procedure, orbitals localized on a given molecular fragment feel the same α while orbitals localized on different fragments have different α's, thereby preserving size consistency.
+Acknowledgements
+The authors are indebted to Arash Mostofi, Xavier Blase, and Kieron Burke for valuable discussions and practical suggestions. ID acknowledges partial support from the French National Research Agency through Grant ANR 12-BS04-0001 PANELS (Photovoltaics from Ab initio Novel Electronic-structure Simulations). AF acknowledges partial support from Italian MIUR through Grant FIRB-RBFR08FOAL_001. MC acknowledges partial support from NSF EAR 0810272 and from the NSF CAREER award DMR 1151738.
+References
+J. Hachmann, R. Olivares-Amaya, S. Atahan-Evrenk, C. Amador-Bedolla, R. S. Sánchez-Carrera, A. Gold-Parker, L. Vogt, A. M. Brockway and A. Aspuru-Guzik, J. Phys. Chem. Lett., 2011, 2, 2241 CrossRef CAS  , ISSN 1948-7185.
+L. Dou, J. You, J. Yang, C. Chen, Y. He, S. Murase, T. Moriarty, K. Emery, G. Li and Y. Yang, Nat. Photonics, 2012, 6, 180 CrossRef CAS  , ISSN 1749-4885, 1749-4893.
+M. Scharber, D. Mühlbacher, M. Koppe, P. Denk, C. Waldauf, A. Heeger and C. Brabec, Adv. Mater., 2006, 18, 789 CrossRef CAS  , ISSN 0935-9648.
+A. N. Sokolov, S. Atahan-Evrenk, R. Mondal, H. B. Akkerman, R. S. Sánchez-Carrera, S. Granados-Focil, J. Schrier, S. C. Mannsfeld, A. P. Zoombelt and Z. Bao, 
+            et al.
+          , Nat. Commun., 2011, 2, 437 CrossRef  , ISSN 2041-1723.
+P. Hohenberg and W. Kohn, Phys. Rev., 1964, 136, B864 CrossRef  , ISSN 0031-899X, 1536-6065.
+W. Kohn and L. J. Sham, Phys. Rev., 1965, 140, A1133 CrossRef  , ISSN 0031-899X, 1536-6065.
+E. Runge and E. K. U. Gross, Phys. Rev. Lett., 1984, 52, 997 CrossRef CAS  , ISSN 0031-9007.
+A. J. Cohen, P. Mori-Sanchez and W. Yang, Science, 2008, 321, 792 CrossRef CAS  , ISSN 0036-8075, 1095-9203.
+A. Dreuw, J. L. Weisman and M. Head-Gordon, J. Chem. Phys., 2003, 119, 2943 CrossRef CAS  , ISSN 00219606.
+M. van Faassen, P. de Boeij, R. van Leeuwen, J. Berger and J. Snijders, Phys. Rev. Lett., 2002, 88, 186401 CrossRef CAS  , ISSN 0031-9007.
+X. Blase and C. Attaccalite, Appl. Phys. Lett., 2011, 99, 171909 CrossRef  , ISSN 00036951.
+B. Himmetoglu, A. Marchenko, I. Dabo and M. Cococcioni, J. Chem. Phys., 2012, 137, 154309 CrossRef .
+L. Hedin, Phys. Rev., 1965, 139, A796 CrossRef  , ISSN 0031-899X, 1536-6065.
+G. Onida, L. Reining and A. Rubio, Rev. Mod. Phys., 2002, 74, 601 CrossRef CAS  , ISSN 0034-6861, 1539-0756.
+P. Umari, G. Stenuit and S. Baroni, Phys. Rev. B: Condens. Matter Mater. Phys., 2009, 79, 201104 CrossRef  , ISSN 1098-0121, 1550-235X.
+P. Umari, G. Stenuit and S. Baroni, Phys. Rev. B: Condens. Matter Mater. Phys., 2010, 81, 115104 CrossRef  , ISSN 1098-0121, 1550-235X.
+X. Blase, C. Attaccalite and V. Olevano, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 83, 115103 CrossRef  , ISSN 1098-0121.
+C. Faber, C. Attaccalite, V. Olevano, E. Runge and X. Blase, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 83, 115123 CrossRef  , ISSN 1098-0121.
+X. Qian, P. Umari and N. Marzari, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 84, 075103 CrossRef  , ISSN 1098-0121, 1550-235X.
+S. Kümmel and L. Kronik, Rev. Mod. Phys., 2008, 80, 3 CrossRef  , ISSN 0034-6861.
+A. D. Becke, J. Chem. Phys., 1993, 98, 1372 CrossRef CAS  , ISSN 00219606.
+D. Varsano, A. Marini and A. Rubio, Phys. Rev. Lett., 2008, 101, 133002 CrossRef  , ISSN 0031-9007.
+P. Broqvist, A. Alkauskas and A. Pasquarello, Phys. Rev. B: Condens. Matter Mater. Phys., 2009, 80, 085114 CrossRef  , ISSN 1098-0121.
+T. Stein, H. Eisenberg, L. Kronik and R. Baer, Phys. Rev. Lett., 2010, 105, 266802 CrossRef  , ISSN 0031-9007, 1079-7114.
+J. P. Perdew and A. Zunger, Phys. Rev. B: Condens. Matter Mater. Phys., 1981, 23, 5048 CrossRef CAS  , ISSN 0163-1829.
+R. Baer and D. Neuhauser, Phys. Rev. Lett., 2005, 94, 043002 CrossRef  , ISSN 0031-9007.
+T. Körzdörfer, M. Mundt and S. Kümmel, Phys. Rev. Lett., 2008, 100, 133004 CrossRef  , ISSN 0031-9007.
+I. Dabo, A. Ferretti, N. Poilvert, Y. Li, N. Marzari and M. Cococcioni, Phys. Rev. B: Condens. Matter Mater. Phys., 2010, 82, 115121 CrossRef  , ISSN 1098-0121.
+
+          A. Ferretti, I. Dabo, M. Cococcioni and N. Marzari, Bridging density-functional and many-body perturbation theory: orbital-density dependence in electronic-structure functionals,  2012, in submission Search PubMed .
+R. Baer, E. Livshits and U. Salzner, Annu. Rev. Phys. Chem., 2010, 61, 85 CrossRef CAS  , ISSN 0066-426X, 1545-1593.
+L. G. Ferreira, M. Marques and L. K. Teles, AIP Adv., 2011, 1, 032119 CrossRef  , ISSN 21583226.
+A. Alkauskas and A. Pasquarello, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 84, 125206 CrossRef  , ISSN 1098-0121, 1550-235X.
+T. Jarlborg, B. Barbiellini, H. Lin, R. Markiewicz and A. Bansil, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 84, 045109 CrossRef  , ISSN 1098-0121, 1550-235X.
+A. J. Cohen, P. Mori-Sánchez and W. Yang, Chem. Rev., 2012, 112, 289 CrossRef CAS  , ISSN 0009-2665, 1520-6890.
+L. Kronik, T. Stein, S. Refaely-Abramson and R. Baer, J. Chem. Theor. Comput., 2012, 8, 1515 CrossRef CAS  , ISSN 1549-9618, 1549-9626.
+
+          I. Dabo, PhD thesis, Massachusetts Institute of Technology,  2008 Search PubMed .
+U. Salzner and R. Baer, J. Chem. Phys., 2009, 131, 231101 CrossRef  , ISSN 00219606.
+S. Lany and A. Zunger, Phys. Rev. B: Condens. Matter Mater. Phys., 2009, 80, 085202 CrossRef  , ISSN 1098-0121, 1550-235X.
+S. Lany and A. Zunger, Phys. Rev. B: Condens. Matter Mater. Phys., 2010, 81, 205209 CrossRef  , ISSN 1098-0121, 1550-235X.
+S. Refaely-Abramson, R. Baer and L. Kronik, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 84, 075144 CrossRef  , ISSN 1098-0121.
+E. Livshits and R. Baer, Phys. Chem. Chem. Phys., 2007, 9, 2932 RSC  , ISSN 1463-9076, 1463-9084.
+T. Kowalczyk, S. R. Yost and T. V. Voorhis, J. Chem. Phys., 2011, 134, 054128 CrossRef  , ISSN 00219606.
+M. Kim, E. Sim and K. Burke, J. Chem. Phys., 2011, 134, 171103 CrossRef  , ISSN 00219606.
+
+          A. Szabo and N. S. Ostlund, Modern quantum chemistry, Dover Publications, New York,  1989, ISBN 0486691861 9780486691862 Search PubMed .
+
+NIST Chemistry WebBook, Standard Reference Database, http://webbook.nist.gov/chemistry/,  2012 Search PubMed .
+R. A. W. Johnstone and F. A. Mellon, J. Chem. Soc., Faraday Trans. 2, 1973, 69, 36 RSC  , ISSN 0300-9238.
+
+          G. Salmona, R. Faure and E. Vincent, C. R. Acad. Sci., Ser. III,  1975, p. 605 Search PubMed .
+B. Ruscic, B. Kovac, L. Klasinc and H. Gusten, Z. Naturforsch., A: Phys. Phys. Chem. Kosmophys., 1978, 33, 1006 Search PubMed  , ISSN 0932-0784.
+N. Dori, M. Menon, L. Kilian, M. Sokolowski, L. Kronik and E. Umbach, Phys. Rev. B: Condens. Matter Mater. Phys., 2006, 73, 195208 CrossRef .
+J. Berkowitz, J. Chem. Phys., 1979, 70, 2819 CrossRef CAS  , ISSN 00219606.
+P. Dupuis, R. Roberge and C. Sandorfy, Chem. Phys. Lett., 1980, 75, 434 CrossRef CAS  , ISSN 00092614.
+S. Khandelwal and J. Roebber, Chem. Phys. Lett., 1975, 34, 355 CrossRef CAS  , ISSN 00092614.
+T. Pasinszki, M. Krebsz and G. Vass, J. Mol. Struct., 2010, 966, 85 CrossRef CAS  , ISSN 00222860.
+M. Bajic, K. Humski, L. Klasinc and B. Ruscic, Z. Naturforsch., B: Anorg. Chem. Org. Chem., 1985, 40, 1214 Search PubMed .
+M. Piancastelli, M. Kelly, Y. Chang, J. McKinley and G. Margaritondo, Phys. Rev. B: Condens. Matter Mater. Phys., 1987, 35, 9218 CrossRef CAS  , ISSN 0163-1829.
+D. Biermann and W. Schmidt, J. Am. Chem. Soc., 1980, 102, 3163 CrossRef CAS  , ISSN 0002-7863.
+J. A. Zimmerman, J. R. Eyler, S. B. H. Bach and S. W. McElvany, J. Chem. Phys., 1991, 94, 3556 CrossRef CAS  , ISSN 00219606.
+D. L. Lichtenberger, M. E. Rempe and S. B. Gogosha, Chem. Phys. Lett., 1992, 198, 454 CrossRef CAS  , ISSN 00092614.
+Y. Li and I. Dabo, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 84, 155127 CrossRef .
+
+          C.-H. Park, A. Ferretti, I. Dabo, N. Poilvert and N. Marzari, Variational minimization of orbital-dependent density functionals,  2012, in submission Search PubMed .
+H. L. Chen, Y. H. Pan, S. Groh, T. E. Hagan and D. P. Ridge, J. Am. Chem. Soc., 1991, 113, 2766 CrossRef CAS  , ISSN 0002-7863.
+J. Schiedt and R. Weinkauf, Chem. Phys. Lett., 1997, 266, 201 CrossRef CAS  , ISSN 00092614.
+L. Crocker, T. Wang and P. Kebarle, J. Am. Chem. Soc., 1993, 115, 7818 CrossRef CAS  , ISSN 0002-7863.
+M. L. Tiago, P. R. C. Kent, R. Q. Hood and F. A. Reboredo, J. Chem. Phys., 2008, 129, 084311 CrossRef  , ISSN 00219606.
+H. Prinzbach, F. Wahl, A. Weiler, P. Landenberger, J. Wörth, L. T. Scott, M. Gelmont, D. Olevano, F. Sommer and B. von Issendorff, Chem.–Eur. J., 2006, 12, 6268 CrossRef CAS  , ISSN 0947-6539, 1521-3765.
+S. Yang, C. Pettiette, J. Conceicao, O. Cheshnovsky and R. Smalley, Chem. Phys. Lett., 1987, 139, 233 CrossRef CAS  , ISSN 00092614.
+X. Wang, C. Ding and L. Wang, J. Chem. Phys., 1999, 110, 8217 CrossRef CAS  , ISSN 00219606.
+X. Wang, H. Woo, X. Huang, M. Kappes and L. Wang, Phys. Rev. Lett., 2006, 96, 143002 CrossRef  , ISSN 0031-9007, 1079-7114.
+K. Laasonen, A. Pasquarello, R. Car, C. Lee and D. Vanderbilt, Phys. Rev. B: Condens. Matter Mater. Phys., 1993, 47, 10142 CrossRef CAS  , ISSN 0163-1829.
+P. Giannozzi, S. Baroni, N. Bonini, M. Calandra, R. Car, C. Cavazzoni, D. Ceresoli, G. L. Chiarotti, M. Cococcioni and I. Dabo, 
+            et al.
+          , J. Phys.: Condens. Matter, 2009, 21, 395502 CrossRef  , ISSN 0953-8984.
+A. Dal Corso and S. de Gironcoli, Phys. Rev. B: Condens. Matter Mater. Phys., 2000, 62, 273 CrossRef CAS  , ISSN 0163-1829.
+A. Castro, H. Appel, M. Oliveira, C. A. Rozzi, X. Andrade, F. Lorenzen, M. A. L. Marques, E. K. U. Gross and A. Rubio, Phys. Status Solidi B, 2006, 243, 2465 CrossRef CAS  , ISSN 0370-1972, 1521-3951.
+M. Marques, Comput. Phys. Commun., 2003, 151, 60 CrossRef CAS  , ISSN 00104655.
+
+          N. Poilvert, PhD thesis, Massachusetts Institute of Technology,  2011 Search PubMed .
+R. A. Heaton, M. R. Pederson and C. C. Lin, J. Chem. Phys., 1987, 86, 258 CrossRef CAS  , ISSN 00219606.
+M. Stengel and N. Spaldin, Phys. Rev. B: Condens. Matter Mater. Phys., 2008, 77, 155106 CrossRef  , ISSN 1098-0121, 1550-235X.
+S. Klüpfel, P. Klüpfel and H. Jónsson, Phys. Rev. A: At., Mol., Opt. Phys., 2011, 84, 050501 CrossRef  , ISSN 1050-2947, 1094-1622.
+D. Hofmann, S. Klüpfel, P. Klüpfel and S. Kümmel, Phys. Rev. A: At., Mol., Opt. Phys., 2012, 85, 062514 CrossRef  , ISSN 1050-2947, 1094-1622.
+In these GW calculations, wave functions are kept frozen and self-consistency is performed on eigenenergies.
+It is beyond the scope of this work to enter into the delicate discussion of the accuracy of GW predictions. Notwithstanding recognized difficulties in converging GW calculations, the present comparisons provide a sufficiently precise assessment of the performance of first-principles methods to draw conclusions on their relative performance.
+
+This journal is © the Owner Societies 2013
+Table Content:
+
+ 	Fig. 1  Schematics of an organic solar cell showing a bilayered donor–acceptor heterojunction (top). Bilayered, nanopatterned, and mixed-phase heterojunctions with typical power conversion efficiencies (bottom).	 
+
+ 	Fig. 2  Energy of a positively charged pentacene–fullerene dyad in the infinite separation limit (black) and energies of the isolated fractionally charged pentacene Pq (light blue) and fullerene C601−q molecules (dark blue) as a function of the transferred charge q within the LSDA and Koopmans-compliant descriptions. (Energies are given relative to the fully ionized individual molecules.)	 
+	(1)
+Πuiσ(f) = fiσ(2f − fiσ)EH[niσ] + Exc[ρ − ρiσ] − Exc[ρ] + ∫drvxc,σ(r;[ρ + (f − fiσ)niσ])ρiσ(r),	(2)
+
+ 	Fig. 3  Diagram of the non-Koopmans energy Πu2p, which quantifies departure from linearity for the adiabatic ionization curve of the 2p state of carbon within LSDA.	 
+	(3)
+	(4)
+
+ 	Fig. 4  Occupation dependence of the non-Koopmans-corrected total energy upon ionization of the 2p state of carbon as a function of the penalty coefficient αNK2p in the (a) unrelaxed and (b) relaxed cases. The underlying Kohn–Sham approximation is LSDA. The reference occupation is fNK2p = ½.	 
+
+ 	Fig. 5  Occupation dependence of the non-Koopmans-corrected total energy upon relaxed ionization of the 2p state of carbon as a function of the reference occupation fNK2p. The underlying Kohn–Sham approximation is LSDA. The penalty coefficient is set to be αNK2p = 0.85, as calculated recursively from eqn (4).	 
+
+ 	Fig. 6  Representative sample of organic molecules (ref. 17) for benchmarking the performance of electronic-structure methods.	 
+
+ 	Fig. 7  LSDA and αNKC0 donor levels compared with experiment (cf. references in Table 1) for the organic molecules listed in Fig. 5.	 
+
+
+
+Benzothiadiazole	6.40	10.29	9.03	8.56	9.15b
+Benzothiazole	6.20	9.66	8.64	8.48	8.85c
+Fluorene	5.64	8.69	7.51	7.64	7.91d
+PTCDA	6.32	9.66	8.12	7.68	8.2e
+Phthalocyanine	5.21	8.31	6.54	6.10	6.41f
+Porphine	5.24	8.34	6.66	6.70	6.9g
+Tetraphenylporphyrin	4.89	8.10	6.21	6.20	6.39h
+Thiadiazole	7.13	11.73	10.10	9.89	10.11i
+Thiophene	6.02	10.97	8.76	8.63	8.85j
+MAD	2.20	1.43	0.16	0.32	
+
+RMS	0.64	0.45	0.11	0.15	
+
+
+ 	Fig. 8  LSDA and αNKC0 donor levels compared with experiment for benzene (ref. 55) and oligoacenes (ref. 56).	 
+
+ 	Fig. 9  LSDA and αNKC0 donor levels compared with experiment for fullerenes. Experimental vertical ionization potentials are from ref. 57 for C50, C60, and C80 (D5d) and from ref. 58 for C70.	 
+
+
+
+Benzothiadiazole	3.52	3.42	1.07	0.42	—
+Benzothiazole	2.35	2.20	<0	<0	—
+Fluorine	2.05	2.00	<0	<0	—
+PTCDA	4.80	4.81	3.19	2.68	—
+Phthalocyanine	3.79	3.82	2.34	2.07	—
+Porphine	3.28	3.19	1.53	1.39	—
+Tetraphenylporphyrin	3.07	3.04	1.68	1.49	1.69(10)b
+Thiadiazole	2.95	2.78	<0	<0	—
+Thiophene	1.59	1.38	0.04	<0	—
+
+
+
+Benzene	1.38	0.03	—	—
+Naphthalene	2.27	0.49	—	—
+Anthracene	2.85	1.16	0.29	0.53b
+Tetracene	3.22	1.60	0.93	1.07c
+Pentacene	3.48	1.98	1.36	1.39c
+Hexacene	3.68	2.18	—	—
+Octacene	4.27	2.48	—	—
+MAD	2.19	0.59	0.13	
+
+RMS	0.09	0.04	0.09	
+
+
+
+
+C20	4.24	2.19	1.76(11)	3.55	2.36	2.25b
+C24	5.06	2.88	2.57(11)	4.19	2.88	—
+C50	5.20	3.49	3.52(14)	4.75	3.73	3.10c
+C60	4.27	2.64	2.23(19)	3.87	2.98	2.69d
+C70	4.10	2.61	2.46(11)	3.98	2.83	2.76e
+C80 (D5d)	5.00	3.91	3.25(10)	4.62	3.88	3.70c
+C80 (Ih)	4.56	2.99	3.90(11)	5.17	4.38	—
+MAD	1.66	0.18	0.42	1.25	0.26	
+
+RMS	0.32	0.12	0.06	0.26	0.21	
+
+	(A1)
+
+ 	Fig. 10  Non-Koopmans penalty coefficient for the highest occupied molecular orbital [1a2(π3)] of furan as a function of wave-function cutoff energy.	 
+
+ 	Fig. 11  Penalty coefficients αNKiσ that quantify orbital relaxation upon ionization for the orbitals of carbon in the spin-up and spin-down channels.	 
+	(A2)
+
+This journal is © the Owner Societies 2013

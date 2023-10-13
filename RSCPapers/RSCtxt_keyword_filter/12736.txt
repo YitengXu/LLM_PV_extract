@@ -1,0 +1,766 @@
+Design and parametric optimization of ion-implanted PERC solar cells to achieve 22.8% efficiency: a process and device simulation study  - Sustainable Energy & Fuels (RSC Publishing) DOI:10.1039/D2SE00434H View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2SE00434H
+(Paper)
+Sustainable Energy Fuels, 2022, 6, 3249-3262Design and parametric optimization of ion-implanted PERC solar cells to achieve 22.8% efficiency: a process and device simulation study
+
+        
+          
+            Savita 
+            Kashyap
+          
+        
+      , 
+      
+        
+          
+            Jaya 
+            Madan
+          
+        
+      * and 
+
+        
+          
+            Rahul 
+            Pandey
+          
+        
+      *
+      VLSI Centre of Excellence, Chitkara University Institute of Engineering and Technology, Chitkara University, Punjab, India. E-mail: rahul.pandey@chitkara.edu.in; Jaya.madan@chitkara.edu.in
+Received 
+      28th March 2022
+    , Accepted 24th May 2022First published on 25th May 2022AbstractSilicon-based photovoltaic (PV) technology is considered the most favourable approach, and has received great consideration worldwide, to possibly meet the ever-growing need for energy. Silicon-passivated emitter and rear cells (PERCs) are promising contenders for mass production in the PV industry. However, PERC devices suffer from losses that limit the device performance. Recombination of minority carriers and absorption losses in PV devices are major limiting factors that restrain the achievable values of power conversion efficiency (PCE). In an attempt to circumvent these losses and enhance PCE, regular upright pyramid surface textured ion-implanted PERC solar devices are designed and simulated using industry-standard process and device simulators. The devices under consideration are constructed using the Athena process simulator using deposit, ion implantation, etch, and diffusion statements. The collective impact of the process parameters, namely, ion implantation dose (1 × 1014 cm−2 to 5 × 1015 cm−2) and energy (10 keV to 30 keV) at a constant diffusion temperature and time of 950 °C and 30 min on the total saturation current density (jo), series resistance (Rs) and PV parameters have been investigated to optimize the emitter region performance. Furthermore, parametric optimization of the bulk thickness (Tbulk) of the boron-doped crystalline silicon (c-Si) wafer, carrier lifetime (τcarrier) and length of a half pyramid (LoHpyramid) has been carried out to improve the PCE. The optimized PERC device with a dose of 7.5 × 1015 cm−2, energy of 30 keV, Tbulk of 150 μm, τcarrier of 2 ms and LoHpyramid of 4 μm yielded a short-circuit current density (JSC) of 40.8 mA cm−2, open-circuit voltage (VOC) of 686 mV, fill factor (FF) of 81.54% and PCE of 22.8% along with a jo of 101 fA cm−2 and Rs of 578 mΩ cm2. A detailed comparison of the simulated efficiency with published experimental work has been made, followed by loss analysis relative to the Auger limit efficiency of 29.4%. The reported device may open a window for further expansion of the PERC solar cell for higher efficiencies.
+1. Introduction
+Global demand for photovoltaic (PV) modules with enhanced PCE values has been continuously growing. As of now, the growth of the PV industry is being gradually influenced by crystalline silicon (c-Si)-based PV devices. In 2018, c-Si wafer-based PV technology accounted for approximately 95% of the total commercial production.1,2 However, to further enhance the competitiveness of PV technology, it is vital to stretch the limits of the maximum values of PCE that can be obtained from c-Si solar cells. c-Si is widely used in PV devices owing to some inherent advantages, such as high purity, a suitable bandgap value of 1.12 eV, minimum defect content, high minority carrier lifetime, availability in terms of abundance, high reliability and long-term stability for rapid research advancement.2,3 Zhao et al. reported a PCE of ∼25% for c-Si based solar cells in 1999.4 Additionally, the interdigitated back contact (IBC) technology of SunPower, USA5 and the heterojunction interdigitated back contact (HJ-IBC) technology of Panasonic, Japan6 showcase certified efficiencies of 25.2% and 25.6%, respectively. Although reasonably high efficiencies have been claimed to be obtained using c-Si technology, the complexities involved in the required lithography steps make the overall fabrication process quite complex and cost-intensive.7
+Al-BSF based solar cells have been researched as a possible technology to overcome the constraints posed by c-Si technology. However, in Al-BSF solar cells, the surface recombination velocity (SRV) near the Si/metal interface prevents the device from attaining a high PCE owing to recombination losses.8–10 Moreover, bulk recombination, surface and optical losses are major hindrances in the Al-BSF solar cell. Thus, there is a clear-cut need for the development of a high-efficiency PV device that reduces the major constraints present in the Al-BSF solar cell.11 To reduce the aforementioned downsides associated with Al-BSF solar devices, passivated emitter rear contact (PERC) technology has shown good promise.12 The origin of the PERC solar cell was established by the UNSW lab in 1989 (ref. 13) and accomplished in 2002 using the laser contact process.14 In order to develop a PERC cell, two additional fabrication steps are applied to an Al-BSF device during the manufacturing process. First, a dielectric passivation layer is deposited on the rear surface to reduce the recombination losses, and secondly, contact openings are formed on the rear side using a laser ablation process.15,16 By employing these additional steps, the PERC solar cell is able to capture more light. In a PERC, if light passes through the cell and remains unabsorbed, there is still a chance for it to be reflected by the dielectric passivation layer on the rear side and then absorbed in the active substrate region. Therefore, an additional current may be generated in the device, which may result in PCE enhancement. Overall, the PERC design is considered to be a promising technology with many advantages, such as enhanced internal reflection on the rear side, reduction in rear-side recombination, and increased internal rear reflection, leading to a higher VOC.17,18
+Numerous researchers have carried out experimental and theoretical studies to enhance the performance of PERC devices. Huang et al.19 reported an efficiency of 20.8% for a p-type Si-based PERC device using an Al2O3 rear-side passivation layer. Zielke et al.20 demonstrated a 21.7% efficient PERC solar device using an Al/AlOx/n+-Si tunnel contact. Chiu et al.21 achieved a 22.25% efficient mono-c-Si-based PERC device using a laser-ablated backside contact pattern, and Huang et al.22 obtained a 22.1% efficient PERC solar configuration with nano inverted pyramids (NIPs) texturing. Ye et al.23 reported a 22.13% efficient p-type mono-PERC solar device. Deng et al.24 obtained 21% efficiency from a p-type mc-Si PERC solar cell. A 21.40% efficient PERC solar device with a busbar-parallel line opening pattern (BLOP) was analyzed by Kim et al.25 Zhao et al.26 obtained 24.4% efficiency by employing pyramid texturing. Shalabny et al.27 presented the effect of surface charge transfer from n-type charge carriers to p-type ones for Si nanowire-based devices. In addition to this, some researchers have reported theoretical interpretation and simulation results for PERC solar cells. Dullweber et al.28 reported a 20.25% efficient p-type PERC device. Min et al.29 showed that the PERC cell efficiency could go beyond 24% and also provided a detailed loss analysis. Wasmer et al.30 presented a metamodeling approach to obtain a PCE of more than 23% in a PERC device. Furthermore, n-type PERC solar cells employing an Al front contact with 24.82% efficiency and a nickel front contact with 24.44% efficiency were simulated by Boukortt et al.31,32 Zidi et al.33 reported a 21.47% efficient front surface textured based p-type PERC solar device. Zhou et al.34 examined a 20.9% efficient PERC device using a double layer of antireflection coating (ARC) of the material SiOxNy/Si3N4.
+Although extensive research and development of PERC solar cells are being carried out in the literature, the accomplished conversion efficiencies are still far from the theoretical Auger limit of 29.4% for silicon solar cells. The major limiting factors identified as being responsible for this difference are the resistive and recombination losses within the emitter region. The formation of the emitter region in PERC solar cells is accomplished using two different methods, i.e., ion-implantation or POCl3 diffusion. Implantation technology has several advantages for the formation of emitter, such as short process time, low thermal budget, superior homogeneity and reproducibility of the doping profile. Various dielectric materials, metals and resists can be used for masking, and implantation through thin layers is also possible. In addition, the implantation dose and energy also allow control over the implanted ions, doping concentration and penetration depth. Process variables such as the implantation dose, energy and diffusion time play important roles in determining the performance of the emitter region and losses associated with it. Therefore, a comprehensive study of these variables during fabrication could provide a path to increase the conversion efficiency. However, a considerably high budget would be required to optimize these parameters through a solely experimental approach. Therefore, industry-standard process and device simulation tools, which are very accurate in modelling the actual experimental processes and device performance, can be utilised to assist in the development of the field and optimization of performance.
+Therefore, in this work, process and device simulators from Silvaco have been extensively utilised to design and optimize ion-implanted PERC cells in terms of the implantation parameters, namely, dose and energy, followed by optimization of the base parameters, namely, the length of a half pyramid (LoHpyramid), bulk thickness (Tbulk) and carrier lifetime (τcarrier). The implantation dose and energy parameters have been varied from 1 × 1014 cm−2 to 7.5 × 1015 cm−2 and 10 keV to 30 keV at a constant diffusion temperature of 950 °C and time of 30 min. The other device parameters, Tbulk, LoHpyramid, and τcarrier, have been varied from 100–250 μm, 3–6 μm and 1 μs to 2 ms, respectively, in 4 steps, and the performance of the device has been obtained for each permutation (64 datasets) of the base parameters.
+The overall manuscript is organized into four different sections. Section 1, i.e., the Introduction, is followed by Section 2, which presents a detailed description of the device and parameters used for the simulation. The results obtained from this research work are then discussed in Section 3, which is further subdivided into five different subsections. Subsection 3.1 presents the absorption analysis of the textured Si wafer. Subsection 3.2 describes the collective influence of the process parameters on the device performance. Parametric optimization of the base parameters is discussed in Subsection 3.3, and the optoelectronic performance in terms of the EQE and optimized J–V curve is presented in Section 3.4. Section 3.5 discusses the comparative loss analysis of the optimized device with the Auger limit. The overall conclusions of the research work are presented in Section 4.
+2. Device analysis and simulation methodology
+The Silvaco TCAD software package was used to design and simulate the PERC device. This package provides various process and device simulators. The Athena (process) and ATLAS (device) simulators were utilized for the process and device simulations, respectively. The detailed process simulation steps are presented in Subsection 2.1, and the device simulation methodology is provided in Subsection 2.2.
+2.1. Process simulation
+The PERC device under consideration was constructed using an Athena process simulator by using deposit, etch, implantation and diffusion statements. Initially, a p-type (7 × 1016 cm−3) Si-substrate was used by employing an etching statement to obtain an accurate value of LoHpyramid.35 Afterwards, phosphorous implantation was performed using the optimized dose (5 × 1015 cm−2) with an energy of 30 keV. Subsequently, a diffuse statement was utilized to run a time and temperature step on the wafer and to allow the diffusion of phosphorus impurities. The diffusion process was allowed to run for 30 minutes at a temperature of 950 °C, and all the process parameters for the ion-implanted emitter were optimized in a previous work.36 As a result, the p–n junction was formed, as depicted in Fig. 1. A fully coupled-diffusion model, which was established at Stanford University, was involved in the higher-order dopant-defect interaction during the diffusion process.37–39 Further, the transient activation model was utilised to compute activated dopants that were accommodated into the substitutional lattice out of the total chemical concentration of the implanted phosphorous.36 The excess dopants that fail to unite are considered to be deactivated. The point at which this occurs at a particular temperature for a particular semiconductor is known as the solid solubility limit.40
+ Fig. 1  Proposed simulation process flow to design the PERC solar device with emitter doping profiles using the optimized process parameters. 
+Subsequently, SiNx with an oxide dielectric layer (SiNx/SiO2 stack) was deposited on the front surface; this serves as both a passivation and an ARC layer for the device. Furthermore, an Al2O3/SiNx stacked dielectric film was also deposited on the back side of the device, followed by contact opening at the back side and metallization. An Al2O3/SiNx passivation stack is employed on the rear side to passivate the abrupt Si interface and thereby minimize the recombination loss. It is worth noting that the rear Al2O3/SiNx stacked layers have an excellent passivation effect that helps to reduce the SRV near the Si/Al2O3 interface. Finally, the device is finished by metallization at the front side to form the silver-based front contact. Generally, the processes of screen-printing and co-firing are used to form a contact with Si by printing silver material on the ARC layer.41 The stepwise process simulation flow steps are shown in Fig. 1, which depicts the actual doping profile created after the implantation and diffusion statements. A textured surface with regular upright pyramids was used to diminish the reflectivity on the front surface to enhance its light trapping to achieve more light absorption within the active region. The pyramid height for the front side texturing was kept constant at 5 μm as per the literature,42 and Tbulk, LoHpyramid and τcarrier were varied from 100–250 μm, 3–6 μm and 1 μs to 2 ms, respectively, to obtain the optimized PV parameters. A heavily doped optimized p-type region of 1019 cm−3 (width = 55 μm,43,44 depth = 4.3 μm45) is included to act as a local BSF region to mitigate the recombination losses at the back surface.
+2.2. Device simulation
+Device simulations were performed for the device created using the Athena process simulations. All the input parameters for the simulation are listed in Table 1, and all the simulations were performed using a temperature of 25 °C and the AM1.5 solar spectrum. The Newton method was chosen as the numerical calculation method for this work. To simulate the device, various models were used as per the published literature,36,45 and the iterative process for the PERC device was completed using various models, as summarized in Table 1.
+Table 1 Input parameters for PERC device
+
+
+
+
+Parameter
+Description
+Value
+
+
+
+
+
+a Indicates variable values.
+
+
+
+
+
+Crystalline-Si35,45,50,52,53
+Thickness (μm)
+100–250a
+
+
+Doping concentration (cm−3)
+7 × 1016
+
+
+Carrier lifetime τn = τp (s)
+1 μs to 2 msa
+
+
+SiNx/SiO2 (front side stack)45
+Optimized thickness (nm)
+70/10
+
+
+Al2O3/SiNx (rear side stack)19,45
+Optimized thickness (nm)
+10/100
+
+
+Pyramid42
+Height (μm)
+5
+
+
+LoHpyramid (μm)
+3–6a
+
+
+p + BSF under rear contact31,32,44,45
+Doping concentration (cm−3)
+1019
+
+
+Depth/width (μm)
+4.3/55
+
+
+Front and rear contact45,49
+SRVn/SRVp (cm s−1)
+107
+
+
+Rear passivated surface46–48
+SRVn/SRVp (cm s−1)
+100/15
+
+
+Finger pitches29,45,54–58
+Front|rear (μm)
+1400|850
+
+
+Front contact51
+Width/height
+19/18
+
+
+Models for PERC device
+
+
+Klaassen mobility model
+
+59
+
+
+
+Schenk bandgap narrowing model
+
+60
+
+
+
+Richter model for Auger recombination (300 K)
+
+61
+
+
+
+Radiative recombination (300 K)
+
+62
+
+
+
+Intrinsic carrier concentration (ni)
+8.27 × 109 cm−3
+
+
+
+
+For the backside interface, the dielectric SRV for passivation was considered to be 100 (15) cm s−1.46–48 Furthermore, a constant SRV of 107 cm s−1 was used to analyze the defects on both the front and rear contact.45,49 Recently, research has been conducted to minimize the “finger-width” to reduce the optoelectronic losses linked with the front finger. Richter et al. reported a front-finger width as low as 11 μm in the TOPCon devices,50 and Tepner et al. used a finger width/height of 19 μm/18 μm for PERC devices.51 For the device analysis, a finger width/height of 19 μm/18 μm was assumed based on recently published work by Tepner et al.51 The obtained PV parameters are in accordance with the previous findings, and are discussed in Tables 3 and 4 of the Results and discussion.
+3. Results and discussion
+3.1. Absorption analysis for the textured Si wafer with front and back SiNx stacked film ARC layers
+Initially, the optical absorption of a 150 μm thick Si wafer with a regular upright textured front surface (height 5 μm, angle 51.3° and width 8 μm) was analyzed using current PV-industry-based SiNx stacked film dielectric ARC layers such as SiNx/SiO2 (front stack films) and Al2O3/SiNx (rear stack layers).63–66 The refractive indices for the SiNx, SiO2 and Al2O3 layers were obtained from ref. 67–69. For the front ARC, the thickness of both SiNx/SiO2 was varied from 10 to 90 nm/10 to 30 nm for enhanced absorption, as shown in Fig. 2. For each of the above-mentioned thicknesses of SiO2, the SiNx thickness was varied from 10 nm to 90 nm to achieve the highest absorption. The results show that the maximum absorption within the substrate is attained at SiNx/SiO2 thicknesses of 70 nm/10 nm; this was also validated through the available photocurrent. Similarly, the Al2O3/SiNx stacked layer thicknesses at the back side are optimized at 10 nm/100 nm.19,45 The accuracy of the simulated response was also validated through the powerful Monte-Carlo online simulation tools OPAL2 (ref. 70) and ‘wafer ray tracer’.71 No significant variation in the absorption or the absorbed photon was observed during optimization of the back dielectric stacking; therefore, results are not shown for this.
+ Fig. 2  Absorption within the substrate of the PERC solar cell versus optical wavelength (nm) with the variation of the thickness of the SiNx/SiO2 stacked layer thicknesses. 
+3.2. Influence of process variables on device performance
+In this section, the collective influence of the implant process parameters, namely, implantation dose (1 × 1014 cm−2 to 5 × 1015 cm−2) and energy (10 keV to 30 keV), is studied and analyzed while keeping other parameters, namely, the diffusion temperature and time, constant at 950 °C and 30 min, respectively. Correspondingly, the device performance was investigated in terms of the active phosphorus concentration, total saturation current density (jo), total series resistance (Rs) and PV parameters, as shown in Fig. 3(a–h), Table 2 and Fig. 4(a–d), respectively. From the results, it is observed that increasing the phosphorous dose resulted in enhanced donor concentration as well as higher junction depth near the front surface at a specific energy, and that increasing the energy increases the peak doping concentration and promotes higher penetration of activated dopants, as depicted in Fig. 3(a–h).
+ Fig. 3  Collective influence of phosphorus dose and energy on the emitter formation and active phosphorus concentration profile plotted for different doses (1 × 1014 to 7.5 × 1015 cm−2) for all energy values (10 keV to 30 keV): (a) 1 × 1014 cm−2, (b) 2.5 × 1014 cm−2, (c) 5 × 1014 cm−2, (d) 7.5 × 1014 cm−2, (e) 1 × 1015 cm−2, (f) 2.5 × 1015 cm−2, (g) 5 × 1015 cm−2 and (h) 7.5 × 1015 cm−2. 
+Table 2 Collective impact of the implantation dose (1 × 1014 to 7.5 × 1015 cm−2) and energy (10 keV to 30 keV) on the saturation current density (jo) and series resistance (Rs)
+
+
+
+
+
+j
+o (fA cm−2)
+
+R
+S (mΩ cm2)
+Energy (keV)
+
+
+10
+15
+20
+25
+30
+
+
+
+
+Dose (cm−2)
+1 × 1014
+24469.2
+897.2
+673.3
+586.4
+497.8
+588.3
+388.9
+579.8
+328.9
+581.3
+
+
+2.5 × 1014
+812.6
+597.8
+337.6
+584.6
+259.3
+575.7
+208.6
+574.9
+180.0
+572.4
+
+
+5 × 1014
+341.1
+586.4
+229.3
+584.2
+193.5
+573.6
+159.3
+578.3
+141.1
+573.7
+
+
+7.5 × 1014
+240.1
+580.4
+184.2
+572.5
+161.8
+576.7
+136.6
+572.3
+124.4
+570.5
+
+
+1 × 1015
+196.2
+573.5
+162.7
+576.3
+144.1
+575.2
+124.8
+570.7
+116.1
+570.8
+
+
+2.5 × 1015
+129.2
+572.2
+120.4
+570.1
+112.6
+572.2
+106.4
+576.6
+105.3
+577.7
+
+
+5 × 1015
+111.3
+572.0
+104.9
+578.3
+103.4
+580.1
+102.9
+580.5
+100.9
+579.6
+
+
+7.5 × 1015
+102.8
+580.7
+101.4
+580.1
+101.3
+579.9
+100.2
+578.7
+108.9
+573.9
+
+
+
+
+ Fig. 4  Collective impact of the process parameters, namely, the dose (1 × 1014 to 7.5 × 1015 cm−2) and implantation energy (10 keV to 30 keV), on the PV parameters: (a) JSC, (b) VOC, (c) FF, (d) PCE. 
+As shown in Fig. 3(a), the lowest doping profile is obtained at the lowest dose of 1014 cm−2 with 10 keV, which resulted in a higher jo (24469 fA cm−2) and Rs (897.2 mΩ cm2), and an improvement in the doping profile in terms of the surface concentration and depth is achieved with increasing dose and energy as shown in Fig. 3(b–h), which decreases the jo and Rs. A low implantation dose resulted in the formation of a poor emitter region with low concentration and junction depth, which further resulted in lower collection probability and a higher recombination rate (higher jo with low VOC). Increasing the dose increases the emitter performance in terms of built-in potential and junction depth, which enhances the device performance by suppressing the jo. Further, it can be noted that reductions in jo and Rs from 24469 fA cm−2 to 101 fA cm−2 and 897.2 mΩ cm2 to 579.6 mΩ cm2 are observed with a dose of 5 × 1015 cm−2 at an energy of 30 keV. Increasing the doses beyond 5 × 1015 cm−2 resulted in a slight degradation in performance due to the formation of a dead layer with a high concentration, which resulted in a slight increase in jo.
+The PV parameters were also obtained while varying the dose and energy collectively. From the results, it can be observed that there is an insignificant change in the current density when the dose and energy are altered, as depicted in Fig. 4(a). The lowest dose and energy result in the minimum VOC, as shown in Fig. 4(b), due to high jo, as discussed earlier. Higher dose and energy suppress jo and improve the VOC. A significant improvement in VOC from 545 mV to 686 mV is observed when increasing the dose from 1 × 1014 cm−2 to 5 × 1015 cm−2 for all energy values from 10 keV to 30 keV. Likewise, the influence of both parameters on the FF was also analyzed. A decrease in the FF is obtained due to higher series resistance (Rs) at lower doses and energy. Subsequently, it starts to increase with increasing the parameters, as shown in Fig. 4(c). The collective influence of these three PV parameters, i.e., JSC, VOC and FF, is reflected in the PCE as shown in Fig. 4(d), which indicates a highest conversion efficiency of 22.8% at the optimized dose and energy of 5 × 1015 cm−2 and 30 keV, respectively.
+3.3. Parametric optimization of LoHpyramid, Tbulk and τcarrier
+The optimized SiNx stacked films were used to analyze the PERC device and the PV performance of the PERC device while varying LoHpyramid (3 to 6 μm), Tbulk (100 to 250 μm), and τcarrier (1 μs to 2 ms). The analysis was carried out for each permutation, i.e., 64 datasets were obtained for the collective variations of LoHpyramid, Tbulk and τcarrier. The obtained data plots are shown in Fig. 5(a–d), respectively, which depict the JSC, VOC, FF and PCE of the PERC solar cell under consideration. The results presented in Fig. 5(a) show that JSC increases with increasing LoHpyramid up to 5 μm owing to the higher amount of light trapping at a longer lifetime (2 ms) for all Tbulk variations from 100 to 250 μm. Enhanced light trapping results in higher light absorption within the substrate. Higher photon absorption results in the generation of electron–hole pairs that increase the collection efficiency of the generated charge carriers and consequently enhance the current density.
+ Fig. 5  Impact of variation of the base parameters Tbulk (100–250 μm), LoHpyramid (3–6 μm) and τcarrier (1 μs to 2 ms) on (a) JSC, (b) VOC, (c) FF and (d) PCE. 
+However, increasing the LoHpyramid beyond 5 μm results in reduced JSC (in all permutations), since for a fixed pyramid height of 5 μm, a LoHpyramid of 5 μm resulted in a characteristic angle ω of 45°, and increasing LoHpyramid to 6 μm resulted in the reduction of ω to 39.8°. The decrease in ω resulted in a reduction in light trapping and hence insufficient optical coupling. This further resulted in a lower absorbed photocurrent. However, typical industrial cells have ω values between 49° and 53°,63–66 and certain etchants may result in ω values as low as 45°.72,73 However, obtaining an ω of 45° is not appropriate or consistent with the experimental work.63–66 Therefore, a LoHpyramid of 4 μm, giving an ω of 51.3°, which is consistent with the literature, was used as the optimized value for all the simulations. Quantitatively, it is observed that increases of 1.35%, 1.35%, 1.18% and 1.39% in JSC are obtained at Tbulk values of 100 μm, 150 μm, 200 μm and 250 μm when increasing LoHpyramid from 3 to 4 μm. Correspondingly, 1.23%, 1.23%, 0.78% and 1.03% reductions in JSC are observed when increasing LoHpyramid from 4 to 6 μm.
+In addition to LoHpyramid, the simulation results show that with increasing Tbulk from 100 to 150 μm, JSC remains unchanged at τcarrier/LoHpyramid values of 2 ms/4 μm, and thereafter, the improvement in JSC is insignificant. Further, PERC device analysis was also conducted by varying τcarrier from 1 μs to 2 ms to understand its impact on PV performance. As in the above-mentioned simulation results, Tbulk/LoHpyramid values of 150 μm/4 μm were used for τcarrier analysis. Fig. 5(a) shows that as τcarrier is increased from 10−6 s → 10−5 s → 10−4 s → 2 × 10−3 s, JSC increases significantly from 34.83 mA cm−2 → 38.73 mA cm−2 → 40.48 mA cm−2 → 40.80 mA cm−2 owing to higher carrier collection efficiency. This results in a 17.14% increase in JSC with increasing τcarrier from 1 μs to 2 ms.
+Similarly, the impact of the base parameters (Tbulk, LoHpyramid and τcarrier) on VOC has been analyzed. It can be observed from Fig. 5(b) that VOC does not exhibit any significant change with increasing of LoHpyramid from 3 to 6 μm at a longer lifetime 2 ms and different Tbulk values, in the same manner as that of JSC. It can also be noted from Fig. 5(b) that with the increase of Tbulk from 100 to 250 μm, VOC decreases slightly, owing to higher carrier recombination in the thicker wafer at τcarrier/LoHpyramid values of 2 ms/4 μm. Additionally, when τcarrier increases from 10−6 s → 10−5 s → 10−4 s → 2 × 10−3 s, VOC increases significantly from 606 mV → 642 mV → 674 mV → 686 mV at Tbulk/LoHpyramid values of 150 μm/4 μm, which is attributed to lower recombination losses due to higher τcarrier.
+Subsequently, Fig. 5(c) depicts the influence of the base parameters on the FF of the PERC device. It can be observed that at a particular τcarrier, the variation in FF is not significant when Tbulk and LoHpyramid are varied. However, changes in τcarrier significantly affect the FF. At constant Tbulk/LoHpyramid values of 150 μm/4 μm, the FF increases from 79.56% → 80.61% → 81.30% → 81.54% with increasing τcarrier from 10−6 s → 10−5 s → 10−4 s → 2 × 10−3 s, respectively. This results in a 2.43% increase in FF as the lifetime changes from 1 μs to 2 ms. The enhancement in FF observed at higher τcarrier values is attributed to the superior diffusion length of the light-generated carrier.
+The effect of all the base parameters on PCE is examined and shown in Fig. 5(d). The variation in the PCE is the collective result of JSC, VOC and FF, as discussed above. The results show that for a particular τcarrier, variation in Tbulk and LoHpyramid resulted in slight variation in the PCE; however, changes in τcarrier affect the concerned parameter significantly. The wafer with Tbulk/LoHpyramid values of 150 μm/4 μm shows a low PCE (16.78%) at a τcarrier value of 1 μs owing to the insufficient diffusion length of the light-generated carriers and the elevated recombination rate inside the absorber layer. However, a similar set of Tbulk and LoHpyramid values resulted in 22.8% PCE at a higher τcarrier value, i.e., 2 ms. The PERC device with an absorber layer having a superior τcarrier exhibited enhanced PV performance due to the lower recombination rate and higher collection probability. It has been further validated that all the parameters under consideration affect PV performance; however, among them, τcarrier affects the PV parameters immensely.
+In addition, in Fig. 5(c), it is worth noting that LoHpyramid showed a significant impact on the FF of the device; i.e., higher LoHpyramid reduces the FF for all τcarrier and Tbulk values. Overall, FF is dominated by the series resistance; therefore, to investigate the cause of the reduction, the Rs was also obtained at all the considered base parameters, as shown in Fig. 6. Higher LoHpyramid values yielded elevated series resistance and reduced the device performance.
+ Fig. 6  Impact of different base parameters, namely, Tbulk (100–250 μm), LoHpyramid (3–6 μm) and τcarrier (1 μs to 2 ms), on series resistance. 
+3.4. Optoelectronic performance in terms of EQE and optimized J–V curve
+Here, the optoelectronic performance is also examined in terms of the EQE and optimized J–V, as shown in Fig. 7(a and b). A device with Tbulk/LoHpyramid values of 150 μm/4 μm is considered in the following discussion. The spectrum response, i.e., the EQE data, was obtained while varying τcarrier and is shown in Fig. 7(a). With variation in τcarrier, the EQE at lower wavelengths was not affected; however, a significant change was observed at higher wavelengths. Lower wavelength photons were more efficiently harvested in the absorber layer with a relatively lower thickness compared to higher wavelength photons. Therefore, even for the lowest carrier lifetime (1 μs), the carriers that are generated in the vicinity of the space charge region have sufficient diffusion length for collection. This resulted in an insignificant reduction in EQE at the lower wavelengths, i.e., below 500 nm. However, the carriers that are generated by harvesting high-wavelength photons (>600 nm) are generated far from the collecting junction. Thus, they require a large τcarrier in order to arrive at the collecting junction, and failing to achieve this leads to their decay via recombination processes within the absorber layer, i.e., the c-Si wafer.
+ Fig. 7  (a) Impact of τcarrier on EQE at the optimized Tbulk of 150 μm and LoHpyramid of 4 μm. (b) Illuminated J–V curve of the optimized PERC solar cell. 
+Therefore, increasing τcarrier results in enhanced carrier diffusion length and collection at higher wavelengths. At 900 nm, with the increase of τcarrier from 10−6 s → 10−5 s → 10−4 s → 2 × 10−3 s, EQE increases from 60.65% → 81.97% → 92.24% → 94.11%. Based on the 64 datasets of the results, the optimized 22.8% efficient PERC device is obtained at a LoHpyramid of 4 μm, Tbulk of 150 μm, and τcarrier of 2 ms. Furthermore, the illuminated optimized J–V curve of the PERC device was also obtained to quantify the PV parameters, which were JSC = 40.8 mA cm−2, VOC = 686 mV, FF = 81.54%, and PCE = 22.8%, along with the total saturation current density (jo) and total series resistance (Rs), as shown in Fig. 7(b).
+3.5. Comparison of simulated 22.8% efficient PERC solar cell with published theoretical and experimental PERC solar cells
+This last subsection of the results summarizes and compares the performance of the simulated device with the state-of-the-art theoretical work published in the literature cited in Table 3. A bar graph is also provided in Fig. 8 to give a comparison with the PV parameters of state-of-the-art simulated PERC devices, the Auger limit74 and recently published analytical results.54 The PV parameters show that the performance of our work is very close to that of the 26% efficient PERC device proposed by Preu et al.54 through analytical modelling (Fig. 8). More precisely, 5.7% and 4.72% lower JSC and VOC values are simulated in the PERC device under consideration. Similarly, a higher FF of 2.28% and a 12.3% reduction in PCE have been obtained. After that, a comparison was made between the simulated PERC device and the analytical, theoretical efficiency limit of 29.4%.74 A difference of 22.4% between the 22.8% efficiency of the simulated PERC device in this work and the Auger efficiency of 29.4% for a doped wafer cell is obtained.
+Table 3 Comparison of PV parameters of simulated PERC devices with theoretical PERC performances31–34,54,74,75
+
+
+
+
+Model
+
+J
+SC (mA cm−2)
+
+V
+OC (mV)
+FF (%)
+PCE (%)
+Source
+
+
+
+
+Silvaco-TCAD (process + device simulations)
+40.8
+686
+81.5
+22.8
+This work
+
+
+Silvaco-TCAD (device simulations)
+40.3
+647
+81.3
+21.2
+
+75
+
+
+
+Silvaco-TCAD (device simulations)
+40.7
+761
+80.2
+24.8
+
+31
+
+
+
+Silvaco-TCAD (device simulations)
+41.7
+727
+80.5
+24.4
+
+32
+
+
+
+PC2D (device simulations)
+39.5
+672
+80.9
+21.5
+
+33
+
+
+
+Silvaco-TCAD (device simulations)
+38.4
+677
+84.3
+21.9
+
+34
+
+
+
+Analytical
+43.3
+720
+83.4
+26.0
+
+54
+
+
+
+Analytical
+43.3
+712
+84.3
+26.0
+
+54
+
+
+
+Analytical (Auger limit)
+43.3
+761
+89.3
+29.4
+
+74
+
+
+
+Quokka3
+43.0
+721
+84.4
+26.1
+
+54
+
+
+
+Quokka3
+40.3
+674
+81.5
+22.1
+
+54
+
+
+
+
+
+ Fig. 8  Comparison of the PV parameters (a) JSC, (b) VOC, (c) FF and (d) PCE of simulated PERC devices with analytical (Auger limit)74 and recently published analytical work.54 
+To possibly narrow down the cause of the difference, the simulated parameters (JsimuSC, VsimuOC and FFsimu) were compared with those of the Auger limit cell. Primarily, we found that the JsimuSC value of 40.8 mA cm−2 could be further enhanced 5.7% (2.5 mA cm−2) with respect to the theoretical limit of JtheoSC = 43.3 mA cm−2. The loss in JSC could be due to front surface reflection loss, front surface recombination and/or bulk recombination during the transport process of the light-generated carriers. The JSC loss also reflects the absence of light-trapping architecture at the rear side as compared to Lambertian light trapping optics in the theoretical limit calculation. Therefore, both front and back surface texturing schemes could be utilised to provide a light-trapping architecture at the front and rear sides to increase the photogenerated current density and minimize the JSC loss.
+The VsimuOC of 686 mV is lower than the VtheoOC of 761 mV; this shows a possibility to improve it further by a factor of 9.8% (75 mV). This difference could be attributed to surface and SRH recombination and to a lower JsimuSC compared to JtheoSC. Therefore, the overall performance of the PERC device could be further improved by using passivating contacts to reduce the recombination losses. The FFsimu of 81.5% showed a significant loss of about 8.7% compared to the FFtheo of 89.3% and is credited to resistive losses, which are mainly contributed by lateral resistance within the emitters and front metallization.
+The results section of this manuscript is concluded with a comparison of the simulated PERC device performance with simulation/theoretical and experimental works on PERC device performances, which are reported in Tables 3 and 4, respectively.
+Table 4 Comparison of PV parameters of the simulated PERC device with recent experimental PERC performances21,76–80
+
+
+
+
+
+J
+SC (mA cm−2)
+
+V
+OC (mV)
+FF (%)
+PCE (%)
+Source
+
+
+
+
+40.8
+686
+81.5
+22.80
+This work
+
+
+40.5
+679
+81.4
+22.40
+
+78
+
+
+
+40.4
+682
+80.5
+22.21
+
+79
+
+
+
+40.2
+670
+79.5
+21.39
+
+77
+
+
+
+39.8
+661
+80.8
+21.25
+
+80
+
+
+
+40.2
+658
+79.4
+21.02
+
+21
+
+
+
+38.3
+647
+80.6
+20.0
+
+76
+
+
+
+
+
+4. Conclusions
+In this paper, ion-implanted PERC devices were designed and virtually realized using industry-standard process and device simulation software. Investigations and optimisation were carried out to find an optimized set of implantation dose, implantation energy, bulk thickness (Tbulk), carrier lifetime (τcarrier) and length of half pyramid (LoHpyramid) values of 5 × 1015 cm−2, 30 keV, 150 μm, 2 ms and 4 μm, respectively, to complete the design of a PERC solar cell with 22.8% PCE. The PERC device under consideration was found to have PV parameters of JSC = 40.8 mA cm−2, VOC = 686 mV and FF = 81.54%. Potential loss analysis of the simulated 22.8% efficient PERC solar cell was also carried out to show where the PERC device under consideration was limited in regards to reaching the 29.4% Auger limit. The work reported herein should prove to be useful in increasing the performance of existing PERC devices.
+The proposed efficiency could be further increased by using improved light trapping architecture on both sides, a wafer with a high carrier lifetime, and double-sided carrier selective contacts and by minimising contact-related resistive losses. The resistive losses are mainly contributed by lateral resistance within the emitters and front metallization, including the contact and line resistance of the fingers and busbars. Therefore, further improvement in the performance could be obtained by applying advanced metallization technologies to reduce the finger width. Additionally, the multi-busbar/multiwire approach could reduce resistive losses by minimising the amount of current flowing in both the fingers and the busbars.
+Conflicts of interest
+The authors declare no competing financial or non-financial interest.
+Acknowledgements
+This work is supported by funding from the “DST-SERB sponsored project (SRG/2019/000941) under Start-up Research Grant (SRG) scheme”. The authors would like to thank the members of “VLSI Centre of Excellence, Chitkara University, Punjab, India” for providing research support.
+References
+A. Jäger-Waldau, Snapshot of photovoltaics− February 2018, EPJ Photovolt., 2018, 9, 6 CrossRef .
+R. Pandey, A. Singla, J. Madan, R. Sharma and R. Chaujar, Toward the design of monolithic 23.1% efficient hysteresis and moisture free perovskite/c-Si HJ tandem solar cell: a numerical simulation study, J. Micromech. Microeng., 2019, 29, 064001 CrossRef CAS .
+C. Yu, S. Xu, J. Yao and S. Han, Recent advances in and new perspectives on crystalline silicon solar cells with carrier-selective passivation contacts, Crystals, 2018, 8, 430 CrossRef .
+J. Zhao, A. Wang and M. A. Green, 24· 5% Efficiency silicon PERT cells on MCZ substrates and 24· 7% efficiency PERL cells on FZ substrates, Prog. Photovolt.: Res. Appl., 1999, 7, 471–474 CrossRef CAS .
+D. D. Smith, P. Cousins, S. Westerberg, R. De Jesus-Tabajonda, G. Aniero and Y.-C. Shen, Toward the practical limits of silicon solar cells, IEEE J. Photovolt., 2014, 4, 1465–1469 Search PubMed .
+K. Masuko, M. Shigematsu, T. Hashiguchi, D. Fujishima, M. Kai and N. Yoshimura, 
+            et al., Achievement of more than 25% conversion efficiency with crystalline silicon heterojunction solar cell, IEEE J. Photovolt., 2014, 4, 1433–1435 Search PubMed .
+R. Pandey and R. Chaujar, Rear contact SiGe solar cell with SiC passivated front surface for> 90-percent external quantum efficiency and improved power conversion efficiency, Sol. Energy, 2016, 135, 242–252 CrossRef CAS .
+C. Battaglia, A. Cuevas and S. De Wolf, High-efficiency crystalline silicon solar cells: status and perspectives, Energy Environ. Sci., 2016, 9, 1552–1576 RSC .
+
+          S. Kashyap, J. Madan, R. Pandey and R. Sharma, Impact of Phosphorus Ion Implantation Dose on the Performance of PERC Solar Cell, in 2021 IEEE 48th Photovoltaic Specialists Conference (PVSC),  2021, pp. 2247–2249 Search PubMed .
+
+          S. Kashyap, R. Pandey, J. Madan and R. Sharma, Silicide Electrode based Electrostatically Doped Back Surface Field in PERC Solar Cell, in 2021 IEEE 48th Photovoltaic Specialists Conference (PVSC),  2021, pp. 2386–2388 Search PubMed .
+
+          X. Cheng, T. Zhou, S. Feng, H. Wang, H. Yang and S. Mao, et al., Comparative Study on Temperature Coefficients of Al-BSF Solar Cells and PERC Solar Cells, in 2019 IEEE 46th Photovoltaic Specialists Conference (PVSC),  2019, pp. 0304–0307 Search PubMed .
+M. A. Green, The passivated emitter and rear cell (PERC): from conception to mass production, Sol. Energy Mater. Sol. Cells, 2015, 143, 190–197 CrossRef CAS .
+A. W. Blakers, A. Wang, A. M. Milne, J. Zhao and M. A. Green, 22.8% efficient silicon solar cell, Appl. Phys. Lett., 1989, 55, 1363–1365 CrossRef CAS .
+E. Schneiderlöchner, R. Preu, R. Lüdemann and S. Glunz, Laser-fired rear contacts for crystalline silicon solar cells, Prog. Photovolt.: Res. Appl., 2002, 10, 29–34 CrossRef .
+A. Blakers, Development of the PERC solar cell, IEEE J. Photovolt., 2019, 9, 629–635 Search PubMed .
+T. Dullweber and J. Schmidt, Industrial silicon solar cells applying the passivated emitter and rear cell (PERC) concept—A review, IEEE J. Photovolt., 2016, 6, 1366–1381 Search PubMed .
+
+          S. Kashyap, J. Madan, R. Pandey, and R. Sharma, Comprehensive Study on the Recent Development of PERC Solar Cell, in 2020 47th IEEE Photovoltaic Specialists Conference (PVSC),  2020, pp. 2542–2546 Search PubMed .
+S. Kashyap, R. Pandey, J. Madan and R. Sharma, Design and Simulation of a-Si: H/PbS Colloidal Quantum Dots Monolithic Tandem Solar Cell for 12% Efficiency, Phys. Status Solidi A, 2020, 217, 2000252 CrossRef CAS .
+H. Huang, J. Lv, Y. Bao, R. Xuan, S. Sun and S. Sneck, 
+            et al., 20.8% industrial PERC solar cell: ALD Al2O3 rear surface passivation, efficiency loss mechanisms analysis and roadmap to 24, Sol. Energy Mater. Sol. Cells, 2017, 161, 14–30 CrossRef CAS .
+D. Zielke, J. H. Petermann, F. Werner, B. Veith, R. Brendel and J. Schmidt, Contact passivation in silicon solar cells using atomic-layer-deposited aluminum oxide layers, Phys. Status Solidi RRL, 2011, 5, 298–300 CrossRef CAS .
+J.-S. Chiu, Y.-M. Zhao, S. Zhang and D.-S. Wuu, The role of laser ablated backside contact pattern in efficiency improvement of mono crystalline silicon PERC solar cells, Sol. Energy, 2020, 196, 462–467 CrossRef CAS .
+Z. Huang, K. Gao, X. Wang, C. Xu, X. Song and L. Shi, 
+            et al., Large-area MACE Si nano-inverted-pyramids for PERC solar cell application, Sol. Energy, 2019, 188, 300–304 CrossRef CAS .
+
+          F. Ye, W. Deng, W. Guo, R. Liu, D. Chen and Y. Chen, et al., 22.13% efficient industrial p-type mono PERC solar cell, in 2016 IEEE 43rd Photovoltaic Specialists Conference (PVSC),  2016, pp. 3360–3365 Search PubMed .
+W. Deng, F. Ye, Z. Xiong, D. Chen, W. Guo and Y. Chen, 
+            et al., Development of high-efficiency industrial p-type multi-crystalline PERC solar cells with efficiency greater than 21%, Energy Procedia, 2016, 92, 721–729 CrossRef CAS .
+
+          D. K. Kim, V. Meemongkolkiat, J.-M. Yeon, B. J. Kim, J.-y. Lim and C.-s. Park, et al., Optimization of Laser-opening Pattern for the Efficiency Improvement of Industrial PERC Solar Cell, in 2018 IEEE 7th World Conference on Photovoltaic Energy Conversion (WCPEC) (A Joint Conference of 45th IEEE PVSC, 28th PVSEC & 34th EU PVSEC),  2018, pp. 2142–2144 Search PubMed .
+J. Zhao, A. Wang, M. A. Green and F. Ferrazza, 19.8% efficient “honeycomb” textured multicrystalline and 24.4% monocrystalline silicon solar cells, Appl. Phys. Lett., 1998, 73, 1991–1993 CrossRef CAS .
+A. Shalabny, F. Buonocore, M. Celino, G. Shalev, L. Zhang and W. Wu, 
+            et al., Semiconductivity Transition in Silicon Nanowires by Hole Transport Layer, Nano Lett., 2020, 20, 8369–8374 CrossRef CAS .
+
+          T. Dullweber, C. Kranz, U. Baumann, R. Hesse, D. Walter and J. Schmidt, et al., Silicon wafer material options for highly efficient p-type PERC solar cells, in 2013 IEEE 39th Photovoltaic Specialists Conference (PVSC),  2013, pp. 3074–3078 Search PubMed .
+B. Min, M. Müller, H. Wagner, G. Fischer, R. Brendel and P. P. Altermatt, 
+            et al., A roadmap toward 24% efficient PERC solar cells in industrial mass production, IEEE J. Photovolt., 2017, 7, 1541–1550 Search PubMed .
+S. Wasmer, A. A. Brand and J. M. Greulich, Metamodeling of numerical device simulations to rapidly create efficiency optimization roadmaps of monocrystalline silicon PERC cells, Energy Procedia, 2017, 124, 207–214 CrossRef CAS .
+N. E. I. Boukortt and B. Hadri, Simulation of Electrical Characteristics of PERC Solar Cells, J. Electron. Mater., 2018, 47, 5825–5832 CrossRef CAS .
+N. Boukortt, S. Patanè and B. Hadri, Development of high-efficiency PERC solar cells using Atlas Silvaco, Silicon, 2019, 11, 145–152 CrossRef CAS .
+L. Zidi, A. Mekemeche and M. Beghdad, Performance Analysis on Conversion Efficiency of PERC Solar Cell by PC2D Simulation, Silicon, 2019, 11, 2479–2485 CrossRef CAS .
+J. Zhou, Y. Tan, W. Liu, X. Cai, H. Huang and Y. Cao, Effect of front surface light trapping structures on the PERC solar cell, SN Appl. Sci., 2020, 2, 1–10 Search PubMed .
+A. Herguth, G. Schubert, M. Käs and G. Hahn, Investigations on the long time behavior of the metastable boron–oxygen complex in crystalline silicon, Prog. Photovolt.: Res. Appl., 2008, 16, 135–140 CrossRef CAS .
+S. Kashyap, J. Madan, R. Pandey and R. Sharma, Process and device simulations
+aimed at improving the emitter region performance of silicon PERC solar cells, J. Micromech. Microeng., 2021, 32, 025001 CrossRef .
+
+          Silvaco International, ATHENA User’s Manual, Silvaco International, Santa Clara,  2014 Search PubMed .
+
+          Silvaco International, ATLAS User’s Manual, Silvaco International, Santa Clara,  2016 Search PubMed .
+
+          S. W. Crowder, Processing Physics in Silicon-On-Insulator Material, Stanford University,  1995 Search PubMed .
+F. A. Trumbore, Solid solubilities of impurity elements in germanium and silicon, Bell Syst. Tech. J., 1960, 39, 205–233 CrossRef .
+
+          B. Hoex, PV-manufacturing, available, https://pv-manufacturing.org/ Search PubMed.
+P. K. Basu, A. Khanna and Z. Hameiri, The effect of front pyramid heights on the efficiency of homogeneously textured inline-diffused screen-printed monocrystalline silicon wafer solar cells, Renewable energy, 2015, 78, 590–598 CrossRef CAS .
+D. Lai, C. S. Tan, C. Ke, J. W. Ho, P. C. Ang and Z. M. Kam, 
+            et al., Optical design considerations of rear-side dielectric for higher efficiency of PERC solar cells, Opt. Express, 2019, 27, A758–A765 CrossRef CAS PubMed .
+M. Müller and F. Lottspeich, Evaluation of determination methods of the Si/Al contact resistance of screen-printed passivated emitter and rear solar cells, J. Appl. Phys., 2014, 115, 084505 CrossRef .
+A. Fell, K. R. McIntosh, P. P. Altermatt, G. J. Janssen, R. Stangl and A. Ho-Baillie, 
+            et al., Input parameters for the simulation of silicon solar cells in 2014, IEEE J. Photovolt., 2015, 5, 1250–1263 Search PubMed .
+Z. Wang, P. Han, H. Lu, H. Qian, L. Chen and Q. Meng, 
+            et al., Advanced PERC and PERL production cells with 20.3% record efficiency for standard commercial p-type silicon wafers, Prog. Photovolt.: Res. Appl., 2012, 20, 260–268 CrossRef CAS .
+Z. Liu, S. E. Sofia, H. S. Laine, M. Woodhouse, S. Wieghold and I. M. Peters, 
+            et al., Revisiting thin silicon for photovoltaics: a technoeconomic perspective, Energy Environ. Sci., 2020, 13, 12–23 RSC .
+
+          R. Jain, S. Behera, K. Sreejith, A. Kottantharayil, P. K. Basu and A. K. Sharma, Mapping of Bulk Diffusion Length and Effective Back Surface Recombination Velocity in Silicon Solar Cells, in 2018 4th IEEE International Conference on Emerging Electronics (ICEE),  2018, pp. 1–5 Search PubMed .
+C. Kranz, J. H. Petermann, T. Dullweber and R. Brendel, Simulation-based efficiency gain analysis of 21.2%-efficient screen-printed PERC solar cells, Energy Procedia, 2016, 92, 109–115 CrossRef CAS .
+A. Richter, R. Müller, J. Benick, F. Feldmann, B. Steinhauser and C. Reichel, 
+            et al., Design rules for high-efficiency both-sides-contacted silicon solar cells with balanced charge carrier transport and recombination losses, Nat. Energy, 2021, 6, 429–438 CrossRef CAS .
+S. Tepner, L. Ney, M. Linse, A. Lorenz, M. Pospischil and K. Masuri, 
+            et al., Screen pattern simulation for an improved front-side Ag-electrode metallization of Si-solar cells, Prog. Photovolt.: Res. Appl., 2020, 28, 1054–1062 CrossRef CAS .
+P. Procel, P. Löper, F. Crupi, C. Ballif and A. Ingenito, Numerical simulations of hole carrier selective contacts in p-type c-Si solar cells, Sol. Energy Mater. Sol. Cells, 2019, 200, 109937 CrossRef CAS .
+L. Helmich, D. Walter, D. Bredemeier, R. Falster, V. Voronkov and J. Schmidt, In situ characterization of electron-assisted regeneration of Cz-Si solar cells, Sol. Energy Mater. Sol. Cells, 2018, 185, 283–286 CrossRef CAS .
+R. Preu, E. Lohmüller, S. Lohmüller, P. Saint-Cast and J. M. Greulich, Passivated emitter and rear cell—Devices, technology, and modeling, Appl. Phys. Rev., 2020, 7, 041315 CAS .
+P. Zheng, J. Yang, Z. Wang, L. Wu, H. Sun and S. Chen, 
+            et al., Detailed loss analysis of 24.8% large-area screen-printed n-type solar cell with polysilicon passivating contact, Cell Rep. Phys. Sci., 2021, 2, 100603 CrossRef CAS .
+N. Wöhrle, T. Fellmeth, J. Greulich, B. Bitnar, H. Neuhaus and P. Palinginis, 
+            et al., Understanding the rear-side layout of p-doped bifacial PERC solar cells with simulation driven experiments, Energy Procedia, 2017, 124, 225–234 CrossRef .
+C. Messmer, A. Fell, F. Feldmann, N. Wöhrle, J. Schön and M. Hermle, Efficiency roadmap for evolutionary upgrades of PERC solar cells by TOPCon: impact of parasitic absorption, IEEE J. Photovolt., 2019, 10, 335–342 Search PubMed .
+S. Joonwichien, S. Utsunomiya, Y. Kida, M. Moriya, K. Shirasawa and H. Takato, Improved rear local contact formation using Al paste containing Si for industrial PERC solar cell, IEEE J. Photovolt., 2017, 8, 54–58 Search PubMed .
+D. Klaassen, A unified mobility model for device simulation—I. Model equations and concentration dependence, Solid-State Electron., 1992, 35, 953–959 CrossRef CAS .
+A. Schenk, Finite-temperature full random-phase approximation model of band gap narrowing for silicon device simulation, J. Appl. Phys., 1998, 84, 3684–3695 CrossRef CAS .
+A. Richter, S. W. Glunz, F. Werner, J. Schmidt and A. Cuevas, Improved quantitative description of Auger recombination in crystalline silicon, Phys. Rev. B: Condens. Matter Mater. Phys., 2012, 86, 165202 CrossRef .
+T. Trupke, M. A. Green, P. Würfel, P. Altermatt, A. Wang and J. Zhao, 
+            et al., Temperature dependence of the radiative recombination coefficient of intrinsic crystalline silicon, J. Appl. Phys., 2003, 94, 4930–4937 CrossRef CAS .
+E. Forniés, C. Zaldo and J. M. Albella, Control of random texture of monocrystalline silicon cells by angle-resolved optical reflectance, Sol. Energy Mater. Sol. Cells, 2005, 87, 583–593 CrossRef .
+
+          H. Mäckel, D. Cambre, C. Zaldo, J. Albella, S. Sánchez and C. Vázquez, et al., Characterisation of monocrystalline silicon texture using optical reflectance patterns, in 23rd European Photovoltaic Solar Energy Conference,  2008, pp. 1160–1163 Search PubMed .
+S. C. Baker-Finch and K. R. McIntosh, Reflection distributions of textured monocrystalline silicon: implications for silicon solar cells, Prog. Photovolt.: Res. Appl., 2013, 21, 960–971 Search PubMed .
+Z. Mrazkova, I. P. Sobkowicz, M. Foldyna, K. Postava, I. Florea and J. Pištora, 
+            et al., Optical properties and performance of pyramidal texture silicon heterojunction solar cells: Key role of vertex angles, Prog. Photovolt.: Res. Appl., 2018, 26, 369–376 CrossRef CAS .
+S. C. Baker-Finch and K. R. McIntosh, Reflection of normally incident light from silicon solar cells with pyramidal texture, Prog. Photovolt.: Res. Appl., 2011, 19, 406–416 CrossRef CAS .
+
+          D. P. Edward and I. Palik, Handbook of Optical Constants of Solids, Academic, Orlando, Florida,  1985 Search PubMed .
+Y. Kim, S. Lee, C. Park, S. Lee and M. Lee, Substrate dependence on the optical properties of Al 2 O 3 films grown by atomic layer deposition, Appl. Phys. Lett., 1997, 71, 3604–3606 CrossRef CAS .
+
+          K. R. McIntosh and S. C. Baker-Finch, OPAL 2: Rapid optical simulation of silicon solar cells, in 2012 38th IEEE Photovoltaic Specialists Conference,  2012, pp. 000265–000271 Search PubMed .
+
+          M. A. McIntosh and B. Sudbury, Wafer Ray Tracer, available, https://www2.pvlighthouse.com.au/calculators/waferraytracer/waferraytracer.html Search PubMed.
+S. C. Baker-Finch and K. R. McIntosh, Reflection distributions of textured monocrystalline silicon: implications for silicon solar cells, Prog. Photovolt.: Res. Appl., 2013, 21, 960–971 Search PubMed .
+J. Thong, P. Luo, W. Choi and S. Tan, Evolution of hillocks during silicon etching in TMAH, J. Micromech. Microeng., 2001, 11, 61 CrossRef CAS .
+A. Richter, M. Hermle and S. W. Glunz, Reassessment of the limiting efficiency for crystalline silicon solar cells, IEEE J. Photovolt., 2013, 3, 1184–1191 Search PubMed .
+M. S. Jeong, Y. Lee, K.-H. Kim, S. Choi, M. G. Kang and S. M. Kim, 
+            et al., Numerical Simulation Analysis of Ag Crystallite Effects on Interface of Front Metal and Silicon in the PERC Solar Cell, Energies, 2021, 14, 592 CrossRef CAS .
+G. Bektaş, G. Kökbudak, A. E. Keçeci, S. K. Bütüner, H. Asav and E. H. Çiftpınar, 
+            et al., Simplified process flow for the fabrication of PERC solar cells with ion implanted emitter, Renewable Energy, 2021, 179, 2295–2299 CrossRef .
+R. Tong, W. Zhang, X. Ke, D. Liu and Z. Zhang, Influence of surface structure on the performance of mono-like Si PERC solar cell, Mater. Sci. Semicond. Process., 2021, 126, 105662 CrossRef CAS .
+W. Yan, X. Tan, L. Guan, H. Zhou, X. Yang and P. Xiang, 
+            et al., Solution of efficiency loss in thinned silicon PERC solar cells, Renewable Energy, 2021, 165, 118–124 CrossRef CAS .
+C. Chen, H. Yang, J. Wang, J. Lv and H. Wang, Investigating the viability of PERC solar cells fabricated on Ga-instead of B-doped monocrystalline silicon wafer, Sol. Energy Mater. Sol. Cells, 2021, 227, 111134 CrossRef CAS .
+A. K. Sharma, S. Mitra, S. Behera and P. K. Basu, Exploring the efficiency limiting parameters trade-off at rear surface in passivated emitter rear contact (PERC) silicon solar cells, Sol. Energy Mater. Sol. Cells, 2021, 232, 111338 CrossRef CAS .
+
+This journal is © The Royal Society of Chemistry 2022
+Table Content:
+
+ 	Fig. 1  Proposed simulation process flow to design the PERC solar device with emitter doping profiles using the optimized process parameters.	 
+
+
+Crystalline-Si35,45,50,52,53	Thickness (μm)	100–250a
+Doping concentration (cm−3)	7 × 1016
+Carrier lifetime τn = τp (s)	1 μs to 2 msa
+SiNx/SiO2 (front side stack)45	Optimized thickness (nm)	70/10
+Al2O3/SiNx (rear side stack)19,45	Optimized thickness (nm)	10/100
+Pyramid42	Height (μm)	5
+LoHpyramid (μm)	3–6a
+p + BSF under rear contact31,32,44,45	Doping concentration (cm−3)	1019
+Depth/width (μm)	4.3/55
+Front and rear contact45,49	SRVn/SRVp (cm s−1)	107
+Rear passivated surface46–48	SRVn/SRVp (cm s−1)	100/15
+Finger pitches29,45,54–58	Front|rear (μm)	1400|850
+Front contact51	Width/height	19/18
+Models for PERC device
+Klaassen mobility model	
+59
+
+Schenk bandgap narrowing model	
+60
+
+Richter model for Auger recombination (300 K)	
+61
+
+Radiative recombination (300 K)	
+62
+
+Intrinsic carrier concentration (ni)	8.27 × 109 cm−3
+
+ 	Fig. 2  Absorption within the substrate of the PERC solar cell versus optical wavelength (nm) with the variation of the thickness of the SiNx/SiO2 stacked layer thicknesses.	 
+
+ 	Fig. 3  Collective influence of phosphorus dose and energy on the emitter formation and active phosphorus concentration profile plotted for different doses (1 × 1014 to 7.5 × 1015 cm−2) for all energy values (10 keV to 30 keV): (a) 1 × 1014 cm−2, (b) 2.5 × 1014 cm−2, (c) 5 × 1014 cm−2, (d) 7.5 × 1014 cm−2, (e) 1 × 1015 cm−2, (f) 2.5 × 1015 cm−2, (g) 5 × 1015 cm−2 and (h) 7.5 × 1015 cm−2.	 
+
+
+Dose (cm−2)	1 × 1014	24469.2	897.2	673.3	586.4	497.8	588.3	388.9	579.8	328.9	581.3
+2.5 × 1014	812.6	597.8	337.6	584.6	259.3	575.7	208.6	574.9	180.0	572.4
+5 × 1014	341.1	586.4	229.3	584.2	193.5	573.6	159.3	578.3	141.1	573.7
+7.5 × 1014	240.1	580.4	184.2	572.5	161.8	576.7	136.6	572.3	124.4	570.5
+1 × 1015	196.2	573.5	162.7	576.3	144.1	575.2	124.8	570.7	116.1	570.8
+2.5 × 1015	129.2	572.2	120.4	570.1	112.6	572.2	106.4	576.6	105.3	577.7
+5 × 1015	111.3	572.0	104.9	578.3	103.4	580.1	102.9	580.5	100.9	579.6
+7.5 × 1015	102.8	580.7	101.4	580.1	101.3	579.9	100.2	578.7	108.9	573.9
+
+ 	Fig. 4  Collective impact of the process parameters, namely, the dose (1 × 1014 to 7.5 × 1015 cm−2) and implantation energy (10 keV to 30 keV), on the PV parameters: (a) JSC, (b) VOC, (c) FF, (d) PCE.	 
+
+ 	Fig. 5  Impact of variation of the base parameters Tbulk (100–250 μm), LoHpyramid (3–6 μm) and τcarrier (1 μs to 2 ms) on (a) JSC, (b) VOC, (c) FF and (d) PCE.	 
+
+ 	Fig. 6  Impact of different base parameters, namely, Tbulk (100–250 μm), LoHpyramid (3–6 μm) and τcarrier (1 μs to 2 ms), on series resistance.	 
+
+ 	Fig. 7  (a) Impact of τcarrier on EQE at the optimized Tbulk of 150 μm and LoHpyramid of 4 μm. (b) Illuminated J–V curve of the optimized PERC solar cell.	 
+
+Silvaco-TCAD (process + device simulations)	40.8	686	81.5	22.8	This work
+Silvaco-TCAD (device simulations)	40.3	647	81.3	21.2	
+75
+
+Silvaco-TCAD (device simulations)	40.7	761	80.2	24.8	
+31
+
+Silvaco-TCAD (device simulations)	41.7	727	80.5	24.4	
+32
+
+PC2D (device simulations)	39.5	672	80.9	21.5	
+33
+
+Silvaco-TCAD (device simulations)	38.4	677	84.3	21.9	
+34
+
+Analytical	43.3	720	83.4	26.0	
+54
+
+Analytical	43.3	712	84.3	26.0	
+54
+
+Analytical (Auger limit)	43.3	761	89.3	29.4	
+74
+
+Quokka3	43.0	721	84.4	26.1	
+54
+
+Quokka3	40.3	674	81.5	22.1	
+54
+
+
+ 	Fig. 8  Comparison of the PV parameters (a) JSC, (b) VOC, (c) FF and (d) PCE of simulated PERC devices with analytical (Auger limit)74 and recently published analytical work.54	 
+
+40.8	686	81.5	22.80	This work
+40.5	679	81.4	22.40	
+78
+
+40.4	682	80.5	22.21	
+79
+
+40.2	670	79.5	21.39	
+77
+
+39.8	661	80.8	21.25	
+80
+
+40.2	658	79.4	21.02	
+21
+
+38.3	647	80.6	20.0	
+76
+
+
+This journal is © The Royal Society of Chemistry 2022

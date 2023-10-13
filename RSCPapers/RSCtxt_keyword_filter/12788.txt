@@ -1,0 +1,409 @@
+Consistent static and small-signal physics-based modeling of dye -sensitized solar cells under different illumination conditions   - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/C3CP43802C View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C3CP43802C
+(Paper)
+Phys. Chem. Chem. Phys., 2013, 15, 14634-14646Show CompoundsShow Chemical TermsConsistent static and small-signal physics-based modeling of dye-sensitized solar cells under different illumination conditions†
+
+        
+          
+            Federica 
+            Cappelluti
+          
+        
+      *a, 
+      
+        
+          
+            Shuai 
+            Ma
+          
+        
+      a, 
+      
+        
+          
+            Diego 
+            Pugliese
+          
+        
+      bc, 
+      
+        
+          
+            Adriano 
+            Sacco
+          
+        
+      bc, 
+      
+        
+          
+            Andrea 
+            Lamberti
+          
+        
+      bc, 
+      
+        
+          
+            Giovanni 
+            Ghione
+          
+        
+      a and 
+
+        
+          
+            Elena 
+            Tresso
+          
+        
+      bc
+aDepartment of Electronics and Telecommunications, Politecnico di Torino, Torino, IT-10129, Italy. E-mail: federica.cappelluti@polito.it
+bCenter for Space Human Robotics @PoliTo, Istituto Italiano di Tecnologia, Corso Trento 21, Torino, IT-10129, Italy
+cApplied Science and Technology Department, Politecnico di Torino, Corso Duca degli Abruzzi 24, Torino, IT-10129, Italy
+Received 
+      29th October 2012
+    , Accepted 11th January 2013First published on 14th January 2013AbstractA numerical device-level model of dye-sensitized solar cells (DSCs) is presented, which self-consistently couples a physics-based description of the photoactive layer with a compact circuit-level description of the passive parts of the cell. The opto-electronic model of the nanoporous dyed film includes a detailed description of photogeneration and trap-limited kinetics, and a phenomenological description of nonlinear recombination. Numerical simulations of the dynamic small-signal behavior of DSCs, accounting for trapping and nonlinear recombination mechanisms, are reported for the first time and validated against experiments. The model is applied to build a consistent picture of the static and dynamic small-signal performance of nanocrystalline TiO2-based DSCs under different incident illumination intensity and direction, analyzed in terms of current–voltage characteristic, Incident Photon to Current Efficiency, and Electrochemical Impedance Spectroscopy. This is achieved with a reliable extraction and validation of a unique set of model parameters against a large enough set of experimental data. Such a complete and validated description allows us to gain a detailed view of the cell collection efficiency dependence on different operating conditions. In particular, based on dynamic numerical simulations, we provide for the first time a sound support to the interpretation of the diffusion length, in the presence of nonlinear recombination and non-uniform electron density distribution, as derived from small-signal characterization techniques and clarify its correlation with different estimation methods based on spectral measurements.
+1 Introduction
+Third generation solar cells based on nanocrystalline semiconductors and organic photosensitive materials are among the most promising photovoltaic devices currently under development, thanks to the good tradeoff between efficiency, manufacturing cost and environmental sustainability. Among these, the nanostructured dye-sensitized solar cell (DSC), firstly demonstrated in 1991,1 has been one of the most intensively studied. Record power conversion efficiencies of 11% under global air mass (AM) 1.5 (100 mW cm−2) illumination have been demonstrated,2 and very recently pushed up to 12.3%.3 The ongoing research aims at further increasing the cell efficiency improving, at the same time, reliability and stability through material and structural optimization. Within this framework, a physics-based model able to consistently describe and understand the device behavior and its relation to microscopic mechanisms (not completely clear so far) under different operating conditions may provide a useful support in the interpretation of the experimental results and significantly contribute to advance in DSC technology.
+The modeling and simulation of DSCs have been addressed by many researchers, focusing on device-level behavior or on some specific physical aspects. As an exhaustive review is out of the scope of this paper, we only quote here a few representative papers, on which we have based the development of our model. Models based on drift-diffusion approaches of charged species in the electrolyte permeated TiO2 mesoporous film have been proposed,4–8 and applied to evaluate the current–voltage (I–V) characteristics and link the microscopic description of the cell to its photovoltaic behavior. One of the most relevant results of these efforts has been the demonstration, at least in the case of conventional cells with high concentration of redox electrolyte, of the effective screening of long-range electric fields across the cell, which makes diffusion the dominant electron transport mechanism. Physics-based steady-state models exploiting a purely diffusive description of charge transport have been used starting from the analytic model reported by Södergren et al.,9 then used to build an analytic device model10 encompassing all the optical and electrical main features of the device, and to develop coupled optical and electrical models.11,12 The diffusion transport approach has been progressively enriched by novel recombination and transport models, aimed at describing experimental observations arising from static but also dynamic characterization techniques.13–15 In particular, Electrochemical Impedance Spectroscopy (EIS),16,17 Intensity Modulated Voltage and Photocurrent Spectroscopy (IMVS, IMPS),18,19 and photocurrent/photovoltage transient13,20,21 have been used to study trap-limited electron transport and recombination, which can be well explained within a multiple trapping model approach. Concerning recombination, many experimental observations, such as the dependence on photogenerated electron concentration of the diffusion length, as derived from both static22 and dynamic methods,14,23 and the nonlinear dependence of the short circuit current density on light intensity,22,24–26 have suggested the inclusion of a nonlinear recombination rate,14 whose physical motivation is a current subject of research. Numerical models including such electron density dependent features have been applied to the analysis of static and small-perturbation transient behavior of DSCs, aimed at estimating electron transport and recombination parameters and diffusion length.8,13,27,28 However, as far as our knowledge goes, physics-based frequency-domain small-signal simulations accounting for trapping and nonlinear recombination mechanisms have never been reported so far.
+In this paper, we present a static (DC) and frequency-domain small-signal (SS) device-level model of DSCs, coupling a detailed physics-based description of the nanoporous photoactive layer (including photogeneration, trap-limited kinetics, nonlinear recombination) to a compact equivalent circuit model of the passive parts of the cell. DC and SS numerical simulations are validated against experiments, with the aim of developing, with the same model parameters, a consistent picture of the DC and SS device behavior under different operating conditions. In particular, we study the behavior of conventional DSCs (exploiting TiO2 nanoparticles, ruthenium-based dyes and the iodide/triiodide redox couple) under different incident illumination intensity and direction in terms of I–V characteristics, Incident Photon to Current Efficiency (IPCE) and EIS. Such general and validated analysis allows then for a detailed investigation of the collection efficiency and its dependence on the cell operating conditions in terms of intensity and wavelength of incident light and on biasing conditions. Emphasis is also given to discuss a reliable strategy for model extraction and validation. Use of numerical simulations allows us to build a direct link between the microscopic and macroscopic behavior of the cell, e.g. between the microscopic electron transport parameters (which are non-uniform across the photoanode due to trapping and recombination mechanisms) and important figures of merit that are usually derived from DC and small-perturbation transient electrical characterization based on more simplified models. As an example, we provide here a rigorous assessment of the well-known mismatch between the diffusion lengths derived from static IPCE and from EIS. The estimation of diffusion length from IPCE and EIS and its interpretation is discussed for the first time on the basis of a complete and consistent DC and SS model of the device under operating conditions where, due to the non-uniform carrier distribution, linearization around the DC point yields a small-signal continuity equation with space-dependent coefficients, thus generally requiring a numerical solution. Such an analysis provides an extension of the work carried out by Jennings et al.,27 where a good agreement between small-signal and steady-state estimations was demonstrated under open circuit conditions. Finally, the presented results are in agreement with previously reported analyses aimed at estimating electron transport parameters from small-perturbation transient measurements at short circuit.13,28
+2 Coupled opto-electronic diffusion transport model
+To model the DSC we couple a detailed physics-based model of the nanoporous TiO2-dye-electrolyte film, approximated as an equivalent homogenous medium, with a compact equivalent circuit model accounting for the electrical loss induced by diffusion through the bulk electrolyte (described by a Warburg impedance, ZW), charge transfer at the electrolyte/counter-electrode interface (RCE, CCE), and contact series resistance, see Fig. 1. The photovoltaic I–V characteristics of the cell are described using the nonlinear system (1) V = Vox − RI(2)where I and V are the total current flowing across the cell and voltage drop between the counter-electrode (CE) and the photoelectrode (PE), taken with the generator convention sign, R = Rs + RCE + RW is the total parasitic resistance,‡ and In and Vox are the current and voltage across the photoelectrode, respectively. Additional efficiency losses related to the non-zero slope of the I–V characteristics under the short circuit conditions are empirically modelled by the parallel resistance Rx. It is worth noting that such non-ideal behavior might be related to a voltage dependence of dye regeneration and/or electron injection as recently addressed in the literature.28–30 In the present model we have discarded a detailed description of these phenomena due to the lack of available experimental measurements allowing for a validation of such a hypothesis. On the other hand, this choice does not affect in any way the main results and conclusions of the paper.
+ Fig. 1  Top: mixed circuit and physical description of the DSC. The intrinsic device is simulated through the Opto-Electronic Diffusion Transport (OEDT) model described in the text. Bottom: definition of the nanoporous film boundaries and a sketch of the energy band diagram at thermal equilibrium (solid lines) and out of equilibrium (dashed lines). 
+2.1 Diffusion transport model
+According to the multiple trapping and release model,31 electron transport across the nanocrystalline semiconductor oxide takes place through extended states in the conduction band, whereas localized states in the band gap act as thermally activated capture or emission centers only. Conduction band electrons are described by Boltzmann statistics, with thermal equilibrium density (3)where Nc is the conduction band density of states, EF0 the Fermi level in thermal equilibrium, Ec the conduction band edge in TiO2. On the other hand, the density of electrons trapped in localized states is evaluated as  where g(E) is the density of states of the traps, approximated as an exponential  where NT is the concentration of trap levels per unit volume and α = T/T0 describes the depth of the states distribution below Ec. By approximating the Fermi–Dirac distribution with a step function  the trapped electron concentration finally results as (4)We assume neutral conditions across the TiO2 film and a concentration of the redox couple in the electrolyte close to the equilibrium value (independent of the cell operating conditions) and much larger than the electron concentration. This allows us to assume the Fermi energy in the electrolyte phase as constant and equal to the equilibrium energy of the I−/I3− redox couple. Under these assumptions, the time dependent continuity equation for conduction band electron density n reads (5)where Un and Gopn are the net recombination rate and optical generation rate, respectively, and Jn is the diffusion current density, given as (6)where D0 is the free electron diffusivity.
+
+Eqn (5) must be complemented by an independent rate equation describing the dynamics of trap occupation probability. However, under the hypothesis of negligible charge transfer within the localized states and between these and the valence band states, detailed equilibrium implies that, under static conditions, the trapping mechanisms will only affect the behavior of the cell in terms of the net charge density and of the induced electrostatic potential. This effect has been shown to be negligible on the basis of a numerical model including Poisson equation and drift current component in the continuity equation,8 thus confirming the validity of the neutrality approximation. Therefore, under DC conditions (zero time derivatives) the cell behavior is fully described by eqn (5), i.e. taking into account only the physical mechanisms involving extended states, which share a common equilibrium Fermi level with the localized ones. On the other hand, under time-varying conditions, the dynamics of electrons in the extended and in the localized states will evolve independently, thus generally requiring a full description of trap kinetics by an independent trap rate equation. However, as long as the frequency range of interest is low with respect to trap dynamics,31 an approximated quasi-static picture may be adopted,32 assuming that even under non-equilibrium conditions, the conduction band and trap populations still are in quasi-equilibrium with each other, i.e. they share the same quasi-Fermi level. Under this assumption, the dynamics of the extended and of the localized states occupation are related as (7)where the term ∂nT/∂n does not explicitly depend on time; by exploiting eqn (3) and (4), this results in  Introducing this expression in the continuity equation (5) we obtain a single equation accounting for the dynamics of both free and trapped electrons,13,28 in the form: (8)where we have defined the adiabatic factor kT as   It is worth noting that the frequency range in which the quasi-static approximation holds depends in turn on the density and distribution of trap states within the semiconductor forbidden bandgap, as extensively analyzed in the literature.31–34 All these analyses confirm the robustness of such an approximation with the values of trap state distribution typically found in conventional DSCs and exploited in the present paper. On the other hand, it is clear that different material systems would require careful investigations on the validity of such a hypothesis.
+Despite the suppression of trap-assisted recombination, electron lifetime is generally limited by recombination at the semiconductor/dye/electrolyte interface with acceptor species in the electrolyte and possibly, as suggested by the analysis of combined characterizations under illumination and dark,13,30 with the excited dye molecules. Here we model, somewhat empirically, the two recombination mechanisms through an equivalent nonlinear net recombination rate14 Un(n) = k0nβ−1(n − n0)(9)aimed at describing the observed discrepancy between photovoltaic performance under different illumination conditions through a carrier density dependent free electron lifetime. It can be noted that, with respect to previous formulations,13,14eqn (9) is consistent with the detailed balance principle, yielding a zero net recombination rate under thermal equilibrium conditions (n = n0). This is not relevant in terms of simulation results, at least under typical operating conditions, but removes possible issues in the convergence of the numerical solution. The conventional constant lifetime approximation is recovered when β = 1; on the other hand, 0 < β < 1 describes a sub-linear increase in recombination rate with carrier density, and β > 1 a super-linear one. Using the definition of the electron diffusion current, the electron continuity equation finally results as (10)The model is completed by a voltage-driven boundary condition at the transparent conductive oxide–TiO2 interface (x = 0) and a Neumann, or reflective, boundary condition at the interface between the nanoporous film and the bulk electrolyte (x = d, being d the nanoporous film thickness). As sketched in Fig. 1, thermal equilibrium conditions are set by EF0 = Eredox,0. A voltage drop Vox across the semiconductor layer displaces the Fermi level in the TiO2 (EF) with respect to the redox energy potential in the electrolyte according to qVox = EF − EF0. Under non-equilibrium conditions, using eqn (3) and expressing Nc as a function of n0, we can write (11)Thus, the boundary conditions result as (12) (13)Once the continuity equation is solved, the total electron current density across the photoelectrode is evaluated from eqn (6) at x = 0.
+2.2 Optical model
+In the present work, carrier photogeneration is simulated exploiting measurement-based optical data of the dyed TiO2 film and other cell layers; the model could be easily extended in order to directly include a complete optical model of the cell.11,12 This can be practically relevant in more advanced design, such as DSCs exploiting light trapping approaches.3 The optical generation rate is calculated assuming a Lambert–Beer exponential attenuation of the light across the solar cell, which has been proven to be fairly accurate in conventional DSCs on the basis of optical models accounting for multiple reflections and coherence across the thin films constituting the complete device.11 The effective optical absorption of the photoelectrode is evaluated according to an effective medium approximation as α = αD + PεαEL,10 where αD and αEL are the optical absorption of dyed TiO2 film and of the electrolyte, respectively, P and ε model the porosity and the average mean path length of the light across the film. The optical generation rate is then evaluated as (14)where Φ(λ) is the spectral photon flux density [cm−2 s−1 μm−1], and the function F(λ) assumes different values depending on the simulated experiment, photovoltaic I–V or IPCE  Obviously, different experimental conditions such as IPCE under bias light can be easily implemented by a suitable combination of Gopn(x) and Gopn(x, λ). The illumination efficiency ηill(λ), accounting for optical loss, is computed as11,22 ηill,PE(λ) = TPE(λ) (1 − RPE(λ))(15)for illumination from the photoelectrode side, and as ηill,CE = TCE(λ)TEL(λ) (1 − RPE(λ))(16)for illumination from the counter-electrode side. TPE and RPE are the transmittance and reflectance of the photoelectrode, respectively; while TCE and TEL are the transmittance of the counter-electrode and bulk electrolyte, respectively. Finally, ηinj may account for electron injection efficiency from the excited state of the dye into the conduction band of TiO2.35
+2.3 Small-signal model
+Small-signal operation implies a small-amplitude time-varying perturbation of the DC operating point, i.e. the static concentration ndc, electrically or optically driven. We focus here on the case of electrical perturbation of the dc operating point, i.e. the case of EIS measurements. Under a harmonic small-amplitude voltage with angular frequency ω, we can write v = Vdc + Re (ejωt),    ≪ Vdc(17) n = ndc + Re (ejωt),    ≪ ndc.(18)After linearization and Fourier transform of eqn (10), we obtain (19)with the boundary condition in eqn (13) at x = d, and the linearized boundary condition at x = 0 (20)The small-signal complex diffusion length in eqn (19) is (21)where we have defined the small-signal diffusivity Dssn and small-signal lifetime τssn as (22) τssn (ndc) = kT(ndc)τf,(23)τf being the static lifetime of conduction band electrons (or free electron lifetime)  Due to the space-dependence of the above parameters, induced by both trap states and nonlinear recombination, eqn (19) is a second-order differential equation with non-constant coefficients, thus generally requiring a numerical solution. Once eqn (19) is solved, the small-signal impedance of the dyed oxide is calculated as Zox = ox/Ĵn, with Ĵn from eqn (6). Notice that in the particular case of constant ndc throughout the photoelectrode, which is approximately met under open circuit conditions, eqn (19) reduces to a conventional diffusion equation with constant parameters, yielding an analytic closed-form expression for the photoelectrode impedance, namely (24)where σn = VT/(qD0ndc) is the electrical conductivity associated with the DC electron concentration and Ln = Lssn(ω = 0) = (τfD0)1/2. In other words, the DC diffusion length depends only on band transport properties and recombination rates, but is not affected by trap dynamics, due to the compensation of the adiabatic factor in eqn (22) and (23). Possible nonlinearities in the transport or recombination mechanisms involving conduction band electrons would thus show up as a voltage or light intensity dependence of Ln, as already widely discussed in the literature.14,22,23,36
+From the implementation standpoint, SS simulations require a twofold numerical solution: a DC simulation allows us to find the charge density distribution across the device, needed to evaluate the density dependent parameters in the SS eqn (19)–(21); then, the SS behavior is simulated. A finite difference method is applied for the solution of the DC and SS partial differential equations, whose self-consistent solution with the circuit-level equations is obtained through a Newton–Raphson algorithm.
+3 Experimental
+The DSCs analyzed in this study were fabricated employing nanocrystalline TiO2 photoelectrodes, 7.5 ± 0.5 μm thick, deposited by tape casting of a TiO2 dispersion (Ti-Nanoxide, Solaronix) onto a glass substrate covered by a thin Transparent Conductive Oxide (TCO) film. A standard cleaning procedure in acetone and ethanol was implemented, followed by a sulfuric acid:hydrogen peroxide solution (3:1) treatment to avoid organic residues and increase the wettability of the TCO surface. After a sintering process at 450 °C, the film was soaked into a 0.3 mM N719 dye solution (Ruthenizer 535bis-TBA, Solaronix) in ethanol for 18 hours at room temperature and rinsed in ethanol in order to remove the un-adsorbed dye. The counter-electrode fabrication, the cell assembly procedure and the electrolyte filling process were described in detail elsewhere.37 In both the transparent substrates the electrical contacts were realized using a silver paint (Elecolit 340). All cells had an active area of 0.78 cm2 and measurements were performed with a 0.22 cm2 black rigid mask. I–V characteristics were measured for both photoelectrode side (PE-side) and counter-electrode side (CE-side) illumination under AM1.5G illumination (100 mW cm−2) using a class A solar simulator (91195A, Newport) and a Keithley 2440 source measure unit. PE-side and CE-side IPCE spectra were measured in DC mode using a 150 W Xenon halogen lamp modulated by a dual grating Czerny Turner monochromator without bias light superimposed. Electrochemical Impedance Spectra (EIS) under PE-side illumination were acquired using an electrochemical workstation (760D, CH Instruments) in the frequency range 100 mHz–100 kHz, at bias voltages ranging from 0 to 0.8 V, with a superimposed AC signal of 10 mV amplitude. Finally, for the PE-side illumination, I–V and EIS were also performed at light intensities in the range 0.1–1 sun, by using neutral density filters.
+4 Results and discussion
+4.1 General comments on electrical characterization results
+All the characterizations have been carried out on the same day, following a schedule that includes repeated measures of I–V, IPCE, and EIS, designed to monitor the stability of the device performance during the whole characterization and identify possible fluctuations due to light intensity stability or change of cell temperature (not controlled); this enables to meaningfully and consistently compare EIS, I–V, and IPCE experimental data with the model results derived with a unique set of physical parameters. The maximum observed deviations of Jsc and Voc under 1 sun, with respect to the first measure, were about 0.8 mA cm−2 and 50 mV, respectively. Finally, I–V and IPCE measurements were repeated after two weeks, and a substantial stability of the devices was verified.
+For all the cells we observed a quite significant discrepancy between the short circuit current values as directly measured from the photovoltaic characterization under AM1.5G illumination and the value predicted from the integration of the IPCE spectrum  In particular, under PE-side and CE-side illumination, the IPCE evaluated values were respectively 20% and 15% lower than the measured ones. It has to be noted that similar or possibly larger discrepancies have been reported in the literature by exploiting the same IPCE measurement setup.22,24,26
+4.2 Device numerical model
+A consistent description of the device under DC and SS conditions and under different illumination implies to extract and verify a unique set of model parameters on the basis of a large enough set of experimental data, which should be able to accurately reproduce the measured behavior under conditions which are different from the ones exploited for model extraction.
+In the present work, the parameter extraction is carried out on I–V and EIS characterizations at 1 sun and on the IPCE spectra acquired under weak light intensity; the model is then successfully validated against I–V and EIS measurements carried out at light intensities in the range 0.1–1 sun.
+
+4.2.1 Model parameter extraction. 
+As already mentioned, Jsc extrapolated from IPCE measurements at weak light intensities significantly underestimates the actual Jsc measured under sun illumination, for both the illumination sides. Moreover, and coherently, an analysis of the ratio of the CE and PE IPCE spectra22 suggests a diffusion length with non-negligible wavelength dependence and a peak value comparable to the film thickness, in contrast to EIS measurements under 1 sun, at open circuit voltage, from which we estimated a diffusion length of about 30 μm.
+To introduce the discussion, let us recall the definition of two widely used figures of merit of the cell efficiency. These are the light harvesting efficiency ηLH, which measures the number of collected photons with respect to the incident ones, thus providing an upper bound to the achievable photocurrent density for zero carrier recombination and full injection efficiency, and the collection efficiency ηCOLL, which measures the fraction of collected electrons with respect to the generated ones. From eqn (14), with ηinj = 1, we have  where s = PE or s = CE depending on the illumination direction. The collection efficiency is then evaluated as  where Jsc(λ) is the short circuit photocurrent density. Thus, assuming that neither injection nor light harvesting is affected by the photogenerated electron density, the aforementioned discrepancy in the cell behavior under low and high light intensity can be described by the nonlinear recombination model in eqn (9), yielding a collection efficiency significantly higher under sun illumination with respect to the one detected during the unbiased IPCE measurement. This provides a way to estimate the optical and electrical model parameters, as summarized in the rest of the section.
+Literature data have been exploited to model the optical generation; in particular, the spectral dependence of transmittance and reflectance of the PE and CE and the optical attenuation of the bulk electrolyte were derived from Halme et al.,10 whereas the optical absorption spectrum of the dyed TiO2 film was derived from absorbance measurements reported by Boschloo et al.38 The peak values of TPE, TCE, TEL and αD were tuned in order to match the measured short circuit current density under 1 sun, assuming almost ideal collection efficiency. The optical parameters used in the simulation reported hereinafter are shown in Fig. 2.
+ Fig. 2  (a) Optical absorption spectra of the cell components exploited in the simulations. (b) Spectral transmittance and reflectance of photoelectrode, counter-electrode and electrolyte exploited in the simulations. 
+The analysis of the I–V characteristics requires also an estimation of the electrical circuit components in Fig. 1, which has been carried out on the basis of EIS characterization at 1 sun. At V = Voc, the electron density across the photoelectrode film turns to be almost constant, thus allowing us to use the analytical impedance expression in eqn (24). As well known, such equation admits for an equivalent circuit representation of the photoactive film in terms of a uniform distributed RC circuit,39 terminated by an open load (see the inset in Fig. 3), whose circuit elements are directly linked to the small-signal transport and recombination parameters in eqn (21)–(23) according to RCTCμ = τssn(25) (26) (27)The Nyquist plot in Fig. 3 compares the measured and fitted impedance at different bias voltages, showing that RCE, CCE and Rs do not present any significant voltage dependence, thus allowing us to neglect possible mass transport limitations from the electrolyte and the activation overpotential at the CE.10,13,40 By exploiting eqn (25)–(27), the EIS equivalent circuit fitting also allows for a preliminary estimation of a few electronic parameters, namely α, NT, D0, to be refined then on the basis of numerical simulations.
+ Fig. 3  Example of EIS fitting under 1 sun at different bias voltages. The inset shows the used equivalent circuit. 
+Literature data have been used for the conduction band effective density of states Nc = 3.24 × 1020 cm−3,41,42 and the electrolyte redox potential at thermal equilibrium Ec − Eredox,0 = 0.93 eV,43 corresponding to a dark electron density (in the conduction band) n0 = 3.32 × 104 cm−3.
+Finally, the β exponent characterizing the electron density dependence of the recombination rate is estimated on the basis of the discrepancy between the short circuit current density measured at 1 sun and the one extrapolated from the IPCE spectra. As well known, an alternative and common approach14,28 is to extract β directly from the slope of the RCTvs. voltage curve derived by EIS spectra measured under open circuit conditions. Clearly, the two methods are equivalent, at least within the model framework presented here, as demonstrated from the results in the ESI.†
+The electrical parameter values used in the following simulations, in good agreement with the typical ones reported in the literature, are summarized in Table 1, together with the estimation method exploited. All the model parameters, with the exception of TEL and TCE, were extracted from experimental data under PE-side illumination.
+Table 1 Electrical model parameters used in the simulations
+
+
+
+
+Parameter
+Value
+Estimation method
+
+
+
+
+
+D
+0
+
+0.18 cm2 s−1
+EIS, optimized
+
+
+
+β
+
+0.72
+IPCE and I–V, optimized
+
+
+
+k
+0
+
+5.35 × 108 cm3β s−1
+EIS and I–V, optimized
+
+
+
+α
+
+0.32
+EIS, optimized
+
+
+
+N
+T
+
+1.18 × 1020 cm−3
+EIS, optimized
+
+
+
+R
+s
+
+1.3 Ω cm2
+EIS
+
+
+
+R
+CE
+
+0.25 Ω cm2
+EIS
+
+
+
+C
+CE
+
+1.20 × 10−4 F cm−2
+EIS
+
+
+
+R
+W
+
+0.2 Ω cm2
+EIS
+
+
+
+ω
+W
+
+3.0 rad s−1
+EIS
+
+
+
+R
+x
+
+1485 Ω cm−2
+EIS
+
+
+
+
+The measured and simulated IPCE spectra and I–V characteristics for both PE and CE side illumination are compared in Fig. 4a and b, respectively, with good agreement. The maximum deviation between measured and simulated I–V appears around the maximum power point, due to an overestimation of the cell fill factor (see the inset of Fig. 4b). A better fit could be obtained by increasing the series parasitic resistance (at the expense, however, of the fit at high forward bias) or by introducing an empirical ideality factor (m) in the conduction band electron Boltzmann statistics.13,44 Such a parameter would not affect neither the short circuit current density nor the IPCE, while it would affect the open circuit voltage and its dependence on light intensity (Ix). In particular, based on a diode-like interpretation of the I–V characteristics, at a first approximation the slope of the Vocvs. Ix curve will be proportional to the ratio m/β. On the other hand, for the analyzed cells, it was not possible to obtain a satisfactory match of the IPCE/I–V discrepancy and of the light intensity dependence of Voc, which for the cells considered here are fully described by the nonlinear recombination model. Thus, at the present stage we have discarded the inclusion of this further empirical parameter, whose physical motivation is currently under study.29,30,35
+ Fig. 4  (a) Measured (symbols) and simulated (solid lines) IPCE for both illumination sides. (b) Measured (symbols) and simulated (solid lines) I–V characteristics under AM1.5G solar illumination. The inset compares the corresponding power density, P, vs. voltage curve. 
+Finally, Fig. 5 reports the calculated light harvesting efficiency and collection efficiency, pointing out the significant effect of the assumed nonlinear recombination mechanism on ηCOLL; in fact, ηCOLL is almost ideal and wavelength independent at 1 sun, whereas it turns out to be comparable to ηLH and dependent on wavelength and illumination side under weak light intensity (0.05 mW cm−2). While from the application standpoint the conventional IPCE characterization under bias light is the obvious choice for assessing the cell photovoltaic performance, unbiased IPCE measurements could be a useful tool to investigate more deeply the electron transport and recombination mechanisms, whose apparent density dependence still lacks a sound physical explanation.
+ Fig. 5  Simulated light harvesting efficiency, ηLH, and collection efficiency, ηCOLL, for both the PE side (solid lines) and CE side (dash-dotted lines) illumination directions. The simulated spectra of ηCOLL refer to two different cases of illumination intensity: at Ix = 1 sun during I–V characterization, and at Ix = 0.05 mW cm−2 during IPCE characterization. 
+
+
+4.2.2 DC and small-signal simulations under different light intensities. 
+It may be asked whether the assumed nonlinear recombination mechanism is able to predict the impact of different illumination intensities on the photovoltaic response of the analyzed DSCs. To this aim, we implemented a set of I–V and EIS measurements with incident light intensity ranging from 0.1 to 1 sun. Within this range of light intensity, the measured short circuit current density (Jsc) increases linearly with Ix and the open circuit voltage (Voc) shows a logarithmic dependence from Ix, as expected according to a diode-like interpretation of the cell, with a non-ideal slope of about 40 mV. Fig. 6 shows the measured and simulated light intensity dependence of Jsc and Voc, providing a validation of the model against measurements not used during the model parameter extraction.
+ Fig. 6  Measured (symbols) and simulated (lines) Jsc (top) and Voc (bottom) as a function of the incident light intensity. Error bars indicate fluctuations observed during the repeated measurements. 
+The fact that, despite the assumed electron density dependence of the recombination rate, the predicted short circuit current density closely follows the measured linear behavior with respect to light intensity, can be explained by analyzing the behavior of the collection efficiency. In particular, we can consider the behavior of the average collection efficiency in the wavelength range of interest Δλ (28)reported in Fig. 7 as a function of the incident light intensity. Within the 0.1–1 sun range, COLL exhibits a weak dependence on Ix, consistent with the linear behavior of Jscvs. Ix in Fig. 6; in contrast, a significant dependence on Ix is observed at light intensities comparable to the one exploited under unbiased IPCE measurement.
+ Fig. 7  Calculated dependence of the average collection efficiency COLL as a function of incident light intensity. As a reference, lamp power density during IPCE measurement was around 0.05 mW cm−2. 
+Finally, we have performed numerical simulations under AC conditions, with the cell biased at open circuit voltage under varying light intensity. Fig. 8 compares the measured and simulated Nyquist plots, showing very good agreement. Correspondingly, Fig. 9 shows the small-signal transport parameters as a function of incident light intensity, as extracted from the measured and simulated EIS impedance according to eqn (25)–(27). Coherent with the previous analysis of COLL, the extracted diffusion length results to be almost independent of the incident light flux.
+ Fig. 8  Measured (symbols) and simulated (solid lines) EIS Nyquist plots under open circuit conditions and under different incident light intensities. The boxed range is zoomed out in the bottom figure. 
+ Fig. 9  Comparison between measured small-signal transport parameters vs. light intensity, as extracted from measured EIS (symbols) and from simulated EIS (solid lines). 
+
+
+4.2.3 Microscopic vs. macroscopic electron parameters. 
+Physics-based simulations allow for an in depth analysis of the interplay among the mechanisms affecting the cell performance and for a critical interpretation of experimental techniques exploited in order to investigate transport and recombination mechanisms. As an example, we investigate here the consequences of trapping and nonlinear recombination on the electrical behavior of the cell in terms of SS data extracted from EIS, an issue which has been seldom addressed, and only on the basis of approximated analytic models,14,31 under the assumption of spatial homogeneity of electron density. Such a discussion aims to clarify the meaning of the diffusion length, as estimated from different characterization techniques, on which there still is an ongoing debate.14,15,23,45 Although in the presence of nonlinear recombination the diffusion length concept does not strictly hold anymore, since Ln becomes a non-constant quantity, the ratio between the diffusion length and oxide thickness is a very widely used figure of merit to predict the cell collection efficiency, usually derived from different measurements on the basis of the assumption of linear recombination. A few studies23,45 have already given support to the extraction of Ln from DC spectral measurements, namely the IPCE ratio,22 based on a full numerical model including nonlinear recombination, whereas a detailed analysis of Ln as extracted from SS techniques is still missing.
+The calculated optical generation and net recombination rate across the photoelectrode are shown in Fig. 10a for three different bias points: short circuit, maximum power, and open circuit, under both the PE and CE illumination at 1 sun. Obviously, the net recombination rate follows the electron density distribution shown in Fig. 10b, with a monotonic increase from the PE to the CE contact.
+ Fig. 10  Space distribution of some simulated physical quantities under PE side (solid lines) and CE side (dashed lines) illumination directions at short circuit, maximum power point (Vmpp), and open circuit (Voc). (a) Optical generation and net recombination rate across the nanocrystalline TiO2 film. (b) Conduction band electron density across the nanocrystalline TiO2 film. (c) DC lifetime τf and SS lifetime τssn distribution across the nanocrystalline TiO2 film. (d) SS diffusivity Dssn distribution across the nanocrystalline TiO2 film at different bias voltages. The electron diffusivity in extended states is D0 = 0.18 cm2 s−1. 
+From the ndc distribution across the film we can evaluate the linearized parameters τf, τssn, and Dssn which affect the cell behavior under AC conditions. Fig. 10c and d clearly highlight the effect of trap dynamics on the small-signal parameters that are usually extracted by EIS fitting: capture and emission processes between trap and extended states make SS lifetime and diffusivity space-dependent and cause an overall slowdown of recombination and diffusion kinetics. Since the amount of such apparent modulation depends on both the trap and conduction state densities, direct use of EIS extracted data to compare recombination losses in cells exploiting different semiconductors needs to be carefully assessed.
+The calculated distribution of the small-signal diffusion length is shown in Fig. 11. Clearly, EIS measurements will provide a good correlation with the approximated uniform distributed circuit as the bias voltage approaches Voc. Under these conditions the extracted Ln well represents the microscopic feature of electron distribution across the photoelectrode, which turns to slightly depend also on the illumination direction. Such an effect, that can be considered negligible in the present case, compared to the typical uncertainty affecting the Ln derived from EIS, could become relevant in devices with a significant asymmetry between light harvesting efficiency from the PE and CE side. On the other hand, it is interesting to analyze how the EIS estimation of Ln compares with the physical Ln at low voltages, where the electron density distribution is highly non-uniform. In Fig. 12 we briefly analyze the frequency dependent features of the simulated impedance Zox as a function of the voltage: at voltages lower than the maximum power point, i.e. when a large photocurrent is flowing across the cell, the high frequency behavior of Zox deviates from the behavior expected according to the open-loaded transmission line model in eqn (24), showing still linear behavior, associated with RT, but with an angle larger than the expected 45°. Such a deviation disappears as the voltage increases toward open circuit, i.e. as the electron density distribution becomes uniform. It may be worth noting that this effect is caused by the density dependence of the SS lifetime, and it is dominated by the trapping mechanisms in the cell. This is highlighted in Fig. 12, by comparing two spectra simulated under the same conditions, including nonlinear recombination, except for the presence (or absence) of traps. At lower frequency, all the simulated spectra were found to closely follow the conventional recombination arc, independent of the voltage. We found that the high frequency deviation of the impedance with respect to the ideal model may cause inaccuracies in the estimation of Ln based on eqn (24) and the associated uniform equivalent circuit. On the other hand, we have to note that EIS measurements in this voltage range could be practically difficult, due to the large differential resistance, and such fine features could be somewhat hindered by other parasitic circuit elements affecting the cell behavior.
+ Fig. 11  Simulated small-signal diffusion length distribution across the TiO2 nanocrystalline film. 
+ Fig. 12  Simulated EIS spectra at low voltages (V < Vmpp) with (diamonds) and without (circles) the trap distribution. The dashed line represents the theoretical linear behavior, with unit slope, expected at high frequency according to eqn (24). 
+Finally, Fig. 13 reports the diffusion length vs. voltage as extracted from the simulated EIS spectra (LEISn) under PE illumination at 1 sun: as the voltage rises from V < Vmpp to Voc, the extracted LEISn almost doubles. The estimated value of 20 μm at low voltages would predict, according to the analytic model of ηCOLL, a current density of about 13 mA cm−2 under 1 sun. A comparison with the calculated microscopic diffusion length in Fig. 11 shows that LEISn may be interpreted as an effective parameter, consistent with the detailed distribution of electron density across the cell, and able to provide information about the light- or voltage-dependence of recombination processes. On the other hand, LEISn values estimated at open circuit voltage will likely overestimate the cell efficiency and its trend with respect to the photoelectrode thickness. For the sake of completeness, we may finally compare LEISn with the value that could be estimated from conventional (V = 0 V) IPCE characterization. To this aim, we have simulated a biased IPCE experiment and extracted the cell diffusion length by using the IPCE ratio analysis. The estimated Ln, reported in the inset of Fig. 13, shows negligible wavelength dependence and a value of about 22 μm in close agreement with the EIS estimation at low voltages.
+ Fig. 13  Small-signal diffusion length as a function of cell voltage extracted from EIS simulations at 1 sun. The inset shows the diffusion length extracted from simulated IPCE spectra, under bias light of 1 sun, according to the IPCE ratio technique.22 
+As a final remark it is straightforward to verify that from the average collection efficiency in Fig. 7 we could derive a dependence of diffusion length on the electron density perfectly equivalent to the one resulting from the EIS analysis at different bias voltages shown in Fig. 13. Clearly this is not a general result, but it comes out as a consequence of the use of an equivalent recombination rate, which does not distinguish the different possible paths to recombination (with the excited dye molecules or with the acceptor species in the electrolyte) thus yielding an electron density dependence of the diffusion length which does not discriminate between optically or electrically injected electrons. On the other hand, such a difference, if any, could become evident by combining EIS characterizations at different light intensities and applied voltages and easily included in the model.
+
+5 Conclusions
+We have presented a mixed-mode physics-based and circuit-level model of the DSC able to consistently predict the device behavior under a wide range of experimental conditions. The model couples in a self-consistent way an accurate description of electron photogeneration, transport and recombination across the nanocrystalline photoactive layer, with an equivalent compact circuit for the parasitic parts of the cell. Trap-limited dynamics and nonlinear recombination are included and their impact on the steady-state and small-signal dynamic behavior of the device is assessed based on experimental data and numerical simulations. A unique and limited set of physical and electrical parameters is derived and verified on the basis of a suitable range of experimental data.
+The simulation results successfully reproduce I–V, IPCE and EIS measurements under different operating conditions (light intensity, illumination direction, and applied voltage), allowing us to clearly identify the optical and electrical loss across the cell and to gain insight into the collection efficiency dependence on electron density. Finally, based on the dynamic small-signal numerical simulations, we provide for the first time a rigorous evaluation of the interpretation of the diffusion length extracted from EIS measurements, a question often raised in the literature but that has not yet found a comprehensive answer.
+Although further experimental and theoretical research effort is needed to derive more physical sound models, e.g. concerning recombination mechanisms, we consider the simulation approach described in this work as a further step towards the development of fully physical, device-level models of DSCs.
+References
+B. C. O'Regan and M. Gratzel, Nature, 1991, 353, 737–740 CrossRef CAS .
+M. Gratzel, J. Photochem. Photobiol., C, 2003, 4, 145–153 CrossRef CAS .
+B. E. Hardin, H. J. Snaith and M. D. McGehee, Nat. Photonics, 2012, 6, 162–169 CrossRef CAS .
+J. Ferber, R. Stangl and J. Luther, Sol. Energy Mater. Sol. Cells, 1998, 53, 29–54 CrossRef CAS .
+A. Usami and H. Ozaki, J. Phys. Chem. B, 2001, 105, 4577–4583 CrossRef CAS .
+T. Oda, S. Tanak and S. Hayase, Sol. Energy Mater. Sol. Cells, 2006, 90, 2696–2709 CrossRef CAS .
+K. Nithyanandam and R. Pitchumani, Sol. Energy, 2012, 86, 351–368 CrossRef CAS .
+D. Gentilini, A. Gagliardi, M. A. der Maur, L. Vesce, D. D'Ercole, T. M. Brown, A. Reale and A. D. Carlo, J. Phys. Chem. C, 2011, 116, 1151–1157 Search PubMed .
+S. Södergren, A. Hagfeldt, J. Olsson and S. Lindquist, J. Phys. Chem., 1994, 98, 5552–5556 CrossRef .
+J. Halme, P. Vahermaa, K. Miettunen and P. Lund, Adv. Mater., 2010, 22, E210–E234 CrossRef CAS .
+S. Wenger, M. Schmid, G. Rothenberger, A. Gentsch, M. Gratzel and J. O. Schumacher, J. Phys. Chem. C, 2011, 115, 10218–10229 CAS .
+M. Topic, A. Campa, M. Filipic, M. Berginc, U. O. Krasovec and F. Smole, Curr. Appl. Phys., 2010, 10, S425–S430 CrossRef .
+P. R. F. Barnes, A. Y. Anderson, J. R. Durrant and B. C. O'Regan, Phys. Chem. Chem. Phys., 2011, 13, 5798–5816 RSC .
+J. Bisquert and I. Mora-Sero, J. Phys. Chem. Lett., 2010, 1, 450–456 CrossRef CAS .
+J. Villanueva-Cab, H. Wang, G. Oskam and L. M. Peter, J. Phys. Chem. Lett., 2010, 1, 748–751 CrossRef CAS .
+J. Bisquert, Phys. Chem. Chem. Phys., 2000, 2, 4185–4192 RSC .
+J. Bisquert, G. Garcia-Belmonte, F. Fabregat-Santiago, N. S. Ferriols, P. Bogdanoff and E. C. Pereira, J. Phys. Chem. B, 2000, 104, 2287–2298 CrossRef CAS .
+L. Dloczik, O. Ileperuma, I. Lauermann, L. M. Peter, E. A. Ponomarev, G. Redmond, N. J. Shaw and I. Uhlendorf, J. Phys. Chem. B, 1997, 101, 10281–10289 CrossRef CAS .
+J. Halme, Phys. Chem. Chem. Phys., 2011, 13, 12435–12446 RSC .
+F. Cao, G. Oskam, G. J. Meyer and P. C. Searson, J. Phys. Chem., 1996, 100, 17021–17027 CrossRef CAS .
+J. Nissfolk, K. Fredin, J. Simiyu, L. Haggman, A. Hagfeldt and G. Boschloo, J. Electroanal. Chem., 2010, 646, 91–99 CrossRef CAS .
+J. Halme, G. Boschloo, A. Hagfeldt and P. Lund, J. Phys. Chem. C, 2008, 112, 5623–5637 CAS .
+H. Wang and L. M. Peter, J. Phys. Chem. C, 2009, 113, 18125–18133 CAS .
+D. Gentilini, D. D'Ercole, A. Gagliardi, A. Brunetti, A. Reale, T. Brown and A. D. Carlo, Superlattices Microstruct., 2010, 47, 192–196 CrossRef CAS .
+Y. Sun, A. C. Onicha, M. Myahkostupov and F. N. Castellano, ACS Appl. Mater. Interfaces, 2010, 2(7), 2039–2045 CAS .
+X. Guo, Y. Luo, C. Li, D. Qin, D. Li and Q. Meng, Curr. Appl. Phys., 2011, 12, e54–e58 CrossRef .
+J. R. Jennings, F. Li and Q. Wang, J. Phys. Chem. C, 2010, 114, 14665–14674 CAS .
+J. A. Anta, J. Idigoras, E. Guillen, J. Villanueva-Cab, H. J. Mandujano-Ramirez, G. Oskam, L. Pelleja and E. Palomares, Phys. Chem. Chem. Phys., 2012, 14, 10285–10299 RSC .
+J. Cai, N. Satoh and L. Han, J. Phys. Chem. C, 2011, 115, 6033–6039 CAS .
+J. R. Jennings and Q. Wang, J. Phys. Chem. C, 2011, 115, 15109–15120 CAS .
+J. Bisquert, Phys. Rev. B: Condens. Matter Mater. Phys., 2008, 77, 235203 CrossRef .
+J. Bisquert and V. S. J. Vikhrenko, J. Phys. Chem. B, 2004, 108, 2313–2322 CrossRef CAS .
+A. B. Walker, L. M. Peter, K. Lobato and P. J. Cameron, J. Phys. Chem. B, 2006, 110, 25504–25507 CrossRef CAS .
+J. P. Gonzalez-Vazquez, J. A. Anta and J. Bisquert, J. Phys. Chem. C, 2010, 114, 8552–8558 CAS .
+S. Koops, B. C. O'Regan, P. F. Barnes and J. R. Durrant, J. Am. Chem. Soc., 2009, 131, 4808–4818 CrossRef CAS .
+P. R. F. Barnes, L. Liu, X. Li, A. Y. Anderson, H. Kisserwan, T. H. Ghaddar, J. R. Durrant and B. C. O'Regan, Nano Lett., 2009, 9, 3532–3538 CrossRef CAS .
+A. Sacco, A. Lamberti, R. Gazia, S. Bianco, D. Manfredi, N. Shahzad, F. Cappelluti, S. Ma and E. Tresso, Phys. Chem. Chem. Phys., 2012, 14, 16203–16208 RSC .
+G. Boschloo and A. Hagfeldt, Inorg. Chim. Acta, 2008, 61, 729–734 CrossRef .
+J. Bisquert, J. Phys. Chem. B, 2002, 106, 325–333 CrossRef CAS .
+J. Villanueva, J. A. Anta, E. Guillen and G. Oskam, J. Phys. Chem. C, 2009, 113, 19722–19731 CAS .
+A. Gagliardi, M. A. der Maur, D. Gentilini and A. D. Carlo, J. Comput. Electron., 2009, 8, 398–409 CrossRef CAS .
+D. Fitzmaurice, Sol. Energy Mater. Sol. Cells, 1994, 32, 289–305 CrossRef CAS .
+G. Smestad, Sol. Energy Mater. Sol. Cells, 1994, 32(3), 273–288 CrossRef CAS .
+J. R. Jennings, A. Ghicov, L. M. Peter, P. Schmuki and A. B. Walker, J. Am. Chem. Soc., 2008, 130, 13364–13372 CrossRef CAS .
+P. R. F. Barnes and B. C. O'Regan, J. Phys. Chem. C, 2010, 114, 19134–19140 CAS .
+
+Footnotes† Electronic supplementary information (ESI) available. See DOI: 10.1039/c3cp43802c‡ Rw is the DC resistive component of Zw,10  This journal is © the Owner Societies 2013
+Table Content:
+	(1)
+V = Vox − RI	(2)
+
+ 	Fig. 1  Top: mixed circuit and physical description of the DSC. The intrinsic device is simulated through the Opto-Electronic Diffusion Transport (OEDT) model described in the text. Bottom: definition of the nanoporous film boundaries and a sketch of the energy band diagram at thermal equilibrium (solid lines) and out of equilibrium (dashed lines).	 
+	(3)
+
+ 		 
+
+ 		 
+
+ 		 
+	(4)
+	(5)
+	(6)
+	(7)
+
+ 		 
+	(8)
+
+ 		 
+Un(n) = k0nβ−1(n − n0)	(9)
+	(10)
+	(11)
+	(12)
+	(13)
+	(14)
+
+ 		 
+ηill,PE(λ) = TPE(λ) (1 − RPE(λ))	(15)
+ηill,CE = TCE(λ)TEL(λ) (1 − RPE(λ))	(16)
+v = Vdc + Re (ejωt),    ≪ Vdc	(17)
+n = ndc + Re (ejωt),    ≪ ndc.	(18)
+	(19)
+	(20)
+	(21)
+	(22)
+τssn (ndc) = kT(ndc)τf,	(23)
+
+ 		 
+	(24)
+
+ 		 
+
+ 		 
+
+ 		 
+
+ 	Fig. 2  (a) Optical absorption spectra of the cell components exploited in the simulations. (b) Spectral transmittance and reflectance of photoelectrode, counter-electrode and electrolyte exploited in the simulations.	 
+RCTCμ = τssn	(25)
+	(26)
+	(27)
+
+ 	Fig. 3  Example of EIS fitting under 1 sun at different bias voltages. The inset shows the used equivalent circuit.	 
+
+
+D
+0
+	0.18 cm2 s−1	EIS, optimized
+
+β
+	0.72	IPCE and I–V, optimized
+
+k
+0
+	5.35 × 108 cm3β s−1	EIS and I–V, optimized
+
+α
+	0.32	EIS, optimized
+
+N
+T
+	1.18 × 1020 cm−3	EIS, optimized
+
+R
+s
+	1.3 Ω cm2	EIS
+
+R
+CE
+	0.25 Ω cm2	EIS
+
+C
+CE
+	1.20 × 10−4 F cm−2	EIS
+
+R
+W
+	0.2 Ω cm2	EIS
+
+ω
+W
+	3.0 rad s−1	EIS
+
+R
+x
+	1485 Ω cm−2	EIS
+
+ 	Fig. 4  (a) Measured (symbols) and simulated (solid lines) IPCE for both illumination sides. (b) Measured (symbols) and simulated (solid lines) I–V characteristics under AM1.5G solar illumination. The inset compares the corresponding power density, P, vs. voltage curve.	 
+
+ 	Fig. 5  Simulated light harvesting efficiency, ηLH, and collection efficiency, ηCOLL, for both the PE side (solid lines) and CE side (dash-dotted lines) illumination directions. The simulated spectra of ηCOLL refer to two different cases of illumination intensity: at Ix = 1 sun during I–V characterization, and at Ix = 0.05 mW cm−2 during IPCE characterization.	 
+
+ 	Fig. 6  Measured (symbols) and simulated (lines) Jsc (top) and Voc (bottom) as a function of the incident light intensity. Error bars indicate fluctuations observed during the repeated measurements.	 
+	(28)
+
+ 	Fig. 7  Calculated dependence of the average collection efficiency COLL as a function of incident light intensity. As a reference, lamp power density during IPCE measurement was around 0.05 mW cm−2.	 
+
+ 	Fig. 8  Measured (symbols) and simulated (solid lines) EIS Nyquist plots under open circuit conditions and under different incident light intensities. The boxed range is zoomed out in the bottom figure.	 
+
+ 	Fig. 9  Comparison between measured small-signal transport parameters vs. light intensity, as extracted from measured EIS (symbols) and from simulated EIS (solid lines).	 
+
+ 	Fig. 10  Space distribution of some simulated physical quantities under PE side (solid lines) and CE side (dashed lines) illumination directions at short circuit, maximum power point (Vmpp), and open circuit (Voc). (a) Optical generation and net recombination rate across the nanocrystalline TiO2 film. (b) Conduction band electron density across the nanocrystalline TiO2 film. (c) DC lifetime τf and SS lifetime τssn distribution across the nanocrystalline TiO2 film. (d) SS diffusivity Dssn distribution across the nanocrystalline TiO2 film at different bias voltages. The electron diffusivity in extended states is D0 = 0.18 cm2 s−1.	 
+
+ 	Fig. 11  Simulated small-signal diffusion length distribution across the TiO2 nanocrystalline film.	 
+
+ 	Fig. 12  Simulated EIS spectra at low voltages (V < Vmpp) with (diamonds) and without (circles) the trap distribution. The dashed line represents the theoretical linear behavior, with unit slope, expected at high frequency according to eqn (24).	 
+
+ 	Fig. 13  Small-signal diffusion length as a function of cell voltage extracted from EIS simulations at 1 sun. The inset shows the diffusion length extracted from simulated IPCE spectra, under bias light of 1 sun, according to the IPCE ratio technique.22	 
+Footnotes
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/c3cp43802c
+‡ Rw is the DC resistive component of Zw,10  		 		 
+
+ 		 
+
+ 		 
+
+This journal is © the Owner Societies 2013

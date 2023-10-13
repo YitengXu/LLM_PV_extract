@@ -1,0 +1,357 @@
+Deconstructing the behavior of donor–acceptor copolymers in solution & the melt: the case of PTB7   - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/C9CP00777F View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C9CP00777F
+(Paper)
+Phys. Chem. Chem. Phys., 2019, 21, 7802-7813Deconstructing the behavior of donor–acceptor copolymers in solution & the melt: the case of PTB7†
+
+        
+          
+            Sean M. 
+            Ryno
+          
+        
+       and 
+
+        
+          
+            Chad 
+            Risko
+          
+        
+      *
+      Department of Chemistry & Center for Applied Energy Research, University of Kentucky, Lexington, Kentucky 40506-0055, USA. E-mail: chad.risko@uky.edu
+Received 
+      7th February 2019
+    , Accepted 26th March 2019First published on 26th March 2019AbstractFor organic semiconductors, the solid-state packing of the π-conjugated molecules or polymers dictate the material electronic, optical, and mechanical characteristics. Combinations of solution and solid-state investigations are often used to establish structure–function relationships, though these connections are often loosely correlated, and experiments in different laboratories can lead to widely variable interpretations. Hence, there remains a need to develop a deeper, more robust understanding of the connections between molecular and polymer chemistry, structure, processing, solid-state order, and materials properties to enable judicious materials design principles. Towards this goal, we employ fully-atomistic molecular dynamics (MD) simulations of poly[4,8-bis(5-(2-ethylhexyl)thiophen-2-yl)benzo[1,2-b;4,5-b′]dithiophene-2,6-diyl-alt-(4-(2-ethylhexyl)-3-fluorothieno[3,4-b]thiophene-)-2-carboxylate-2-6-diyl] (PTB7), a donor–acceptor copolymer that has been widely investigated in the organic solar cell literature, to unravel some of these associations. The MD simulations make use of polymer lengths (molecular weights) and solution concentrations that are consistent with those used in experiment, allowing for a detailed picture to arise as to how variations in the polymer environment can direct polymer structure. Comparisons between experiment and theory suggest that processing history can be an important factor in the polymer structures presumed experimentally that are used to interpret optical and electronic responses. The results of these simulations provide specific information into the behavior of PTB7 under different conditions, and showcase how atomistic MD simulations that approach experimentally relevant sizes can be used to develop broader chemical insight that can aid in the design, processing, and characterization of polymer-based organic semiconductors.
+Introduction
+Organic semiconductors derived from π-conjugated polymers, and in particular advances in the design of donor–acceptor copolymers, have drawn wide-ranging technological interest due to the chemical versatility imbued by organic synthetic chemistry that allows facile tuning of material electronic, optical, and mechanical properties, and enables novel paradigms in solution and melt processing.1–6 Though polymer-based materials have been implemented across a range of technologies, extending from flexible (opto)electronics7–14 through biocompatible medical devices15–18 to thermoelectric power generation and beyond,19–23 there remains limited knowledge to establish hard-and-fast rules that relate the chemical composition of an isolated polymer chain to the materials characteristics;24–28 notably, the same is true in the space of molecular-based organic semiconductors. To enhance the rate of the adoption of organic semiconductors and ensure the disruptive capabilities of the technologies that follow, the Edisonian approaches to materials design that have dominated the past few decades need to be replaced with protocols predicated on a priori knowledge that begins at the atomistic level.
+The quest for semiconducting polymeric materials has undergone considerable advance over the decades. Theoretical investigations by Pople and Walmsley29 in the 1960s, for instance, explored the distinctive nature of the electronic characteristics of simple polyenes, while the pioneering works of Shirakawa, Heeger, and MacDiarmid of doped polyacetylene30–33 led to the realization of polymers with metallic conductivity. In 1990, Burroughes and co-workers reported the first functional application of polymer-based organic semiconductors by presenting an organic light-emitting diode (OLED) that made use of poly[2-methoxy-5-(2-ethylhexyloxy)-1,4-phenylenevinylene] (MEH-PPV) as the optoelectronic active material;34 though the OLED efficiency was only 8%, this work represented an important step in the application and development of polymer-based semiconductors. Further, MEH-PPV and the now ubiquitous poly[3-hexylthiophene] (P3HT) were applied as the electron donating materials in organic photovoltaic (OPV) devices, achieving power conversion efficiencies (PCE) of up to 6.4% when combined with suitable electron accepting materials and processing conditions.35,36 While such PCE are certainly impressive for blended materials that started with PCE less than 1%, they pale in comparison to the greater than 14% PCE37–40 of many OPV active materials that employ donor–acceptor co-polymers, whose chemistries build off of the original work of Havinga and co-workers.41,42 In general, most major advances in polymer-based organic semiconductors have been driven by chemical adaptations to tune the electronic and optical properties and solubility of isolated polymer chains, though there has been a recent focus on controlling the thin-film morphology through polymer and process design.43–53
+Outside of their potential technological relevance, materials derived from π-conjugated polymers are also of interest as they are often challenging to characterize,7 both from the standpoint of their morphology and materials properties, necessitating the development of new experimental and computational techniques and models. Focusing here on morphology through the purview of computation and modeling, molecular dynamics (MD) and related computational methods, such as Monte Carlo (MC) simulations, have proven to be powerful tools in this pursuit, as they are able describe, across multiple scales, connections among chain conformations in different environments, polymer dynamics, and a host of materials characteristics (e.g. miscibility parameters, cohesive energies, stress–strain relationships).28,48,54–71 For instance, Hu and co-workers, using MC simulations, examined how chemical defects along MEH-PPV chains (with 100 repeat units) governed the conformations available to individual chains, with results corroborated against single-molecule spectroscopy experiments.72 When no defects were present along the MEH-PPV chains, the chains were shown to adopt one of four conformations: random coil, globule, toroid, or rod; examples of these conformations are shown from this work for the polymer poly[4,8-bis(5-(2-ethylhexyl)thiophen-2-yl)benzo[1,2-b;4,5-b′]dithiophene-2,6-diyl-alt-(4-(2-ethylhexyl)-3-fluorothieno[3,4-b]thiophene-)-2-carboxylate-2-6-diyl] (aka PTB7)73,74 in Fig. 1. However, when chemical defects were invoked, two additional conformations appeared, and sharp deviations in the backbone geometry produced either defect-coil or defect-cylinder conformations. Focusing on defect-free donor–acceptor co-polymers, Jackson and co-workers55,56 used atomistic MD simulations that considered implicit solvent to determine the role of backbone stiffness on polymer conformation. Here, stiff π-conjugated polymers were shown to tend to form rod-like conformations, semi-flexible polymers formed either stacked rod or toroid structures, and flexible polymers formed globules in solution; further, this work noted that polymers that adopt globular-like structures can lead to high-performing materials. There are also a number of works that explore polymer conformations in binary blends and in solvents:28,75,76 Here, we bring the recent work of Reid and co-workers77 to the reader's attention, who reported on atomistic MD simulations of PTB7 oligomers in explicit solvents, including chlorobenzene, chloronaphthalene, and diiodooctane; these simulations provide in-depth analyses of solvent–polymer interactions and the influence of the alkyl chain structure on polymer solubility, and highlight the importance of accounting for explicit solvation in MD simulations to describe polymer behavior.
+ Fig. 1  (top) Examples of stacked-rod, toroid, globule, and rod/coil conformations derived from atomistic MD simulations of an isolated 30-mer PTB7 chain in vacuum. Yellow represents sulfur, pink represents fluorine, red represents oxygen, and green represents carbon; hydrogen atoms are not shown for clarity. (bottom) Chemical structure of PTB7. 
+From the simulation standpoint, trade-offs among the simulation size and chemical accuracy are often made to reduce the computational cost, e.g. polymer chains are truncated, or implicit solvent models are used. What is often not clear, however, is how these reductions in chemical complexity impact the materials understanding. For example, what is the implication when polymer lengths (or molecular weights) are truncated in such simulations, when it has been suggested that folds in such polymer backbones require considerable lengths (e.g., at minimum seven to eight repeat units depending on the monomer length)?7 Questions such as these plague the electronic polymer literature, and can make definitive advances in understanding difficult to realize from the standpoint of simulation.
+To afford computational models and methods that allow knowledge-driven materials design across the entire structure–processing–function paradigm, it is critical to establish concrete connections between polymer chemistry, structure, and dynamics, the influence of processing conditions, thin-film morphology, and the resulting material properties. In this work we begin down this path with an in silico investigation of PTB7, using polymer chain lengths (molecular weights) that are consistent with those reported in the experimental literature, in different environments – ranging from vacuum to experimentally relevant solution concentrations in fully atomistic solvents to the pure polymer glass/melt; notably, some of these simulations have total system sizes in excess of one million atoms. We present a number of characterizing metrics that are beneficial to both computational practitioners and experimentalists that we hope will provide insight and future consideration for the design and rationalization of polymer behavior, including: radius of gyration, persistence length, Hansen and Hildebrand solubility parameters, and Flory–Huggins interaction parameters.78–85
+Computational methods
+Force field preparation
+All MD simulations were completed using the GROMACS 2016 software suite.86 Force field parameters in the OPLS-AA (optimized potentials for liquid simulations – all atom) style were adapted for PTB7 from the report of Jackson and co-workers,56 and converted from the Tinker format to that compatible with GROMACS. Solvent parameters were taken from the OPLS-AA force field.87 Atomic charges for PTB7 were recalculated using density functional theory (DFT) at the ωB97X-D/6-31G(d) level within the Charge Model 5 (CM5) framework using an optimized PTB7 trimer.88,89 Separate charges were generated for the head and tail end units and the middle repeat units. The PTB7 trimer was geometry optimized before applying non-empirical gap tuning to omega,90,91 and then followed by an additional geometry optimization. The optimized omega value for the PTB7 trimer was 0.108 Bohr−1. All parameters for chlorobenzene were taken from the OPLS-AA force field without modification. All DFT calculations were completed using the Gaussian 09 Rev. E.01 suite.92
+Vacuum simulations
+For the vacuum simulations, the initial PTB7 conformations were generated by randomly inserting an extended (33 to 36 nm length)93 PTB7 30-mer composed of 3092 atoms (22.7 kDa) in a box large enough that the polymer is at least 2 nm from any box edge and 4 nm from any replicate upon rotation; note that parallel simulations were run with slightly differing initial polymer conformations. The system was treated within the NVT (constant number of molecules, N, volume, V, and temperature, T) ensemble at 300 K using a leapfrog integrator with 2 fs timestep and velocity rescaling thermostat with 0.1 ps coupling constant. The short-range cutoff was set to 1.4 nm and long-range interactions were treated via particle mesh Ewald summation. Hydrogen bonds were constrained using the LINear Constraint Solver (LINCS) to their equilibrium values. Initial velocities were assigned via Maxwell distribution. An initial NVT equilibration at 300 K was carried out for 2 ns followed by linearly heating the system from 300 K to 550 K over 2 ns. The system was then allowed to rest at 550 K for an additional 2 ns before cooling from 550 K to 300 K over 2 ns. Finally, the system was allowed to rest at 300 K for 15 ns. Sixteen PTB7 conformations were obtained from these simulations, by extracting structures at different points throughout the simulation trajectory that sampled a wide range of conformations, for use in further simulations.
+Solvent simulations
+Solvent simulations of single PTB7 chains were built in the same fashion as the gas-phase simulations. For a given PTB7 conformation (of the 16 extracted from the vacuum simulations), chlorobenzene molecules were randomly inserted within the simulation box to bring the total system density to that of the solvent. Approximately 100000 solvent molecules were needed to fully solvate a polymer chain, bringing the total system size to approximately 1.2 million atoms. The system was initially minimized using a combination of steepest descent and conjugate gradient methods. The final workflow was modelled after that employed by Jackson and co-workers.56 Initial NVT and NPT (constant number of molecules, N, pressure, P, and temperature, T) equilibrations were performed for 2 ns each. A velocity rescaling thermostat was used for both simulations with a 0.1 ps coupling constant, while the Parrinello–Rahman barostat was used for the NPT simulations with a 2 ps coupling constant. All simulations used a 2 fs time step with hydrogen bonds constrained via LINCS to their equilibrium distances. Following equilibration, the system rested for 1 ns before being heated over 2 ns from 300 K to 550 K in an NPT ensemble, followed by an additional 1 ns of equilibration at 550 K. The system sat at 550 K for 2 ns in an NVT ensemble before cooling to 300 K over 2 ns in an NPT ensemble with an additional 1 ns of equilibration time. Finally, the system rested for 15 ns in an NVT ensemble at 300 K. To allow for increased polymer mobility within the solvent, additional simulations were performed where the system rested at 550 K for 10 ns before cooling. Diffusion coefficients were determined via the mean-squared displacement (MSD) using the Einstein relation, neglecting the initial 10% and final 10% of a snapshot window. A total of 16 polymer–solvent simulations were completed from various PTB7 conformations obtained from the vacuum simulations. Visual representations of the starting conformations are available in the ESI† (Fig. S1–S4).
+Polymer melt and glass simulations
+The creation of solid-state polymer systems is a difficult task that often includes using a random walk to build the polymer chains in such a way that limits intersection among chains. However, this method often imparts initial conformational bias to the simulation, e.g., twisted molecules will likely remain twisted. Therefore, we used a method suggested by Larsen and co-workers that over the course of 21 steps heats and compresses the system before returning to standard conditions;94 a table describing each of the 21 steps is in the ESI† (Table S1). The initial state is generated by randomly inserting 338 PTB7 30-mers into a simulation box while ensuring that there is no polymer overlap. The system is then heated and compressed through the 21-step procedure. The final polymer system at 300 K has a density within 4% of the experimental density (experimental:95 1.17 g cm−3, calculated: 1.13 g cm−3), suggesting that the method allows for the creation of experimentally relevant systems. Unless specifically noted, all measurements in the Results and discussion are completed at 300 K.
+During the compression steps all temperature couplings use a 0.1 ps coupling constant and velocity rescaling thermostat, and all pressure couplings use a Berendsen barostat with 2 ps coupling constant. Subsequent NPT simulations use a Parrinello–Rahman barostat. Positional restraints are enforced for the first three compression steps to prevent polymer self-solvation. All hydrogen bonds are constrained with LINCS to their equilibrium distances. After compression a 10 ns NPT simulation is used for sampling to extract relevant system information for later analysis.
+Results and discussion
+To examine the impact of the processing environment on the PTB7 structure and dynamics and to more easily draw comparisons between the current work and previous investigations, we separate our investigation into three sections: PTB7 in vacuum, PTB7 in solvent, and PTB7 in the glass and melt. A discussion on solubility parameters and Flory–Huggins interaction parameters is presented after these sections. As polymer length (molecular weight) will influence the structure and dynamics that we are interested in examining,55 we make use of PTB7 chains that are comprised of 30 repeat units (30-mer) and have (extended) lengths of approximately 36 nm for all simulations. Number-averaged molecular weights for PTB7 are reported to vary from 22.8 kg mol−1 to 105 kg mol−1,96 thus, our 30-mers with a molecular weight of 22.7 kg mol−1 fall in line with experiment. We note that example input files necessary to reproduce any of the simulations presented here are provided in the ESI† in order to assist with future evaluations of the methods.
+Vacuum PTB7 simulations
+As a first metric of the behavior of PTB7, we present the radius of gyration as a function of time in vacuum (see the Computational methods for a complete description of the simulation procedure), as it provides an indication to the extended/folded nature and stiffness of individual PTB7 chains (Fig. 2). Extended PTB7 chains, used as the starting points in the simulations, possess radii of gyration of 9.7 nm, but this value quickly collapses to approximately 4 nm after just 180 ps of simulation time in vacuum. This behavior highlights that in the absence of intermolecular interactions with the environment (e.g. with solvent, additional polymer chains, etc.) that PTB7 chains will quickly self-solvate to form a variety of toroidal, stacked rod, and globular structures, in a similar manner to those previously reported from implicit solvent MD simulations.55,56 In other words, vacuum is a very poor solvent for π-conjugated polymers. Several conformations (Fig. S1–S4, ESI†) were extracted during the polymer collapse for classification and further use in the study: nine rod-like, four stacked-rod, two toroidal, and one globular. Note that we use the term rod-like to describe any polymer without folds along the chain that arise from polymer self-interaction.
+ Fig. 2  [top] Radius of gyration versus persistence length for rod-like (black circle), stacked rod (blue square), toroidal (red triangle), and globular (green diamond) conformations extracted from vacuum simulations of isolated PTB7 chains. Persistence length vectors were defined by the first and last atoms for each donor and acceptor subunit in the monomer, resulting in two defined vectors per repeat unit. The radius of gyration and persistence length data were obtained as averages over the final 15 ns of simulation time for 16 separate simulations. [bottom] Radius of gyration versus simulation time for a single PTB7 chain at 300 K in vacuum that assumes a stacked-rod conformation. 
+Expected correlations (Fig. 2) among the radii of gyration and persistence lengths with respect to the PTB7 conformations are found. Here, the persistence length vectors were defined by the first and last atoms for each donor and acceptor subunit in the monomer, resulting in two defined vectors per repeat unit (representations of the vectors are shown in Fig. S5, ESI†); further, the radius of gyration and persistence length data were obtained as averages over the final 15 ns of simulation time for 16 separate simulations. Rod-like geometries have the largest persistence lengths, followed by the stacked-rod morphologies (due in part to flat, stacked regions that contain two to four repeat units).55 Lastly, the toroidal and globular morphologies present persistence lengths of one-to-two repeat units, a result that is not unexpected due to the large degree of backbone twisting necessary to obtain these geometries; for such toroidal and globular structures, the very small persistence lengths suggest that charge-carrier transport along the polymer backbone, often considered to be efficient in π-conjugated polymers, would be very limited. We note that dihedral distributions can also provide quantitative measures of polymer structure for a given polymer conformation, and we will make use of these parameters in later sections.
+With a baseline set as to the dynamics and conformations available to isolated PTB7 chains established, it is of interest to examine how interpolymer interactions among multiple PTB7 chains alter this behavior. We now consider five PTB7 chains in vacuum in an analogous fashion as to the isolated PTB7 simulations. In addition to the self-solvation tendency described for an isolated PTB7 chain, here the individual chains can also quickly interact to solvate each other on a time scale that is proportional given to the system size, about 5 to 6× longer than the isolated chain simulations. The five-chain aggregates present regions that display both stacked rod and globular characteristics (Fig. 3). The persistence lengths of the individual chains reflect these morphologies, ranging from 1.0 to 1.4 nm, in accordance with the single chain structures.
+ Fig. 3  [top] Example backbone conformations after 2 ns of simulation of five PTB7 chains at 300 K in vacuum. The alkyl side chains have been removed for clarity, and each chain individually colored. [bottom] The average radius of gyration of five polymer chains in vacuum at 300 K as a function of simulation time. 
+Though not directly relevant to experiment, these vacuum simulations provide insight into the behavior of PTB7. In the absence of any intermolecular interactions (e.g. from solvent molecules or other polymer chains), an isolated PTB7 chain tends to self-solvate, forming a wide variety of stacked-rod, globule, or toroidal conformations. When multiple chains are present, tightly bound aggregates form, with the chains in these aggregates taking on similar conformations as to those found for the isolated chains in vacuum. These results, even though no implicit solvent is used, are in accord with the behavior of PTB7 and other π-conjugated polymers that have been previously reported from MD simulations.55,56,72 With this baseline behavior established, we now turn to explicit solvent simulations to understand how variations in PTB7 conformations dictate the polymer characteristics in solvent.
+PTB7 in atomistic solvents
+We now turn to the behavior of PTB7 in a fully atomistic solvent environment; here, either a single PTB7 30-mer chain or five PTB7 polymer 30-mer chains are solvated in approximately 100000 chlorobenzene molecules. The resulting concentrations are 2 mg mL−1 for the single PTB7 chain in solvent and 10 mg mL−1 for the five PTB7 chains in solvent; note that this latter concentration is consistent with those used in small-angle neutron scattering (SANS) experiments and in thin-film processing.73,97–99 The final system densities are 1.09 g cm−3 and 1.11 g cm−3 for the single PTB7 chain and five PTB7 chains in chlorobenzene, respectively; we note that the experimental density of chlorobenzene is 1.11 g cm−3.100 To determine how solvent interactions influence PTB7 structure and dynamics, 16 chain conformations obtained from the vacuum simulations were used as starting geometries in the atomistic chlorobenzene environment, with the chain structures encompassing variations in the rod, stacked rod, toroid, or globule categories; using such a wide variety of starting points allows us to explore the relationships between polymer structure and dynamics in solvent without the need for extremely long time-scale simulations. Each conformation in chlorobenzene was treated to a heating and cooling cycle that spanned 28 ns, as described in the Computational methods section.
+The radii of gyration were used as a measure to determine if the PTB7 chains experience additional collapse, as would be expected for a poor or anti-solvent, or either no change in structure or expansion that might be expected for good solvents. It is important to recall that while one may use a good solvent for a polymer, specific intrachain or interchain interactions may be more stabilizing than the polymer–solvent interactions, which can in turn act to provide kinetic barriers to the formation of the preferred polymer conformations in the solvent. Representative structures for each of the conformations are listed in Table 1. In general, we observe that most PTB7 chains showcase an increase in the radius of gyration relative to their initial structures taken from the vacuum simulations, indicating that, as expected, PTB7 can be solvated by chlorobenzene. An exception to this trend is found for the rod-like conformation, where additional bends along the backbone are introduced during the high temperature step, but after annealing we observe that the radius of gyration increases from about 6.5 nm to 6.9 nm during the course of the NVT simulation. Expected correlations are also found between the radii of gyration and Kuhn lengths (Fig. S6, ESI†) – i.e. a larger radius of gyration corresponds with a larger Kuhn length.
+Table 1 Average radius of gyration for representative structures at 300 K for gas-phase structures and at 550 K and 300 K for the same structure in chlorobenzene. All lengths are given in nm. Average standard deviations for the explicit solvent simulations are given in parentheses
+
+
+
+
+Conformation
+300 K gas phase
+550 K solvent
+300 K solvent
+
+
+
+
+Rod-like
+9.76
+7.87 (0.53)
+6.47 (0.19)
+
+
+Stacked rod
+4.09
+3.80 (0.25)
+4.20 (0.11)
+
+
+Toroid
+2.22
+3.30 (0.29)
+3.35 (0.12)
+
+
+Globule
+2.45
+3.49 (0.30)
+3.87 (0.14)
+
+
+
+
+To illustrate the PTB7 chain structure as a function of time in chlorobenzene, we extracted dihedral angle distributions between the benzodithiophene and thienothiophene subunits (Fig. 4 and Fig. S7, ESI†). For the stacked-rod conformation, the dihedral distributions evolve towards 0° (adjacent S atoms are in a cis configuration) and 180° (adjacent S atoms are in a trans configuration) from an initially broad distribution, as the polymer unravels and adopts a more planar geometry. The toroidal and globular conformations also show an overall contraction of the dihedral distributions, with large increases in the populations near the 0° and 180° extremes, as the structures disentangle and portions of the chains adopt more rod-like conformations. In the rod-like conformation, the dihedral distribution shifts to 180° as the chain begins to unzip and form loops around the chain midpoint. In all conformations, dihedral populations near 90° all but disappear, as the unfavorable twists along the chain that occurred due to chain self-solvation in vacuum relax in the solvent.
+ Fig. 4  Distributions for the dihedral angles between thienothiophene and the adjacent benzodithiophene averaged over the first 1 ns at 550 K (black) and over the first 1 ns at 300 K (red) for toroid (top left), rod-like (bottom left), globule (top right), and stacked rod (bottom right) chain conformations. Inset figures are the polymer chain conformations at the beginning of the 550 K run (top) and the beginning of the 300 K run (bottom). Dihedral angles are reported with respect to adjacent S atoms: 0° degrees corresponds to adjacent S atoms being in a cis configuration, while 180° degrees corresponds to adjacent S atoms being in to a trans configuration. 
+With this insight that the PTB7 chains tend to expand their radii of gyration in chlorobenzene, it is of interest to assess the stability and diffusion (Table 2) of these conformations. Determination of the relative enthalpies of each conformation reveals that the PTB7 chains prefer to be more extended in chlorobenzene. In turn, the conformations, as expected, also impact chain diffusion through the solvent. Generally, the smaller the PTB7 radius of gyration then the larger the diffusion coefficient. For example, a rod-like PTB7 conformation with a radius of gyration of 6.7 nm has a diffusion coefficient of 2.6 nm2 ns−1, while a globular conformation with radius of gyration of 3.2 nm has a diffusion coefficient of 4.6 nm2 ns−1. The tendency that extended polymers showcase smaller diffusion coefficients is consistent with previous work from Hegde and co-workers.101 Such differences in polymer mobility due to conformation could portend consequences with respect to solution processing, as polymer mobility will impact the number and types of interpolymer interactions that determine the material morphology that develops during the solvent drying process.
+Table 2 Average relative enthalpy (kJ mol−1) and diffusion coefficients (nm2 ns−1) for PTB7 chains in chlorobenzene at 300 K
+
+
+
+
+Morphology
+Relative enthalpy
+Diffusion coefficient
+
+
+
+
+Rod-like
+0
+2.28
+
+
+Stacked Rod
+336
+7.59
+
+
+Toroid
+491
+9.05
+
+
+Globule
+406
+4.63
+
+
+
+
+Expanding the PTB7 solvent simulations, we undertook PTB7–chlorobenzene atomistic MD simulations with five PTB7 chains in rod-like conformations, presenting a concentration of 10 mg mL−1; importantly, this concentration is common for experimental solution measurements and for the creation of polymer-based thin films.102,103 In contrast to the vacuum simulations, the PTB7 chains do not aggregate with each other within the (albeit small) timeframes considered, which in this case is 36 ns (including 10 ns at 550 K); recall that in vacuum the five PTB7 chains self-solvated within approximately 1.2 ns. Indeed, chains that seemingly approach close contact migrate from each other as the simulation proceeds. Further, the PTB7 chains, which in this case were started in rod-like conformations, do bend and twist, but always maintain a rod-like conformation, in direct contrast to the vacuum simulations where within 1 ns the polymer chains begin to intertwine themselves and fold. This difference in behavior is readily apparent in the persistence lengths: while the average persistence length in the vacuum simulation is only 1.2 nm, the average persistence length of the five polymer chains in chlorobenzene is 3.8 nm.
+To draw further insight into PTB7 structure in solution, we used the simulated PTB7 structures to model SANS spectra via the Debye method104 (Fig. 5) for assessment with reported experiments. While it is difficult to make direct comparisons due to the sensitivity of SANS techniques to polymer geometry, and different solvents used in the simulations (chlorobenzene) and experiments (dichlorobenzene), generalizations can be made as to the size of individual chains or aggregates. Two reported SANS experiments for PTB7 provide contrasting pictures of the polymer behavior under similar conditions. He and co-workers97 report a PTB7 radius of gyration from Guinier analysis of 129 nm in the low-q region, and from Guinier–Porod fittings of 114 nm in the lower-q region and 25 nm in the higher-q region in deuterated 1,2-dichlorobenzene (10 mg mL−1) at 298 K. The radius of gyration determined from the low-q region is considerably longer than the typical PTB7 chain length and was proposed to arise from considerable aggregation in solution. Upon heating the sample to 383 K, these numbers changed to 50 nm (Guinier analysis) and 26 nm (Guinier–Porod fitting), respectively, indicating a loss of aggregation. Notably, temperature-dependent UV-vis experiments97 result in varied optical absorption profiles, analysis of which also suggested aggregation at 298 K. On the other hand, SANS experiments from Das and co-workers propose that PTB7 is well dissolved in 1,2-dichlorobenzene (10 mg mL−1), with a contour length of 39.5 nm (and Kuhn length of 18.3 nm);73 in this report, the SANS data were modeled using a worm-like chain model, and aggregation was not a reported feature of PTB7 in solution.
+ Fig. 5  Simulated SANS spectra for individual PTB7 chains extracted from the five polymer vacuum (dotted line) and five polymer chain solvent (dashed line) simulations. The vacuum simulation chains adopt stacked-rod (blue) and globular (green) conformations while the chains extracted from the solvent simulations both adopt rod-like conformations (red and purple). Experimental SANS data from ref. 73 (black) is provided for reference. 
+From the SANS simulations based on the atomistic MD simulations here, even considering the five-chain solvent simulation where the chains are rod-like and non-aggregated, the largest radius of gyration that we obtain is 34.3 nm. This confirms the result that the larger radii of gyration in ref. 97 are for PTB7 aggregates in the 10 mg mL−1 1,2-dichlorobenzene solutions at 298 K. On the other hand, Das and co-workers73 obtain a fundamentally different result for an (nearly) identical system (10 mg mL−1 PTB7 in 1,2-dichlorobenzene) suggesting individual, isolated chains in solution. Based on the simulations here, the polymer chains in ref. 73 correspond to individual chains that are in folded conformations, particularly either stacked-rod or toroidal (obtained for solvated stacked-rod and toroidal conformations, or from individual chains extracted from the five-molecule gas-phase simulations). It is intriguing that the more compact structures are proposed via the agreement between the simulated and experimental SANS spectra, given that (i) the enthalpically more favorable conformations in chlorobenzene are the more extended, rod-like structures, and (ii) the tendency for the chains to unfold/relax with simulation time.
+Combining the results from the two experimental SANS measurements and the simulated SANS data based on the MD simulations leads to the suggestion that the PTB7 chains measured in these experiments maintain structure from their processing history. While we do not speculate as to why such different polymer behavior is observed for solutions of identical composition due to the very large number of variables that must be considered during the preparation of the polymer solutions, these results provide some insight as to the polymer structures observed in solution-based investigations. It is also important to remark that the solvent simulations show the importance of the diffusion limited kinetics of alterations to polymer conformations in solution. One can imagine the large energy and long time-scales (much longer than the simulations here) required to move the densely packed solvent molecules that surround the polymer chains to allow (un)folding to occur. Hence, when considering conformational structures that such π-conjugated polymers take, these diffusion-limited processes need to be accounted in order to provide relevant knowledge and correspondence with respect to experiment.
+PTB7 melts and glasses
+PTB7 tends to form thin films with low-degrees of long-range order, making it difficult to experimentally characterize.53,96,105 Computationally, polymer glasses are difficult to simulate due to the large system sizes required, and are often limited to simulations using coarse-grained (CG) MD methodologies. However, due to the inherent nature of CGMD simulations, structural information can be lost during the coarse-graining procedure, making it difficult to map the coarse-grained system back to an atomistic system. Additionally, the large conformational spaces make sampling difficult, while the large size of the polymer chains makes creating the system non-trivial. Therefore, random walks are often used to build the polymer chains. However, these types of initial structures lock the chains into their conformations unless very long simulation times are used to allow the individual polymer chains time to migrate through the system. To mitigate the use of random walks, we built our initial system by arbitrarily inserting polymer chains into a large, empty simulation box and ensuring that no two chains were in close contact. We then performed many high temperature and high pressure runs to compress the system, and then allowed the system to decompress to obtain structure from which the glass was simulated. The final PTB7 density from this simulation protocol (see the Computational methods and ESI† for more details) is 1.13 g cm−3, which compares very well to experimental density for PTB7 films of 1.17 g cm−3.95
+To draw comparisons with the vacuum and solvent simulations, the radii of gyration and persistence lengths for each of the 338 polymer chains in the simulation box (Fig. 6) were determined. Note that as with the vacuum and solvent simulations, the chains used in the glass and melt simulations are composed of 30 repeat units, each consisting of 3092 atoms with a molecular weight of 22.7 kg mol−1; hence, the simulation size is over one-million atoms. Visual examination of every chain in the glass reveals a classification that suggests 91% of the chains are rod-like, while 9% of the chains are either stacked rod or toroidal (we do not separate these due to the open interpretation and limited folding or coiling within the condensed polymer phase); no globule chains were identified. This conformational distribution aligns well with the semi-rigid nature of the PTB7 backbone, as shown here and in previous simulations of PTB7 oligomers.106
+ Fig. 6  [top] Persistence length vs. radius of gyration for the 338 PTB7 chains in the pure polymer simulations. Inset: Polymer conformations extracted from the PTB7 glass where the radius of gyration for both chains is similar, but the persistence lengths greatly differ due to the relative planarity of the backbone. [bottom] Dihedral distributions between the sulfur of the thienothiophene and the sulfur on the adjacent benzodithiophene for each of the 338 polymer chains in the pure PTB7 simulation. Inset shows the dihedral angle of interest. 
+On average, the PTB7 persistence length in the glass is 10 nm, while the radius of gyration is 6.7 nm. This result is consistent with the tendency for PTB7 to move towards more extended chains in the solvent simulations. For radii of gyration up to about 6.5 nm, there is a very strong correlation with persistence length, as one might expect, since these more folded or twisted structures will tend to interrupt or break the π-conjugation along the polymer backbone. When the radius of gyration approaches 6.5 nm or longer, the chains almost exclusively adopt rod-like conformations that result in persistence lengths of more than 10 nm. However, closer inspection of the individual chains reveals two primary rod-like conformations: (i) those that twist along their backbone to avoid other polymer chains, and (ii) those wherein the backbones of two or more polymer chains are aligned in a stacked arrangement. It is this second type of rod-like conformation where we observe persistence lengths of several tens of nanometers, with some polymer chains having persistence lengths longer than the actual chain due to the nearly planar backbone morphology. It is these long, extended conformations wherein one would expect to see the possibility of efficient intramolecular charge transport along the chain that results in high charge-carrier transport mobilities, rather than less efficient intermolecular charge-carrier transport that is expected to be more common in the stacked-rod and toroidal conformations.107
+Solubility and interaction parameters
+While quantities such as persistence length play a role in what we can expect as far as material performance (i.e. longer persistence lengths equate to more extended π-conjugation pathways and more efficient charge-carrier transport) and radii of gyration are important for drawing connections between simulations and experimental measures, they are of limited use when determining how the polymer chains interact with their environment. To describe these interactions, cohesive energy densities and solubility parameters are often employed. There are two popular methods for calculating these quantities: the Hildebrand and Hansen solubility formulations.108,109 While the Hildebrand formulation, based on the total energy of a system, is common, it does not properly account for polar environments as it was originally formulated to describe the behavior of hydrocarbon solvents. The Hansen formulation, on the other hand, explicitly accounts for coulombic, dispersive, and hydrogen bonding contributions to the cohesive energy and is therefore better suited to describe PTB7 in chlorobenzene. We note that due to the nature of the force field used in the MD simulations, it is not possible to separate the coulombic and hydrogen bonding components, so a modified version of the Hansen formulations wherein the coulombic and hydrogen bonding terms are taken as a sum rather than separate components is often used.66,110,111
+For the sake of completeness, we report both the Hansen and Hildebrand solubility parameters for all systems considered. From Table 3, we determine the Hildebrand solubility parameter (δT) for chlorobenzene to be 9.49 (cal cm−3)1/2, and the Hansen solubility parameter for dispersion (δD) to be 9.10 (cal cm−3)1/2 and for electrostatics (δP + δH) to be 2.15 (cal cm−3)1/2. These values compare well to the experimental values of δT = 9.56 (cal cm−3)1/2, δD = 9.29 (cal cm−3)1/2, and δP + δH = 2.24 (cal cm−3)1/2, and to the previous computational determination from Tummala and co-workers (δT: 9.48 (cal cm−3)1/2; δD: 9.31 (cal cm−3)1/2; (δP + δH): 1.80 (cal cm−3)1/2).110 For PTB7, we extract the Hildebrand and Hansen solubility parameters from the final polymer glasses (at 300 K): δT = 9.36 (cal cm−3)1/2, δD = 9.83 (cal cm−3)1/2, and δP + δH = 1.15 (cal cm−3)1/2. The similarity of δD and δP + δH suggest that PTB7 should be soluble in chlorobenzene, in agreement with experimental observations. While the polar nature of the chlorobenzene solvent and the local dipoles present along the PTB7 backbone could lead one to assume that the Hildebrand solubility should be a poor descriptor of this system, we see only small differences compared to the Hansen solubility.
+Table 3 Hildebrand (δT) and Hansen solubility parameters obtained for pure chlorobenzene (CB), pure PTB7 in the glass, and PTB7 solvated in chlorobenzene. Solubility parameters in units of (cal cm−3)1/2. All simulation temperatures were 300 K. The dispersion component of the Hansen solubility (δD) is reported separate from the polar (δP) and hydrogen-bonding (δH) components, as the latter two cannot be separated due to the nature of the force field employed
+
+
+
+
+
+
+
+δ
+T
+
+
+δ
+D
+
+(δP + δH)
+
+X
+
+
+
+
+
+Chlorobenzene
+9.49
+9.10
+2.15
+
+
+
+
+PTB7
+9.36
+9.83
+1.15
+
+
+
+
+PTB7 in CB
+9.68
+9.36
+2.25
+−0.037
+
+
+5 PTB7 in CB
+9.67
+9.34
+2.21
+−0.035
+
+
+
+
+To evaluate the interactions between PTB7 and chlorobenzene more fully, the Flory–Huggins (χ) interaction parameter was computed from the Hildebrand cohesive energy densities of the pure components and blends, as has been done previously.78–80,82,110,112 From Flory–Huggins theory, if χAB < χcr (where χcr is the Flory–Huggins critical point) then components A and B are soluble, and if χAB is negative then the mixing is exothermic. Since χ is concentration dependent,110 one would expect χ to increase as the number of polymer chains increases. While the concentration differences in the PTB7–chlorobenzene systems simulated here are relatively small (2 mg mL−1 to 10 mg mL−1), we should still see a change in χ. Indeed, χ increases from −0.037 for a single PTB7 chain in chlorobenzene to −0.035 for five PTB7 chains. Both χ are less than the χcr for this system of 0.006, suggesting that mixing is energetically favorable at these concentrations; as supported by the tendency of individual polymer chains to remain dispersed within solvent during the MD simulations and by these concentrations being readily accessible in experimental investigations.
+Synopsis
+Though device efficiency records continue to be set for polymer-based organic semiconducting devices, the design of π-conjugated polymers and the processing conditions used to develop the active materials remains highly trial-and-error. To eventually develop and make use of a priori design and processing guidelines, a more robust, multiscale understanding of the behavior of π-conjugated polymers in different environments is necessary. The larger sizes of organic electronic polymers places practical limitations on the computational methods that can be employed to study these systems and, also, on the experimental techniques. To combat these limitations in the computational realm, various approximations have been used, such as implicit solvent, truncated polymer fragments, or coarse-grained simulations; importantly, each of these methods introduces some degree of uncertainty and loss of chemical accuracy in the final analysis.
+By using fully-atomistic MD simulations that make use of polymer chains with lengths comparable to experiment to explore PTB7 in several environments, we attempted to circumvent many of these approximations, though the time scales do remain small. For PTB7 in vacuum, we observe that within 200 ps that an isolated, extended PTB7 chain will self-solvate to form tightly folded aggregates in stacked rod, toroidal, or globule conformations; this behavior extends to simulations with multiple chains, where the chains tend to intertwine and form large aggregates. For each of these vacuum-environment systems, the persistence lengths are severely reduced, when compared to an extended rod-like chain, to only one-to-two repeat units. When considering solvated PTB7 in chlorobenzene, however, the polymer chains remain in elongated, rod-like conformations, or the degree of coiling/folding lessens for structures that start with small radii of gyration. In polymer glasses derived from the melt, the PTB7 chains wrap around each other but remain in mostly rod-like conformations, with twists along the backbone determining the persistence length. Here, we observe persistence lengths of several tens of nanometers. In total, these results demonstrate how the local environment surrounding the PTB7 chains can greatly influence structure, as well as the dynamics.
+The potential chemistry used to design polymers for organic semiconductors is vast, and modest modifications in chemical composition and structure can impart changes to the nature and strength of the intrapolymer and interpolymer interactions that in turn impact the structure and dynamics in the chemical environments the polymer will encounter during processing and material formation. It is our hope that the challenges addressed here will help to form the foundation for additional large-scale materials simulations that begin at the atomistic scale and provide materials specific quantities and representative morphologies for these complex systems.
+Conflicts of interest
+None to declare.
+Acknowledgements
+This work was supported by the Office of Naval Research (Award Number N00014-16-1-2985), and was made possible by the Department of Defense (DoD) Centennial, Hokule’a, Lightning, Onyx, Thunder, and Topaz supercomputing resources through the DoD High Performance Computing Modernization Program (HPCMP; Project Number ONRDC40433481). Additional supercomputing resources on the Lipscomb High Performance Computing Cluster were provided by the University of Kentucky Information Technology Department and Center for Computational Sciences (CCS), and on the Holly computing cluster by the University of Kentucky College of Arts & Sciences. We would like to thank Mr Shi Li for many fruitful discussions on the MD protocols, and Dr Uma Ramasamy for a critical evaluation of this work.
+References
+T. A. Chen and R. D. Rieke, J. Am. Chem. Soc., 1992, 114, 10087–10088 CrossRef CAS .
+C. L. Gettinger, A. J. Heeger, J. M. Drake and D. J. Pine, J. Chem. Phys., 1994, 101, 1673–1678 CrossRef CAS .
+S. N. Patel, G. M. Su, C. Luo, M. Wang, L. A. Perez, D. A. Fischer, D. Prendergast, G. C. Bazan, A. J. Heeger, M. L. Chabinyc and E. J. Kramer, Macromolecules, 2015, 48, 6606–6616 CrossRef CAS .
+H. Youn, H. J. Park and L. J. Guo, Energy Technol., 2015, 3, 340–350 CrossRef CAS .
+B. Dorling, V. Vohra, T. T. Dao, M. Garriga, H. Murata and M. Campoy-Quiles, J. Mater. Chem. C, 2014, 2, 3303–3310 RSC .
+R. Pan, W. Zhao, T. Zhou and A. Zhang, J. Polym. Sci., Part B: Polym. Phys., 2010, 48, 595–599 CrossRef CAS .
+Y. Lee and E. D. Gomez, Macromolecules, 2015, 48, 7385–7395 CrossRef CAS .
+A. Facchetti, Chem. Mater., 2011, 23, 733–758 CrossRef CAS .
+M. S. AlSalhi, J. Alam, L. A. Dass and M. Raja, Int. J. Mol. Sci., 2011, 12, 2036 CrossRef CAS PubMed .
+S. H. Park, A. Roy, S. Beaupré, S. Cho, N. Coates, J. S. Moon, D. Moses, M. Leclerc, K. Lee and A. J. Heeger, Nat. Photonics, 2009, 3, 297 CrossRef CAS .
+H. Spanggaard and F. C. Krebs, Sol. Energy Mater. Sol. Cells, 2004, 83, 125–146 CrossRef CAS .
+P. Peumans, A. Yakimov and S. R. Forrest, J. Appl. Phys., 2003, 93, 3693–3723 CrossRef CAS .
+S. Lu, J. Lin, K. Liu, S. Yue, K. Ren, F. Tan, Z. Wang, P. Jin, S. Qu and Z. Wang, Acta Mater., 2017, 130, 208–214 CrossRef CAS .
+L. La Notte, P. Cataldi, L. Ceseracciu, I. S. Bayer, A. Athanassiou, S. Marras, E. Villari, F. Brunetti and A. Reale, Mater. Today Energy, 2018, 7, 105–112 CrossRef .
+L.-J. Tang, M.-H. Wang, H.-C. Tian, X.-Y. Kang, W. Hong and J.-Q. Liu, Micromachines, 2017, 8, 281 CrossRef PubMed .
+M. Frohlich, W. L. Grayson, L. Q. Wan, D. Marolt, M. Drobnic and G. Vunjak- Novakovic, Curr. Stem Cell Res. Ther., 2008, 3, 254–264 CrossRef CAS PubMed .
+S. M. Richardson-Burns, J. L. Hendricks, B. Foster, L. K. Povlich, D.-H. Kim and D. C. Martin, Biomaterials, 2007, 28, 1539–1552 CrossRef CAS PubMed .
+J. T. Mabeck and G. G. Malliaras, Anal. Bioanal. Chem., 2006, 384, 343–353 CrossRef CAS PubMed .
+M. Chabinyc, Nat. Mater., 2014, 13, 119 CrossRef CAS PubMed .
+W. B. Chang, C.-K. Mai, M. Kotiuga, J. B. Neaton, G. C. Bazan and R. A. Segalman, Chem. Mater., 2014, 26, 7229–7235 CrossRef CAS .
+C.-K. Mai, B. Russ, S. L. Fronk, N. Hu, M. B. Chan-Park, J. J. Urban, R. A. Segalman, M. L. Chabinyc and G. C. Bazan, Energy Environ. Sci., 2015, 8, 2341–2346 RSC .
+L. Wang, Y. Liu, Z. Zhang, B. Wang, J. Qiu, D. Hui and S. Wang, Composites, Part B, 2017, 122, 145–155 CrossRef CAS .
+G. Chen, W. Xu and D. Zhu, J. Mater. Chem. C, 2017, 5, 4350–4360 RSC .
+T. Adachi, J. Brazard, P. Chokshi, J. C. Bolinger, V. Ganesan and P. F. Barbara, J. Phys. Chem. C, 2010, 114, 20896–20902 CrossRef CAS .
+E. Collini and G. D. Scholes, Science, 2009, 323, 369–373 CrossRef CAS PubMed .
+B. J. Schwartz, Annu. Rev. Phys. Chem., 2003, 54, 141–172 CrossRef CAS PubMed .
+Z. Hu, T. Adachi, Y.-G. Lee, R. T. Haws, B. Hanson, R. J. Ono, C. W. Bielawski, V. Ganesan, P. J. Rossky and D. A. Vanden Bout, ChemPhysChem, 2013, 14, 4143–4148 CrossRef CAS PubMed .
+L. Ye, H. Hu, M. Ghasemi, T. Wang, B. A. Collins, J.-H. Kim, K. Jiang, J. H. Carpenter, H. Li, Z. Li, T. McAfee, J. Zhao, X. Chen, J. L. Y. Lai, T. Ma, J.-L. Bredas, H. Yan and H. Ade, Nat. Mater., 2018, 17, 253–260 CrossRef CAS PubMed .
+J. A. Pople and S. H. Walmsley, Trans. Faraday Soc., 1962, 58, 441–448 RSC .
+H. Shirakawa, E. J. Louis, A. G. MacDiarmid, C. K. Chiang and A. J. Heeger, J. Chem. Soc., Chem. Commun., 1977, 578–580,  10.1039/C39770000578 .
+C. K. Chiang, C. R. Fincher, Y. W. Park, A. J. Heeger, H. Shirakawa, E. J. Louis, S. C. Gau and A. G. MacDiarmid, Phys. Rev. Lett., 1977, 39, 1098–1101 CrossRef CAS .
+C. K. Chiang, M. A. Druy, S. C. Gau, A. J. Heeger, E. J. Louis, A. G. MacDiarmid, Y. W. Park and H. Shirakawa, J. Am. Chem. Soc., 1978, 100, 1013–1015 CrossRef CAS .
+C. K. Chiang, Y. W. Park, A. J. Heeger, H. Shirakawa, E. J. Louis and A. G. MacDiarmid, J. Chem. Phys., 1978, 69, 5098–5104 CrossRef CAS .
+J. H. Burroughes, D. D. C. Bradley, A. R. Brown, R. N. Marks, K. Mackay, R. H. Friend, P. L. Burns and A. B. Holmes, Nature, 1990, 347, 539 CrossRef CAS .
+W. B. Chen, M. Z. Deng, H. J. Zou, C. Y. Li, L. F. Deng and P. T. Lai, IEEE Int. Conf. Electron Devices Solid-State Circuits, 2010, 1–4 Search PubMed .
+S. Holliday, R. S. Ashraf, A. Wadsworth, D. Baran, S. A. Yousaf, C. B. Nielsen, C.-H. Tan, S. D. Dimitrov, Z. Shang, N. Gasparini, M. Alamoudi, F. Laquai, C. J. Brabec, A. Salleo, J. R. Durrant and I. McCulloch, Nat. Commun., 2016, 7, 11585 CrossRef CAS PubMed .
+W. Zhao, S. Li, H. Yao, S. Zhang, Y. Zhang, B. Yang and J. Hou, J. Am. Chem. Soc., 2017, 139, 7148–7151 CrossRef CAS PubMed .
+G. Li, W.-H. Chang and Y. Yang, Nat. Rev. Mater., 2017, 2, 17043 CrossRef CAS .
+L. Lu, T. Zheng, Q. Wu, A. M. Schneider, D. Zhao and L. Yu, Chem. Rev., 2015, 115, 12666–12731 CrossRef CAS PubMed .
+G. Li, R. Zhu and Y. Yang, Nat. Photonics, 2012, 6, 153 CrossRef CAS .
+E. E. Havinga, W. ten Hoeve and H. Wynberg, Polym. Bull., 1992, 29, 119–126 CrossRef CAS .
+E. E. Havinga, W. ten Hoeve and H. Wynberg, Synth. Met., 1993, 55, 299–306 CrossRef CAS .
+C. Caddeo and A. Mattoni, Macromolecules, 2013, 46, 8003–8008 CrossRef CAS .
+E. Verploegen, R. Mondal, C. J. Bettinger, S. Sok, M. F. Toney and Z. Bao, Adv. Funct. Mater., 2010, 20, 3519–3529 CrossRef CAS .
+X. Gu, H. Yan, T. Kurosawa, B. C. Schroeder, K. L. Gu, Y. Zhou, J. W. F. To, S. D. Oosterhout, V. Savikhin, F. Molina-Lopez, C. J. Tassone, S. C. B. Mannsfeld, C. Wang, M. F. Toney and Z. Bao, Adv. Energy Mater., 2016, 6, 1601225 CrossRef .
+E. Pavlopoulou, C. S. Kim, S. S. Lee, Z. Chen, A. Facchetti, M. F. Toney and Y.-L. Loo, Chem. Mater., 2014, 26, 5020–5027 CrossRef CAS .
+R. Noriega, A. Salleo and A. J. Spakowitz, Proc. Natl. Acad. Sci. U. S. A., 2013, 110, 16315–16320 CrossRef CAS PubMed .
+M. L. Jones, D. M. Huang, B. Chakrabarti and C. Groves, J. Phys. Chem. C, 2016, 120, 4240–4250 CrossRef CAS .
+D. Mendels and N. Tessler, Sci. Rep., 2016, 6, 29092 CrossRef PubMed .
+R. Noriega, J. Rivnay, K. Vandewal, F. P. V. Koch, N. Stingelin, P. Smith, M. F. Toney and A. Salleo, Nat. Mater., 2013, 12, 1038 CrossRef CAS PubMed .
+J. A. Reinspach, Y. Diao, G. Giri, T. Sachse, K. England, Y. Zhou, C. Tassone, B. J. Worfolk, M. Presselt, M. F. Toney, S. Mannsfeld and Z. Bao, ACS Appl. Mater. Interfaces, 2016, 8, 1742–1751 CrossRef CAS PubMed .
+S. Kouijzer, J. J. Michels, M. van den Berg, V. S. Gevaerts, M. Turbiez, M. M. Wienk and R. A. J. Janssen, J. Am. Chem. Soc., 2013, 135, 12057–12067 CrossRef CAS PubMed .
+Y. Liu, J. Zhao, Z. Li, C. Mu, W. Ma, H. Hu, K. Jiang, H. Lin, H. Ade and H. Yan, Nat. Commun., 2014, 5, 5293 CrossRef CAS PubMed .
+A. Ramírez-Hernández, F. A. Detcheverry, B. L. Peters, V. C. Chappa, K. S. Schweizer, M. Müller and J. J. de Pablo, Macromolecules, 2013, 46, 6287–6299 CrossRef .
+T. J. Fauvell, T. Zheng, N. E. Jackson, M. A. Ratner, L. Yu and L. X. Chen, Chem. Mater., 2016, 28, 2814–2822 CrossRef CAS .
+N. E. Jackson, K. L. Kohlstedt, B. M. Savoie, M. Olvera de la Cruz, G. C. Schatz, L. X. Chen and M. A. Ratner, J. Am. Chem. Soc., 2015, 137, 6254–6262 CrossRef CAS PubMed .
+Y.-s. Huang, S. Westenhoff, I. Avilov, P. Sreearunothai, J. M. Hodgkiss, C. Deleener, R. H. Friend and D. Beljonne, Nat. Mater., 2008, 7, 483 CrossRef CAS PubMed .
+D. Beljonne, G. Pourtois, C. Silva, E. Hennebicq, L. M. Herz, R. H. Friend, G. D. Scholes, S. Setayesh, K. Müllen and J. L. Brédas, Proc. Natl. Acad. Sci. U. S. A., 2002, 99, 10982–10987 CrossRef CAS PubMed .
+S. Saiev, L. Bonnaud, P. Dubois, D. Beljonne and R. Lazzaroni, Polym. Chem., 2017, 8, 5988–5999 RSC .
+J. M. Ilnytskyi and D. Neher, J. Chem. Phys., 2007, 126, 174905 CrossRef PubMed .
+M. F. Palermo, F. Bazzanini, L. Muccioli and C. Zannoni, Liq. Cryst., 2017, 44, 1764–1774 CAS .
+D. M. Huang, R. Faller, K. Do and A. J. Moulé, J. Chem. Theory Comput., 2010, 6, 526–537 CrossRef CAS PubMed .
+K. Do, D. M. Huang, R. Faller and A. J. Moule, Phys. Chem. Chem. Phys., 2010, 12, 14735–14739 RSC .
+A. J. Moulé and K. Meerholz, Adv. Mater., 2008, 20, 240–245 CrossRef .
+E. Cho, C. Risko, D. Kim, R. Gysel, N. Cates Miller, D. W. Breiby, M. D. McGehee, M. F. Toney, R. J. Kline and J.-L. Bredas, J. Am. Chem. Soc., 2012, 134, 6177–6190 CrossRef CAS PubMed .
+N. R. Tummala, C. Bruner, C. Risko, J.-L. Brédas and R. H. Dauskardt, ACS Appl. Mater. Interfaces, 2015, 7, 9957–9964 CrossRef CAS PubMed .
+M. Williams, N. R. Tummala, S. G. Aziz, C. Risko and J.-L. Brédas, J. Phys. Chem. Lett., 2014, 5, 3427–3433 CrossRef CAS PubMed .
+K. Kremer and G. S. Grest, J. Chem. Phys., 1990, 92, 5057–5086 CrossRef CAS .
+S. J. V. Frankland, V. M. Harik, G. M. Odegard, D. W. Brenner and T. S. Gates, Compos. Sci. Technol., 2003, 63, 1655–1661 CrossRef CAS .
+C. Luo, M. Kröger and J.-U. Sommer, Polymer, 2017, 109, 71–84 CrossRef CAS .
+E. Mahmoudinezhad, A. Marquardt, G. Eggeler and F. Varnik, Procedia Comput. Sci., 2017, 108, 265–271 CrossRef .
+D. Hu, J. Yu, K. Wong, B. Bagchi, P. J. Rossky and P. F. Barbara, Nature, 2000, 405, 1030 CrossRef CAS PubMed .
+S. Das, J. K. Keum, J. F. Browning, G. Gu, B. Yang, O. Dyck, C. Do, W. Chen, J. Chen, I. N. Ivanov, K. Hong, A. J. Rondinone, P. C. Joshi, D. B. Geohegan, G. Duscher and K. Xiao, Nanoscale, 2015, 7, 15576–15583 RSC .
+L. Lu and L. Yu, Adv. Mater., 2014, 26, 4413–4430 CrossRef CAS PubMed .
+N. Zhou and A. Facchetti, Mater. Today, 2018, 21, 377–390 CrossRef CAS .
+G. Han, X. Shen, R. Duan, H. Geng and Y. Yi, J. Mater. Chem. C, 2016, 4, 4654–4661 RSC .
+D. R. Reid, N. E. Jackson, A. J. Bourque, C. R. Snyder, R. L. Jones and J. J. de Pablo, J. Phys. Chem. Lett., 2018, 9, 4802–4807 CrossRef CAS PubMed .
+B. H. Wunsch, M. Rumi, N. R. Tummala, C. Risko, D.-Y. Kang, K. X. Steirer, J. Gantz, M. Said, N. R. Armstrong, J.-L. Bredas, D. Bucknall and S. R. Marder, J. Mater. Chem. C, 2013, 1, 5250–5260 RSC .
+P. J. Flory, J. Chem. Phys., 1941, 9, 660 CrossRef CAS .
+P. J. Flory, J. Chem. Phys., 1942, 10, 51–61 CrossRef CAS .
+P. J. Flory, J. Chem. Phys., 1949, 17, 303–310 CrossRef CAS .
+M. L. Huggins, J. Chem. Phys., 1941, 9, 440 CrossRef CAS .
+M. L. Huggins, J. Phys. Chem., 1942, 46, 151–158 CrossRef CAS .
+J. H. Hildebrand, J. Soc. Chem. Ind., 1936, 55, 665 Search PubMed .
+C. M. Hansen, Prog. Org. Coat., 2004, 51, 77–84 CrossRef CAS .
+M. J. Abraham, T. Murtola, R. Schulz, S. Páll, J. C. Smith, B. Hess and E. Lindahl, SoftwareX, 2015, 1-2, 19–25 CrossRef .
+W. L. Jorgensen, D. S. Maxwell and J. Tirado-Rives, J. Am. Chem. Soc., 1996, 118, 11225–11236 CrossRef CAS .
+A. V. Marenich, S. V. Jerome, C. J. Cramer and D. G. Truhlar, J. Chem. Theory Comput., 2012, 8, 527–541 CrossRef CAS PubMed .
+J.-D. Chai and M. Head-Gordon, Phys. Chem. Chem. Phys., 2008, 10, 6615–6620 RSC .
+H. Sun, S. Ryno, C. Zhong, M. K. Ravva, Z. Sun, T. Körzdörfer and J.-L. Brédas, J. Chem. Theory Comput., 2016, 12, 2906–2916 CrossRef CAS PubMed .
+H. Sun, C. Zhong and J.-L. Brédas, J. Chem. Theory Comput., 2015, 11, 3851–3858 CrossRef CAS PubMed .
+
+          M. J. Frisch, G. W. Trucks, H. B. Schlegel, G. E. Scuseria, M. A. Robb, J. R. Cheeseman, G. Scalmani, V. Barone, G. A. Petersson, H. Nakatsuji, X. Li, M. Caricato, A. Marenich, J. Bloino, B. G. Janesko, R. Gomperts, B. Mennucci, H. P. Hratchian, J. V. Ortiz, A. F. Izmaylov, J. L. Sonnenberg, D. Williams-Young, F. Ding, F. Lipparini, F. Egidi, J. Goings, B. Peng, A. Petrone, T. Henderson, D. Ranasinghe, V. G. Zakrzewski, J. Gao, N. Rega, G. Zheng, W. Liang, M. Hada, M. Ehara, K. Toyota, R. Fukuda, J. Hasegawa, M. Ishida, T. Nakajima, Y. Honda, O. Kitao, H. Nakai, T. Vreven, K. Throssell, J. A. Montgomery Jr., J. E. Peralta, F. Ogliaro, M. Bearpark, J. J. Heyd, E. Brothers, K. N. Kudin, V. N. Staroverov, T. Keith, R. Kobayashi, J. Normand, K. Raghavachari, A. Rendell, J. C. Burant, S. S. Iyengar, J. Tomasi, M. Cossi, J. M. Millam, M. Klene, C. Adamo, R. Cammi, J. W. Ochterski, R. L. Martin, K. Morokuma, O. Farkas, J. B. Foresman and D. J. Fox, Gaussian 09, Revision E.01, Gaussian, Inc., Wallingford CT,  2016 Search PubMed.
+The range of lengths results from small changes in bond angles and dihedral twists along the polymer backbone between each inserted polymer.
+G. S. Larsen, P. Lin, K. E. Hart and C. M. Colina, Macromolecules, 2011, 44, 6944–6951 CrossRef CAS .
+O. Dyck, S. Hu, S. Das, J. Keum, K. Xiao, B. Khomami and G. Duscher, Polymers, 2015, 7, 2446–2460 CrossRef CAS .
+X. He, S. Mukherjee, S. Watkins, M. Chen, T. Qin, L. Thomsen, H. Ade and C. R. McNeill, J. Phys. Chem. C, 2014, 118, 9918–9929 CrossRef CAS .
+Z. He, F. Liu, C. Wang, J. Chen, L. He, D. Nordlund, H. Wu, T. P. Russell and Y. Cao, Mater. Horiz., 2015, 2, 592–597 RSC .
+C. H. To, A. Ng, Q. Dong, A. B. Djuriši, J. A. Zapien, W. K. Chan and C. Surya, ACS Appl. Mater. Interfaces, 2015, 7, 13198–13207 CrossRef CAS PubMed .
+Q. Wan, X. Guo, Z. Wang, W. Li, B. Guo, W. Ma, M. Zhang and Y. Li, Adv. Funct. Mater., 2016, 26, 6635–6640 CrossRef CAS .
+
+          W. M. Haynes, CRC Handbook of Chemistry and Physics, CRC Press LLC, Boca Raton: FL, 94th edn,  2013–2014 Search PubMed .
+G. A. Hegde, J.-f. Chang, Y.-l. Chen and R. Khare, J. Chem. Phys., 2011, 135, 184901 CrossRef PubMed .
+J. W. Mok, D. Kipp, L. R. Hasbun, A. Dolocan, J. Strzalka, V. Ganesan and R. Verduzco, J. Mater. Chem. A, 2016, 4, 14804–14813 RSC .
+N. Zhou, M.-G. Kim, S. Loser, J. Smith, H. Yoshida, X. Guo, C. Song, H. Jin, Z. Chen, S. M. Yoon, A. J. Freeman, R. P. H. Chang, A. Facchetti and T. J. Marks, Proc. Natl. Acad. Sci. U. S. A., 2015, 112, 7897–7902 CrossRef CAS PubMed .
+Y. Garmay, A. Shvetsov, D. Karelov, D. Lebedev, A. Radulescu, M. Petukhov and V. Isaev-Ivanov, J. Phys.: Conf. Ser., 2012, 340, 012094 CrossRef .
+F. Liu, W. Zhao, J. R. Tumbleston, C. Wang, Y. Gu, D. Wang, A. L. Briseno, H. Ade and T. P. Russell, Adv. Energy Mater., 2014, 4, 1301377 CrossRef .
+S. E. Root, N. E. Jackson, S. Savagatrup, G. Arya and D. J. Lipomi, Energy Environ. Sci., 2017, 10, 558–569 RSC .
+R. Noriega, J. Rivnay, K. Vandewal, F. P. V. Koch, N. Stingelin, P. Smith, M. F. Toney and A. Salleo, Nat. Mater., 2013, 12, 1038–1044 CrossRef CAS PubMed .
+
+          C. M. Hansen, The Three Dimensional Solubility Parameter and Solvent Diffusion Coefficient, Danish Technical Press, Copenhagen,  1967 Search PubMed .
+J. H. Hildebrand and R. L. Scott, J. Chem. Phys., 1952, 20, 1520–1521 CrossRef CAS .
+N. R. Tummala, S. Mehraeen, Y.-T. Fu, C. Risko and J.-L. Brédas, Adv. Funct. Mater., 2013, 23, 5800–5813 CrossRef CAS .
+M. Williams, N. R. Tummala, S. G. Aziz, C. Risko and J. L. Bredas, J. Phys. Chem. Lett., 2014, 5, 3427–3433 CrossRef CAS PubMed .
+M. Belmares, M. Blanco, W. A. Goddard, R. B. Ross, G. Caldwell, S. H. Chou, J. Pham, P. M. Olofson and C. Thomas, J. Comput. Chem., 2004, 25, 1814–1826 CrossRef CAS PubMed .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: 10.1039/c9cp00777fThis journal is © the Owner Societies 2019
+Table Content:
+
+ 	Fig. 1  (top) Examples of stacked-rod, toroid, globule, and rod/coil conformations derived from atomistic MD simulations of an isolated 30-mer PTB7 chain in vacuum. Yellow represents sulfur, pink represents fluorine, red represents oxygen, and green represents carbon; hydrogen atoms are not shown for clarity. (bottom) Chemical structure of PTB7.	 
+
+ 	Fig. 2  [top] Radius of gyration versus persistence length for rod-like (black circle), stacked rod (blue square), toroidal (red triangle), and globular (green diamond) conformations extracted from vacuum simulations of isolated PTB7 chains. Persistence length vectors were defined by the first and last atoms for each donor and acceptor subunit in the monomer, resulting in two defined vectors per repeat unit. The radius of gyration and persistence length data were obtained as averages over the final 15 ns of simulation time for 16 separate simulations. [bottom] Radius of gyration versus simulation time for a single PTB7 chain at 300 K in vacuum that assumes a stacked-rod conformation.	 
+
+ 	Fig. 3  [top] Example backbone conformations after 2 ns of simulation of five PTB7 chains at 300 K in vacuum. The alkyl side chains have been removed for clarity, and each chain individually colored. [bottom] The average radius of gyration of five polymer chains in vacuum at 300 K as a function of simulation time.	 
+
+Rod-like	9.76	7.87 (0.53)	6.47 (0.19)
+Stacked rod	4.09	3.80 (0.25)	4.20 (0.11)
+Toroid	2.22	3.30 (0.29)	3.35 (0.12)
+Globule	2.45	3.49 (0.30)	3.87 (0.14)
+
+ 	Fig. 4  Distributions for the dihedral angles between thienothiophene and the adjacent benzodithiophene averaged over the first 1 ns at 550 K (black) and over the first 1 ns at 300 K (red) for toroid (top left), rod-like (bottom left), globule (top right), and stacked rod (bottom right) chain conformations. Inset figures are the polymer chain conformations at the beginning of the 550 K run (top) and the beginning of the 300 K run (bottom). Dihedral angles are reported with respect to adjacent S atoms: 0° degrees corresponds to adjacent S atoms being in a cis configuration, while 180° degrees corresponds to adjacent S atoms being in to a trans configuration.	 
+
+Rod-like	0	2.28
+Stacked Rod	336	7.59
+Toroid	491	9.05
+Globule	406	4.63
+
+ 	Fig. 5  Simulated SANS spectra for individual PTB7 chains extracted from the five polymer vacuum (dotted line) and five polymer chain solvent (dashed line) simulations. The vacuum simulation chains adopt stacked-rod (blue) and globular (green) conformations while the chains extracted from the solvent simulations both adopt rod-like conformations (red and purple). Experimental SANS data from ref. 73 (black) is provided for reference.	 
+
+ 	Fig. 6  [top] Persistence length vs. radius of gyration for the 338 PTB7 chains in the pure polymer simulations. Inset: Polymer conformations extracted from the PTB7 glass where the radius of gyration for both chains is similar, but the persistence lengths greatly differ due to the relative planarity of the backbone. [bottom] Dihedral distributions between the sulfur of the thienothiophene and the sulfur on the adjacent benzodithiophene for each of the 338 polymer chains in the pure PTB7 simulation. Inset shows the dihedral angle of interest.	 
+
+Chlorobenzene	9.49	9.10	2.15	
+
+PTB7	9.36	9.83	1.15	
+
+PTB7 in CB	9.68	9.36	2.25	−0.037
+5 PTB7 in CB	9.67	9.34	2.21	−0.035
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/c9cp00777f
+
+This journal is © the Owner Societies 2019

@@ -1,0 +1,835 @@
+Molecular design of redox carriers for electrochemical CO 2 capture and concentration  - Chemical Society Reviews (RSC Publishing) DOI:10.1039/D2CS00367H View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2CS00367H
+(Tutorial Review)
+Chem. Soc. Rev., 2022, 51, 8415-8433Molecular design of redox carriers for electrochemical CO2 capture and concentration
+
+        
+          
+            Jeffrey M. 
+            Barlow†
+a, 
+      
+        
+          
+            Lauren E. 
+            Clarke†
+b, 
+      
+        
+          
+            Zisheng 
+            Zhang†
+c, 
+      
+        
+          
+            Daniel 
+            Bím
+          
+        
+      c, 
+      
+        
+          
+            Katelyn M. 
+            Ripley
+          
+        
+      b, 
+      
+        
+          
+            Alessandra 
+            Zito
+          
+        
+      a, 
+      
+        
+          
+            Fikile R. 
+            Brushett
+          
+          
+        
+      *b, 
+      
+        
+          
+            Anastassia N. 
+            Alexandrova
+          
+          
+        
+      *c and 
+
+        
+          
+            Jenny Y. 
+            Yang
+          
+          
+        
+      *a
+aDepartment of Chemistry, University of California, Irvine, California 92697, USA. E-mail: j.yang@uci.edu
+bDepartment of Chemical Engineering, Massachusetts Institute of Technology, Cambridge, MA 02139, USA. E-mail: brushett@mit.edu
+cDepartment of Chemistry and Biochemistry, University of California, Los Angeles, Los Angeles, California 90095-1569, USA. E-mail: ana@chem.ucla.edu
+Received 
+      10th May 2022
+    First published on 21st September 2022AbstractDeveloping improved methods for CO2 capture and concentration (CCC) is essential to mitigating the impact of our current emissions and can lead to carbon net negative technologies. Electrochemical approaches for CCC can achieve much higher theoretical efficiencies compared to the thermal methods that have been more commonly pursued. The use of redox carriers, or molecular species that can bind and release CO2 depending on their oxidation state, is an increasingly popular approach as carrier properties can be tailored for different applications. The key requirements for stable and efficient redox carriers are discussed in the context of chemical scaling relationships and operational conditions. Computational and experimental approaches towards developing redox carriers with optimal properties are also described.
+Jeffrey M. Barlow
+Jeffrey Barlow was born and raised in Boise, Idaho. He received his Bachelor's degree in chemistry from Boise State University where he worked with Professor Eric C. Brown investigating hydrogen-bonding interactions in synthetic mimics of Carbonic Anhydrase and ADA DNA repair protein. He then completed his doctoral studies at UC Irvine under Professor Jenny Y. Yang, where his research focused on the utilization of secondary interactions to promote energy efficient electrochemical approaches for CO2 capture and conversion. He is currently a postdoctoral fellow at Argonne National Laboratory investigating photochemical CO2 capture and conversion under David Kaphan and David Tiede.
+Lauren Clarke
+Lauren Clarke is a PhD candidate in the Department of Chemical Engineering at the Massachusetts Institute of Technology (MIT). Her thesis research focuses on computational models and experimental platforms for electrochemical carbon dioxide separation. In 2020, she obtained her MS in Chemical Engineering Practice from MIT. Prior to this, Lauren received her BS and MS, both in Chemical Engineering, from the University of North Dakota in 2016 and 2018, respectively.
+Zisheng Zhang
+Zisheng Zhang was born in Wuhan, PRC. He received a BSc in Chemistry from South University of Science and Technology of China in 2019 advised by Prof. Jun Li. At UCLA, he was a UCLA-CSST fellow in 2018, obtained a MSc in Chemistry in 2021, and is currently a PhD candidate advised by Prof. Anastassia N. Alexandrova. In 2022 summer, he worked with Dr Maria K. Chan as a research intern at Argonne National Lab. His research interests include realistic modeling of catalytic interfaces and inverse design of functional molecules.
+Fikile Brushett
+Fikile Brushett is an Associate Professor of Chemical Engineering at the Massachusetts Institute of Technology (MIT). Prior to joining MIT, he received his PhD from the University of Illinois at Urbana-Champaign and was a Director's Postdoctoral Fellow at Argonne National Laboratory. He leads a research group advancing the science and engineering of electrochemical technologies for a sustainable energy economy. Their current efforts focus on redox flow batteries for grid storage and electrochemical processes for carbon management and chemical manufacturing. Brushett also serves as the Research Integration co-Lead for the Joint Center for Energy Storage Research, a DOE-funded energy innovation hub.
+Anastassia N. Alexandrova
+Anastassia Alexandrova is a Professor in the Department of Chemistry and Biochemistry, UCLA. She obtained a BS/MS Diploma with highest honors, from Saratov University, Russia, her PhD in theoretical physical chemistry from Utah State University, and was then a Postdoctoral Associate and an American Cancer Society Postdoctoral Fellow at Yale University. Anastassia joined the faculty of UCLA and CNSI in 2010. The focus of her laboratory is theory and computation for design and multi-scale modeling of functional materials: dynamic catalytic interfaces, artificial metalloenzymes, molecular qubits and their assemblies, and quantum materials.
+Jenny Y. Yang
+Jenny Y. Yang received her BS in Chemistry at UC Berkeley (research with Professor Jeffrey R. Long) and completed her doctoral studies at MIT with Professor Daniel G. Nocera. After her postdoctoral position with Dr Daniel L. Dubois at the Pacific Northwest National Laboratory, she was hired as a research scientist in the Center for Molecular Electrocatalysis. After a subsequent position as a scientist at the Joint Center for Artificial Photosynthesis, she started her current position as a faculty member at the University of California, Irvine. Her research interests span inorganic synthesis, electrochemically-driven reactions and processes, and bio-inspired reactivity.
+
+Key learning points
+(1) Advantages of electrochemical CO2 capture and concentration (eCCC) compared to thermal methods.
+(2) Key redox carrier properties for eCCC, (i.e. CO2 binding, reduction potential, and pKa) and correlation of these properties across different compound classes.
+(3) Several system configurations (cell design) that are possible for eCCC with different advantages and disadvantages.
+(4) Computational methods that can assist in molecular engineering for tailored redox carriers with desired properties.
+
+1. Introduction
+1.1 Background
+Carbon dioxide (CO2) capture and concentration (CCC) is a foundational technology which, in concert with low-carbon power production, enhanced transmission and distribution, and efficient use, can enable the transition to a sustainable global energy economy. The deployment of CCC coupled with sequestration or utilization can immediately address greenhouse gas emissions.1 In the current energy and industrial sectors, post-combustion or post-process capture can be used to remove CO2 from large volume point sources (i.e., flue gases or effluent gases) following fossil–fuel combustion or chemical transformations in hard-to-decarbonize sectors (e.g., steel and cement industries).1 Other sectors lead to a large quantity of disperse, small volume CO2 emission streams (e.g., transportation, residential, and agricultural) that can also be mobile, and thus challenges the use of point source capture approaches. In such cases, direct air capture (DAC), where CO2 is separated from ambient air, may be the best method for carbon emission management. Operation of DAC in the long-term can also lead to net-negative emissions. At present, a number of global CCC projects are operational, under development, or in construction, for both post-combustion capture and DAC. While candidate CCC technologies have been demonstrated at relevant scales, widespread implementation is largely limited by technical and economic factors. The most significant barrier is the high energetic requirement of current systems, which in turn leads to high capital and operating costs.1 Ultimately, the mechanism of CO2 capture and release will define system energetics and overall process costs.
+The most common approaches for both post-combustion capture and DAC employ thermally-driven chemical absorption (adsorption), where a solvent (sorbent) is used to bind CO2, effectively removing it from a feed gas stream, followed by an input of heat as the primary driving force for solvent (sorbent) regeneration and CO2 recovery at higher concentrations.1 The key challenge in using heat for CO2 capture and release is that the two components of free energy, enthalpy and entropy, make opposing contributions in each step. CO2 capture is entropically unfavorable; therefore, capture of dilute CO2 requires sufficiently large negative sorbent reaction enthalpies (i.e., large binding affinities). However, the large reaction enthalpies required for capture hamper CO2 release. Since release is entropically favorable, elevated temperatures are required to offset the large negative enthalpic contribution. Due to the high enthalpies, as well as Carnot-like limitations of temperature-driven systems and system irreversibilities, these processes have high heating demands during regeneration.2–4 Current processes for post-combustion capture and DAC require ∼2.2–4.1 GJ ton−1 CO2 captured (or ∼107–199 kJ mol−1 CO2 captured) and ∼4.2–10 GJ ton−1 CO2 captured (or ∼204–486 kJ mol−1 CO2 captured) of thermal energy, respectively, which constitutes the majority of process energy requirements. Consequently, current processes operate with low energetic efficiencies of ca. ≤10%, even after optimization at scale.5 These lower energetic efficiencies have limited the potential for cost reduction in thermochemical CO2 capture systems.
+Although less mature, the use of electrochemical CCC (eCCC) cycles to separate CO2 has the potential to address the inherent limitations of thermochemically-based absorption or adsorption processes. Electrochemical approaches can enable higher energetic efficiencies, safe operation at mild conditions (closer to ambient temperature and pressure), and direct coupling with renewable energy sources. Electrochemical technologies are also modular, and thus can be scaled down more readily than thermochemical processes, which may permit cost-effective capture from small/disperse emissions.6
+A variety of electrochemical methods for CO2 capture have been pursued, starting in the late 1960's, where the use of molten salt electrolysis was proposed to maintain CO2 levels in sealed close-quarter vessels such as submarines, aircraft, or spacecraft.7 The cost of electricity (as compared to heat) likely limited large scale technology deployment and restricted its use to niche applications where efficiency and compactness superseded cost.
+Recently, there has been renewed interest in employing electrochemical approaches broadly across industry in addition to carbon capture due to (1) the urgent need to meaningfully address CO2 emissions to avoid the most critical impacts of climate change and (2) the emergence and expansion of low-cost carbon-free renewable electricity enabled by increasing deployments of solar and wind technologies. As a result, this field has expanded to include electrochemically mediated amine regeneration (EMAR),8,9 as well as the utilization of bipolar membranes10–12 or proton coupled electron transfer (PCET) mediators which induce pH changes in aqueous solutions to facilitate CO2 uptake and release.13,14 These are considered indirect methods of eCCC, as the electrochemical reactions do not directly involve the CO2-binding species. In addition to these indirect methods, there has been increasing interest in the utilization of redox-active capture molecules (i.e., redox carriers) to directly bind and release CO2. In these direct eCCC systems, redox carriers can be solubilized (dissolved in an electrolyte) or immobilized (embedded on an electrode surface). There are currently no clear advantages and disadvantages between the different electrochemical approaches, as this research field is still relatively small and most studies consist of proof-of-concept demonstrations. This tutorial review will specifically focus on the use of redox carriers as they provide a high level of chemical tunability to achieve high energetic efficiency, CO2 selectivity, separation capacity, and sorbent stability. Topics covered include the basics of a redox-carrier eCCC system, design criteria for redox carriers and system requirements, and a description of redox carrier molecules and observed trends. We will also highlight opportunities for scientific and engineering advancement to develop cost-competitive and long-lasting technologies for CCC through the lens of molecular design.
+1.2 Thermodynamic considerations for eCCC processes
+For any CCC approach, the minimum thermodynamic work required to concentrate CO2 from an ideal gaseous mixture is governed by the standard Gibbs free energy difference, ΔGmin (J mol−1 CO2), for a specific shift in equilibrium. For removing an infinitesimal quantity of CO2, such that the bulk composition remains unaltered, this thermodynamic limit is given by the following eqn (1)15 (1)where R is the ideal gas constant (8.314 J mol−1 K−1), T is the absolute temperature (K), and QCO2 is the reaction quotient (−) for the CO2 concentration process. The partial pressures of CO2 in the initial and final mixtures are denoted by PCO2,i and PCO2,f. This relationship between the change in free energy and reaction equilibria in eqn (1) indicates that the process of concentrating CO2 is endergonic and is dependent upon the desired changes in concentration and system temperature. For context, Table 1 shows the minimum work required to concentrate CO2 into a pure stream (100% CO2 or PCO2,f = 1 atm) at standard temperature (T = 298 K) from a variety of application-relevant initial concentrations (PCO2,i). The data from Table 1 shows that more energy is needed to concentrate CO2 from more dilute sources; for instance, it requires more than 4 times the energy to capture CO2 from the atmosphere (0.04% CO2) than compared to flue gas from a coal-fired power plant (15% CO2),1 with 19.4 and 4.7 kJ mol−1 CO2 required, respectively. The minimum energy requirements also increase as the fraction of CO2 captured deviates from 0 and more than an infinitesimal quantity of CO2 is removed. For example, when 90% of CO2 is captured from flue gas (15% CO2), ΔGmin increases to 6.4 kJ mol−1 CO2, as calculated using equations derived by Lackner.15
+Table 1 Representative CO2 partial pressures of various sources (PCO2,i),1 and computed ΔGmin and ΔEmin requirements for the associated eCCC processes. It is assumed that CO2 is recovered at 100% purity (PCO2,f = 1 atm) and the sorbent molecule can theoretically capture one CO2 molecule for every electron transferred (n/q = 1)
+
+
+
+
+Application
+
+P
+CO2,i (atm)
+ΔGmin (kJ mol−1 CO2)
+|ΔEmin| (mV)
+
+
+
+
+Direct air capture
+4.0 × 10−4
+19.4
+201
+
+
+Aluminum production (flue gas)
+0.01
+11.4
+118
+
+
+Natural gas fired boiler (flue gas)
+0.10
+5.7
+59
+
+
+Oil-fired boiler (flue gas)
+0.12
+5.3
+54
+
+
+Coal-fired boiler (flue gas)
+0.15
+4.7
+49
+
+
+Steel production (flue gas)
+0.20
+4.0
+41
+
+
+Cement production (flue gas)
+0.30
+3.0
+31
+
+
+Ethanol production
+0.90
+0.3
+3
+
+
+
+
+For electrochemically-mediated processes, the capture and release cycles are initiated by applying a potential or bias to an electrode instead of the changes in temperature that are used in thermally-driven systems. For direct eCCC systems, the electrochemical bias at the electrode surface results in oxidation or reduction of a species that captures or releases CO2. The change in the Gibbs free energy, ΔG (J mol−1), for an electrochemical process is thus related to the cell potential, ΔEcell (V). Based upon the minimum Gibbs free energy for separation, ΔGmin, we have computed ΔEmin requirements for the associated eCCC processes, as described in Table 1. It is assumed that CO2 is recovered at 100% purity (PCO2,f = 1 atm) and the sorbent molecule can theoretically capture one CO2 molecule for every electron transferred (n/q = 1).
+While ΔEmin is relatively low, this represents the minimum potential difference required for separation, and the actual cell voltage will be larger due to concentration changes during operation, cell overpotentials, and other factors, as will be described in Section 1.5. The extent of the deviation in the cell voltage from ΔEmin will be dictated by properties of the sorbent chemistry as well as process design aspects. Thus, for direct eCCC systems, redox carrier design and process engineering will be important to achieve optimal properties for efficient separations.
+1.3 Overview of eCCC with redox carriers
+A redox carrier for CO2 must be able to reversibly bind CO2 in one oxidation state and release it in another, as shown in Scheme 1. Typically, the resting state carrier (R) is reduced with n electrons to form the active state carrier species (R)n− at a reduction potential (i.e., standard reduction potential), E1/2(cap). The reduced species has a high affinity for CO2 (), and can bind q CO2 molecules, which allows capture from a dilute inlet stream to form the CO2-bound adduct, R(CO2)qn−. CO2 release is triggered by oxidation of R(CO2)qn− to form R(CO2)q, which is characterized by E1/2(rel). The oxidized carrier has a much lower affinity for CO2 (KCO2(R)), resulting in liberation of q CO2 molecules to re-form the resting-state carrier (R) and complete the cycle. This approach takes advantage of the difference between the CO2 binding affinities of the oxidized, KCO2(R), and reduced, , states of the carrier (R and Rn−, respectively). We note that the reaction mechanism shown in Scheme 1 is simplified; in reality, carriers may undergo multiple electron transfer events and bind CO2 at each associated oxidation state, which is discussed in more detail in Section 2.1.
+ Scheme 1  General process for eCCC systems featuring a redox carrier (R, top left). (R), which has a small or negligible binding constant for CO2 (KCO2(R)), is reduced at the cathode at E1/2(cap) potential to yield (R)n−, which has a higher binding constant for CO2 (). The reduced carrier (R)n− selectively binds CO2 from a dilute gas stream, forming R(CO2)qn−. Regeneration of the carrier is accomplished by oxidation of R(CO2)qn− to R(CO2)q at the anode at E1/2(rel) leading to release and concentration of CO2 and regeneration of the neutral state of the redox agent (R). In this scheme, n represents the stoichiometric ratio of moles of electrons transferred per mole of CO2. (right, in red) Two reactions with O2 and H2O that can deactivate (R)n−: (1) if the  potential is more negative than the O2/O2˙− reduction potential, electron transfer from (R)n− to O2 to form superoxide can occur. (2) If the pKa of (RH)(n−1)− is higher than the pKa of water or protic solvent, protonation of (R)n− can occur. Scheme adapted from ref. 16 with permission from the American Chemical Society. 
+1.4 System configurations for eCCC with redox carriers
+While dominant process designs have yet to emerge due to the recent nascency of the field, design strategies for electrochemical CO2 separators have been considered, which can be broadly categorized into four system configurations. Fig. 1 presents envisioned examples of each configuration for continuous eCCC systems based on solubilized redox carriers. One configuration is a 4-stage system (Fig. 1(a)), which was recently employed in a lab-scale demonstration.17 This system employs an electrochemical cell for carrier activation (cathode) and deactivation (anode). CO2 dissolution and absorption, following carrier activation, primarily occur in a separate process unit such as an absorption column. Similarly, CO2 desorption and degasification are carried out in a separate process step after deactivation. A mode for CO2 removal can be incorporated into the anode design, which is referred to as anodic desorption, which allows for simultaneous carrier deactivation, CO2 desorption, and degasification, eliminating the need for a separate desorption unit. Adoption of anodic desorption in the system is classified as a 3-stage configuration (Fig. 1(b)). A 3-stage system with anodic desorption was emulated in an H-cell, where desorbed CO2 was removed from the H-cell and measured during redox carrier oxidation (i.e. deactivation).18 A 3-stage configuration can instead incorporate cathodic absorption (Fig. 1(c)), where the CO2-containing feed gas is contacted with the carrier within the cathode compartment. This cathode design allows for simultaneous carrier activation, CO2 dissolution, and CO2 absorption. Finally, a 2-stage configuration integrates both anodic desorption and cathodic absorption, such that all phenomena occur within the electrochemical cell (Fig. 1(d)). This type of system could potentially be operated without the need for liquid pumping. In this format, an electrolyte containing the solubilized redox carrier can be enclosed within the inter-electrode gap, either as a free liquid volume, imbibed into a porous separator, or absorbed into a membrane. Configurations can also implement cell formats where the redox carrier is immobilized on the electrode surface rather than solubilized in the electrolyte. Notably, this has been demonstrated in a 2-stage type configuration, with immobilized redox-active sorbents on a working electrode paired with a counter electrode that serves as a source and sink of electrons.19,20 While the use of solubilized sorbents can enable a continuous process, cell formats with immobilized carriers necessitate batch (i.e., electro-swing) operation, where the working electrode is cycled between the CO2 capture and release stages.20
+ Fig. 1  Potential embodiments of four eCCC configurations leveraging dissolved redox carriers: (a) 4-stage system, (b) 3-stage system with anodic desorption, (c) 3-stage system with cathodic absorption, and (d) 2-stage system. Figure adapted from ref. 21 with permission from the American Chemical Society. 
+Prior work has demonstrated that each of the considered configurations can lead to significant differences in performance. Thermodynamic modeling shows that 2-stage systems can theoretically operate at the highest energetic efficiency and approach the thermodynamic limit for energy requirements (ΔGmin). More generally, implementation of cathodic absorption and/or anodic desorption reduces the thermodynamic driving force for capture and release, leading to greater reversibility and resulting in higher energetic efficiencies.9 However, system design decisions should not be based on this thermodynamic argument alone. For example, operation of a system with a reduced driving force for binding and/or release will occur at a slower rate. In a system with cathodic absorption, the reduced driving force will manifest as current density limitations, as operation of the electrochemical cell will likely be restricted by mass transport of CO2 from the feed gas to the reaction environment. Thus, it is likely that operating current densities for configurations with cathodic absorption will be lower, especially for capturing CO2 from dilute sources, leading to higher electrochemical reactor costs. There are other aspects to consider as well which may not be specifically linked to performance. For example, a 4-stage system makes use of process units that are commonly employed and well understood in industry (i.e. absorption columns and flash tanks), and therefore implementation of this configuration may be beneficial for post-combustion capture from industrial sources and power plants. Comparatively, a 2-stage system can embody a more simplified and modular process scheme with no liquid circulation. This configuration may be advantageous for DAC applications which do not have requirements for process size and may be operated in remote locations. Overall, four general configurations have been considered thus far, which will each have inherent advantages and disadvantages, and thus each may be more beneficial in different applications. While choice of configuration in itself can impact performance, the molecular properties are also innately linked to the system performance. More generally, molecular properties impact process performance, and the resulting trends are different for each configuration, which is described in more detail in the following section.
+1.5 General requirements for eCCC with redox carriers
+For redox carriers, the general criteria for high performance eCCC systems include: (1) high affinity for CO2 binding when activated, (2) complete CO2 release when deactivated, (3) high solubility for solubilized carriers (or low solubility and high electrode capacity for immobilized carriers), (4) high CO2 selectivity, and (5) long-term stability. These characteristics will enable sorbents with long lifetimes and high CO2 separation capacities, reducing the required cost of materials and chemicals. Additionally, the ideal carrier and electrolyte pair should have fast mass transport and kinetics, operate at low cell voltages, and cycle with high current densities, which will minimize costs associated with both energy and materials.
+High CO2 binding affinity and complete release, dictated by  and KCO2(R), respectively, in Scheme 1, are important for achieving both high separation capacities and faradaic efficiencies (defined here as moles of CO2 separated per mole of electrons transferred). Specifically,  must be high enough to capture CO2 from a given feed gas composition and KCO2(R) must be low enough to permit the complete release of CO2. For example, previous work has estimated that CO2 capture at high faradaic efficiencies from flue gas (15% CO2) requires , whereas DAC would need , both with the requirement that .7,21 However, we note that these estimates are used for demonstration and should not be taken as exact guidelines, since specific values of required binding coefficients will change depending upon other process factors, such as electrolyte properties (e.g., carrier concentration and CO2 solubility), operating parameters (e.g. state of charge swing and % CO2 removal), and system configuration. These  and KCO2(R) estimates were made assuming a 1 M carrier concentration, a CO2 solubility in the range of 0.01–0.3 M atm−1, and use of a carrier that can bind one CO2 molecule (q = 1). If the carrier concentration is decreased (relative to the CO2 solubility), for example, required  values would be higher, and faradaic efficiencies would also be reduced. These estimates also do not consider how required binding affinities may change with the fraction of CO2 that is removed from the feed gas. In general, ideal redox carriers should have sufficient binding affinities ( and KCO2(R)), as well as high carrier concentration (both absolute and relative to CO2 solubility), to enable operation at high separation capacities and faradaic efficiencies. The ideal properties identified here were based upon maximization of the faradaic efficiency, although this is not the only important performance metric. Prior work indicates that systems lacking cathodic absorption (e.g., 4-stage system) may benefit from lower  values (which do not maximize the faradaic efficiency) due to an inherent tradeoff between faradaic and thermodynamic (i.e., energetic) efficiency in these systems.21
+The cell voltage (Vcell) can be generally represented as an equilibrium potential difference (Ecell) with the addition of overpotentials due to kinetics (ηs), mass transport (ηconc), and ohmics (ηohm). This relation is shown in eqn (2) for an electrolytic device.22 |Vcell| = |Ecell| + |ηs| + |ηconc| + |ηohm|(2)
+For operation at low cell voltages, overpotentials resulting from kinetics, mass transport, and ohmics should be minimized. This goal may be achieved with high carrier solubilities (permitting high concentrations), fast electrochemical kinetics, high rates of species mass transport, and a highly conductive electrolyte. These properties may also permit operation at high current densities.
+The equilibrium potential difference also impacts the cell voltage, and thus should also be minimized. This potential, Ecell, is equal to the equilibrium potential difference between the cathode and anode. In an ideal system with a symmetric cell (as shown in Fig. 1), the cathode will only carry out the carrier activation reaction for CO2 capture, and the only reaction at the anode will be the carrier deactivation for CO2 release. Thus, the equilibrium potentials for the cathode and anode can be represented with the Nernstian potentials for the activation (for capture) and deactivation (for release) reactions, which we define here as Ecap and Erel, respectively. For ideal solutions, the equilibrium potentials, Ecap and Erel, will be related to the standard reduction potentials, E1/2(cap) and E1/2(rel), and species concentrations (bracketed, mol L−1) according to the Nernst equation, as shown in eqn (3) and (4) for the Scheme 1 mechanism. (3) (4)
+Thus, the equilibrium potential difference, Ecell, may be impacted by the reduction potentials, E1/2(cap) and E1/2(rel). More specifically, a larger difference between the reduction potentials (ΔE1/2 = E1/2(rel) − E1/2(cap)) of the electrochemical reactions can lead to high cell voltages and reduced energetic efficiencies. Ideally, low ΔE1/2 would be preferred; however, this is challenged by an intrinsic relation between  and ΔE1/2 (eqn (5)). (5)
+From a thermodynamic perspective, a larger  ratio can increase the driving force for CO2 capture and release, which consequently introduces irreversibility into the system, resulting in larger cell voltages and thus lower energetic efficiencies. As a result, any thermodynamic driving force beyond the minimum required  for a specific concentration swing may negatively impact system energetics. However, it has also been shown that this is dependent upon the choice of system configuration.23 For systems which implement both cathodic absorption and anodic desorption (i.e., a 2-stage system), where CO2 is fed to and removed from the electrodes, the thermodynamic driving force for capture and release is reduced (even at high  ratios). Considering the electrode potentials, the increase in ΔE1/2 due to higher values of is offset by favorable Nernstian potential shifts due to CO2 binding at the cathode and CO2 removal at the anode. For the configurations which lack cathodic absorption and/or anodic desorption, increasing the  ratio can result in lower energetic efficiencies due to the inherently higher ΔE1/2. This consideration is a vital factor in the design of redox carriers (and the overall system). For example, a carrier capable of CO2 concentration from atmospheric sources could theoretically be used to concentrate from flue gas. However, the latter system may operate at a lower efficiency due to this increased standard reduction potential difference.
+Finally, the carrier should be selective towards CO2 and stable in both oxidized and reduced states. High selectivity and stability require the carrier to preferentially bind CO2 in its activated state and avoid side reactions which can lead to undesirable side products and/or species decay. Thus, redox carriers must be stable and selective in the presence of any additional components in the desired CO2-containing feed stock. Oxygen (O2) and water vapor (H2O) are commonly present for both post-combustion capture and DAC. Additionally, flue gas streams from combustion or industrial reaction may also include SOx, NOx, acidic gases, particulates, and other compounds. However, due to environmental regulations these species are present in significantly lower quantities than O2 and H2O.24–26 Furthermore, it has been shown in past work that carriers that are reduced in their activated state tend to react with dioxygen (O2) and/or water vapor (H2O) (Scheme 1).27 While pre-treatment of inlet gas streams is possible to preclude O2 and protonation sources, their implementation typically results in increased costs and decreased energetic efficiencies; thus, ideal carriers should be tolerant to O2 and H2O.
+Regarding oxygen tolerance, the reduced carrier can participate in redox chemistry with O2, the most common of which is a one electron transfer event to re-generate the resting state (R) while also forming superoxide (O2˙−) (Scheme 1, eqn (I)), reducing the overall faradaic efficiency for CO2 capture. Perhaps more deleterious, the superoxide species can react irreversibly with the carrier, solvent, or electrolyte, negatively impacting long-term cycling stability. The thermodynamic favorability for an electron transfer to O2 is dictated by the standard reduction potential of the carrier (E1/2(cap) in the simplified mechanism) as compared to the O2/O2˙− couple, () which typically occurs at ∼−1.2 V vs. Fe(C5H5)2+/0 in organic solvents.28 Additionally, if the reduced carrier is sufficiently basic, it can be protonated by water or other acidic protons in the solvent/carrier, reducing the carrier's propensity to capture CO2 (Scheme 1, eqn (II)).29 The free energy of a protonation event is dictated by the pKa of (RH)(n−1)−. More generally, the favorability of protonation is governed by the pKa of the CO2-binding site of a carrier as compared to the pKa of other sites in the molecule, water, and/or protic media. Overall, an optimal redox carrier for eCCC will have low pKa and more positive E1/2(cap) values. However, as we describe in the following section, correlations exist between these properties and the CO2 binding affinity, which challenge the achievement of these ideal conditions.
+Overall, these are the requirements that must be considered for high performance operation of eCCC systems. There are also many process factors which can be changed to improve performance, including molecular properties, operating conditions, and system design. However, this tutorial review will focus specifically on the molecular design of redox carriers by tuning the CO2 binding affinity, standard reduction potential, and pKa. We describe the inherent relationships between these properties as well as how they may be impacted by the solvent environment. We outline approaches to designing redox carriers which have adequate CO2 binding at mild potentials and low pKa values and describe how theory and computational methods can be used to supplement and accelerate this design process.
+2. Survey of redox carrier molecules
+To be considered as a candidate CO2 redox carrier, a molecule must contain both a CO2-binding site and a redox-active site. CO2 binding is associated with a pronounced reorganization in the CO2 geometry, changing from a linear to a bent structure. In most cases, a neutral CO2 molecule binds via the electrophilic carbon atom to an electron-rich nucleophilic center, such as a metal to form a metal carboxylate, an alkoxide to form a carbonate, or an amide to form a carbamate. Thus, for these redox carrier systems, the redox-active site must induce a substantial change in electron localization (i.e., electron density) at the CO2-binding site to enhance (or decrease) its nucleophilicity, and therefore, binding.27,30 The redox-active and binding sites can be the same (co-located) or distinct; however, if the two sites are separated, reduction (or oxidation) at the redox-active site must generate this change in electron density as described above.27,30 Early studies noted the importance of proximity of the redox center to the CO2 binding site, where it was found that shorter distances between the two sites resulted in larger binding affinity differences between the activated and deactivated states of the carrier.30 The observed differences in CO2 binding between different oxidation states of a carrier were negligible when the sites were separated by more than a single atom, emphasizing the importance of electronic communication between the two sites.
+Several classes of organic molecules and transition metal complexes meet this requirement of having both a redox-active and CO2 binding site, which have been assessed for their potential capabilities as a redox carrier for eCCC. Among the organic compounds, thiols, bipyridines, and quinones have all demonstrated capabilities for eCCC.27 Of these classes, quinones are the most widely explored, as their redox and protonation behavior has been extensively studied and hundreds of quinone species are commercially available or readily synthesized. Additionally, quinones exhibit higher affinity for CO2 at moderate potentials compared to the other classes of redox carriers (Table 2 and Fig. 2). Therefore, quinones will be a main focus of this tutorial review. Observed trends for previously reported carriers will be described in the following sections. First, correlations between redox-carrier CO2 binding affinity and reduction potential are discussed for quinones (Section 2.1) and transition metal complexes (Section 2.2). We then assess what these correlations imply for the design of effective yet stable redox carriers (Section 2.3).
+Table 2 Reported reduction potentials of various quinones in N2 (E1/2(QRA/QDA)) and CO2 () environments, and measured CO2 binding coefficients of the dianion, KCO2(DA)
+
+
+
+
+Quinone
+Solvent
+
+E
+1/2(QRA/QDA) (N2)f
+
+ (CO2)f
+ΔE1/2a
+log(KCO2(DA))
+Ref.
+
+
+
+
+
+a Potentials reported in units of volts.
+b Calculated using approach reported in panel using reported reduction potentials under N2 and CO2 atmosphere.
+c Only lower bound can be estimated as E1/2 is shifted positive of first redox couple under CO2 and prevents accurate determination of KCO2 or ΔE1/2.
+d Calculated from reported CO2 binding energies.
+e Potentials converted to SCE from [Fe(C5H5)2]+/0 using ref. 39.
+f Potentials are reported as V vs. SCE. Potentials recorded in MeCN were converted to SCE using ref. 39.
+g Undergoes Kolbe–Schmitt reaction with CO2 as a decomposition pathway.
+h Features intramolecular hydrogen-bonding interactions.
+
+
+
+
+
+Tetrachloro-1,4-benzoquinone (TCQ)
+DMF
+−0.72
+N/A
+N/A
+3.8
+
+30
+
+
+
+2,6-di-tert-Butyl-1,4-benzoquinone (DtBBQ)
+DMF
+−1.46
+N/A
+N/A
+15.0
+
+30
+
+
+
+Phenanthrenequinone (PAQ)
+DMF
+−1.19
+N/A
+N/A
+11.8
+
+30
+
+
+
+2,3-Dicyano-1,4-benzoquinoneg
+DMF
+−0.47
+N/A
+N/A
+3.8
+
+30
+
+
+
+Tetrafluoro-1,4-benzoquinone (TFQ)
+DMF
+−0.80
+−0.50
+0.30
+4.3
+
+31
+
+
+
+1,4-Benzoquinone (BQ)g
+DMSO
+−1.05
+0.00
+1.05
+16.9b
+
+32
+
+
+
+Anthraquinone (AQ)
+DMSO
+−1.40
+−0.65
+0.75
+11.8b
+
+32
+
+
+
+Duroquinone (DQ)
+DMSO
+−1.55
+−0.33
+1.22
+19.9b
+
+32
+
+
+
+Napthoquinone (NQ)
+DMSO
+−1.25
+−0.40
+0.85
+13.5b
+
+32
+
+
+
+2,6-Dimethyl-1,4-benzoquinone (DMBQ)
+DMSO
+−1.40
+−0.23
+1.17
+19.0b
+
+32
+
+
+
+2,6-Dichloro-1,4-benzoquinone
+MeCN
+−0.94
+−1.00
+0.34
+6.0
+
+33
+
+
+
+2-Chloro-1,4-benzoquinone
+MeCN
+−1.07
+−0.58
+0.49
+10.0
+
+33
+
+
+
+Tetrafluoro-1,4-benzoquinone (TFQ)
+MeCN
+−0.80
+−0.62
+0.18
+3.8
+
+33
+
+
+
+Tetrachloro-1,4-benzoquinone (TCQ)
+MeCN
+−0.74
+−0.63
+0.11
+2.5
+
+33
+
+
+
+5-Hydroxy-napthoquinoneh
+MeCN
+−0.94
+−0.71
+0.23
+3.3
+
+33
+
+
+
+1,8-Dihydroxy-anthraquinoneh
+MeCN
+−1.20
+–0.94
+0.26
+5.4
+
+33
+
+
+
+1,2-Dihydroxy-anthraquinoneh
+MeCN
+−1.29
+−1.08
+0.21
+4.6
+
+33
+
+
+
+5,8-Dihydroxy-naphthoquinoneh
+MeCN
+−0.98
+−0.91
+0.07
+2.1
+
+33
+
+
+
+
+N-Propyl-4,4′Bipyridine
+MeCN
+−1.71
+>−1.0
+>0.71c
+>11.5bc
+
+34
+
+
+
+4,4′Bipyridine
+BMP TFSI
+−1.92
+−1.07
+0.85
+12.8d
+
+35
+
+
+
+
+N-Methyl-4,4′Bipyridine
+BMP TFSI
+−1.87
+−1.27
+0.60
+12
+
+36
+
+
+
+Benzyl thiolate
+BMP TFSI
+−1.82
+−1.32
+0.50
+11.6d
+
+37
+
+
+
+[Co(Me8[14]-4,11-diene)]+
+DMSO
+−1.27e
+N/A
+N/A
+0.84
+
+38
+
+
+
+
+meso-[Co(Me6[14]-4,11-diene)]+
+DMSO
+−1.31e
+N/A
+N/A
+2.4
+
+38
+
+
+
+
+d,l-[Co(Me6[14]-4,11-diene)]+
+DMSO
+−1.31e
+N/A
+N/A
+4.5
+
+38
+
+
+
+[Co(Me4[14]-1,8-diene)]+
+DMSO
+−1.37e
+N/A
+N/A
+5.0
+
+38
+
+
+
+
+
+ Fig. 2  Plot showing trend between log(KCO2(DA)) and (E1/2(QRA/QDA) shown as E1/2(−1/−2)) for reported quinones (red squares), bipyridines (blue triangles), thiolate (green diamond), or transition metal complexes (orange circles) listed in Table 2. The vertical black dotted lines indicate the range of O2/O2˙− couples in organic solvents. Dotted horizontal lines represent the minimum requirement of log(KCO2(DA)) from flue gas (green) or atmospheric (blue) resources. Shaded regions display the working regimes necessary for flue gas (green) or atmospheric (blue) eCCC applications. Figure adapted from ref. 16 with permission from the American Chemical Society. 
+2.1 Quinones (organic redox carriers)
+
+Correlation between CO2 binding (KCO2) and reduction potential (E1/2). 
+In neutral aprotic media, quinones (Q) typically undergo two sequential one-electron transfer events (n = 2 in Scheme 1). The quinone is first reduced to generate a semiquinone or radical anion (QRA), and this reaction is characterized by a reduction potential, E1/2(Q/QRA) in Scheme 2. The radical anion undergoes its second reduction step to form a dianion (QDA), at a more negative reduction potential, E1/2(QRA/QDA).30 Previous work in eCCC has shown that quinones can bind CO2 at one or both of the anionic oxygen sites following reduction, corresponding to q = 1 or 2 in the generalized reaction network shown in Scheme 1. More specifically, it has been proposed that a quinone binds CO2via an ECEC or EEC mechanism, where E denotes an electron transfer step, C indicates a chemical step, and the notation indicates the order of these steps in the mechanism.21,23 The disparity in mechanism likely arises from the thermodynamic favorability of CO2 binding to a quinone radical anion species (QRA), which is defined by the CO2 binding affinity for QRA, KCO2(RA). If CO2 binds upon formation of QRA (ca. KCO2(RA) ≫ KCO2(Q)) prior to further reduction to QDA, then an ECEC mechanism would predominate. However, if CO2 binding to QRA is unfavorable, then an EEC mechanism would occur. A complication to this assessment, however, is if disproportionation of two QRA molecules transpires to create Q and QDA, which then reacts with CO2, as shown at the top of Scheme 2.30 Disproportionation would result in inflated values for KCO2(RA) and may falsely suggest an ECEC mechanism if not properly considered. One method for determining whether disproportionation occurs is the use of UV-visible spectroelectrochemistry. If no disproportion is occurring, the absorption spectrum should indicate the clean formation of QRA upon one electron reduction, followed by QDA upon full reduction. However, if one electron reduction of Q results in both Q and QDA in the spectrum, then disproportionation must be considered in the determination of the binding constant.
+ Scheme 2  General reaction schemes for the reduction and binding of one or two CO2 molecules to para-quinones via: disproportionation (top), EEC (middle), or ECEC (bottom) mechanisms. 
+Reported CO2 binding constants with quinone dianions (KCO2(DA)) have been shown to vary between <10 to >1018 (Table 2).30,31 Although, numerous quinones have been observed to bind CO2 in their radical anion state (QRA), only two values for KCO2(RA) have been reported to date, for PAQ and DtBBQ.30 These reported binding constants for both radical anions (KCO2(RA)) were several orders of magnitude smaller than the corresponding values for the dianions (KCO2(DA)). Although no other values of KCO2(RA) have been quantitatively determined, studies by cyclic voltammetry suggest that KCO2(RA) is usually much smaller than KCO2(DA).30 The disparity between CO2 binding of each species is likely due to increased nucleophilicity of the oxygen atoms in the dianion.
+A correlation exists between CO2 binding affinity of a carrier and its reduction potential. For quinones tested in DMF, Dubois and coworkers observed a linear relationship between the second reduction potential, E1/2(QRA/QDA), and the logarithm of the binding coefficient of the dianion, log(KCO2(DA)).30Fig. 3 (left) shows log(KCO2(DA)) vs. E1/2(QRA/QDA) for various quinones in DMF, DMSO, and MeCN solvents (data from Table 2). Intra-molecular interactions and side reactions with CO2 disrupt the linear relationship in Fig. 3, left. Ogura and coworkers note that quinones featuring intramolecular hydrogen-bonding interactions (indicated by h in Table 2) display significantly lower CO2 binding capabilities.29 Additionally, several quinones are prone to irreversible Kolbe–Schmitt reactions if C–H bonds are present α to the quinone carbonyl groups,30 and this decomposition pathway may lead to inaccurate measurements of KCO2(DA). If the quinones featuring hydrogen-bonding interactions or Kolbe–Schmitt decomposition are removed from the plot (Fig. 3, left), the linear trend becomes more apparent (Fig. 3, right). The data in Fig. 3 were collected in polar aprotic solvents; the effects of protic or non-polar solvents (as well as cation effects from the supporting salt) may affect this observed linear trend.
+ Fig. 3  Plots showing trend between log(KCO2(DA)) and (E1/2(QRA/QDA) (shown as E1/2(−1/−2)) for various quinones reported in DMSO (green triangles), DMF (red squares), or MeCN (blue diamonds). Left figure includes quinones that feature intramolecular hydrogen-bonding interactions (circled in black) as well as quinones observed to undergo Kolbe–Schmitt decomposition pathways in the presence of CO2 (circled in orange). Figure on the right shows that a strong linear correlation exists when the circled quinones with secondary effects or decomposition are removed. 
+
+2.2 Transition metal complexes
+Transition metals also have the potential to serve as CO2 redox carriers by forming a new σ bond between the metal and the electrophilic carbon of CO2.38 The strength of CO2 binding (i.e., CO2 binding coefficient) tends to trend with nucleophilicity. For example, in 1978, Evans et al. reported that CO2 binding by metal carbonyl anions and empirical nucleophilicities correlated with the CO2 reaction rates.40
+A trend between the CO2 binding affinity and reduction potential has also been observed for transition metal complexes. The stability of the metal-carboxylate adducts, which are formed upon CO2 binding, correlates with the metal's reduction potentials.38 In transition metal complexes reported to-date, those with reduction potentials negative of −1.90 V vs. Fc+/0 exhibit irreversible CO2 binding, while those with reduction potentials positive of −1.7 V vs. Fc+/0 do not react directly with CO2. Thus, there is only a narrow window in which reversible CO2 binding is likely to occur, as shown in Fig. 4 (left). Due to this limited window, very few measurements on reversible CO2 binding constants have been made on transition metal complexes; of note is a series of Ni(I) and Co(I) tetra-aza macrocyclic complexes described by Lewis and co-workers.38 A plot of the binding affinity, log(KCO2(I)), with the reduction potential, E1/2(I/II), results in a linear free energy relationship that correlates more reducing metal centers with stronger, reversible CO2 binding (Fig. 4, left).
+ Fig. 4  All data are taken from ref. 38. Left: A relationship of CO2 binding constants (logK) against M(II/I) reduction potentials of different ML complexes; M = Co, Ni. The measurements were obtained in DMSO solution and reported M(II/I) potentials are referred to the ferrocenium/ferrocene (Fc+/0) redox couple. An irreversible binding was observed for complexes with reduction potentials more negative than −1.90 V; the binding constants for complexes with potentials more positive than −1.70 V were too low to be measured. Right: A relationship of CO2 binding constants (logK) against dielectric constants (ε/ε0) of the used solvent. The measurements were obtained in propylene carbonate, DMSO, DMF, MeCN, and THF. 
+However, even within this limited data set, other factors that contribute to CO2 binding are evident that can break this correlation. For instance, the difference in CO2 binding affinities between the two individual conformers of Me6[14]-4,11-diene chelate highlight the importance of flexibility and sterics.38 Although the Co complexes with the Me6[14]-4,11-diene ligand in the d,l and meso configurations have identical reduction potentials, the d,l has a CO2 binding constant that is nearly two orders of magnitude larger (cf. Fig. 4, left). The inhibited binding from the meso isomer is likely due to steric factors that impact CO2 binding.
+At the same time, improved CO2 adduct stabilization for these metal macrocycles may be due to increased hydrogen bonding interactions between the amine hydrogens and the CO2 oxygen atoms in the d,l configuration. Thus, secondary interactions could be useful in the design of new generations of both metal-based and organic carriers. For instance, a number of solvent and electrolyte effects on CO2 binding to metals are documented,38 including: (i) stabilization of reactants/products in different solvents as the effect of solvent polarity, (ii) coordination of a solvent molecule as an axial ligand in the ML complexes, (iii) degree of solvation of alkali ions or electrolyte cations, (iv) hydrogen bonding interactions, and (v) CO2 solubility. Fig. 4 (right) shows a trend between log(KCO2(I)) and solvent dielectric constants (ε/ε0), given as a measure of solvent polarities. A positive correlation is observed, which may be a result of higher stabilization of CO2 adducts (metal carboxylates) in more polar solvents and/or increased CO2 solubility.
+The presence of ion-pairing may complicate the understanding of solvent effects on CO2 binding. CO2 binding affinity has been shown to improve with the assistance of acidic partners, such as alkali cations (M+).41 A concerted attack of Co(I) on the electrophilic carbon of CO2 and M+ interaction with the basic oxygen of CO2 was observed for bimetallic Co(salen)M complexes.41 Therefore, the extent of solvation of the alkali ions or electrolyte cations in the solution may significantly influence the measured log(KCO2(I)). As an example, Li+ ions greatly increase the binding affinity in comparison to, e.g., tetrabutylammonium cations that have less localized negative charge density.38 Lastly, the effect of Li+ cations on CO2 stabilization is more dramatic in THF than in DMSO. This is probably due to a better solvation of Li+ in DMSO, making the cations less accessible for CO2 stabilization.
+2.3 Design implications for stable carriers
+Competent eCCC redox carriers must be able to continually cycle between CO2 capture and release steps while avoiding undesirable side-reactions. These undesirable decomposition pathways are shown in Scheme 3 and discussed in further detail below.
+ Scheme 3  Common decomposition pathways for reduced quinone (left) or transition metal complex (right) species. 
+
+O2 stability. 
+O2 stability of reduced quinones generally requires reduction potentials positive of the O2/O2˙− couple.27,42 Very reducing redox carriers (with reduction potentials negative of this couple) can be oxidized by O2, to produce superoxide (O2˙−) and regenerate the resting-state carrier (Scheme 1, eqn (I)). A cleavage of the C–C bond between the carbonyl groups was observed in the reaction of alpha-diketones (including 1,2-quinones) in air-saturated solution under electrochemical conditions.43 This decomposition mechanism was attributed to a fast radical coupling of O2˙− and the diketone (quinone) anion radical simultaneously present in a solution, producing the corresponding dicarboxylate species. However, more negative (cathodic) reduction potentials of redox carriers also result in increased CO2 affinity,30 causing more potent CO2 carriers to also be more sensitive to O2. Accordingly, the E1/2(QRA/QDA)vs. log(KCO2(DA)) plots shown in Fig. 2 reveal that none of the quinones are reduced at potentials less negative than the O2/O2˙− potential while maintaining appreciable binding constants (log(KCO2(DA)) > 4). This direct correlation between desired and undesired reactivities requires more detailed consideration of chemical property correlations to design redox carrier-based eCCC systems.
+To develop carriers selective for CO2 binding in an oxygenated atmosphere, they must bind CO2 at more positive potentials without sacrificing the desirable nucleophilicity. This goal could potentially be achieved by attaching additional auxiliary substituents to include non-covalent interactions for CO2 binding at its nucleophilic oxygen atoms, e.g., through electrostatics or hydrogen bonding.16,29,38 This approach can be used for both organic and transition metal complexes. Some of the quinones possessing proton donors (e.g., hydroxyl groups) have been synthesized.33 However, the hydroxyl groups in the semiquinones reacted rapidly with molecular oxygen to form hydroperoxide anion radicals—which can further release superoxides—so other CO2 stabilization strategies might be required.33
+
+
+H2O stability. 
+As described above, redox carriers with more cathodic potentials will increase the nucleophilicity of the redox carrier, which leads to an increase in log(KCO2). However, more cathodic potentials also correlates with Brønsted basicity with quinones44 and transition metals.45 The positive correlation between log(KCO2) and pKb is a challenge to the design of stable carriers, as sufficiently basic carriers may deprotonate H2O instead of capturing CO2. From the very limited kinetic data reported for quinone-CO2 reactivity, protonation of the reduced quinone species is kinetically favored over CO2 binding.30,32,46 Protonation of anthraquinone has been observed to be twice as fast as CO2 binding in DMSO.32 Careful matching of solvent and quinone pKa and preclusion of acidic proton sources are necessary to prevent kinetic inhibition of eCCC due to protonation.
+Although Brønsted basicity is an important parameter to consider for redox carriers, capture can still be performed with an Rn− that is more basic than OH−. In these cases, it is expected that Rn− will deprotonate water to generate OH−, which will then react with CO2 to form bicarbonate or carbonate. The change in basicity of R/Rn− effectively changes the pH of the solution to capture and release CO2 instead of binding CO2 directly. These pH swing systems have been described in more detail in recent reviews.47,48 Conversely, Liu and coworkers have recently shown that utilization of extremely salt-concentrated aqueous electrolytes, known as “water-in-salt” electrolytes, can prevent protonation of reduced quinone species.49
+
+
+Other effects on stability. 
+Carriers can be deactivated by the irreversible binding of the CO2 molecule. This mechanism was observed for some metal-based carriers with highly negative M(II/I) reduction potentials,38 which can also behave as an electrocatalyst for CO2 reduction. Irreversible binding has also been observed for several quinone molecules that possess ortho- or para- hydrogens relative to the quinone carbonyl groups.27 In these cases, the Kolbe–Schmitt carboxylation reaction is viable, rendering an adduct that does not allow the CO2 release. A prominent example of this undesirable reaction is the inactivation of p-benzoquinone after few CO2 capture/release cycles, providing 2,5-dihydroxybenzoic acid.46 Substitution of the α C–H with another substituent prevents undesirable Kolbe–Schmitt reactivity.
+
+3. Molecular engineering of redox carriers
+Investigation of trends observed in prior work has shown that the key properties for redox carriers – nucleophilicity, basicity, and reduction potentials – are correlated. Generally, increased nucleophilicity is expected to result in greater affinity for CO2; however, this usually comes with a more negative reduction potential and increased pKa due to linear free energy relationships (LFER), presenting challenges in optimizing all three properties. A more detailed consideration of chemical property correlations to find characteristics that break these linear free energy relationships is required to effectively design redox carrier molecules for eCCC systems.
+Molecular engineering is the practice of modifying the structure of a parent molecule (substituent/ligand environments) to tune its molecular properties, as an optimization task, and has been successfully applied to various families of functional molecules or molecular catalysts. Similar to the drug design industry, the role of theory in the molecular design workflow is unitary: it offers trends or insights to guide experimental work (which is much more time- and resource-consuming), meriting low-cost and rapid iteration in accessing a larger chemical space and examining a pool of potential candidates. However, since the accurate prediction of redox potential and binding energies requires free energy calculation chemical accuracy, the choice of theoretical model is sensitive and multiple realistic aspects may need to be included.
+In the following subsections we will discuss the theoretical methods, from computational methods to realistic modeling techniques, for calculating molecular properties and free energetics at chemical accuracy. We will also give a discussion on the inverse design strategies enabled by recent developments in semi-empirical methods, global optimization algorithms, data science and machine learning models.
+3.1 Redox carrier design with theoretical methods
+Molecular association in a solution can be viewed as a multi-step process (Fig. 5) that consists of: (i) change in geometry from the equilibrium structures of the free reactants to the geometry of the product, (ii) electronic structure reorganization associated with the formation of new chemical bonds or strong intermolecular interactions, and (iii) change in the solvation environment as the two solvation spheres begin to interact and eventually merge. Besides the electronic structure methods, the correct description in computations thus demands a robust protocol for evaluation of free energies of the equilibrium and transition-state structures of the species involved.
+ Fig. 5  The CO2 binding in aqueous solution by a prototypical tetrachloro-p-benzoquinone (TCBQ) carrier. Within the association, the free reagents (left) approach each other to form a ‘pre-reaction’ bimolecular complex (middle). This complex is mainly stabilized by the interactions with the neighboring solvent molecules, making an accurate description of the change in solvent configurational entropy a critical factor for the precision of quantum chemical calculations. The driving force for the association is the formation of a stable molecular entity (right), which is regularly accompanied by a significant change in the geometries of the interacting species (e.g., bending of the CO2 molecule) and electronic structure adjustment as the new chemical bonds are formed. 
+
+Sampling of the molecular conformational space. 
+In a real reaction system, the molecules exist as ensembles of different conformations surrounded by different solvent configurations and under the influence of non-uniform external fields. Since the macroscopic observables are essentially thermodynamic ensemble averages, each accessible configuration contributes to the ensemble. Capturing such a tremendous number of degrees of freedom is impractical but including one or a few of them makes the model more realistic and closer to the physical reality.
+According to the Eyring equation, molecules can move across barriers of ∼20 kcal mol−1 on the timescale of minutes at room temperature, and all isomers within ca. 3 kcal mol−1 could have a significant population. Sampling the huge and complex conformational space with chemical accuracy is therefore an algorithmic challenge for its sheer size. Cheminformatics methods are perhaps the most common and affordable choices for this purpose, which include machine learning models fitted to experimental crystal structures or scripting heuristic rules to build the geometry ‘fragment by fragment’ according to local connectivity. The knowledge-based algorithms enable the generation of a putative global minimum conformer on a personal computer in milliseconds, but the a priori geometric constraint also excludes some parts of the conformational space. Another class of easily affordable methods is the stochastic or systematic torsion scan using molecular mechanics (MM) force field. Although more grounded physically, they rely on the proper parametrization of the force field. As a result, the potential energy surface (PES) may still be far from chemical accuracy, especially in the regions where noncovalent interactions dominate. To describe the energy landscape more accurately, one needs to employ QM methods with efficient potential energy surface sampling (owing to a much higher computational cost of the local optimization steps). Ensembles generated at a lower level of theory (MM or semiempirical QM) with a higher energy cutoff could serve as decent samples, including those from systematic or stochastic torsion scan, simulated annealing, high-T molecular dynamics trajectory, meta-dynamics simulation, etc.50,51
+
+
+Modeling of the solvent environment and electrochemical conditions. 
+The interaction between the solvent molecules and the solute is known to affect the energetics of chemical reactions, and the relative stability of the low-energy conformers. Accordingly, the fully explicit treatment of the solvent would be ideal for capturing the specific interatomic interactions. However, since the weak interactions vanish beyond ∼4 Å, the explicit QM treatment of only the inner-shell solvent molecules (i.e., microsolvation approach) is a natural approximation to the problem. Including several explicit solvent molecules allows the interaction between solvent and carrier to be studied explicitly, and some intermediate structure that must be stabilized by solvent can be thereby recovered.52 Such a molecular cluster is notorious for a flat potential energy surface, and a more sophisticated sampling technique is needed, such as genetic algorithm.53 In terms of energetics, microsolvation models can help to reduce the mean unsigned error of solvation free energy to less than ca. 1.5 kcal mol−1 if a proper number of explicit water molecules is adopted.54 Note that this solvation free energy is dependent on the number of explicit water molecules, since diverse solvated molecules have different molecular volume and charge distribution that requires an altered number of explicit solvent molecules to best mimic the geometry of the solvation complex in a real solution. Even if a decent number of solvent molecules is chosen, the geometry from the microsolvation model would still be different from the real solvation environment due to the absence of outer shell solvent molecules that affect the orientation and arrangement of the inner shell solvent molecules. A recent study showed that the microsolvation model can treat different classes of molecules consistently and reproduce the experimental values only after including more than 20 explicit water molecules.55
+Except for the inconsistent performance over molecules of different kinds (dipole, charge state, solvent-accessible area), the microsolvation model also fails to capture the configurational entropy of solvent molecules in a real solution, which is essentially a common drawback of all quantum chemical (QC) calculations based on static models, where the entropy comes only from a single Hessian. To capture the free energy change of the reaction system in solution – in this context, specifically CO2 binding/release, one-electron reduction/oxidation, and protonation/deprotonation – the statistical mechanical methods outperform “static” methods. Two major approaches to free energy calculations are free energy perturbation (FEP) and thermodynamic integration (TI). In FEP, the system is perturbed along the reaction coordinate, and the total free energy is expressed by summing the successive intermediate steps. In TI, the generalized force is averaged over the sampled configurational space. Due to the statistical nature of FEP and TI, sufficient sampling is required, and the samples can be from Monte Carlo simulation, molecular dynamics trajectory, or more advanced sampling techniques such as umbrella sampling.56,57 Combined with QM/MM, statistical mechanical methods can treat hundreds if not thousands of explicit water molecules routinely, reproducing experimental energetics of deprotonation and zwitterion dissociation of biomolecules in realistic water solvation, and provide rich chemical insight into the reaction process.58
+At the electrochemical interface, the local environment becomes much more complex. In addition to the carrier molecule and the surrounding solvent molecules, there would be a solid-state electrode, an electrolyte forming a double electric layer, and the non-uniform electric field throughout the region. Endeavors have been made to model this kind of an interface at an atomic scale; one of the most popular is the computational hydrogen electrode (CHE) model which has been applied to a wide range of electrocatalytic systems and demonstrated to qualitatively agree with experimental trends. However, it only holds for the systems with coupled proton–electron transfer and cannot account for polarization of the adsorbate at the charged electrode surface. A more theoretically sound treatment is the grand canonical DFT model which connects the system under consideration to a reservoir of electrons and allows the number of electrons in the system to vary, so as to model constant-potential chemistries. This can be achieved by charging the system with fractional numbers of electrons, combined with the linearized Poisson–Boltzmann equation for continuum behaviour, to avoid a spurious excess charge and provides a much more realistic description of an electric double layer. Such a model has been successfully applied to reveal potential-dependent binding energetics and adsorption configuration switching of an adsorbate on an electrode surface at different applied potentials.59 Although in eCCC no explicit electrochemical conversion of CO2 is involved, the adsorption behavior and CO2 binding capacity of a carrier at the electrode could be different from that in the bulk solution, which can represent an extra dimension for optimization.
+Another factor in designing or simulating a new carrier is the stability of the molecular structure. In addition to the structure which has substituents with intrinsic instability (e.g., acid chlorides, anhydrides, cyclopentadienes, aziridines, enamines, hemiaminals, enol ethers, cyclobutadiene, cycloheptatriene etc.), some moieties, for example, alpha bromide or iodide (good leaving group), alpha ester and carbonyl (subject to hydrolysis), may appear stable in gas phase simulation but are destabilized in protic solvent when the carrier is reduced to an anion or binds CO2. Capturing carrier stability thus requires introduction of a sufficient number of explicit solvent molecules and sampling beyond the chemical space of interest. Molecular dynamics or meta-dynamics simulation would provide information on stability by tracing the connectivity along the trajectory, but routinely applying a stability check on every candidate molecule is computationally demanding. Therefore, the chemical space must be cautiously defined before the production run; otherwise, a series of molecules that are seemingly practical but unstable under reaction conditions may be generated.
+
+
+Energetics of CO2 binding. 
+The bond-breaking/forming process itself is highly sensitive to the level of theory since the change in bonding is accompanied by a change in the charge localization in the bound/unbound states, charge transfer from one molecule to a binding region, a significant change in the dispersion in going from the free reactants to the product and increasing the static (non-dynamical) correlation. All of these effects are highly problematic (e.g, for the conventional treatment at the density functional theory (DFT) level), since the method neglects the long-range correlation. Some of the shortcomings may be alleviated by resigning on the kinetic description of the process and focusing only on the thermodynamic (equilibrium) binding. Then, the equilibrium constant of the reaction can be obtained from the free energy difference between the reactants and the product.
+For electron donor–acceptor type CO2 physisorption, in which CO2 acts as a Lewis acid and the CO2-philic center as a Lewis base, hydrogen bonding interactions exhibit importance in binding. As an example, a relatively strong interaction was observed between CO2 and a purine molecule (∼23 kJ mol−1 at the CCSD(T)/CBS level), as depicted in Fig. 6(A).60 The preferred in-plane binding mode is controlled by the donation of the electron density from the nitrogen atom to the electrophilic carbon of the CO2 group, and the weak hydrogen bond is stabilizing the resulting complex. In Fig. 6(B), the π–π interaction between CO2 and the aromatic ring is illustrated. This interaction is another significant contribution to CO2 binding, which was postulated to be crucial for effectively tuning the uptake efficiency by various metal–organic frameworks (MOFs) or zeolite materials designed for CO2 adsorption and separation. At last, a different binding pattern was uncovered by Ruiz–Lopez and co-workers, showing the dual role of CO2 as both Lewis acid and Lewis base when interacting with some carbonyl compounds.61 A cooperative carbonyl–CO2 π–π* interaction (Fig. 6(C)) was demonstrated to have comparable interaction energy to the conventional binding.
+ Fig. 6  The main intermolecular interactions involved in the CO2 physisorption. (A) The electron donor–acceptor interaction is accompanied by the stabilizing hydrogen-bonding between the oxygen atom of CO2 and an amine group of purine. (B) The π–π interaction may become dominant in the aromatic systems. (C) The dual electron donor–acceptor character of CO2 is pronounced in its interaction with carbonyl groups. 
+Regarding the computational methods, the correlation energy was demonstrated to play a critical role for accurate energetics, with dispersion forces accounting for ca. 40% of the total interaction.60 Hence, addition of dispersion corrections are recommended for DFT calculations whenever applicable, if a higher level of theory is unaffordable.
+Further complications might arise when CO2 is covalently bonded to the (redox) carrier. In this case, the formation of various reaction intermediates can occur, following the initial CO2 uptake. Their potential interconversion and/or decomposition make the computational treatment difficult, due to the potential energy surface possibly varying dramatically depending on the solvation model (vide supra). As an example, there seems to be a clear consensus that amine functionalities bind CO2 with a direct/indirect participation of the solvent molecules, which also assist in the stabilization of formed intermediates. Inconsistencies in the theoretical models thus mostly originate in the improper modeling of the solvent environment, leading to many contrasting results on the CO2 binding mechanism. Still, theoretical calculations are important to understanding correlations between CO2 binding energies and various substituents effects, basicities or nucleophilicities of the CO2-binding centers, or their influence in the CO2 stabilization via hydrogen-bonding.
+As far as the redox eCCC carriers are concerned, the number of computational studies is relatively limited and only exceptionally extend the standard QM (DFT) with the implicit solvation model approach. On the other hand, the reliability of the methods is often enhanced by their correlation or direct connection with the experiments. A few examples, which include the reaction mechanism for CO2 capture by 4,4′-bipyridine (bipy) and N-methyl-4,4′-bipyridine (Mebipy), were investigated using DFT (B3LYP and M062X) with the implicit solvation model (IEFPCM or PCM).27 The computations revealed that a stable adduct is formed between the radical anion of bipy or Mebipy and the CO2 molecule, with ΔG0 = −43.9 kJ mol−1 or −59 kJ mol−1, supporting the results from the CV experiments. The release of the CO2 molecule was accomplished by re-oxidation of the adduct, yielding a zwitterionic intermediate susceptible to decarboxylation.
+In ref. 37, the benzyl disulfide-benzyl thiolate electrochemical cycle was studied computationally at the DFT (B3LYP) level, estimating the binding energy of CO2 to benzyl thiolate of ca. −66 kJ mol−1. A significant electron density localized at the S–C bond of the thiolate and carbon of the CO2 molecule suggests that upon oxidation, the destabilization should lead to rapid CO2 release. Benzyl ditelluride and benzyl diselenide are expected to have a similar reactivity.
+Finally, the G3MP2//B3LYP composite method with the CPCM solvation model were used to explain the different reactivities of p-benzoquinone (BQ) and tetrafluoro-p-benzoquinone (TFBQ) toward CO2 capture.31 BQ was shown to capture CO2 after the first reduction in the semiquinone state (ECEC mechanism), while TFBQ was proposed to react with CO2 only after the full (two-electron) reduction was accomplished (EEC mechanism). The lower reactivity of the TFBQ semiquinone was explained based on the lower nucleophilicity of the quinone oxygens due to the electron-withdrawing fluorine atoms. Also, the calculations revealed that TFBQ binds CO2 at the oxygen atom, forming the carbonate product (favored by ∼88 kJ mol−1 over the carboxylate), while BQ prefers carboxylate by ∼10 kJ mol−1. However, a faster rate toward carbonate formation should circumvent the carboxylate product.
+CO2 binding has also been heavily studied in various organic diamines (such as hydrazine, piperazine, etc.), carbonaceous materials, metal/covalent organic frameworks (MOFs/COFs), ultrathin membranes, organic polymers, zeolites, and others. Many of these systems were reviewed quite recently, with focus on both experimental and theoretical evaluation of CO2 interactions. The interested reader should be referred to relevant articles and references therein (see, e.g., ref. 62).
+
+3.2 Inverse design of redox carriers
+
+Computational high throughput screening. 
+An alternative to the bottom-up rational design (based on understanding of the molecular system and substituent effects) is the top-down inverse design method that start with a desired property before defining the chemical space. One inverse design approach is computational high throughput screening or high throughput virtual screening. Assuming there is no prior knowledge about the chemistry or structure-property relationship, the search starts blindly from an expansive library of different kinds of molecules, and multiple filtering processes to eliminate the unfit molecules, finally reaching a small pool of promising candidates with outstanding properties (Fig. 7). This practice has been applied to in silico drug design by the pharmaceutical industry for decades. Empowered by the huge and growing quantity of molecules stored in open databases, researchers can filter through entries to prepare a library of molecules with the help of cheminformatics tools such as OpenBabel, RDKit, and Indigo. The notable databases include ChemSpider, ChEMBL, PubChem, ZINC, and eMolecules, each specializing in different aspects like bioactivity, physical properties, and commercial availability.
+ Fig. 7  Comparison of the general molecular design workflow via three different strategies: direct design (upper row), inverse design by computational high throughput screening (middle row), and inverse design with generative machine learning model (lower row). Adapted from ref. 63 and 64. 
+Based on the prepared library of molecules, property descriptors can be constructed to “score” each candidate. Standard techniques include fingerprinting, substructure matching, and surface matching to check similarities against a known active molecule or substrate. QSAR models, clustering and partitioning, can also be readily applied to the filtering process using multiple structures as input.65
+The techniques mentioned above can achieve extremely fast screening speeds; however, as the library is rendered to a smaller size, their performance worsens due to the loss of physical and chemical information in these oversimplified representations. In such cases, switching back to more “physical” models can help recover some properties and insights. Molecular mechanics methods, despite successful application to large systems in the last few decades, are outperformed by recently developed efficient quantum chemical methods. The linear-scaling semiempirical method MOZYME-PMn, tight-binding method GFNn-xTB, and revised low-cost density functional method B97-3c can all routinely deal with systems of hundreds of atoms on a single processor and still provide quantum mechanically meaningful results. Although their accuracy may be off by a few kcal mol−1 compared to advanced ab initio methods, they are capable of cutting down the library to a much more tractable size for advanced QM treatment. It is worth noting that, in 2019, Jensen et al. performed high throughput virtual screening through a chemical space of 200 billion molecules in search of energy storage carriers with PM3 and GFN2-xTB,66 demonstrating the efficiency of semiempirical methods in virtual screening.
+
+
+Generative machine learning models. 
+Although computational high-throughput screening can greatly expand the investigated chemical space from the experience and intuition of a chemist to all known compounds ever synthesized by the whole community, it is still a small and uneven sampling subset of the complete chemical space. At this point one must go beyond the limit of current synthetic/commercial accessibility and resort to generative machine learning (ML) models. A schematic for the general workflow of inverse molecular design with ML is shown in Fig. 7. The molecules are mapped by an encoder into a vector search space for ML where a certain descriptor is maximized or minimized, and then the vectors are converted back to the human-readable molecular format by a decoder. Generating molecular structures that are outside the box but within chemical sense is the major challenge in inverse design with ML, because the ML models need a search space with well-defined metrics and compact embedding of molecular features to ensure that the algorithms and optimizations are efficient and that the outputs are meaningful. Generative tasks are extremely sensitive to the representation of molecular structures.63
+For predictive tasks, the molecular representations that only cover information of local environments would be sufficient, such as bag-of-bonds, which summarizes pairwise bonding entities in a molecule, and fingerprint, which counts the number of occurrences of different chemical fragments in a molecule. However, they are not suitable for a generative model, which relies heavily on the invertibility of the representation, i.e., the capability to robustly convert into or back from a molecular structure that makes chemical sense. This is related to the different nature of the two tasks: a specific property usually depends on a local region near the active site or whether a certain kind of substituent is present, so a minimal representation that can include those would be enough and efficient; but to generate new structures, one needs to establish a robust mapping between points in the vectorized search space to the real-world molecules. Otherwise the optimization is likely to lead to a nonsense vector that stands for nothing at all.
+The XYZ coordinates or Z-matrix, which are standard representations for ab initio calculations, straightforwardly describe the atomic positions but are not suitable for ML models since they either cannot offer a description of the intrinsic structural features or are difficult to be converted into consistent matrix representations due to undefined length/size. If the desired search space is relatively local, e.g., all 3-substituted quinones, one can naturally define a parent system where the substituent positions are predefined and then one-hot encode the ligands’ type and position into an M × N-D vector where M is the size of the ligand pool and N is the number of possible sites. Such representation allows exploration of chemical space of size ∼MN (permutations included), which can then be fed to global optimization algorithms such as a genetic algorithm to locate the extrema of a specific property. This practice can be used not only to optimize a specific property but also to break the aforementioned linear scaling relationships (LSRs) among several key molecular properties. By setting the normal direction of the LSRs as the search goal, a global optimization algorithm can intentionally sample towards that direction and discover chemical principles with a deeper electronic structure origin, that leads to decoupling of the properties. For example, Zhang et al. used this technique to propose new design principles to decouple CO2 binding and redox potential by asymmetric substitution (break degeneracy of the HOMO)67 and to decouple CO2 binding and pKa by introducing bulky ortho groups to force CO2 into a different orientation than that of a proton (so that they bind via different orbitals) to achieve stronger CO2 binding capacity and mitigate water sensitivity at the same time.68 However, such discretized and fixed-dimensionality encoding relies entirely on chemical knowledge of the system as in the molecular skeleton, therefore confining the search space in the predefined subspace.
+Focusing on the atomic connectivity in a molecule leads to molecular graphs where only information of atom types (as nodes) and connectivity (as edges) are retained, e.g., SMILES and SMARTS. Such representations “translate” the geometry into a 1D string text by a grammar based on empirical bonding principles in a molecule, which offers a higher level of abstraction while maintaining readability. However, the NLP-like search space suffers from discretization, which makes the model not directly suitable for generative ML tasks. One solution then is to adopt a variational autoencoder (VAE) framework to encode the discrete strings into a point in continuous latent space, which is readily available for interpolation, optimization, and random exploration.64 Within the latent space, one can implement local or global optimization algorithms combined with predictive models to evaluate the property descriptor at each point and optimize toward a maximized property. The optima in latent space with descriptors above a certain criterion can be converted back into the original representation format with another decoder model. It requires teaching the encoder and decoder models to read and write in SMILES grammar. Generative Adversarial Networks (GAN) can do a similar job by co-training a discriminator model and a fake generator model to judge whether a string-based representation is legal or not. GAN, when combined with the latent space approach, has been reported to work well in both random generation and target biased generation.69 One may also adopt reversible string/graph representation without the use of any encoder/decoder, such as SELFIES.
+Image-based representation is another growing field that has been powered by advances in computer vision and image recognition in the last decade. In 2018, Zhavoronkov et al. constructed a 3D image representation of molecular structure based on wave transform and convolutional neural network. In 2019, Vogiatzis et al. proposed a persistence image (PI) representation based on the persistent homology mathematics, which provides a topological representation and has been applied to identify 44 new CO2 binders based on an active learning model.70
+Another challenge is the scarcity of data. Even for properties that are relatively inexpensive and easy to determine, for example, pKa, the size of the database is usually no more than a few thousand for a certain class of molecules. Other properties, such as the CO2 binding constant or redox potential in a specific solvent, may be costlier or more demanding, leading to an even more severe lack of data. Automation does not help much since ML needs data points of different molecules using the same setting, and the rate-limiting factor of the whole workflow is the commercial availability or synthesis of molecules, while most automation set-ups aim to optimize experimental parameters such as concentration, temperature, pressure, and choice of solvents. Data augmentation techniques, such as symmetry-based expansion or neural networks making use of the non-uniqueness of SMILES, helps to improve prediction metrics but does not actually make chemical space larger. A promising approach is to jointly train over a hybrid dataset (experimental and ab initio results) to achieve data enrichment and to explore expanded chemical space.
+A universal or generalized ML model for exploration of chemical space may not exist at all; even if there can be one, it may not work well. The difficulty originates in the intrinsic discontinuity of chemical space of practical molecules – they are deep wells scattering over the potential energy surface separated by unstable structures – and the knowledge to avoid the impractical regions must be provided by either ad hoc priors with chemical insights (encoding grammar, formatting, predefined chemical environment and fragments, ligand pool) or sufficiently large and reliable experimental datasets (which are not available); otherwise a myriad of disordered atomic clusters may dominate the set. Such sparse nature of chemical space also makes hyperparameter tuning (learning rate and batch size) and convergence difficult, especially on a diverse dataset. The tradeoff between complete sampling of chemical space and producing practical molecules is somewhat contradictory. Despite the unsatisfactory transferability, generative ML models are still the best possible tools at the moment to locally explore the chemical space of a specific class of chemicals to optimize the desired property.
+
+4. Conclusion and outlook
+Electrochemical CO2 capture and concentration can enable higher theoretical energetic efficiencies compared to thermal methods. Although the field is still in its infancy, the few reported systems using redox carriers have thermodynamic efficiencies that rival or exceed current state-of-the-art amine-based capture systems. However, practical implementation requires improvements to the performance, stability, and efficiency of the redox carriers. The current systems perform at <10% of the theoretical efficiency, but these values could be improved by modifying the redox carrier CO2 binding constant (KCO2) and reduction potential (E1/2). The reduction potential (E1/2) is also a critical property towards redox carrier sensitivity towards O2 however; while undesirable reactivity with water is dictated by its pKa. In this tutorial review, we discuss how these values are correlated through scaling relationships, leading to unfavorable trade-offs for the respective properties. We describe the use of experimental and computational methods to pursue design strategies for redox carriers that deviate from these scaling relationships, leading to more optimal properties.
+Box/panel 1 experimentally measuring CO2 binding constants
+Determination of KCO2 for the active and resting states of redox carriers can be determined utilizing numerous methods. The use of electrochemical methods, however, are unique to redox carriers. Large carrier CO2 binding constants (KCO2 > 100) can be measured using the observed shift in the reduction potential recorded in the presence () and absence (E1/2) of a known concentration of CO2 by applying eqn (6).38 (6)where R is the universal gas constant (8.314 J mol−1 K−1), T is absolute temperature (K), F is the Faraday constant (96485 C mol−1), and n is the number of electrons being passed in the redox event. The number of CO2 molecules that are bound during the chemical step is represented by the term q (typically, q = 1 or 2, and can be determined via other spectroscopic or voltametric techniques).30 For carriers where KCO2 < 100, the assumption that KCO2 [CO2] ≫ 1 (which is used to derive eqn (6)) is no longer valid, and eqn (7) must be used instead, where q is assumed to be 1.38 (7)
+This approach can be highly beneficial, as it does not require isolation of the active state carrier, which can often be unstable or difficult to isolate cleanly. Furthermore, the approach can be utilized for carriers spanning a large range of KCO2 (KCO2 values ranging between <10 to >1015 have been reported using this method).29,30,38 Values of KCO2 for redox-carriers can be also be determined using more common spectroscopic or physical techniques, depending on the magnitude of KCO2 and solubility of the carrier. These techniques include, but are not limited to: NMR and electronic absorption spectroscopy, gravimetry, and gas uptake experiments.
+Conflicts of interest
+There are no conflicts to declare.
+References
+X. Wang and C. Song, Front. Energy Res., 2020, 8, 560849 CrossRef .
+Z. (Henry) Liang, W. Rongwong, H. Liu, K. Fu, H. Gao, F. Cao, R. Zhang, T. Sema, A. Henni, K. Sumon, D. Nath, D. Gelowitz, W. Srisang, C. Saiwan, A. Benamor, M. Al-Marri, H. Shi, T. Supap, C. Chan, Q. Zhou, M. Abu-Zahra, M. Wilson, W. Olson, R. Idem and P. (PT) Tontiwachwuthikul, Int. J. Greenhouse Gas Control, 2015, 40, 26–54 CrossRef .
+P. H. M. Feron, A. Cousins, K. Jiang, R. Zhai and M. Garcia, Fuel, 2020, 273, 117776 CrossRef CAS .
+M. Fasihi, O. Efimova and C. Breyer, J. Cleaner Prod., 2019, 224, 957–980 CrossRef CAS .
+A. Adamu, F. Russo-Abegão and K. Boodhoo, BMC Chem. Eng., 2020, 2, 1–18 Search PubMed .
+N. Tanbouza, T. Ollevier and K. Lam, iScience, 2020, 23, 101720 CrossRef CAS .
+C. Koval, J. Poshusta, P. Scovazzo, R. Noble and D. DuBois, J. Electrochem. Soc., 2003, 150, D91–D98 CrossRef .
+M. C. Stern, F. Simeon, H. Herzog and T. A. Hatton, Energy Environ. Sci., 2013, 6, 2505–2517 RSC .
+M. Wang, S. Hariharan, R. A. Shaw and T. A. Hatton, Int. J. Greenhouse Gas Control, 2019, 82, 48–58 CrossRef CAS .
+M. D. Eisaman, L. Alvarado, D. Larner, P. Wang, B. Garg and K. A. Littau, Energy Environ. Sci., 2011, 4, 1319–1328 RSC .
+M. D. Eisaman, L. Alvarado, D. Larner, P. Wang and K. A. Littau, Energy Environ. Sci., 2011, 4, 4031–4037 RSC .
+S. Datta, M. P. Henry, Y. J. Lin, A. T. Fracaro, C. S. Millard, S. W. Snyder, R. L. Stiles, J. Shah, J. Yuan, L. Wesoloski, R. W. Dorner and W. M. Carlson, Ind. Eng. Chem. Res., 2013, 52, 31 Search PubMed .
+S. Jin, M. Wu, R. G. Gordon, M. J. Aziz and D. G. Kwabi, Energy Environ. Sci., 2020, 13, 3706–3722 RSC .
+J. D. Watkins, N. S. Siefert, X. Zhou, C. R. Myers, J. R. Kitchin, D. P. Hopkinson and H. B. Nulwala, Energy Fuels, 2015, 29, 7508–7515 CrossRef CAS .
+K. S. Lackner, Energy, 2013, 50, 38–46 CrossRef CAS .
+J. M. Barlow and J. Y. Yang, J. Am. Chem. Soc., 2022, 144, 14161–14169 CrossRef CAS .
+K. M. Diederichsen, Y. Liu, N. Ozbek, H. Seo and T. A. Hatton, Joule, 2022, 6, 221–239 CrossRef CAS .
+H. Seo, M. Rahimi and T. Alan Hatton, J. Am. Chem. Soc., 2022, 144, 2164–2170 CrossRef CAS PubMed .
+S. Voskian and T. A. Hatton, Energy Environ. Sci., 2019, 12, 3530–3547 RSC .
+Y. Liu, H. Z. Ye, K. M. Diederichsen, T. Van Voorhis and T. A. Hatton, Nat. Commun., 2020, 11, 1–11 CrossRef CAS PubMed .
+L. E. Clarke, M. E. Leonard, T. A. Hatton and F. R. Brushett, Ind. Eng. Chem. Res., 2022, 61(29), 10531–10546 CrossRef CAS .
+
+          T. F. Fuller and John N. Harb, Electrochemical Engineering, John Wiley & Sons, Inc., Hoboken,  2018 Search PubMed .
+M. C. Stern, F. Simeon, T. Hammer, H. Landes, H. J. Herzog and T. Alan Hatton, Energy Procedia, 2011, 4, 860–867 CrossRef CAS .
+
+          R. Zevenhoven and P. Kilpinen, Control of Pollutants in Flue Gases and Fuel Gases, Finland,  2001, pp. 2.1–2.12 Search PubMed .
+AP-42: Compilation of Air Emissions Factors|US EPA.
+U. Asghar, S. Rafiq, A. Anwar, T. Iqbal, A. Ahmed, F. Jamil, M. S. Khurram, M. M. Akbar, A. Farooq, N. S. Shah and Y. K. Park, J. Environ. Chem. Eng., 2021, 9(5), 106064 CrossRef CAS .
+J. H. Rheinhardt, P. Singh, P. Tarakeshwar and D. A. Buttry, ACS Energy Lett., 2017, 2, 454–461 CrossRef CAS .
+P. S. Jain and S. Lal, Electrochim. Acta, 1982, 27, 759–763 CrossRef CAS .
+T. Nagaoka, N. Nishii, K. Fujii and K. Ogura, J. Electroanal. Chem., 1992, 322, 383–389 CrossRef CAS .
+
+          D. L. Dubois, A. Miedaner, W. Bell and J. C. Smart, in Electrochemical and Electrocatalytic Reactions of Carbon Dioxide, ed. B. R. Sullivan, Elsevier, Amsterdam,  1993, pp. 94–117 Search PubMed .
+M. Namazian, H. R. Zare and H. Yousofian-Varzaneh, Electrochim. Acta, 2016, 196, 692–698 CrossRef CAS .
+T. Comeau Simpson and R. R. Durand, Electrochim. Acta, 1990, 35, 1399–1403 CrossRef .
+D. Jeziorek, T. Ossowski, A. Liwo, D. Dyl, M. Nowacka and W. Woz, J. Chem. Soc., Perkin Trans. 2, 1997, 229–236 RSC .
+H. Ishida, T. Ohba, T. Yamaguchi and K. Ohkubo, Chem. Lett., 1994, 905–908 CrossRef CAS .
+R. Ranjan, J. Olson, P. Singh, E. D. Lorance, D. A. Buttry and I. R. Gould, J. Phys. Chem. Lett., 2015, 6, 4943–4946 CrossRef CAS PubMed .
+P. Singh, P. Tarakeshwar and D. A. Buttry, ChemElectroChem, 2020, 7, 469–475 CrossRef CAS .
+P. Singh, J. H. Rheinhardt, J. Z. Olson, P. Tarakeshwar, V. Mujica and D. A. Buttry, J. Am. Chem. Soc., 2017, 139, 1033–1036 CrossRef CAS .
+M. H. Schmidt, G. M. Miskelly and N. S. Lewis, J. Am. Chem. Soc., 1990, 112, 3420–3426 CrossRef CAS .
+J. R. Aranzaes, M.-C. Daniel and D. Astruc, Can. J. Chem., 2006, 84, 288–299 CrossRef .
+G. O. Evans, W. F. Walter, D. R. Mills and C. A. Streit, J. Organomet. Chem., 1978, 144, C34–C38 CrossRef CAS .
+G. Fachinetti, C. Floriani and P. F. Zanazzi, J. Am. Chem. Soc., 1978, 100, 7405–7407 CrossRef CAS .
+A. M. Zito, D. Bim, S. Vargas, A. N. Alexandrova and J. Y. Yang, ACS Sustainable Chem. Eng., 2022, 10(34), 11387–11395 CrossRef CAS .
+K. Boujlel and J. Simonet, Tetrahedron Lett., 1979, 20, 1063–1066 CrossRef .
+H. Mayr and A. R. Ofial, J. Phys. Org. Chem., 2008, 21, 584–595 CrossRef CAS .
+J. Y. Yang, T. A. Kerr, X. S. Wang and J. M. Barlow, J. Am. Chem. Soc., 2020, 142, 19438–19445 CrossRef CAS PubMed .
+L. O. De Sousa Bulhõesw and A. J. Zara, J. Electroanal. Chem. Interfacial Electrochem., 1988, 248, 159–165 CrossRef .
+R. Sharifian, R. M. Wagterveld, I. A. Digdaya, C. Xiang and D. A. Vermaas, Energy Environ. Sci., 2021, 14, 781–814 RSC .
+S. E. Renfrew, D. E. Starr and P. Strasser, ACS Catal., 2020, 10, 13058–13074 CrossRef CAS .
+Y. Liu, H.-Z. Ye, K. M. Diederichsen, T. Van Voorhis and T. A. Hatton, Nat. Commun., 2020, 11, 2278 CrossRef CAS PubMed .
+C. M. Sterling and R. Bjornsson, J. Chem. Theory Comput., 2019, 15, 52–67 CrossRef CAS .
+P. R. Jothi, Y. Zhang, J. P. Scheifers, H. Park and B. P. T. Fokwa, Sustainable Energy Fuels, 2017, 1, 1928–1934 RSC .
+M. Gupta, E. F. Da Silva and H. F. Svendsen, J. Phys. Chem. B, 2016, 120, 9034–9050 CrossRef CAS PubMed .
+A. N. Alexandrova, J. Phys. Chem. A, 2010, 114, 12591–12599 CrossRef CAS .
+C. C. R. Sutton, G. V. Franks and G. Da Silva, J. Phys. Chem. B, 2012, 116, 11999–12006 CrossRef CAS PubMed .
+Y. Basdogan, M. C. Groenenboom, E. Henderson, S. De, S. B. Rempe and J. A. Keith, J. Chem. Theory Comput., 2020, 16, 633–642 CrossRef PubMed .
+A. N. Alexandrova and W. L. Jorgensen, J. Phys. Chem. B, 2007, 111, 720–730 CrossRef CAS PubMed .
+D. Shivakumar, J. Williams, Y. Wu, W. Damm, J. Shelley and W. Sherman, J. Chem. Theory Comput., 2010, 6, 1509–1519 CrossRef CAS PubMed .
+A. N. Alexandrova and W. L. Jorgensen, J. Phys. Chem. B, 2011, 115, 13624–13632 CrossRef CAS PubMed .
+S. N. Steinmann and P. Sautet, J. Phys. Chem. C, 2016, 120, 5619–5623 CrossRef CAS .
+K. D. Vogiatzis, A. Mavrandonakis, W. Klopper and G. E. Froudakis, ChemPhysChem, 2009, 10, 374–383 CrossRef CAS .
+M. Altarsha, F. Ingrosso and M. F. Ruiz-Lopez, ChemPhysChem, 2012, 13, 3397–3403 CrossRef CAS PubMed .
+X. Yang, R. J. Rees, W. Conway, G. Puxty, Q. Yang and D. A. Winkler, Chem. Rev., 2017, 117, 9524–9593 CrossRef CAS PubMed .
+B. Sanchez-Lengeling and A. Aspuru-Guzik, Science, 2018, 361, 360–365 CrossRef CAS PubMed .
+R. Gómez-Bombarelli, J. N. Wei, D. Duvenaud, J. M. Hernández-Lobato, B. Sánchez-Lengeling, D. Sheberla, J. Aguilera-Iparraguirre, T. D. Hirzel, R. P. Adams and A. Aspuru-Guzik, ACS Cent. Sci., 2018, 4, 268–276 CrossRef .
+J. Bajorath, Nat. Rev. Drug Discovery, 2002, 1, 882–894 CrossRef CAS PubMed .
+M. Koerstz, A. S. Christensen, K. V. Mikkelsen, M. B. Nielsen and J. H. Jensen, PeerJ Phys. Chem., 2021, 3, 16 CrossRef .
+Z. Zhang and Y.-G. Wang, J. Phys. Chem. C, 2021, 125, 13836–13849 CrossRef CAS .
+Z. Zhang, A. L. Kummeth, J. Y. Yang and A. N. Alexandrova, Proc. Natl. Acad. Sci. U. S. A., 2022, 119(25), 2123496119 CrossRef .
+O. Prykhodko, S. V. Johansson, P. C. Kotsias, J. Arús-Pous, E. J. Bjerrum, O. Engkvist and H. Chen, J. Cheminf., 2019, 11, 1–13 Search PubMed .
+K. Alexopoulos, Y. Wang and D. G. Vlachos, ACS Catal., 2019, 9(6), 5002–5010 CrossRef CAS .
+
+Footnote† Authors contributed equally.This journal is © The Royal Society of Chemistry 2022
+Table Content:
+
+Jeffrey M. Barlow
+	Jeffrey Barlow was born and raised in Boise, Idaho. He received his Bachelor's degree in chemistry from Boise State University where he worked with Professor Eric C. Brown investigating hydrogen-bonding interactions in synthetic mimics of Carbonic Anhydrase and ADA DNA repair protein. He then completed his doctoral studies at UC Irvine under Professor Jenny Y. Yang, where his research focused on the utilization of secondary interactions to promote energy efficient electrochemical approaches for CO2 capture and conversion. He is currently a postdoctoral fellow at Argonne National Laboratory investigating photochemical CO2 capture and conversion under David Kaphan and David Tiede.
+
+Lauren Clarke
+	Lauren Clarke is a PhD candidate in the Department of Chemical Engineering at the Massachusetts Institute of Technology (MIT). Her thesis research focuses on computational models and experimental platforms for electrochemical carbon dioxide separation. In 2020, she obtained her MS in Chemical Engineering Practice from MIT. Prior to this, Lauren received her BS and MS, both in Chemical Engineering, from the University of North Dakota in 2016 and 2018, respectively.
+
+Zisheng Zhang
+	Zisheng Zhang was born in Wuhan, PRC. He received a BSc in Chemistry from South University of Science and Technology of China in 2019 advised by Prof. Jun Li. At UCLA, he was a UCLA-CSST fellow in 2018, obtained a MSc in Chemistry in 2021, and is currently a PhD candidate advised by Prof. Anastassia N. Alexandrova. In 2022 summer, he worked with Dr Maria K. Chan as a research intern at Argonne National Lab. His research interests include realistic modeling of catalytic interfaces and inverse design of functional molecules.
+
+Fikile Brushett
+	Fikile Brushett is an Associate Professor of Chemical Engineering at the Massachusetts Institute of Technology (MIT). Prior to joining MIT, he received his PhD from the University of Illinois at Urbana-Champaign and was a Director's Postdoctoral Fellow at Argonne National Laboratory. He leads a research group advancing the science and engineering of electrochemical technologies for a sustainable energy economy. Their current efforts focus on redox flow batteries for grid storage and electrochemical processes for carbon management and chemical manufacturing. Brushett also serves as the Research Integration co-Lead for the Joint Center for Energy Storage Research, a DOE-funded energy innovation hub.
+
+Anastassia N. Alexandrova
+	Anastassia Alexandrova is a Professor in the Department of Chemistry and Biochemistry, UCLA. She obtained a BS/MS Diploma with highest honors, from Saratov University, Russia, her PhD in theoretical physical chemistry from Utah State University, and was then a Postdoctoral Associate and an American Cancer Society Postdoctoral Fellow at Yale University. Anastassia joined the faculty of UCLA and CNSI in 2010. The focus of her laboratory is theory and computation for design and multi-scale modeling of functional materials: dynamic catalytic interfaces, artificial metalloenzymes, molecular qubits and their assemblies, and quantum materials.
+
+Jenny Y. Yang
+	Jenny Y. Yang received her BS in Chemistry at UC Berkeley (research with Professor Jeffrey R. Long) and completed her doctoral studies at MIT with Professor Daniel G. Nocera. After her postdoctoral position with Dr Daniel L. Dubois at the Pacific Northwest National Laboratory, she was hired as a research scientist in the Center for Molecular Electrocatalysis. After a subsequent position as a scientist at the Joint Center for Artificial Photosynthesis, she started her current position as a faculty member at the University of California, Irvine. Her research interests span inorganic synthesis, electrochemically-driven reactions and processes, and bio-inspired reactivity.
+
+Key learning points
+(1) Advantages of electrochemical CO2 capture and concentration (eCCC) compared to thermal methods.
+(2) Key redox carrier properties for eCCC, (i.e. CO2 binding, reduction potential, and pKa) and correlation of these properties across different compound classes.
+(3) Several system configurations (cell design) that are possible for eCCC with different advantages and disadvantages.
+(4) Computational methods that can assist in molecular engineering for tailored redox carriers with desired properties.
+
+	(1)
+
+Direct air capture	4.0 × 10−4	19.4	201
+Aluminum production (flue gas)	0.01	11.4	118
+Natural gas fired boiler (flue gas)	0.10	5.7	59
+Oil-fired boiler (flue gas)	0.12	5.3	54
+Coal-fired boiler (flue gas)	0.15	4.7	49
+Steel production (flue gas)	0.20	4.0	41
+Cement production (flue gas)	0.30	3.0	31
+Ethanol production	0.90	0.3	3
+
+ 	Scheme 1  General process for eCCC systems featuring a redox carrier (R, top left). (R), which has a small or negligible binding constant for CO2 (KCO2(R)), is reduced at the cathode at E1/2(cap) potential to yield (R)n−, which has a higher binding constant for CO2 (). The reduced carrier (R)n− selectively binds CO2 from a dilute gas stream, forming R(CO2)qn−. Regeneration of the carrier is accomplished by oxidation of R(CO2)qn− to R(CO2)q at the anode at E1/2(rel) leading to release and concentration of CO2 and regeneration of the neutral state of the redox agent (R). In this scheme, n represents the stoichiometric ratio of moles of electrons transferred per mole of CO2. (right, in red) Two reactions with O2 and H2O that can deactivate (R)n−: (1) if the  potential is more negative than the O2/O2˙− reduction potential, electron transfer from (R)n− to O2 to form superoxide can occur. (2) If the pKa of (RH)(n−1)− is higher than the pKa of water or protic solvent, protonation of (R)n− can occur. Scheme adapted from ref. 16 with permission from the American Chemical Society.	 
+
+ 	Fig. 1  Potential embodiments of four eCCC configurations leveraging dissolved redox carriers: (a) 4-stage system, (b) 3-stage system with anodic desorption, (c) 3-stage system with cathodic absorption, and (d) 2-stage system. Figure adapted from ref. 21 with permission from the American Chemical Society.	 
+|Vcell| = |Ecell| + |ηs| + |ηconc| + |ηohm|	(2)
+	(3)
+	(4)
+	(5)
+
+
+Tetrachloro-1,4-benzoquinone (TCQ)	DMF	−0.72	N/A	N/A	3.8	
+30
+
+2,6-di-tert-Butyl-1,4-benzoquinone (DtBBQ)	DMF	−1.46	N/A	N/A	15.0	
+30
+
+Phenanthrenequinone (PAQ)	DMF	−1.19	N/A	N/A	11.8	
+30
+
+2,3-Dicyano-1,4-benzoquinoneg	DMF	−0.47	N/A	N/A	3.8	
+30
+
+Tetrafluoro-1,4-benzoquinone (TFQ)	DMF	−0.80	−0.50	0.30	4.3	
+31
+
+1,4-Benzoquinone (BQ)g	DMSO	−1.05	0.00	1.05	16.9b	
+32
+
+Anthraquinone (AQ)	DMSO	−1.40	−0.65	0.75	11.8b	
+32
+
+Duroquinone (DQ)	DMSO	−1.55	−0.33	1.22	19.9b	
+32
+
+Napthoquinone (NQ)	DMSO	−1.25	−0.40	0.85	13.5b	
+32
+
+2,6-Dimethyl-1,4-benzoquinone (DMBQ)	DMSO	−1.40	−0.23	1.17	19.0b	
+32
+
+2,6-Dichloro-1,4-benzoquinone	MeCN	−0.94	−1.00	0.34	6.0	
+33
+
+2-Chloro-1,4-benzoquinone	MeCN	−1.07	−0.58	0.49	10.0	
+33
+
+Tetrafluoro-1,4-benzoquinone (TFQ)	MeCN	−0.80	−0.62	0.18	3.8	
+33
+
+Tetrachloro-1,4-benzoquinone (TCQ)	MeCN	−0.74	−0.63	0.11	2.5	
+33
+
+5-Hydroxy-napthoquinoneh	MeCN	−0.94	−0.71	0.23	3.3	
+33
+
+1,8-Dihydroxy-anthraquinoneh	MeCN	−1.20	–0.94	0.26	5.4	
+33
+
+1,2-Dihydroxy-anthraquinoneh	MeCN	−1.29	−1.08	0.21	4.6	
+33
+
+5,8-Dihydroxy-naphthoquinoneh	MeCN	−0.98	−0.91	0.07	2.1	
+33
+
+
+N-Propyl-4,4′Bipyridine	MeCN	−1.71	>−1.0	>0.71c	>11.5bc	
+34
+
+4,4′Bipyridine	BMP TFSI	−1.92	−1.07	0.85	12.8d	
+35
+
+
+N-Methyl-4,4′Bipyridine	BMP TFSI	−1.87	−1.27	0.60	12	
+36
+
+Benzyl thiolate	BMP TFSI	−1.82	−1.32	0.50	11.6d	
+37
+
+[Co(Me8[14]-4,11-diene)]+	DMSO	−1.27e	N/A	N/A	0.84	
+38
+
+
+meso-[Co(Me6[14]-4,11-diene)]+	DMSO	−1.31e	N/A	N/A	2.4	
+38
+
+
+d,l-[Co(Me6[14]-4,11-diene)]+	DMSO	−1.31e	N/A	N/A	4.5	
+38
+
+[Co(Me4[14]-1,8-diene)]+	DMSO	−1.37e	N/A	N/A	5.0	
+38
+
+
+ 	Fig. 2  Plot showing trend between log(KCO2(DA)) and (E1/2(QRA/QDA) shown as E1/2(−1/−2)) for reported quinones (red squares), bipyridines (blue triangles), thiolate (green diamond), or transition metal complexes (orange circles) listed in Table 2. The vertical black dotted lines indicate the range of O2/O2˙− couples in organic solvents. Dotted horizontal lines represent the minimum requirement of log(KCO2(DA)) from flue gas (green) or atmospheric (blue) resources. Shaded regions display the working regimes necessary for flue gas (green) or atmospheric (blue) eCCC applications. Figure adapted from ref. 16 with permission from the American Chemical Society.	 
+
+ 	Scheme 2  General reaction schemes for the reduction and binding of one or two CO2 molecules to para-quinones via: disproportionation (top), EEC (middle), or ECEC (bottom) mechanisms.	 
+
+ 	Fig. 3  Plots showing trend between log(KCO2(DA)) and (E1/2(QRA/QDA) (shown as E1/2(−1/−2)) for various quinones reported in DMSO (green triangles), DMF (red squares), or MeCN (blue diamonds). Left figure includes quinones that feature intramolecular hydrogen-bonding interactions (circled in black) as well as quinones observed to undergo Kolbe–Schmitt decomposition pathways in the presence of CO2 (circled in orange). Figure on the right shows that a strong linear correlation exists when the circled quinones with secondary effects or decomposition are removed.	 
+
+ 	Fig. 4  All data are taken from ref. 38. Left: A relationship of CO2 binding constants (logK) against M(II/I) reduction potentials of different ML complexes; M = Co, Ni. The measurements were obtained in DMSO solution and reported M(II/I) potentials are referred to the ferrocenium/ferrocene (Fc+/0) redox couple. An irreversible binding was observed for complexes with reduction potentials more negative than −1.90 V; the binding constants for complexes with potentials more positive than −1.70 V were too low to be measured. Right: A relationship of CO2 binding constants (logK) against dielectric constants (ε/ε0) of the used solvent. The measurements were obtained in propylene carbonate, DMSO, DMF, MeCN, and THF.	 
+
+ 	Scheme 3  Common decomposition pathways for reduced quinone (left) or transition metal complex (right) species.	 
+
+ 	Fig. 5  The CO2 binding in aqueous solution by a prototypical tetrachloro-p-benzoquinone (TCBQ) carrier. Within the association, the free reagents (left) approach each other to form a ‘pre-reaction’ bimolecular complex (middle). This complex is mainly stabilized by the interactions with the neighboring solvent molecules, making an accurate description of the change in solvent configurational entropy a critical factor for the precision of quantum chemical calculations. The driving force for the association is the formation of a stable molecular entity (right), which is regularly accompanied by a significant change in the geometries of the interacting species (e.g., bending of the CO2 molecule) and electronic structure adjustment as the new chemical bonds are formed.	 
+
+ 	Fig. 6  The main intermolecular interactions involved in the CO2 physisorption. (A) The electron donor–acceptor interaction is accompanied by the stabilizing hydrogen-bonding between the oxygen atom of CO2 and an amine group of purine. (B) The π–π interaction may become dominant in the aromatic systems. (C) The dual electron donor–acceptor character of CO2 is pronounced in its interaction with carbonyl groups.	 
+
+ 	Fig. 7  Comparison of the general molecular design workflow via three different strategies: direct design (upper row), inverse design by computational high throughput screening (middle row), and inverse design with generative machine learning model (lower row). Adapted from ref. 63 and 64.	 
+	(6)
+	(7)
+Footnote
+† Authors contributed equally.
+
+This journal is © The Royal Society of Chemistry 2022

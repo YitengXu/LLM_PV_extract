@@ -1,0 +1,291 @@
+Exploring new approaches towards the formability of mixed-ion perovskites by DFT and machine learning   - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/C8CP06528D View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C8CP06528D
+(Paper)
+Phys. Chem. Chem. Phys., 2019, 21, 1078-1088Exploring new approaches towards the formability of mixed-ion perovskites by DFT and machine learning†
+
+        
+          
+            Heesoo 
+            Park
+          
+        
+      *a, 
+      
+        
+          
+            Raghvendra 
+            Mall
+          
+        
+      b, 
+      
+        
+          
+            Fahhad H. 
+            Alharbi
+          
+        
+      ac, 
+      
+        
+          
+            Stefano 
+            Sanvito
+          
+        
+      d, 
+      
+        
+          
+            Nouar 
+            Tabet
+          
+        
+      ac, 
+      
+        
+          
+            Halima 
+            Bensmail
+          
+        
+      b and 
+
+        
+          
+            Fedwa 
+            El-Mellouhi
+          
+        
+      *a
+aQatar Environment and Energy Research Institute, Hamad Bin Khalifa University, PO Box 34110, Doha, Qatar. E-mail: hpark@hbku.edu.qa; felmellouhi@hbku.edu.qa
+bQatar Computing Research Institute, Hamad Bin Khalifa University, Doha, Qatar
+cQatar Environment and Energy Research Institute, Hamad Bin Khalifa University, PO Box 34110, Doha, Qatar
+dSchool of Physics, AMBER and CRANN Institute, Trinity College, Dublin 2, Ireland
+Received 
+      11th November 2018
+    , Accepted 7th December 2018First published on 7th December 2018AbstractRecent years have witnessed a growing effort in engineering and tuning the properties of hybrid halide perovskites as light absorbers. These have led to the successful enhancement of their stability, a feature that is often counterbalanced by a reduction of their power-conversion efficiency. In order to provide a systematic analysis of the structure–property relationships of this class of compounds we have performed density functional theory calculations exploring fully inorganic ABC3 chalcogenide (I–V–VI3), halide (I–II–VII3) and hybrid perovskites. Special attention has been given to structures featuring three-dimensional BC6 octahedral networks because of their efficient carrier transport properties. In particular we have carefully analyzed the role of BC6 octahedral deformations, rotations and tilts in the thermodynamic stability and optical properties of the compounds. By using machine learning algorithms we have estimated the relations between the octahedral deformation and the bandgap, and established a similarity map among all the calculated compounds.
+1 Introduction
+Inspired by the fabrication of high power-conversion-efficiency (PCE) solar cells using low-temperature solution-processed methylammonium lead triiodide (MAPbI3) as the absorber,1–4 an increasingly large number of groups have devoted their attention to the broad family of perovskite compounds for photovoltaic applications. The three-dimensional (3D) network of the PbI6 octahedra appears now to be the structural unit responsible for the highly efficient photo-carrier generation and for their transport.5 Unfortunately, MAPbI3 remains unstable even today, an unwanted feature that undermines its commercialization. Thus, there have been several attempts to design novel ABC3 structures with an appropriate bandgap and presenting a perovskite-like structure, either cubic, tetragonal or orthorhombic.6–15 There have also been efforts to find new ABC3 perovskites based on numerous calculated compounds by screening or by applying machine learning.16–19 In the search for lead-free compounds and for more stable MAPbI3 alternates, a second strategy has been that of considering ionic mixing, resulting in mixed-ion perovskites.20–24
+In a ABC3 perovskite, the B-site cations are octahedrally coordinated to the C-site anions forming a BC6 octahedral network, while the A-site cations are accommodated in the voids between the corner sharing BC6 octahedra. Given this structure one can usually infer whether a particular chemical composition will be stable by looking at a number of chemical and physical parameters, namely, the ratio of the ionic radii, the empirical tolerance factor (TF) and the octahedral factor (OF). These quantities, however, provide only a rough guideline and cannot be taken as robust criteria for thermodynamic stability. Furthermore, subtle deformations of the BC6 octahedron network may result in profound alterations of the electronic structure and the transport properties of a given compound.25–34 We then have a picture where the chemical composition and the basic crystal structure provide a hint on the thermodynamic stability, but a detailed structural analysis is always necessary for estimating the electronic and optical properties. This dichotomy poses a significant challenge that blinds materials predictions.
+This work investigates inorganic chalcogenide and halide perovskites by using density functional theory (DFT) calculations, where the geometry of the starting ideal cubic perovskite structure is fully optimized with high degrees of freedom by a consistent workflow. The resulting relaxed structures are analyzed in terms of their octahedral deformations, BC6 rotations and tilts. Such structural parameters, which define descriptors, are correlated with the calculated electronic properties.35 In particular we find that the degrees of quadratic elongation and the angle variance appear to describe well the structural variations of the metal-anion octahedron.36–38 By using machine learning regression and cluster analysis, we estimate the relations between the BC6 octahedral distortion, the bandgap and the chemical composition. Furthermore, clustering analysis based on these descriptors allows us to construct a similarity map, which provides designing guidelines for the synthesis of mixed-ion organic and inorganic perovskites with tuned properties.
+2 Computational methods
+2.1 DFT calculations and structural parameters
+We have investigated 120 inorganic ABC3 chalcogenide (I–V–VI3) and halide (I–II–VII3) perovskites deemed formable according to the rule of balance of charges, where A = Li+, Na+, K+, Rb+ and Cs+; B = V5+, Nb5+, Ta5+, Ge3+, Sn3+ and Pb3+; and C = O2−, S2−, Se2−, Te2−, F−, Cl−, Br− and I− (see Table S1 in the ESI† – for a complete list). In addition to the inorganic perovskites, we have also considered APbI3 ones with A being either methylammonium (MA+; [CH3NH3]+), formamidinium (FA+; [CH(NH2)2]+) or guanidinium (Gua+; [C(NH2)3]+). This allows us to explore the effects of a non-spherical A-site cation on the electronic properties.
+The calculation yield was managed by the FireWorks39 workflow, while the Pymatgen40–44 tools were used for pre- and post-processing the data. All DFT calculations used the projector-augmented wave (PAW) method45,46 as implemented in the VASP code.47–49 The structures were fully relaxed with the Perdew–Burke–Ernzerhof (PBE)50,51 parameterization of the generalized gradient approximation (GGA) of the DFT exchange and correlation energy. A plane-wave energy cutoff of 520 eV was employed alongside a 4 × 4 × 4 k-point mesh generated according to the Monkhorst–Pack scheme. The geometry relaxation was conducted in three steps for the 2 × 2 × 2 supercells of the cubic perovskite unit cell: (1) the cell volume was optimized for the perovskite structure by keeping the Pmm space group; then (2) the atomic coordinates were displaced in random directions by 0.1 Å to escape from harmonic wells (possible local minima); finally (3) all degrees of freedom, namely, the atomic positions, cell shape and cell volume, were optimized without any structural constraints. Energies and forces were converged within 10−7 eV per atom and 0.01 eV Å−1, respectively. When we used the GLLB-sc52,53 functional to calculate the bandgaps, which is implemented in the GPAW code54,55 we carried out the calculation at the same basis set level, using the relaxed structure by VASP.
+In the case of the organic cations, MA+, FA+ and Gua+, the molecules were aligned along random directions in the supercell, but were initialized to have the same center-of-mass positions. For these hybrid perovskite calculations, we did not include van der Waals (vdW) corrections, although PBE-vdW reproduces the experimental lattice constant of hybrid perovskites by virtue of including the long-distance attraction between the organic ions.34,56,57 Note that in ref. 57 it was observed that the absence of vdW forces does not change appreciably the structure resulting from hydrogen bond interactions. Hence, in order to remain consistent with the calculations carried out for the inorganic compounds, we have preferred not to include vdW corrections.
+We measure the distortion of the BC6 octahedra from the ideal cubic structure, by carefully selecting only octahedra where the central B-site cation is 6-fold coordinated with the C anions. In other words, we identify a convex polygon in which the B ion is surrounded by exactly six C anions and no A cation is included. This is obtained by constructing Voronoi polyhedra as implemented in Pymatgen. Thus, we can verify the coordination numbers even for the severely distorted structures arising from the geometry relaxation, as shown in Fig. 1, where the BC6 octahedra are pictured in orange. Such quantities are defined as follows: (1) (2) (3)Here, li is the distance between the central atom and i-th coordinated anion in an octahedron, as shown in Fig. 1, and l0 is the same distance for the ideal cubic octahedron with the same volume. Then ϕi is the i-th ∠C–B–C′ angle, i denotes the vector defined by a pair of C-site atoms located at opposite sides in the octahedron along the i-th direction, and the tilt was compared with the directions of the three supercell lattice vectors. The vector i is the lattice vector whose direction makes the smallest angle with i. An ideally cubic perovskite should have a quadratic elongation λ = 1, an angle variance σ2 = 0 and octahedral tilt θ2 = 0.
+ Fig. 1  Scheme of the distortion of the BC6 octahedra in a perovskite structure. The measured structural features used to estimate the octahedral distortion descriptors are depicted (see the main manuscript). The BC6 octahedra are coloured in orange. 
+The convex hull energies have been obtained by using the Pymatgen library and the data contained in Materials Project,58–60 together with the appropriate corrections for the GGA underestimation of the total energies of oxides and sulfides.44,61,62 For hybrid perovskites, we have computed the reaction energy, ΔErxn, by calculating the known decomposition reaction, APbI3 → AI + PbI2, where A = MA+, FA+, Gau+, namelyΔErxn = E(ABC3) − {E(AC) + E(BC2)},where E(X) is the DFT energy of the X fragment. In the analysis ΔErxn replaces ΔECH for these hybrid compounds.
+2.2 Machine learning
+In this work we have analyzed our DFT results with both unsupervised and supervised machine learning (ML) algorithms. Unsupervised machine learning aims at establishing relationships among the various input variables (e.g. the structural parameters), which define a compound. In this way, we can establish similarity criteria among the different materials calculated, so that similar compounds can be clustered together. In contrast, supervised machine learning seeks to determine relations between the input values (e.g. atomic information) and the desired properties (e.g. the bandgaps).
+The cluster analysis has been performed with the k-means algorithm, which partitions a number of entries into k clusters, by minimizing the sum of the distances between the mean of the cluster and the entries belonging to it. This unsupervised machine-learning algorithm aims to classify entries into a specific number of groups. When performing such cluster classification, we have first reduced the dimensionality of the input variables space by using the t-SNE (t-distributed stochastic neighbour embedding) scheme.63 t-SNE algorithm constructs the probability distribution over the pairs of data points. Given a data point, it finds a closest object in the dataset. t-SNE is distinguishable from PCA (Principal component analysis), which converts the dataset into an orthogonal basis set. An axis in PCA is possibly the result from a set of correlated variables; meanwhile, an axis in t-SNE is not interpreted easily in physical sense. Since the t-SNE algorithm concentrates on only neighbors, the main advantage of the t-SNE method is to reduce the dimensions of the input space while preserving the relative distance between the various entries. In our case we have aimed at a two-dimensional (2D) representation, which allows us to construct an easy-to-visualize map of compounds.
+Concerning supervised learning we have used a regression analysis to predict bandgaps from the structural distortions obtained by DFT. Our algorithm of choice is the Random Forest (RF) one, where the input is formed by the atomic properties and the ionic radii of the elements forming a compound. The RF method belongs to the class of ensemble-based supervised white-box learning techniques.64 The RF algorithm applies the general scheme of bagging or bootstrapped aggregating65 to decision tree learners. Given a dataset D = {Xi,Yi}Ni=1 with response Yi ∈ {0,1}, bagging repeatedly selects random samples with replacement from the dataset D and fits separate trees to these samples. Consequently, the range of the dataset determines the prediction coverage.
+The algorithm described below provides a brief summary of the Random Forest approach. The bootstrap sampling procedures help de-correlate the trees by showing them different parts of the dataset D. RF allows one to automatically rank features based on their importance for a given task by considering the average Information Gain64 for each variable across all the trees. Here we used the ‘Distributed Random Forest’ algorithm from the H2O package66 in R for building our RF models, evaluating each model with 5-fold cross-validation. In other words, we have included 80% of the compounds in the train set and the remaining 20% is assigned to the test set, while performing 5 iterations.
+
+
+
+
+Algorithm 1: Random Forest model
+
+
+
+Input:
+
+
+D = {Xi,Yi}Ni=1, number of random samples to select (n), feature sampling frequency fs, and the number of trees T.
+
+
+
+for
+t = 1…Tdo
+
+
+
+
+Sample, with replacement, n samples from D to get Dt.
+
+
+Cross-validate and build a decision tree using sampling  frequency fs: Ht(Dt).
+
+
+After cross-validation, prediction for unseen samples X′ can be made using a majority vote from all the individual decision trees on X′.
+
+
+
+end
+
+
+
+
+Output:
+
+Final ensemble i.e.
+
+
+
+3 Results and discussion
+3.1 Structural classification
+
+Fig. 2 shows the octahedra-averaged structural deviation from the ideal cubic structure of the computed perovskites. Data have been extracted by taking the mean values among the eight metal-anion polyhedra contained in the 2 × 2 × 2 supercell. In general, deformation measurements show that λ and σ2 correlate linearly. This fact enables us to classify the calculated perovskites into three groups by using their quadratic elongation, 〈λ〉, as the only descriptor. We will improve on such rough classification in the last section, where we will present the results for the clustering analysis based on λ, σ2, θ2, the lattice constants and the coordination numbers. By using only 〈λ〉, we define perovskites to be close-to-ideal-cubic for 1.0 ≤ 〈λ〉 ≤ 1.01, to be distorted for 1.01 < 〈λ〉 ≤ 1.15 and to be non-perovskites for 1.15 < 〈λ〉. This last group also includes compounds for which the Voronoi polyhedron is not an octahedron, namely, in which the central B ion has either 5-fold or 7-fold coordination with the C anions. For close-to-ideal-cubic perovskites in any octahedron the difference between the longest and shortest bond does not exceed 15%. Non-perovskites have either less than 8 octahedra in the supercell or the longest bond is twice as long as the shortest one at least in one octahedron. According to this criterion, we have assigned 34 and 39 compounds to close-to-ideal-cubic and distorted perovskites, respectively, while the remaining ones, 47, are not perovskites.
+ Fig. 2  The distribution of the mean octahedral distortion metrics for all the calculated materials gives us a materials classification in structures ranging from ideal cubic to distorted perovskites. Here 〈λ〉 is the quadratic elongation, and 〈σ2〉 is the angle variance. The colour code of the circles describes the octahedral tilting, 〈θ2〉. The inset is a zoom on materials presenting nearly ideal but tilted octahedra, such as CsPbI3. 
+For close-to-ideal-cubic perovskites there is a linear relation between 〈λ〉 and 〈σ2〉 as shown in the inset of Fig. 2. These include most of the perovskites reported in the past few years. The bond distances and angles show some deviation from those of an ideal perovskite, but they present negligible octahedral rotation or tilting. For example, the black-filled circles describe CsGeI3, NaNbO3 and KNbO3 as ferroelectric compounds in agreement with their well-known ferroelectric ground state. In contrast, the octahedral tilting can reach up to 15° for halide perovskites, while their octahedra remain close to the ideal cubic structure (the octahedral rotation is rigid). Finally, chalcogenide compounds turn out to be generally distorted, as S2−, Se2− and Te2− ions are too large to be accommodated in the perovskite structure. The fact that ideal-cubic chalcogenide perovskite is unstable is well consistent with previous theoretical screening works.15,67,68
+We have classified compounds as non-perovskites if a polyhedron does not have exactly a 6-fold coordination with the anions. There are some members of this group, such as LiNbO3 and LiTaO3, whose crystalline structure is that of a perovskite but not all the B-site metal cations form octahedra, as the O2− anions are displaced from the expected sites. Since a perovskite is defined as a compound having all B-sites coordinated octahedrally, all materials not displaying such a criterion are defined as non-perovskites. The third group of distorted perovskites fall between these two extreme cases (close-to-ideal-cubic and non-perovskites).
+In order to assess the stability of the various compounds we have computed their energy distance from the corresponding convex hull diagram, ΔECH. This has been obtained by using the Pymatgen library and the data contained in Materials Project,58–60 after applying the appropriate corrections for the GGA underestimation of the total energies of oxides and sulfides.44,61,62 The results are presented in Table S1 of the ESI.† In general we find that, with the exception of a few oxides, most close-to-ideal-cubic and distorted perovskites appear to be unstable, but rather beneath the metastability line (100 meV).69 This means that such compositions can be stabilized only under specific growth conditions, a task that has already been pursued before. For instance, ΔECH for CsPbI3 is calculated here to be 36 meV, indicating that the compound is metastable in the perovskite structure. Fu et al.70 demonstrated that one can selectively grow different CsPbI3 polymorphs,70 including perovskites, by choosing appropriate additives. A second alternative consists in stabilizing a particular polymorph by designing an appropriate substrate, which minimizes the interfacial and strain energy so that an epitaxial growth can be achieved.71,72 Such a strategy has been successfully employed in the synthesis of metastable lead-free piezoelectric materials.73 Thus, in what follows we carry on our analysis by considering also metastable compounds, trusting that for these one may design a suitable synthetic route.
+3.2 Electronic structure
+
+Fig. 3 provides a map of the electronic bandgaps (calculated at the GGA level) for a selection of compounds, which includes only close-to-ideal-cubic and distorted perovskites. Non-perovskites are not presented here, since their bandgaps are not attributed to the nature of the corner-sharing BC6 octahedra. In general, it is rather clear that chalcogenide and halide perovskites display a rather different behaviour. The chalcogenide family includes only a small number of close-to-ideal-cubic perovskite structures, meaning that the 6-fold coordination is difficult to maintain for this chemical composition. The appearance of distortions in this case completely suppresses the bandgap, with the only exception of RbNbO3, which is distorted and insulating. The nearly cubic structure is maintained for Nb- and Ta-based oxides, for which we calculate a GGA bandgap in the region of 2 eV. Recalling that the GGA typically severely underestimates the bandgaps, we can conclude that stoichiometric chalcogenide perovskites are unlikely to be efficient photovoltaic materials, since their absorption edge is likely to be well in the low ultraviolet. Castelli et al. showed that GLLB-sc with spin–orbit correction (SOC) provides relatively high accuracy at the band gap of perovskites. In fact, as shown in Table S1 in the ESI,† those bandgaps are over 4 eV at the GLLB-sc+SOC level.
+ Fig. 3  Matrix of the bandgaps, Eg, of the calculated ABC3 perovskites presented as a function of the chemical content of the A-site (y-axis) and BC3-site (x-axis). The squares represent close-to-ideal-cubic perovskites, while the diamonds are for the distorted perovskites. The bandgaps are calculated at the PBE level and vary from 0 (black) to 4.0 eV (white). 
+The situation in the halide family appears much more promising. In this case there is a large number of both close-to-ideal-cubic and distorted perovskites, with only a few compounds presenting a non-perovskite structure. The resulting GGA bandgaps distribute over a relatively large range, going from less than 1 eV to more than 4 eV. In general, for a given cation A the bandgap increases as the difference in electronegativity of the elements forming the BC6 octahedra gets larger (e.g. for CsGeC3 the gap increases when C goes from I, to Br, to Cl, to F). In addition, we notice that the larger is the size of the A-site cation the smaller is the bandgap, indicating that the A-site cation plays a steric role in the BC6 octahedral network, which in turn changes the bandgap.
+Further analysis is provided in Fig. 4, which shows the distribution of 〈λ〉 (upper panels) and Eg (lower panels) of close-to-ideal-cubic and distorted perovskites with respect to the compounds’ constituent elements. For example, the box corresponding to Li in panel (a) includes compounds having V, Nb, Ta, Ge, Sn, or Pb as the B-site and O, S, Se, Te, F, Cl, Br, or I as the C-site. These plots help us to visualize the chemical–structural relations among the different compounds. Focusing on the C-site dependence first [panels (c) and (f)] it is quite clear that, as observed before, halide-based compounds have a tendency to crystallize in the perovskite structure, 〈λ〉 → 1, while the chalcogenide ones are more prone to distortion. Interestingly, this trend is found over a broad range of chemical compositions. The only exceptions are for elements at the beginning of the group, since all O-based perovskites are almost cubic, while compounds including F display large distortions. It is also interesting to note that in the case where Te is at the C site there are two compounds, namely, LiNbTe3 and LiTaTe3, which crystallize very close to an ideal cubic perovskite structure. This is likely due to the small ionic radius of the Li+ ion.
+ Fig. 4  Influence of the ABC3 chemical composition on the quadratic elongation descriptor, 〈λ〉 (plots a–c) and the calculated PBE optical bandgap (plots d–f). The graphs have been generated by using the boxplot method contained in the Seaborn package.74 
+The dependence of the structure on the elements occupying either the A or B site is less clear, the distributions are broad [see panels (a) and (b)], and the chemical trends are less pronounced. In general, when the B site is occupied by an early transition metal (V, Nb and Ta) the structure deviates significantly from cubic, in particular for light elements. In contrast, having an element from group IV at the B site favors structures with 〈λ〉 → 1, although heavily distorted examples are also found. Finally, the choice of the element for the A-site has two main effects. On one hand, it is clear that larger is the ionic radius (heavier is the element), higher is the possibility of obtaining a cubic structure. On the other hand, it is also clear that regardless of the cation choice, it is possible to obtain very distorted perovskites.
+If we now turn our attention to the bandgaps [panels (d), (e) and (f)] some clear patterns emerge. Firstly, it appears that the chemical nature of the cation (all elements are from group I) has less distinct influence on the bandgaps, which are distributed in a range going from metallic to about 4 eV (this is the PBE gap) regardless of the A-site atomic number [panel (a)]. In contrast, the bandgap distributions are centered around progressively large bandgap values as one moves down in the groups associated with the B-site. Thus, the bandgaps of V-based compounds are smaller than those of Nb-based, which in turn are smaller than those of the Ta-based ones [panel (b)]. This is true for both transition metals and group IV elements, with the compounds incorporating the latter in general displaying larger bandgaps. Finally, the C-site element has a complex influence on the bandgaps [panel (f)]. The bandgaps of perovskites based on halides get smaller as the halide gets heavier, while chalcogenide-based compounds are almost all metallic. Oxygen-based materials are an exception with all the studied compounds clustering around a GGA-PBE bandgap value of 2 eV.
+3.3 Machine learning analysis
+In order to gain more insights into the relations between chemical composition and both structural and electronic properties we have performed machine learning analysis, which is described here. Firstly, we have employed a RF regression to our available dataset to assess how the chemical/physical attributes defining the materials affect the octahedral deformation and the optical bandgap. In particular we have considered two physical attributes for any given compound, namely, the Goldschmidt tolerance factor (TF) and the octahedral factor (OF), and a number of chemical attributes of its constituent elements. These are the electronegativity (EN), the ionic radius (IR), the electron affinity (EA), the period number (PN), the group number (GN), the atomic number (AN) and the 1st, 3rd, and 5th ionization energies for groups 1, 5, and 14, respectively (IE). The RF regression uses these attributes to define the octahedral distortion metrics: the quadratic elongation, λ, the angle variance, σ2, and the tilt variance, θ2. We have particularly focused our attention on the feature importance. In other words, we have ranked the various attributes in terms of their relevance in defining a given quantity. Furthermore, the same analysis was performed for the bandgaps, Eg, where 〈λ〉, 〈σ2〉 and 〈θ2〉 have been used as attributes together with the chemical ones. We can track the strength of the linear correlation between two variables by looking at the Pearson correlation coefficient, as shown in Fig. S2 in the ESI.† However, there is a limit in the method at finding non-linear correlation. The Random Forest is relatively reliable since the algorithm is capable of tackling chemical properties in a non-linear way. Fig. S3 in the ESI† presents its better performance compared with the general linear method (GLM). In addition to the analysis, the feature importance in Fig. 5 can illustrate the overall strength of each site.
+ Fig. 5  Feature importance as analyzed with a Random Forest regression for the ABC3 perovskites studied. Here the octahedral distortion parameters, 〈λ〉, 〈σ2〉 and 〈θ2〉, are expressed in terms of the chemical attributes of the elements forming the compounds and of the Goldschmidt tolerance factor (TF) and the octahedral factor (OF). Then the value of the bandgap, Eg, is correlated with the chemical attributes and the octahedral distortion parameters. 
+The feature importance of these trained ML models are reported in Fig. 5. In the figure, we find that both the quadratic elongation and the angle variance are determined in an equal measure by the chemical attributes related to all elements, meaning that the chemistry of all available sites is equally important for these two properties. However, while 〈σ2〉 is little affected by the two structural attributes, this is not the case for 〈λ〉, which is also determined by the Goldschmidt tolerance and the octahedral factor. In contrast, the octahedral tilt, 〈θ2〉, predominantly depends on the chemistry of the A cation. This can be rationalized with the steric effect played by the A-site element on the voids in the BC6 networks, as observed before, namely, the octahedral tilt is expected to depend on the size of the A+ ion with respect to the volume of the voids.
+If we now move our attention to the bandgap, the most distinctive feature is its extremely strong dependence on the chemistry of the C-site, in particular on both the atomic number and the electronegativity. Notably, these two quantities are strongly correlated with each other, namely, the electronegativity decreases with the atomic number within a group. The B-site appears to have a smaller influence on the bandgaps in comparison to the C-site. In general, in these compounds the valence-band maxima are mainly associated with the occupied p orbitals of the C-site ions, while the conduction-band minima originate from the B-sites’ unoccupied p orbitals. Thus it appears that variations in the energy levels of the B-sites’ p orbitals hardly affect the position of the band and hence the bandgap. Finally, the A-site seems to play an insignificant role in determining the bandgap. This, however, is only partially true. In fact, the choice of A determines the structural parameters, which in turn have some effect on the bandgap. We find that 〈λ〉, 〈σ2〉 and 〈θ2〉 account for about 14% of the total feature importance, with the largest contribution coming from 〈σ2〉. Note that in our machine-learning analysis of the bandgap we have considered the octahedral descriptors as independent input variables, although they actually depend on the chemistry of the compounds. Thus, we conclude that the bandgap is largely determined by the chemical attributes with the structure playing only a secondary role but not negligible. In Fig. S4 of the ESI† we have compared the calculated band gaps at the PBE and GLLB-sc+SOC level. As expected, PBE underestimates the band gaps. However, the PBE gaps are linearly correlated with the GLLB-sc+SOC ones, so that the qualitative conclusions of the ML analysis drawn for the PBE data remain, namely, PBE is enough to identify trends.
+In order to elucidate the relation between the different materials we have performed a t-SNE cluster analysis for all the compounds studied in this work. The t-SNE scheme allows one to reduce the dimension of the attribute space, while preserving its metric, so that data can be easily visualized. The attributes used this time are the octahedral structure parameters, 〈λ〉, 〈σ2〉 and 〈θ2〉, the supercell volume and the energy distance from the convex hull diagram, ΔECH.
+Our results are presented in Fig. 6, where similar compounds are positioned close to each other, while dissimilar ones are separated. We would like to stress here that in the figure objects are not positioned at scale, meaning that the absolute distance does not measure the degree of the similarity. In any case the plot provides a map of similarity. For instance, we can see that CsPbI3 is more similar to GauPbI3, FAPbI3, MAPbI3, RbPbI3, CsSnI3, and RbSnI3 than to any other compounds. In particular, we find that close-to-ideal-cubic chalcogenide and halide perovskites are well separated from each other, while chalcogenide and halide perovskites are grouped together by the similarity of their chemical composition and structural features. In contrast, the non-perovskite compounds are scattered across the plot and are positioned in between the close-to-ideal-cubic halides and chalcogenides. Putting aside the charge balance (not included in the attributes here), chalcogenide and halide perovskites are thus separated by their structural features, in particular by their volumes. This suggests that, based only on structural consideration, halide and chalcogenide perovskites are unlikely to form homogeneous mixtures.
+ Fig. 6  Visualization of structural similarities among the different compounds as obtained with the t-SNE algorithm. We used λ, σ2, θ2, the volume and the energy distance from the convex hull diagram, ΔECH, as attributes. The chemical compositions are shown for close-to-ideal-cubic (black) and distorted (green) perovskites. For clarity, only distorted perovskites surrounded in the graph by close-to-ideal-cubic ones are labelled with their chemical composition. Note that the figure includes both inorganic and hybrid compounds. 
+Intriguingly, our t-SNE visualization appears to provide some hints on the possibility of forming mixed-ion perovskites. In fact, we observe that perovskites that have already been successfully mixed20,21,24,75,76,77,78,79 tend to cluster together. For example, CsPbI3 and MAPbI3 are represented close to each other and the mixed MAxCs1−xPbI3 phase was fabricated with the perovskite structure.21 Another notable case is that of NaNbO3 and NaTaO3. These two compounds are placed close to each other and NaNbxTa1−xO3 was experimentally reported.77,78 Thus, we can use the clustering of Fig. 6 as a map for proposing novel mixed-ion structures, where the mixing can influence the electronic and thermodynamic properties through both the chemistry of the composition and the resulting structure. The main rationale for such attribution is the observation that perovskites of similar structure tend to support mixed-ion phases. This means that having two similar ABC3 and A′BC3 perovskites in general allows the formation of the mixed phase AxA1−x′BC3, which is likely to present similar structural properties to the parental compounds.20,24,75,79 Note that such a mixed phase can be optimized to have better chances to be grown (e.g. by optimizing the lattice constant for a particular substrate), thus mixed-phase compound may have a better chance to be grown than their parental materials.
+As a final step in our investigation, we now look at the effects brought by the choice of a non-spherical cation. We replace the group I element with either methylammonium (MA+), formamidinium (FA+) or guanidinium (Gua+). In particular we consider the case where the inorganic lattice is formed by PbI6 octahedra, i.e. we compare the electronic and structural properties of CsPbI3 with those of MAPbI3, FAPbI3 and GuaPbI3. The effective ionic radii are 188, 217, 253 and 278 pm, respectively for Cs+, MA+, FA+ and Gua+, and these yield the corresponding tolerance factors of 0.85, 0.91, 0.99 and 1.04. The structural optimization of the hybrid compounds is carried out as in the case of their inorganic counterparts, with the only difference that the organic molecules are initialized with a random orientation. This leads to several different possible structures for the same chemical composition.
+In Fig. 7, we present the calculated PBE bandgap for three of such inequivalent geometries as a function of the three structural parameters. As expected the presence of a non-spherical cation results in structures, which are significantly distorted. However, interestingly, for any given cation the bandgap varies only moderately (within 0.2 eV) with the specific disorder realization. Thus, we find that Gua-based perovskites have bandgaps systematically larger than that of CsPbI3, while those of MAPbI3 and FAPbI3 are similar and smaller than that in CsPbI3. Going into more details, it is clear that as 〈λ〉 and 〈σ2〉 increase, the bandgap gets larger. The same cannot be said for 〈θ2〉, since the geometries investigated present a rather narrow distribution of octahedral tilts. Fig. 7 also suggests that among the three molecular cations investigated methylammonium is the one producing the broadest distribution of both structural parameter values and bandgaps. This correlates nicely with the fact that MA+ is the molecular ion with a smaller ionic radius and also that with the most linear geometry.
+ Fig. 7  PBE bandgaps calculated for different configurational disorder realizations of organic–inorganic hybrid perovskites. The bandgaps are presented as a function of the cell-averaged (a) quadratic elongation 〈λ〉, (b) angle variance 〈σ2〉 and (c) octahedral tilt 〈θ2〉. 
+Our analysis thus shows that hybrid perovskites offer additional opportunities to fine tune the bandgap. This can be achieved by controlling the cation rotation angle, which in turn impacts the structural deformation of the BC6 octahedra.80
+4 Conclusions
+We have investigated the structural and electronic properties of inorganic chalcogenide and halide perovskites and of a few hybrid ones by means of density functional theory calculations. Particularly, we have focussed our attention on establishing relations between the chemical composition, the crystal structure and the electronic properties of the compounds. Such an analysis was carried out by analyzing our theoretical data with both supervised and unsupervised machine learning methods.
+A Random Forest regression using various chemical features of the constituent elements as attributes suggests that all the ions in the ABC3 structure have a similar influence on the distortion of the octahedral cages. The only exception is for the octahedral tilt parameter, θ, which is mostly determined by the cation A. This is the result of the steric effect exerted by the A site on the BC6 octahedra. In contrast, the electronic bandgap is mostly determined by the nature of the ion occupying the C site. In general, chalcogenide-based compounds tend to exhibit crystal structures, which significantly depart from the ideal cubic perovskite ones, and small bandgaps. The only exception is for some oxides, which nevertheless have a bandgap too large for photovoltaic applications. Halide materials behave differently and often maintain the perovskites structure. These show a wide range of bandgaps, a feature that opens an avenue for the fine tuning of their electronic properties.
+Finally, we have performed a clustering analysis and provided a map of similarity of all the compounds investigated. Interestingly, we have noticed that compositions grouped together are amenable to form mixed-ion compounds, so that our map can offer interesting guidelines on how to engineer mixed-phase solar harvesting perovskites.
+Data availability
+The authors declare that the relevant data supporting the findings of this study are available within the paper and its ESI† files. The ESI† file includes the details of the relaxed structures; bandgap, octahedral distortions, lattice parameters, ΔECH; comparison of the caculated bandgaps between the PBE and GLLB-sc+SOC level; details of the calculated hybrid perovskites; and visualization of the decision tree.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+This work was sponsored by the Qatar National Research Fund (QNRF) through the National Priorities Research Program (NPRP8-090-2-047) and by the Qatar Environment and Energy Research Institute (FE, FHA and NT). Computational resources have been provided by the research computing group at Texas A&M University at Qatar.
+References
+H.-S. Kim, C.-R. Lee, J.-H. Im, K.-B. Lee, T. Moehl, A. Marchioro, S.-J. Moon, R. Humphry-Baker, J.-H. Yum, J. E. Moser, M. Grätzel and N.-G. Park, Sci. Rep., 2012, 2, 591 CrossRef PubMed .
+T. M. Brenner, D. A. Egger, L. Kronik, G. Hodes and D. Cahen, Nat. Rev. Mater., 2016, 1, 15007 CrossRef CAS .
+M. Zhang, M. Lyu, H. Yu, J.-H. Yun, Q. Wang and L. Wang, Chem. – Eur. J., 2015, 21, 434–439 CrossRef CAS PubMed .
+W. S. Yang, B.-W. Park, E. H. Jung, N. J. Jeon, Y. C. Kim, D. U. Lee, S. S. Shin, J. Seo, E. K. Kim, J. H. Noh and S. I. Seok, Science, 2017, 356, 1376–1379 CrossRef CAS PubMed .
+Z. Xiao, W. Meng, J. Wang, D. B. Mitzi and Y. Yan, Mater. Horiz., 2017, 4, 206–216 RSC .
+N. K. Noel, S. D. Stranks, A. Abate, C. Wehrenfennig, S. Guarnera, A. A. Haghighirad, A. Sadhanala, G. E. Eperon, S. K. Pathak, M. B. Johnston, A. Petrozza, L. M. Herz and H. J. Snaith, Energy Environ. Sci., 2014, 7, 3061–3068 RSC .
+Y.-Y. Sun, J. Shi, J. Lian, W. Gao, M. L. Agiorgousis, P. Zhang and S. Zhang, Nanoscale, 2016, 8, 6284–6289 RSC .
+E. T. McClure, M. R. Ball, W. Windl and P. M. Woodward, Chem. Mater., 2016, 28, 1348–1354 CrossRef CAS .
+F. Hong, B. Saparov, W. Meng, Z. Xiao, D. B. Mitzi and Y. Yan, J. Phys. Chem. C, 2016, 120, 6435–6441 CrossRef CAS .
+S. Chakraborty, W. Xie, N. Mathews, M. Sherburne, R. Ahuja, M. Asta and S. G. Mhaisalkar, ACS Energy Lett., 2017, 2, 837–845 CrossRef CAS .
+F. El-Mellouhi, A. Akande, C. Motta, S. N. Rashkeev, G. Berdiyorov, M. E.-A. Madjet, A. Marzouk, E. T. Bentria, S. Sanvito, S. Kais and F. H. Alharbi, ChemSusChem, 2017, 10, 1931–1942 CrossRef CAS PubMed .
+F. El-Mellouhi, E. T. Bentria, S. N. Rashkeev, S. Kais and F. H. Alharbi, Sci. Rep., 2016, 6, 30305 CrossRef CAS PubMed .
+F. El-Mellouhi, A. Marzouk, E. T. Bentria, S. N. Rashkeev, S. Kais and F. H. Alharbi, ChemSusChem, 2016, 9, 2648–2655 CrossRef CAS PubMed .
+H. Park, F. H. Alharbi, S. Sanvito, N. Tabet and F. El-Mellouhi, ChemPhysChem, 2018, 19, 703–714 CrossRef CAS PubMed .
+H. Park, F. H. Alharbi, S. Sanvito, N. Tabet and F. El-Mellouhi, J. Phys. Chem. C, 2018, 122, 8814–8821 CrossRef CAS .
+I. E. Castelli, D. D. Landis, K. S. Thygesen, S. Dahl, I. Chorkendorff, T. F. Jaramillo and K. W. Jacobsen, Energy Environ. Sci., 2012, 5, 9034–9043 RSC .
+I. E. Castelli, T. Olsen, S. Datta, D. D. Landis, S. Dahl, K. S. Thygesen and K. W. Jacobsen, Energy Environ. Sci., 2012, 5, 5814–5819 RSC .
+I. E. Castelli, K. S. Thygesen and K. W. Jacobsen, Top. Catal., 2013, 57, 265–272 CrossRef .
+K. Takahashi, L. Takahashi, I. Miyazato and Y. Tanaka, ACS Photonics, 2018, 5, 771–775 CrossRef CAS .
+P. Gratia, I. Zimmermann, P. Schouwink, J.-H. Yum, J.-N. Audinot, K. Sivula, T. Wirtz and M. K. Nazeeruddin, ACS Energy Lett., 2017, 2, 2686–2693 CrossRef CAS .
+L. K. Ono, E. J. Juarez-Perez and Y. Qi, ACS Appl. Mater. Interfaces, 2017, 9, 30197–30246 CrossRef CAS PubMed .
+B. Charles, J. Dillon, O. J. Weber, M. S. Islam and M. T. Weller, J. Mater. Chem. A, 2017, 5, 22495–22499 RSC .
+G. Han, H. D. Hadi, A. Bruno, S. A. Kulkarni, T. M. Koh, L. H. Wong, C. Soci, N. Mathews, S. Zhang and S. G. Mhaisalkar, J. Phys. Chem. C, 2018, 122, 13884–13893 CrossRef CAS .
+A. D. Jodlowski, C. Roldán-Carmona, G. Grancini, M. Salado, M. Ralaiarisoa, S. Ahmad, N. Koch, L. Camacho, G. de Miguel and M. K. Nazeeruddin, Nat. Energy, 2017, 2, 972–979 CrossRef CAS .
+J. M. Frost, K. T. Butler, F. Brivio, C. H. Hendon, M. van Schilfgaarde and A. Walsh, Nano Lett., 2014, 14, 2584–2590 CrossRef CAS PubMed .
+Z. Zhang, R. Long, M. V. Tokina and O. V. Prezhdo, J. Am. Chem. Soc., 2017, 139, 17327–17333 CrossRef CAS PubMed .
+T. Katayama, H. Suenaga, T. Okuhata, S. Masuo and N. Tamai, J. Phys. Chem. C, 2018, 122, 5209–5214 CrossRef CAS .
+J.-H. Lee, N. C. Bristowe, P. D. Bristowe and A. K. Cheetham, Chem. Commun., 2015, 51, 6434–6437 RSC .
+A. E. Maughan, A. M. Ganose, A. M. Candia, J. T. Granger, D. O. Scanlon and J. R. Neilson, Chem. Mater., 2018, 30, 472–483 CrossRef CAS .
+R. X. Yang, J. M. Skelton, E. L. da Silva, J. M. Frost and A. Walsh, J. Phys. Chem. Lett., 2017, 8, 4720–4726 CrossRef CAS PubMed .
+L. Zhou, A. J. Neukirch, D. J. Vogel, D. S. Kilin, L. Pedesseau, M. A. Carignano, A. D. Mohite, J. Even, C. Katan and S. Tretiak, ACS Energy Lett., 2018, 3, 787–793 CrossRef CAS .
+S. N. Rashkeev, F. El-Mellouhi, S. Kais and F. H. Alharbi, Sci. Rep., 2015, 5, 11467 CrossRef CAS PubMed .
+G. R. Berdiyorov, F. El-Mellouhi, M. E. Madjet, F. H. Alharbi and S. N. Rashkeev, Appl. Phys. Lett., 2016, 108, 053901 CrossRef .
+C. Motta, F. El-Mellouhi and S. Sanvito, Sci. Rep., 2015, 5, 12746 CrossRef CAS PubMed .
+J. S. Bechtel and A. Van der Ven, Phys. Rev. Mater., 2018, 2, 025401 CrossRef .
+K. Robinson, G. V. Gibbs and P. H. Ribbe, Science, 1971, 172, 567–570 CrossRef CAS PubMed .
+D. Cortecchia, S. Neutzner, A. R. Srimath Kandada, E. Mosconi, D. Meggiolaro, F. De Angelis, C. Soci and A. Petrozza, J. Am. Chem. Soc., 2017, 139, 39–42 CrossRef CAS PubMed .
+W. Jang, J. Yun, T. Lee, Y. Lee and A. Soon, J. Phys. Chem. C, 2018, 122, 3558–3566 CrossRef CAS .
+A. Jain, S. P. Ong, W. Chen, B. Medasani, X. Qu, M. Kocher, M. Brafman, G. Petretto, G.-M. Rignanese, G. Hautier, D. Gunter and K. A. Persson, Concur. Comp.– Pract. E., 2015, 27, 5037–5059 CrossRef .
+S. P. Ong, W. D. Richards, A. Jain, G. Hautier, M. Kocher, S. Cholia, D. Gunter, V. L. Chevrier, K. A. Persson and G. Ceder, Comput. Mater. Sci., 2013, 68, 314–319 CrossRef CAS .
+S. P. Ong, L. Wang, B. Kang and G. Ceder, Chem. Mater., 2008, 20, 1798–1807 CrossRef CAS .
+S. P. Ong, A. Jain, G. Hautier, B. Kang and G. Ceder, Electrochem. Commun., 2010, 12, 427–430 CrossRef CAS .
+A. Jain, S. P. Ong, G. Hautier, W. Chen, W. D. Richards, S. Dacek, S. Cholia, D. Gunter, D. Skinner, G. Ceder and K. A. Persson, APL Mater., 2013, 1, 011002 CrossRef .
+A. Jain, G. Hautier, C. J. Moore, S. P. Ong, C. C. Fischer, T. Mueller, K. A. Persson and G. Ceder, Comput. Mater. Sci., 2011, 50, 2295–2310 CrossRef CAS .
+P. E. Blöchl, Phys. Rev. B: Condens. Matter Mater. Phys., 1994, 50, 17953–17979 CrossRef .
+G. Kresse and D. Joubert, Phys. Rev. B: Condens. Matter Mater. Phys., 1999, 59, 1758–1775 CrossRef CAS .
+G. Kresse and J. Hafner, Phys. Rev. B: Condens. Matter Mater. Phys., 1993, 47, 558–561 CrossRef CAS .
+G. Kresse and J. Furthmüller, Phys. Rev. B: Condens. Matter Mater. Phys., 1996, 54, 11169–11186 CrossRef CAS .
+G. Kresse and J. Furthmüller, Comput. Mater. Sci., 1996, 6, 15–50 CrossRef CAS .
+J. P. Perdew, K. Burke and Y. Wang, Phys. Rev. B: Condens. Matter Mater. Phys., 1996, 54, 16533–16539 CrossRef CAS .
+J. P. Perdew, K. Burke and M. Ernzerhof, Phys. Rev. Lett., 1996, 77, 3865–3868 CrossRef CAS PubMed .
+O. Gritsenko, R. van Leeuwen, E. van Lenthe and E. J. Baerends, Phys. Rev. B: Condens. Matter Mater. Phys., 1995, 51, 1944–1954 CAS .
+M. Kuisma, J. Ojanen, J. Enkovaara and T. T. Rantala, Phys. Rev. B: Condens. Matter Mater. Phys., 2010, 82, 115106 CrossRef .
+J. J. Mortensen, L. B. Hansen and K. W. Jacobsen, Phys. Rev. B: Condens. Matter Mater. Phys., 2005, 71, 035109 CrossRef .
+J. Enkovaara, C. Rostgaard, J. J. Mortensen, J. Chen, M. Dułak, L. Ferrighi, J. Gavnholt, C. Glinsvad, V. Haikola, H. A. Hansen, H. H. Kristoffersen, M. Kuisma, A. H. Larsen, L. Lehtovaara, M. Ljungberg, O. Lopez-Acevedo, P. G. Moses, J. Ojanen, T. Olsen, V. Petzold, N. A. Romero, J. Stausholm-Møller, M. Strange, G. A. Tritsaris, M. Vanin, M. Walter, B. Hammer, H. Häkkinen, G. K. H. Madsen, R. M. Nieminen, J. K. Nørskov, M. Puska, T. T. Rantala, J. Schiøtz, K. S. Thygesen and K. W. Jacobsen, J. Phys.: Condens. Matter, 2010, 22, 253202 CrossRef CAS PubMed .
+D. A. Egger and L. Kronik, J. Phys. Chem. Lett., 2014, 5, 2728–2733 CrossRef CAS PubMed .
+J. Li and P. Rinke, Phys. Rev. B, 2016, 94, 2246 Search PubMed .
+Materials Project – A Materials Genome Approach, http://materialsproject.org, accessed on Apr/27/2018.
+A. Jain, S. P. Ong, G. Hautier, W. Chen, W. D. Richards, S. Dacek, S. Cholia, D. Gunter, D. Skinner, G. Ceder and K. a. Persson, APL Mater., 2013, 1, 011002 CrossRef .
+S. P. Ong, S. Cholia, A. Jain, M. Brafman, D. Gunter, G. Ceder and K. A. Persson, Comput. Mater. Sci., 2015, 97, 209–215 CrossRef .
+L. Wang, T. Maxisch and G. Ceder, Chem. Mater., 2007, 19, 543–552 CrossRef CAS .
+A. Jain, G. Hautier, S. P. Ong, C. J. Moore, C. C. Fischer, K. A. Persson and G. Ceder, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 84, 045115 CrossRef .
+L. v. d. Maaten and G. Hinton, J. Mach. Learn. Res., 2008, 9, 2579–2605 Search PubMed .
+L. Breiman, Mach. Learn., 2001, 45, 5–32 CrossRef .
+L. Breiman, Mach. Learn., 1996, 24, 123–140 Search PubMed .
+Amazon AWS, H2O, http://h2o-release.s3.amazonaws.com/h2o/master/4195/index.html.
+S. Körbel, M. A. L. Marques and S. Botti, J. Mater. Chem. C, 2016, 4, 3157–3167 RSC .
+K. Kuhar, A. Crovetto, M. Pandey, K. S. Thygesen, B. J. Seger, P. C. K. Vesborg, O. Hansen, I. Chorkendorff and K. W. Jacobsen, Energy Environ. Sci., 2017, 10, 2579–2593 RSC .
+W. Sun, S. T. Dacek, S. P. Ong, G. Hautier, A. Jain, W. D. Richards, A. C. Gamst, K. A. Persson and G. Ceder, Sci. Adv., 2016, 2, e1600225 CrossRef PubMed .
+Y. Fu, M. T. Rea, J. Chen, D. J. Morrow, M. P. Hautzinger, Y. Zhao, D. Pan, L. H. Manger, J. C. Wright, R. H. Goldsmith and S. Jin, Chem. Mater., 2017, 29, 8385–8394 CrossRef CAS .
+J. Lyu, I. Fina, R. Solanas, J. Fontcuberta and F. Sánchez, Sci. Rep., 2018, 8, 495 CrossRef PubMed .
+Z. Xu, P. Salvador and J. R. Kitchin, ACS Appl. Mater. Interfaces, 2017, 9, 4106–4118 CrossRef CAS PubMed .
+L. M. Garten, S. Dwaraknath, J. Walker, J. S. Mangum, P. F. Ndione, Y. Park, D. A. Beaton, V. Gopalan, B. P. Gorman, L. T. Schelhas, M. F. Toney, S. Trolier-McKinstry, K. A. Persson and D. S. Ginley, Adv. Mater., 2018, 34, 1800559 CrossRef PubMed .
+
+          M. Waskom, O. Botvinnik, D. O'Kane, P. Hobson, S. Lukauskas, D. C. Gemperline, T. Augspurger, Y. Halchenko, J. B. Cole, J. Warmenhoven, J. de Ruiter, C. Pye, S. Hoyer, J. Vanderplas, S. Villalba, G. Kunter, E. Quintero, P. Bachant, M. Martin, K. Meyer, A. Miles, Y. Ram, T. Yarkoni, M. L. Williams, C. Evans, C. Fitzgerald, Brian, C. Fonnesbeck, A. Lee and A. Qalieh,  2017, mwaskom/seaborn: v0.8.1 .
+L. K. Ono, E. J. Juarez-Perez and Y. Qi, ACS Appl. Mater. Interfaces, 2017, 9, 30197–30246 CrossRef CAS PubMed .
+L. Liu, S. Zheng, R. Huang, D. Shi, Y. Huang, S. Wu, Y. Li, L. Fang and C. Hu, Adv. Powder Technol., 2013, 24, 908–912 CrossRef CAS .
+P. Jana, V. A. de la Pena O'Shea, C. M. Montero, P. Galvez, P. Pizarro, J. M. Coronado and D. P. Serrano, Green Chem., 2015, 17, 1735–1743 RSC .
+M. Wang, M. Fang, X. Min, Z. Huang, C. Tang, Y. Liu and X. Wu, Chem. Phys. Lett., 2017, 686, 18–25 CrossRef CAS .
+E. M. Mozur, A. E. Maughan, Y. Cheng, A. Huq, N. Jalarvo, L. L. Daemen and J. R. Neilson, Chem. Mater., 2017, 29, 10168–10177 CrossRef CAS .
+C. Motta, F. El-Mellouhi, S. Kais, N. Tabet, F. Alharbi and S. Sanvito, Nat. Commun., 2015, 6, 7026 CrossRef CAS PubMed .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: 10.1039/c8cp06528dThis journal is © the Owner Societies 2019
+Table Content:
+	(1)
+	(2)
+	(3)
+
+ 	Fig. 1  Scheme of the distortion of the BC6 octahedra in a perovskite structure. The measured structural features used to estimate the octahedral distortion descriptors are depicted (see the main manuscript). The BC6 octahedra are coloured in orange.	 
+ΔErxn = E(ABC3) − {E(AC) + E(BC2)},
+
+Algorithm 1: Random Forest model
+
+Input:
+	
+D = {Xi,Yi}Ni=1, number of random samples to select (n), feature sampling frequency fs, and the number of trees T.
+
+for
+t = 1…Tdo
+
+	Sample, with replacement, n samples from D to get Dt.
+Cross-validate and build a decision tree using sampling  frequency fs: Ht(Dt).
+After cross-validation, prediction for unseen samples X′ can be made using a majority vote from all the individual decision trees on X′.
+
+end
+
+
+Output:
+	Final ensemble i.e.
+
+ 	Fig. 2  The distribution of the mean octahedral distortion metrics for all the calculated materials gives us a materials classification in structures ranging from ideal cubic to distorted perovskites. Here 〈λ〉 is the quadratic elongation, and 〈σ2〉 is the angle variance. The colour code of the circles describes the octahedral tilting, 〈θ2〉. The inset is a zoom on materials presenting nearly ideal but tilted octahedra, such as CsPbI3.	 
+
+ 	Fig. 3  Matrix of the bandgaps, Eg, of the calculated ABC3 perovskites presented as a function of the chemical content of the A-site (y-axis) and BC3-site (x-axis). The squares represent close-to-ideal-cubic perovskites, while the diamonds are for the distorted perovskites. The bandgaps are calculated at the PBE level and vary from 0 (black) to 4.0 eV (white).	 
+
+ 	Fig. 4  Influence of the ABC3 chemical composition on the quadratic elongation descriptor, 〈λ〉 (plots a–c) and the calculated PBE optical bandgap (plots d–f). The graphs have been generated by using the boxplot method contained in the Seaborn package.74	 
+
+ 	Fig. 5  Feature importance as analyzed with a Random Forest regression for the ABC3 perovskites studied. Here the octahedral distortion parameters, 〈λ〉, 〈σ2〉 and 〈θ2〉, are expressed in terms of the chemical attributes of the elements forming the compounds and of the Goldschmidt tolerance factor (TF) and the octahedral factor (OF). Then the value of the bandgap, Eg, is correlated with the chemical attributes and the octahedral distortion parameters.	 
+
+ 	Fig. 6  Visualization of structural similarities among the different compounds as obtained with the t-SNE algorithm. We used λ, σ2, θ2, the volume and the energy distance from the convex hull diagram, ΔECH, as attributes. The chemical compositions are shown for close-to-ideal-cubic (black) and distorted (green) perovskites. For clarity, only distorted perovskites surrounded in the graph by close-to-ideal-cubic ones are labelled with their chemical composition. Note that the figure includes both inorganic and hybrid compounds.	 
+
+ 	Fig. 7  PBE bandgaps calculated for different configurational disorder realizations of organic–inorganic hybrid perovskites. The bandgaps are presented as a function of the cell-averaged (a) quadratic elongation 〈λ〉, (b) angle variance 〈σ2〉 and (c) octahedral tilt 〈θ2〉.	 
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/c8cp06528d
+
+This journal is © the Owner Societies 2019

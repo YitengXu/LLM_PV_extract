@@ -1,0 +1,719 @@
+Intelligent control of nanoparticle synthesis through machine learning  - Nanoscale (RSC Publishing) DOI:10.1039/D2NR00124A View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2NR00124A
+(Review Article)
+Nanoscale, 2022, 14, 6688-6708Intelligent control of nanoparticle synthesis through machine learning
+
+        
+          
+            Honglin 
+            Lv
+          
+        
+       and 
+
+        
+          
+            Xueye 
+            Chen
+          
+        
+      *
+      College of Transportation, Ludong University, Yantai, Shandong 264025, China. E-mail: xueye_chen@126.com
+Received 
+      8th January 2022
+    , Accepted 4th April 2022First published on 5th April 2022AbstractThe synthesis of nanoparticles is affected by many reaction conditions, and their properties are usually determined by factors such as their size, shape and surface chemistry. In order for the synthesized nanoparticles to have functions suitable for different fields (for example, optics, electronics, sensor applications and so on), precise control of their properties is essential. However, with the current technology of preparing nanoparticles on a microreactor, it is time-consuming and laborious to achieve precise synthesis. In order to improve the efficiency of synthesizing nanoparticles with the expected functionality, the application of machine learning-assisted synthesis is an intelligent choice. In this article, we mainly introduce the typical methods of preparing nanoparticles on microreactors, and explain the principles and procedures of machine learning, as well as the main ways of obtaining data sets. We have studied three types of representative nanoparticle preparation methods assisted by machine learning. Finally, the current problems in machine learning-assisted nanoparticle synthesis and future development prospects are discussed.
+1. Introduction
+With the deepening of the research progress of nanoparticles, researchers have found that nanoparticles play a vital role in many research fields, for example, the fields of electronics, sensing, chemical catalysis, physical components and medical treatment,1–4 and it also shows great potential in some emerging research directions. Nanoparticles refer to particles with a particle size between 1 and 100 nm (nanoparticles are also called ultrafine particles). They belong to the range of colloidal particle size.5,6 They are located in the transition zone between clusters of atoms and macroscopic objects, and are groups composed of a small number of atoms or molecules. There are many methods for preparing nanoparticles, and some of the traditional methods include vapor deposition, precipitation, and hydrothermal synthesis.7–9 With the gradual maturity of microfluidic technology, people have focused on the use of microfluidic technology to prepare nanoparticles.10,11 Compared with traditional methods, this technology has the advantages of less reagent loss, sufficient mixing reaction, and cheap preparation of microreactors. These advantages make the use of microfluidic technology to prepare nanoparticles have good development prospects.12,13
+Artificial intelligence is a branch of computer science. Its main functions are making decisions and solving problem tasks. In many cases, it is also a multi-parameter fitting and scoring system. Artificial intelligence can simulate the information process of human consciousness and thinking. Machine learning is the core of artificial intelligence and it is one of the more cutting-edge research areas.14,15 It is the use of data or previous experience as a way to optimize the performance criteria of a computer program in order to acquire new knowledge or skills. And it can reorganize the existing knowledge structure to continuously improve its performance. Machine learning is a branch of artificial intelligence that uses a large number of known datasets to predict or respond to unknown data.16 The main purpose of machine learning is to use historical data and specific conditions to train the model to build complex dependencies between independent variables and dependent variables, so as to infer and predict new data.17 Machine learning was put forward for research as early as the 1950s. However, due to the immature technology development, it is far from being able to meet the needs of mankind. In recent years, the research and development of machine learning has suddenly exploded, which has brought new research prospects for some tedious experiments and unknown conditions. At the same time, it also brings hope of breakthrough to some areas with bottlenecks.
+The properties of nanoparticles in electronics, optics and sensing are often directly affected by the size, shape and surface chemistry of the nanoparticles.18 For example, polystyrene nanoparticles with a size of 50 nm and 100 nm have different properties. And when their surface chemistry is different, they also change the properties of the biologically active protein in the corona to varying degrees. The nanoparticle size and polyethylene glycol graft density have a direct effect on the relative density of adsorbed proteins.19 Changes in serum protein adsorption are related to differences in the mechanism and the efficiency of the macrophage uptake of nanoparticles. Macrophages lead to the inefficient delivery of nanomaterials to diseased tissues. Therefore, it is a key challenge that the synthesis of nanoparticles can be precisely controlled.20 The current microfluidic control technology for preparing nanoparticles cannot accurately synthesize the expected nanoparticle size and shape. In order to achieve the control of nanoparticle synthesis, it takes repeated experiments to estimate the approximate reaction conditions. This is not only time-consuming but also laborious. Therefore, it is imperative to combine machine learning to assist the synthesis of nanoparticles. Since machine learning has the advantage of being able to make predictions by building models, this will solve the challenge of efficient and accurate synthesis of nanoparticles with the desired properties.
+In this paper, we review the methods and principles of nanoparticle preparation adopting microfluidics in recent years and describe the implementation steps, functions of machine learning and its applications in nanotechnology. We summarize the approaches and advantages of using machine learning to prepare nanoparticles in recent years. Finally, we provide an outlook on the use of transmission electron microscopy to acquire nanoparticle images online to identify the centers and contours of nanoparticles to determine their size, and the use of convolutional neural networks to characterize aspects of nanoparticle size and morphology.
+2. Synthesis of nanoparticles by microfluidic technology
+Microfluidics is the technology for controlling, manipulating and detecting complex fluids at microscopic dimensions. It is a new interdisciplinary discipline developed on the basis of microelectronics, micromechanics, bioengineering and nanotechnology.21 Microreactors typically contain small channel sizes (equivalent diameter less than 500 μm) and channel diversity. Fluids flow in these channels and are required to undergo the required reactions in these microchannels. This leads to a very large contact area and excellent reactions between different fluids in microconstructed chemical devices.22,23 Microreactors have excellent heat and mass transfer capabilities. They can achieve instantaneous homogeneous mixing of materials and efficient heat transfer, so many reactions that cannot be achieved in conventional reactors can be achieved in microreactors.24,25
+Nanoparticles have become one of the most important frontier applications in the development of modern analytical chemistry. Due to their unique optical, electrical, thermal, chemical and mechanical properties, they have a wide range of applications in many fields of analytical chemistry such as chromatography, electrochemical analysis, spectroscopy, imaging analysis, vital analysis, pharmaceutical analysis, etc., and especially they play an important role in enhancing the sensitivity, selectivity and analytical speed of analytical methods.26–28
+There are many methods used to prepare nanoparticles, including traditional process methods and emerging microfluidic technologies. Traditional processes for preparing nanoparticles are mainly classified into two types according to their nature: physical and chemical methods.29,30 The physical method involves the crushing or grinding of large material blocks into micron or nanoscale size particles by some mechanical devices. It also called mechanical crushing.31,32 Chemical methods are used to synthesize nanoparticles through the reaction or polymeric assembly between atoms and ions in reagents, which mainly include: solution-gel method, hydrothermal method, thermal decomposition method, high-temperature combustion synthesis method and vapor phase deposition method.33–35 However, the conventional method of preparing nanoparticles has some drawbacks. It takes a long time or even more than one hour, and the reaction temperature and the mixing of reagents are not well controlled. Microreactors, however, have the ability to control a wide range of reaction conditions. Moreover, its reaction time is short, mixing is sufficient and fast, and heat transfer is uniform. The reaction also requires less chemical reagents, thereby saving costs. Furthermore, microfluidic chips are highly integrated and can achieve adequate mixing of reagents before performing the reaction according to the reaction conditions.36–39
+Nanoparticle preparation by microreactors can be divided into three main categories: continuous laminar flow, segmented flow, and droplet-based microreactors.40–42 The continuous laminar flow microreactor is currently the most common and it is relatively the simplest in design and operation.43,44 It works on the principle of continuous flow of several different fluids in full contact and reaction within microscale channels, followed by nanoparticle nucleation and growth (Fig. 1b). In recent years, it has been studied and reported by many research scientists for the synthesis of nanoparticles. In general, high-quality biochemical reactions require certain reaction conditions and adequate mixing to be achieved.45,46 In the preparation of Cu2O nanoparticles, two chemical reagents, Benedict's solution and glucose buffer, can be reacted using an AC electrothermal continuous laminar flow micromixer. Only a certain temperature can be reached to trigger the reaction conditions. Cu2O is a semiconductor nanomaterial, which has excellent absorption properties for visible light and can reach a theoretical energy conversion of up to 20%. The Cu2O particles are all cubic in shape, but the particle size is different at different voltages.47
+ Fig. 1  Types of nanoparticles prepared using microreactors. (a) Schematic diagram of nanoparticles prepared using microreactors.1 (b) Continuous type microreactor.47 (c) Segmented flow microreactor.51 (d) Droplet-based microreactor.42 
+A segmented flow microreactor is typically composed of multiple inlets (Fig. 1c). The inlets include a multiple liquid phase and a single gas phase input. Due to the presence of the gas input, bubbles are created during the fluid flow, thus blocking the continuous flow of the fluid. The reason for creating bubbles between continuously flowing fluids that restrict the fluid from reacting is the presence of surface tension between the gas and liquid phases.48–50 In order to control the range of the particle size distribution to be narrow, segmented flow methods are often employed in the synthesis of Au nanoparticles. In the microreactor for synthesizing Au nanoparticles, the HAuCl4 chemical reagent of NaBH4 is usually employed for the rapid generation of Au nuclei by the reduction reaction, followed by the growth of Au nuclei by agglomeration, and the growth of Au nuclei has an interactive connection with the fluid flow in the microchannel. It has been found that the particle size distribution of Au nanoparticles is influenced not only by axial diffusion in segmented flow but also by the fluid circulation-induced mixing within the microchannel.51
+Droplet-based microreactors are composed of a continuous phase (oil) and several dispersed phase (chemical reagents) inlets (Fig. 1d). Due to the unmixable effect of the continuous phase, the dispersed phase is wrapped to produce droplets.52,53 The reagents inside the droplets allow for adequate mixing and reaction. The advantage of this method is that it allows for a relatively clean and healthy reaction environment, but it is necessary to control the two-phase flow by adjusting parameters such as surface tension, viscous effects, and capillary number so that the two-phase flow has conditions such that it does not stick to the walls of the microchannel thus avoiding problems such as diffusion of the fluid and droplet rupture.54,55 In experiments investigating the synthesis of nanoparticles from recombinant Escherichia coli cell solutions and metal ion solutions, the continuous phase inlet was fed with FC40 and the surfactant polyethylene glycol perfluoropolyether (PEG-PFPE). The dispersive phase inlet is fed with the reactants. Droplets were generated by means of co-axial flow focusing, which led to the synthesis of nanoparticles in the droplets.56
+It has been found through previous studies that the reaction conditions for preparing nanoparticles (for example, reaction temperature, reaction time, concentration ratio of chemical reagents, reaction precursors, reaction ligands, type of solution reagents, channel structure of the microreactor and external stimuli) have a direct influence on the properties of nanoparticles such as size, shape and surface chemistry.57,58 In turn, these properties often have a controlling effect on the electronic, sensing and optical properties of nanoparticles as well as on some applications. However, the precise control of nanoparticle properties with the current microfluidics methods is still a key challenge. Machine learning is an intelligent algorithm with predictable functions. It can use a large amount of data to establish complex linkages for the desired nanoparticle properties and reaction conditions to achieve the accurate prediction of nanoparticle properties and applications.59,60
+Machine learning is a powerful tool for the efficient and accurate development of nanoparticle synthesis solutions with anticipatory properties and the potential synthesis of novel nanoparticles with complex properties.
+3. Machine learning
+3.1. Algorithm
+Machine learning prediction models are divided into linear regression and non-linear regression. The relationship between reaction conditions and nanoparticle properties in experiments for preparing nanoparticles is generally nonlinear. Machine learning algorithms can achieve precise control of the properties of the synthesized nanoparticles. Machine learning models include supervised learning, unsupervised learning, and reinforcement learning.61–63 Among them supervised learning is widely used in prediction tasks for nanoparticle synthesis, and both build models can represent the relationship between input conditions and output attributes.64 The dataset used to train the machine learning model is called the training set and the dataset used to verify the accuracy of the machine learning model is called the test set. Generally, they are in the ratio of 7:3.65 There are many kinds of predictable machine learning models being selected, but we have to match the selection by weighing between its predictive accuracy, computational cost and feasibility.66,67 The predictive power is usually affected by the amount of data in the test set, the choice of kernel function and the definition of loss function in the data set. The larger the dataset the more accurate the prediction of the machine learning model, but it may substantially increase the computational cost and lead to a long computation time. There is also a risk of overfitting due to too much data. Before making predictions, machine learning models need to be validated and evaluated, and the selection of machine learning model algorithms based on actual conditions also needs to have strong scientific insight.68–70
+3.2. Supervised learning
+The principle of supervised learning is actually an attempt to explore an unknown function where a linkage exists between the input variables and an unknown output target.71 It includes the following typical algorithms.
+
+Support vector machine algorithm (SVM). 
+SVM can be used for classification and regression, and in nanoparticle synthesis techniques we use support vector regression algorithms that can solve prediction problems. The essence of the regression problem is to be able to find a straight line or curve so that it fits our data points perfectly.72 The traditional linear regression algorithm solves the problem by minimizing the mean squared loss function corresponding to the predicted straight line to the data points. The SVM regression model, on the other hand, is different from the traditional regression algorithm. Its method to solve the fitting data is to first define a constant ε. For a certain point (xi, yi), if |yi − ω·ϕ(xi) − b| ≤ ε, there is no loss at all. If |yi − ω·ϕ(xi) − b| > ε, the loss is |yi − ω·ϕ(xi) − b| − ε (Fig. 2a). The SVM algorithm has a large number of kernel functions available, which makes it flexible to solve various nonlinear classification regression problems. More often, when the sample size is not massive data, the classification accuracy is high and the generalization ability is strong. However, SVM is computationally overloaded and less suitable for use when the sample size is very large and the kernel function mapping dimension is very high, and there is no general standard for the selection of kernel functions for nonlinear problems, making it difficult to choose a suitable kernel function.73 Khatibinia, Mohsen, et al. focused on the prediction of the compressive and flexural strength of self-pressurized mortars containing SiO2 nano, Fe2O3 nano, and CuO nano using a wavelet-based weighted least squares support vector machine approach. The complex relationship between the input and output in the database is constructed by the support vector machine thus the properties of the nanofluid can be predicted. Similarly, we can use the above wavelet-based weighted least squares support vector machine method for predicting the properties of the synthesized nanoparticles.74
+ Fig. 2  Schematic diagram of the principles of machine learning algorithms. (a) SVM. (b) KNN. (c) Genetic algorithm. (d) ANN. (e) Clustering algorithm. (f) Reinforcement learning algorithm. (g) Decision tree. 
+
+
+K-nearest neighbor algorithm (KNN). 
+When using the KNN algorithm to solve the prediction problem, we first have to choose the k value, which is generally a smaller value based on the size of the data set, and then select a more appropriate final value by cross-validation. The decision method in regression problems generally uses the mean method or the weighted mean method (Fig. 2b). The weighted mean method is calculated by using weights and distances inversely proportional to each other.75 Among all the machine learning algorithms we have encountered, KNN is the easiest to get started with. It has the advantages of simple model, good results without much tuning and fast when the data set is small. But in fact it is very limited in solving prediction problems. It is prone to generalization, over-fitting, and under-fitting. In addition, it is not suitable for datasets with many features when the dataset is large, and it is slow and ineffective. Chau et al. examined the potential of using quantitative nanostructure–activity relationship models to predict the properties of nanoparticles prior to synthesis. In this study, it was shown that if k = 7 and 5 of its nearest neighbors showed good cellular uptake while 2 showed poor cellular uptake, the nanoparticle would therefore be predicted to have good cellular uptake. The model developed using the K-nearest neighbor algorithm was used to predict the uptake of 105 single metal core nanoparticles by pancreatic cancer cells. The above prediction model using the K-nearest neighbor algorithm can be investigated for application to synthetic nanoparticles in order to predict their properties.76
+
+
+Decision tree (DT). 
+The calculation principle of the DT algorithm is to determine the segmentation variable according to the data set, and then consider the segmentation point. In this way, the loss function value of each segmentation point is calculated and the optimal segmentation point is found. Then two segments before and after the optimal segmentation point, namely D1 and D2, are found. And then while continuing the above operation steps, the optimal cut point is selected. Finally, the regression tree is generated (Fig. 2c). It has the advantage of basically no preprocessing, no advance normalization, and handling missing values.77 However, it is very prone to overfitting, resulting in poor generalization, and it is difficult to learn for some of the more complex relations. Trinh et al. used in vitro characteristics as input parameters (for example, cell line, source, type, and so on). Decision trees and example-based algorithms were used to manage and analyze the data on metal nanoparticles (AuNPs and AgNPs) to predict cytotoxicity. We can use the decision tree prediction principle from the above work to apply it to predict various aspects of nanoparticle properties.78
+
+
+Artificial neural network (ANN). 
+An ANN is composed of an input layer, a neuron layer, and an output layer. The neuron layer includes multiple artificial neurons. Artificial neurons can be implemented to construct a nonlinear relationship between the input conditions and the predicted properties, which can determine an unknown nonlinear function. In order to achieve this relationship there may be a particular degree of complexity, it can be solved by stacking multiple neurons and adjusting the weights and activation functions. This will complete the computation through the combination of multiple nonlinear functions.79 The neurons can be flexibly arranged and connected to each other, thus constituting a neural network (Fig. 2d).
+ANN has powerful computational power. It can approximate arbitrarily complex nonlinear relationships very well. All quantitative or qualitative information is equipotentially distributed and stored in each neuron within the network, so it has strong robustness and fault tolerance. This powerful predictive capability further proves that it is more robust for application to assist in the preparation of nanoparticles.80,81 Youshia et al. determined the effect of molecular weight, hydrophobicity and surface activity of polymers on the particle size by measuring the viscosity, contact angle and interfacial tension of polymers. An artificial neural network was used to develop a model with the particle size and polydispersity index as the input and the particle size and polydispersity index as the output. Finally, the effectiveness of the artificial neural network in predicting the particle size and polydispersity of polymer nanoparticles was confirmed. This method of constructing artificial neural network models for predicting the nanoparticle particle size is fully applicable for us to study in microfluidics. This combines the advantages of microfluidics with the application of neural network models to predict nanoparticles, thus making the neural network-assisted synthesis of nanoparticles technology more efficient and the device more integrated.82
+
+3.3. Unsupervised learning
+Unsupervised learning is concerned with finding similar classes in unlabeled data, for instance, clustering in a dataset. The most typical example in unsupervised learning is clustering. The purpose of clustering is to group similar things together (Fig. 2e). Clustering algorithms work based on the calculation of similarity.83 The main algorithms included in the typical partitioning clustering are: the K-means algorithm, the K-medoids algorithm, and the CLARANS algorithm.84 Even though unsupervised learning is a remarkable technique for class partitioning of similarity in datasets, the technique is very narrowly involved in the problem of preparing nanoparticles. We do not need to cluster the properties of nanoparticles based on similarity, what is important is the problem of prediction of their properties.
+Unsupervised algorithms rely mainly on visibility to process images.85 For the application of nanoparticles on unsupervised learning dabble we can have a scientific outlook on it. The lack of technology for this area is something we should consider to compensate. Bi, Xiangyu, et al.86 used the K-means clustering algorithm for the first time in conjunction with the signal processing of raw SPICP-MS data. Compared with currently used data processing methods, the K-means algorithm improves the distinction between particle signals and background signals. It provides a sophisticated statistical-based method for quantitatively solving the different large groups contained in nanoparticle suspensions. Finally, the function of classifying nanoparticle suspensions according to their large groups is achieved.
+3.4. Reinforcement learning
+Reinforcement learning deals with the problem by finding the best or better action among many plans to satisfy the maximization of the reward. In a nutshell, its essence is learning in interaction to achieve optimization. Reinforcement learning builds a convenient work system for intelligent work that can intelligently learn to plan the optimal work path thus achieving the defined goals.87
+On the one hand, strategies of genetic algorithms as well as heuristic and Bayesian optimization algorithms88,89 can be used to optimize the factors influencing the process of response experiments. By defining the fitness function and thus optimizing the fitness factor, the experiment is optimized with increasing number of iterations of the population through a scheme similar to the genetic evolution strategy (Fig. 2f). On the other hand, the global optimum can be found by defining an objective function, which may be a loss function, and then selecting some independent variables affecting the objective (for example, reaction time, reaction temperature, ligand concentration ratio and so on) and thus optimizing them90 (Fig. 2f). What's more, stable branching and fitting noise optimization algorithms can also be used to establish the three-dimensional spatial relationship between the reaction conditions and the properties of the nanoparticle objective, so that the global optimal value can be searched for.91
+3.5. Working steps of machine learning
+
+Dataset preparation. 
+The dataset in machine learning models generally consists of input variables and output properties. Moreover, it is usually related to the reaction conditions and properties of the nanoparticles. The output properties are generally determined by the input variables. Preparation of the dataset is the first step of the machine learning model. The quality of the prepared data directly affects the superiority of the predictive function of the machine learning model. The more the dataset satisfies the normal distribution, the easier it is to be trained by the machine learning model. However, in the real data, the datasets we get often suffer from missing data, noise and errors, so the collected data can be de-duplicated, normalized, and error corrected, and subjected to other operations.92 Machine learning models are greedy for data, and larger datasets represent more powerful computational prediction capabilities. The final dataset is generally saved as a database file or a file in csv format.
+
+
+Analysis of independent and dependent variables. 
+Before the algorithm is chosen, we have to determine the independent variables (x1…xn) and the dependent variable (y1…yn). Then it is necessary to find out the correlation between the dependent and independent variables. In nanoparticle preparation techniques the independent variables are generally selected as reaction conditions (for example, reaction temperature, reaction time, concentration ratio of chemical reagents, reaction precursors, reaction ligands, type of solution reagents, channel structure of the microreactor, external stimuli and so on) while the dependent variables are generally selected as the size, shape, and electronic and optical properties of the nanoparticles.
+
+
+Feature selection. 
+After preparing the dataset for analysis, we need to filter the data and meaningful features are a worthy choice. It is crucial to select good features to seat the input of machine learning models for model training. For example, for quantum dots, new variables for the total number and concentration of quantum dots can be created. Their representation is presented by the following equation.93 (1) (2)
+In general, we choose features from two aspects. On the one hand, we want to select divergent features so as to ensure that the variance is not close to 0, and thus the features are distinguishable by their differences in the dataset. On the other hand, features with high correlation with the output in the dataset should be considered for removal, thus ensuring the generalization ability and accuracy of the model.
+
+
+Splitting the data set. 
+The dataset is generally divided into two components, namely the training set and the test set. The part used to train the machine learning model is the bulk of the dataset. The test set will be used to evaluate the performance of our trained model. Usually the data are divided into two datasets with 8:2 or 7:3. The training set cannot be used directly to evaluate the superiority of the machine learning model. This is because the model only remembers the “problem”, but will not predict correctly when it encounters new data.
+
+
+Algorithm selection and evaluation. 
+Firstly, we have to classify the problem before choosing an algorithm, whether it is a prediction problem or an experimental optimization problem. Second, the number and shape of the datasets we prepare also is a crucial decision on the algorithm selection. Each algorithm has a different level of data set inclusion, some require a few data sets to achieve accurate prediction, but some require a huge amount of data sets to achieve the functionality.94,95
+We are careful in algorithm selection to avoid generalization, overfitting and underfitting. Machine learning models have excellent performance not only on the training set, but also have excellent predictive power for new data. This effect is called machine learning with better generalization.96,97 The reasons for the poor predictive power of machine learning algorithms also include overfitting and under fitting. After algorithm evaluation it is important to try to avoid the problem and choose the appropriate algorithm.
+
+
+Online operation. 
+Running the machine learning model online directly assesses the maturity of the model for assisting in the preparation of nanoparticle technology. The reliability of the model is evaluated based on the prediction accuracy, time spent, run speed and feasibility of the machine learning model (Fig. 3).
+ Fig. 3  Main steps of the machine learning algorithm.105 
+
+
+Data set acquisition method. 
+The most important step before building a machine learning model is the preparation of the dataset. We can generally obtain real experimental data ourselves by doing experiments and simulations, which will ensure the quality of that data, but this method is time consuming for experiments that require a large number of dataset samples. We can also obtain reliable datasets from published papers to train machine learning models.98 Another way is to search for relevant datasets to download by ourselves through some open source shared data and repositories on websites.99,100 The main method of obtaining the dataset is still the first method. Because the research subjects in different experiments are different, and the datasets obtained based on published papers or databases on websites may not be fully compliant. So the latter two methods are with limitations. However, to satisfy the curiosity of some readers about databases, we have listed some addresses of databases for them. The reader can construct a machine learning model based on the dataset (Table 1) we provide for these publications and study the optimization of the machine learning model based on it. Alternatively, the dataset can be optimized using different algorithms and compared with the algorithms studied in the publications themselves. The open source databases we collected are summarized in Table 1.
+Table 1 Main ways to get the dataset
+
+
+
+
+Database
+Describe
+Web address
+
+
+
+
+Graphene structure set
+This is the initial configuration of a set of graphene nanosheets for computational research. Including graphene nanostructures of different sizes and shapes
+
+                      https://data.csiro.au/collections/collection/CIcsiro:10528v1
+                    
+
+
+Cambridge Structural Database (CSD)104
+Molecular crystal experimental data center collected by Cambridge crystallography
+
+                      https://www.ccdc.cam.ac.uk/
+                    
+
+
+Kaggle data set
+The website contains a large number of real datasets of various shapes, sizes, and formats
+
+                      https://www.kaggle.com/datasets
+                    
+
+
+Amazon data set
+The data source contains multiple data sets in different fields
+
+                      https://registry.opendata.aws
+                    
+
+
+UCI machine learning library
+It contains more than 100 datasets and categorizes the datasets according to the type of machine learning problem
+
+                      https://archive.ics.uci.edu/ml/datasets.html
+                    
+
+
+Google's data set search engine
+It is a toolbox that can search datasets by name
+
+                      https://toolbox.google.com/datasetsearch
+                    
+
+
+Microsoft dataset
+It contains a data repository in the public cloud and is used to facilitate collaboration among the global research community
+
+                      https://msropendata.com
+                    
+
+
+GDB105
+Hypothetical small organic molecule database
+
+                      https://gdb.unibe.ch/downloads
+                    
+
+
+Springer materials105
+The world's largest material data resource, a unique, high-quality numerical database
+
+                      https://materials.springer.com
+                    
+
+
+Crystallography Open Database (COD)105
+Structure data of organic, inorganic, and metal–organic compounds and minerals
+
+                      https://cod.ensicaen.fr
+                    
+
+
+
+
+The quality of the data in the database may be influenced by the large amount of data resulting in the quality not being guaranteed. In order to ensure the quantity and quality of data at the same time, we should ensure that the selected open source database has a certain degree of reliability. But for different engineering problems, it is difficult to give examples of the best database to solve the dataset. Because valid open source datasets should be conceptually verifiable and different databases need to be searched for the data involved in different domains. When the obtained dataset has missing values and outliers, we can also handle them according to the method of replacing the missing values with the average of a statistic that is close to the missing data, or replacing the missing values with the values calculated by it according to the statistical model. In turn, the authority and completeness of the dataset are satisfactory, and the subsequent building of the machine learning model is ensured to be smoother.101 Before building the machine learning model, we can normalize the data of the prepared dataset, which can improve the accuracy and computational convergence speed of the machine learning model.102,103
+
+4. Preparation of nanoparticles on microreactors through machine learning
+The size and geometry of nanoparticles have a direct effect on their properties in electronic, optical and sensing applications. However, with the current technical means of preparing nanoparticles on microreactors, there is still a certain backwardness in controlling their size and shape precisely to realize the control of their properties for applications. There are many factors affecting the properties of nanoparticles, and it requires high precision. We consider that machine learning possesses nonlinear mapping capability, self-learning adaptation capability and powerful predictive computing capability, so the use of machine learning-assisted synthesis of nanoparticles will definitely make a qualitative leap in terms of precise control.106,107 At present, nanoparticles that are widely followed by researchers in various fields mainly include Au and Ag nanoparticles, semiconductor quantum dot nanoparticles, and perovskite nanoparticles.108,109 Their unique optical properties and their ability to be used in many applications (for example, in bioimaging, solar cells, optoelectronic devices, and quantum information technology) make them marketable on a large scale and worthy of investigation. We highlight the above-mentioned representative nanoparticle preparation techniques by machine learning (Table 2).
+Table 2 Summary of major cases of machine learning-assisted preparation of nanoparticles
+
+
+
+
+Nanoparticles
+Reaction conditions
+Property of the target
+Algorithms
+Interpretation
+Ref.
+
+
+
+
+Au
+Reaction time, concentration of reagents, concentration ratio of Au salt to stabilizer, intensity, wavelength and focusing conditions
+Particle size
+ANN
+Precise control of SPR peaks is achieved by predicting particle size. Accuracy of 0.978 for the whole dataset
+
+117
+
+
+
+Au
+Velocity and length of segmented flow
+Particle size
+ANN
+Predictive power is ensured by adjusting the weights and activation functions of neurons in ANN
+
+51
+
+
+
+Au
+Concentration of reactants
+FWHM distribution and spectral position of SPR peaks
+Self-driving platform
+Machine learning algorithm-assisted platform autonomously searches for optimal multi-component formulations to ensure a small number of experiments
+
+116
+
+
+
+Ag
+Solution flux and concentration ratios
+Better particle size distribution and lower polydispersity
+Genetic algorithm
+Optimization by multi-objective genetic algorithm weighing the relationship between each objective
+
+118
+
+
+
+Ag
+Chemical composition of different reactants
+Shape and amplitude of the absorption spectrum
+DNN and BP
+Optimization by means of defining loss functions
+
+119
+
+
+
+CdSe
+Reaction temperature and time
+Reaction yields
+ANN
+The conditional-attribute relationships on the dataset are obtained by neural networks. The accuracy of the model reaches 0.977
+
+83
+
+
+
+PbS
+Reaction time, reaction temperature and reaction precursors
+Particle size
+DT and random forest
+Comparative analysis of different algorithms for prediction accuracy
+
+128
+
+
+
+CdSe
+Precursor flow ratio and reaction time
+Emission wavelength, FWHM and intensity
+Kriging
+Modeling by Kriging and thus predicting the reactor
+
+129
+
+
+
+Perovskites
+Different ligands and precursors
+Optical properties
+ANN
+ANN algorithm accelerates the synthesis path of chalcogenide
+
+132
+
+
+
+Perovskite nanosheets
+Reaction temperature, ligand concentration and ligand length
+Average thickness
+SVM
+The root mean square error of the predicted thickness of the SVM model is 0.7556
+
+148
+
+
+
+Copolymer nanoparticles
+Polymer ratio and the number of blocks in the copolymer
+Nano-particle size, polydispersity, and noscapine entrapment efficiency
+ANN and RSA
+Artificial neural networks can accurately predict the particle size of nanoparticles
+
+149
+
+
+
+
+
+4.1. Au and Ag nanoparticles
+The preparation of metal nanoparticles is mainly obtained by reducing metal salt precursors using reducing agents. This section covers the application of machine learning approaches in the synthesis of Au and Ag nanoparticles via reduction. There is a significant relationship between the size and morphology of metal nanoparticles and their optical properties, but this relationship is not visible from the crystalline matter of the nanoparticles. The size and morphology relationship of plasma can be found by resonance frequencies.110,111 Metal nanoparticles are the main substance for many emerging fields of research. The size of nanoparticles has a direct impact on optical and other properties, and being able to control their size is a skill we should have to master. Surface plasmon resonance (SPR) is one of the most important properties of metal nanoparticles. The wavelength and intensity of SPR depend on the shape and size of the nanoparticles. Metal nanoparticles are mainly used in sensing, solar cells, photothermal therapy, and so on. So the ability to precisely control the size of metal nanoparticles can lead to nanoparticles with specific applications.3
+The reaction rate can affect the Au nanoparticle size distribution.112 For example, important parameters for Au nanoparticle synthesis include the switching frequency of the microfluidic inlet syringe pump, which can regulate the reaction rate of the metal chemical reagents and reducing agents. The reaction time is generally inversely related to the diameter of the nanoparticles. Tetrachloroauric acid (HAuCl4) and sodium citrate (C6H5Na3O7) are used as the reaction system for the reduction synthesis of Au nanoparticles as reactants. The particle number of Au nanoparticles can be detected by scanning electron microscopy. The switching frequency of the micropump can control the reaction rate of the fluid. When the frequencies are 50 Hz, 100 Hz and 200 Hz, respectively, the particle size of the synthesized Au nanoparticles can be found to be different by scanning electron microscopy113 (Fig. 4a). In order to precisely control the particle size, we can build machine learning models to construct the relationship between them. SVM algorithms or ANN are often chosen as prediction models. The switching frequency of the micropump is used as the input variable and the diameter of the nanoparticles as the output target, thus building machine learning models for predicting new data and thus investigating the particle size distribution pattern at different frequencies.
+ Fig. 4  Prediction of metal nanoparticle synthesis. (a) Effect of nanoparticle frequency on the particle size distribution (particle size distribution of metal nanoparticles when the frequency is 50100 and 200 Hz as well as the physical image).113 (b) Training set of the ANN prediction model.115 (c) Test set of the ANN prediction model.115 (d) ANN prediction of the nanoparticle particle size.115 (e) Error analysis of ANN.115 
+Because the particle size of the synthesized Au nanoparticles differs depending on the reaction conditions, the effect of parameters such as reaction time, concentration of reaction reagents, concentration ratio of Au salt to stabilizer, intensity, wavelength and variation of focusing conditions on the size of Au nanoparticles is investigated.114 Then the variation parameters are used as input conditions and the size of Au nanoparticles as output targets, which are trained with the designed artificial neural network, and finally the trained neural network model is used to predict the size of Au nanoparticles.
+The completed artificial neural network trained in this project has two hidden layers and has three and seven neurons in each hidden layer, respectively.115 In order to verify the predictive power of the artificial neural network, an error analysis can be performed, (Fig. 4e).115 The relative error analysis of the performance of the 25 test datasets using the trained neural network model revealed a correlation factor of 0.959 for all relative errors less than 2.6%, which indicates that the neural network model has a more accurate performance. The correlation factors for the training set, validation set, and overall dataset were 0.992, 0.980, and 0.978, respectively.115 They all reach a high level. This is direct proof that the training of this neural network is successful, so we can further predict the Au nanoparticle size with the designed neural network model. The size of Au nanoparticles is predicted by inputting new data values (Fig. 4d). In order to verify how well this artificial neural network model matches the experimental results, the regression equation between the predicted value of the neural network model and the experimentally measured SPR absorption maximum (target) can be calculated (Fig. 4b and c). Where the dotted line indicates perfect correlation (R = 1), the dots indicate the true correlation between the target and output values, and the solid line indicates the best linear fit of the points. They reveal the reduced bias of the ANN model predictions from the experimental values.
+On segmented flow microreactors, the slip velocity between the two fluids and the mixing of the continuous phase segments are the primary reasons for the size of the nanoparticles. For example, Au nanoparticles are synthesized using NaBH4 and HAuCl4 as reaction reagents. First, it is verified that the particle size is independent of the inert fluid, and we exclude the effect of factors other than the flow rate on the nanoparticle size. Au nanoparticles are synthesized using toluene as the inert reagent, and the sizes of the Au nanoparticles are of particles when the residence time of the fluid is 20 s, 30 s and 40 s, respectively.51 The velocity between the two phase fields and the length of the segmented flow are used as the input of the neural network, and the particle size of the nanoparticles is used as the output of the neural network. The threshold value of the hidden layer, the activation function and the weight size of the neurons are adjusted according to the loss function, thus ensuring the accurate prediction capability of the constructed neural network model.
+The reactant concentrations in the reaction system for the synthesis of Au nanoparticles by the reaction of NaOH and HAuCl4 at full width at half peak (FWHM) particle size distribution are shown in Fig. 5.116 Red circles represent narrow particle size distribution and blue circles represent wider particle size distribution (Fig. 5a), as well as on the spectral position of the SPR peak: red circles represent large values and blue circles represent small values (Fig. 5b).
+ Fig. 5  Optimization of metal nanoparticle synthesis. (a) Joint effect of the reactant concentration ratio on the SPR peak of Au nanoparticle spectral properties.116 (b) Joint effect of the reactant concentration ratio on the FWHM of Au nanoparticle spectral properties.116 (c) Second order derivative absorption spectrum after genetic algorithm optimization.118 (d) Particle size analysis of nanoparticle intensity distribution after genetic algorithm optimization.118 
+In order to synthesize Ag nanoparticles with the smallest size, we can use the algorithm of artificial neural network for optimization. For example, it is found that the pumping rate of the inlet reagent, the concentration ratio of AgNO3 and optimum reactants and the mixing rate in the reaction system for the synthesis of AgNO3 have the most significant effects on the size of Ag nanoparticles. Therefore, in order to achieve the minimum size of Ag nanoparticles, the artificial neural network can be used to predict the above three influencing factors. In building the neural network model, a factorial d-optimal array can be used to construct relationships on the data set. Factors such as the weights of the neural network, the number of neurons and the choice of the activation function can be optimized using algorithms. Nowadays, the problem is that during the optimization process, the machine learning model can easily fall into the dilemma of local optimality and thus cannot search for the minimum value. So an improved particle swarm optimization algorithm (PSO) with two operators of crossover and variation can be used to train neural network schemes.117
+For the preparation of Ag nanoparticles, their solution flux and concentration ratios can be optimized using a multi-objective genetic algorithm to obtain Ag nanoparticles with better particle size distribution and lower polydispersity.118 The final second-order derivative absorption spectra of Ag nanoparticles (Fig. 5c) and the average particle size of the optimized Ag nanoparticles (Fig. 5d) are obtained.
+The optical properties of synthetic nanoparticles with anticipatory properties are tuned by multiple experimental attempts. In order to accelerate the synthesis, a machine learning-assisted microreactor can be used to prepare Ag nanoparticles. For example, a combination of Bayesian optimization with Gaussian distribution and deep neural networks trained on a large dataset can be used to obtain potential relationships between reaction conditions and the absorption spectral properties of nanoparticles, which are similar to “black boxes”. In turn, it is possible to accurately predict the desired nanoparticle properties. For the alternative model of Bayesian optimization, a Gaussian process model is chosen. The purpose of this model is to be used for the role of data collection in parameter space. The hyperparameters in the control Gaussian process can influence the shape of the regression function. The advantage is that the dataset can be small and with a small number of iterations. A grid search is added to the entire parameter space of the neural network model to select the optimal solution with the minimum of the loss function, and its purpose is to strengthen the regularization term in the optimization process.
+The loss function can be defined as.119 (3) (4)where Ameasuredmax is the maximum value of the measured absorption spectrum. In the study of Ag nanoparticle optimization one can first let the data run eight times in the algorithmic framework (Fig. 6a). After converging to a similar region of {QAgNO3, Qseed} space by both Bayesian optimization and the conditions suggested by the deep neural network (Fig. 6a), the 2D mapping value of the minimum of the loss function at the end of eight runs of the framework is finally the output (Fig. 6b). It can be seen that the deep neural network has the best performance capability in the total dimension.
+ Fig. 6  Optimization of metal nanoparticle synthesis. (a) Bayesian optimization (BO) and DNN optimization results and nanoparticle shapes.119 (b) 2D mapping relationship between BO and DNN optimization for minimum loss.119 
+4.2. Quantum dot
+Nanoparticles with dimensions close to or smaller than the Bohr exciton radius (2–10 nm) and with continuous energy bands confined to discrete energy levels (quantum confinement effect) are called quantum dots.120,121 Generally speaking, quantum dots are synthesized by thermal injection and heating methods. Thermal injection means that the reagent is rapidly injected into a hot solvent containing a surfactant. However, the heating method refers to an intermittent process that is accomplished by heating the reaction mixture until it reaches the temperature of crystallization. In recent years, the development of research breakthroughs in quantum dots in the fields of optical sensing, optics and light wave emission has led to more attention to their performance. In particular, aspects such as solar cell optimization and laser threshold optimization are still mainly influenced by improving nanoparticle monodispersity.122–126 We can use machine learning to train experimentally collected datasets and construct neural network structures for the reaction parameter space with synthesized monodisperse PbS quantum dots.127 This strategy allows PbS quantum dots to have well-defined exciton absorption peaks. The results show exciton absorption peaks of 55 meV and 24 meV at nanoparticle particle sizes of 950 nm and 1500 nm, respectively.
+Because there is always some error in the prediction made by neural networks (Fig. 7a), a new strategy is considered that is less affected by local noise and provides a broader range distribution of the effect of each factor. In order to optimize the neural network model, the prediction points can be searched more precisely. A Bayesian algorithm optimization model is proposed. Once the neural network predicts the optimal position in the dataset for new data, the Bayesian algorithm samples around the optimal position until the closest actual data is accurately searched for. The scatter distribution of the training and test sets in the neural network for various combinations of influences (Fig. 7b and c) is reported. This method does not require a large dataset to be collected experimentally, and requires only a small number of combined factors to make accurate predictions for a specific label. This would be a meaningful improvement, substantially reducing the time needed for the number of trials. Most of the activation functions of neurons in neural networks are nonlinearly related, so that they can better simulate real-world problems. Nonlinear regression has potential for application in quantum dot synthesis.
+ Fig. 7  Prediction of quantum dot synthesis. (a) Prediction error versus time for training loss and true value loss.127 (b) True value versus predicted value for training set in a.127 (c) True value versus predicted value for test set in a.127 (d) Predictive ability of CdSe quantum dot reaction yield.83 (e) The effect of reaction time and reaction temperature on CdSe quantum dot reaction yield.83 
+In experiments for the preparation of nanoparticles, the properties of the synthesized nanoparticles are extremely sensitive to the reaction conditions. In order to investigate the connection between the combined factors, artificial neural networks have been used for their training and analysis. More than 3000 experimental data collected on a microreactor for the CdSe nanoparticle reaction system have been used to train the neural network in order to find the relationship between reaction conditions and properties. The dataset is pre-processed before starting. The final construction of the machine learning model takes 2–5 hours.83 The experimental results show that the model has good predictive power for the reaction yield (RY) of CdSe with a validation coefficient R = 0.937 (Fig. 7d). The neural network can well fit the predicted mapping relationship between the reaction temperature, reaction time and CdSe quantum dot yield (Fig. 7e). The reaction yield of CdSe quantum dots is performed by automatic analysis of UV-visible and photoluminescence spectral data using a developed spectral peak analysis program. This analysis provides the wavelength, peak intensity, half-peak full width and peak area of the main peak. Based on the results, the particle size and CdSe reaction yield can be estimated. Fig. 7e shows the data interpolation results. A 3D surface plot between reaction temperature, reaction time and reaction yield is shown. It can be seen from the plot that the predicted reaction yield of CdSe reaches the maximum value around 55% when the reaction temperature is 300 °C and the reaction time is 15 s.
+The highly efficient prediction of nanoparticle size by machine learning models to obtain specific nanoparticle properties is a problem that should be widely focused on. This will enable the prediction of the quantum dot size to meet the expected performance requirements. At present, the progress in this research is that machine learning can be applied to assist in the synthesis of quantum dots and a large amount of available informative data from previous papers can be collected. From the machine learning algorithms in the current experiments, it can be seen that the most influential factors on the particle size of quantum dots are the reaction time, reaction temperature and reaction precursors. Therefore, they can be used as input variables for machine learning to predict the size of quantum dots. In the study, decision trees (Fig. 8a), random forests (Fig. 8b) and augmented machine learning (Fig. 8c) are used to train and predict the dataset, respectively.128 The most accurate prediction ability of machine learning is found by error analysis calculation (Fig. 8d).
+ Fig. 8  Prediction of quantum dot synthesis. (a) CdSe quantum dot decision tree regression model prediction plot (blue) versus observation plot (dark red).128 (b) Prediction plot versus observation plot of CdSe quantum dot random forest regression model.128 (c) Prediction plot versus observation plot of CdSe quantum dot enhanced machine learning algorithm.128 (d) Importance of each variable in the enhanced machine learning model.128 
+In the reaction system for the synthesis of CdSe nanoparticles, the precursor flux ratio R and the reaction time have a direct effect on the emission wavelength, FWHM and intensity. The relationship between them is represented by the three-dimensional optimal surface (Fig. 9a–c). The precursor flux ratio R can be defined by the following equation:129 (5)where FCd and FSe are the inlet flow rates of the cadmium and selenium precursor streams, respectively.
+ Fig. 9  Optimization of quantum dot synthesis. (a) 3D spatial surface of the effect of time and R-boundary on the maximum value of all parameter combinations in the reaction system for CdSe quantum dot synthesis.129 (b) FWHM value.129 (c) Intensity.129 (d) Effect of injection rate of FCdO and FSe on the value of the dissatisfaction factor (DC). (At this time the reaction temperature is 220 °C and the target wavelength is 530 nm. Red and blue markers represent the reaction conditions specified during the sampling of the control algorithm.)130 (e) Variation of the dissatisfaction factor (black markers) and y-optimal value (red markers) with the number of measurements (the y-optimal value of 0.185 was obtained after the 71st iteration of optimization).130 (f) Variation of the peak band-side emission with wavelength for 71 measurements (the vertical dashed line indicates the target wavelength).130 
+In the reaction system for the preparation of CdSe nanoparticles, the reactants injected at the inlet of the microreactor are solutions of CdO and Se, respectively, and the heating is to be implemented during the reaction. The emission spectra of the synthesized nanoparticles are measured by an online spectrometer. A control algorithm is defined in the study, using the experimentally obtained data as input. The nonlinear function that implements the algorithm is defined as a scalar “dissatisfaction factor”.130 Thereby, a three-dimensional spatial scatter distribution of the dissatisfaction coefficient is obtained (Fig. 9d). Then the reaction conditions are automatically iterated by optimization until the minimization of the coefficients is satisfactory. As the number of optimization updates increases, the wavelength gets closer to the target wavelength. Finally, after the 71st optimization, the target wavelength (Fig. 9f) is obtained.
+4.3. Perovskite
+The main steps for the preparation of perovskite by microfluidics are as follows: a polar solution consisting of lead halide, tin halide, cesium halide, a polar solvent and a stabilizer is used as the flow phase a, and a non-polar solvent is used as the flow phase b. The flow ratio of flow phase a to flow phase b is 1: (10–120). Finally, perovskite is synthesized by the reaction of a two-phase solution. Perovskite has superior optoelectronic properties and has a broad spectrum of applications in optoelectronic devices. It is an attractive and high priority material candidate. It can be used for rapid development and flow synthesis, modular and reconfigurable flow synthesis platforms equipped with precursor formulations. What is more, it is subject to controlled flow synthesis and field diagnostic modules. More importantly, it allows for high-throughput experiments and real-time access to the photovoltaic properties of lead halide perovskites.
+In the microfluidic preparation of perovskite, the reaction temperature and surfactant have a direct effect on the size of perovskite nanoparticles.131 The particle size distributions of the synthesized perovskite nanoparticles at different temperatures were different (Fig. 10a). What is more, there is also the role of the particle size when the reaction surfactant is different (Fig. 10b and c).
+ Fig. 10  Prediction of perovskite synthesis. (a) Variation of particle size distribution with reaction time at different temperatures in the reaction system for the synthesis of perovskite.131 (b) Low surfactant loading.131 (c) High surfactant loading.131 (d) Effect of precursors ZnI2 and ZnBr2 on the objective function.132 (e) Effect of oleic acid (OA) and oleylamine (OLA) on the objective function.132 (f) Model prediction results.132 
+In the absence of any a priori knowledge, 11 accurately customized quantum dot synthesis ingredients have been obtained using artificial neural networks, using under 210 ml of total starting quantum dot solution, and without user-selected experiments for 30 hours.132 Spatial datasets of reaction conditions, model-predicted output values, and parameter space for studying the effect of different ligands on the optical properties of perovskites, that is, the effect of precursors on the target (Fig. 10d), and parameter space surfaces for the effect of oleic acid (OA) and oleylamine (OLA) on the target (Fig. 10e) are investigated. The order of the sampling arrows for the corresponding output parameters predicted by the model (Fig. 10f).
+In the reaction system for the synthesis of perovskites, there can be many permutations of reaction conditions. However, each group has different timings, material cost and properties of the synthesis. The choice for the best combination is a primary challenge.133–137 In the study, the best combination of recipes can be determined using an experimental scheme for autonomous microreactor synthesis developed within a global learning framework. The new neural network has 500 randomly structured forward feedback neural networks constructed. An objective function z(x)138 is defined in each of the optimized gaps. It is defined by the following equation: (6)
+The entire demonstration process of luminescence spectra of perovskites with eight independent input parameters used for the real-time monitoring of microreactor synthesis is investigated. Its optimization results exist for three target properties with optimized output (Fig. 11a). The optimized luminescence spectra obtained for 10 different fluxes of separately optimized perovskites are available on the autonomous intelligent microfluidic experimental platform (Fig. 11b). The model constructs a system that enables an intelligent platform for machine active learning, optimization and production of perovskites with the desired optoelectronic properties on demand.
+ Fig. 11  Optimization of perovskite synthesis. (a) Sample output values of 10 optimizations for different target emission colors.138 (b) Luminescence spectra of 10 optimized perovskites.138 (c) Variation of median emission wavelengths of the four ligands with temperature (constant alkali-acid ratio of 1:0).138 (d) Variation of median emission wavelengths of the four ligands with the alkali-acid ratio (constant temperature of 140 °C).139 (e) Variation of the tetrad range of the four ligands with temperature (constant alkali-acid ratio of 1:0).139 (f) Variation of the tetrad range of the four ligands with alkali-acid ratio (constant temperature of 140 °C).139 
+The space of reaction conditions for synthesizing perovskite nanoparticles is tedious, so finding conditions with the desired set of reaction spaces is a matter of extensive experimentation. It is time consuming to debug. In general, in the reaction system of synthesized perovskites, the reaction temperature, the acid–base ligand concentration ratio, and the quantum confinement structure have a direct effect on their optical properties.139 The emission wavelengths and quadrature ranges of the four ligands are different at a constant base to acid ratio and constant temperature (Fig. 11c–f). The optimization of the maximum value of the luminescence intensity and the minimum value of the emission bandwidth by the functional variation of the reaction factors is the main purpose of the next worthwhile study.
+5. Conclusion and outlook
+In this paper, we mainly review the methods used in recent years to prepare nanoparticles using microfluidic techniques, and mainly describe the working principle of machine learning, as well as review the progress of work on nanoparticle preparation assisted by machine learning. The research on machine learning in aiding nanoparticle synthesis can be summarized in two main areas:
+(1) Supervised learning in machine learning predicts the specific optical, electronic and sensing properties of nanoparticles after synthesis. In general, we can take reaction conditions (for example, reaction temperature, reaction time, concentration ratio of chemical reagents, reaction precursors, reaction ligands, type of solution reagents, channel structure of the microreactor, external stimuli and so on) as input variables and nanoparticle properties as output targets (for example, nanoparticle size, morphology, surface chemistry and so on). Through the selection of different machine learning algorithms to construct the mapping relationships between them, we are able to precisely control the nanoparticles with the desired functions. Currently, there are still challenges in controlling nanoparticle synthesis on microreactors. However, the use of machine learning to assist nanoparticle synthesis will bring new breakthroughs and advances.
+(2) In the neural network models for the prediction of nanoparticles, hyperparameters such as the number of neurons and the number of hidden layers have a direct impact on the predictive power. On the one hand, Bayesian optimization of hyperparameters can be performed by defining loss functions to make the prediction model more authoritative. On the other hand, “unsatisfactory coefficients” can be defined according to the experimental conditions. Finally the control algorithm can be optimized iteratively until the optimization is satisfactory and the target emission wavelength is reached.
+(3) The principle of fitting functions with mathematical modeling is least squares, which is a mathematical optimization technique. It finds the best function match for the data by minimizing the squared error. However, the fitting accuracy of this method is not high, and the time cost of fitting is huge for large data sets. Compared to traditional modeling, machine learning-assisted preparation of nanoparticles takes much less time to train the data, and the accuracy can be improved by optimizing the model. Among the various algorithms of machine learning, artificial neural networks are the most frequently applied compared to other algorithms. It can approximate arbitrarily complex nonlinear relationships very well. All quantitative or qualitative information is equally distributed among the neurons within the network, so it has strong robustness and fault tolerance. This powerful predictive capability further proves that it is more robust for application to assist in the preparation of nanoparticles.
+However, with the current technology, even machine learning-assisted synthesis of nanoparticles generally has some problems. On the one hand, it is difficult to achieve precise synthesis control. The method of characterizing nanoparticle size by collecting the emission spectra of nanoparticles through an online spectrometer introduces some errors. For example, emission spectra with similar shapes and wavelengths may correspond to nanoparticles with different particle sizes.140–142 This also represents a possible bias in the nanoparticle size predicted by neural networks trained on large datasets. On the other hand, the issue of how to address the large time and effort investment required for the machine learning-assisted synthesis of nanoparticles needs to be explored and addressed in depth.
+To address the error problem mentioned above, devices such as Fourier transform ultraviolet spectrometers and infrared spectrometers are used to characterize the size of nanoparticles are worth being considered. They can be combined with online spectrometers to characterize nanoparticles, and thus the data generated for training neural networks crossover should greatly improve the accuracy of their predictions.143 Secondly, dynamic light scattering is one of the promising methods for estimating optical dimensions in a manner commensurate with fast measurement timescales. Therefore, the dynamic light scattering approach is used to estimate the particle size of nanoparticles which would make high throughput valuable. Moreover, to solve the problem of being able to accurately measure the size of nanoparticles, transmission electron microscopy is used to acquire nanoparticle images online,144 and then the method of processing the images by computer to identify the centers and contours of nanoparticles to determine their size is also expected. Convolutional neural networks145–147 can process, identify, and segment images very well. If convolutional neural networks can be used to measure the size of nanoparticles, this will also provide advances for the effective and accurate control of machine learning-assisted preparation of nanoparticles.
+In the research of machine learning-assisted synthesis of nanoparticles, the problem of reusing machine learning to assist in the construction of feature attribute models when training different kinds of nanoparticles is faced. This would again require a significant amount of time to usher in the training model. To solve the above commonly faced time cost problem, migration learning can be used to help train new models by migrating the trained model parameters to the new model. This can substantially reduce the time cost of training the model. Since most of the data or tasks are related, migration learning allows us to somehow share the learned model parameters to the new model, thus accelerating and optimizing the learning efficiency of the model without the need to learn it from scratch as most networks do. Finally, the current immaturity of the machine learning-assisted preparation of nanoparticle technology means that many challenges remain, but this does not hinder its novelty and great research potential.
+Author contributions
+Honglin Lv: Conceptualization, methodology, writing – original draft. Xueye Chen: Supervision, writing – review and editing, project administration.
+Conflicts of interest
+The authors declare no competing financial or non-financial interests.
+Acknowledgements
+This work was supported by Young Taishan Scholars Program of Shandong Province of China (tsqn202103091) and Shandong Provincial Natural Science Foundation (ZR2021JQ).
+References
+N. Hao, Y. Nie and J. X. J. Zhang, Microfluidic synthesis of functional inorganic micro-/nanoparticles and applications in biomedical engineering, Int. Mater. Rev., 2018, 63(8), 461–487 CrossRef CAS .
+P. Paletti, 
+            et al., Two-dimensional electric-double-layer Esaki diode, npj 2D Mater. Appl., 2019, 3(1), 1–7 CrossRef CAS .
+H. Tao, 
+            et al., Nanoparticle synthesis assisted by machine learning, Nat. Rev. Mater., 2021, 1–16 Search PubMed .
+R. Staacke, 
+            et al., Highly transparent conductors for optical and microwave access to spin-based quantum systems, npj Quantum Inf., 2019, 5(1), 1–5 CrossRef .
+J. Boken, S. K. Soni and D. Kumar, Microfluidic synthesis of nanoparticles and their biosensing applications, Crit. Rev. Anal. Chem., 2016, 46(6), 538–561 CrossRef CAS .
+D. Liu, 
+            et al., Current developments and applications of microfluidic technology toward clinical translation of nanomedicines, Adv. Drug Delivery Rev., 2018, 128, 54–83 CrossRef CAS PubMed .
+A.-G. Niculescu, 
+            et al., Fabrication and Applications of Microfluidic Devices: A Review, Int. J. Mol. Sci., 2021, 22(4), 2011 CrossRef CAS PubMed .
+J. P. Martins, G. Torrieri and H. A. Santos, The importance of microfluidics for the preparation of nanoparticles as advanced drug delivery systems, Expert Opin. Drug Delivery, 2018, 15(5), 469–479 CrossRef CAS PubMed .
+P. M. Valencia, 
+            et al., Microfluidic platform for combinatorial synthesis and optimization of targeted nanoparticles for cancer therapy, ACS Nano, 2013, 7(12), 10671–10680 CrossRef CAS PubMed .
+Z. Wang, 
+            et al., Microfluidics-prepared uniform conjugated polymer nanoparticles for photo-triggered immune microenvironment modulation and cancer therapy, ACS Appl. Mater. Interfaces, 2019, 11(12), 11167–11176 CrossRef CAS PubMed .
+S. J. Shepherd, D. Issadore and M. J. Mitchell, Microfluidic formulation of nanoparticles for biomedical applications, Biomaterials, 2021, 274, 120826 CrossRef CAS PubMed .
+S. Ding, 
+            et al., Microfluidic nanoprecipitation systems for preparing pure drug or polymeric drug loaded nanoparticles: an overview, Expert Opin. Drug Delivery, 2016, 13(10), 1447–1460 CrossRef CAS PubMed .
+M. Maeki, 
+            et al., Advances in microfluidics for lipid nanoparticles and extracellular vesicles and applications in drug delivery systems, Adv. Drug Delivery Rev., 2018, 128, 84–100 CrossRef CAS PubMed .
+H. Bachratý, 
+            et al., Applications of machine learning for simulations of red blood cells in microfluidic devices, BMC Bioinf., 2020, 21(2), 1–15 Search PubMed .
+E. Goldberg, 
+            et al., Prediction of nanoparticle transport behavior from physicochemical properties: machine learning provides insights to guide the next generation of transport models, Environ. Sci.: Nano, 2015, 2(4), 352–360 RSC .
+S. A. Bini, Artificial intelligence, machine learning, deep learning, and cognitive computing: what do these terms mean and how will they impact health care?, J. Arthroplasty, 2018, 33(8), 2358–2361 CrossRef PubMed .
+D. E. Jones, H. Ghandehari and J. C. Facelli, A review of the applications of data mining and machine learning for the prediction of biomedical properties of nanoparticles, Comput. Methods Programs Biomed., 2016, 132, 93–103 CrossRef .
+Y. He, K.-J. Kim and C.-H. Chang, Continuous, size and shape-control synthesis of hollow silica nanoparticles enabled by a microreactor-assisted rapid mixing process, Nanotechnology, 2017, 28(23), 235602 CrossRef PubMed .
+M. Lundqvist, 
+            et al., Nanoparticle size and surface properties determine the protein corona with possible implications for biological impacts, Proc. Natl. Acad. Sci. U. S. A., 2008, 105(38), 14265–14270 CrossRef CAS .
+C. D. Walkey, 
+            et al., Nanoparticle size and surface chemistry determine serum protein adsorption and macrophage uptake, J. Am. Chem. Soc., 2012, 134(4), 2139–2147 CrossRef CAS PubMed .
+S. Kumar and S. Ganesan, Numerical simulation of nanocrystal synthesis in a microfluidic reactor, Comput. Chem. Eng., 2017, 96, 128–138 CrossRef CAS .
+M. A. Wahab and E. Y. Erdem, Multi-step microfludic reactor for the synthesis of hybrid nanoparticles, J. Micromech. Microeng., 2020, 30(8), 085006 CrossRef .
+Q. Lang, 
+            et al., In-plane microvortices micromixer-based AC electrothermal for testing drug induced death of tumor cells, Biomicrofluidics, 2016, 10(6), 064102 CrossRef PubMed .
+H. Sun, 
+            et al., Three-Fluid Sequential Micromixing-Assisted Nanoparticle Synthesis Utilizing Alternating Current
+Electrothermal Flow, Ind. Eng. Chem. Res., 2020, 59(27), 12514–12524 CrossRef CAS .
+H. Van Nguyen, 
+            et al., Centrifugal microfluidic device for the high-throughput synthesis of Pd@ AuPt core–shell nanoparticles to evaluate the performance of hydrogen peroxide generation, Lab Chip, 2020, 20(18), 3293–3301 RSC .
+S. Mandal, 
+            et al., Gold-nanoparticle-embedded microchannel array for enhanced power generation, Lab Chip, 2020, 20(15), 2717–2723 RSC .
+C. Walgama, 
+            et al., Hybrid paper and 3D-printed microfluidic device for electrochemical detection of Ag nanoparticle labels, Lab Chip, 2020, 20(9), 1648–1657 RSC .
+P. M. Valencia, 
+            et al., Microfluidic platform for combinatorial synthesis and optimization of targeted nanoparticles for cancer therapy, ACS Nano, 2013, 7(12), 10671–10680 CrossRef CAS .
+J. Wang, 
+            et al., Structural evolution and pulverization of tin nanoparticles during lithiation-delithiation cycling, J. Electrochem. Soc., 2014, 161(11), F3019 CrossRef CAS .
+M. Goudarzi, 
+            et al., Biosynthesis and characterization of silver nanoparticles prepared from two novel natural precursors by facile thermal decomposition methods, Sci. Rep., 2016, 6(1), 1–13 CrossRef PubMed .
+K. Kondo, S. Kato and T. Niwa, Mechanical particle coating using polymethacrylate nanoparticle agglomerates for the preparation of controlled release fine particles: The relationship between coating performance and the characteristics of various polymethacrylates, Int. J. Pharm., 2017, 532(1), 318–327 CrossRef CAS PubMed .
+M. Iijima, 
+            et al., Simultaneous epoxy grafting on SiO2 nanoparticles during bead milling and their effects on the mechanical properties of epoxy-based composites, Adv. Powder Technol., 2019, 30(9), 1782–1788 CrossRef CAS .
+K. Nejati and R. Zabihi, Preparation and magnetic properties of nano size nickel ferrite particles using hydrothermal method, Chem. Cent. J., 2012, 6(1), 1–6 CrossRef PubMed .
+M. I. Khalil, 
+            et al., Synthesis and characterization of ZnO nanoparticles by thermal decomposition of a curcumin zinc complex, Arabian J. Chem., 2014, 7(6), 1178–1184 CrossRef CAS .
+E. Chiesa, 
+            et al., The microfluidic technique and the manufacturing of polysaccharide nanoparticles, Pharmaceutics, 2018, 10(4), 267 CrossRef CAS PubMed .
+V. Bal and R. Bandyopadhyaya, Mechanistic aspects in the formation of nano-and submicron particles in a batch and a continuous microfluidic reactor: Experiment, modeling and simulation, Chem. Eng. J., 2019, 371, 43–54 CrossRef CAS .
+X. Zhao, 
+            et al., Microfluidic generation of nanomaterials for biomedical applications, Small, 2020, 16(9), 1901943 CrossRef CAS PubMed .
+M. B. Kulkarni and S. G. Goel, Microfluidic devices for synthesizing nanomaterials–A review, Nano Express, 2020, 1(3), 032004 CrossRef .
+Z. Han and X. Jiang, Microfluidic synthesis of functional nanoparticles, Nanotechnol. Microfluid., 2020, 319–345 CAS .
+S. Gómez-de Pedro, M. Puyol and J. Alonso-Chamarro, Continuous flow synthesis of nanoparticles using ceramic microfluidic devices, Nanotechnology, 2010, 21(41), 415603 CrossRef PubMed .
+C.-X. Zhao, 
+            et al., Nanoparticle synthesis in microreactors, Chem. Eng. Sci., 2011, 66(7), 1463–1479 CrossRef CAS .
+O. Kašpar, 
+            et al., Influence of channel height on mixing efficiency and synthesis of iron oxide nanoparticles using droplet-based microfluidics, RSC Adv., 2020, 10(26), 15179–15189 RSC .
+A. Jahn, 
+            et al., Preparation of nanoparticles by continuous-flow microfluidics, J. Nanopart. Res., 2008, 10(6), 925–934 CrossRef CAS .
+J. Wang, 
+            et al., A microfluidic tubing method and its application for controlled synthesis of polymeric nanoparticles, Lab Chip, 2014, 14(10), 1673–1677 RSC .
+S. Tao, 
+            et al., Continuous synthesis of hedgehog-like Ag–ZnO nanoparticles in a two-stage microfluidic system, RSC Adv., 2016, 6(51), 45503–45511 RSC .
+H. W. Kang, 
+            et al., Continuous synthesis of zinc oxide nanoparticles in a microfluidic system for photovoltaic application, Nanoscale, 2014, 6(5), 2840–2846 RSC .
+K. Zhang, 
+            et al., Continuous microfluidic mixing and the highly controlled nanoparticle synthesis using direct current-induced thermal buoyancy convection, Microfluid. Nanofluid., 2020, 24(1), 1–14 CrossRef CAS .
+Y. He, K.-J. Kim and C.-H. Chang, Segmented Microfluidic Flow Reactors for Nanomaterial Synthesis, Nanomaterials, 2020, 10(7), 1421 CrossRef CAS PubMed .
+D. V. Ravi Kumar, B. L. V. Prasad and A. A. Kulkarni, Segmented flow synthesis of Ag nanoparticles in spiral microreactor: Role of continuous and dispersed phase, Chem. Eng. J., 2012, 192, 357–368 CrossRef CAS .
+K.-J. Kim, 
+            et al., Continuous microwave-assisted gas–liquid segmented flow reactor for controlled nucleation and growth of nanocrystals, Cryst. Growth Des., 2014, 14(11), 5349–5355 CrossRef CAS .
+V. S. Cabeza, 
+            et al., Size-Controlled Flow Synthesis of Gold Nanoparticles Using a Segmented Flow Microfluidic Platform, Langmuir, 2012, 28(17), 7007–7013 CrossRef PubMed .
+S. Abalde-Cela, 
+            et al., Droplet microfluidics for the highly controlled synthesis of branched gold nanoparticles, Sci. Rep., 2018, 8(1), 1–6 CAS .
+M. A. Maleki, 
+            et al., Effects of magnetic nanoparticles on mixing in droplet-based microfluidics, Phys. Fluids, 2019, 31(3), 032001 CrossRef .
+S. Sachdev, 
+            et al., Synthesis of gold nanoparticles using the interface of an emulsion droplet, Langmuir, 2017, 33(22), 5464–5472 CrossRef CAS PubMed .
+I. Shestopalov, J. D. Tice and R. F. Ismagilov, Multi-step synthesis of nanoparticles performed on millisecond time scale in a microfluidic droplet-based system, Lab Chip, 2004, 4(4), 316–321 RSC .
+J. H. Jung, 
+            et al., Homogeneous biogenic paramagnetic nanoparticle synthesis based on a microfluidic droplet generator, Angew. Chem., Int. Ed., 2012, 51(23), 5634–5637 CrossRef CAS PubMed .
+M. Reza Rasouli and M. Tabrizian, An ultra-rapid acoustic micromixer for synthesis of organic nanoparticles, Lab Chip, 2019, 19(19), 3316–3325 RSC .
+J. Wang, 
+            et al., Droplet microfluidics for the production of microparticles and nanoparticles, Micromachines, 2017, 8(1), 22 CrossRef .
+T. Jaouhari, 
+            et al., Process intensification for the synthesis of ultra-small organic nanoparticles with supercritical CO2 in a microfluidic system, Chem. Eng. J., 2020, 397, 125333 CrossRef CAS .
+J. W. Choi, 
+            et al., Droplet-based synthesis of homogeneous gold nanoparticles for enhancing HRP-based ELISA signals, BioChip J., 2020, 14(3), 298–307 CrossRef CAS .
+J. Timoshenko, 
+            et al., Supervised machine-learning-based determination of three-dimensional structure of metallic nanoparticles, J. Phys. Chem. Lett., 2017, 8(20), 5091–5098 CrossRef PubMed .
+V. Rizzuto, 
+            et al., Combining microfluidics with machine learning algorithms for RBC classification in rare hereditary hemolytic anemia, Sci. Rep., 2021, 11(1), 1–12 CrossRef PubMed .
+T. Lookman, 
+            et al., Active learning in materials science with emphasis on adaptive sampling using uncertainties for targeted design, npj Comput. Mater., 2019, 5(1), 1–17 CrossRef .
+A. S. Barnard, George Opletal, Selecting machine learning models for metallic nanoparticles, Nano Futures, 2020, 4(3), 035003 CrossRef .
+K. Bang, 
+            et al., Accelerated mapping of electronic density of states patterns of metallic nanoparticles via machine-learning, Sci. Rep., 2021, 11(1), 1–11 CrossRef PubMed .
+J. W. Khor, 
+            et al., Using machine learning to discover shape descriptors for predicting emulsion stability in a microfluidic channel, Soft Matter, 2019, 15(6), 1361–1372 RSC .
+D. E. Jones, H. Ghandehari and J. C. Facelli, A review of the applications of data mining and machine learning for the prediction of biomedical properties of nanoparticles, Comput. Methods Programs Biomed., 2016, 132, 93–103 CrossRef PubMed .
+R. Jinnouchi and R. Asahi, Predicting catalytic activity of nanoparticles by a DFT-aided machine-learning algorithm, J. Phys. Chem. Lett., 2017, 8(17), 4279–4283 CrossRef CAS PubMed .
+X. Yan, 
+            et al., In silico profiling nanoparticles: predictive nanomodeling using universal nanodescriptors and various machine learning approaches, Nanoscale, 2019, 11(17), 8352–8362 RSC .
+N. C. Frey, 
+            et al., Prediction of synthesis of 2D metal carbides and nitrides (MXenes) and their precursors with positive and unlabeled machine learning, ACS Nano, 2019, 13(3), 3031–3041 CrossRef CAS PubMed .
+J. Timoshenko, 
+            et al., Probing atomic distributions in mono-and bimetallic nanoparticles by supervised machine learning, Nano Lett., 2018, 19(1), 520–529 CrossRef PubMed .
+M. Hassoun, 
+            et al., A droplet-based microfluidic chip as a platform for leukemia cell lysate identification using surface-enhanced Raman scattering, Anal. Bioanal. Chem., 2018, 410(3), 999–1006 CrossRef CAS PubMed .
+H. Dies, 
+            et al., Rapid identification and quantification of illicit drugs on nanodendritic surface-enhanced Raman scattering substrates, Sens. Actuators, B, 2018, 257, 382–388 CrossRef CAS .
+M. Khatibinia, 
+            et al., Modeling mechanical strength of self–compacting mortar containing nanoparticles using wavelet–based support vector machine, Comput. Concr., 2016, 18(6), 1065–1082 Search PubMed .
+X. Xu, 
+            et al., Dynamic liquid surface enhanced Raman scattering platform based on soft tubular microfluidics for label-free cell detection, Anal. Chem., 2019, 91(13), 7973–7979 CrossRef CAS PubMed .
+Y. T. Chau and C. W. Yap, Quantitative nanostructure–activity relationship modelling of nanoparticles, RSC Adv., 2012, 2(22), 8489–8496 RSC .
+E. S. Levy, 
+            et al., A Systematic Approach for Liposome and Lipodisk Preclinical Formulation Development by Microfluidic Technology, AAPS J., 2021, 23(6), 1–12 CrossRef PubMed .
+T. X. Trinh, 
+            et al., Curation of datasets, assessment of their quality and completeness, and nanoSAR classification model development for metallic nanoparticles, Environ. Sci.: Nano, 2018, 5(8), 1902–1910 RSC .
+J. Riordon, 
+            et al., Deep learning with microfluidics for biotechnology, Trends Biotechnol., 2019, 37(3), 310–324 CrossRef CAS PubMed .
+R. Liu, 
+            et al., Causal inference machine learning leads original experimental discovery in CdSe/CdS core/shell nanoparticles, J. Phys. Chem. Lett., 2020, 11(17), 7232–7238 CrossRef CAS PubMed .
+Y. Orimoto, 
+            et al., Application of artificial neural networks to rapid data analysis in combinatorial nanoparticle syntheses, J. Phys. Chem. C, 2012, 116(33), 17885–17896 CrossRef CAS .
+J. Youshia, M. E. Ali and A. Lamprecht, Artificial neural network based particle size prediction of polymeric nanoparticles, Eur. J. Pharm. Biopharm., 2017, 119, 333–342 CrossRef CAS PubMed .
+N. Sizochenko, 
+            et al., Evaluating genotoxicity of metal oxide nanoparticles: Application of advanced supervised and unsupervised machine learning techniques, Ecotoxicol. Environ. Saf., 2019, 185, 109733 CrossRef CAS PubMed .
+A. J. Parker and A. S. Barnard, Machine learning reveals multiple classes of diamond nanoparticles, Nanoscale Horiz., 2020, 5(10), 1394–1399 RSC .
+I. Constantinou, 
+            et al., Self-learning microfluidic platform for single-cell imaging and classification in flow, Micromachines, 2019, 10(5), 311 CrossRef PubMed .
+J. Youshia, M. E. Ali and A. Lamprecht, Artificial neural network based particle size prediction of polymeric nanoparticles, Eur. J. Pharm. Biopharm., 2017, 119, 333–342 CrossRef CAS PubMed .
+J. Li, 
+            et al., AI applications through the whole life cycle of material discovery, Matter, 2020, 3(2), 393–432 CrossRef .
+R. M. Hathout and A. A. Metwally, Towards better modelling of drug-loading in solid lipid nanoparticles: Molecular dynamics, docking experiments and Gaussian Processes machine learning, Eur. J. Pharm. Biopharm., 2016, 108, 262–268 CrossRef CAS PubMed .
+L. A. Bawazer, 
+            et al., Combinatorial microfluidic droplet engineering for biomimetic material synthesis, Sci. Adv., 2016, 2(10), e1600567 CrossRef PubMed .
+N. V. Orupattur, S. H. Mushrif and V. Prasad, Catalytic materials and chemistry development using a synergistic combination of machine learning and ab initio methods, Comput. Mater. Sci., 2020, 174, 109474 CrossRef CAS .
+J. Bemetz, 
+            et al., Microfluidic-based synthesis of magnetic nanoparticles coupled with miniaturized NMR for online relaxation studies, Anal. Chem., 2018, 90(16), 9975–9982 CrossRef CAS PubMed .
+K. Juganson, 
+            et al., NanoE-Tox: New and in-depth database concerning ecotoxicity of nanomaterials, Beilstein J. Nanotechnol., 2015, 6(1), 1788–1804 CrossRef CAS PubMed .
+R. Ramprasad, 
+            et al., Machine learning in materials informatics: recent applications and prospects, npj Comput. Mater., 2017, 3(1), 1–13 CrossRef .
+Z. Ban, 
+            et al., Machine learning predicts the functional composition of the protein corona and the cellular recognition of nanoparticles, Proc. Natl. Acad. Sci. U. S. A., 2020, 117(19), 10492–10499 CrossRef CAS PubMed .
+M. Wang, 
+            et al., Nanomaterials discovery and design through machine learning, Small Methods, 2019, 3(5), 1900025 CrossRef .
+F. Yu, 
+            et al., Deep exploration of random forest model boosts the interpretability of machine learning studies of complicated immune responses and lung burden of nanoparticles, Sci. Adv., 2021, 7(22), eabf4130 CrossRef CAS PubMed .
+E. Egorov, 
+            et al., Robotics, microfluidics, nanotechnology and AI in the synthesis and evaluation of liposomes and polymeric drug delivery systems, Drug Delivery Transl. Res., 2021, 11(2), 345–352 CrossRef CAS PubMed .
+W. Lu, 
+            et al., Data mining-aided materials discovery and optimization, J. Materiomics, 2017, 3(3), 191–201 CrossRef .
+A. A. Volk, R. W. Epps and M. Abolhasani, Accelerated development of colloidal nanomaterials enabled by modular microfluidic reactors: toward autonomous robotic experimentation, Adv. Mater., 2021, 33(4), 2004495 CrossRef CAS PubMed .
+S. Sarkar, 
+            et al., Machine learning-aided quantification of antibody-based cancer immunotherapy by natural killer cells in microfluidic droplets, Lab Chip, 2020, 20(13), 2317–2327 RSC .
+B. Zheng and G. X. Gu, Machine learning-based detection of graphene defects with atomic precision, Nano-Micro Lett., 2020, 12(1), 1–13 CrossRef PubMed .
+S. Srikanth, 
+            et al., Droplet Based Microfluidics Integrated with Machine Learning, Sens. Actuators, A, 2021, 113096 CrossRef CAS .
+K. Joshi, 
+            et al., A Machine Learning–Assisted Nanoparticle–Printed Biochip for Real–Time Single Cancer Cell Analysis, Adv. Biosyst., 2020, 4(11), 2000160 CrossRef PubMed .
+M. Fernandez, H. Shi and A. S. Barnard, Geometrical features can predict electronic properties of graphene nanoflakes, Carbon, 2016, 103, 142–150 CrossRef CAS .
+Q. Tao, 
+            et al., Machine learning for perovskite materials design and discovery, npj Comput. Mater., 2021, 7(1), 1–18 CrossRef .
+N. Saha, G. Astray and S. D. Gupta, Modelling and optimization of biogenic synthesis of gold nanoparticles from leaf extract of Swertia chirata using artificial neural network, J. Cluster Sci., 2018, 29(6), 1151–1159 CrossRef CAS .
+S.-Y. Yang, 
+            et al., Size-controlled synthesis of gold nanoparticles using a micro-mixing system, Microfluid. Nanofluid., 2010, 8(3), 303–311 CrossRef CAS .
+Y. Cheng, 
+            et al., Microfluidic synthesis of quantum dots and their applications in bio-sensing and bio-imaging, Nanoscale Adv., 2021, 3(8), 2180–2195 RSC .
+R. M. Maceiczyk, 
+            et al., Microfluidic reactors provide preparative and mechanistic insights into the synthesis of formamidinium lead halide perovskite nanocrystals, Chem. Mater., 2017, 29(19), 8433–8439 CrossRef CAS .
+H. Tao, 
+            et al., Self–Driving Platform for Metal Nanoparticle Synthesis: Combining Microfluidics and Machine Learning, Adv. Funct. Mater., 2021, 2106725 CrossRef CAS .
+D. Aldakov and P. Reiss, Safer-by-design fluorescent nanocrystals: Metal halide perovskites vs semiconductor quantum dots, J. Phys. Chem. C, 2019, 123(20), 12527–12541 CrossRef CAS .
+J. Li, 
+            et al., Deep learning accelerated gold nanocluster synthesis, Adv. Intell. Syst., 2019, 1(3), 1900029 CrossRef .
+K. Sugano, 
+            et al., Mixing speed-controlled gold nanoparticle synthesis with pulsed mixing microfluidic system, Microfluid. Nanofluid., 2010, 9(6), 1165–1174 CrossRef CAS .
+L. L. Lazarus, 
+            et al., Flow-focused synthesis of monodisperse gold nanoparticles using ionic liquids on a microfluidic platform, Lab Chip, 2010, 10(24), 3377–3379 RSC .
+A. M. M. Gherman, 
+            et al., Artificial neural networks modeling of the parameterized gold nanoparticles generation through photo-induced process, Mater. Res. Express, 2018, 5(8), 085011 CrossRef .
+R. W. Epps, 
+            et al., Artificial chemist: an autonomous quantum dot synthesis bot, Adv. Mater., 2020, 32(30), 2001626 CrossRef CAS PubMed .
+G. R. Khayati, A predictive model on size of silver nanoparticles prepared by green synthesis method using hybrid artificial neural network-particle swarm optimization algorithm, Measurement, 2020, 151, 107199 CrossRef .
+R. W. Epps, 
+            et al., Artificial chemist: an autonomous quantum dot synthesis bot, Adv. Mater., 2020, 32(30), 2001626 CrossRef CAS PubMed .
+F. Mekki-Berrada, 
+            et al., Two-step machine learning enables optimized nanoparticle synthesis, npj Comput. Mater., 2021, 7(1), 1–10 CrossRef .
+I. Lignos, R. Maceiczyk and A. J. deMello, Microfluidic technology: uncovering the mechanisms of nanocrystal nucleation and growth, Acc. Chem. Res., 2017, 50(5), 1248–1257 CrossRef CAS PubMed .
+E. J. Braham, 
+            et al., Machine learning-directed navigation of synthetic design space: A statistical learning approach to controlling the synthesis of perovskite halide nanoplatelets in the quantum-confined regime, Chem. Mater., 2019, 31(9), 3281–3292 CrossRef CAS .
+J. Peng, 
+            et al., How Machine Learning Accelerates the Development of Quantum Dots?, Chin. J. Chem., 2021, 39(1), 181–188 CrossRef CAS .
+P. R. Regonia, 
+            et al., Predicting the band gap of ZnO quantum dots via supervised machine learning models, Optik, 2020, 207, 164469 CrossRef CAS .
+B. Tang, 
+            et al., Machine learning-guided synthesis of advanced inorganic materials, Mater. Today, 2020, 41, 72–80 CrossRef CAS .
+M. Omidi, M. Hashemi and L. Tayebi, Microfluidic synthesis of PLGA/carbon quantum dot microspheres for vascular endothelial growth factor delivery, RSC Adv., 2019, 9(57), 33246–33256 RSC .
+F. Bian, 
+            et al., Quantum dots from microfluidics for nanomedical application, Wiley Interdiscip. Rev.: Nanomed. Nanobiotechnol., 2019, 11(5), e1567 Search PubMed .
+O. Voznyy, 
+            et al., Machine learning accelerates discovery of optimal colloidal quantum dot synthesis, ACS Nano, 2019, 13(10), 11122–11128 CrossRef CAS PubMed .
+F. Baum, 
+            et al., Machine Learning Tools to Predict Hot Injection Syntheses Outcomes for II–VI and IV–VI Quantum Dots, J. Phys. Chem. C, 2020, 124(44), 24298–24305 CrossRef CAS .
+R. M. Maceiczyk and A. J. deMello, Fast and reliable metamodeling of complex reaction spaces using universal kriging, J. Phys. Chem. C, 2014, 118(34), 20026–20033 CrossRef CAS .
+S. Krishnadasan, 
+            et al., Intelligent routes to the controlled synthesis of nanoparticles, Lab Chip, 2007, 7(11), 1434–1441 RSC .
+K. Abdel-Latif, 
+            et al., Flow synthesis of metal halide perovskite quantum dots: from rapid parameter space mapping to AI-guided modular manufacturing, Matter, 2020, 3(4), 1053–1086 CrossRef .
+R. W. Epps, 
+            et al., Artificial chemist: an autonomous quantum dot synthesis bot, Adv. Mater., 2020, 32(30), 2001626 CrossRef CAS PubMed .
+K. Higgins, 
+            et al., Chemical robotics enabled exploration of stability in multicomponent lead halide perovskites via machine learning, ACS Energy Lett., 2020, 5(11), 3426–3436 CrossRef CAS .
+Z. Li, 
+            et al., Robot-accelerated perovskite investigation and discovery, Chem. Mater., 2020, 32(13), 5650–5663 CrossRef CAS .
+P. V. Balachandran, 
+            et al., Experimental search for high-temperature ferroelectric perovskites guided by two-step machine learning, Nat. Commun., 2018, 9(1), 1–9 CrossRef CAS PubMed .
+L. Zhang, M. He and S. Shao, Machine learning for halide perovskite materials, Nano Energy, 2020, 105380 CrossRef CAS .
+S. Sun, 
+            et al., Accelerated development of perovskite-inspired materials via high-throughput synthesis and machine-learning diagnosis, Joule, 2019, 3(6), 1437–1451 CrossRef CAS .
+K. Abdel-Latif, 
+            et al., Self–Driven Multistep Quantum Dot Synthesis Enabled by Autonomous Robotic Experimentation in Flow, Adv. Intell. Syst., 2021, 3(2), 2000245 CrossRef .
+S. Li, 
+            et al., Automated microfluidic screening of ligand interactions during the synthesis of cesium lead bromide nanocrystals, Mol. Syst. Des. Eng., 2020, 5(6), 1118–1130 RSC .
+W. Haiss, 
+            et al., Determination of size and concentration of gold nanoparticles from UV–Vis spectra, Anal. Chem., 2007, 79(11), 4215–4221 CrossRef CAS PubMed .
+D. Salley, 
+            et al., A nanomaterials discovery robot for the Darwinian evolution of shape programmable gold nanoparticles, Nat. Commun., 2020, 11(1), 1–7 CrossRef PubMed .
+N. R. Jana, L. Gearheart and C. J. Murphy, Seeding growth for size control of 5–40 nm diameter gold nanoparticles, Langmuir, 2001, 17(22), 6782–6786 CrossRef CAS .
+A. Samide, C. Stoean and R. Stoean, Surface study of inhibitor films formed by polyvinyl alcohol and silver nanoparticles on stainless steel in hydrochloric acid solution using convolutional neural networks, Appl. Surf. Sci., 2019, 475, 1–5 CrossRef CAS .
+X. Yan, 
+            et al., Prediction of Nano–Bio Interactions through Convolutional Neural Network Analysis of Nanostructure Images, ACS Sustainable Chem. Eng., 2020, 8(51), 19096–19104 CrossRef CAS .
+Y. Yamamoto, 
+            et al., Twinned/untwinned catalytic gold nanoparticles identified by applying a convolutional neural network to their Hough transformed Z-contrast images, Microscopy, 2018, 67(6), 321–330 CrossRef CAS PubMed .
+D. P. Russo, 
+            et al., Virtual
+molecular projections and convolutional neural networks for the end-to-end modeling of nanoparticle activities and properties, Anal. Chem., 2020, 92(20), 13971–13979 CrossRef CAS PubMed .
+D. Kolenov, 
+            et al., Convolutional neural network applied for nanoparticle classification using coherent scatterometry data, Appl. Opt., 2020, 59(27), 8426–8433 CrossRef CAS PubMed .
+E. J. Braham, 
+            et al., Machine learning-directed navigation of synthetic design space: A statistical learning approach to controlling the synthesis of perovskite halide nanoplatelets in the quantum-confined regime, Chem. Mater., 2019, 31(9), 3281–3292 CrossRef CAS .
+K. S. Shalaby, 
+            et al., Determination of factors controlling the particle size and entrapment efficiency of noscapine in PEG/PLA nanoparticles using artificial neural networks, Int. J. Nanomed., 2014, 9, 4953 CAS .
+
+This journal is © The Royal Society of Chemistry 2022
+Table Content:
+
+ 	Fig. 1  Types of nanoparticles prepared using microreactors. (a) Schematic diagram of nanoparticles prepared using microreactors.1 (b) Continuous type microreactor.47 (c) Segmented flow microreactor.51 (d) Droplet-based microreactor.42	 
+
+ 	Fig. 2  Schematic diagram of the principles of machine learning algorithms. (a) SVM. (b) KNN. (c) Genetic algorithm. (d) ANN. (e) Clustering algorithm. (f) Reinforcement learning algorithm. (g) Decision tree.	 
+	(1)
+	(2)
+
+ 	Fig. 3  Main steps of the machine learning algorithm.105	 
+
+Graphene structure set	This is the initial configuration of a set of graphene nanosheets for computational research. Including graphene nanostructures of different sizes and shapes	
+                      https://data.csiro.au/collections/collection/CIcsiro:10528v1
+                    
+Cambridge Structural Database (CSD)104	Molecular crystal experimental data center collected by Cambridge crystallography	
+                      https://www.ccdc.cam.ac.uk/
+                    
+Kaggle data set	The website contains a large number of real datasets of various shapes, sizes, and formats	
+                      https://www.kaggle.com/datasets
+                    
+Amazon data set	The data source contains multiple data sets in different fields	
+                      https://registry.opendata.aws
+                    
+UCI machine learning library	It contains more than 100 datasets and categorizes the datasets according to the type of machine learning problem	
+                      https://archive.ics.uci.edu/ml/datasets.html
+                    
+Google's data set search engine	It is a toolbox that can search datasets by name	
+                      https://toolbox.google.com/datasetsearch
+                    
+Microsoft dataset	It contains a data repository in the public cloud and is used to facilitate collaboration among the global research community	
+                      https://msropendata.com
+                    
+GDB105	Hypothetical small organic molecule database	
+                      https://gdb.unibe.ch/downloads
+                    
+Springer materials105	The world's largest material data resource, a unique, high-quality numerical database	
+                      https://materials.springer.com
+                    
+Crystallography Open Database (COD)105	Structure data of organic, inorganic, and metal–organic compounds and minerals	
+                      https://cod.ensicaen.fr
+                    
+
+Au	Reaction time, concentration of reagents, concentration ratio of Au salt to stabilizer, intensity, wavelength and focusing conditions	Particle size	ANN	Precise control of SPR peaks is achieved by predicting particle size. Accuracy of 0.978 for the whole dataset	
+117
+
+Au	Velocity and length of segmented flow	Particle size	ANN	Predictive power is ensured by adjusting the weights and activation functions of neurons in ANN	
+51
+
+Au	Concentration of reactants	FWHM distribution and spectral position of SPR peaks	Self-driving platform	Machine learning algorithm-assisted platform autonomously searches for optimal multi-component formulations to ensure a small number of experiments	
+116
+
+Ag	Solution flux and concentration ratios	Better particle size distribution and lower polydispersity	Genetic algorithm	Optimization by multi-objective genetic algorithm weighing the relationship between each objective	
+118
+
+Ag	Chemical composition of different reactants	Shape and amplitude of the absorption spectrum	DNN and BP	Optimization by means of defining loss functions	
+119
+
+CdSe	Reaction temperature and time	Reaction yields	ANN	The conditional-attribute relationships on the dataset are obtained by neural networks. The accuracy of the model reaches 0.977	
+83
+
+PbS	Reaction time, reaction temperature and reaction precursors	Particle size	DT and random forest	Comparative analysis of different algorithms for prediction accuracy	
+128
+
+CdSe	Precursor flow ratio and reaction time	Emission wavelength, FWHM and intensity	Kriging	Modeling by Kriging and thus predicting the reactor	
+129
+
+Perovskites	Different ligands and precursors	Optical properties	ANN	ANN algorithm accelerates the synthesis path of chalcogenide	
+132
+
+Perovskite nanosheets	Reaction temperature, ligand concentration and ligand length	Average thickness	SVM	The root mean square error of the predicted thickness of the SVM model is 0.7556	
+148
+
+Copolymer nanoparticles	Polymer ratio and the number of blocks in the copolymer	Nano-particle size, polydispersity, and noscapine entrapment efficiency	ANN and RSA	Artificial neural networks can accurately predict the particle size of nanoparticles	
+149
+
+
+ 	Fig. 4  Prediction of metal nanoparticle synthesis. (a) Effect of nanoparticle frequency on the particle size distribution (particle size distribution of metal nanoparticles when the frequency is 50100 and 200 Hz as well as the physical image).113 (b) Training set of the ANN prediction model.115 (c) Test set of the ANN prediction model.115 (d) ANN prediction of the nanoparticle particle size.115 (e) Error analysis of ANN.115	 
+
+ 	Fig. 5  Optimization of metal nanoparticle synthesis. (a) Joint effect of the reactant concentration ratio on the SPR peak of Au nanoparticle spectral properties.116 (b) Joint effect of the reactant concentration ratio on the FWHM of Au nanoparticle spectral properties.116 (c) Second order derivative absorption spectrum after genetic algorithm optimization.118 (d) Particle size analysis of nanoparticle intensity distribution after genetic algorithm optimization.118	 
+	(3)
+	(4)
+
+ 	Fig. 6  Optimization of metal nanoparticle synthesis. (a) Bayesian optimization (BO) and DNN optimization results and nanoparticle shapes.119 (b) 2D mapping relationship between BO and DNN optimization for minimum loss.119	 
+
+ 	Fig. 7  Prediction of quantum dot synthesis. (a) Prediction error versus time for training loss and true value loss.127 (b) True value versus predicted value for training set in a.127 (c) True value versus predicted value for test set in a.127 (d) Predictive ability of CdSe quantum dot reaction yield.83 (e) The effect of reaction time and reaction temperature on CdSe quantum dot reaction yield.83	 
+
+ 	Fig. 8  Prediction of quantum dot synthesis. (a) CdSe quantum dot decision tree regression model prediction plot (blue) versus observation plot (dark red).128 (b) Prediction plot versus observation plot of CdSe quantum dot random forest regression model.128 (c) Prediction plot versus observation plot of CdSe quantum dot enhanced machine learning algorithm.128 (d) Importance of each variable in the enhanced machine learning model.128	 
+	(5)
+
+ 	Fig. 9  Optimization of quantum dot synthesis. (a) 3D spatial surface of the effect of time and R-boundary on the maximum value of all parameter combinations in the reaction system for CdSe quantum dot synthesis.129 (b) FWHM value.129 (c) Intensity.129 (d) Effect of injection rate of FCdO and FSe on the value of the dissatisfaction factor (DC). (At this time the reaction temperature is 220 °C and the target wavelength is 530 nm. Red and blue markers represent the reaction conditions specified during the sampling of the control algorithm.)130 (e) Variation of the dissatisfaction factor (black markers) and y-optimal value (red markers) with the number of measurements (the y-optimal value of 0.185 was obtained after the 71st iteration of optimization).130 (f) Variation of the peak band-side emission with wavelength for 71 measurements (the vertical dashed line indicates the target wavelength).130	 
+
+ 	Fig. 10  Prediction of perovskite synthesis. (a) Variation of particle size distribution with reaction time at different temperatures in the reaction system for the synthesis of perovskite.131 (b) Low surfactant loading.131 (c) High surfactant loading.131 (d) Effect of precursors ZnI2 and ZnBr2 on the objective function.132 (e) Effect of oleic acid (OA) and oleylamine (OLA) on the objective function.132 (f) Model prediction results.132	 
+	(6)
+
+ 	Fig. 11  Optimization of perovskite synthesis. (a) Sample output values of 10 optimizations for different target emission colors.138 (b) Luminescence spectra of 10 optimized perovskites.138 (c) Variation of median emission wavelengths of the four ligands with temperature (constant alkali-acid ratio of 1:0).138 (d) Variation of median emission wavelengths of the four ligands with the alkali-acid ratio (constant temperature of 140 °C).139 (e) Variation of the tetrad range of the four ligands with temperature (constant alkali-acid ratio of 1:0).139 (f) Variation of the tetrad range of the four ligands with alkali-acid ratio (constant temperature of 140 °C).139	 
+
+This journal is © The Royal Society of Chemistry 2022

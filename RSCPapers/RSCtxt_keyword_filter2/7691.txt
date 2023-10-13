@@ -1,0 +1,1033 @@
+Numerical simulation and optimization of a CsPbI 3 -based perovskite solar cell to enhance the power conversion efficiency  - New Journal of Chemistry (RSC Publishing) DOI:10.1039/D2NJ06206B View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2NJ06206B
+(Paper)
+New J. Chem., 2023, 47, 4801-4817Numerical simulation and optimization of a CsPbI3-based perovskite solar cell to enhance the power conversion efficiency
+
+        
+          
+            M. Khalid 
+            Hossain
+          
+        
+      *ab, 
+      
+        
+          
+            G. F. Ishraque 
+            Toki
+          
+        
+      c, 
+      
+        
+          
+            Intekhab 
+            Alam
+          
+        
+      d, 
+      
+        
+          
+            Rahul 
+            Pandey
+          
+        
+      e, 
+      
+        
+          
+            D. P. 
+            Samajdar
+          
+        
+      f, 
+      
+        
+          
+            Md. Ferdous 
+            Rahman
+          
+        
+      g, 
+      
+        
+          
+            Md. Rasidul 
+            Islam
+          
+        
+      h, 
+      
+        
+          
+            M. H. K. 
+            Rubel
+          
+        
+      i, 
+      
+        
+          
+            H. 
+            Bencherif
+          
+        
+      j, 
+      
+        
+          
+            Jaya 
+            Madan
+          
+        
+      e and 
+
+        
+          
+            Mustafa K. A. 
+            Mohammed
+          
+        
+      k
+aInstitute of Electronics, Atomic Energy Research Establishment, Bangladesh Atomic Energy Commission, Dhaka 1349, Bangladesh. E-mail: khalid.baec@gmail.com
+bDepartment of Advanced Energy Engineering Science, Interdisciplinary Graduate School of Engineering Sciences, Kyushu University, Fukuoka 816-8580, Japan. E-mail: khalid@kyudai.jp
+cCollege of Materials Science and Engineering, Donghua University, Shanghai 201620, China
+dDepartment of Mechanical and Manufacturing Engineering, University of Calgary, Calgary, AB T2N 1N4, Canada
+eVLSI Centre of Excellence, Chitkara University Institute of Engineering and Technology, Chitkara University, Rajpura, 140401 Punjab, India
+fDepartment of ECE, Indian Institute of Information Technology, Design & Manufacturing, Madhya Pradesh 482005, India
+gDepartment of Electrical and Electronic Engineering, Begum Rokeya University, Rangpur 5400, Bangladesh
+hDepartment of Electrical and Electronic Engineering, Bangamata Sheikh Fojilatunnesa Mujib Science & Technology University, Jamalpur 2012, Bangladesh
+iDepartment of Materials Science and Engineering, University of Rajshahi, Rajshahi 6205, Bangladesh
+jHNS-RE2SD, Higher National School of Renewable Energies, Environment & Sustainable Development, Batna 05078, Algeria
+kRadiological Techniques Department, Al-Mustaqbal University College, 51001 Hillah, Babylon, Iraq
+Received 
+      19th December 2022
+    , Accepted 26th January 2023First published on 27th January 2023AbstractIn this study, we investigated the potential of CsPbI3 as an absorber material to be used in perovskite solar cells (PSCs). To optimize the device, we used TiO2 as the electron transport layer and copper barium thiostannate (CBTS) as the hole transport layer in the CsPbI3-based PSC, and employed SCAPS-1D software. We initially tested 10 different back metal contacts (BMCs) to identify the most suitable one for the primary device. After optimization of the BMC, the best-optimized device structure, ITO/TiO2/CsPbI3/CBTS/Ni, achieved a power conversion efficiency of 17.91%. We then evaluated the impact of the absorber thickness, acceptor density, and defect density on the device performance. We also analyzed the effect of changing the thickness, charge-carrier density, and defect density of the CsPbI3, TiO2, and CBTS layers, as well as the interfacial defect densities at the CBTS/CsPbI3 and CsPbI3/TiO2 interfaces, to further optimize device performance. This resulted in an improved efficiency of 19.06% for the ITO/TiO2/CsPbI3/CBTS/Ni device with HTL, compared to 18.17% without HTL. We also analyzed the impacts of operating temperature, series resistance, and shunt resistance on the final optimized device performance, as well as its capacitance–voltage, generation and recombination rate, current density–voltage (J–V), and quantum efficiency (QE) features. The results of these simulations provide valuable insights for the experimental fabrication of an efficient CsPbI3-based inorganic PSC.
+1. Introduction
+Perovskite materials have the potential to be used in high-performance photovoltaic (PV) solar cells and are receiving huge interest from the scientific community.1–5 Organic–inorganic hybrid perovskite solar cells (PSCs) have achieved significant advancements in device construction and element control due to their superior optical absorption, low trap density, extended charge-carrier lifetime, high charge-carrier mobility, and low exciton binding energy.6–8 However, the primary challenges for their extensive commercial uses are the volatility and thermally instability of the organic cations.8–16 Conversely, inorganic CsPbX3 (X = Br, I) perovskites have remarkable compositional stability, and therefore, they can greatly contribute to the development of solar cells.17 Especially, CsPbI3 has attracted considerable interest among the inorganic halide perovskites due to its enhanced thermal stabilities and suitable band gap (∼1.7 eV) for application in highly-effective tandem solar cells.18 Over the last several years, the power conversion efficiency (PCE) of CsPbI3-based PSC has increased from 2.9% to more than 19%.19,20 Black phases of CsPbI3 are structurally unstable and rapidly deteriorate to the non-perovskite yellow δ-phase at ambient temperature.19,21,22 It has been reported that the reduction of the grain size and doping stabilizes the CsPbI3 in the black phase by utilizing surface energy or changing the tolerance factor. Between them, doping is a widely-adopted method in which suitable element ions are introduced into the CsPbI3 host lattices to modify the perovskite lattice structure to improve the PV performance with various electron transport layers (ETLs) and hole transport layers (HTLs).23–25
+The ETL extracts electrons from the perovskite layer and blocks the electron–hole recombination.26,27 A thick ETL may reduce recombination, but the high series resistance may hamper electron transport. Several solar cell designs have been made without an ETL; however, their PCEs are poor compared to the planar PSCs with an ETL.28,29 As of right now, among several metal oxides, TiO2 is commonly regarded to be the preferable ETL for PSCs. This is because its conduction band (CB) is usually better matched with the perovskite, and as a result, it has a high capacity for charge transfer and collection. Besides, TiO2 is a wide bandgap semiconductor that is often used as an ETL in PSCs. It is known for its high electron mobility, stability, and transparency in the visible light range. Its high electron mobility allows it to effectively transport electrons from the perovskite layer to the electrode, thus increasing the overall efficiency of the device. However, the use of TiO2 ETL in PSCs is restricted due to some drawbacks, such as poor conductivity and a high number of defects, which inevitably result in carrier recombination.30–32 To enhance the PSC efficiency, TiO2 ETLs have been the focus of several initiatives such as doping, nanostructure formation, and interface engineering.33–37
+The HTL collects photo-generated holes from perovskite and delivers them to the cathode in both n–i–p and p–i–n architectures. It has a strong correlation with the device's functionality and long-term stability.38,39 P-type chemical compounds, including 2,2′,7,7′-tetrakis, poly[bis(4-phenyl)(2,4,6-trimethylphenyl)amine] (PTAA), poly(3,4-ethylenedioxythiophene) polystyrene sulphonate (PEDOT:PSS), and poly[bis(4-phenyl)(2,4,6-trimethylphenyl)amine] (PTAA) has been used constantly as the HTL layer in extremely competitive PSCs. However, these organic compounds are costly due to difficult synthesis processes and high purity demands, and they are particularly prone to deterioration in moisture and air. Organic HTL materials cannot maintain a long-lasting superior efficiency because they are chemically harmful to perovskite absorbers, such as acidic and hygroscopic PEDOT:PSS. The need for alternate inorganic HTL materials was prompted by the problems brought on by the usage of organic materials. The mobility and band alignment of the HTL with the perovskite absorber along with material stability and chemical compatibility should be considered while choosing the HTL, as these aspects are crucial for defining hole collection/extraction and carrier separation/injection, which are directly related in controlling the short circuit current (JSC) and open circuit voltage (VOC). These findings imply that there is a pressing need to investigate novel inorganic semiconductors that can serve as reliable and effective HTL materials. Cu2BaSnS4 (CBTS) is known for its high hole mobility, stability, and transparency in the visible light range. Its high hole mobility allows it to effectively transport holes from the perovskite layer to the electrode, thus increasing the overall efficiency of the device. Besides, CBTS has more advantageous defect features for effective PV and photo-electrochemical solar energy conversion due to its noncentrosymmetric crystalline structure and substantial atomic size changes between the constituent cations.40 Its large band gap (∼2 eV) makes it a good tandem solar top-cell absorber.41 Therefore, because of its adequate chemical stability, high mobility (10 cm2 V−1 s−1), and excellent band alignment, (CBTS) thin film with a bandgap of 2.04 eV is promising as an HTL for the CsPbI3 absorber, even if it is not frequently utilized in PSCs.39,42
+In our previous study, with the one-dimensional solar cell capacitance simulator (SCAPS-1D) simulation, we found 96 different structures for CsPbI3-based PSC with a diverse set of charge transport layers.43 Among those structures, the CBTS HTL with 6 different ETLs showed noticeable performances, and ITO/TiO2/CsPbI3/CBTS/Au was the best device with a PCE of 17.90%, fill factor (FF) of 85.21%, JSC of 21.075 mA cm−2, and VOC of 0.997 V. In this study, we focused into the optimization of this ITO/TiO2/CsPbI3/CBTS/Au device through SCAPS-1D. Initially, we explored the BMC variation to improve the PSC efficiency and obtained the optimum device structure of ITO/TiO2/CsPbI3/CBTS/Ni. Then we further optimized the thickness of CsPbI3, HTL, and ETL, charge-carrier density and defect density of absorber, ETL, and HTL, and interfacial defect density. Moreover, we observed the impact of operating temperature, series resistance, and shunt resistance on the final optimized device's performance and also investigated the capacitance–voltage (C–V), generation and recombination rate, J–V, and QE of the final optimized device with and without HTL. Concurrently, we investigated the variation in the device performance without using the HTL.
+2. Numerical simulations
+2.1 SCAPS-1D numerical simulation
+The computational model framework allows the comprehension of the principles of solar cells and highlights the primary parameters that affect their performance. The SCAPS-1D program uses numerical methods to resolve important one-dimensional semiconductor equations.44–47 The Poisson's equation (eqn (1))48 relates the charges to the electrostatic potential as shown in eqn (1). (1)Here, ψ represents the electric potential, εr represents the relative permittivity, ε0 represents the permittivity of free space, ND and NA represent the densities of ionized donors and acceptors, respectively, n and p represent the electron and hole densities, respectively, ρp and ρn represent the hole and electron distributions, respectively, and q represents the electronic charge. Due to the simultaneous analysis of recombination, generation, drift, and diffusion, the continuity equation is known to be the governing equation. The continuity equations for the change in the concentration of electrons and holes are shown in eqn (2) and (3). (2) (3)Here, Jn and Jp represent the current densities for holes and electrons, respectively, Gn and Gp represent the electrons and holes generation, respectively, and Rn and Rp are the electrons and holes recombination, respectively. Eqn (4) and (5), as shown below, provide the charge carrier drift-diffusion equations that are used to estimate the electron and hole current densities of solar cells Jn = qμnnε + qDn∂n(4) Jp = qμppε − qDp∂p(5)Here, μn and μp represent the mobility of carriers, respectively, and Dn and Dp represent the diffusion coefficient of electrons and holes, respectively. From the Einstein relationship, the diffusion coefficient is dependent on the mobility of the carrier along with the carrier lifetime.49 Furthermore, the new Eg-sqrt model, that is the newly adapted type of the conventional sqrt (hν − Eg) model, was employed for obtaining the absorption constant for films. This relation is represented by the “Tauc laws” and is shown in eqn (6). (6)where α represents the absorption coefficient, Eg symbolizes the bandgap, and hν implies the photon energy. The model constants α0 and β0 are associated with the traditional model constants A and B by eqn (7) and (8) as shown below: (7) (8)
+2.2 CsPbI3-based PSC structure
+In these calculations, the HTL and perovskite are considered as the p-region and ETL is taken as the n-region of the CsPbI3 devices. We considered indium-doped tin oxide (ITO) as the transparent conductive oxide (TCO), TiO2 as the ETL, CBTS as the HTL, CsPbI3 as the absorber layer, and Au as the BMC for the device (initially). The CsPbI3 crystal structure and schematic structure of the primary device are shown in Fig. 1(a) and (b), respectively.
+ Fig. 1  (a) CsPbI3 crystal structure, (b) design configuration, (c) energy band diagram, and (d) energy band alignment of the ITO/TiO2/CsPbI3/CBTS/Au device. 
+
+Fig. 1(c) shows the energy band diagram (EBD) for the device to understand the carrier dynamics. Upon illumination formation of quasi-Fermi levels, Fn and Fp were observed, which validates the generation of electron–hole pairs within the device. A slight offset between the CB/valence band (VB) of the absorber is observed, which validates electron–hole pair generation within the device. A slight offset between the CB/VB of the absorber is observed with the CB/VB of TiO2 ETL/CBTS HTL, which will lead to interfacial resistance and hamper the device's FF. The observed offset is attributed to the work function (WF) difference between the absorber and transport layers. Built-in potential and associated electric fields at the ETL/absorber and absorber/HTL interface help extract electrons and holes from the light-generated electron–hole pairs in the absorber layer. Extracted electrons and holes in ETL and HTL get collected in the external circuit through ITO and gold (Au) based front and back electrodes having WF 4.0 eV and 5.1 eV, respectively. Fig. 1(d) shows the energy band alignment of the ITO/TiO2/CsPbI3/CBTS/Au device.
+
+Table 1 shows the input parameters of the TCO, ETL, HTL, and absorber layer used in this simulation. Besides, Table 2 provides the input parameters of the interfacial defect layers. All the simulations were performed using the conditions of the AM1.5G_1 solar spectrum which is equivalent to a power density of 1000 W m−2 at 300 K temperature. The only exception to this was the evaluation of the effect of temperature on the photovoltaic performance of the device.
+Table 1 Input parameters of the TCO, ETL, HTL, and absorber layer43
+
+
+
+
+Parameters
+ITO
+TiO2
+CBTS
+CsPbI3
+
+
+
+
+
+a These parameters are held constant in this study throughout initial optimization to get the optimal BMC.
+
+
+
+
+
+Thickness (nm)
+500
+30
+100
+800a
+
+
+Band gap, Eg (eV)
+3.5
+3.2
+1.9
+1.694
+
+
+Electron affinity, χ (eV)
+4
+4
+3.6
+3.95
+
+
+Dielectric permittivity (relative), εr
+9
+9
+5.4
+6
+
+
+CB effective density of states, NC (1 cm−3)
+2.2 × 1018
+2 × 1018
+2.2 × 1018
+1.1 × 1020
+
+
+VB effective density of states, NV (1 cm−3)
+1.8 × 1019
+1.8 × 1019
+1.8 × 1019
+8.2 × 1020
+
+
+Electron mobility, μn (cm2 V−1 s−1)
+20
+20
+30
+25
+
+
+Hole mobility, μh (cm2 V−1 s−1)
+10
+10
+10
+25
+
+
+Shallow uniform acceptor density, NA (1 cm−3)
+0
+0
+1 × 1018
+1 × 1015a
+
+
+Shallow uniform donor density, ND (1 cm−3)
+1 × 1021
+9 × 1016
+0
+0a
+
+
+Defect density, Nt (1 cm−3)
+1 × 1015a
+1 × 1015a
+1 × 1015a
+1 × 1015a
+
+
+
+
+Table 2 Input parameters of the ETL/CsPbI3 and CsPbI3/HTL interface defect layers50
+
+
+
+
+Interface
+Defect type
+Capture cross section: electrons/holes (cm2)
+Energetic distribution
+Reference for defect energy level
+Total density (cm−2) (integrated over all energies)
+
+
+
+
+ETL/CsPbI3
+Neutral
+1.0 × 10−17
+Single
+Above the VB maximum
+1.0 × 1010
+
+
+1.0 × 10−18
+
+
+CsPbI3/HTL
+Neutral
+1.0 × 10−18
+Single
+Above the VB maximum
+1.0 × 1010
+
+
+1.0 × 10−19
+
+
+
+
+3. Result and discussion
+3.1 Optimization of back metal contact (BMC)
+In the beginning, with Au as the BMC, the PSC showed a PCE of 17.90%. But there are a few studies where the back metal WF has been varied to get better performance,51,52 which was also followed in this work as shown in Table 3. We found that with the increase of back metal WF, the VOC, JSC, FF, and PCE started to increase; hence, the observed trend wasAg < Cu < Fe < C < Au < W < Ni < Pd < Pt < Se
+Table 3 The comparison of PV parameters of CsPbI3-based solar cells with various BMCs
+
+
+
+
+BMC
+WF (eV)51
+
+V
+OC (V)
+
+J
+SC (mA cm−2)
+FF (%)
+PCE (%)
+
+
+
+
+Ag
+4.26
+0.449
+21.04
+40.75
+3.85
+
+
+Cu
+4.65
+0.840
+21.07
+63.73
+11.28
+
+
+Fe
+4.81
+0.980
+21.07
+69.94
+14.45
+
+
+C
+5
+0.997
+21.07
+84.24
+17.70
+
+
+Au
+5.1
+0.997
+21.07
+85.21
+17.90
+
+
+W
+5.22
+0.997
+21.08
+85.24
+17.91
+
+
+Ni
+5.5
+0.997
+21.08
+85.24
+17.91
+
+
+Pd
+5.6
+0.997
+21.10
+85.24
+17.93
+
+
+Pt
+5.7
+0.997
+21.10
+85.24
+17.93
+
+
+Se
+5.9
+0.997
+21.10
+85.24
+17.93
+
+
+
+
+During the simulation, we found the same PCE of 17.91% for both W and Ni back contacts. On the other hand, Pd, Pt, and Se back contacts showed slightly better PCE of 17.93% (Table 3). The decrease in back contact WF lowered the device's performance. For example, as the Ag back contact has a very low WF, it is hard for the holes to move to the surface of the metal, but it is easy for the electrons to move. This causes the reverse saturation current to go down, and thus, the PSC with Ag back contact showed the lowest PCE of 3.85%. Also, experimentally, it has been observed that the iodide ions of the perovskite layer react with the Ag ions to make AgI. When AgI breaks down in the presence of the perovskite material, the iodide ion can move through the absorber, which deteriorates the device's performance.51 Furthermore, the PCE and FF increased as the back contact WF enhanced, which was because, due to the presence of BMCs with high WF (e.g., Au, Pt, Pd, etc.) in the PSC, the Schottky barrier diminishes that favors the hole transportation.53 Other studies also show that the performance of the PSCs changes when the back contact WF changes.50,54 Because of the abundance, low cost, and efficiency, Ni was chosen as the back contact for the next steps.
+3.2 Effect of absorber acceptor density with absorber thickness
+The combined effects of varying acceptor concentration (NA) from 109 cm−3 to 1018 cm−3 and thickness from 400 nm to 2200 nm of CsPbI3 absorber on the output of the device (with and without the HTL) were investigated to assess their influence on PV performance (Fig. 2). The presence of charge transport layers in sandwiched architecture-based devices results in the formation of interface defect density and associated interface recombination. Therefore in this section, two devices, i.e., a device with HTL and a device without HTL were analyzed to observe the combined effect of acceptor density and absorber layer thickness. During the analysis, the defect densities (Nt) of the absorber, ETL, and HTL, as well as the interfacial defect densities were kept fixed at the initial values.
+ Fig. 2  Contour mapping of PV performance parameters while (a and a′) represents VOC (V), (b and b′) represents JSC (mA cm−2), (c and c′) represents FF (%), and (d and d′) represents PCE (%) depending on thickness and acceptor density of CsPbI3 absorber for HTL (left) and without HTL (right) based devices. 
+
+Fig. 2(a) and 2(a′), respectively, illustrate the simultaneous effect of absorber thickness and NA on the VOC of the device with and without the HTL. In the case of the device with HTL, when the NA was more than 8 × 1017 cm−3 and absorber thickness spanned from 400–2200 nm, the VOC was in the range of 1.04–1.054 V (Fig. 2(a)). Again, for the device without HTL, the VOC was in the 1.042–1.050 V range when the absorber thickness ranged from 400–2200 nm and NA was greater than 8 × 1017 cm−3 (Fig. 2(a′)). Moreover, the VOC decreased significantly for both configurations when the absorber thickness was ≥1200 nm and NA was ≤6 × 1017 cm−3. Again, Fig. 2(b) and 2(b′), respectively, show the combined effect of absorber thickness and NA on the JSC of the device with and without the HTL. When the absorber thickness was ≥1200 nm and NA was ≤8 × 1017 cm−3, the JSC of the device was maximum at around 22.20 mA cm−2 for both configurations (Fig. 2(b) and 2(b′)). But the JSC of both configurations declined significantly when the NA was ≥8 × 1017 cm−3, regardless of the increase of absorber thickness.
+Additionally, Fig. 2(c) and 2(c′) illustrate the simultaneous effect of absorber thickness and NA on the FF of the device with and without the HTL, respectively. In the device with HTL, the maximum FF was around 86.70 mA cm−2 when the absorber thickness and NA were 800 nm and 8 × 1017 cm−3, respectively, and the lowest FF was approximately 79.80 mA cm−2 when the absorber thickness was ≥2200 nm and NA was 4 × 1017 cm−3 (Fig. 2(c)). On the other hand, in the device without HTL, the FF was maximum at the absorber thickness ≤1400 nm and NA ≤ 6 × 1017 cm−3 (Fig. 2(c′)). Again, Fig. 2(d) and 2(d′), respectively, reflect the combined effect of absorber thickness and NA on the PCE of the structure with and without the HTL, with the highest respective PCEs of 18.56% and 19.20%. The observed trends of this study were comparable to the previously reported studies.55
+3.3 Effect of absorber defect density with absorber thickness
+Material thickness, deposition techniques, as well as manufacturing defects significantly affect the PV performance of PSC. Fig. 3 illustrates how the JSC, VOC, FF, and PCE of the CsPbI3-based structure (with and without the HTL) are affected by the combined change of absorber Nt and thickness. According to Fig. 3(a), in the device with HTL, the VOC remained unchanged when the Nt was ≤7 × 1017 cm−3 and the absorber thickness was ≤600 nm. As the Nt exceeded 7 × 1017 cm−3 and absorber thickness was ≥600 nm, the VOC degraded. The maximal VOC of 1.05 V was noticed at the absorber thickness of 400 nm and Nt of 6 × 1017 cm−3. Contrarily, in the device without HTL, the maximum VOC of 1.01 V was attained at Nt ≤ 6 × 1017 cm−3 and absorber thickness ≥1200 nm (Fig. 3(a′)). As the Nt exceeded 7 × 1017 cm−3 and absorber thickness was ≤1000 nm, the VOC dropped. Again, Fig. 3(b) and 3(b′), respectively, illustrate the simultaneous impact of absorber thickness and Nt on the JSC of the device with and without the HTL. The JSC of the device with and without the HTL reached a maximum value of around 22.22 mA cm−2 and 21.22 mA cm−2, respectively, when the Nt was ≤7 × 1017 cm−3 and absorber thickness was ≥1600 nm.
+ Fig. 3  Contour mapping of PV performance parameters while (a and a′) represents VOC (V), (b and b′) represents JSC (mA cm−2), (c and c′) represent FF (%), and (d and d′) represents PCE (%) depending on thickness and defect density of CsPbI3 absorber for HTL (left) and without HTL (right) based devices. 
+
+Fig. 3(c) and 3(c′) illustrate the observed FF trends of the device with and without the HTL, respectively, during the simultaneous variation of absorber thickness and Nt. The maximum FF values of around 88.70% and 85.70% were found for the device with and without the HTL, respectively, at absorber thickness ≤1200 nm and Nt ≤ 7 × 1017 cm−3. For both cases, as the absorber thickness was ≥1600 nm and Nt was ≥ 8 × 1017 cm−3, the FF decreased. Furthermore, Fig. 3(d) and 3(d′), respectively, show that in the device with and without HTL, when the Nt was ≤6 × 1017 cm−3 and absorber thickness was ≥800 nm, the corresponding highest PCE values of 19.70% and 18.40% were achieved. The observed trends were comparable to other literature.56
+3.4 Device optimization
+
+3.4.1 Optimization of absorber layer thickness. 
+As the performance of the ITO/TiO2/CsPbI3/CBTS/Ni structure was influenced by the absorber thickness, we increased the absorber thickness from 400 nm to 2400 nm to optimize the device performance. The performance change with the varying absorber thickness of the PSC with and without the HTL has been shown in Fig. 4(a).
+ Fig. 4  Effect of the thickness variation of the CsPbI3 layer, TiO2 ETL, and CBTS HTL, respectively. (a) Shows the effect of the CsPbI3 thickness variation on VOC, JSC, FF, and PCE with and without HTL; (b) shows the effect of the TiO2 ETL thickness variation on VOC, JSC, FF, and PCE with and without HTL; (c) shows the CBTS HTL thickness variation on VOC, JSC, FF, and PCE. 
+During the optimization, as the absorber thickness increased, the VOC of the PSC decreased for both with and without the HTL configurations as the reverse saturation current increased with the increasing absorber thickness.53 Again, in both with and without the HTL configurations, the JSC increased with the incrementing thickness as the spectral response at longer wavelengths will go up as the thickness rises.54 However, when the absorber thickness was increased, the structure with and without the HTL showed different FF trends. For both with and without the HTL structures, the reduction in efficiency on both sides of the optimal absorber thickness of 1500 nm was due to the impacts of the photon absorption rate and charge carrier recombination.57 When the absorber thickness is the same as the charge carrier diffusion length, the PSC usually shows the best performance. As the absorber layer thickness rises, a higher number of photons are absorbed with the simultaneous enhancement of the recombination rate. However, for a thin absorber, the carrier extraction at the electrodes is significant and the PCE drops because a thin absorber can only absorb a small number of photons.58 Since too thick perovskite film can only convert a small amount of power, a good balance is needed between the light absorption and moving carriers.59,60 Therefore, for better performance of VOC (0.978 V), JSC (21.98 mA cm−2), FF (85.47%), and PCE (18.37%) need to be an ideal thickness, which was found to be 1500 nm for the CsPbI3 absorber in the study. This optimization result was included in the next stage of the performance evaluation.
+
+
+3.4.2 Optimization of ETL and HTL layer thickness. 
+With an appropriate ETL, the recombination currents can be lowered, while the transmittance can be raised in the PSC.61 In this work, the thickness of the TiO2 ETL was changed from 10 nm to 500 nm, while all other parameters were kept the same. Fig. 4(b) shows how the ETL thickness affects the PV parameters of the configurations with and without the HTL. There was an insignificant drop in VOC, JSC, FF, and PCE with the increasing ETL thickness, which could be because a thicker ETL partially absorbs light, retarding the charge generation and collection rate. The performance loss gets more severe as the ETL gets thicker because of the drop in transmittance.50 Based on the results, it was apparent that the ETL thickness had little effect on the PV performance, similar to the previous works.62 So, 30 nm was chosen as the best ETL thickness, which was the same as the initial value.
+Again, the CBTS HTL thickness was modulated from 50 nm to 500 nm to find the optimum HTL thickness, and Fig. 4(c) illustrates its effect on the device performance. Alike the ETL thickness variation, no significant variation in PV parameters was observed during the modulation of HTL thickness. That's why the optimized HTL thickness was chosen to be 100 nm for further optimization, which was the initial setting of the study. A p-type layer (HTL) needs to be thicker in comparison to the n-type layer (ETL) to reduce the likelihood of recombination as it facilitates the prompt transportation of an equal number of charge carriers to terminal.63 Therefore, the ideal thickness of HTL should be larger than the ideal thickness of ETL, which was followed in this work. Besides, thicker HTL is beneficial as it makes the light-harvesting layer more capable of absorbing photons.63
+
+
+3.4.3 Optimization of acceptor density of the absorber. 
+To find the effect of the NA of the absorber on the PV parameters, the NA of the CsPbI3 layer was changed between 109 cm−3 and 1018 cm−3. Fig. 5(a) shows how the FF, PCE, VOC, and JSC change in the configurations with and without the HTL as the absorber NA changes. The VOC and FF improved from 0.96 V to 1.053 V and 81.97% to 83.34%, respectively, whereas the JSC and PCE dropped from 21.972 mA cm−2 to 11.099 mA cm−2 and 17.29% to 9.74%, respectively, for the structure with the HTL. In addition, the performance parameters of the structure without the HTL also followed a similar trend when the absorber NA was varied; but the maximum PCE of 18.17% was found at 1015 cm−3NA instead of 1016 cm−3NA. The decrease in the Fermi energy level of the hole is caused by an increase in the absorber NA, which in turn, enhances the VOC.64 As the NA of the absorber goes up, so does the built-in potential. This can be another reason for the VOC to go up because the charge separation also rises. But when the absorber NA value was more than 1016 cm−3, the PCE went down. This is because, as the number of defect states starts to rise when the absorber NA goes up, hence, the PCE goes down.64 So, to get the best performance of VOC = 1.01 V, JSC = 21.42 mA cm−2, FF = 85.31%, and PCE = 18.46%, the optimum value of NA was taken as 1016 cm−3.65 This value was considered for the PSC structure for the next stage of this study.
+ Fig. 5  (a) Shows variation in the acceptor density of absorber on VOC, JSC, FF, and PCE with and without HTL; (b) shows variation in defect density of absorber on VOC, JSC, FF, and PCE with and without HTL. 
+
+
+3.4.4 Optimization of defect density of the absorber. 
+The efficiency of PSCs is significantly influenced by the absorber Nt. Photoelectrons are produced when the absorber layer is allowed to interact with light. However, this might lead to an inadequate perovskite layer coverage on the ETL if the morphology is not good. Inadequate film quality leads to a larger defect density, which in turn, increases the recombination. Fig. 5(b) demonstrates that all PV parameters declined as the absorber Nt was increased from 109 cm−3 to 1018 cm−3 in the configurations with and without the HTL.
+The VOC, JSC, FF, and PCE considerably decreased from 1.02 V to 0.78 V, 21.57 mA cm−2 to 16.45 mA cm−2, 86.55% to 66.60%, and 19.05% to 8.53%, respectively, in the configuration with the HTL. The results were also similar for the structure without the HTL. As the absorber Nt reached 109 cm−3 to 1012 cm−3, the device performance remained almost constant, and it started to decrease slowly after 1012 cm−3. The Shockley–Read–Hall (SRH) nonradiative recombination, which is a major source of lifespan reduction, carrier recombination, and performance drop of the device, is responsible for this decline in performance.53 It is defined by eqn (9) and (10). (9) τ = 1/[σ × Nt × Vth](10)Here, σ represents the charge-carriers capture cross-section, τ represents the lifespan of the charge-carriers, and Vth represents the thermal velocity of charge carriers. It is possible to reduce the number of defects in a crystalline perovskite by improving the crystallinity by using the appropriate layer processing conditions that can reduce the SRH recombination.57 In this work, the optimum Nt for CsPbI3 was found to be 1012 cm−3, which is nearly similar to the published literature.64 For the next stage of the simulation, this absorber Nt value was considered for the device.
+
+
+3.4.5 Optimization of donor and defect densities of ETL. 
+
+Fig. 6(a) shows the change of the PV parameters against the doping concentration (ND) of the TiO2 ETL for the configurations with and without the HTL. As the ND of TiO2 was increased from 9 × 1014 cm−3 to 9 × 1020 cm−3, the VOC, JSC, and PCE slightly decreased from 1.0203 V to 1.0201 V, 21.57 mA cm−2 to 21.44 mA cm−2, and 19.05% to 18.93%, respectively, whereas the FF increased slightly from 86.54% to 86.57% in the configuration with the HTL. Up to 9 × 1017 cm−3ND, the JSC, and PCE remained almost the same, and after that, they decreased slightly. The structure without the HTL showed an identical type of trend during the increment of ND values. In these circumstances, we considered the optimum ND of ETL as 9 × 1017 cm−3, which was utilized for the next steps of this study. Again, Fig. 6(b) illustrates the impact of the Nt of TiO2 ETL on the performance parameters of the configurations with and without the HTL. As the Nt of TiO2 was increased from 1011 cm−3 to 1018 cm−3, the VOC, JSC, FF, and PCE remained almost constant in both configurations. Similar trends can also be found in the previously published work.54 So, we selected the initial value of 1015 cm−3 as the optimum Nt of ETL for the next parts of this work.
+ Fig. 6  (a) Shows variation in donor density of TiO2 ETL on VOC, JSC, FF, and PCE with and without HTL; (b) shows variation in defect density of TiO2 ETL on VOC, JSC, FF, and PCE with and without HTL. 
+
+
+3.4.6 Optimization of acceptor and defect densities of HTL. 
+
+Fig. 7(a) shows the effect of the NA of CBTS on the VOC, JSC, FF, and PCE of the PSC when it was changed from 1015 cm−3 to 1021 cm−3. The variation in NA of HTL may be achieved through two options. It is possible to do so by using the minority carriers but using this strategy will result in a significant reduction of PV characteristics. On the other hand, it is also possible to do this by using the majority carriers, which significantly improves the PV parameters. In this work, throughout the variation of NA of HTL, the VOC, JSC, FF, and PCE remained unchanged, and thus, we selected the initial value of 1018 cm−3 as the optimum NA of CBTS HTL. Again, Fig. 7(b) shows how the performance parameters changed when the Nt of CBTS was increased from 1012 cm−3 to 1018 cm−3. The VOC, JSC, FF, and PCE remained almost unchanged during the whole variation, and previous research on CBTS HTL also came to the above-mentioned conclusion.39,66 Therefore, we considered the initial value of 1015 cm−3 as the optimum Nt of HTL for the next steps of this work.
+ Fig. 7  (a) Shows variation in acceptor density of CBTS HTL on VOC, JSC, FF, and PCE; (b) shows variation in defect density of CBTS HTL on VOC, JSC, FF, and PCE. 
+
+
+3.4.7 Optimization of interfacial trap densities. 
+
+Fig. 8(a) and (b) illustrate how the trap densities at the CBTS/CsPbI3 and CsPbI3/TiO2 interfaces affect the performance parameters when they were varied from 1010 cm−2 to 1022 cm−2 and 1010 cm−2 to 1018 cm−2, respectively. From the results, we found that the VOC, JSC, FF, and PCE declined as the trap density increased at both interfaces. This drop in PV performance is due to enhanced recombination at higher interfacial defect densities. However, it was apparent that the trap density at CBTS/CsPbI3 interface had more dominance on the device efficiency compared to the CsPbI3/TiO2 interface. We selected 1010 cm−2 as our optimum trap density at both interfaces similar to our initial selection.
+ Fig. 8  (a) Shows variation in defect density at CBTS/CsPbI3 interface on VOC, JSC, FF, and PCE; (b) shows variation in defect density at CsPbI3/TiO2 interface on VOC, JSC, FF, and PCE. 
+
+3.5 Optimized J–V and QE characteristics
+After the optimization of the ITO/TiO2/CsPbI3/CBTS/Ni device, the thickness, NA, and Nt of the absorber changed from 800 nm to 1500 nm, 1015 to 1016 cm−3, and 1015 to 1012 cm−3, respectively. However, during the optimization, the ETL and HTL thicknesses, NA and Nt of HTL, Nt of ETL, and interfacial trap densities at both interfaces remained unchanged, while the NA of ETL changed from 9 × 1016 to 9 × 1017 cm−3. After the final optimization, the PCE improved from the initial value of 17.90% to finally 19.06%. Fig. 9(a) shows the current density–voltage (J–V) curves of the device with and without the HTL, respectively, for the optimized configuration. In both cases, as the voltage increased, the current density steadily went down, following the previous studies.67 Again, Fig. 9(b) illustrates the correlation between the wavelength and quantum efficiency (QE) of the optimized device with and without the HTL, respectively. QE is defined as the ratio of the number of photogenerated charge carriers to the number of photons striking the solar cell.68,69 In the QE curves, the range of wavelength was 300–800 nm. QE was near 100% initially and dropped to 0% at the wavelength of 740 nm in both cases.
+ Fig. 9  (a) J–V and (b) QE curves of the PSC with and without HTL for the best-optimized structure. 
+3.6 Effect of resistance and temperature
+
+3.6.1 Effect of series and shunt resistance. 
+
+Fig. 10(a) represents the effect of series resistance (RS) on the PV parameters of the device with and without the HTL as it was varied from 0–6 Ω cm2, while the shunt resistance (RSH) was constant at 105 Ω cm2. As the RS enhanced, the VOC of the device without HTL increased marginally from 1.0203 V to 1.02 V, whereas the JSC, FF, and PCE dropped from 21.58 mA cm−2 to 21.54 mA cm−2, 86.57% to 75.26%, and 19.06% to 16.54%, respectively. Similar findings were also attained for the device without HTL. Overall series resistance is determined by the resistance of each layer utilized in the cell, and resistance of interfaces between semiconductor–semiconductor and semiconductor–metal. Highly conductive TCO rarely contributes to RS.70 Therefore, RS majorly depends on the resistance of materials, and at the semiconductors–metal interface, RS significantly hampers the FF of the device and sometimes also affects the VOC43 and results in an overall reduction in PCE due to higher power loss.52
+ Fig. 10  (a) Shows variation in series resistance (RS) on VOC, JSC, FF, and PCE when RSH = 1 × 105 Ω cm2 with and without HTL; (b) shows variation in shunt resistance (RSH) on VOC, JSC, FF, and PCE when RS = 0.5 Ω cm2 with and without HTL; (c) shows the variation of temperature 275 K to 475 K VOC, JSC, FF, and PCE. 
+Meanwhile, Fig. 10(b) illustrates the effect of RSH on the performance parameters of the device with and without the HTL during its augmentation from 10 to 107 Ω cm2, whereas the RS remained at a constant value of 0.5 Ω cm2. During this enhancement, we found increments in VOC, JSC, FF, and PCE values from 0.215 V to 1.020 V, 20.545 mA cm−2 to 21.572 mA cm−2, 25% to 85.61%, and 1.11% to 18.84%, respectively. When the optimization was carried out without using HTL, we obtained similar conclusions. Manufacturing defects mainly contribute to RSH.43 A greater RSH lowers the p/n junction resistance allowing more current to flow through it. The results of our research ascertain that RSH affects the FF and PCE substantially.43,71 When the RSH was between 10 Ω cm2 to 104 Ω cm2, a significant change in the performance could be seen, and then, the performance was more stable between 105 Ω cm2 to 107 Ω cm2RSH. In a previous study, even though the RSH exceeded 8000 Ω cm2, the FF, PCE, and VOC steadily rose, while the JSC stayed consistent.52
+
+
+3.6.2 Effect of temperature. 
+
+Fig. 10(c) represents the effect of temperature variation from 275 K to 475 K on the performance parameters of the device with and without the HTL. During the modulation of temperature, we found variations in VOC, JSC, FF, and PCE of the device with HTL from 1.083 V to 0.568 V, 21.536 mA cm−2 to 21.727 mA cm−2, 87.61% to 74.74%, and 20.43% to 9.22%, respectively. Similar trends could be observed for the device without HTL. The device performance steadily declined with the rise in temperature due to the increase in defects and deformation stress, which is in line with the previous report.72 Furthermore, the increasing temperature also affects the diffusion length and increases RS, which directly affects the FF and PCE of the device.51,73
+
+3.7 Analysis of capacitance and Mott–Schottky values
+As the voltage varied from −0.5 V to 0.8 V and the frequency was kept constant at 1 MHz, Fig. 11(a) and (b) show the fluctuation of the capacitance (C) and Mott–Schottky values (MS, 1/C2), each for the final structure with and without HTL. The capacitance increased with increasing voltage. At zero bias, the entire device was exhausted; but when a forward bias of about 0.5 V was applied, the depletion width decreased to a value close to the absorber thickness. With the increase in forward bias, the capacitance increased and began to act according to the MS relationship. Previous research has shown that at low voltages the current is well below the saturation current, but at voltage peaks, the current is only allowed to exceed the saturation current of the contact.74 On the other hand, MS is a popular and trusted way to find out the built-in potential (Vbi) of a device, which represents the contrast between the functionality of the electrode and the doping level. The basis of the MS theory is based on the properties of the p–n junction, where the Vbi of semiconductor devices is usually represented by the intersection of the x-axis. Despite the lower-than-expected results, the slope of 1/C2(V) is usually identified as the concentration of occupied traps. A decrease in MS values is observed with an increase in voltage which is in accordance with the previous findings.43,71,75
+ Fig. 11  (a) Capacitance (C), (b) Mott–Schottky (1/C2), (c) generation rate, and (d) recombination rate of the optimized device with and without HTL. 
+3.8 Analysis of generation and recombination rate
+With respect to the position in the device, Fig. 11(c) and (d), respectively, show the carrier generation and recombination rate for optimized structures with and without HTL. In the carrier generation step, electron–hole pairs are generated with the excitation of an electron from the VB to CB, leaving a hole in the VB. The discharge of electrons and holes from these PSCs propels carrier generation. The maximum generation rates for the optimized structure with and without HTL were discovered at around 1.6 μm and 1.45 μm, respectively. The generation rate at that range was maximum as the highest number of electrons are generated at that particular position because of the increased absorption of photons. SCAPS-1D calculates the electron–hole pairs generation, G(x) by employing the incoming photon flux, Nphot(λ, x) by following eqn (11): G(λ, x) = α(λ, x)·Nphot(λ, x)(11)In contrast, during the recombination, the electrons and holes of the CB get combined and become eliminated. The rate of recombination in PSCs is influenced by the charge carrier lifetime and density. Additionally, the defect state of each PSC layer has an impact on electron–hole recombination. The maximum recombination rates for the optimized device with and without HTL were observed at around 0.1 μm and 1.6 μm, respectively. This is because, compared to other locations, a greater number of electrons in the CB crosses the energy gap and reaches the VB to get stable and occupy the position of a hole at that range. As a result, the energy levels produced at that point affected the electron–hole recombination profile. In addition, grain boundaries and imperfections can cause non-uniformity in the distribution of recombination rates.
+3.9 Comparison of obtained results with previous works
+
+Table 4 shows the comparative analysis of the recent experimental and theoretical works on CsPbI3-based PSC with our results. The previous experimental reports were done with the strategies like declining crystal size/dimensional engineering, ionic incorporation, or steric hindrance to surpass the limitation of CsPbI3.18,20,22,76–87 Experimentally, the PCE of CsPbI3-based PSC has reached up to 18.40%20 with such modifications. Theoretically, there is not enough study with the CsPbI3 absorber, and in only one simulation study, the PCE reached up to 15.6%.52 As the results were not up to expectations in most theoretical studies, we tried to optimize the CsPbI3-based PSC to enhance its performance, and our results were the best compared to all other studies.
+Table 4 The comparison of PV parameters of different CsPbI3-based solar cells
+
+
+
+
+Ref.
+Year
+Type
+Device structure
+
+V
+OC (V)
+
+J
+SC (mA cm−2)
+FF (%)
+PCE (%)
+
+
+
+
+E = experimental, T = theoretical.
+
+
+
+
+
+83
+
+2016
+E
+FTO/TiO2/CsPbI3/Spiro/MoOx/Al
+0.99
+13.47
+65.0
+10.8
+
+
+
+84
+
+2016
+E
+FTO/TiO2/CsPbI3/Spiro/Ag
+0.66
+11.92
+52.5
+4.1
+
+
+
+77
+
+2017
+E
+FTO/TiO2/CsPbI3/PTAA/Au
+1.09
+20.34
+77.0
+17.0
+
+
+
+78
+
+2018
+E
+FTO/TiO2/CsPbI3/P3HT/Au
+1.04
+16.53
+65.7
+11.3
+
+
+
+18
+
+2018
+E
+FTO/TiO2/CsPbI3/PTAA/Au
+1.06
+18.95
+75.1
+15.1
+
+
+
+79
+
+2018
+E
+FTO/TiO2/CsPbI3/C
+0.79
+18.50
+65.0
+9.5
+
+
+
+81
+
+2018
+E
+FTO/TiO2/CsPbI3/P3HT/Au
+1.02
+17.40
+79.4
+14.1
+
+
+
+22
+
+2018
+E
+FTO/TiO2/CsPbI3/Spiro/Au
+1.11
+14.88
+65.0
+10.7
+
+
+
+86
+
+2018
+E
+FTO/TiO2/CsPbI3/PTAA/Au
+1.20
+15.25
+78.7
+14.5
+
+
+
+76
+
+2019
+E
+FTO/TiO2/CsPbI3/PTAA/Au
+1.08
+19.72
+75.7
+16.1
+
+
+
+80
+
+2019
+E
+ITO/PTAA/CsPbI3/C60/BCP/Cu
+0.96
+17.50
+73.0
+12.5
+
+
+
+82
+
+2019
+E
+ITO/PTAA/CsPbI3/BCP/Cu
+1.12
+17.10
+70.0
+13.4
+
+
+
+20
+
+2019
+E
+FTO/TiO2/CsPbI3/Spiro/Ag
+1.11
+20.23
+82.0
+18.4
+
+
+
+85
+
+2019
+E
+FTO/TiO2/CsPbI3/PTAA/Au
+0.99
+19.51
+70.5
+13.7
+
+
+
+87
+
+2019
+E
+FTO/TiO2/CsPbI3/Spiro/Au
+1.11
+14.80
+74.0
+12.2
+
+
+
+52
+
+2021
+T
+FTO/ZnO/CsPbI3/CuSbS2/Se
+1.10
+22.59
+62.6
+15.6
+
+
+This work
+2022
+T
+ITO/TiO2/CsPbI3/CBTS/Ni
+1.00
+21.08
+86.6
+19.1
+
+
+
+
+4. Summary
+CsPbI3-based PSCs are attractive because of the excellent optoelectronic properties and thermal stability of CsPbI3 absorber compared to other perovskites This work showcases the optimization of ITO/TiO2/CsPbI3/CBTS/Au PSC by considering and optimizing multiple performance parameters for the absorber and charge transport layers and the associated material interfaces, and the following conclusions can be drawn:
+(i) Ni was considered as the optimum back contact during the back contact optimization. The ITO/TiO2/CsPbI3/CBTS/Ni device exhibited a PCE of 17.91%, which was further optimized (with and without HTL). Before further optimization, the simultaneous impacts of absorber thickness with acceptor density and absorber thickness with defect density on the device with and without HTL were explored.
+(ii) The optimal absorber thickness for both configurations was 1500 nm. During the variation in ETL and HTL thickness, ETL and HTL defect density, and HTL acceptor density, the device's performance was almost unperturbed.
+(iii) The optimum absorber acceptor densities of the PSC with and without HTL were 1016 cm−3 and 1015 cm−3, respectively, while the optimum absorber defect density and ETL donor density for both cases were 1012 cm−3 and 9 × 1017 cm−3, respectively.
+(iv) The finally optimized ITO/TiO2/CsPbI3/CBTS/Ni device achieved a maximum PCE of 19.06%, which is 1.16% higher (in magnitude) than the initial combination of ITO/TiO2/CsPbI3/CBTS/Au. And the efficiency of this final optimized structure without HTL was 18.17%.
+(v) Furthermore, capacity and Mott–Schottky showed a similar trend for final optimized devices with and without HTL, in contrast, generation and recombination effects on the optimized device showed significant performance with HTL compared to without HTL.
+For validation of the solar cell, we checked the series and shunt resistance, working temperature, illuminated current–voltage curve, and quantum efficiency. The extensive optimization study reported in this study for CsPbI3-based perovskite cells may lead the way in the development of high-efficiency Cs-based PSCs in the future.
+Data availability
+The raw/processed data required to reproduce these findings cannot be shared at this time as the data also forms part of an ongoing study.
+Author contributions
+M. K. Hossain: conceptualization, data curation, formal analysis, funding acquisition, investigation, methodology, project administration, resources, software, supervision, validation, visualization, writing – original draft, and writing – review & editing; G. F. I. Toki: data curation, formal analysis, investigation, software, validation, visualization, and writing – original draft; I. Alam: conceptualization, data curation, formal analysis, investigation, methodology, software, validation, visualization, and writing – review & editing; R. Pandey, D. P. Samajdar, M. F. Rahman, M. R. Islam, M. H. K. Rubel, H. Bencherif, J. Madan, and M. K. A. Mohammed: data curation, formal analysis, investigation, validation, visualization, and writing – review & editing.
+List of abbreviations
+
+BMCBack metal contact
+CBTSCopper barium thiostannate
+
+E
+g
+Band gap
+
+N
+D
+Shallow uniform donor density
+XElectron affinity
+
+ε
+r
+Dielectric permittivity (relative)
+
+μ
+h
+Hole mobility
+
+μ
+n
+Electron mobility
+CBOConduction band offset
+CsPbI3Cesium lead halide
+CBConduction band
+EBDEnergy band diagram
+ETLElectron transport layer
+EAElectron affinity
+FFFill factor
+HTLHole transport layer
+ITOIndium-doped tin oxide
+IEIonization energy
+
+J
+SC
+Short circuit current density
+
+J–VCurrent voltage density
+MSMott–Schottky
+
+N
+A
+Shallow uniform acceptor density
+
+N
+C
+CB effective density of states
+
+N
+t
+Defect density
+
+N
+V
+VB effective density of states
+PCEPower conversion efficiency
+PSCPerovskite solar cell
+PVPhotovoltaic
+SCAPSSolar cell capacitance simulator
+SRHShockley-read-hall
+WFWork function
+VBValence band
+VBOValence band offset
+
+V
+OC
+Open voltage current
+
+Conflicts of interest
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+Acknowledgements
+The SCAPS-1D program was kindly provided by Dr M. Burgelman of the University of Gent in Belgium. The authors would like to express their gratitude to him.
+References
+S. Zou, Y. Liu, J. Li, C. Liu, R. Feng, F. Jiang, Y. Li, J. Song, H. Zeng, M. Hong and X. Chen, J. Am. Chem. Soc., 2017, 139, 11443–11450 CrossRef CAS PubMed .
+T. Qiao, D. Parobek, Y. Dong, E. Ha and D. H. Son, Nanoscale, 2019, 11, 5247–5253 RSC .
+M. H. K. Rubel, M. A. Hossain, M. K. Hossain, K. M. Hossain, A. A. Khatun, M. M. Rahaman, M. Ferdous Rahman, M. M. Hossain and J. Hossain, Results Phys., 2022, 42, 105977 CrossRef .
+M. H. K. Rubel, S. K. Mitro, M. K. Hossain, K. M. Hossain, M. M. Rahaman, J. Hossain, B. K. Mondal, A. Akter, M. F. Rahman, I. Ahmed and A. K. M. A. Islam, Mater. Today Commun., 2022, 33, 104302 CrossRef CAS .
+M. R. Islam, A. A. M. Mazumder, M. R. H. Mojumder, A. S. Z. Shifat and M. K. Hossain, Jpn. J. Appl. Phys., 2023, 62(1), 011002 CrossRef .
+Y.-C. Zhao, W.-K. Zhou, X. Zhou, K.-H. Liu, D.-P. Yu and Q. Zhao, Light Sci. Appl., 2017, 6, e16243 CrossRef CAS PubMed .
+D. Luo, W. Yang, Z. Wang, A. Sadhanala, Q. Hu, R. Su, R. Shivanna, G. F. Trindade, J. F. Watts, Z. Xu, T. Liu, K. Chen, F. Ye, P. Wu, L. Zhao, J. Wu, Y. Tu, Y. Zhang, X. Yang, W. Zhang, R. H. Friend, Q. Gong, H. J. Snaith and R. Zhu, Science, 2018, 360, 1442–1446 CrossRef CAS PubMed .
+H. Bencherif and M. K. Hossain, Sol. Energy, 2022, 248, 137–148 CrossRef CAS .
+M. K. Hossain, G. F. I. Toki, A. Kuddus, M. H. K. Rubel, M. M. Hossain, H. Bencherif, M. F. Rahman, M. R. Islam and M. Mushtaq, Sci. Rep., 2023 DOI:10.1038/s41598-023-28506-2 .
+S. M. Majeed, D. S. Ahmed and M. K. A. Mohammed, Org. Electron., 2021, 99, 106310 CrossRef CAS .
+
+          M. K. A. Mohammed, S. Singh, A. K. Al-Mousoi, R. Pandey, J. Madan, D. Dastan and G. Ravi, RSC Adv.,  2022, 12, 32611–32618 Search PubMed .
+Q. Wang, X. Zhang, Z. Jin, J. Zhang, Z. Gao, Y. Li and S. F. Liu, ACS Energy Lett., 2017, 2, 1479–1486 CrossRef CAS .
+J. Jiang, Z. Jin, J. Lei, Q. Wang, X. Zhang, J. Zhang, F. Gao and S. (Frank) Liu, J. Mater. Chem. A, 2017, 5, 9514–9522 RSC .
+H. Bencherif, F. Meddour, M. H. Elshorbagy, M. K. Hossain, A. Cuadrado, M. A. Abdi, T. Bendib, S. Kouda and J. Alda, Micro Nanostruct., 2022, 171, 207403 CrossRef CAS .
+M. K. A. Mohammed, A. K. Al-Mousoi, S. M. Majeed, S. Singh, A. Kumar, R. Pandey, J. Madan, D. S. Ahmed and D. Dastan, Energy Fuels, 2022, 36, 13187–13194 CrossRef CAS .
+M. K. A. Mohammed, R. K. Al-Azzawi, H. H. Jasim, S. H. Mohammed, S. Singh, H. H. Kadhum, A. Kumar, P. Sasikumar, M. S. Revathy and M. S. Jabir, Opt. Mater., 2022, 133, 112901 CrossRef CAS .
+W. Zhou, Y. Y. Zhao, X. Zhou, R. Fu, Q. Li, Y. Y. Zhao, K. Liu, D. Yu and Q. Zhao, J. Phys. Chem. Lett., 2017, 8, 4122–4128 CrossRef CAS PubMed .
+K. Wang, Z. Jin, L. Liang, H. Bian, D. Bai, H. Wang, J. Zhang, Q. Wang and S. Liu, Nat. Commun., 2018, 9, 4544 CrossRef PubMed .
+Y. Wang, T. Zhang, M. Kan and Y. Zhao, J. Am. Chem. Soc., 2018, 140, 12345–12348 CrossRef CAS PubMed .
+Y. Wang, X. Liu, T. Zhang, X. Wang, M. Kan, J. Shi and Y. Zhao, Angew. Chem., Int. Ed., 2019, 58, 16691–16696 CrossRef CAS PubMed .
+T. Zhang, M. I. Dar, G. Li, F. Xu, N. Guo, M. Grätzel and Y. Zhao, Sci. Adv., 2017, 3(9), e1700841 CrossRef PubMed .
+B. Li, Y. Zhang, L. Fu, T. Yu, S. Zhou, L. Zhang and L. Yin, Nat. Commun., 2018, 9, 1076 CrossRef PubMed .
+M. Cha, P. Da, J. Wang, W. Wang, Z. Chen, F. Xiu, G. Zheng and Z.-S. Wang, J. Am. Chem. Soc., 2016, 138, 8581–8587 CrossRef CAS PubMed .
+E. M. Sanehira, A. R. Marshall, J. A. Christians, S. P. Harvey, P. N. Ciesielski, L. M. Wheeler, P. Schulz, L. Y. Lin, M. C. Beard and J. M. Luther, Sci. Adv., 2017, 3(10), eaao4204 CrossRef PubMed .
+J. Liang, Z. Liu, L. Qiu, Z. Hawash, L. Meng, Z. Wu, Y. Jiang, L. K. Ono and Y. Qi, Adv. Energy Mater., 2018, 8, 1800504 CrossRef .
+M. F. Rahman, M. M. Alam Moon, M. K. Hossain, M. H. Ali, M. D. Haque, A. Kuddus, J. Hossain and A. B. Md. Ismail, Heliyon, 2022, 8, e12034 CrossRef CAS PubMed .
+M. F. Rahman, M. J. A. Habib, M. H. Ali, M. H. K. Rubel, M. R. Islam, A. B. Md. Ismail and M. K. Hossain, AIP Adv., 2022, 12, 105317 CrossRef CAS .
+W. Ke, G. Fang, J. Wan, H. Tao, Q. Liu, L. Xiong, P. Qin, J. Wang, H. Lei, G. Yang, M. Qin, X. Zhao and Y. Yan, Nat. Commun., 2015, 6, 6700 CrossRef CAS PubMed .
+D. Liu, J. Yang and T. L. Kelly, J. Am. Chem. Soc., 2014, 136, 17116–17122 CrossRef CAS PubMed .
+A. Hagfeldt, G. Boschloo, L. Sun, L. Kloo and H. Pettersson, Chem. Rev., 2010, 110, 6595–6663 CrossRef CAS PubMed .
+B. Roose, S. Pathak and U. Steiner, Chem. Soc. Rev., 2015, 44, 8326–8349 RSC .
+M. K. A. Mohammed, A. K. Al-Mousoi, S. Singh, U. Younis, A. Kumar, D. Dastan and G. Ravi, Energy Fuels, 2022, 36, 12192–12200 CrossRef CAS .
+H. Zhou, Q. Chen, G. Li, S. Luo, T. Song, H.-S. Duan, Z. Hong, J. You, Y. Liu and Y. Yang, Science, 2014, 345, 542–546 CrossRef CAS PubMed .
+S. Li, P. Zhang, Y. Wang, H. Sarvari, D. Liu, J. Wu, Y. Yang, Z. Wang and Z. D. Chen, Nano Res., 2017, 10, 1092–1103 CrossRef CAS .
+M. K. Hossain, M. F. Pervez, M. N. H. Mia, S. Tayyaba, M. J. Uddin, R. Ahamed, R. A. Khan, M. Hoq, M. A. Khan and F. Ahmed, Mater. Sci., 2017, 35, 868–877 CAS .
+M. K. Hossain, A. A. Mortuza, S. K. Sen, M. K. Basher, M. W. Ashraf, S. Tayyaba, M. N. H. Mia and M. J. Uddin, Optik (Stuttg)., 2018, 171, 507–516 CrossRef CAS .
+M. K. Hossain, M. F. Pervez, M. J. Uddin, S. Tayyaba, M. N. H. Mia, M. S. Bashar, M. K. H. Jewel, M. A. S. Haque, M. A. Hakim and M. A. Khan, Mater. Sci., 2017, 36, 93–101 Search PubMed .
+J. Chen and N.-G. Park, J. Phys. Chem. C, 2018, 122, 14039–14063 CrossRef CAS .
+Y. H. Khattak, F. Baig, H. Toura, S. Beg and B. M. Soucase, J. Electron. Mater., 2019, 48, 5723–5733 CrossRef CAS .
+F. Hong, W. Lin, W. Meng and Y. Yan, Phys. Chem. Chem. Phys., 2016, 18, 4828–4834 RSC .
+D. Shin, B. Saparov, T. Zhu, W. P. Huhn, V. Blum and D. B. Mitzi, Chem. Mater., 2016, 28, 4771–4780 CrossRef CAS .
+J. Ge, C. R. Grice and Y. Yan, J. Mater. Chem. A, 2017, 5, 2920–2928 RSC .
+M. K. Hossain, M. H. K. Rubel, G. F. I. Toki, I. Alam, M. F. Rahman and H. Bencherif, ACS Omega, 2022, 7, 43210–43230 CrossRef CAS PubMed .
+M. H. Ali, A. T. M. S. Islam, M. D. Haque, M. F. Rahman, M. K. Hossain, N. Sultana and A. Z. M. T. Islam, Mater. Today Commun, 2023, 34, 105387 CrossRef .
+R. Pandey, S. Bhattarai, K. Sharma, J. Madan, A. K. Al-Mousoi, M. K. A. Mohammed and M. K. Hossain, ACS Appl. Electron. Mater., 2023 DOI:10.1021/acsaelm.2c01574 .
+A. K. Al-Mousoi, M. K. A. Mohammed, S. Q. Salih, R. Pandey, J. Madan, D. Dastan, E. Akman, A. A. Alsewari and Z. M. Yaseen, Energy Fuels, 2022, 36, 14403–14410 CrossRef .
+A. K. Al-Mousoi, M. K. A. Mohammed, R. Pandey, J. Madan, D. Dastan, G. Ravi, P. Sakthivel and G. Anandha Babu, RSC Adv., 2022, 12, 32365–32373 RSC .
+R. A. Jabr, M. Hamad and Y. M. Mohanna, Int. J. Electr. Eng. Educ., 2007, 44, 23–33 CrossRef .
+
+          Y. H. Khattak, Modeling of High Power Conversion Efficiency Thin Film Solar Cells, PhD thesis, Universitat Politècnica de València,  2019,  DOI:10.4995/Thesis/10251/118802 .
+Y. Raoui, H. Ez-Zahraouy, N. Tahiri, O. El Bounagui, S. Ahmad and S. Kazim, Sol. Energy, 2019, 193, 948–955 CrossRef CAS .
+F. Behrouznejad, S. Shahbazi, N. Taghavinia, H.-P. Wu and E. Wei-Guang Diau, J. Mater. Chem. A, 2016, 4, 13488–13498 RSC .
+D. Jayan K, V. Sebastian and J. Kurian, Sol. Energy, 2021, 221, 99–108 CrossRef CAS .
+I. Alam, R. Mollick and M. A. Ashraf, Phys. B, 2021, 618, 413187 CrossRef CAS .
+U. Mandadapu, S. V. Vedanayakam and K. Thyagarajan, Indian J. Sci. Technol., 2017, 10, 1–8 CrossRef .
+H. Bencherif, Sol. Energy, 2022, 238, 114–125 CrossRef CAS .
+A. Hosen and S. R. Al Ahmed, J. Alloys Compd., 2022, 909, 164823 CrossRef CAS .
+L. Lin, L. Jiang, P. Li, B. Fan and Y. Qiu, J. Phys. Chem. Solids, 2019, 124, 205–211 CrossRef CAS .
+A. Bag, R. Radhakrishnan, R. Nekovei and R. Jeyakumar, Sol. Energy, 2020, 196, 177–182 CrossRef CAS .
+D. Liu, M. K. Gangishetty and T. L. Kelly, J. Mater. Chem. A, 2014, 2, 19873–19881 RSC .
+D. E. Tareq, S. M. AbdulAlmohsin and H. H. Waried, IOP Conf. Ser. Mater. Sci. Eng., 2020, 928, 072044 CrossRef CAS .
+A. Tara, V. Bharti, S. Sharma and R. Gupta, Opt. Mater., 2021, 119, 111362 CrossRef CAS .
+M. M. Salah, M. Abouelatta, A. Shaker, K. M. Hassan and A. Saeed, Semicond. Sci. Technol., 2019, 34, 115009 CrossRef CAS .
+O. Ahmad, A. Rashid, M. W. Ahmed, M. F. Nasir and I. Qasim, Opt. Mater., 2021, 117, 111105 CrossRef CAS .
+P. K. Patel, Sci. Rep., 2021, 11, 3082 CrossRef CAS PubMed .
+K. D. Jayan and V. Sebastian, Semicond. Sci. Technol., 2021, 36, 065010 CrossRef CAS .
+R. Chakraborty, K. M. Sim, M. Shrivastava, K. V. Adarsh, D. S. Chung and A. Nag, ACS Appl. Energy Mater., 2019, 2, 3049–3055 CrossRef CAS .
+G. E. Eperon, G. M. Paternò, R. J. Sutton, A. Zampetti, A. A. Haghighirad, F. Cacialli and H. J. Snaith, J. Mater. Chem. A, 2015, 3, 19688–19695 RSC .
+J. Hossain, M. M. A. Moon, B. K. Mondal and M. A. Halim, Opt. Laser Technol., 2021, 143, 107306 CrossRef CAS .
+M. M. A. Moon, M. H. Ali, M. F. Rahman, A. Kuddus, J. Hossain and A. B. M. Ismail, Phys. Scr., 2020, 95, 035506 CrossRef CAS .
+A. Bosio, S. Pasini and N. Romeo, Coatings, 2020, 10, 344 CrossRef CAS .
+M. K. Hossain, A. A. Arnab, R. C. Das, K. M. Hossain, M. H. K. Rubel, M. F. Rahman, H. Bencherif, M. E. Emetere, M. K. A. Mohammed and R. Pandey, RSC Adv., 2022, 12, 34850–34873 RSC .
+L. Slami, A. Bouchaour and M. Merad, Int. J. Mater., 2020, 7, 1–5 Search PubMed .
+S. R. Raga, E. M. Barea and F. Fabregat-Santiago, J. Phys. Chem. Lett., 2012, 3, 1629–1634 CrossRef CAS PubMed .
+M. Burgelman, K. Decock, A. Niemegeers, J. Verschraegen and S. Degrave, Univ. Gent, 2021, 1–111 Search PubMed .
+M. Samiul Islam, K. Sobayel, A. Al-Kahtani, M. A. Islam, G. Muhammad, N. Amin, M. Shahiduzzaman and M. Akhtaruzzaman, Nanomaterials, 2021, 11, 1218 CrossRef PubMed .
+K. Wang, Z. Jin, L. Liang, H. Bian, H. Wang, J. Feng, Q. Wang and S. (Frank) Liu, Nano Energy, 2019, 58, 175–182 CrossRef CAS .
+L. A. Frolova, D. V. Anokhin, A. A. Piryazev, S. Y. Luchkin, N. N. Dremova, K. J. Stevenson and P. A. Troshin, J. Phys. Chem. Lett., 2017, 8, 67–72 CrossRef CAS PubMed .
+B. Zhao, S.-F. Jin, S. Huang, N. Liu, J.-Y. Ma, D.-J. Xue, Q. Han, J. Ding, Q.-Q. Ge, Y. Feng and J.-S. Hu, J. Am. Chem. Soc., 2018, 140, 11716–11725 CrossRef CAS PubMed .
+S. Xiang, Z. Fu, W. Li, Y. Wei, J. Liu, H. Liu, L. Zhu, R. Zhang and H. Chen, ACS Energy Lett., 2018, 3, 1824–1831 CrossRef CAS .
+P. Becker, J. A. Márquez, J. Just, A. Al-Ashouri, C. Hages, H. Hempel, M. Jošt, S. Albrecht, R. Frahm and T. Unold, Adv. Energy Mater., 2019, 9, 1900555 CrossRef .
+W. Ke, I. Spanopoulos, C. C. Stoumpos and M. G. Kanatzidis, Nat. Commun., 2018, 9, 4785 CrossRef PubMed .
+J. Xi, C. Piao, J. Byeon, J. Yoon, Z. Wu and M. Choi, Adv. Energy Mater., 2019, 9, 1901787 CrossRef .
+A. Swarnkar, A. R. Marshall, E. M. Sanehira, B. D. Chernomordik, D. T. Moore, J. A. Christians, T. Chakrabarti and J. M. Luther, Science, 2016, 354, 92–95 CrossRef CAS PubMed .
+P. Luo, W. Xia, S. Zhou, L. Sun, J. Cheng, C. Xu and Y. Lu, J. Phys. Chem. Lett., 2016, 7, 3603–3608 CrossRef CAS PubMed .
+K. Wang, Z. Li, F. Zhou, H. Wang, H. Bian, H. Zhang, Q. Wang, Z. Jin, L. Ding and S. (Frank) Liu, Adv. Energy Mater., 2019, 9, 1902529 CrossRef CAS .
+H. Bian, D. Bai, Z. Jin, K. Wang, L. Liang, H. Wang, J. Zhang, Q. Wang and S. (Frank) Liu, Joule, 2018, 2, 1500–1510 CrossRef CAS .
+F. Liu, C. Ding, Y. Zhang, T. Kamisaka, Q. Zhao, J. M. Luther, T. Toyoda, S. Hayase, T. Minemoto, K. Yoshino, B. Zhang, S. Dai, J. Jiang, S. Tao and Q. Shen, Chem. Mater., 2019, 31, 798–807 CrossRef CAS .
+
+This journal is © The Royal Society of Chemistry and the Centre National de la Recherche Scientifique 2023
+Table Content:
+	(1)
+	(2)
+	(3)
+Jn = qμnnε + qDn∂n	(4)
+Jp = qμppε − qDp∂p	(5)
+	(6)
+	(7)
+	(8)
+
+ 	Fig. 1  (a) CsPbI3 crystal structure, (b) design configuration, (c) energy band diagram, and (d) energy band alignment of the ITO/TiO2/CsPbI3/CBTS/Au device.	 
+
+
+Thickness (nm)	500	30	100	800a
+Band gap, Eg (eV)	3.5	3.2	1.9	1.694
+Electron affinity, χ (eV)	4	4	3.6	3.95
+Dielectric permittivity (relative), εr	9	9	5.4	6
+CB effective density of states, NC (1 cm−3)	2.2 × 1018	2 × 1018	2.2 × 1018	1.1 × 1020
+VB effective density of states, NV (1 cm−3)	1.8 × 1019	1.8 × 1019	1.8 × 1019	8.2 × 1020
+Electron mobility, μn (cm2 V−1 s−1)	20	20	30	25
+Hole mobility, μh (cm2 V−1 s−1)	10	10	10	25
+Shallow uniform acceptor density, NA (1 cm−3)	0	0	1 × 1018	1 × 1015a
+Shallow uniform donor density, ND (1 cm−3)	1 × 1021	9 × 1016	0	0a
+Defect density, Nt (1 cm−3)	1 × 1015a	1 × 1015a	1 × 1015a	1 × 1015a
+
+ETL/CsPbI3	Neutral	1.0 × 10−17	Single	Above the VB maximum	1.0 × 1010
+1.0 × 10−18
+CsPbI3/HTL	Neutral	1.0 × 10−18	Single	Above the VB maximum	1.0 × 1010
+1.0 × 10−19
+Ag < Cu < Fe < C < Au < W < Ni < Pd < Pt < Se
+
+Ag	4.26	0.449	21.04	40.75	3.85
+Cu	4.65	0.840	21.07	63.73	11.28
+Fe	4.81	0.980	21.07	69.94	14.45
+C	5	0.997	21.07	84.24	17.70
+Au	5.1	0.997	21.07	85.21	17.90
+W	5.22	0.997	21.08	85.24	17.91
+Ni	5.5	0.997	21.08	85.24	17.91
+Pd	5.6	0.997	21.10	85.24	17.93
+Pt	5.7	0.997	21.10	85.24	17.93
+Se	5.9	0.997	21.10	85.24	17.93
+
+ 	Fig. 2  Contour mapping of PV performance parameters while (a and a′) represents VOC (V), (b and b′) represents JSC (mA cm−2), (c and c′) represents FF (%), and (d and d′) represents PCE (%) depending on thickness and acceptor density of CsPbI3 absorber for HTL (left) and without HTL (right) based devices.	 
+
+ 	Fig. 3  Contour mapping of PV performance parameters while (a and a′) represents VOC (V), (b and b′) represents JSC (mA cm−2), (c and c′) represent FF (%), and (d and d′) represents PCE (%) depending on thickness and defect density of CsPbI3 absorber for HTL (left) and without HTL (right) based devices.	 
+
+ 	Fig. 4  Effect of the thickness variation of the CsPbI3 layer, TiO2 ETL, and CBTS HTL, respectively. (a) Shows the effect of the CsPbI3 thickness variation on VOC, JSC, FF, and PCE with and without HTL; (b) shows the effect of the TiO2 ETL thickness variation on VOC, JSC, FF, and PCE with and without HTL; (c) shows the CBTS HTL thickness variation on VOC, JSC, FF, and PCE.	 
+
+ 	Fig. 5  (a) Shows variation in the acceptor density of absorber on VOC, JSC, FF, and PCE with and without HTL; (b) shows variation in defect density of absorber on VOC, JSC, FF, and PCE with and without HTL.	 
+	(9)
+τ = 1/[σ × Nt × Vth]	(10)
+
+ 	Fig. 6  (a) Shows variation in donor density of TiO2 ETL on VOC, JSC, FF, and PCE with and without HTL; (b) shows variation in defect density of TiO2 ETL on VOC, JSC, FF, and PCE with and without HTL.	 
+
+ 	Fig. 7  (a) Shows variation in acceptor density of CBTS HTL on VOC, JSC, FF, and PCE; (b) shows variation in defect density of CBTS HTL on VOC, JSC, FF, and PCE.	 
+
+ 	Fig. 8  (a) Shows variation in defect density at CBTS/CsPbI3 interface on VOC, JSC, FF, and PCE; (b) shows variation in defect density at CsPbI3/TiO2 interface on VOC, JSC, FF, and PCE.	 
+
+ 	Fig. 9  (a) J–V and (b) QE curves of the PSC with and without HTL for the best-optimized structure.	 
+
+ 	Fig. 10  (a) Shows variation in series resistance (RS) on VOC, JSC, FF, and PCE when RSH = 1 × 105 Ω cm2 with and without HTL; (b) shows variation in shunt resistance (RSH) on VOC, JSC, FF, and PCE when RS = 0.5 Ω cm2 with and without HTL; (c) shows the variation of temperature 275 K to 475 K VOC, JSC, FF, and PCE.	 
+
+ 	Fig. 11  (a) Capacitance (C), (b) Mott–Schottky (1/C2), (c) generation rate, and (d) recombination rate of the optimized device with and without HTL.	 
+G(λ, x) = α(λ, x)·Nphot(λ, x)	(11)
+
+
+
+83
+	2016	E	FTO/TiO2/CsPbI3/Spiro/MoOx/Al	0.99	13.47	65.0	10.8
+
+84
+	2016	E	FTO/TiO2/CsPbI3/Spiro/Ag	0.66	11.92	52.5	4.1
+
+77
+	2017	E	FTO/TiO2/CsPbI3/PTAA/Au	1.09	20.34	77.0	17.0
+
+78
+	2018	E	FTO/TiO2/CsPbI3/P3HT/Au	1.04	16.53	65.7	11.3
+
+18
+	2018	E	FTO/TiO2/CsPbI3/PTAA/Au	1.06	18.95	75.1	15.1
+
+79
+	2018	E	FTO/TiO2/CsPbI3/C	0.79	18.50	65.0	9.5
+
+81
+	2018	E	FTO/TiO2/CsPbI3/P3HT/Au	1.02	17.40	79.4	14.1
+
+22
+	2018	E	FTO/TiO2/CsPbI3/Spiro/Au	1.11	14.88	65.0	10.7
+
+86
+	2018	E	FTO/TiO2/CsPbI3/PTAA/Au	1.20	15.25	78.7	14.5
+
+76
+	2019	E	FTO/TiO2/CsPbI3/PTAA/Au	1.08	19.72	75.7	16.1
+
+80
+	2019	E	ITO/PTAA/CsPbI3/C60/BCP/Cu	0.96	17.50	73.0	12.5
+
+82
+	2019	E	ITO/PTAA/CsPbI3/BCP/Cu	1.12	17.10	70.0	13.4
+
+20
+	2019	E	FTO/TiO2/CsPbI3/Spiro/Ag	1.11	20.23	82.0	18.4
+
+85
+	2019	E	FTO/TiO2/CsPbI3/PTAA/Au	0.99	19.51	70.5	13.7
+
+87
+	2019	E	FTO/TiO2/CsPbI3/Spiro/Au	1.11	14.80	74.0	12.2
+
+52
+	2021	T	FTO/ZnO/CsPbI3/CuSbS2/Se	1.10	22.59	62.6	15.6
+This work	2022	T	ITO/TiO2/CsPbI3/CBTS/Ni	1.00	21.08	86.6	19.1
+BMC	Back metal contact
+CBTS	Copper barium thiostannate
+
+E
+g
+	Band gap
+
+N
+D
+	Shallow uniform donor density
+X	Electron affinity
+
+ε
+r
+	Dielectric permittivity (relative)
+
+μ
+h
+	Hole mobility
+
+μ
+n
+	Electron mobility
+CBO	Conduction band offset
+CsPbI3	Cesium lead halide
+CB	Conduction band
+EBD	Energy band diagram
+ETL	Electron transport layer
+EA	Electron affinity
+FF	Fill factor
+HTL	Hole transport layer
+ITO	Indium-doped tin oxide
+IE	Ionization energy
+
+J
+SC
+	Short circuit current density
+
+J–V	Current voltage density
+MS	Mott–Schottky
+
+N
+A
+	Shallow uniform acceptor density
+
+N
+C
+	CB effective density of states
+
+N
+t
+	Defect density
+
+N
+V
+	VB effective density of states
+PCE	Power conversion efficiency
+PSC	Perovskite solar cell
+PV	Photovoltaic
+SCAPS	Solar cell capacitance simulator
+SRH	Shockley-read-hall
+WF	Work function
+VB	Valence band
+VBO	Valence band offset
+
+V
+OC
+	Open voltage current
+
+This journal is © The Royal Society of Chemistry and the Centre National de la Recherche Scientifique 2023

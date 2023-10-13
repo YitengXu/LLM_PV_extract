@@ -1,0 +1,291 @@
+Accelerated exploration of efficient ternary solar cells with PTB7:PC 71 BM:SMPV1 using machine-learning methods   - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/D2CP02368G View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2CP02368G
+(Paper)
+Phys. Chem. Chem. Phys., 2022, 24, 22538-22545Accelerated exploration of efficient ternary solar cells with PTB7:PC71BM:SMPV1 using machine-learning methods†
+
+        
+          
+            Chaorong 
+            Guo
+          
+        
+      a, 
+      
+        
+          
+            Zhennan 
+            Li
+          
+        
+      a, 
+      
+        
+          
+            Kuo 
+            Wang
+          
+        
+      a, 
+      
+        
+          
+            Xunchen 
+            Zhou
+          
+        
+      a, 
+      
+        
+          
+            Di 
+            Huang
+          
+        
+      *a, 
+      
+        
+          
+            Jiaojiao 
+            Liang
+          
+        
+      *a and 
+
+        
+          
+            Ling 
+            Zhao
+          
+        
+      *b
+aHunan University of Technology, Zhuzhou, 412008, China
+bShandong Provinical Key Laboratory of Optical Communication Science and Technology, School of Physical Science and Information Technology, Liaocheng University, Liaocheng, 252059, China
+Received 
+      25th May 2022
+    , Accepted 23rd August 2022First published on 24th August 2022AbstractMachine learning (ML) provides an efficient tool for predicting the photoelectric conversion efficiency (PCE) of organic solar cells (OSCs). In this paper, random forest (RF), K-nearest neighbors, and support vector machine are used to predict the PCE for ternary OSCs with PC71BM. The results of ML show that RF has the best PCE prediction accuracy. Therefore, RF is chosen to predict the champion PCE of ternary OSCs with PTB7:PC71BM:SMPV1, which is around 8.01% in ternary OSCs with a doping ratio of around 6 wt% of SMPV1. To check the prediction, ternary OSCs with PTB7:PC71BM:SMPV1 were fabricated, and the experimental results show that the best PCE of 8.83% is obtained in ternary OSCs with 7.5 wt% of SMPV1 introduced. The experiments verify the feasibility of ML in predicting the PCE of ternary OSCs, and its great potential in predicting the doping concentration of the third component for ternary OSCs. Moreover, the working mechanism of the performance enhancement in the ternary OSCs is further researched and demonstrated as the following: (i) an increase in photon capture in the visible light spectrum to enhance the short circuit current density (Jsc); (ii) high priority charge transport to boost the fill factor and Jsc.
+1. Introduction
+As a branch of artificial intelligence, machine learning (ML) is a discipline that simulates the process of human learning and cognition, so as to continuously optimize itself. ML can quickly and accurately mine a large amount of data. Moreover, ML can discover hidden laws while building models with predictive power.1–5 Nowadays, ML has also been applied in the field of photovoltaics, such as the research and development of organic photovoltaic materials,6–8 the screening of photovoltaic materials,9–12 the optimization of solar cell stability,13–16 and the preparation of high-performance solar cells.17 Qi Zhang et al. successfully screened 22 new photovoltaic materials with high potential using ML, which provided reasonable design guidance for the synthesis of materials for new high-performance OSCs.6 Min-Hsuan Lee accurately predicted the open circuit voltage (Voc) of OSCs, and proposed a random forest (RF) model which can predict the photoelectric conversion efficiency (PCE) of ternary OSCs.18 David et al. used ML to identify materials with the best stability and performance for OSCs.19 Recently, Tianyu Hao et al. applied ML for non-fullerene ternary OSCs to obtain a high PCE by applying energy level alignment of the acceptor or donor material, and their prediction results were confirmed in validation experiments.20 As mentioned above, ML has been successfully applied to OSCs. Nowadays, a large number of new materials are tried to use in OSCs. However, the suitable materials is screened by the repeated experiments for high-efficiency OSCs, which is time-consuming and labor-intensive. When ML is used to analyze a large amount of existing experimental data, the PCE of OSCs with the selected materials can be quickly predicted and the development process can be remarkably improved.
+In recent years, the ternary strategy has become the main way to obtain high-efficiency OSCs due to its simple processing. Moreover, the PCE of ternary OSCs has been successfully promoted to exceed 18%.1,21,22 For ternary OSCs, the selection of the third material and the doping ratio of the third material greatly affect the performance of the devices. Choosing a suitable third material can effectively improve the short circuit current density (Jsc), Voc and PCE in devices.23,24 For example, Lingling Zhan et al. recently constructed ternary OSCs, which were composed of symmetric BTP-eC9 and asymmetric BTP-S9 acceptors. Without sacrificing the external quantum efficiency (EQE), this type of ternary OSC showed a better performance than binary OSCs.1 Kaien Chong et al. applied novel NFA acceptors with side chain engineering to the ternary OSCs and doped with solid additives to improve the charge extraction and inhibit charge recombination for the device. Therefore they finally prepared all-polymer ternary OSCs with a high efficiency of 19.05%.21 What is more, Jinzhao Qin et al. also reported all-small-molecule ternary OSCs with the best PCE of 17.0%.25 To develop the new highly efficient ternary OSCs, a lot of trial-and-error experiments of ternary OSCs is required because of the wide variety of organic photovoltaic materials. However, this is not only time-consuming but also extremely challenging. Based on previous studies of ternary OSCs, there is already a huge amount of data about OSCs, therefore ML can be used to explore ternary OSCs.26,27
+In this paper, we first apply RF, K-nearest neighbors (KNN), and support vector machine (SVM) of ML to predict the PCE of ternary OSCs through the energy level of the acceptor and donor materials, and the optimal doping concentration of the third component. The results show that RF provides the best prediction accuracy amongst the three algorithms. Therefore RF is selected to predict the best PCE and the optimal doping ratio of the third component for ternary OSCs. Secondly, to verify the validity of ML, the small-molecule donor SMPV1 is chosen as the third component and introduced into the binary system of PTB7:PC71BM. The highest PCE of ternary OSCs with PTB7:PC71BM:SMPV1 is predicted by RF to be around 8.01%, and the predicted best doping ratio of SMPV1 is about 6 wt%. The experimental results show that when 7.5 wt% SMPV1 is added, the ternary OSCs obtained the best PCE of 8.83%. Lastly, the enhancement in performance for ternary OSCs with PTB7:PC71BM:SMPV1 is investigated. Absorption spectra indicate that the doped SMPV1 significantly broadens absorption in the active layer. Photoluminescence (PL) and time resolved transient PL (TRPL) show that after doping with SMPV1, extra charge transfer takes place between SMPV1 and PTB7, and the energy transfer can be negligible.
+2. Results and discussion
+2.1 Machine-learning-assisted optimization and prediction
+In order to study the effects of HOMO level, LUMO level and doping ratio on the device performance, HOMO(D) and LUMO(D) of the donor material, HOMO(A) and LUMO(A) of the acceptor material, HOMO(T) and LUMO(T) of the third component and the doping ratio T (%) of the third component were taken as input variables. Firstly, the Pearson correlation coefficient (r) was calculated to evaluate the correlation between material energy level, doping ratio and device performance. Fig. 1(a and b) show the correlation matrix of the r value for the related energy levels of materials and doping ratio of the third material with respect to Jsc and PCE, respectively. As can be seen in Fig. 1a, HOMO(A) and HOMO(T) display significant linear relationships with Jsc (r = 0.47, r = −0.43), which indicates that the HOMO of the acceptor material and the third component should be considered for Jsc optimization in ternary OSCs. It is also explained that the shallower HOMO level of acceptor (the HOMO level of acceptor has a high correlation with Jsc; r = 0.47) can reduce the band gap of the active layer to improve Jsc. As shown in Fig. 1b, it is easy to see that there are obvious linear relationships between HOMO(A), HOMO(T) and PCE (r = 0.47, r = −0.46), while HOMO(D) and T (%) are also correlated (r = −0.33, r = −0.34). Therefore the PCE exhibits obvious correlation with the HOMO energy levels of the three kinds of material in ternary OSCs, which is reasonable for explaining that the cascade energy level structure for the three materials in ternary OSCs can weaken the barrier to increase charge transfer and inhibit the recombination of carriers for raising the performance of ternary OSCs. The LUMO and HOMO energy levels of PTB7 are 3.31 eV and 5.15 eV,28 respectively. SMPV1 has a 3.51 eV LUMO and 5.26 eV HOMO in Fig. 1c,29 which means that after adding SMPV1, a cascade energy level structure of donor/acceptor materials is formed in ternary OSCs. Therefore, PTB7, SMPV1 and PC71BM were chosen in this work. In addition, the Jsc and PCE correlations with doping concentration of the third component (r = −0.41, r = −0.34) show that ternary OSCs can enhance the photon absorption ability of the active layer by using third material, which can optimize Jsc and improve PCE in ternary OSCs.
+ Fig. 1  (a) Correlation matrix between Jsc, material energy levels (HOMO(D) and LUMO(D) for donor; HOMO(A) and LUMO(A) for acceptor; HOMO(T) and LUMO(T) for the third component) and doping ratio of the third material (T (%)). (b) Correlation matrix between PCE, material energy levels and T (%). (Ranging from −0.6 to 1, coded from white to dark blue). (c) Energy level diagram of ternary OSCs. 
+To evaluate the PCE prediction accuracy of the ML model, comparison diagrams of true PCE and predicted PCE for RF, KNN and SVM algorithms were measured. Fig. 2a displays the comparison diagram of real PCE and predicted PCE for RF. Fig. S4 (ESI†) gives the plots of the relationship between the true PCE and the predicted PCE predicted by KNN and SVM. Here, 102 sets of optimal PCE and corresponding energy levels under the optimal doping ratio were used to predict the PCE. Compared with the comparison diagram for RF, the PCE prediction points predicted by the KNN and SVM algorithms are more discrete from the real PCE line. Furthermore, the coefficient of determination (R2), root mean square error (RMSE), mean absolute error (MAE), and mean absolute percent error (MAPE) in the RF, KNN and SVM algorithms are computed in ESI† and shown in Table 1 for the quantitative measurement of the PCE prediction accuracy. In evaluation metrics, the R2 value is applied to determine the goodness of fit in the ML model. Therefore, when the value of R2 is closer to 1, the accuracy prediction for PCE is higher. The R2 value of RF is 0.84, which is much higher than the 0.62 and 0.59 of KNN and SVM, respectively. More importantly, the R2 value of RF is closer to 1 than those of KNN and SVM, which means that RF provides higher accuracy for PCE prediction. Moreover, RMSE can evaluate the deviation between the true PCE and the predicted PCE. The smallest RMSE value of RF (1.22) also shows the best PCE prediction results in these three kinds of algorithms. In other words, RF provides the minimum deviation between the predicted PCE and the true PCE. In addition, MAE and MAPE can also accurately reflect the prediction error, and RF also achieves smaller MAE and MAPE values (0.84, 0.11) than SVM or KNN. Moreover, the RF algorithm offers an experimental method to detect the interactions between variables, and provides the relative importance of each feature in the prediction results to obtain higher accuracy.6,18,20 These all indicate that the PCE predicted by the RF algorithm is very close to the real PCE in ternary OSCs. What is more, there are no over-fitting or under-fitting phenomena, which confirms the feasibility of using the RF algorithm to predict the PCE of ternary OSCs. Therefore we use the RF algorithm to predict the PCE of PTB7:SMPV1:PC71BM OSCs with different doping ratios.
+ Fig. 2  (a) The plot of the relationship between the true PCE and the predicted PCE predicted by RF; the red line is the reference for the fitting result. (b) The curves of the predicted PCE vs. the doping ratios of the third component in ternary OSCs. (The data in this figure is the average of five groups of predicted values.) 
+Table 1 The performance of different algorithms evaluated using R2, RMSE, MAE and MAPE
+
+
+
+
+ML techniques
+
+R
+2
+
+RMSE
+MAE
+MAPE
+
+
+
+
+RF
+0.84
+1.22
+0.84
+0.11
+
+
+KNN
+0.62
+1.89
+1.31
+0.18
+
+
+SVM
+0.59
+1.92
+1.43
+0.19
+
+
+
+
+To predict the best doping ratio of the third component in ternary OSCs, we applied the RF algorithm to predict the PCE of the ternary device under different doping ratios with concentration gradients of 1 wt%, according to energy levels of PTB7, PC71BM and SMPV1 in Fig. 1c. The predicted results are shown in Fig. 2b. It is not difficult to see that there are optimal peak points around 6 wt%, and the best predicted PCE is 8.01%, which reduces the selection range over which we should explore the optimal doping ratio. Notably the prediction curve values show cliffs when the doping ratio reaches 55 wt% and 95 wt% in Fig. 2b. The main reason is that there are relatively few studies on the PCE of ternary OSCs with a heavy doping ratio of the third material in most research articles, therefore these cliffs occur in the predicted curve due to the small number of data points collected. It is worth mentioning that the data in Fig. 2b is built from the average value of multiple predictions, mainly due to the small differences in the optimal PCE and its corresponding optimal doping ratio of the third component in each prediction. Given all of that, the doping ratios of 0 wt%, 5 wt%, 7.5 wt% and 12.5 wt% for SMPV1 were used for the next verification experiments in the following work.
+2.2 Experimental validation of the model prediction
+In order to check and confirm the ML prediction in ternary OSCs, we fabricated OSCs with different blends of active layers using the inverted device structure with ITO/ZnO/active layer/MoOx/Ag, as seen in Fig. S2 (ESI†). The current density vs. voltage (J–V) characteristics of all the OSCs were tested and are displayed in Fig. 3 and Table 2. In binary OSCs with PTB7:PC71BM active layers, the devices show 0.71 V Voc, 14.14 mA cm−2Jsc and a 72% fill factor (FF), resulting in 7.23% PCE. For the ternary OSCs, the OSC performance is fully dependent on the doping weight ratios of SMPV1. We observe the peaks of PCE at SMPV1 doping weight ratios of about 7.5 wt%. The best PCE, FF and Jsc of ternary OSCs are enhanced to 8.83%, 76% and 16.20 mA cm−2 with 7.5 wt% SMPV1 doping weight ratio in donors, respectively. The best PCE in ternary OSCs shows a 22.1% PCE enhancement compared to the binary devices. Moreover, the best FF of the ternary OSCs is much higher than that of the binary OSCs. The enhanced FF could be demonstrated by the value of shunt resistance (Rsh) and series resistance (RS) in OSCs, as displayed in Table 2. Rsh displays an increasing and then decreasing trend with the enhancement in SMPV1 doping volume ratio. In addition, RS displays a decreasing and then increasing trend with the increase in SMPV1 adding weight ratio. The large Rsh and small RS are instrumental in charge transportation and collection, leading to increased PCE and FF in OSCs.30 More importantly, RS and Rsh of the ternary OSC’ are better than those of PTB7:PC71BM binary OSCs, showing clearly the more efficient charge transportation and collection in the ternary OSCs. It is worth mentioning that, compared with the predicted result, the experimental results are obviously slightly different, which may be caused by the different batch of active layer materials, the experimental conditions, the device structure and so on.
+ Fig. 3  The J–V characteristics of OSCs with different weight ratios of SMPV1 on AM 1.5G illumination under 100 mW cm−2 light intensity. 
+Table 2 Summary of performance parameters of OSCs with different SMPV1 doping weight ratios in donors. PCEave is the average PCE from 8 cell samples
+
+
+
+
+SMPV1 (wt%)
+
+V
+oc [V]
+
+J
+sc [mA cm−2]
+FF [%]
+
+R
+s [Ω cm2]
+
+R
+sh [Ω cm2]
+PCE [%]
+PCEave [%]
+
+
+
+
+0
+0.71
+14.14
+0.72
+3.82
+1665.21
+7.23
+7.11
+
+
+5
+0.72
+15.64
+0.73
+3.00
+3736.18
+8.25
+7.98
+
+
+7.5
+0.72
+16.20
+0.76
+2.61
+4828.16
+8.83
+8.75
+
+
+12.5
+0.72
+15.59
+0.74
+3.46
+1743.73
+8.29
+8.03
+
+
+
+
+To explore the Jsc enhancement, the absorption with different active layers was carried out, because the improvement in Jsc could be easily attributed to the increased photon capturing of ternary mixed active layers.30,31 SMPV1 film has a high absorption range between 400 nm and 700 nm. PTB7 film displays a comparatively low absorption in this spectrum but has great photon harvesting ability between wavelengths of 500 nm and 800 nm in Fig. S3 (ESI†). PC71BM film shows strong absorption from the UV to the visible light spectrum, which should be good for capturing photons from the shorter wavelength spectrum for the active layers. Fig. 4a displays the absorption spectra of PTB7:PC71BM films and ternary mixed films with 7.5 wt% SMPV1. In the case of the binary blend active layer, PTB7 and PC71BM were mixed in the weight ratio of 1:1.5. For the ternary blend active layers which contain PTB7, SMPV1 and PC71BM, SMPV1 was doped into the PTB7:PC71BM blend with a weight percent of 7.5 of donors. An obvious complementary absorption in the ternary mixed layers with 7.5 wt% SMPV1 is gained, which is strong evidence that the photon capturing ability in the ternary films with PTB7:SMPV1:PC71BM is enhanced. What is more, the absorption intensity in the ternary mixed films with the spectrum between 400 nm and 600 nm is raised when 7.5 wt% SMPV1 is added to the donors. At the same time, the absorption intensity of these films with the spectrum between 600 nm and 800 nm shows a small decrease. In addition, we carried out EQE tests to prove the contribution of photocurrent collection to the incoming photon energy, as shown in Fig. 4b. On the whole, we see that the EQE spectra explain a substantial part of the improvement (consistent with the portion of the Jsc enhancement) in the wavelength range from 450 nm to 800 nm with 7.5 wt% SMPV1 doped weight ratio in donors. The increment between 450 and 600 nm is due to the stronger absorption of ternary blend films. On the other hand, the improvement in EQE from 600 nm to 800 nm cannot be solely explained by the absorption contribution, as can be seen from Fig. 4a.
+ Fig. 4  (a) Absorption spectra of PTB7:PC71BM, and ternary mixed active layers with 7.5 wt% SMPV1. (b) The corresponding OSCs EQE spectra with different SMPV1 doping weight ratios. 
+To identify other causal factors for improving the performance of ternary OSCs, we obtained more insight into the exciton dissociation process of the different active layers. The photocurrent density (Jph) vs. the effective voltage (Veff) curves of ternary and binary OSCs were studied and are displayed in Fig. 5. Here, Jph is defined as Jph = J − Jd, where J is the current density with 100 mW cm−2 illumination and Jd is the current density in the dark. Veff is defined by Veff = Vo − V, where Vo is the voltage when Jph is 0, and V is the applied bias.32–35 Supposing the charge collection efficiency and exciton dissociation efficiency are unified at Veff = 1.7 V, the saturation current density (Jsat) is heavily determined by the maximum exciton generation rate (Gmax). Therefore, Jsat = LqGmax, where L represent the thickness of the active layers and q is the elementary charge. The Jsat values of OSCs are 14.79 mA cm−2 for a binary device with PTB7:PC71BM and 16.72 mA cm−2 for a ternary device with 7.5 wt% SMPV1 in the donors. The exciton dissociation can be estimated from the values of Jph/Jsat with the short circuit condition.34,36–38 The Jph/Jsat values of corresponding OSCs are 97.8% and 98.1% under short circuit conditions, respectively. The maximum Jph/Jsat value of 98.1% is obtained for the ternary OSCs with SMPV1, meaning the optimized exciton dissociation efficiency for the ternary films.
+ Fig. 5  
+J
+ph–Veff curves of typical OSCs. 
+To further investigate the charge recombination of the ternary devices, J–V characteristics of the optimized ternary and binary OSCs with different light illumination intensities were measured and the Jsc reliance on the light intensity is shown in Fig. 6. Jsc is used to estimate a power-law dependence on current (I, Jsc ∝ Iα).39–41 The data plotted on a log–log scale and fitted to a power factor, α, are displayed in Fig. 6. The values show that the charge collection efficiency is slightly reliant on the light intensity. What is more, the ternary device with SMPV1 yields α = 0.967 (approaching unity), which is a bit bigger than that of a binary device without SMPV1 (α = 0.954). This result further explains that the charge carrier losses of the ternary active layer are resolved by captured monomolecular recombination in the defect sites, meanwhile bimolecular exciton annihilation may lead to only minor losses in the ternary device.
+ Fig. 6  
+J
+sc
+vs. light illumination intensity profiles in the binary OSCs based on PTB7:PC71BM and ternary OSCs with 7.5 wt% SMPV1. 
+To provide a more visual analysis of the dynamic processing between PTB7 and SMPV1, the normalized PL and absorption spectra of pure PTB7 and SMPV1 films are shown in Fig. 7a and Fig. S3 (ESI†). Plainly, the pure PTB7 and SMPV1 films display big emission peaks at 705 nm and 776 nm, respectively. Classically, it is easily found that a relatively enhanced emission intensity of SMPV1 and reduced emission intensity of PTB7 in the mixed PTB7:SMPV1 layers come with an increment in SMPV1 added weight ratios, suggesting that the quantum yields of PTB7 and SMPV1 are more or less the same, if energy transfer occurs from PTB7 to SMPV1. As shown in Fig. 7a, the emission intensities of both PTB7 and SMPV1 are broadly reduced with an enhancement in SMPV1 doping weight ratios because of the charge transfer between SMPV1 and PTB7. Consequently, the energy transfer between SMPV1 and PTB7 could be ignored. Generally, TRPL is a simple way to research energy transfer or charge transfer between different materials.42–45 To further confirm the charge transfer dynamic processing between SMPV1 and PTB7, the TRPL spectra of pure PTB7, pure SMPV1, and PTB7:SMPV1 films were measured by testing emission at 705 nm with 495 nm light excitation. From Fig. 7b, it is clear that the 705 nm emission lifetime for neat PTB7 film is about 0.36 ns which reduces by degrees to about 0.33 ns for a mixed PTB7:SMPV1 layer. What is more, the emission lifetime at 705 nm for the pure SMPV1 film (about 0.48 ns) is a little bigger than those for pure PTB7 or mixed PTB7:SMPV1 films, demonstrating that the energy transfer between SMPV1 and PTB7 can be negligible or absent. The reduced emission intensity of SMPV1 and PTB7 could be attributed to charge transfer rather than energy transfer between SMPV1 and PTB7 based on the TRPL and PL spectra of the mixed films.
+ Fig. 7  (a) The PL spectra of neat PTB7, pure SMPV1 and mixed PTB7:SMPV1 layers with light excitation of 495 nm. (b) TRTPL spectra of neat PTB7, pure SMPV1, and mixed PTB7:SMPV1 layers via monitoring light emission at 750 nm. 
+To reveal the effect of SMPV1 dopant on the OSC performance, the surface morphology of the active layers was studied by atomic force microscopy (AFM). All the films were prepared under the same conditions for AFM characterization. The morphological AFM images of the binary and ternary active layers are displayed in Fig. 8. The value of root-mean-square (RMS) roughness in the mixed films is reduced from 2.07 nm to 1.65 nm when 7.5 wt% SMPV1 is added. The reduced RMS of the active layer surface indicates that molecular aggregation could be restrained by adding 7.5 wt% SMPV1. Moreover, when the doping weight ratio of SPMV1 is around 7.5 wt% in donors there is no significant morphological change observed in the ternary active layer. This result indicates that introducing SMPV1 with a low doping concentration has a small effect on the pristine matrix PTB7:PC71BM.
+ Fig. 8  AFM morphological images of blended films with 0 wt% and 7.5 wt% doping ratios of SMPV1 in the donors. 
+3. Conclusions
+In conclusion, three ML algorithms are applied to construct a prediction model for ternary OSCs based on the PC71BM dataset, and the prediction accuracy of these three algorithm models is evaluated according to R2, RMSE, MAE and MAPE. RF is selected to predict the optimal doping ratio for ternary OSCs with PTB7:PC71BM:SMPV1 because of its best prediction performance (R2 = 0.84, RMSE = 1.22, MAE = 0.84, MAPE = 0.11). The prediction result from RF shows when the doping ratio of SMPV1 is around 6 wt%, ternary OSCs with PTB7:PC71BM:SMPV1 achieve the best PCE of 8.01%. To verify this prediction, 0 wt%, 5 wt%, 7.5 wt% and 12.5 wt% doped ratios for ternary OSCs are used for fabrication. When the weight ratio of SMPV1 is 7.5 wt%, the highest PCE of ternary OSCs with PTB7:PC71BM:SMPV1 is 8.83%, indicating that adding a small-molecule donor SMPV1 has a positive effect on device performance. In addition, we investigate the reasons about the improvement of performance in ternary OSCs through absorption spectroscopy, Jph–Veff plots, PL, TRPL and AFM, and find that after doping SMPV1, the photon trapping, exciton dissociation and charge transport has been optimized for higher Jsc and FF in ternary OSCs. In general, our work proves that ML has great reference value in predicting the performance of ternary OSCs and the doping ratio of the third component in ternary OSCs.
+Author contributions
+The work was initiated by D. H. and L. Z.; predication was performed and analyzed by Z. L., X. Z. and K. W.; experiment was measured by C. G., Z. C. and L. Z.; result analysis and interpretation was carried out by C. G., D. H. and J. L.; the paper was written by C. G. and revised by D. H., J. L. and L. Z.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+This work is supported by the Natural Science Foundation of Hunan Province (Grant No. 2021JJ40168 and 2020JJ5135), the Education Department of Hunan Province (Grant No. 21B0534), Postgraduate Research and Innovation Project of Hunan University of Technology (Grant No. cx2211).
+Notes and references
+Z. W. Zhao, Y. Geng, A. Troisi and H. Ma, Adv. Intell. Syst., 2022, 2100261 CrossRef .
+C. Chen, Y. Zuo, W. Ye, X. Li, Z. Deng and S. P. Ong, Adv. Energy Mater., 2020, 10, 1903242 CrossRef CAS .
+A. Mahmood and J.-L. Wang, Energy Environ. Sci., 2021, 14, 90–105 RSC .
+A. Mahmood and J.-L. Wang, J. Mater. Chem. A, 2021, 9, 15684–15695 RSC .
+M. H. Lee, Sol. Energy, 2022, 234, 360–367 CrossRef CAS .
+Q. Zhang, Y. J. Zheng, W. Sun, Z. Ou, O. Odunmbaku, M. Li, S. Chen, Y. Zhou, J. Li, B. Qin and K. Sun, Adv. Sci., 2022, 9, e2104742 CrossRef PubMed .
+M. R. S. A. Janjua, A. Irfan, M. Hussien, M. Ali, M. Saqib and M. Sulaman, Energy Technol., 2022, 10(5), 2200019 CrossRef CAS .
+M. H. Lee, Adv. Electron. Mater., 2019, 5, 1900573 CrossRef CAS .
+S. Lu, Q. Zhou, Y. Ouyang, Y. Guo, Q. Li and J. Wang, Nat. Commun., 2018, 9, 3405 CrossRef PubMed .
+K. Kranthiraja and A. Saeki, Adv. Funct. Mater., 2021, 31, 2011168 CrossRef CAS .
+Y. Wu, S. Lu, M. G. Ju, Q. Zhou and J. Wang, Nanoscale, 2021, 13, 12250–12259 RSC .
+Z. Gao, H. Zhang, G. Mao, J. Ren, Z. Chen, C. Wu, I. D. Gates, W. Yang, X. Ding and J. Yao, Appl. Surf. Sci., 2021, 568, 150916 CrossRef CAS .
+B. Yılmaz, Ç. Odabaşı and R. Yıldırım, Energy Technol., 2022, 10, 2100948 CrossRef .
+T. W. David, G. A. Soares, N. Bristow, D. Bagnis and J. Kettle, Prog. Photovoltaics, 2021, 29, 1274–1284 CAS .
+X. Cai, Y. Zhang, Z. Shi, Y. Chen, Y. Xia, A. Yu, Y. Xu, F. Xie, H. Shao, H. Zhu, D. Fu, Y. Zhan and H. Zhang, Adv. Sci., 2022, 9, e2103648 CrossRef PubMed .
+J. Chen, W. Xu and R. Zhang, J. Mater. Chem. A, 2022, 10, 1402–1413 RSC .
+Y. Cui, Y. Xu, H. Yao, P. Bi, L. Hong, J. Zhang, Y. Zu, T. Zhang, J. Qin, J. Ren, Z. Chen, C. He, X. Hao, Z. Wei and J. Hou, Adv. Mater., 2021, 33, e2102420 CrossRef PubMed .
+M. H. Lee, Adv. Energy Mater., 2019, 1900891 CrossRef .
+T. W. David, H. Anizelli, T. J. Jacobsson, C. Gray, W. Teahan and J. Kettle, Nano Energy, 2020, 78, 105342 CrossRef CAS .
+T. Hao, S. Leng, Y. Yang, W. Zhong, M. Zhang, L. Zhu, J. Song, J. Xu, G. Zhou, Y. Zou, Y. Zhang and F. Liu, Patterns, 2021, 2, 100333 CrossRef CAS PubMed .
+L. Zhan, S. Li, Y. Li, R. Sun, J. Min, Z. Bi, W. Ma, Z. Chen, G. Zhou, H. Zhu, M. Shi, L. Zuo and H. Chen, Joule, 2022, 6, 662–675 CrossRef CAS .
+L. Zhu, M. Zhang, J. Xu, C. Li, J. Yan, G. Zhou, W. Zhong, T. Hao, J. Song, X. Xue, Z. Zhou, R. Zeng, H. Zhu, C. C. Chen, R. C. I. MacKenzie, Y. Zou, J. Nelson, Y. Zhang, Y. Sun and F. Liu, Nat. Mater., 2022, 21, 656–663 CrossRef CAS PubMed .
+L. Zhao, H. Ji, S. Li, X. Miao, Q. Shi, C. Zhu, W. Wang, S. Zhao, D. Huang and X. Dong, Org. Electron., 2022, 105, 106495 CrossRef CAS .
+L. Zhao, H. Ji, S. Li, Q. Shi, C. Zhu, W. Wang and D. Huang, Appl. Surf. Sci., 2021, 569, 151120 CrossRef CAS .
+J. Qin, Z. Chen, P. Bi, Y. Yang, J. Zhang, Z. Huang, Z. Wei, C. An, H. Yao, X. Hao, T. Zhang, Y. Cui, L. Hong, C. Liu, Y. Zu, C. He and J. Hou, Energy Environ. Sci., 2021, 14, 5903–5910 RSC .
+Y. Wen, Y. Liu, B. Yan, T. Gaudin, J. Ma and H. Ma, J. Phys. Chem. Lett., 2021, 12, 4980–4986 CrossRef CAS .
+Y. Wu, J. Guo, R. Sun and J. Min, npj Comput. Mater., 2020, 6, 120 CrossRef CAS .
+S. K. Gupta, D. C. Tripathi, A. Garg and S. K. Pathak, Sol. Energy Mater. Sol. Cells, 2021, 224, 110994 CrossRef CAS .
+Q. S. An, F. J. Zhang, L. L. Li, J. Wang, Q. Q. Sun, J. Zhang, W. H. Tang and Z. B. Deng, ACS Appl. Mater. Interfaces, 2015, 7, 3691–3698 CrossRef CAS .
+Q. An, J. Wang, W. Gao, X. Ma, Z. Hu, J. Gao, C. Xu, M. Hao, X. Zhang, C. Yang and F. Zhang, Sci. Bull., 2020, 65, 538–545 CrossRef CAS .
+R. Zhou, Z. Jiang, C. Yang, J. Yu, J. Feng, M. A. Adil, D. Deng, W. Zou, J. Zhang, K. Lu, W. Ma, F. Gao and Z. Wei, Nat. Commun., 2019, 10, 5393 CrossRef PubMed .
+H. R. Bai, Q. An, M. Jiang, H. S. Ryu, J. Yang, X. J. Zhou, H. F. Zhi, C. Yang, X. Li, H. Y. Woo and J. L. Wang, Adv. Funct. Mater., 2022, 2200807 CrossRef CAS .
+X. Liu, Z. Liang, S. Du, J. Tong, J. Li, R. Zhang, X. Shi, L. Yan, X. Bao and Y. Xia, Energy Mater., 2021, 4, 1774–1783 CAS .
+M. A. Adil, W. A. Memon, J. Zhang, M. J. Iqbal, C. Yang, Y. Wang, W. Zou and Z. Wei, Sol. RRL, 2022, 2101083 CrossRef CAS .
+Y. Ren, X. Liu, H. Li, J. Qin, S. Du, X. Lu, J. Tong, C. Yang and J. Li, Opt. Mater., 2022, 129, 112520 CrossRef CAS .
+H. Zhao, B. Lin, J. Xue, H. B. Naveed, C. Zhao, X. Zhou, K. Zhou, H. Wu, Y. Cai, D. Yun, Z. Tang and W. Ma, Adv. Mater., 2022, 34, e2105114 CrossRef PubMed .
+H. Xia, Y. Zhang, W. Deng, K. Liu, X. Xia, C. J. Su, U. S. Jeng, M. Zhang, J. Huang, J. Huang, C. Yan, W. Y. Wong, X. Lu, W. Zhu and G. Li, Adv. Mater., 2022, 34, e2107659 CrossRef PubMed .
+M. Jiang, H. Bai, H. Zhi, L. Yan, H. Y. Woo, L. Tong, J. Wang, F. Zhang and Q. An, Energy Environ. Sci., 2021, 14, 3945–3953 RSC .
+X. Duan, W. Song, J. Qiao, X. Li, Y. Cai, H. Wu, J. Zhang, X. Hao, Z. Tang, Z. Ge, F. Huang and Y. Sun, Energy Environ. Sci., 2022, 15, 1563–1572 RSC .
+C. Yang, C. Zhang, C. Chen, Y. Ren, H. Shen, J. Tong, S. Du, Y. Xia and J. Li, Energy Technol., 2022, 10, 2200199 CrossRef CAS .
+X. Liu, Z. Liang, S. Du, X. Niu, J. Tong, C. Yang, X. Lu, X. Bao, L. Yan, J. Li and Y. Xia, ACS Appl. Mater. Interfaces, 2022, 14, 9386–9397 CrossRef PubMed .
+Z. Bi, H. B. Naveed, H. Wu, C. Zhang, X. Zhou, J. Wang, M. Wang, X. Wu, Q. Zhu, K. Zhou, K. Chen, C. Wang, Z. Tang and W. Ma, Adv. Energy Mater., 2022, 5, 2103735 CrossRef .
+Y. Gao, W. Xu, S. W. Zhang, T. Fan, M. Zhang, A. Ran, X. Zhang, F. Kang and G. Wei, Small, 2022, 18, e2106083 CrossRef PubMed .
+X. Du, Y. Yuan, L. Zhou, H. Lin, C. Zheng, J. Luo, Z. Chen, S. Tao and L. S. Liao, Adv. Funct. Mater., 2020, 30, 1909837 CrossRef CAS .
+T. Liu, Z. Luo, Y. Chen, T. Yang, Y. Xiao, G. Zhang, R. Ma, X. Lu, C. Zhan, M. Zhang, C. Yang, Y. Li, J. Yao and H. Yan, Energy Environ. Sci., 2019, 12, 2529–2536 RSC .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2cp02368gThis journal is © the Owner Societies 2022
+Table Content:
+
+ 	Fig. 1  (a) Correlation matrix between Jsc, material energy levels (HOMO(D) and LUMO(D) for donor; HOMO(A) and LUMO(A) for acceptor; HOMO(T) and LUMO(T) for the third component) and doping ratio of the third material (T (%)). (b) Correlation matrix between PCE, material energy levels and T (%). (Ranging from −0.6 to 1, coded from white to dark blue). (c) Energy level diagram of ternary OSCs.	 
+
+ 	Fig. 2  (a) The plot of the relationship between the true PCE and the predicted PCE predicted by RF; the red line is the reference for the fitting result. (b) The curves of the predicted PCE vs. the doping ratios of the third component in ternary OSCs. (The data in this figure is the average of five groups of predicted values.)	 
+
+RF	0.84	1.22	0.84	0.11
+KNN	0.62	1.89	1.31	0.18
+SVM	0.59	1.92	1.43	0.19
+
+ 	Fig. 3  The J–V characteristics of OSCs with different weight ratios of SMPV1 on AM 1.5G illumination under 100 mW cm−2 light intensity.	 
+
+0	0.71	14.14	0.72	3.82	1665.21	7.23	7.11
+5	0.72	15.64	0.73	3.00	3736.18	8.25	7.98
+7.5	0.72	16.20	0.76	2.61	4828.16	8.83	8.75
+12.5	0.72	15.59	0.74	3.46	1743.73	8.29	8.03
+
+ 	Fig. 4  (a) Absorption spectra of PTB7:PC71BM, and ternary mixed active layers with 7.5 wt% SMPV1. (b) The corresponding OSCs EQE spectra with different SMPV1 doping weight ratios.	 
+
+ 	Fig. 5  
+J
+ph–Veff curves of typical OSCs.	 
+
+ 	Fig. 6  
+J
+sc
+vs. light illumination intensity profiles in the binary OSCs based on PTB7:PC71BM and ternary OSCs with 7.5 wt% SMPV1.	 
+
+ 	Fig. 7  (a) The PL spectra of neat PTB7, pure SMPV1 and mixed PTB7:SMPV1 layers with light excitation of 495 nm. (b) TRTPL spectra of neat PTB7, pure SMPV1, and mixed PTB7:SMPV1 layers via monitoring light emission at 750 nm.	 
+
+ 	Fig. 8  AFM morphological images of blended films with 0 wt% and 7.5 wt% doping ratios of SMPV1 in the donors.	 
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2cp02368g
+
+This journal is © the Owner Societies 2022

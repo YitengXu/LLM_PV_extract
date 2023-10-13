@@ -1,0 +1,216 @@
+Machine learning-assisted development of organic photovoltaics via high-throughput in situ formulation   - Energy & Environmental Science (RSC Publishing) DOI:10.1039/D1EE00641J View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D1EE00641J
+(Paper)
+Energy Environ. Sci., 2021, 14, 3438-3446Machine learning-assisted development of organic photovoltaics via high-throughput in situ formulation†
+
+        
+          
+            Na Gyeong 
+            An
+          
+        
+      ab, 
+      
+        
+          
+            Jin Young 
+            Kim
+          
+        
+      *b and 
+
+        
+          
+            Doojin 
+            Vak
+          
+        
+      *a
+aCommonwealth Scientific and Industrial Research Organisation (CSIRO) Manufacturing, Clayton, Victoria 3168, Australia. E-mail: doojin.vak@csiro.au
+bSchool of Energy and Chemical Engineering, Ulsan National Institute of Science and Technology (UNIST), Ulsan, 44919, South Korea. E-mail: jykim@unist.ac.kr
+Received 
+      2nd March 2021
+    , Accepted 23rd April 2021First published on 24th April 2021AbstractThe discovery of high-performance non-fullerene acceptors and ternary blend systems has resulted in a breakthrough in the efficiency of organic photovoltaics (OPVs) and has created new opportunities for commercialization. However, manufacturing technology has remained far behind expectations. Here we show a new research approach to develop OPVs via industrial roll-to-roll (R2R) slot die coating in conjunction with the in situ formulation technique and machine learning (ML) technology. The formulated PM6:Y6:IT-4F ternary blends deposited on continuously moving substrates resulted in the high-throughput fabrication of OPVs with various compositions. The system was used to produce training data for ML prediction. The composition/deposition parameters, referred to as deposition densities, and the efficiencies of 2218 devices were used to screen ML algorithms and to train an ML model based on a Random Forest regression algorithm. The generated model was used to predict high-performance formulations and the prediction was experimentally validated by fabricating 10.2% efficiency devices, the highest efficiency for R2R-processed OPVs so far.
+
+Broader context
+Organic photovoltaics (OPVs) have been in a boom in terms of their efficiencies with the discovery of non-fullerene acceptors (NFAs) and ternary blend systems. However, a typical multi-component system requires an enormous number of fabrication parameters to find the optimum conditions and the manufacturing technology is still lagging behind. This demands a novel research method which allows the rapid screening of a large parameter space, ideally via industry-relevant methods. Here, we show a new research approach via industrial roll-to-roll (R2R) processing with an in situ formulation technique. The method using a NFA-based ternary blend system produces the high-throughput fabrication of 2218 OPVs with various combinations on continuously moving substrates. The data enable the training random forest regression, and then the generated model predicts high-performance and thickness tolerance formulation. The prediction was experimentally validated by confirming the thickness tolerance tendency and fabricating R2R-processed OPVs with the highest efficiency (10.2%) so far. We believe that this new research method, based on process innovation combined with digital technologies, will be pioneering for printed electronics.
+
+1 Introduction
+Organic photovoltaics (OPVs) have received significant attention as a promising renewable energy source due to their outstanding advantages of being lightweight and highly flexibile.1 More importantly, the technology can be mass-produced by low-cost roll-to-roll (R2R) processes. Recent improvements in power conversion efficiencies (PCEs) to over 18%2 have been facilitated by two key breakthroughs: the discovery of non-fullerene acceptors and the development ternary systems, where either double donors or double acceptors produce a broader combined absorption, leading to a high short-circuit current density (JSC).3,4 This strategy has led to the successful development of high-performance OPVs, with quaternary systems now proposed to increase the PCEs of OPVs even further.5–8
+Although such multi-component systems provide an opportunity to raise the PCE beyond 20%, they also set a new challenge in exploring numerous possible material combinations, together with thickness variations,9 thermal annealing conditions10 and processing additives.11,12 Once a market-competitive PCE has been achieved on a laboratory scale, the next step is translating the technology for manufacturing, which is challenging and time-consuming.13–16 This demands a new research method, which can rapidly explore an enormous parameter space, ideally via industry-relevant methods. High-throughput experiments have been demonstrated with a blade-coating method and hyperspectral imaging to cover the enormous composition space;17,18 however, such approaches are not quantitative and it is difficult to translate the findings to upscaling.
+Machine learning (ML) technology has emerged as a powerful research tool, especially for dealing with large and complicated datasets. Unlike conventional computational modelling, which is built on theories, the ML system learns from existing data, so-called “training data”, and predicts values in unexplored space based on the trend of the training data. ML has already been successfully applied in the discovery of drugs,19 reactions20 and materials.21 In the domain of OPVs, the correlation between electronic properties and efficiencies has been studied to predict PCEs,22 and high-throughput virtual screening for identifying efficient organic materials has been conducted.23 Troisi et al. developed ML to predict the efficiencies of various donor–acceptor combinations using a kernel ridge regression model established from published PCEs of 320 organic donor–acceptor pairs.24 Although the work demonstrated the potential of ML technology for the development of OPVs, such an approach has limitations as the source of the training data includes many unknown variables, such as the degree of experimental optimization of fabrication parameters, the quality of materials, fabrication conditions, etc. We have found no work using consistent experimental training data for the ML-assisted optimization of printed OPVs. We believe that this is due to current limitations in fabricating the numerous devices required to create the training data.
+Here, we report an R2R slot die system as a data production tool and demonstrate the first ML-assisted printed OPV research using consistently produced experimental datasets. Together with a dual-feed in situ formulation technique,25 R2R slot die can be used to fabricate numerous devices with various compositions in one experiment. We chose the PM6:Y6:IT-4F ternary system, one of the highest performing ternary systems,26 then fabricated >2000 unique devices to create training data for the ML system. A random forest (RF) regression model was used to find the compositions for the highest efficiency and also printability, i.e. thickness-tolerant formulation. Further experiments were performed based on the predicted compositions, resulting in a PCE of over 10%, which is the highest efficiency from R2R slot die coated OPVs so far. Thickness tolerance of the printing-friendly composition was also experimentally confirmed. The results demonstrate the true potential of ML-assisted research for OPVs.
+2 Results and discussion
+2.1 Material selection, device application and characterization
+
+Fig. 1a illustrates the high-throughput dual-feed deposition system used for composition screening. Two solutions (Sol. A and B) are injected by programmable syringe pumps, mixed in a Y-connector in situ, and deposited on a continuously moving substrate. Therefore, a film with a gradient composition can be fabricated by a single deposition process. Further details can be seen in Fig. S1 (ESI†).
+ Fig. 1  Illustration of dual-feed slot die deposition, materials, device structure and an example result of OPV devices fabricated in a dual-feed deposition process. (a) A schematic illustration of R2R dual-feed slot die deposition. Flow rates of solutions A and B are independently controlled, and therefore, a film with various compositions and thicknesses can be formed in one deposition. (b) Molecular structures of the materials and device structure used in this study. (c) An example of dual-feed slot die coated OPV devices. PM6 and Y6:IT-4F (4:1, w/w) solutions were mixed during the deposition and the relative fraction of the acceptors (DDs of acceptors/TDD) is used as the x axis. The top x-axis shows the physical position of each device relative to the start of the coating. Solid lines exhibit DDs and the TDD at the corresponding position. 
+The three materials, PM6, Y6 and IT-4F, shown in Fig. 1b were mixed at various ratios and deposited on a long (typically 6 m per experiment) substrate. The film was then cut into small pieces for the evaporation of MoO3 and Ag with the pattern shown in Fig. 1b. We used a hot deposition technique that we previously developed.27,28 The method produces high-performance OPVs without using problematic additives for polymers with temperature-dependent-aggregation (TDA) behavior. PM6 was selected as a donor due to its TDA behavior, as well as its high efficiency. Y6 and IT-4F were selected as the acceptor combination that was the best reported when this study was started.26
+We first confirmed the effect of deposition temperature on the performance of the devices with each acceptor. The PM6:Y6 and PM6:IT-4F combinations showed the best performance at the same temperature combination of 90 °C solution (head) and 130 °C substrate. (Fig. S2 and Table S1, ESI†). Therefore, the deposition temperature was fixed for all subsequent experiments. Fig. 1c shows the result of an example of dual-feed deposition. In this case, two acceptors were pre-mixed at the optimized ratio (Y6:IT-4F = 4:1) in the literature.26 Only the donor:acceptors ratio was changed gradually by changing the flow rates of the solutions while maintaining the total flow rate, and the in situ formulated solution was deposited over a six-meter-long substrate. Slot die coating is a pre-metered method with no loss mechanism in the deposition. Therefore, the deposition amount of each component per unit area can easily be calculated from the flow rate, coating speed/width, and the concentration of each component. The detailed calculation procedures can be found in Supplementary Note 1 and Fig. S3 (ESI†). In this work, the absolute amounts of each component and the total solid per unit area are called the deposition density (DD) and total deposition density (TDD), respectively. The figure shows DD and TDD together with the device parameters.
+The device parameters depending on the fraction of acceptors are shown in Fig. 1c. The figure clearly shows how the donor:acceptors ratio affects the device parameters. The open-circuit voltage (VOC) continuously decreased with an increased acceptor fraction. This is evidence of the controlled, continuous change in composition along the substrate as designed. It was obvious that a donor-only or acceptor-only compositions would not make high-performance devices. However, we designed all experiments to scan through a wide parameter space to create the training data so that ML can learn which compositions result in a poor performance as well as a high performance. From the experiment, the maximum PCE was 9.69% observed at ∼0.54 acceptor fraction (equivalent to donor:acceptors = 1:1.16). The result is consistent with the optimized ratio (donor:acceptors = 1:1.2) in the literature.26 Although the stability issue is not the main scope of this work, we confirmed the stability of the additive-free R2R device. The device stored under a nitrogen atmosphere for 70 days showed only negligible changes as shown in Fig. S4 and Table S2 (ESI†).
+The films of the example experiment were further analyzed. Fig. 2a shows the normalized UV-Vis spectra of the films at selected points and the expected compositions are color-coded. As the ratio of acceptors increased, the absorption of the acceptors in the 600–1000 nm range become more pronounced,26 whereas the absorption of PM6 in the 300–700 nm range is diminished. Selected compositions from pre-mixed solutions (dashed lines) show reasonable agreement, proving that composition control was achieved as planned.
+ Fig. 2  Optical and photovoltaic properties of R2R OPV devices. (a) UV-vis absorption spectra of slot die coated films of PM6:Y6:IT-4F at various blend ratios. Solid lines represent in situ blended films via dual-feed R2R deposition and dashed lines represent batch-processed slot die coated films from pre-mixed blends. (b) J–V characteristics and (c) the corresponding IPCE values of R2R devices at various donor:acceptor1:acceptor2 (D:A1:A2) ratios (same color-codes as (a)). 
+Atomic force microscopy (AFM) was performed to confirm the morphological differences between various donor and acceptor ratios, and the corresponding results are analyzed in Supplementary Note 2 and shown in Fig. S5 (ESI†). J–V curves and the incident photon-to-current conversion efficiency (IPCE) spectra of the devices with corresponding compositions are shown in Fig. 2b and c, respectively, and the photovoltaic parameters are summarized in Table 1. The IPCE spectra are used to confirm the JSC from J–V measurements and all integrated current values are in good agreement with the corresponding JSC values as shown in the table.
+Table 1 Summarized photovoltaic parameters (JSC, VOC, fill factor (FF) and PCE) of dual-feed R2R slot die coated OPV devices at various D:A1:A2 ratios
+
+
+
+
+PM6:Y6:IT-4F (w/w)
+
+J
+SC (mA cm−2)
+Cal. JSC (mA cm−2)
+
+V
+OC (V)
+FF
+PCE (%)
+
+
+
+
+1:0:0
+0.40
+—
+0.88
+0.24
+0.09
+
+
+1:0.26:0.07
+6.52
+5.90
+0.84
+0.41
+2.25
+
+
+1:0.53:0.13
+16.7
+16.6
+0.82
+0.50
+6.89
+
+
+1:0.93:0.23
+19.8
+19.7
+0.80
+0.61
+9.69
+
+
+1:1.76:0.44
+17.9
+17.6
+0.78
+0.59
+8.30
+
+
+1:4:1
+14.0
+13.7
+0.78
+0.50
+5.42
+
+
+1:54:13
+3.73
+3.14
+0.74
+0.32
+0.89
+
+
+
+
+For full optimization, we conducted three types of experiments: (i) A modulated TDD with a pre-formulated solution. Such experiments show the effect of thickness on the performance of a given composition. In this case, only a single pump was used. (ii) A modulated Y6:IT-4F ratio at selected TDDs and donor:acceptors ratios. (iii) A modulated donor:acceptors ratio at selected Y6:IT-4F ratio (4:1) and TDDs. The Fig. 1c shows a type (iii) experiment (further details in Fig. S6, ESI†). The type (ii) and (iii) experiments should show only composition effects at a fixed thickness if the densities of the materials are the same. However, we found minor variations in the dry-film thicknesses depending on the composition, as shown in Fig. S7 (ESI†). The device parameters of experiment types (i)–(iii) are shown in Fig. 3a–c.
+ Fig. 3  Photovoltaic parameters of R2R produced OPV devices (2218 cells) with various compositions and thicknesses. Device parameters of the OPVs (a) depending on the thickness changes of pre-mixed blends at various PM6:acceptor ratios (fixed Y6:IT-4F ratio at 4:1, w/w), (b) depending on the Y6:IT-4F ratios at various PM6:acceptor ratios (fixed TDD at ∼28.2 μg cm−2) and (c) depending on the PM6:acceptor ratios at various thicknesses (fixed Y6:IT-4F ratio at 4:1, w/w). The Y6 fraction indicates the DD of Y6/DDs of acceptors. (d) All composition parameters examined in this study. 
+
+Fig. 3a shows the effect of TDD (thickness) depending on the donor:acceptors ratios at the optimum Y6:IT-4F ratio (4:1). All experiments were designed to have a consistent amount of donor rather than TDD, and therefore the solutions with higher acceptors fractions were scanned through wider TDD ranges with coarse data points. The estimated thickness of the 1:1 formulation, based on the calibrated thickness/TDD value (225 nm/28 μg cm−2 ≈ 8.0 nm/μg cm−2) in Fig. S7 (ESI†), would be around 40–480 nm (because the TDD range is 5–60 μg cm−2), and a 25 μg cm−2 TDD would be approximately 200 nm. From the type (i) experiment, we found an interesting trend depending on the donor:acceptors ratio; an acceptor-rich (1:2) formulation shows the worst thickness tolerance, with the optimum at 10 μg cm−2 TDD. At higher TDD, the FF drops sharply and the VOC consistently decreases. This would be due to poorer charge transport and/or increased charge recombinations in the acceptor-rich composition. By contrast, a donor-rich formulation (1:0.5) shows the highest thickness tolerance, which is an important requirement for large-area printing or commercial production. There is no sign of VOC loss in the thick films of the donor-rich formulation and the optimum TDD (∼30 μg cm−2) is higher than other compositions. However, the 1:1.2 formulation was found to be best composition overall with its highest PCE and reasonable thickness tolerance.
+
+Fig. 3b shows the result of type (ii) experiments. The Y6:IT-4F ratio was scanned from 0 to 1 at three different donor:acceptors ratios (donor-rich, known optimum ratio, acceptor-rich) with fixed TDD. While the 1:1.2 formulation shows the best performance near 0.8 Y6 fraction (i.e. Y6:IT-4F = 4:1), which is consistent with the previous report, we found another peak in the IT-4F-rich region. Interestingly, the peak positions were different for each donor:acceptors ratio, and the IT-4F-rich region showed an even higher performance than the Y6-rich region in the donor-rich composition. The result clearly shows why wide composition parameters need to be studied with the high-throughput system; a critical tool in improving the performance of ternary or quaternary OPVs. Due to practical research limitations, in a typical process one parameter is optimized and then a second parameter is optimized using the fixed first parameter. This introduces a significant problem: the optimized first parameter may not be optimum when the second parameter is changed, as shown in Fig. 3b. The problem is more pronounced when there are more than four parameters to be optimized, as the overall trend cannot even be visualized. In this case, ML is essential for analyzing the data.
+An additional type (ii) experiment was performed for the 1:1.2 composition with a much higher TDD of 50 μg cm−2 (ca. 380 nm) based on the calibrated thickness/TDD value (210 nm/28 μg cm−2 ≈ 7.50 nm/μg cm−2) in Fig. S7 (ESI†) to see a trend in thicker films. The results are shown in Fig. S8 (ESI†). The thick films showed the same trend of decreased VOC with an increased amount of Y6. However, no ternary blend showed a better performance than a binary system in such a thick film due to the low electron-transporting property of the mixed acceptors compared with a single acceptor system, which is less critical in thinner films. The benefit of the combined absorption of double acceptors is reduced in such a thick film.
+
+Fig. 3c shows the results of type (iii) experiments. The donor:acceptors ratio was scanned from 0 to 1 at various TDDs with a fixed Y6:IT-4F ratio of 4:1. The example data shown in Fig. 1c are shown together in Fig. 3c for a comparison with other experiments. In this case, the performance changes dramatically depending on the donor:acceptors ratio so that the optimum composition at each TDD can be seen clearly. Regardless of the TDD, all experiments showed a similar trend with slightly different optimum positions. The optimum point was in the acceptor-rich region for thin films, and in a more donor-rich region for thick films. The results are consistent with the results from type (i) experiments, i.e. donor-rich compositions showing a superior performance in thick films.
+The ultimate goal of the experiments is to find the best composition from the entire parameter space. Therefore, we collected all experimental data and made a 3D chart by color-coding PCEs, as shown in Fig. 3d. Six vertically arranged datasets correspond to the type (i) experiments and clearly reflect the thickness variation at each donor:acceptors ratio. Four horizontally arranged datasets parallel to the Y6 fraction axis correspond to experiment type (ii). Another four datasets parallel to the PM6 fraction axis correspond to experiment type (iii). Although there are unexplored areas in the 3D space, the experiments were designed to cover as much as was practical. A total of 2218 devices with about 2200 different compositions are used in the figure. To the best of our knowledge, the number of compositions studied in this work is the highest reported for OPV research.
+2.2 Machine learning-assisted optimization and prediction
+The first step to develop a ML model is designing the input data structure, so-called feature extraction. Any training data, including images, need to be converted to fixed-length arrays. We introduced the DD as the universal feature of OPVs. The feature covers the thicknesses of the device and the ratio between the components. The donor:acceptors ratio is a commonly used feature when devices are optimized; however, it would not be useful when a new component is added. By contrast, DD is an absolute amount and will be reusable for different material combinations or more complicated systems, such as quaternary OPVs. Additives or co-solvents can also be described in the DD. In the case of 4D or higher-dimensional space, it will be impossible to visualize without dimensionality reduction. That was another reason to design the dataset with only three axes in this study.
+ML is typically used for classification, clustering and regression. For our purpose, i.e. analyzing the performance trend in the 3D parameter space, regression needs to be used. Regression is classified as supervised ML, meaning that each training data set is paired with an output. The input parameters can be any size (dimension), but the output parameter needs to be only one for most algorithms. In this work, PCE was the obvious choice for the output.
+Various ML algorithms were tested as described in Supplementary Note 3 (ESI†), the RF algorithm was chosen, and an RF-based ML model was trained using the 2218 datasets. Using the model, the predicted PCEs of the whole 3D space of PM6, Y6 and IT-4F (0 to 50 μg cm−2 range, 1 μg cm−2 interval, total 125000 datasets) could be created regardless of the accuracy. The accuracy of the predicted PCEs in the zones without any experimental data would be low, but we found a remarkable prediction accuracy with relatively high performance-metrics in the hold-out validation process as shown in Fig. S9 (ESI†). The results are shown in Fig. 4a; however, the as-generated 3D graph is not useful for analyzing the performance. Therefore, meaningful datasets need to be filtered out and visualized in a more human-friendly way. As an example, composition parameters corresponding to TDDs of ∼20, ∼40 and ∼60 μg cm−2, referred to as thin, middle and thick films, respectively, were extracted from the 3D graph as shown in Fig. S10 (ESI†). The data planes in the 3D graph were converted to 2D graphs as shown in Fig. 4a by simple dimensionality reduction. The 2D graphs clearly show different optimum compositions for different thicknesses. The optimum composition at each thickness range can easily be found in this process. Such graphs would be useful for applications requiring a specific thickness. For example, semi-transparent applications of OPVs require thin films, and industrial printing would need thick films for reliable production.
+ Fig. 4  Predicted PCEs of 125000 deposition parameters created by ML and extracted prediction data to find the performance trend and thickness tolerance depending on the composition. (a) Predicted PCEs of all possible combinations of the PM6:Y6:IT-4F blend (up to 50 μg cm−2 DD of each material, 1 μg cm−2 resolution) created by ML (represented in the top-left illustration) and PCE variations in thin (TDD as ∼20 μg cm−2), middle (∼40 μg cm−2) and thick (∼60 μg cm−2) films depending on the composition. The PM6 fraction represents the DD of PM6/TDD. (b) Deposition parameters predicted to be >8% PCE in a 3D parameter space. (c) Counts of the devices in a 2D composition map. 
+We took the approach further to find a printing-friendly composition. As discussed earlier, the industrial production of OPVs requires thickness tolerant formulations, i.e. consistent performance regardless of thickness variations. To find such a formulation, another set of predicted PCEs in the whole 3D space was created with higher resolution (200 data per axis in 0.25 μg cm−2 intervals, total 8000000 datasets). Then datasets with PCE > 8% were filtered out and the absolute DD values were converted to relative compositions. The relative composition was used as the xy-plane and TDD was used as the z-axis as shown in Fig. 4b. Then data points at each xy coordinate were counted. The results are shown in Fig. 4c (further details in Supplementary Note 4 and Fig. S11 and S12, ESI†). The peak with the higher variance in Fig. 4c is located at a PM6 fraction of 0.42 and a Y6 fraction of 0.88 (see Table S5, ESI†). The coordinate is equivalent to PM6:Y6:IT-4F = 1:1.22:0.17. The formulation is called the best printable formulation (BPF). Finding best efficiency formulation (BEF) was simple. The 8000000 datasets were sorted by PCE and then the first dataset was selected. BEF was PM6:Y6:IT-4F = 1:1.08:0.27 at 28.25 μg cm−2 TDD. Other top formulations can be seen in Table S5 and S6 (ESI†).
+2.3 Experimental validation of the model prediction
+For experimental validation, devices were fabricated using pre-mixed solutions of BPF and BEF. Type (i) experiments were then carried out to fabricate devices of various thickness. For BEF, a relationship between the physical thickness and TDD was calibrated and found to be thickness = 6.78 × TDD as shown in Fig. S13 (ESI†). The device results, together with the estimated thicknesses, are shown in Fig. 5a. The BEF showed up to 10.2% PCE with 21.6 mA cm−2 (ca. JSC: 20.5 mA cm−2), 0.78 V VOC, and 0.60 FF at 32.4 μg cm−2 TDD (ca. 220 nm). Although the peak TDD position does not match exactly, the devices around 28.25 μg cm−2 TDD in Fig. 5b show similar performances with around 10% PCE. The result is good enough to demonstrate the promising potential of ML-assisted research for OPVs. Moreover, we believe it is the first report of demonstrating over 10% PCE from R2R produced OPVs. Recently reported performances and the photovoltaic parameters of R2R processed OPVs are summarized in Fig. S14 and Table S7 (ESI†). If the promising efficiency can be obtained in commercially produced solar cells, the printed OPV would be able to enter the market. Min et al. predicted a 26.4 $ m−2 manufacturing cost and a 0.43 $ W−1 minimum sustainable cost based on demonstrated 10% PCE in the industrial production scenario of NFA-based OPV modules.29 Since the calculation was based on NFA-based OPVs, the difference using different active materials would not be significant. We tried to calculate the cost using the model only by replacing their active layer with our optimized formulation and found the costs of 30.6 $ m−2 and 0.46 $ W−1.
+ Fig. 5  Thickness dependent PCEs of the optimized formulations and photovoltaic properties of the optimized devices. (a) PCEs depending on TDD for the BPF and the BEF values. The top x-axis represents the film thickness calibrated from the measured film thicknesses of selected devices. Inset: Corresponding normalized PCEs depending on the TDD. (b) J–V characteristics and corresponding photovoltaic parameters (inset table) and IPCE spectrum (inset graph) of the best R2R processed OPV based on the BEF. 
+The BPF devices showed relatively lower PCEs with the best PCE of 8.85% for a JSC of 20.4 mA cm−2, VOC of 0.78 V and FF of 0.55 as expected. The reproducibility of the devices from multiple batches are also checked and the results are summarized in Table S8 (ESI†). In terms of the relative thickness tolerance, the BPF shows a superior property over the BEF, as shown the inset of Fig. 5a. The BPF shows relatively smaller performance variations depending on the thickness change with a clearly slower performance decay outside of the 15–30 μg cm−2 TDD range than that of the BEF. The results demonstrate how ML can assist in research progress; however, the prediction was not perfect in terms of the TDD range of PCE > 8%, which was the original query to find the BPF. We attribute this to the limited number of datasets, although the number of compositions studied in this work is significantly larger than that of typical research works. As shown in Fig. 3d, the datasets still cover only a small fraction of the composition space and the prediction accuracy would be improved with more datasets covering the unexplored space. Nonetheless, the formulation and fabrication parameters optimized by the R2R process with the assistance of ML would make a great contribution to the commercialization of OPV technology.
+3 Conclusions
+We introduced a new digital research method and demonstrated the highest efficiency from industrial roll-to-roll printed OPVs using this approach. The roll-to-roll process with an in situ formulation system was used not only for the high-throughput fabrication of OPVs but also the production of training data of the ML system. The compositions of PM6:Y6:IT-4F ternary blends and deposition parameters could be thoroughly studied using the high-throughput fabrication system and the parameter-dependent performance trend was clearly observed. The efficiency data of 2218 devices were then used as training data together with the deposition densities, an absolute amount of each material per unit area, as a reusable feature of OPVs. A ML model based on the Random Forest algorithm showed a remarkable prediction accuracy with relatively high performance-metrics in the hold-out validation process, and was then used to predict formulations for the highest efficiency and printing. The prediction was experimentally validated and the high-efficiency formulation (PM6:Y6:IT-4F = 1:1.08:0.27) showed up to 10.2% PCE at the predicted thickness range. More importantly, the efficiency is the highest efficiency from roll-to-roll processed OPV so far. The formulation for printing (PM6:Y6:IT-4F = 1:1.22:0.17) showed relatively low efficiency. Even though the prediction was not perfect in terms of the TDD range of PCE > 8%, it showed a higher tolerance to the thickness variation, which is a requirement for industrial printing processes. To the best of our knowledge, this work is the first ML-assisted printed OPV study based on consistent experimental datasets and demonstrates the true potential of ML-assisted research for OPVs. The next challenge will be to develop a model that can predict the stability of OPVs, and it will be possible via developing correlated features since collecting actual composition-dependent stability data is impractical. We believe such a digital transformation of OPV research will lead to further breakthroughs, paving the way towards commercialization of OPV and can be applied more broadly in organic electronics.
+Author contributions
+J. Y. K. and D. V. supervised the project. N. G. A. and D. V. conceived the original ideas and designed the experiments. N. G. A. fabricated all OPV devices and conducted photovoltaic characterizations. N. G. A. analyzed slot die coated films by UV-vis absorption and AFM. N. G. A. designed the schematic illustration of dual-feed deposition and R2R device structure. D. V. carried out ML model training and prediction of PCEs. N. G. A. wrote the manuscript and J. Y. K. and D. V. revised the manuscript.
+Conflicts of interest
+The authors declare no competing interests.
+Acknowledgements
+This work was supported by the Australian Centre for Advanced Photovoltaics (ACAP) program funded by the Australian Government through the Australian Renewable Energy Agency (ARENA). This research was also supported by the Technology Development Program to Solve Climate Changes of the National Research Foundation (NRF) funded by the Ministry of Science, ICT & Future Planning (NRF-2016M1A2A2940914, 2020M1A2A2080746).
+References
+M. Kaltenbrunner, M. S. White, E. D. Głowacki, T. Sekitani, T. Someya, N. S. Sariciftci and S. Bauer, Nat. Commun., 2012, 3, 770 CrossRef PubMed .
+Q. Liu, Y. Jiang, K. Jin, J. Qin, J. Xu, W. Li, J. Xiong, J. Liu, Z. Xiao, K. Sun, S. Yang, X. Zhang and L. Ding, Sci. Bull., 2020, 65, 272–275 CrossRef CAS .
+T. Ameri, P. Khoram, J. Min and C. J. Brabec, Adv. Mater., 2013, 25, 4245–4266 CrossRef CAS PubMed .
+N. Gasparini, A. Salleo, I. McCulloch and D. Baran, Nat. Rev. Mater., 2019, 4, 229–242 CrossRef .
+T. Goh, J.-S. Huang, K. G. Yager, M. Y. Sfeir, C.-Y. Nam, X. Tong, L. M. Guard, P. R. Melvin, F. Antonio, B. G. Bartolome, M. L. Lee, N. Hazari and A. D. Taylor, Adv. Energy Mater., 2016, 6, 1600660 CrossRef .
+M. Zhang, L. Zhu, G. Zhou, T. Hao, C. Qiu, Z. Zhao, Q. Hu, B. W. Larson, H. Zhu, Z. Ma, Z. Tang, W. Feng, Y. Zhang, T. P. Russell and F. Liu, Nat. Commun., 2021, 12, 309 CrossRef CAS PubMed .
+Z. Bi, Q. Zhu, X. Xu, H. B. Naveed, X. Sui, J. Xin, L. Zhang, T. Li, K. Zhou, X. Liu, X. Zhan and W. Ma, Adv. Funct. Mater., 2019, 29, 1806804 CrossRef .
+X. Ma, J. Wang, Q. An, J. Gao, Z. Hu, C. Xu, X. Zhang, Z. Liu and F. Zhang, Nano Energy, 2020, 70, 104496 CrossRef CAS .
+T. L. Nguyen, H. Choi, S. J. Ko, M. A. Uddin, B. Walker, S. Yum, J. E. Jeong, M. H. Yun, T. J. Shin, S. Hwang, J. Y. Kim and H. Y. Woo, Energy Environ. Sci., 2014, 7, 3040–3051 RSC .
+H. W. Cho, N. G. An, S. Y. Park, Y. S. Shin, W. Lee, J. Y. Kim and S. Song, Adv. Energy Mater., 2020, 10, 1903585 CrossRef CAS .
+Y. Kim, H. R. Yeom, J. Y. Kim and C. Yang, Energy Environ. Sci., 2013, 6, 1909–1916 RSC .
+J. Peet, J. Y. Kim, N. E. Coates, W. L. Ma, D. Moses, A. J. Heeger and G. C. Bazan, Nat. Mater., 2007, 6, 497–500 CrossRef CAS PubMed .
+R. Po, A. Bernardi, A. Calabrese, C. Carbonera, G. Corso and A. Pellegrino, Energy Environ. Sci., 2014, 7, 925–943 RSC .
+J. E. Carlé, M. Helgesen, O. Hagemann, M. Hösel, I. M. Heckler, E. Bundgaard, S. A. Gevorgyan, R. R. Søndergaard, M. Jørgensen, R. García-Valverde, S. Chaouki-Almagro, J. A. Villarejo and F. C. Krebs, Joule, 2017, 1, 274–289 CrossRef .
+P. Meredith and A. Armin, Nat. Commun., 2018, 9, 5261 CrossRef CAS PubMed .
+A. S. Gertsen, M. F. Castro, R. R. Søndergaard and J. W. Andreasen, Flexible Printed Electron., 2020, 5, 014004 CrossRef CAS .
+A. Harillo-Baños, X. Rodríguez-Martínez and M. Campoy-Quiles, Adv. Energy Mater., 2020, 10, 1902417 CrossRef .
+X. Rodríguez-Martínez, S. Sevim, X. Xu, C. Franco, P. Pamies-Puig, L. Córcoles-Guija, R. Rodriguez-Trujillo, F. J. del Campo, D. Rodriguez San Miguel, A. J. deMello, S. Pané, D. B. Amabilino, O. Inganäs, J. Puigmartí-Luis and M. Campoy-Quiles, Adv. Energy Mater., 2020, 10, 2001308 CrossRef .
+Y.-C. Lo, S. E. Rensi, W. Torng and R. B. Altman, Drug Discovery Today, 2018, 23, 1538–1546 CrossRef CAS PubMed .
+C. W. Coley, W. H. Green and K. F. Jensen, Acc. Chem. Res., 2018, 51, 1281–1289 CrossRef CAS PubMed .
+B. Sanchez-Lengeling and A. Aspuru-Guzik, Science, 2018, 361, 360–365 CrossRef CAS PubMed .
+H. Sahu, F. Yang, X. Ye, J. Ma, W. Fang and H. Ma, J. Mater. Chem. A, 2019, 7, 17480–17488 RSC .
+S. A. Lopez, B. Sanchez-Lengeling, J. de Goes Soares and A. Aspuru-Guzik, Joule, 2017, 1, 857–870 CrossRef CAS .
+D. Padula and A. Troisi, Adv. Energy Mater., 2019, 9, 1902463 CrossRef CAS .
+J. Alstrup, M. Jørgensen, A. J. Medford and F. C. Krebs, ACS Appl. Mater. Interfaces, 2010, 2, 2819–2827 CrossRef CAS PubMed .
+Q. An, X. Ma, J. Gao and F. Zhang, Sci. Bull., 2019, 64, 504–506 CrossRef CAS .
+S.-I. Na, Y.-H. Seo, Y.-C. Nah, S.-S. Kim, H. Heo, J.-E. Kim, N. Rolston, R. H. Dauskardt, M. Gao, Y. Lee and D. Vak, Adv. Funct. Mater., 2019, 29, 1805825 CrossRef .
+S. Song, K. T. Lee, C. W. Koh, H. Shin, M. Gao, H. Y. Woo, D. Vak and J. Y. Kim, Energy Environ. Sci., 2018, 11, 3248–3255 RSC .
+J. Guo and J. Min, Adv. Energy Mater., 2019, 9, 1802521 CrossRef .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1ee00641jThis journal is © The Royal Society of Chemistry 2021
+Table Content:
+
+Broader context
+Organic photovoltaics (OPVs) have been in a boom in terms of their efficiencies with the discovery of non-fullerene acceptors (NFAs) and ternary blend systems. However, a typical multi-component system requires an enormous number of fabrication parameters to find the optimum conditions and the manufacturing technology is still lagging behind. This demands a novel research method which allows the rapid screening of a large parameter space, ideally via industry-relevant methods. Here, we show a new research approach via industrial roll-to-roll (R2R) processing with an in situ formulation technique. The method using a NFA-based ternary blend system produces the high-throughput fabrication of 2218 OPVs with various combinations on continuously moving substrates. The data enable the training random forest regression, and then the generated model predicts high-performance and thickness tolerance formulation. The prediction was experimentally validated by confirming the thickness tolerance tendency and fabricating R2R-processed OPVs with the highest efficiency (10.2%) so far. We believe that this new research method, based on process innovation combined with digital technologies, will be pioneering for printed electronics.
+
+
+ 	Fig. 1  Illustration of dual-feed slot die deposition, materials, device structure and an example result of OPV devices fabricated in a dual-feed deposition process. (a) A schematic illustration of R2R dual-feed slot die deposition. Flow rates of solutions A and B are independently controlled, and therefore, a film with various compositions and thicknesses can be formed in one deposition. (b) Molecular structures of the materials and device structure used in this study. (c) An example of dual-feed slot die coated OPV devices. PM6 and Y6:IT-4F (4:1, w/w) solutions were mixed during the deposition and the relative fraction of the acceptors (DDs of acceptors/TDD) is used as the x axis. The top x-axis shows the physical position of each device relative to the start of the coating. Solid lines exhibit DDs and the TDD at the corresponding position.	 
+
+ 	Fig. 2  Optical and photovoltaic properties of R2R OPV devices. (a) UV-vis absorption spectra of slot die coated films of PM6:Y6:IT-4F at various blend ratios. Solid lines represent in situ blended films via dual-feed R2R deposition and dashed lines represent batch-processed slot die coated films from pre-mixed blends. (b) J–V characteristics and (c) the corresponding IPCE values of R2R devices at various donor:acceptor1:acceptor2 (D:A1:A2) ratios (same color-codes as (a)).	 
+
+1:0:0	0.40	—	0.88	0.24	0.09
+1:0.26:0.07	6.52	5.90	0.84	0.41	2.25
+1:0.53:0.13	16.7	16.6	0.82	0.50	6.89
+1:0.93:0.23	19.8	19.7	0.80	0.61	9.69
+1:1.76:0.44	17.9	17.6	0.78	0.59	8.30
+1:4:1	14.0	13.7	0.78	0.50	5.42
+1:54:13	3.73	3.14	0.74	0.32	0.89
+
+ 	Fig. 3  Photovoltaic parameters of R2R produced OPV devices (2218 cells) with various compositions and thicknesses. Device parameters of the OPVs (a) depending on the thickness changes of pre-mixed blends at various PM6:acceptor ratios (fixed Y6:IT-4F ratio at 4:1, w/w), (b) depending on the Y6:IT-4F ratios at various PM6:acceptor ratios (fixed TDD at ∼28.2 μg cm−2) and (c) depending on the PM6:acceptor ratios at various thicknesses (fixed Y6:IT-4F ratio at 4:1, w/w). The Y6 fraction indicates the DD of Y6/DDs of acceptors. (d) All composition parameters examined in this study.	 
+
+ 	Fig. 4  Predicted PCEs of 125000 deposition parameters created by ML and extracted prediction data to find the performance trend and thickness tolerance depending on the composition. (a) Predicted PCEs of all possible combinations of the PM6:Y6:IT-4F blend (up to 50 μg cm−2 DD of each material, 1 μg cm−2 resolution) created by ML (represented in the top-left illustration) and PCE variations in thin (TDD as ∼20 μg cm−2), middle (∼40 μg cm−2) and thick (∼60 μg cm−2) films depending on the composition. The PM6 fraction represents the DD of PM6/TDD. (b) Deposition parameters predicted to be >8% PCE in a 3D parameter space. (c) Counts of the devices in a 2D composition map.	 
+
+ 	Fig. 5  Thickness dependent PCEs of the optimized formulations and photovoltaic properties of the optimized devices. (a) PCEs depending on TDD for the BPF and the BEF values. The top x-axis represents the film thickness calibrated from the measured film thicknesses of selected devices. Inset: Corresponding normalized PCEs depending on the TDD. (b) J–V characteristics and corresponding photovoltaic parameters (inset table) and IPCE spectrum (inset graph) of the best R2R processed OPV based on the BEF.	 
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1ee00641j
+
+This journal is © The Royal Society of Chemistry 2021

@@ -1,0 +1,361 @@
+A multiscale quantum mechanics/electromagnetics method for device simulations  - Chemical Society Reviews (RSC Publishing) DOI:10.1039/C4CS00348A View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C4CS00348A
+(Tutorial Review)
+Chem. Soc. Rev., 2015, 44, 1763-1776A multiscale quantum mechanics/electromagnetics method for device simulations
+
+        
+          
+            ChiYung 
+            Yam
+          
+          
+        
+      *ab, 
+      
+        
+          
+            Lingyi 
+            Meng
+          
+          
+        
+      c, 
+      
+        
+          
+            Yu 
+            Zhang
+          
+          
+        
+      b and 
+
+        
+          
+            GuanHua 
+            Chen
+          
+          
+        
+      b
+aBeijing Computational Science Research Center, Beijing 100084, China. E-mail: yamcy@csrc.ac.cn
+bDepartment of Chemistry, The University of Hong Kong, Hong Kong, China
+cCollaborative Innovation Center of Chemistry for Energy Materials, Xiamen University, Xiamen, 361005, China
+Received 
+      20th October 2014
+    First published on 22nd January 2015AbstractMultiscale modeling has become a popular tool for research applying to different areas including materials science, microelectronics, biology, chemistry, etc. In this tutorial review, we describe a newly developed multiscale computational method, incorporating quantum mechanics into electronic device modeling with the electromagnetic environment included through classical electrodynamics. In the quantum mechanics/electromagnetics (QM/EM) method, the regions of the system where active electron scattering processes take place are treated quantum mechanically, while the surroundings are described by Maxwell's equations and a semiclassical drift-diffusion model. The QM model and the EM model are solved, respectively, in different regions of the system in a self-consistent manner. Potential distributions and current densities at the interface between QM and EM regions are employed as the boundary conditions for the quantum mechanical and electromagnetic simulations, respectively. The method is illustrated in the simulation of several realistic systems. In the case of junctionless field-effect transistors, transfer characteristics are obtained and a good agreement between experiments and simulations is achieved. Optical properties of a tandem photovoltaic cell are studied and the simulations demonstrate that multiple QM regions are coupled through the classical EM model. Finally, the study of a carbon nanotube-based molecular device shows the accuracy and efficiency of the QM/EM method.
+ChiYung Yam
+ChiYung Yam completed his undergraduate and graduate education in Chemistry at the University of Hong Kong. He received his PhD in 2004. After postdoctoral training in University of Hong Kong and University of Bremen, he joined Beijing Computational Science Research Center in 2013 as an assistant professor. His research interests include developing linear-scaling quantum mechanical methods, quantum transport and electronic device simulations.
+Lingyi Meng
+Lingyi Meng is a research associate at the Collaborative Innovation Center of Chemistry for Energy Materials (iChEM), Xiamen University. In 2004 he graduated from the University of Science and Technology of China with two Bachelor of Science degrees (in chemistry and computer science). He received his PhD in physical chemistry in 2009 from the Institute of Chemistry, Chinese Academy of Sciences, and continued his research in the Department of Chemistry, The University of Hong Kong, as a Postdoctoral Fellow (before joining the iChEM). His work now focuses on multiscale simulation methods for novel optoelectronic and photovoltaic devices and materials.
+Yu Zhang
+Yu Zhang received his BS degree in Physics from Sun Yat-Sen University in 2010 and PhD degree from the University of Hong Kong in 2014. He then joined the Center of Bio-inspired Energy Science, Northwestern University, USA, as a Postdoctoral Fellow. His current research interests focus on development of fundamental theory for (time-dependent) quantum transport and dissipation and modeling of nanoscale optoelectronics.
+GuanHua Chen
+GuanHua Chen is a Professor of Chemistry at the University of Hong Kong. He received his PhD in Physics at California Institute of Technology in 1992. After postdoctoral training in University of Rochester, he joined the Department of Chemistry in the University of Hong Kong in 1996 as an assistant professor. In 2010, he became the Head of the Department of Chemistry. Prof. Chen was elected as a Fellow of the American Physical Society in 2014. His current research interests focus on development of first-principles methods for open systems, O(N) first-principles methods for excited states, and multiscale simulation methods for emerging electronics.
+
+Key learning points
+(1) A multiscale scheme for studying the interactions between charge carriers and electromagnetic field in nanoscale devices.
+(2) The state-of-the-art computational methods for modeling static and dynamic electron transport.
+(3) Development and application of efficient computational methods for complex systems.
+(4) Case studies on multiscale modeling of simulations of molecular electronics, field-effect transistors, and photovoltaic devices.
+
+1 Introduction
+With the advent of modern computing, computational science has emerged as a new area of scientific research over the past decades. Different from the traditional forms of research, it tackles problems in various scientific disciplines through computer simulations and analysis of mathematical models implemented in computers. The advance in computer hardware, algorithms and mathematical techniques allows theoretical models to be implemented in computer programs for simulations which were previously inaccessible and this enables computational science to play an imperative role in various research fields. Given the increasing cost, and, sometimes impossibility (due to technological limitations) of experimental studies; and the complexity of mathematics in theoretical studies, computational science is able to fill some of the open gaps which experiment or theory alone cannot resolve. Today, experiment, theory and computation are regarded as an equal and indispensable trilogy to understand complex phenomena in science and engineering.
+However, most problems in science and engineering involve many scales in time and space. An example is chemical reactions where the time scale of electron movements is of the order of femtoseconds while it is common that reactions can take seconds and minutes to occur. Another example comes from microelectronics where the length scale of integrated circuits is of the order of centimeters but the continuous miniaturization of electronic devices requires modeling details at a nanometer scale to correctly describe the transistors. A few hurdles lie ahead and have to be surmounted in order to tackle these problems. For instance, a simple attempt to represent all scales in the simulation of these problems will be doomed to failure due to the enormous computational problems associated with unacceptably long computation times and large memory requirements. On the other hand, the physical and chemical properties of matter can change dramatically in response to the variations in the fine structures. Thus, simulations at a coarser level, ignoring the fine details, may lead to physically incorrect results. The necessity for an accurate treatment together with the limitation of computational resources imposes some compromise. Under these circumstances, multiscale methods provide alternative approaches by applying additional simplifications to reduce the total computational cost while retaining the accuracy for the properties of interest. The rationale behind is that the properties of interest are usually determined by a small portion of the system while the rest will have considerably less importance. Therefore, accurate treatment can be confined to the small subsystem of interest and the environment will be included in a more approximate manner. The most well-known example is perhaps the quantum mechanics/molecular mechanics (QM/MM) method1 in quantum chemistry, which uses the classical Newtonian mechanics to track the movement of a multitude of atoms, and quantum mechanics to describe the breaking and forming of chemical bonds. To recognize its importance, the Nobel Prize in Chemistry 2013 was awarded to Martin Karplus, Michael Levitt and Arieh Warshel for their contributions to development of multiscale models for complex chemical systems.
+Mixed atomistic and continuum methods are common multiscale approaches to model processes involving multiple length scales in nanoscience.2–11 At the nanoscale, details of atomistic disposition can be critical to the overall properties of the system. However, due to the atomic resolution, the modeling capacity of atomistic models is restricted to rather small simulation domains. One way to include appropriate multiple length scales is to connect atomistic models with continuum models. The polarizable continuum model (PCM)9 can be considered to be a multiscale method to model solvation effects commonly used in computational chemistry. In PCM, instead of explicit molecules, the solvent is modeled as a polarizable continuum medium which hosts solute molecules in its cavity. To study plasmon–molecule systems, simultaneous treatment of multiple scales can be achieved by a combination of classical electrodynamics simulation of the plasmonic nanoparticle and a quantum mechanical calculation of a nearby molecule.7,8 Multiscale approaches have been recently applied to electronic devices,3–6 where quantum mechanical models12–17 are solved in conjunction with classical electromagnetics.18–24 The requirement of atomistic quantum description of nanoscale devices poses considerable challenges for device simulation. Recently, a multiscale quantum mechanics/electromagnetics (QM/EM) method has been developed, which seizes upon the strengths of both QM and classical methods.3–5 The QM/EM method provides a general framework which allows the simultaneous treatment of multiple scales for investigation of interactions between charge carriers and electromagnetic field in different nanoscale devices including field-effect transistors (FETs), photovoltaic and plasmonic devices.
+In this article, we review the multiscale QM/EM method for nanoscale device simulations. The multiscale coupling scheme is first introduced where the information exchange between QM regions and EM regions is summarized. The quantum transport theory for both static and dynamic responses is then discussed, which is followed by a description of the coupled electromagnetics semiconductor scheme. The method is highlighted in several applications to electronic devices including junctionless field-effect transistors (JFETs), silicon nanowire (SiNW) photovoltaic devices and carbon nanotube (CNT) molecular devices.
+2 QM/EM method
+Inspired by the success of the QM/MM method,1 a multiscale QM/EM method is developed to model and simulate the electric responses of electronic devices. In the QM/EM method, the simulation domain is partitioned into a QM region that requires quantum mechanical treatment and an EM region where a classical description is sufficiently accurate [see Fig. 1]. As demonstrated in the example of tandem cells in Section 3.2, the QM/EM method may handle multiple QM regions. The QM treatment provides a description of the device electronic structure, while the EM treatment allows for the efficient inclusion of the wider environment and its influence on the device properties. Practically, the whole simulation domain is discretized into regular Cartesian meshes, where finer meshes are used in the QM region to capture the atomistic details and coarser ones are adopted in the EM region. The same physical quantities, i.e. potentials and carrier densities, are obtained by solving the QM and EM equations in the corresponding models. Numerically, the atomistic description in the QM region usually requires the QM equations to be discretized in terms of atomic basis functions. Thus, two discretization schemes are employed in the QM region, i.e. Cartesian meshes and atomic basis functions. In practice, physical quantities like potentials are projected onto atomic basis functions to set up the Hamiltonian while quantities like charge density and current density are projected onto the Cartesian meshes for solving the EM equations.
+ Fig. 1  QM/EM simulation of a CNT molecular device. The QM region (inner box) includes the atomistic details and is described by the QM transport model. The remaining constitutes the EM region which is treated classically. 
+Like the QM/MM method, the key issue lies in how the interface between quantum and classical regions is treated. In the QM/EM method, the QM and EM models communicate by means of boundary conditions at the interface. Due to the different mesh sizes, when passing information between the models, physical quantities obtained from the EM region are interpolated to match the higher resolution in the QM region. In return, the physical quantities obtained from the QM region are integrated to fit the coarser meshes in the EM region. In this way, QM and EM equations are coupled and solved concurrently. As shown in Fig. 2, the EM treatment is responsible for providing potentials for QM simulations as boundary conditions while the QM model simulates the current density using the provided boundary potentials. The current density is then back coupled to the EM region as a boundary condition to satisfy the current continuity equations. Specifically, Maxwell's equations coupled with drift-diffusion equations are first solved for the whole simulation domain to obtain an initial guess. The potentials at the interface between QM and EM regions are then taken as boundary conditions for solving the QM equations. The QM/EM method adopts the non-equilibrium Green's functions (NEGF) formalism to simulate quantum transport in electronic devices. This can be combined with different Hamiltonians, like density-functional theory (DFT),12 density-functional tight-binding (DFTB)13 or empirical tight-binding,14 depending on the level of accuracy. Through the quantum transport model, the current density across the QM/EM interface can be simulated. The obtained current density is then used as the boundary condition at the QM/EM interface for the next EM simulation. The classical EM model solves again Maxwell's equations and drift-diffusion equations using the provided current density. It should be noted that with the current density as the boundary condition, unlike the first step, coupled Maxwell's and drift-diffusion equations are solved only in the EM region. A new potential distribution is obtained and the interface potentials can be extracted for the next QM simulation. The whole process is iterated until the convergence of current density and potentials at the interface is achieved. In this way, the interaction between the electronic devices and the electromagnetic environment is taken into account self-consistently.
+ Fig. 2  Coupling scheme in the QM/EM method. Potential and current density are used for information exchange between QM and EM models. The yellow dotted line represents the QM/EM interface where boundary conditions are imposed. The black dotted line marks locations where external boundary conditions are imposed in EM simulations. 
+In general, QM regions are embedded inside the EM region, thus EM equations have to be solved with external boundary conditions imposed (see Fig. 2). Specifically, the Dirichlet boundary condition for scalar potential is applied to the external boundary where bias voltage is added while the Neumann boundary condition is imposed at the remaining area of the boundary. The boundary values of carrier densities are determined by current continuity equations. For vector potential, the Neumann boundary condition is imposed to ensure that there are no outward pointing magnetic fields.
+The QM/EM method is first developed to simulate steady state properties.3 It is then extended to the time domain4 and the frequency domain5 to study dynamic properties. The QM/EM coupling scheme in frequency-domain simulation is essentially the same as the static case, except that the frequency-dependent variables become complex. In the cases of time-domain simulations of dynamic response, the QM and EM equations are solved sequentially at every time interval along the time evolution.4 Similarly, charge density and potential distribution at the QM/EM interface are used for communications between the models. At each time step, the QM equation of motion is first solved to evaluate the current density. It is then utilized as the boundary condition for solving the EM equation of motion and the potential distribution for the next time step is obtained. The procedures are repeated to obtain the whole time trajectory. Within each model, time integration of the corresponding equations of motion is done in which the fourth-order Runge–Kutta method is commonly used. It should be noted that besides exchange of energy between QM and EM regions, the multiscale coupling scheme adopted in the QM/EM method permits also flow of charge carriers across them. In the following, we will review, respectively, the QM and EM models adopted in QM/EM methods.
+2.1 Quantum transport models
+In the QM/EM method, the QM region of the simulation domain encompasses the part where electron scattering processes take place. The system in the QM part is further divided into the contact and device regions where an arbitrary number of contacts can be included. The contacts are semi-infinite and they are assumed to have bulk properties. As mentioned in the previous section, the QM model is responsible for providing the current densities to the classical EM model while utilizing the potential distribution calculated from the EM model as the boundary condition. Techniques based on the NEGF formalism15 provide a natural framework for treating quantum transport in nanoscale electronic devices. It allows the computation of charge density and tunneling current flowing between contacts under non-equilibrium conditions where the system is biased by an external field.
+In an out-of-equilibrium situation, the single particle Green's function G(t,t′) satisfies the equation of motion, (1)where Htot represents the Hamiltonian of the system. Without loss of generality, we consider systems containing a device with two contacts. It is further assumed that there is no direct interaction between contacts. Expressed in the atomic orbital basis, the Hamiltonian can be partitioned as (2)where HL, HR and HD represent the left contact Hamiltonian, the right contact Hamiltonian, and the device Hamiltonian, respectively. HLD, HRD, HDL and HDR correspond to the coupling matrices between the device and contacts. Potential distributions in the QM region are required to construct the Hamiltonian and this is obtained by solving Poisson equations with boundary conditions provided by the classical EM model. In principle, vector potential has to be included in the Hamiltonian in the framework of quantum electrodynamics. For simplicity, our quantum transport model adopts a semi-classical approach. The vector potential in the QM region is obtained by solving Ampere's equation, cf.eqn (51) below, with the quantum mechanically simulated current density.
+
+G(t,t′) contains all the information about the system from which we can extract the required properties. In particular, projected on real space, its lesser component gives rise to the electron density ρ(r,t) = −2i〈r|G<(t,t′)|t=t′|r〉(3)and the total current Jα(t) passing through the contact α can be evaluated accordingly, (4)where the space integral extends over the contact α. Current Jα will then be back coupled to EM simulations as the boundary condition.
+
+2.1.1 Steady state quantum transport. 
+In cases when steady states are concerned, Green's functions rely only on the difference of the two time variables. We can thus Fourier transform the time difference coordinate (t − t′) to energy, G<(E) = ∫d(t − t′)eiE(t−t′)/ℏG<(t − t′).(5)
+The retarded and advanced components in energy domains can be obtained accordingly.
+2.1.1.1 Coherent transport. 
+We first consider coherent transport where electrons are scattered elastically and there is no phase-breaking during the electron transport across the system. By defining the self-energy matrix for the contacts Σr,aα(E) = (ESDα − HDα)gr,aα(ESαD − HαD),(6)where superscripts r and a correspond to retarded and advanced quantities, respectively. We can express Green's function of the device region as (7)and (8)
+It should be noted that eqn (7) involves matrices with the dimension of the device region only. Here, S is the overlap matrix and gr,aα is the surface Green's function of the contact α. The contacts are assumed to be semi-infinite periodic lattices and the surface Green's function can be evaluated efficiently by applying the renormalization method.25 In eqn (7), HD is the isolated device Hamiltonian and the self-energies Σrα account for the effect of the contact α on the device, which serves as the open boundary condition. Under non-equilibrium conditions, the potential profile in the device region has to be adjusted to conform with the charge density changes. For closed systems, where the electrostatic potential is usually considered as zero at infinity, the Hartree potential V(r) is given by (9)while in the QM/EM method, the potential distributions at the interface are set by classical EM simulations. The potential distribution in the device region is instead obtained from the Poisson equation ∇2V(r) = 4πρ(r).(10)
+
+Eqn (10) can be solved in real space using a three-dimensional multigrid algorithm. It is noted that recent effort has also been devoted to develop a linear-scaling solver for the Poisson equation in two-dimensional systems.26 The Hamiltonian matrix is then updated with the new potential profile and the density matrix σ is constructed using lesser Green's function G<(E) (11)where G<D(E) = GrD(E)Σ<(E)GaD(E).(12)
+Here, the subscript D denotes matrices corresponding to the device region. The lesser self-energy, Σ<(E), represents injection of charges from the contacts. Eqn (10) and (11) are solved iteratively to achieve self-consistency of Hamiltonian and Green's function. For coherent transport, the NEGF formalism reduces to the traditional Landauer transmission formalism16,17 and the current flowing through the electronic device between contacts α and β can be evaluated via (13)where fα is the Fermi–Dirac distribution for contact α with chemical potential μα, and T(E,ΔV) is the transmission coefficient at energy E under bias voltage ΔV. The transmission coefficient is related to Green's functions by Tαβ(E,ΔV) = Tr[Γα(E)GrD(E,ΔV)Γβ(E)GaD(E,ΔV)](14)where Γ(E) is the line-width function or coupling between the device and the leads at energy E, (15)
+2.1.1.2 Incoherent transport. 
+The NEGF technique allows the treatment of coherent and incoherent transport within a unified mathematical framework. In cases when electrons are scattered inelastically by phonons or photons, the effects of electron–phonon and electron–photon interactions can be included through self-energies, Σ<,>ep(E) = M[NG<,>D(E ∓ ℏω) + (N + 1)G<,>D(E ± ℏω)]M(16)where G>D(E) is the greater device Green's function, giving the spectral density of unoccupied states. Since both photons and phonons are bosons and subjected to Bose–Einstein statistics, their interactions with electrons have similar properties and result in the same expression as for the self-energies. M stands for the electron–phonon or the electron–photon coupling matrix, depending on the type of interaction. It is noted that self-energy in eqn (16) is dependent on Green's function. Eqn (16) is thus non-linear and has to be solved self-consistently. In the limit of weak interaction, the lowest order expansion to the self-energy can be adopted27 where the bare Green's functions are used to construct the self-energy and device Green's function as follow Σ<,>ep(E) ≈ M[NḠ<,>D(E ∓ ℏω) + (N + 1)Ḡ<,>D(E ± ℏω)]M(17) (18)
+In eqn (17) and (18), ḠD(E) corresponds to steady state Green's functions without the influence of photons or phonons while Green's function GD(E) includes inelastic scattering effects at the lowest order.
+The tunneling current flowing between contacts including the inelastic scattering effects can be expressed as (19)
+By substitution of eqn (18) into the above equation, the tunneling current can be divided into two parts. In addition to the elastic part given by eqn (13), an inelastic part arises due to the phonon/photon scattering (20)where Tinel(E) is defined as the inelastic transmission coefficient and Γeff(E) = i{fα(E)Σ>ep(E) − [fα(E) − 1]Σ<ep(E)}. Thus, Jinelα corresponds to the phonon/photon induced current.
+
+
+2.1.2 Frequency-domain AC quantum transport. 
+Dynamic properties can be described either in real time or in frequency domain. An alternating current (AC) quantum transport theory was developed recently which satisfies both gauge invariance and current continuity.28 In the frequency domain, Green's function and self-energy can be partitioned into two parts: Gr,a,<D(E,E′) = Ḡr,a,<D(E,E′)δ(E − E′) + δGr,a,<D(E,E′)(21) (22)
+As in Section 2.1.1.2, ḠD is defined as the equilibrium or steady state Green's function without the AC bias and  corresponds to the equilibrium or steady state self-energy. δGD and δΣ are induced Green's function and self-energy due to the AC voltage. In the linear response regime, the system is assumed to be excited by a sinusoidal perturbation with small amplitude and the induced lesser Green's function is given by (23)and the induced lesser self-energy can be expressed as (24)
+In analogy to the steady state [eqn (11)], the induced density matrix is obtained from the induced lesser Green's function, (25)
+The induced frequency dependent potential, δV(ω), is then obtained by solving the the Poisson equation [eqn (10)] with the corresponding induced frequency dependent charge density, δρ(r,ω). Eqn (10) and (23)–(25) are then solved self-consistently. It has been shown that the self-consistency of the charge density and potential distribution is the key to ensure gauge invariance in AC transport.28
+To obtain the frequency dependent current across the system, eqn (33) is transformed into the frequency domain via a double-time Fourier transform, (26)
+Within the WBL approximation and the linear response regime, eqn (26) can be simplified as28 (27)
+In practice, a small-signal technique is employed where a direct current (DC) bias voltage is applied to drive the system out of equilibrium and a small AC bias is applied as a perturbation around this bias operating point. The former one corresponds to the steady state solution which is first obtained by solving eqn (10) and (11). Thus, the frequency dependent current can be readily evaluated using the steady state Green's functions at DC bias voltage Ḡr,aD and the self-consistently determined potential δV(ω).
+
+
+2.1.3 Transient quantum transport. 
+As mentioned before, one can also follow the time evolution of Green's function, i.e.eqn (1), to access the dynamic responses of the system. We consider the lesser component of Green's function. Assuming in the orthogonal basis representation, it follows the equation of motion, (28)where α(t,t′) is given by (29)
+Following the NEGF technique,15 as in static cases, α(t,t′) can be rewritten in a form that incorporates only matrices with the dimension of the device region (30)where Σr,a,<(t,t′) and Gr,aD(t,t′) are the time-domain counterparts of eqn (6) and (7), respectively.
+Instead of Green's function, a significant simplification can be achieved by solving the reduced density matrix for the device region σD(t), which is dependent only on a single time variable. The quantity σ(t) is precisely the lesser Green's function with identical time variables, σ(t) = −iG<(t,t′)|t=t′.(31)
+Thus, the equation of motion for σD(t) can be obtained from eqn (28) as (32)where Qα(t) = [α(t,t′) + h.c.]t′=t. The transient current across the system can be evaluated from the trace of the matrix Qα (ref. 29) (33)
+Although eqn (30) contains matrices with only the dimension of the device region, solving Q(t) is computationally demanding due to the two-time quantities involved. For practical purpose, two numerical schemes for Q(t) can be adopted: the adiabatic wide-band-limit (AWBL) approximation29 and the hierarchical equation of motion (HEOM)30–32 for single-electron density matrices.
+2.1.3.1 Adiabatic wide-band-limit approximation. 
+Within the AWBL approximation, the retarded and advanced self-energies become local in time, Σr,aα(t,t′) = ∓iδ(t − t′)Λα(EF)(34)where Λα = Γα/2 and Γα(EF) is given by eqn (15) evaluated at the Fermi energy, EF. The lesser self-energy then becomes (35)where ΔVα is the applied voltage on contact α. Substitution of eqn (34) and (35) into eqn (30) results in (36)
+The curly brackets denote an anticommutator. Invoking an adiabatic approximation,29Pα(t) is given by (37)and the history of the applied voltage is tracked with the propagator Uα(t) (38)
+With the expression given in eqn (36), the equation of motion of the density matrix [eqn (32)] can be readily solved.
+2.1.3.2 Equation of motion for first- and second-tier dissipation matrices. 
+Alternatively, Qα can be written in terms of first-tier and second-tier dissipation matrices (39)and eqn (32) can be rewritten as (40)where φ is the first-tier dissipation matrix and its equation of motion can be expressed as (41)
+The second-tier dissipation matrix φα,α′(E,E′,t) arises and follows the equation of motion (42)
+For non-interacting systems, this hierarchy terminates exactly at the second tier without any approximation.33 Thus, the dynamic response of the non-interacting systems, like Kohn–Sham reference systems, can be obtained exactly by solving eqn (40)–(42).
+Numerically, a Lorentzian–Padé decomposition scheme for the self-energy is adopted31 where the line-width function is expanded by Lorentzian functions and the Fermi–Dirac function is expanded by the Padé spectrum decomposition.34 (43) (44)
+The self-energy is then rewritten in a summation form using the residue theorem and the energy integral in eqn (40)–(42) can thus be solved numerically.
+
+2.2 Classical EM models
+The EM region is treated with classical continuum models and constitutes an electromagnetic environment in the QM region. The basic equations governing the spatial and temporal evolution of electromagnetic fields in different media are given by Maxwell's equations,18
+Gauss's law: ∇·(εE) = ρ.(45)
+Gauss's law for magnetism: ∇·B = 0.(46)
+Maxwell–Faraday's law: (47)
+Maxwell–Ampere's law: (48)where E, B, J and ρ denote electric field, magnetic field, current density and charge density, respectively. ε and μ correspond to permittivity and permeability, respectively. In our implementation, a potential formulation of Maxwell's equations is adopted where an electric scalar potential V and a magnetic vector potential A are introduced. From eqn (46) and (47), we may express the magnetic field and electric field as, (49)
+
+Eqn (45) and (48) can be rewritten as (50)and (51) (52)where JD is defined as the displacement current. The reason for using a potential description is two-fold. First, in the potential formulation, a vector problem (electric field E) is reduced to a scalar one (scalar potential V). Second, the potential solutions are directly related to the commonly used physical quantities found in experiments. The arbitrariness in the definition of the scalar and vector potentials however necessitates an appropriate gauge condition. Without loss of generality, the Lorentz gauge condition is employed, (53)
+The constitutive equations relating current J to electric field and carrier densities are determined by the material under consideration. For conductors, J is given by Ohm's law J = σE,(54)and for semiconductors, the current is obtained from the drift-diffusion model and is split into electron and hole currents, (55)where n and p are the electron and hole densities. μn and μp are the corresponding mobilities and q is the elementary charge. k denotes the Boltzmann constant and T the temperature. For dielectrics, there are no free charge carriers and therefore current can be neglected.
+The current continuity equation should be satisfied in all media,
+Conductors: (56)
+Semiconductors: (57)
+Here, we neglect recombination and generation of charge carriers in semiconductors. In cases when charge recombination and generation are concerned, e.g. in photovoltaics, the corresponding rates can be readily included in the RHS of eqn (57). The current continuity equations provide solution of the variables n and p and they are combined to give the total charge density ρ = q(p − n + ND − NA)(58)where ND and NA are the donor and acceptor concentrations due to the doping, respectively.
+In practice, the system is discretized into regular Cartesian meshes as shown in Fig. 3. All independent scalar variables are assigned to each node while vector variables are associated with the connections between nodes which are called links hereafter.19 For instance, each link between nodes i and j is associated with a gauge vector field variable, Aij = A·êij where êij is a unit vector in the direction of the link. In that way, the original vector variables are replaced by their scalar projections along individual links. Based on the finite volume method (FVM), a mimetic discretization of differential operators is adopted to ensure local charge conservation.4,19 For the semiconductors, the Scharfetter–Gummel discretization scheme35 is adopted to solve the drift-diffusion equations numerically.
+ Fig. 3  Discretization of the simulation domain into regular Cartesian meshes. Scalar variables, V, n and p, are assigned to individual nodes. Vector variables, A and J, are assigned to links (connections between nodes). 
+
+2.2.1 Steady state EM model. 
+For steady states, all terms involving time derivative vanish. Thus, Maxwell's equations reduce to Poisson equations, ∇·(ε∇V) + ρ = 0(59)and the current continuity equations are expressed as
+Conductors: ∇·(σ∇V) = 0.(60)
+Semiconductors: (61)
+It should be noted that at the QM/EM interface, the current obtained from QM simulations, cf.eqn (13), should satisfy current continuity equations. Thus, ∇·(JQM + JEM) = 0,(62)for all QM/EM interface nodes, where JQM and JEM denote the current density obtained from QM and EM models, respectively. Numerically, eqn (59)–(62) are solved based on the Newton–Raphson technique to obtain the scalar variables, n, p and V at every node. In particular, scalar potential V at the QM/EM interface will be transferred to the QM model as the boundary condition for subsequent calculations.
+
+
+2.2.2 Frequency-domain EM model. 
+Analogous to the QM model, the EM model can be solved in both time domain and frequency domain for dynamic properties. In the frequency domain, the potential description becomes (63)where ω is the operation frequency. The displacement current in the frequency domain reads JD(ω) = iωε(−∇V − iωA).(64)
+In cases when optical properties are of interest, e.g. plasmonic and photovoltaic systems, the polarization of the system is taken into account via dielectric constant, ε = ε0(1 + χ)(65)where ε0 is the permittivity of free space. The electric susceptibility χ is frequency dependent and may be described by the Drude model, (66)
+Here, ωp denotes the plasma frequency and γ represents a characteristic collision frequency.
+
+J and ρ can be determined by the constitutive equations that are given by (67)for conductors and (68)for semiconductors. Again, current continuity equations should be satisfied across QM and EM regions at the QM/EM interface nodes.
+Parallel to QM simulations in Section 2.1.2, the system is biased at a given operating point and the linear response to a small harmonic perturbation is considered. The former one is obtained from static solution of equations given in Section 2.2.1. In particular, the vector potential A can be determined from the static current. Starting with the static solution, different independent variables X (i.e., A, V, n and p) can be rewritten as summation of a static part and an AC part X = XDC + XAC·eiωt.(69)
+Performing a Taylor series expansion and keeping only the linear terms, the equations that determine the amplitudes and phases of the harmonic perturbations are obtained. The same as static equations, eqn (63), (67) and (68) are solved iteratively using the Newton–Raphson technique.
+
+
+2.2.3 Time-domain EM model. 
+In time-domain simulations, the EM equations are propagated to obtain the trajectories of all independent variables. The equations of motion (EOMs) for scalar potential and vector potential are given by Lorentz gauge conditions and Ampere's equations, respectively, (70)
+EOMs for charge densities are given by current continuity equations and drift-diffusion equations, (71)
+For optical properties, the frequency dependent susceptibility gives rise to an extra contribution to the total current, JP = iωε0χE,(72)where JP is defined as the polarization current and its EOM is given by (73)
+Similar to frequency-domain simulations in Section 2.2.2, the initial conditions for time propagation are provided by the static solution given in Section 2.2.1. The initial vector potential can be derived from eqn (51) by setting the displacement current to zero. Practically, time integration of the EOMs may be performed by the commonly used fourth-order Runge–Kutta method. Similarly, the time-dependent current density obtained from eqn (33) should satisfy current continuity equations at the QM/EM interface nodes.
+
+3 Illustrative examples
+3.1 Junctionless field-effect transistors
+The existing transistors rely on the use of semiconductor junctions. The statistical nature of distribution of the dopants in the semiconductor imposes technological challenge for the formation of ultrashallow junctions with high doping concentration gradients. Recently, JFETs were fabricated with no PN junction and no doping concentration gradient,36 which eliminates the difficulties in fabricating the ultrashallow junctions. These devices have full complementary metal-oxide-semiconductor (CMOS) functionality and are made using silicon nanowires (SiNWs). With a tri-gate structure, JFETs provide better gating control and are found to have a superior subthreshold slope and low leakage voltage. Computational studies also find that JFETs exhibit better subthreshold behavior than classical inversion-mode transistors. The key to fabricate a JFET lies in the formation of a semiconductor layer which is narrow enough to allow full depletion of carriers when the device is turned off and on the other hand heavy doping is needed to allow for a decent amount of current flow when the device is turned on. The experimental realization of JFETs potentially alleviates the increasingly difficult fabrication challenge in the semiconductor industry. The smallest JFET reported has a diameter down to 4 nm.37
+Computational studies offer an opportunity to help interpret experimental data and to provide further insight into optimization of the performance of this class of electronic devices. The QM/EM method has been applied to simulate realistic JFETs with dimensions comparable to experiments.38 The structure of the JFETs in the simulations is shown in Fig. 4, which is divided into QM and EM regions. The QM region contains an atomistic SiNW as the conducting channel described at the DFTB level, while the dielectric oxide, gate, source, and drain electrodes constitute the EM region. As shown in Fig. 4(a), the device has a gate-all-around (GAA) architecture. For direct comparison with experiments, a SiNW with a length of 25 nm and a cross-section of 5 nm by 2.5 nm was used in the simulations, giving rise to a total of 15616 atoms in the QM region. A [110]-oriented SiNW with hydrogen-terminated surfaces was adopted in the simulations. To model doped SiNWs, silicon atoms are substituted by arsenic and gallium atoms for n-type doping and p-type doping, respectively. Four dopants were evenly distributed in the channel which corresponds to 1.3 × 1019 cm−3 doping concentration for a 20 nm long channel. The QM region is enclosed in an EM region with a dimension of 37 × 33 × 30.5 nm3, comprising dielectric oxide and the electrodes. Following ref. 37, a 14 nm-thick effective gate oxide and a 20 nm-length gate are adopted in the EM region. Silicon dioxide is used as the gate dielectric, and n-doped silicon is used for the source and the drain. Experimental values are adopted in the EM model where dielectric constants for silicon dioxide and silicon are 3.9 and 11.9, respectively. The mobility is 0.045 and 0.15 m2 V−1 s−1 for holes and electrons, respectively. A temperature of 300 K is used throughout the simulations. The Dirichlet boundary condition is applied to the contact region while the Neumann boundary condition is applied to the remaining part. A 50 mV drain bias and various gate voltages are applied to obtain transfer characteristics of the JFETs. In the QM/EM method, the EM simulations provide the electrostatic environment for JFETs where the quantum transport equations are solved.
+ Fig. 4  (a) An illustration of domain separation in the QM/EM method. The QM region (inner box) contains the atomistic SiNW and is described by the quantum transport model and the remaining EM region, comprising gate dielectrics and source/drain, is treated classically. (b) Cross-section of a 25 nm long SiNW JFET. Permission obtained from ref. 38. 
+
+Fig. 5 plots the transfer characteristics for the JFETs for both p-type and n-type doping SiNWs. The red curve represents the QM/EM simulation results for As-doped SiNW. Giving the same ON/OFF ratio, the result shows that a good agreement is obtained between QM/EM simulations and experiments.37 The simulation results reproduce correctly the transfer characteristics of JFETs obtained from experiments, which justifies the accuracy of the QM/EM method. Fig. 5 shows also the simulation results for p-typed JFETs. Both types of JFET show good electrostatic control and subthreshold characteristics. Based on the QM/EM simulation results, a circuit simulation of an inverter consisting of a p-type JFET and a n-type JFET has been performed.38Fig. 6 depicts the local densities of state (LDOS) in the channel of the n-type JFET at gate voltages of −0.6 V and −0.9 V. The strong peaks at ±5 nm correspond to the impurity states due to the dopants. In the vicinity of the source–drain bias window, the impurity states give rise to the conduction channel. It is noted that at −0.6 V gate voltage, the impurity states are well-located within the bias window, which corresponds to the ON state of the JFET. They are then pushed out of the bias window when the gate voltage is decreased to −0.9 V, leading to a three order of magnitude reduction in the conduction current and corresponding to the OFF state.
+ Fig. 5  Drain current versus gate voltage for n-type JFETs (red line) and p-type JFETs (blue line). 
+ Fig. 6  Local density of state (LDOS) of As-doped JFETs with gate voltage (a) −0.6 V and (b) −0.9 V. Black dashed lines indicate the channel regions, and white dashed lines indicate the bias windows. Permission obtained from ref. 38. 
+The above example demonstrates that the QM/EM method is capable of calculating efficiently the J–V characteristics of realistic transistors. The method features a full atomistic QM treatment of electronic devices where quantum effects like impurity scattering, quantum confinement,39 and dopant deactivation40 are captured. And the interaction with an electrostatic environment is taken into account self-consistently.
+3.2 Photovoltaic devices
+The increasing demand of renewable energy supply has motivated the search for high efficiency photovoltaic devices.41–44 Semiconductor nanostructured photovoltaic devices have emerged as a new generation of devices due to their potential applications in low cost devices with high power conversion efficiencies (PCEs). Recent studies found that the nanowire-based solar cells are able to achieve high PCE, which breaks the traditional limit.41,42 On the other hand, advances in device architecture have led to further PCE improvements. The tandem solar cell has been proposed where multiple photoactive layers with complementary absorption frequencies are connected in series.45 The tandem structure in principle circumvents the power loss due to subband-gap transmission and the thermalization of hot charge carriers. Experimental results have demonstrated a substantial increase of open-circuit voltage for tandem devices compared to that of the corresponding single cell.
+Due to the different temporal and spatial scales involved, it remains a great challenge to model the processes in photovoltaic energy conversion. Conventionally, two major approaches for optoelectronic device simulations are the continuum equation model20,21 and the discrete dynamic Monte Carlo (DMC) method,22–24 which are both based on classical models. The quantum mechanical method for study of the performance of SiNW-based photovoltaic devices has recently been done within the framework of the NEGF formalism.46 Electron–photon interaction is taken into account via self-energies as described in Section 2.1.1.2. The method allows simultaneous simulations of J–V characteristics and optical properties of photovoltaic devices without relying on empirical parameters. The QM/EM method has been extended to include electron–photon interactions and applied to simulate tandem photovoltaic devices. Fig. 7 shows the model adopted in the simulations. The system is divided into an EM region and two QM regions. Each QM region contains a photovoltaic cell which is formed by an atomistic SiNW PN junction with a dimension of 2 × 2 × 25 nm3 oriented in the [110] direction. Both SiNWs are doped explicitly with Ga/As atoms at two sides forming a PN junction. This corresponds to a doping concentration of 8.0 × 1019 cm−3. A potential difference of 1.13 V is formed when the p-doped and n-doped SiNWs come into contact, giving rise to the built-in potential across the junction. The QM regions are embedded in an EM region which includes electrodes and a tunneling junction linking the two cells. Monochromatic light fixed at a power of 1 kW m−2 with a frequency of 2.5 eV is used throughout the simulations and it is assumed that electronic excitation occurs only in the QM regions. Upon light illumination, an electron–hole pair is generated after absorbing a photon. The electron flows from the p-doped region to the n-doped region, owing to the built-in potential, while the hole transports in the opposite direction, resulting in a photocurrent generated in the PN junction. The direction of photocurrent is opposite to that of the dark current, where electrons flow from the n-doped region to the p-doped region in the PN junction. When forward bias is applied to the SiNW, the potential difference across the junction is reduced and dark current increases. Eventually, the dark current offsets the photo-generated current, when forward bias voltage reaches open-circuit voltage.
+ Fig. 7  Schematic diagram of a tandem photovoltaic device. The simulation domain is divided into an EM region and two QM regions. Each QM region contains a SiNW PN junction photovoltaic cell. The EM region includes the electrodes and a tunneling junction connecting the two cells. 
+
+Fig. 8 plots the J–V curves of the SiNW tandem cell. The solid squares give the dark currents and the open squares give the currents obtained under monochromatic light illumination. The calculated short-circuit current is 2.75 mA cm−2 and the open-circuit voltage is 1.2 V. The J–V curve of a single SiNW cell is plotted for comparison (blue lines) and the corresponding short-circuit current and open-circuit voltage for the single cell are 2.33 mA cm−2 and 0.62 V, respectively. Overall PCEs of 2.6% and 1.7% are obtained for the tandem cell and single cell, respectively. The low PCE can be attributed to the poor absorptivity of the systems which in general can be improved experimentally through antireflection and light-trapping techniques.47–49 QM/EM simulation results in Fig. 8 demonstrate that a significant enhancement of open-circuit voltage is achieved by using the tandem approach, resulting in an improvement in PCE compared to a single cell. In the current configuration of the tandem cell, two identical devices are used. In principle, the tandem cell may be fabricated with different cells and each cell generates electric current in response to different wavelengths of light. This allows the absorbance of a broader range of wavelengths in the light spectrum, and thus further improves the energy conversion efficiency of the cell.
+ Fig. 8  
+J–V curves of a single (blue lines) and a tandem (red lines) photovoltaic cell. The open squares stand for illuminated currents while solid squares stand for dark currents. 
+3.3 Molecular electronics
+As a benchmark, the QM/EM method has been applied to CNT-based molecular devices.3Fig. 1 shows the QM/EM partitioning of the simulation domain. The QM region encloses with a (5,5) CNT embedded in a silicon substrate. The device is connected to two aluminum leads where a bias voltage is applied. The EM region contains the metallic leads and silicon substrate which provides the electromagnetic environment. Steady state properties are first studied and DFTB Hamiltonian is adopted in the QM model. Fig. 9 shows the J–V curves of the device in the linear response regime. To demonstrate the accuracy of the QM/EM method, the J–V characteristics are compared against the results of a full DFTB + NEGF simulation of the whole system. The covered bias voltage ranges from 0 to 5 mV. It is shown that the J–V curve obtained by the QM/EM method reproduces precisely that of the full simulation which justifies the multiscale QM/EM approach. While computational time scales generally as N3 with the system size in QM calculations, the QM/EM method provides an efficient means for nanoscale electronic device simulations since the EM region of the system can be easily scaled up with minor computational efforts.
+ Fig. 9  Comparison of the full QM and QM/EM simulations of J–V curves of a CNT-based molecular device. 
+Dynamic properties are also studied in both time domain4 and frequency domain.5 Starting from the static solution, AC bias voltages at different frequencies are applied on the electrodes. For time-domain simulations, a sinusoidal bias voltage and a period of 5 fs are applied at t = 0. Simulation results are then Fourier transformed to the frequency domain. Dynamic admittance G(ω) = J(ω)/V(ω) can be obtained and characteristic parameters: resistance R, capacitance C and inductance L, can be extracted.50
+
+Fig. 10 plots the dynamic admittance obtained from frequency-domain and time-domain simulations. It should be noted that based on the small-signal technique, the frequency-domain QM/EM method is a linear response theory with respect to the bias voltage. As long as the applied AC voltage is small enough, the results obtained from the time-domain and frequency-domain simulations agree well over frequencies up to 0.6 eV (∼140 THz) which validates the dynamic QM/EM methods. At a higher AC bias voltage (1.0 V), where the system is far from equilibrium, it is shown that the dynamic admittance obtained from time-domain simulation results deviates from that obtained at lower AC bias voltages (0.1 mV and 0.01 V) due to the non-linear effect and the deviation becomes more prominent at higher frequencies. While considering only linear response, frequency domain simulations give the same dynamic admittance for both high and low AC bias voltages. In general, the frequency-domain QM/EM method serves as an efficient alternative to the time-domain QM/EM method in the low frequency regime since self-consistency can be readily achieved. At high frequencies, the time-domain QM/EM method is more efficient and allows studies of non-linear effects.
+ Fig. 10  Dynamic admittance simulated by the time-domain (TD) and frequency-domain (FD) QM/EM simulation methods at different operating frequencies. The upper curves are the real part of the admittance while the lower ones are the imaginary part. 
+4 Conclusions
+The study of interactions between charge carriers and electromagnetic field is fundamentally important to a variety of applications, for instance, electronics, photovoltaics, plasmonics, etc. The QM/EM method constitutes a promising approach for realistic device simulations. The multiscale approach of the QM/EM method features a self-consistent treatment between QM and classical EM models. The models are coupled by means of information exchange at the interface. In particular, the QM/EM coupling scheme permits not only exchange of energy but also charge carriers between QM and EM regions. The inclusion of electron–photon interaction in the QM model allows simulations of optoelectronic devices. We believe that the QM/EM method can offer an effective way for studying multiscale and multiphysics problems in nanoscale devices.
+Acknowledgements
+The support from the National Natural Science Foundation of China (NSFC 21322306(CYY), NSFC 21273186(GHC, CYY), NSFC 21403176(LYM)), the Hong Kong Research Grant Council (HKU7009/12P, HKU7007/11P (GHC)), the University Grant Council (AoE/P-04/08(GHC, CYY)) and the University of Hong Kong (UDF on Fast Algorithm) is gratefully acknowledged.
+References
+A. Warshel and M. Levitt, J. Mol. Biol., 1976, 103, 227–249 CrossRef CAS .
+E. Tadmor, R. Phillips and M. Ortiz, Langmuir, 1996, 12, 4529–4534 CrossRef CAS .
+C. Y. Yam, L. Meng, G. H. Chen, Q. Chen and N. Wong, Phys. Chem. Chem. Phys., 2011, 13, 14365–14369 RSC .
+L. Meng, C. Y. Yam, S. K. Koo, Q. Chen, N. Wong and G. H. Chen, J. Chem. Theory Comput., 2012, 8, 1190–1199 CrossRef CAS .
+L. Meng, Z. Yin, C. Y. Yam, S. K. Koo, Q. Chen, N. Wong and G. H. Chen, J. Chem. Phys., 2013, 139, 244111 CrossRef PubMed .
+M. A. der Maur, A. Pecchia, G. Penazzi, F. Sacconi and A. Di Carlo, J. Comput. Electron., 2013, 12, 553–562 CrossRef .
+H. Chen, J. M. McMahon, M. A. Ratner and G. C. Schatz, J. Phys. Chem. C, 2010, 114, 14384–14392 CAS .
+Y. Gao and D. Neuhauser, J. Chem. Phys., 2013, 138, 181105 CrossRef PubMed .
+J. Tomasi, B. Mennucci and R. Cammi, Chem. Rev., 2005, 105, 2999–3093 CrossRef CAS PubMed .
+Z. Tang, H. Zhao, G. Li and N. Aluru, Phys. Rev. B: Condens. Matter Mater. Phys., 2006, 74, 064110 CrossRef .
+S. Zhang, R. Khare, Q. Lu and T. Belytschko, Int. J. Numer. Meth. Eng., 2007, 70, 913 CrossRef .
+
+          R. G. Parr and W. Yang, Density-Functional Theory of Atoms and Molecules, Oxford University Press, USA,  1994 Search PubMed .
+M. Elstner, D. Porezag, G. Jungnickel, J. Elsner, M. Haugk, T. Frauenheim, S. Suhai and G. Seifert, Phys. Rev. B: Condens. Matter Mater. Phys., 1998, 58, 7260–7268 CrossRef CAS .
+P. Vogl, H. P. Hjalmarson and J. D. Dow, J. Phys. Chem. Solids, 1983, 44, 365–378 CrossRef CAS .
+
+          H. Haug and A. Jauho, Quantum Kinetics in Transport and Optics of Semiconductors, Springer,  2007 Search PubMed .
+R. Landauer, IBM J. Res. Dev., 1957, 1, 233 CrossRef .
+M. Büttiker, Phys. Rev. Lett., 1986, 57, 1761–1764 CrossRef .
+
+          D. J. Griggiths, Introduction to Electrodynamics, Addison Wesley, 3rd edn,  1999 Search PubMed .
+P. Meuris, W. Schoenmaker and W. Magnus, IEEE Trans. Comput-Aided. Des., 2001, 20, 753–762 CrossRef .
+L. Koster, E. Smits, V. Mihailetchi and P. Blom, Phys. Rev. B: Condens. Matter Mater. Phys., 2005, 72, 085205 CrossRef .
+Y. Shang, Q. Li, L. Meng, D. Wang and Z. Shuai, Appl. Phys. Lett., 2010, 97, 143511 CrossRef PubMed .
+P. Watkins, A. Walker and G. Verschoor, Nano Lett., 2005, 5, 1814–1818 CrossRef CAS PubMed .
+L. Meng, Y. Shang, Q. Li, Y. Li, X. Zhan, Z. Shuai, R. G. E. Kimber and A. B. Walker, J. Phys. Chem. B, 2010, 114, 36–41 CrossRef CAS PubMed .
+L. Meng, D. Wang, Q. Li, Y. Yi, J.-L. Bredas and Z. Shuai, J. Chem. Phys., 2011, 134, 124102 CrossRef PubMed .
+J. Z. Huang, W. C. Chew, Y. Wu and L. J. Jiang, J. Appl. Phys., 2012, 112, 013711 CrossRef PubMed .
+Z. Ma, W. C. Chew and L. Jiang, Prog. Electromagn. Res., 2013, 136, 195–209 CrossRef .
+Y. Zhang, C. Y. Yam and G. H. Chen, J. Chem. Phys., 2013, 138, 164121 CrossRef PubMed .
+J. Zhang, Z. Yin, X. Zheng, C. Y. Yam and G. H. Chen, Eur. Phys. J. B, 2013, 86, 423 CrossRef .
+X. Zheng, F. Wang, C. Y. Yam, Y. Mo and G. H. Chen, Phys. Rev. B: Condens. Matter Mater. Phys., 2007, 75, 195127 CrossRef .
+X. Zheng, G. H. Chen, Y. Mo, S. K. Koo, H. Tian, C. Y. Yam and Y. J. Yan, J. Chem. Phys., 2010, 133, 114101 CrossRef PubMed .
+H. Xie, F. Jiang, H. Tian, X. Zheng, Y. Kwok, S. Chen, C. Y. Yam, Y. J. Yan and G. H. Chen, J. Chem. Phys., 2012, 137, 044113 CrossRef PubMed .
+Y. H. Kwok, H. Xie, C. Y. Yam, X. Zheng and G. H. Chen, J. Chem. Phys., 2013, 139, 224111 CrossRef PubMed .
+J. Jin, X. Zheng and Y. Yan, J. Chem. Phys., 2008, 128, 234703 CrossRef PubMed .
+J. Hu, R.-X. Xu and Y. Yan, J. Chem. Phys., 2010, 133, 101106 CrossRef PubMed .
+D. Scharfetter and H. Gummel, IEEE Trans. Electron Devices, 1969, 16, 64–77 CrossRef PubMed .
+J.-P. Colinge, C.-W. Lee, A. Afzalian, N. D. Akhavan, R. Yan, I. Ferain, P. Razavi, B. O'Neill, A. Blake, M. White, A.-M. Kelleher, B. McCarthy and R. Murphy, Nat. Nanotechnol., 2010, 5, 225–229 CrossRef CAS PubMed .
+S.-J. Choi, D.-I. Moon, J. P. Duarte, S. Kim and Y.-K. Choi, Proc. VLSIT, 2011, 74–75 Search PubMed .
+C. Y. Yam, J. Peng, Q. Chen, S. Markov, J. Z. Huang, N. Wong, W. C. Chew and G. H. Chen, Appl. Phys. Lett., 2013, 103, 062109 CrossRef PubMed .
+G. Bryant, Phys. Rev. B: Condens. Matter Mater. Phys., 1984, 29, 6632–6639 CrossRef CAS .
+M. Björk, H. Schmid, J. Knoch, H. Riel and W. Riess, Nat. Nanotechnol., 2009, 4, 103–107 CrossRef PubMed .
+J. Wallentin, N. Anttu, D. Asoli, M. Huffman, I. Berg, M. H. Magnusson, G. Siefer, P. Fuss-Kailuweit, F. Dimroth, B. Witzigmann, H. Q. Xu, L. Samuelson, K. Deppert and M. T. Borgström, Science, 2013, 339, 1057–1060 CrossRef CAS PubMed .
+P. Krogstrup, H. I. Jorgensen, M. Heiss, O. Demichel, J. V. Holm, M. Aagesen, J. Nygard and A. Fontcuberta i Morral, Nat. Photonics, 2013, 6, 306–310 CrossRef .
+L. Lu, T. Xu, W. Chen, J. M. Lee, Z. Luo, I. H. Jung, H. I. Park, S. O. Kim and L. Yu, Nano Lett., 2013, 13, 2365–2369 CrossRef CAS PubMed .
+Y. Jung, X. Li, N. K. Rajan, A. D. Taylor and M. A. Reed, Nano Lett., 2013, 13, 95–99 CrossRef CAS PubMed .
+G. Dennler, M. C. Scharber, T. Ameri, P. Denk, K. Forberich, C. Waldauf and C. J. Brabec, Adv. Mater., 2008, 20, 579–583 CrossRef CAS .
+Y. Zhang, L. Meng, C. Y. Yam and G. H. Chen, J. Phys. Chem. Lett., 2014, 5, 1272–1277 CrossRef CAS .
+E. Garnett and P. Yang, Nano Lett., 2010, 10, 1082–1087 CrossRef CAS PubMed .
+W. Wang, S. Wu, K. Reinhardt, Y. Lu and S. Chen, Nano Lett., 2010, 10, 2012–2018 CrossRef CAS PubMed .
+M. D. Kelzenberg, S. W. Boettcher, J. A. Petykiewicz, D. B. Turner-Evans, M. C. Putnam, E. L. Warren, J. M. Spurgeon, R. M. Briggs, N. S. Lewis and H. A. Atwater, Nat. Mater., 2010, 9, 239–244 CrossRef CAS .
+C. Y. Yam, Y. Mo, F. Wang, X. Li, G. H. Chen, X. Zheng, Y. Matsuda, J. Tahir-Kheli and W. A. Goddard, III, Nanotechnology, 2008, 19, 495203 CrossRef .
+
+This journal is © The Royal Society of Chemistry 2015
+Table Content:
+
+ChiYung Yam
+	ChiYung Yam completed his undergraduate and graduate education in Chemistry at the University of Hong Kong. He received his PhD in 2004. After postdoctoral training in University of Hong Kong and University of Bremen, he joined Beijing Computational Science Research Center in 2013 as an assistant professor. His research interests include developing linear-scaling quantum mechanical methods, quantum transport and electronic device simulations.
+
+Lingyi Meng
+	Lingyi Meng is a research associate at the Collaborative Innovation Center of Chemistry for Energy Materials (iChEM), Xiamen University. In 2004 he graduated from the University of Science and Technology of China with two Bachelor of Science degrees (in chemistry and computer science). He received his PhD in physical chemistry in 2009 from the Institute of Chemistry, Chinese Academy of Sciences, and continued his research in the Department of Chemistry, The University of Hong Kong, as a Postdoctoral Fellow (before joining the iChEM). His work now focuses on multiscale simulation methods for novel optoelectronic and photovoltaic devices and materials.
+
+Yu Zhang
+	Yu Zhang received his BS degree in Physics from Sun Yat-Sen University in 2010 and PhD degree from the University of Hong Kong in 2014. He then joined the Center of Bio-inspired Energy Science, Northwestern University, USA, as a Postdoctoral Fellow. His current research interests focus on development of fundamental theory for (time-dependent) quantum transport and dissipation and modeling of nanoscale optoelectronics.
+
+GuanHua Chen
+	GuanHua Chen is a Professor of Chemistry at the University of Hong Kong. He received his PhD in Physics at California Institute of Technology in 1992. After postdoctoral training in University of Rochester, he joined the Department of Chemistry in the University of Hong Kong in 1996 as an assistant professor. In 2010, he became the Head of the Department of Chemistry. Prof. Chen was elected as a Fellow of the American Physical Society in 2014. His current research interests focus on development of first-principles methods for open systems, O(N) first-principles methods for excited states, and multiscale simulation methods for emerging electronics.
+
+Key learning points
+(1) A multiscale scheme for studying the interactions between charge carriers and electromagnetic field in nanoscale devices.
+(2) The state-of-the-art computational methods for modeling static and dynamic electron transport.
+(3) Development and application of efficient computational methods for complex systems.
+(4) Case studies on multiscale modeling of simulations of molecular electronics, field-effect transistors, and photovoltaic devices.
+
+
+ 	Fig. 1  QM/EM simulation of a CNT molecular device. The QM region (inner box) includes the atomistic details and is described by the QM transport model. The remaining constitutes the EM region which is treated classically.	 
+
+ 	Fig. 2  Coupling scheme in the QM/EM method. Potential and current density are used for information exchange between QM and EM models. The yellow dotted line represents the QM/EM interface where boundary conditions are imposed. The black dotted line marks locations where external boundary conditions are imposed in EM simulations.	 
+	(1)
+	(2)
+ρ(r,t) = −2i〈r|G<(t,t′)|t=t′|r〉	(3)
+	(4)
+G<(E) = ∫d(t − t′)eiE(t−t′)/ℏG<(t − t′).	(5)
+Σr,aα(E) = (ESDα − HDα)gr,aα(ESαD − HαD),	(6)
+	(7)
+	(8)
+	(9)
+∇2V(r) = 4πρ(r).	(10)
+	(11)
+G<D(E) = GrD(E)Σ<(E)GaD(E).	(12)
+	(13)
+Tαβ(E,ΔV) = Tr[Γα(E)GrD(E,ΔV)Γβ(E)GaD(E,ΔV)]	(14)
+	(15)
+Σ<,>ep(E) = M[NG<,>D(E ∓ ℏω) + (N + 1)G<,>D(E ± ℏω)]M	(16)
+Σ<,>ep(E) ≈ M[NḠ<,>D(E ∓ ℏω) + (N + 1)Ḡ<,>D(E ± ℏω)]M	(17)
+	(18)
+	(19)
+	(20)
+Gr,a,<D(E,E′) = Ḡr,a,<D(E,E′)δ(E − E′) + δGr,a,<D(E,E′)	(21)
+	(22)
+	(23)
+	(24)
+	(25)
+	(26)
+	(27)
+	(28)
+	(29)
+	(30)
+σ(t) = −iG<(t,t′)|t=t′.	(31)
+	(32)
+	(33)
+Σr,aα(t,t′) = ∓iδ(t − t′)Λα(EF)	(34)
+	(35)
+	(36)
+	(37)
+	(38)
+	(39)
+	(40)
+	(41)
+	(42)
+	(43)
+	(44)
+∇·(εE) = ρ.	(45)
+∇·B = 0.	(46)
+	(47)
+	(48)
+	(49)
+	(50)
+	(51)
+	(52)
+	(53)
+J = σE,	(54)
+	(55)
+	(56)
+	(57)
+ρ = q(p − n + ND − NA)	(58)
+
+ 	Fig. 3  Discretization of the simulation domain into regular Cartesian meshes. Scalar variables, V, n and p, are assigned to individual nodes. Vector variables, A and J, are assigned to links (connections between nodes).	 
+∇·(ε∇V) + ρ = 0	(59)
+∇·(σ∇V) = 0.	(60)
+	(61)
+∇·(JQM + JEM) = 0,	(62)
+	(63)
+JD(ω) = iωε(−∇V − iωA).	(64)
+ε = ε0(1 + χ)	(65)
+	(66)
+	(67)
+	(68)
+X = XDC + XAC·eiωt.	(69)
+	(70)
+	(71)
+JP = iωε0χE,	(72)
+	(73)
+
+ 	Fig. 4  (a) An illustration of domain separation in the QM/EM method. The QM region (inner box) contains the atomistic SiNW and is described by the quantum transport model and the remaining EM region, comprising gate dielectrics and source/drain, is treated classically. (b) Cross-section of a 25 nm long SiNW JFET. Permission obtained from ref. 38.	 
+
+ 	Fig. 5  Drain current versus gate voltage for n-type JFETs (red line) and p-type JFETs (blue line).	 
+
+ 	Fig. 6  Local density of state (LDOS) of As-doped JFETs with gate voltage (a) −0.6 V and (b) −0.9 V. Black dashed lines indicate the channel regions, and white dashed lines indicate the bias windows. Permission obtained from ref. 38.	 
+
+ 	Fig. 7  Schematic diagram of a tandem photovoltaic device. The simulation domain is divided into an EM region and two QM regions. Each QM region contains a SiNW PN junction photovoltaic cell. The EM region includes the electrodes and a tunneling junction connecting the two cells.	 
+
+ 	Fig. 8  
+J–V curves of a single (blue lines) and a tandem (red lines) photovoltaic cell. The open squares stand for illuminated currents while solid squares stand for dark currents.	 
+
+ 	Fig. 9  Comparison of the full QM and QM/EM simulations of J–V curves of a CNT-based molecular device.	 
+
+ 	Fig. 10  Dynamic admittance simulated by the time-domain (TD) and frequency-domain (FD) QM/EM simulation methods at different operating frequencies. The upper curves are the real part of the admittance while the lower ones are the imaginary part.	 
+
+This journal is © The Royal Society of Chemistry 2015

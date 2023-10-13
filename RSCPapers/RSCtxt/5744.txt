@@ -1,0 +1,3478 @@
+Material and energy requirements of transport electrification   - Energy & Environmental Science (RSC Publishing) DOI:10.1039/D2EE00802E View PDF VersionPrevious ArticleNext Article Open Access Article
+This Open Access Article is licensed under a Creative Commons Attribution 3.0 Unported Licence DOI: 10.1039/D2EE00802E
+(Analysis)
+Energy Environ. Sci., 2022, 15, 4872-4910Material and energy requirements of transport electrification†
+
+        
+          
+            Daniel 
+            Pulido-Sánchez
+          
+        
+      a, 
+      
+        
+          
+            Iñigo 
+            Capellán-Pérez
+          
+        
+      *ab, 
+      
+        
+          
+            Carlos 
+            de Castro
+          
+        
+      ac and 
+
+        
+          
+            Fernando 
+            Frechoso
+          
+        
+      ad
+aResearch Group on Energy, Economy and System Dynamics, Escuela de Ingenierías Industriales, University of Valladolid, Paseo del Cauce s/n, 47011 Valladolid, Spain. E-mail: inigo.capellan@uva.es
+bDepartment of Systems Engineering and Automatic Control, Escuela de Ingenierías Industriales, University of Valladolid, Paseo del Cauce s/n, 47011 Valladolid, Spain
+cDepartment of Applied Physics, Escuela de Ingenierías Industriales (Sede Mergelina. 511), University of Valladolid, C/dr. Mergelina s/n, 47011, Spain
+dDepartment of Electric Engineering, Escuela de Ingenierías Industriales, Paseo del Cauce s/n, University of Valladolid, 47011 Valladolid, Spain
+Received 
+      10th March 2022
+    , Accepted 12th August 2022First published on 28th October 2022AbstractThe replacement of internal combustion engines by electric vehicles (EVs) is being promoted towards the decarbonisation of the transportation sector. EVs require important amounts of materials, some of which are being assessed as potentially critical in the future. In this work, we develop a submodule of material requirements for transport for an integrated assessment model with great detail in the representation of electric transportation modes. This submodule includes the following novel characteristics: a portfolio of EV battery subtechnologies (LMO, NMC622, NMC811, NCA & LFP) and EV chargers, including the required connections to the grid; comprehensive coverage of their material intensities; and a dynamic allocation function for EV battery subtechnologies, taking into account the changes over time of their Energy Stored Over energy Invested (ESOI) and material scarcities. We obtain ESOIst levels for household 4-wheelers in the range of 1.1–2.3:1 depending on the subtechnology, and lower than 1:1 for all subtechnologies when expanding the boundaries (ESOIfinal) to include grids and chargers. The NCA and NMC subtechnologies are the best performing options in terms of ESOI; however, they are more dependent on critical materials such as nickel, cobalt and manganese. Expanding the boundaries to include chargers significantly increases the GHG footprint of EVs. The integration of these features into a dynamic modelling framework, including the demand of materials from the rest of the economy, allows us to analyse different decarbonisation strategies, taking into account the feedback between the energy and material dimensions. Simulating the MEDEAS-World model including the developed submodule until 2050 for 3 different global transport transition strategies, we find that reserves of copper (with significant contributions from EV chargers and railways), cobalt, lithium, manganese, nickel and graphite would be depleted in at least one of the scenarios studied. The Degrowth scenario puts less pressure on material endowments. Recycling is an important strategy to reduce criticalities, but its effectiveness is limited as the materials are trapped for long time periods in stocks in-use in the system, which is worsened by the growth-oriented nature of the current economic paradigm.
+
+Broader context
+The transport sector contributed to 27% of global CO2 emissions in 20191 (with large regional heterogeneity), with an increased mobility demand trend in most countries. The electrification of transport is one of the cornerstones of decarbonisation strategies, potentially addressing ∼2/3 of current GHG transport emissions (i.e., excluding shipping, aviation and long-haul heavy trucks).2 In this work, we aim to shed light on two biophysical limitations: potential material bottlenecks and net energy returns. We find that the net energy return of a typical household 4-wheeler including grids and chargers is almost zero, i.e., the same amount of energy is invested in its manufacturing than it is given back for mobility use during its lifetime. Model simulation under 3 different transition strategies in the transportation sector by 2050 allows us to estimate the EV battery market shares, the recycling content rates and the shares of cumulative extraction vs. current reserves and resources. We find that reserves of copper, cobalt, lithium, manganese, nickel and graphite would be depleted in at least one of the scenarios studied. Recycling is an important strategy to reduce criticalities, but with limited effectiveness due to the overall system effects. The perspective of net energy analysis recommends to favor those EV transport modes with higher ESOI, such as shared and public transportation. From an energy societal metabolic point of view, switching to more energy-intensive mobility services would decrease the amount of net energy for other discretionary uses of the society, which would go in the direction of hampering well-being. Further work should perform a thorough comparison of the full energy lifecycle of EVs and ICEVs.
+
+1. Introduction
+The transport sector contributed to 27% of global CO2 emissions (the greenhouse gas (GHG) contributing most to climate change) in 2019,1 although with large regional heterogeneity.3 Despite general trends in vehicle efficiency improvements driven by the general progressive adoption of stricter fuel efficiency policies targeting both environmental (atmospheric pollution and climate change) and economic aims (typically reducing external dependence on non-renewable fossil fuels4–6), transport GHG emissions continue to increase in most countries due to increased mobility demand. In fact, the IPCC has estimated that GHG emissions from transport have increased at a faster rate than those from other sectors (2% per year).3 It is noteworthy the current high dependence of transport on liquid fuels (∼95%), with ∼55% of all liquid fuels – mostly oil – being used for this purpose today.7 In a highly globalized economy, transportation is particularly key for trade, services and industrial processes; therefore, any problem affecting this sector can quickly translate to the rest of the economy,8 which is alarming considering also that oil is the fossil fuel showing more marked signs of forthcoming geological depletion.9,10
+In this paper we apply several strategies to decarbonize the global transportation sector by 2050 comparing the conventional efficiency improvement and technological substitution scenarios with a scenario including drastic changes in the mobility patterns which can be representative of an interpretation of global de/postgrowth transportation scenario. The following three main reasons motivate skepticism towards achieving absolute decoupling between economic activity and material throughput/environmental impacts as proposed in the Green Growth and Green Deal proposals and motivate post-growth proposals: (1) historically, increases in affluence have generally driven increases in environmental impacts,11 (2) widespread rebound effects present in growth-economies have been proven to counterbalance efficiency improvements to a great extent12,13 and (3) likely future scarcity of some key materials and natural resources, especially in the context of decreasing marginal returns due to attempts to further expand the economic system in an already degraded biosphere.14 As a consequence, de/postgrowth scenarios are increasingly being identified in the literature as a relevant and feasible alternative to green growth strategies,15–18 and are increasingly attracting the attention of institutions (e.g., European Energy Agency:19). De/postgrowth scenarios applied to transport are typically characterized by a reduction in the overall transportation passenger demand for more affluent people (who concentrate today most of the transportation demand globally), a reduction in trade favorising relocalization (i.e., freight activity reduction), in combination with a modal shift of private 4-wheeler transport to light and public modes and to railway in the case of freight.20–23 These changes would require to be implemented together with a radical change in urban planning: in the words of ref. 15 “to enable 15 minute urban centres requiring little motorized travel and sufficiently compact to encourage reasonable-sized dwellings; and reallocation of some public urban space from parking structures and roads to infrastructure for non-motorized mobility”.
+In this context, transport electrification is today one of the main strategies implemented worldwide to decarbonize the transport sector, being especially suitable for light vehicles. In fact, the full electrification of heavy vehicles faces thermodynamic limits to the energy density that electric batteries can store in the chemical form while keeping an acceptable reversible capacity able to deliver a sufficient number of recharging cycles.24 Besides technical issues, transport electrification also faces institutional issues (e.g., design and enforcement of effective policies), economic issues (e.g., required investments, especially for large-scale projects) and social issues due to the higher cost of EV compared to that of their internal combustion engine vehicle (ICEV) counterparts. Also, prolonging the system of private motorized mobility would retain the problems of public space occupation, traffic jams, traffic-related accidents, segregation of spaces or the requirement of large communication roads. These aspects are beyond the scope of this work, which is focused on the biophysical limits which the electrification of transport may face in the future in two key aspects: material requirements and the net energy balance of EV batteries and their associated systems.
+In fact, a large amount and diversity of materials is used in electric transportation technologies, incorporated in electric motors, batteries, chargers, railway catenaries, related electric grids enhancements, etc. Currently, there are more than 1000 million vehicles of all types, the large majority being ICEVs, circulating on worldwide roads,25 and more than a million kilometres of railroad tracks (73%) not electrified.26–28 In this context, the scientific literature points to the fact that large amounts of primary materials will be required for the electrification of the transportation system, with many of them being scarce,29–31 difficult to extract and refine, and therefore expensive.32 Hence, transport electrification may face in the near future biophysical limits from the side of material availability such as aluminium, copper, lithium, iron or cobalt; limits which are also more recently being acknowledged at a high institutional level (e.g., EU,33,34 OECD,35 World Bank36 and IEA37), in particular for the case of electric vehicle (EV) batteries but more broadly with relation to the promoted green and digital transitions.29
+
+Table 1 collates a selection of relevant studies which have analysed the material requirements of transport electrification, and categorises them against a set of criteria: evaluation of the material requirements of the rest of the economy – including detail for other Low Carbon Technologies (LCTs),‡ the modelling method (static vs. dynamic), the transportation systems assessed, scenarios tested and the studied materials. It is noteworthy that most studies are quite recent and span the last decade. Valero et al.38 estimated the material requirements of several technologies for renewable electricity generation and electric vehicles in a global scenario of technology replacement up to the year 2050 extrapolating current trends and identifying 13 elements (cadmium, chromium, cobalt, copper, gallium, indium, lithium, manganese, nickel, silver, tellurium, tin and zinc) to have very high or high risk, meaning that these could generate bottlenecks in the future. Junne et al.39 estimated the demand for materials considering various types of batteries, electric motors and wind generators through a static analysis using exogenous scenarios and identifying future supply risks for dysprosium, cobalt and lithium. Tokimatsu et al.40 used a model that integrates energy, materials and a simplified climate model to evaluate and estimate the material requirements of various low carbon technologies in 2 scenarios based on the 2 °C limit in the year 2100. García Olivares et al.41 proposed a global energy transition scenario applying an extrapolation of current trends and assuming linear material demands and considering up-front potential material scarcities and hence giving priority to technologies with abundant materials. Mangerber and Stenqvist42 estimated the demand for 12 metals considering several types of batteries, electric motors and renewable technologies in global climate mitigation scenarios up to 2060 by means of a static analysis using exogenous scenarios and quantified the impacts on demand of different assumptions on future improvements and technological mix. This study highlights the importance of capturing subtechnology granularities characterized by different material intensities in order to perform robust projections. Moreau et al.43 reviewed the difficulties of material supply of a renewable energy system by addressing through a static analysis the material demand of renewable technologies, biofuels and batteries. Capellán-Pérez et al.44 applied the MEDEAS-W model to investigate the biophysical implications in terms of material requirements and Energy Return on Energy Investment (EROI) of the system in scenarios of transition to renewables but only considering the LMO batteries. De Blas et al.24 applied the same model version as that mentioned in ref. 44 but specifically tested 4 different decarbonization scenarios for transport and found that only a “Degrowth” scenario, i.e., a planned decrease in consumption in general and in mobility in particular, would be compatible with current material endowments. Pulido et al. (2021)45 expanded the analysis from ref. 24 to 5 EV battery sub-technologies performing an analysis of extreme scenarios without sub-technology allocation. UTS46 estimated the material intensity and recycling of batteries today and showed hypotheses and estimates of these values in the future; Kushnir et al.,47 Grosjean et al.48 and Greim et al.31 focus on the challenges of lithium supply for transport electrification.
+Table 1 Selection of relevant studies analysing the material requirements of transport electrification. *De Blas et al. 202024 use the same version as MEDEAS-W but vary the applied scenarios. LCTs: low carbon technologies. Own compilation
+
+
+
+
+Study
+Material requirements from the rest of the economy evaluated?
+Modelling method (static or dynamic)
+Transportation systems assessed
+Scenarios
+Studied materials
+Estimation of ESOI EV batteries
+
+
+
+
+García olivares et al. (2012)41
+NO (including in detail other LCTs)
+Static
+Electrified railroad
+• Expected trends
+Copper
+NO
+
+
+Light EV vehicles
+Cobalt
+
+
+Heavy electric vehicles
+Nickel
+
+
+EV batteries (Li-ion & Zebra Na-NiCl2)
+
+
+
+
+
+
+
+
+Tokimatsu et al. (2017)40
+NO (including in detail other LCTs)
+Dynamic
+Light EV vehicles
+• Target 2 °C (gas and renewables)
+Cobalt
+NO
+
+
+EV batteries (LMO & NCA (LiNi0.8Co0.15Al0.05O2))
+• Target 2 °C (coal and nuclear)
+Lithium
+
+
+Hybrid vehicles
+• IRENA Global Energy Transition: 2050dREmap scenario
+Manganese
+
+
+Heavy electric vehicles
+• (IEA) 2018dSustainable development Scenario
+Nickel
+
+
+Electrified railroad
+IEA ETP B2deg Scenario
+
+
+
+
+
+
+• Jacobson et al. 100% clean and renewable energy roadmaps for 139 countries with an assessment of stationary storage demand
+
+
+
+
+• LUT University and Energy Watch Group global energy system based on 100% renewable energy
+
+
+
+
+
+
+Valero et al. (2018)38
+YES (including in detail other LCTs)
+Static
+Light EV vehicles
+• Expected trends
+Aluminium
+NO
+
+
+EV battery NCA
+Copper
+
+
+Electric motors
+Cobalt
+
+
+Heavy electric vehicles
+Lithium
+
+
+Hybrid vehicles
+Manganese
+
+
+
+
+Nicke
+
+
+
+
+
+
+Koning et al. (2018)49
+YES (including in detail other LCTs)
+Static
+EV batteries (NiMH & LMO)
+• Business-as-usual (BAU) scenario, including efficiency improvements
+Aluminium
+NO
+
+
+Electric motors
+• Technological Scenario (TS)
+Copper
+
+
+Heavy electric vehicles
+• Blue Map electricity supply (BMES) scenario of IEA
+Lithium
+
+
+Hybrid vehicles
+• Rare Earth Metals (REM) scenario.
+Nickel
+
+
+Light EV vehicles
+
+
+
+
+
+
+
+
+
+
+Mangerber and Stenqvist (2018)42
+NO (excepting other LCTs)
+Static
+EV battery NMC111, NMC442, NMC532 & NMC622
+• ‘Beyond 2 degree’ (B2D) scenario from the energy technology perspective study by IEA (2017a)
+Cobalt
+NO
+
+
+Electric motors
+Copper
+
+
+Heavy electric vehicles
+Dysprosium
+
+
+Hybrid vehicles
+Gallium
+
+
+Hydrogen vehicles
+Lithium
+
+
+Light EV vehicles
+Indium
+
+
+
+
+Neodymium
+
+
+
+
+Nickel
+
+
+
+
+Platinum
+
+
+
+
+Selenium
+
+
+
+
+Silver
+
+
+
+
+Tellurium
+
+
+
+
+
+
+Moreau et al. (2019)43
+NO (excepting other LCTs)
+Static
+EV batteries (NCA, NMC622, NMC811, LFP, Zebra NaNiCl)
+• IPCC
+Aluminium
+NO
+
+
+Biofuels
+• Ecofys and WWF
+
+
+• IEA ETP B2deg Scenario
+
+
+• IEA high ren
+
+
+• IRENA Global Energy Transition: 2050 REmap scenario
+
+
+
+
+
+
+Cobalt
+
+
+
+
+
+
+Copper
+
+
+
+
+
+
+Indium
+
+
+
+
+
+
+Iron
+
+
+
+
+
+
+Lithium
+
+
+
+
+
+
+Magnesium
+
+
+
+
+
+
+Manganese
+
+
+
+
+
+
+Neodymium
+
+
+
+
+
+
+Nickel
+
+
+
+
+
+
+Palladium
+
+
+
+
+
+
+Platinum
+
+
+
+
+
+
+Capellán-Pérez et al. (2019)*44
+YES (including in detail other LCTs)
+Dynamic
+EV battery LMO
+GG-50%
+Aluminium
+NO
+
+
+Light EV vehicles
+GG-75%
+Copper
+
+
+Heavy electric vehicles
+GG-100%
+Lithium
+
+
+Hybrid vehicles
+
+
+Manganese
+
+
+Electrified railroad
+
+
+
+
+
+
+
+
+
+
+Junne et al. (2020)39
+YES (including in detail other LCTs)
+Dynamic
+EV batteries (NMC, NCA, LFP, LMO, LiS8, LiO2)
+• Greenpeace Evolution 2015
+Cobalt
+NO
+
+
+Electric motors
+• Advanced Energy scenario
+Lithium
+
+
+Heavy electric vehicles
+
+
+Dysprosium
+
+
+Hybrid vehicles
+
+
+Neodymium
+
+
+Hydrogen vehicles
+
+
+
+
+
+
+Light EV vehicles
+
+
+
+
+
+
+
+
+
+
+This work
+YES (including in detail other LCTs)
+Static and Dynamic
+EV batteries (LMO, NCA, NMC622, NMC811, LFP)
+• Expected EV trends
+Aluminium
+YES
+
+
+Electric motors copper
+• EV High
+Copper
+
+
+Heavy electric vehicles
+• E-bike
+Cobalt
+
+
+Hybrid vehicles
+• Degrowth
+Lithium
+
+
+Light EV vehicle
+
+
+Manganese
+
+
+Electrified railroad
+
+
+Nickel
+
+
+Electric chargers and connection to the grid (including auxiliary elements)
+
+
+Flake graphite
+
+
+
+
+As shown in Table 1, most studies have focused on a limited set of transportation technologies, electric vehicles and battery types; static analyses dominate over dynamic ones; the material requirements of the rest of the economy are often not taken into account; and none has previously estimated the Energy Stored on Energy Invested of EV batteries (ESOI, i.e., the ratio between the energy stored and the energy invested to build it and make it work over the whole lifetime of the storage unit). The ESOI is a biophysical indicator analogous to the EROI for storage, and it incorporates several storage attributes, like efficiency or energy density. The higher the ESOI of a storage technology, the best its technological performance and the less relative energy requirements to build and operate it. This indicator is relevant from a broader energetic metabolism perspective, given that complex societies require high net energy returns to be viable.50–53
+Only two original studies, Barnhart and Benson§54 (LCO) and Kurland and Benson55 (LFP) have estimated the ESOI of Li-ion batteries in the literature. However, both studies focused on the back-up stationary storage for renewables instead of electric transportation. Barnhart and Benson54 found a ESOI of 32:1 (defined as final/final)56 for LCO batteries, which however are in reality used in electronics such as cell phones and laptops due to the very high specific energy, being less than ideal for EV applications due to their short lifespans, limited thermal stability and low specific power.32 Kurland and Benson 201955 analysed a PV generation system coupled with a grid-connected LFP battery storage system on dwellings finding a range of 8–28:1 ESOI depending on the size of the battery and the location of the case study. However, we must note that this work represents an overestimation since it does not take into account the infrastructure necessary for the operation of the batteries.
+In this context, we focus in this work on the materials required for the electrification of the global transportation system aiming at filling some of the identified gaps in the literature: (i) by achieving a high granularity in the represented types of transportation technologies, electric vehicles types, EV batteries (LMO, NMC622, NMC811, NCA & LFP) and EV chargers and the required connections to the existing grid, as well as incorporating railway catenaries in a stylized manner; (ii) through an exhaustive literature review combining information from lifecycle analyses (LCA), manufacturers and grey ley literature, and allowing us to comprehensively cover most relevant transport components and materials; (iii) by computing the standard and final (point-of-use) ESOI of EV battery technologies with a focus on household 4-wheelers including the material and energy investments associated with the chargers and the additional grids; (iv) development of a dynamic allocation function for EV battery subtechnologies taking into account the changes over time of the ESOI and material scarcities; (v) by implementing all these features in a dynamic framework within the Integrated Assessment Model MEDEAS-W44,57 which allows us to analyse different decarbonisation strategies taking into account the feedback between the energy and material dimensions; and (vi) including the demand of materials from the rest of the economy. This module is tested in MEDEAS-W but it is originally being developed to be included in the in-development WILIAM model (https://www.locomotion-h2020.eu/).
+The developed approach allows the analysis of the amount of materials required by the transition to electric transportation systems, but notably also allows us to explore some issues which have been highlighted as critical but are still understudied in the literature, such as what are the possibilities and potential of sub-technology EV substitution in order to avoid future material shortages and what is the potential of increasing recycling rates to reduce primary material extraction of the most critical ones. Our comprehensive material and expanded boundary analysis allows the extraction of implications in terms of GHG footprint of EV, given that there is still a controversy in the literature with relation to the comparison between EV and ICEV in current systems.58
+Next Section 2 describes in detail the methodology applied; the scenarios simulated are covered in Section 3; the results obtained are shown and discussed in Section 4; and Section 5 concludes.
+2. Methodology
+The analysis is divided in two main parts (Fig. 1):
+ Fig. 1  Workflow of the analysis. 
+(1) Static analysis: the starting point is the selection of relevant technologies for a decarbonized transportation system (Section 2.1), followed by the assessment of their material requirements and technical performance factors (Section 2.2). The main output from the static analysis is the computation of ESOIst (standard) and ESOIfinal (point-of-use) over the lifetime for the EV battery sub-technologies studied, with a focus on household 4-wheelers.
+(2) Dynamic analysis: taking as starting point the data collated in the static analysis as well as data on material availability (Section 2.3), a submodule focused on the material requirements of transport technologies is developed and integrated within the MEDEAS-World (Section 2.5). Additionally, an allocation function to assign the shares of EV battery subtechnologies is developed taking as reference their relative ESOIdyn (the superscript “dyn” is used to refer to the ESOI obtained in our dynamic analysis to differentiate it from the conventional over-the-lifetime EROI) as well as material scarcities. Four decarbonisation strategies for the global transportation sector aiming at a −80% GHG reduction¶ are simulated up to 2050, taken from de Blas et al.24 The main outputs from the dynamic analysis are the market shares as well as the dynamic ESOIdynst and ESOIdynfinal of the EV battery sub-technologies studied, the recycling content material recycling rates and the shares of primary cumulative demand vs. current reserves and resources.
+2.1. Selection of electric transportation modes and technologies
+This work is focused on inland technologies because we consider that the widespread electrification of aviation and marine transportation is not a plausible option in the timeframe of this analysis.59–64 Hydrogen is excluded from this analysis because it is not represented in MEDEAS. MEDEAS excludes H2 and hence also synthetic gases and fuels due to the fact that the large-scale commercial deployment of green hydrogen, i.e., from renewable sources, is still uncertain and the technical performance indicators are nowadays quite poor when looking at the full conversion chain from energy sources towards final energies (since H2 is just a carrier).44,65 For example, the conversion elec-H2-elec through electrolysers (with typical efficiencies of just 50%) has been found to have an EROI < 1:1.66,67 Future studies may integrate the latter given the increasing policy relevance of this topic (e.g., ref. 68). In this work we focus on the following components:
+• Electric vehicles:
+○ EV batteries
+○ Inverters, electric motors and wires
+○ Chargers and connection to the existing grid
+• Railway infrastructure:
+○ Catenary
+○ Electric transformers
+
+Table 2 shows the possible combinations of the types of land transport and the technologies considered in this work: human traction, electric vehicles (both battery (BEV) and railway catenaries), combustion engine only vehicles (ICEV) and hybrid (including both HEVs and PHEVs). Not all combinations have been studied due to technical incompatibilities and due to the fact that MEDEAS models do not include shared transport modes.
+Table 2 Matrix of transport types and mobility technologies
+
+
+
+
+Fuel and technology
+Human traction
+Electric
+ICE
+Hybrid
+
+
+Transport mode
+
+
+
+
+—, technically incompatible; X, excluded from the analysis; •, object of the study.
+
+
+
+
+Walking
+•
+—
+—
+—
+
+
+Single person vehicle
+•
+•
+—
+—
+
+
+Shared single person vehicle
+X
+X
+—
+—
+
+
+Car
+—
+•
+•
+•
+
+
+Shared car
+—
+X
+X
+X
+
+
+Motorcycle
+—
+•
+•
+•
+
+
+Bike
+•
+•
+—
+•
+
+
+Shared bike
+—
+X
+—
+—
+
+
+Bus
+—
+•
+•
+•
+
+
+Cab
+—
+•
+•
+•
+
+
+Small truck/van
+—
+•
+•
+•
+
+
+Long-distance truck (Lorry)
+—
+—
+•
+•
+
+
+Subway/suburban train
+—
+•
+•
+X
+
+
+Medium and long-distance train
+—
+•
+•
+X
+
+
+Freight train
+—
+•
+•
+X
+
+
+
+
+2.2. Material intensities and technical performance factors
+
+2.2.1. General scope of the analysis and literature review. 
+This work covers the material requirements of EV under two conditions: (1) those materials allowing the estimation of the ESOI of EV vehicles, and (2) those materials which are different between the EV and the ICEV, the latter being a condition particularly relevant for the robust simulation of dynamic scenarios in which EV replaces ICEV. It must be highlighted that previous studies which have reported different material requirements for EV and ICEV compared different models (e.g., Valero et al. (2018)38). However, for a robust comparison, the differences between EV and ICEV should be assessed for the same model. As no study performing this analysis was found in the literature, we instead inferred information from the report Volvo (2020)69 which compares the lifecycle GHG emissions for the EV and ICEV versions of the same model (Citroën C4). The data extracted from this report in combination with our own data|| show that the most relevant differences in terms of material intensities between both types of vehicles are for the battery and the extra copper used by EVs in the wiring, inverter or electric motor. Hence, we focused our literature review on these components. See Section 2.5 for the implications for dynamic modelling.
+It should be noted that in the analysis of inverters, motors and cables as well as the railway infrastructure, we have focused on copper, as it is the dominant material in these systems. Although some authors have considered permanent magnet motor materials such as dysprosium and neodymium in their analyses (cf.Table 1), in this work we have not included given that the automotive sector, affected by the impacts of the scarcity of rare earth elements (and therefore their high price), is increasingly opting for induction motors without permanent magnets. For example, manufacturers such as BMW and Renault have already designed or are designing new motors free of rare earth elements,70,71 Toyota is using magnets without dysprosium and with 50% less neodymium, and Volkswagen and Tesla are replacing permanent magnet motors with induction motors.72
+A comprehensive literature review has been performed collating information from a variety of sources such as LCA analyses, manufacturers and grey literature, and combining them whenever possible with the aim of filling data gaps. The objective was to collate information on the material composition of the manufactured products. Material losses during manufacturing (scraping losses), are accounted for by increasing the material composition by 10%73 (cf. tabs “EV batteries req & intensities”, “Electric grid & chargers req”, “Railway catenaries req” and “Cu additional req” in the ESI†).
+
+
+2.2.2. Electric vehicle batteries. 
+A literature review was conducted aiming at identifying the most relevant current and future types of EV batteries considering factors such as expected efficiencies, costs, market expectations and shares, as well as the materials that compose them, reviewing scientific and manufacturers’ literature.32,38,39,42,43,74–85
+Five Li-ion technologies were selected, primarily due to their good technical characteristics (e.g., high energy density, stability, and reliability) which make them very suitable for their operation in electric mobility and are hence used by the main manufacturers. Typically, Li-ion batteries contain a graphite anode and lithium-containing cathode. Common cathodes include LiMnO2 (LMO) (which is today rather a technology in decline but is included in this analysis in order to be able to represent past trends and since it does not depend on other critical materials such as Co or Ni) and four types that have today reached the commercial stage: two types of Li[NiMnCo]O2 (NMC-622 and 811), Li[Ni0.8Co0.15Al0.05]O2 (NCA) and LiFePO4 (LFP).
+Other types of electric batteries such as lithium sulphide were excluded as, given that they have worse technical characteristics than Li-ion (NiMH, Pb-acid, and NiCd batteries), they are not suitable for electric mobility applications (Na-NiCl2, LiCoO2), or because they are new technologies whose technical properties and material composition are still unknown for mass production (LiS8, solid electrolyte, LiO2):
+• NiMH: these batteries have historically been dominant in the past for hybrid vehicles but have been replaced by Li-ion technologies. They were used by Toyota until 2020. Although they have a great stability and reliability, they have a serious problem of memory effect and self-discharge in addition to a poor energy density.
+• Pb-acid and NiCd: these are batteries with very poor energy density, heavy weight, memory effect and, most remarkably, they use materials that are difficult to recycle and harmful to the health and environment such as acids or cadmium.
+• Na-NiCl2 (Zebra): this has the problem of a high operating temperature (270–350 °C), with continuous use of the electric vehicle being necessary to avoid freezing of the battery electrolyte. When the car is not in use, an external heating system maintains the system at the operating temperature by consuming a large amount of the battery energy.
+• LiCoO2 (LiPo): although a priori their technical characteristics seem better in all aspects than Li-ion batteries, they have a serious problem of thermal instability that does not allow fast charges of electric vehicles and could even become dangerous if subject to intensive use or if it is damaged in a traffic accident.
+• LiS8: at the moment, this has not left the laboratory stage and that has serious problems in its useful life.86 Although some authors39 include it in their analysis (due to its promising properties), they warn that both its material composition and its final technical characteristics for mass production are unknown.
+• Solid electrolyte: although already at a more advanced stage of development compared to the LiS8 battery, it suffers from a similar situation. This battery is in the laboratory phase with trials being made to alleviate some of its problems with a view to mass production.87 The advantage with respect to LiS8 batteries is that some examples of the use of this technology are already being observed in the market: e.g., Mercedes-Benz has launched a bus with this technology, although for now, its specifications are similar to those of traditional lithium-ion batteries.88 In any case, the composition and the properties of these batteries are unknown and whether or not they will be similar to those that can be manufactured on a large scale in the future and when that time will come.
+• Lithium–air (LiO2): although they have a high energy density, they are also in a laboratory state due to their poor useful life and stability, since oxygen rapidly degrades and oxidizes the lithium in the battery.89,90
+
+Table 3 shows the commercial electric vehicle examples and the mass and capacity of each type of battery selected in this study.
+Table 3 Mass and capacity of the studied batteries in this work, together with examples of commercial EVs using them
+
+
+
+
+
+
+Unit
+LMO
+NMC 622
+NMC 811
+NCA
+LFP
+
+
+
+
+Battery mass
+kg
+∼294
+∼330
+∼330
+∼478
+∼700
+
+
+Battery capacity
+kW h
+∼24
+∼55
+∼55
+∼80.5
+∼85
+
+
+Examples of vehicle models using each type of battery
+—
+Nissan Leaf
+Hyundai Kona; Ioniq
+Renault ZOE
+Tesla Model 3
+BYD e6
+
+
+Ref.
+—
+
+82
+
+
+80, 81 and 83
+
+
+83 and 91
+
+
+84
+
+
+85 and 92
+
+
+
+
+
+
+Table 4 shows the estimated mass intensity per power (kg MW−1) of each of the materials which compose each type of battery which has been obtained through literature review collating data from real batteries, mass shares and the capacity of the batteries and the mass of the cathode elements per battery capacity.75–78,93 In order to standardize the subsequent analysis and comparison between the different types of batteries analysed, we establish that each battery is used the same number of hours (equivalent to assuming the same CF), has a capacity of 60 kW h (as several models on the market80,83,94), and 100 kW of power, since a vehicle with these characteristics has a range and power that allow practically a “traditional” use of the vehicle.** Normalization is performed by extrapolating the material mass per capacity kg kW−1 h−1 of real batteries and then, depending on the use of the battery and the type of vehicle it is intended for, its size is adapted.
+Table 4 Material intensities (kg MW−1) of the selected EV batteries; based on a 60 kW h battery with a power of 100 kW
+
+
+
+
+kg MW−1
+LMO
+NMC-622
+NMC- 811
+NCA
+LFP
+
+
+
+
+
+a The mass of oxygen has been found by stoichiometry of the composition of each battery.
+
+
+
+
+
+Aluminium
+1396.5
+756
+756
+759.1
+939
+
+
+Copper
+807.2
+468
+468
+463
+543
+
+
+Iron
+0
+0
+0
+0
+486
+
+
+Lithium
+96
+78
+66
+48
+61
+
+
+Manganese
+1422
+120
+60
+0
+0
+
+
+Nickel
+0
+367
+451
+402
+0
+
+
+Cobalt
+0
+120
+60
+63
+0
+
+
+Phosphorus
+0
+0
+0
+0
+270
+
+
+Graphite flake
+865.8
+442
+442
+385
+524
+
+
+Rest (plastics, electronics…)
+1933.5
+915.8
+989.5
+1168.8
+1560.2
+
+
+Oxygena
+829.03
+333.23
+307.58
+274.16
+556.96
+
+
+TOTAL
+7350
+3600
+3600.1
+3563.1
+4940.1
+
+
+Ref.
+
+76 and 77
+
+
+75–77
+
+
+75–77
+
+
+75–77
+
+
+75–78
+
+
+
+
+
+The applied method consists of combining different sources of information in order to estimate the material composition of each battery. Starting with the total mass of each 60 kW h battery, relative mass and Energy Use (EnU, cf. Section 2.4) shares are used to obtain the absolute values. The following hypotheses by type of EV battery have been made (cf. tab “EV batteries req & intensities” in the ESI† for further details):
+• LMO: the mass share of aluminium and copper is obtained from Dunn et al.;76 the share of the total Energy Used (EnU, i.e., the embodied energy in a given material or component) for lithium, manganese and graphite is taken from Dunn et al.77 and used to infer the kg MW−1 for each material.
+• NMC-622 & NMC-811: the mass share of aluminium and copper is obtained from Dunn et al.;76 the materials from the cathodes have been taken from De La Torre Palacios et al.75 Graphite material intensity has been estimated from the EnU reported by Dunn et al.77
+• NCA: the mass share of aluminium and copper is obtained from Dunn et al.;76 the materials of the cathodes have been taken from De La Torre Palacios et al.75 Graphite material intensity has been estimated from the EnU from Dunn et al.77 assuming a similar share to that for the NMC batteries.
+• LFP: the mass share of aluminium and copper is obtained from Dunn et al.;76 the amount of phosphorus and iron is obtained from Gaines et al.78 and the materials from the cathode from De La Torre Palacios et al.75 Graphite material intensity has been estimated from the EnU from Dunn et al.77
+
+
+2.2.3. Copper in the rest of the vehicle. 
+The electric vehicles also incorporate copper in other components of the vehicle, such as the inverter, the electric motor, wires, etc., which ultimately makes the total amount of copper in an EV higher than that in an ICE-equivalent vehicle (∼23 kg per vehicle) (cf.Table 5).95 We take as reference the study95 which collates the amount of copper for some types of vehicles (4-wheeled electric & hybrid vehicles (H4w BEV & H4w HEV), hybrid and electric buses (Bus HEV; Bus BEV), cf. glossary for the definition of acronyms), and for the rest we apply mass-vehicle ratios to the most similar vehicles (cf. tab “Cu additional req” in the ESI† for details).
+Table 5 Copper intensity per type of vehicle (excluding the battery)
+
+
+
+
+kg per vehicle
+Copper intensity reported by ref. 95
+
+
+Vehicle parts (excluding battery)
+H4w ICEV
+H4w HEV
+H4w PHEV
+H4w BEV
+Bus HEV & BEV
+
+
+
+
+Inverter
+0
+0.31
+0.3
+0.31
+1
+
+
+Electric motor
+0
+5
+5
+9.9
+20
+
+
+High voltage connection
+0
+5
+5
+5
+11
+
+
+Low voltage connection
+18
+23
+23
+23
+40
+
+
+Others
+5
+5
+5
+5
+5
+
+
+TOTAL (excluding battery)
+23
+38.3
+38.3
+43.2
+77
+
+
+
+
+
+
+2.2.4. Charging points. 
+Three types of charging points are considered: home chargers (3.7 kW), conventional chargers (45 kW) and fast chargers (200 kW). The material requirements for each type (kg per unit) are estimated from the data of Lucas et al.96 except for the copper of fast chargers which is taken from ref. 95 and the iron of fast chargers which is obtained by applying the same ratio between the mass of copper of Lucas et al.96 and Idtechx,95i.e., taking a 21.05% reduction of the material with respect to Lucas et al.
+The obtained material intensities per charger and type of charger are listed in Table 6, together with the lifetime from ref. 96.
+Table 6 Material intensity per unit of charger and lifetime by the type of charger. Source: ref. 95 and 96, with own modifications (see text)
+
+
+
+
+
+
+Material
+Unit
+Home charger (3.7 kW)
+Conventional charger (45 kW)
+Fast charger (200 kW)
+
+
+
+
+Material intensity
+Copper
+kg per unit
+∼0.7
+∼1.5
+120
+
+
+Iron
+kg per unit
+0
+0
+180
+
+
+Cement
+kg per unit
+0
+1200
+2400
+
+
+Stainless steel
+kg per unit
+3.5
+2.14
+90
+
+
+PVC
+kg per unit
+7.5
+0
+0
+
+
+ABS, Fiberglass…
+kg per unit
+0
+52.5
+380
+
+
+Lifetime. Source: ref. 96
+Years
+15
+10
+12
+
+
+
+
+
+Table 7 shows the number of chargers by type according to the type of the vehicle assumed. Given data scarcity, different assumptions are made taking as reference the data from ref. 96 for H4w of 1 home charger, 0.25 conventional chargers and 0.15 fast chargers per vehicle. HEVs do not require chargers. For the remaining the following assumptions are applied:
+Table 7 Number of chargers by type and vehicle type. Source: ref. 96 with own modifications
+
+
+
+
+
+
+
+
+Ref.
+Home charger (3.7 kW) (units per vehicle)
+Conventional charger (45 kW) (units per vehicle)
+Fast charger (200 kW) (units per vehicle)
+
+
+
+
+Private vehicles
+H4w BEV
+
+96
+
+1
+0.25
+0.15
+
+
+H4w HEV
+HEV do not require chargers
+0
+0
+0
+
+
+H2w BEV
+Own estimation, see text
+1
+0.25
+0
+
+
+SEV
+Own estimation, see text
+0
+0
+0
+
+
+Commercial vehicles
+HV HEV
+HEV do not require chargers
+0
+0
+0
+
+
+LC BEV
+Own estimation, see text
+1
+0.25
+0
+
+
+LC HEV
+HEV do not require chargers
+0
+0
+0
+
+
+Bus HEV
+HEV do not require chargers
+0
+0
+0
+
+
+Bus BEV
+Own estimation, see text
+0
+1
+0
+
+
+
+
+• Private vehicles:
+• 2-wheeled electric vehicles (H2w BEV): as this type of vehicles has a similar use to 4-wheeled electric vehicles in the urban environment, the same number of home chargers and conventional chargers is established, but as these vehicles are not made for the purpose of traveling, 0 fast chargers have been arranged.
+• Single person electric vehicles (SEV): these vehicles will be charged in a conventional power outlet so 0 chargers per vehicle have been established.
+• Commercial vehicles:
+• Light cargo battery electric vehicles (LC BEV): as this type of vehicles has a similar use to the particular 4-wheeled electric vehicles in the urban environment, the same number of home and conventional chargers is established, but as these vehicles are not made for the purpose of traveling, 0 fast chargers have been established.
+• Electric bus (bus BEV): these vehicles will not be charged in home chargers due to the low power of the latter, nor in fast chargers, since they would shorten the life of the battery; these vehicles will be charged in conventional chargers in their docks.
+
+
+2.2.5. Connection of the charging points to the existing grid. 
+Given that chargers will be often located in places without a direct access to the grid, some assumptions must be made to account for this factor. The material requirements per unit length of the grid estimated by the type of electricity distribution and transmission line are shown in Table 8, under the following assumptions:
+Table 8 Material intensity and lifetime by type of electricity distribution and transmission line
+
+
+
+
+
+
+Material
+Units
+Low voltage grids
+Medium-low voltage grids
+Medium voltage grids
+High voltage grids
+
+
+Ref.
+Own elaboration from ref. 97
+Ref. 98 and 99 with own modifications
+
+
+
+
+Material intensity
+Copper
+kg m−1
+0.044
+0
+0
+0
+
+
+Aluminium
+kg m−1
+0
+0.173
+1.215
+1.215
+
+
+Galvanized steel
+kg m−1
+0
+0
+0.45
+0.45
+
+
+Steel bar
+kg m−1
+0
+0
+2.48
+2.48
+
+
+Cement
+kg m−1
+0
+0
+180
+180
+
+
+PVC
+kg m−1
+0
+0
+11
+11
+
+
+Lifetime100
+years
+40
+
+
+
+
+• Low voltage grids: estimation applying formula 16 of Annex 2 of the Spanish low voltage guide.97
+• Low-medium voltage grids: data obtained from the technical guide for voltage drop application.97
+• Medium and high voltage grids: data from ref. 98 and 99 have been taken as the reference. A two-pipe pipe of 160 mm in diameter inserted into a concrete cube of side 45 cm and a thickness of about 5 cm, taken from the instructions of the reference,99 was chosen as a reference pipe. The concrete weight of this last reference was compared with the weight of the concrete from Bumby et al.98 using this relation to apply it to the other materials.
+The lifetime of these infrastructures is taken from ref. 100 (for more details, cf. tab “Electric grid & chargers req” in the ESI†). For the sake of simplicity, in this work no additional grids besides the connection to the existing grids, transformers or substations are considered.
+Finally, an estimate of the total length of grid infrastructure connection to the charger by type of voltage line has been performed based on experience93 and observation of existing facilities (cf. tab “Electric grid & chargers req” in the ESI†). However, it must be acknowledged that much variability exists depending on each case. For example, a single-family house will hardly require any new installation, but a shared parking lot will likely require the installation of several tens of meters of cable. The same applies to other types of connections; in conventional chargers it will depend on the existing installation of electrical wiring and the layout of the city streets for example. For fast chargers, it will depend on where the distribution centre is located, if there are roads at the time of laying the wire, etc. Despite the existing uncertainties in terms of number of chargers by type and by type of vehicle (cf. Section 2.2.4) as well as in terms of the length grid infrastructure connection, uncertainty analyses have shown that these are negligible compared with the magnitude order of material requirements by others parts of the system (cf. ref. 93).
+
+
+2.2.6. Electrified railway. 
+Information and data have been collected from diverse sources in order to obtain the material intensity of railway catenary as well as modelling of the future length of railroads to be implemented in the MEDEAS-W model.
+For the sake of simplicity, we take as reference ADIF's (Spanish railway infrastructure manager) CA-220 catenary due to its versatility and its capacity to be used under different situations and conditions.101 It should be noted that the catenary uses copper-PTE (including silver and lead) with a copper weight share of more than 99.90%,102 so in the results section we will focus on this material.
+With relation to the modelling of future length of railroads, the data related to global railroads are disperse and incomplete in the literature.26,27 Hence, we assume the following simplifying hypotheses:
+• Given the lack of global data about the evolution over time of the share of double, triple, etc. railroads, we assume for the sake of simplicity that all tracks that are not single-tracks are double-tracks and that the share of double railroad follows the same temporal trend than electrification, since both are trends that roughly emerged at the same time and have been increasing up to now to a great extent together.103 Although the reference assesses this aspect in Spain, the rest of the world has followed the same mode of operation in railway construction, as most electrified railroads are double railroads.
+• Electrification share is modelled as an exogenous policy targeting a specific share in a specific year linearly.
+• The estimation of the track length is modelled depending on two parameters:26,27 the ratio of total length of railway track vs. length lines and the ratio of the length of railway lines vs. the number of locomotives which for the sake of simplicity we maintain constant in the model in their estimated values for the base year 2015, at the values of 1.5 and 3, respectively. The total track length is then estimated by multiplying these parameters by the total number of trains which is an endogenous variable of the MEDEAS-W model depending on the demand of this type of transport.
+
+Table 9 collates the data of the global rail transport infrastructure in 2019.
+Table 9 Data of global rail transport infrastructure in 2019. Sources: ref. 26, 27, 101 and 104
+
+
+
+
+Parameter
+Unit
+Value
+
+
+
+
+Length of railroads
+km
+1142014
+
+
+Share of electrified railroads
+%
+27%
+
+
+Share of single tracks
+%
+50%
+
+
+Lifetime of the tracks
+years
+60
+
+
+Lifetime of the catenary
+years
+20
+
+
+Copper railroad (single track)
+kg km−1
+10791.25
+
+
+Traction substation (single track)
+kg km−1
+50
+
+
+
+
+
+2.3. Resources, reserves and recycling ratios
+The amount of currently estimated reserves and resources is generally taken from the USGS,105 completing the data with other sources when the information is incomplete or inaccurate (cf. Appendix B in ref. 52 for details). Following the USGS, resource is “a concentration of naturally occurring solid, liquid, or gaseous material in or on the Earth's crust in such form and amount that economic extraction of a commodity from the concentration is currently or potentially feasible”; reserves is “that part of the reserve base which could be economically extracted or produced at the time of determination. The term reserves need not signify that extraction facilities are in place and operative”.106
+Target recycling rates in the version of MEDEAS developed for this paper (cf. Section 2.5) correspond to the share of end-of-life (EOL) material which is recycled. Current EOL recycling rates in MEDEAS are taken in general from UNEP (2011).107 However, for the case of lithium, the UNEP reference (reporting <1%) seems to be outdated, and we perform an own calculation based on data from Melin,108 Sverdrup et al.109 and a literature review of the main recycling methods of EV batteries existing in the market and R&D stages and the recycling rates obtained per mineral (cf. Appendix B). Taking as reference the data from Melin,108 which found that almost 100000 lithium-ion batteries were recycled in 2018, mainly in China and South Korea which represent ∼87% of the lithium recycling world market, amounting to around 50% of the total lithium-ion batteries reaching the end-of-lifetime (EOL) that year globally, and considering that hydrometallurgical combined with pyrolysis and/or mechanic processes as a pre-step is the most used recycling method of these batteries in both countries (which allows the achievement of a 57% maximum recycling efficiency of lithium110–113), while in the rest of the world other less performant methods such as pyrolysis which does not recover any lithium are more common, and assuming a 85% efficiency in the recycling process due to lower efficiency of industrial processes vs laboratory conditions, we find a global current lithium EOL recycling rate of ∼21%. Considering the lack of transparency of the data reported by Melin108 and that Sverdrup et al., estimated in 2017 an EOL of 10%,109 we consider in this work an EOL recycling rate for lithium of 15%. Table 10 shows the reserves, resources and current recycling level EOL of the metals analysed in this study. Appendix B reviews the main recycling methods of EV batteries existing in the market and R&D stages.
+Table 10 Worldwide resources, reserves and recycling ratios EOL (end-of-life) for the base year of 2015 of the materials analysed in this work
+
+
+
+
+
+
+Units
+Refs.
+Lithium
+Nickel
+Cobalt
+Manganese
+Aluminium
+Copper
+Graphite
+
+
+
+
+
+a For lithium an own calculation based on various sources was performed, see main text.
+
+
+
+
+
+Resources
+Mt
+
+52
+
+40
+130
+145
+1030
+7.5 × 104
+2100
+670
+
+
+Reserves
+Mt
+
+52
+
+14
+81
+7.2
+570
+2.8 × 104
+720
+21
+
+
+Current estimated recycling rates EOL
+%
+
+114
+
+15a
+60
+32
+53
+56
+48
+0
+
+
+
+
+2.4. ESOI of EV batteries
+The ESOI (Energy Stored Over energy Invested) is the ratio between the energy stored and the energy invested to build and make work a storage unit over its whole lifetime. The ESOI is a biophysical indicator analogous to the EROI for storage, and it incorporates several storage attributes instead of isolated properties, like efficiency or energy density. The higher the ESOI of a storage technology, the best its technological performance and the less the energy requirements to build and operate it.54 This indicator is relevant from a metabolic perspective, given that complex societies require high net energy returns to be viable.50–53 In this work, the ESOI of different types of batteries has been estimated by applying the method developed by Carlos de Castro and Capellán-Pérez73 in order to estimate the EROI of different renewable energy technologies.
+Depending on the selected system boundaries different definitions of ESOI exist. Here we focus on the standard and final (or point of use) levels defined as final/final energy (Fig. 2). The standard ESOI (ESOIst, eqn (1)) takes into account the energy invested to manufacture the batteries and the amount of energy stored in the batteries over the lifetime. The final ESOI (ESOIfinal, eqn (2)) takes into account the same parameters as that of the standard but widens the boundaries to consider that the storage system is part of the energy system. Hence, it includes the energy investments related to the chargers, the connection to the existing grid and associated losses (ECL), as well as the losses in order to account for the energy supplied to the motor (EaB&E).
+ Fig. 2  Boundaries taken for ESOIfinal and ESOIst. 
+It is noteworthy that the ESOI will also depend on the type of vehicle which will affect the mileage, the size of the battery and its technical characteristics (power, capacity, etc.). In this work, we focus on household 4-wheelers but other cases are reported in the results for illustration. (1) (2)where:
+– the Nominal power capacity considered is 1 MW.
+– CF is capacity factor, the ratio between the amount of energy a battery releases during vehicle use and the maximum energy it can release in the same period if it would be working 100% of the time. The starting point for calculating the CF is the assumed mileage in the whole lifetime of the vehicle, which considering the autonomy of the battery can be translated into a certain power use. For example, for a private 4-wheeler with a mileage of 100000 km and assuming a cycle range of 420 km, a total power used of 146.77 W can be compared with the 100 kW power of our normalized batteries which would mean a CF of ∼0.15%.
+– L is the battery operational lifetime in seconds, based on typical values from manufacturers guarantees (8 years),115,116 choosing a value of 10 years. It must be taken into account that, currently, the critical factor determining the lifetime of the battery of a 4-wheeled private EV is aging, not mileage driven; every 10 years the EV batteries loose between 20% and 25% of the capacity.117 Theoretically, the EV batteries studied should be able to withstand mileages over 400000 km, but given the low usage ratio of vehicles this would require between 15 and 20 years in countries like the USA118 and more than 25 years in Europe.119
+– OL is constant electricity operational losses of the batteries by the self-discharge of the batteries set at 0.014%.120 The battery consumes 0.014% of the total battery capacity every hour of its life by self-discharge. This translates into cycles of use that have not been used to move the vehicle, which means losses. To find the total loss rate, the cycles lost due to self-discharge (which only depends of lifetime) are compared with the cycles used to actually move the vehicle, cf. tab “ESOIstatic 4W-car” in the ESI.†
+– EaB&E (energy used at battery and electronics): The energy losses from the energy stored in the batteries to the energy that actually drives and operates the electric vehicle. Also included are other losses such as the energy used to drive and air-condition the system (battery and electronics and the car cabin). We take 35.4% as the central value for the charge loss ratio in order to maintain the same ratio between the energy stored over the lifetime and the energy lost in the auxiliary processes necessary for the operation of the electric vehicle as the reference,120 and due to the high variability of this coefficient, an uncertainty analysis has been performed with values ±10% around it, cf. tab “ESOIstatic 4W-car” in the ESI.†
+– ECL: losses from the charger to the battery, that is, energy lost in the charging process. This is not to be confused with the losses in the transport and distribution of energy to the chargers (TDL) which is outside the boundaries of the ESOI calculation as can be shown in Fig. 2. To calculate this energy, we use a charge loss ratio (CL) according to eqn (3). We take 21.3% as the central value for CL in order to maintain the same ratio between the energy stored over the lifetime and the energy lost in the charging process as the reference,120 and due to the high variability of this coefficient, an uncertainty analysis has been performed with values ±10% around the central value, cf. tab “ESOIstatic 4W-car” in the ESI.† ECL = Electricity stored over the lifetime·CL(3)– EnU is the energy used in final terms to make available each unit of the material. If in primary terms (PEnU), then the factor g is used to convert from primary to final: EnU = g*PEnU. We take g as the final to primary energy ratio for the global energy system from the year 2015 from MEDEAS-W (g = 0.737) in order to make the static comparable with the dynamic results.
+– EnUNew cap is the final energy used (joules) for the construction phase of the new installed capacity (cradle to gate). Eqn (4) represents the computation for each EnU for each EV battery subtechnology i depending on the material intensity (in kg MW−1) and energy consumption per unit of each material j consumption (in primary terms), weighted average taking into account current recycling rates (embodied energy, EE(recycling rate) in MJ kg−1), at a global system level. We take the EE for virgin and recycled materials from ref. 121 for all materials except for graphite which is taken from ref. 122. Given the lack of robust data globally for all the minerals studied (which has impeded to date to include this factor in the literature), for the sake of simplicity in this work the energy intensities of virgin materials have been held constant over time, even though in reality, the scarcity of materials is linked through the increasing energy requirements to extract materials as their ore grade decreases. (4)– EnUMr is the machining factor of 15% of the EnU for all components except battery (without taking into account the 10% of material losses) to include the energy required for manufacturing components from raw materials.73 For the battery, a central value for manufacturing energy of 400 MJ kW−1 h−1 with lower and higher bounds of 200 and 800 MJ kW−1 h−1 has been taken from the literature review carried out by Porzio and Scown123 (cf. their Fig. 3).
+ Fig. 3  Stock-flow diagram of the material flow analysis developed for MEDEAS-W. VenSIM has a visual interface that allows us to relate variables by means of arrows (arithmetic operations) and to establish stocks (variables in boxes) together with flows (arrows that enter and leave the boxes). Stocks take an initial value (set by the user) at the beginning of the simulation, and then vary depending on the related flows. 
+– EnUDecom is the final energy used (joules) to dismantle the infrastructures that have finished their lifetime. 10% of the (EnUNewcap + EnUMr) is assumed for all technologies following ref. 124 due to the lack of relevant global data.
+– EnUG&S is the final energy used (joules) in the construction and maintenance of the networks, storage and other related infrastructure needed to transport and distribute electricity to the point of use. In our case, it includes also the chargers.
+– EnUTra is the final energy used for the transport of all the materials (materials, diesel, etc.) estimated following the methodology from ref. 73 using the data of ref. 125–127, cf. tab “Transport materials energy” in the ESI.†
+For more details on the calculation, cf. tab “ESOIstatic 4W-car” in the ESI.†
+The above equations refer to the customary definition of EROI/ESOI which is typically defined as a static ratio over the lifetime of the facility studied. In this work, the integration of these concepts in a dynamic simulation framework makes possible to explore the ESOI in dynamic terms (ESOIdyn), i.e., using instantaneous variables instead, which can bring relevant insights into the analysis of the energy transition since it is an inherently dynamic process (cf. Capellán-Pérez et al.,52 for dynamic EROIst results for the whole energy system in transition scenarios for the electricity sector).
+2.5. Development of a submodule about material requirements for transport within the MEDEAS-W model
+A new submodule dedicated to the material requirements of transport has been developed and integrated within the IAM MEDEAS-World taking as a basis the data collected as documented in the previous sections. Before describing this module, Section 2.5.1 briefly overviews the model and Section 2.5.2 synthetizes the modelling of transportation present in the standard version of the model.
+
+2.5.1. Overview of the MEDEAS-World. 
+The MEDEAS family of models44,57 which is a set of dynamic and recursive system models for policy simulation developed with the aim of helping in the decision making process to achieve the transition to sustainable energy systems focusing on biophysical, economic, social and technological constraints. MEDEAS models typically run from 1995 to 2050, although the simulation horizon can be extended to 2100 when they focus on long-term strategic sustainability analysis. MEDEAS-W is based on the principles of biophysical and ecological economics, which assume that the availability of final energy acts as a limiting factor in the economic process. Energy intensities (defined as the ratio of the final energy spent by each economic sector divided by the economic output of that sector) evolve over time due to technological progress. Furthermore, the scarcity of each type of final energy stimulates the substitution of inter-final energy; however, if these substitutions are not sufficient, the economic process is limited to the amount of final energy available.128 The economy adapts to the most limiting final energy follow the ecosystem analogy (Liebig's law of minimum) that growth is not dictated by the total resources available, but by the scarcest resource. MEDEAS-W is the global aggregated version and is structured in nine main modules, economics, energy demand, energy availability, energy infrastructure and rate of return, materials, land use, water, climate and finally social and environmental impacts.
+The demand of materials in MEDEAS comes from two sides:52
+(1) Bottom-up estimation of materials from variable renewables (solar PV, solar CSP, wind onshore, wind offshore and EV batteries) and electric batteries; altogether grouped as LCTs.
+(2) Regression over GDP for the rest of the economy. Given the lack of data of material intensities associated with the WIOD sectors, a stylized approach was applied in order to estimate the consumption of materials by the rest of the economy acknowledging that there is a close relationship between economic activity and material consumption in the current socio-economical industrial system (the model has been recalibrated to avoid double-counting of materials used in electrified transport). MEDEAS then back-calculates demand to be extracted considering the recycled fraction. In this work, regressions for Co and graphite flakes have been incorporated to the model.
+Finally, MEDEAS-W compares the total primary demand for materials extracted from mines with the estimated level of their geological availability (reserves and resources). In this way an estimate of material shortages is calculated, but it does not constrain economic activities (contrary to energy shortages) due to the much lower robustness of the demand estimate as well as of the data on material availability. Note that in the standard version of MEDEAS-W the recycling rate targets of materials are given in recycling content (RC), while thanks to the improvements done in this work in order to represent also the stock of materials of the rest of the economy (cf. Section 2.5.3), the recycling rate targets here will be expressed in a more realistic way of end-of-life (EOL) and the RC will be hence endogenous.
+
+
+2.5.2. Transport modelling in the MEDEAS-World model. 
+Transport is modelled in great detail in the MEDEAS-W,129 which makes it possible to simulate transition policies based on the replacement of liquid fuel vehicles by other types of vehicles and fuel, as well as the possibility of a modal shift towards light electric vehicles and demand management policies. These policies are applied to households and freight transport.
+The types of vehicles and fuels modelled in MEDEAS-W for household transport policies are: 4-wheeled liquid-fuelled, electric, hybrid and natural gas vehicles; and 2-wheeled electric and liquid-fuelled vehicles.
+The vehicles considered for the freight transport sector are light vehicles in the same categories as domestic 4-wheelers; liquid-fuel, gas and hybrid vehicles are considered for heavy vehicles; liquid-fuel, gas, electric and hybrid vehicles for buses; and trains powered by liquids and electricity.
+The user can set policy objectives in terms of target shares for each type of vehicle and fuel in a target year. The model translates these shares into changes in the corresponding final energy intensities of households and inland transport (linear evolution over time) using the derivative of intensities.
+Demand-oriented policies imply a restructuring of production in the various sectors which is captured by the model.129
+
+
+2.5.3. Submodule of material requirements of transportation. 
+A new submodule dedicated to the material requirements of transport has been developed and integrated within the IAM MEDEAS-World. This submodule includes several features:
+• Material intensities and technical performance factors per transport technology, as covered in previous sections. These intensities are combined with the new infrastructures (EV batteries, chargers, catenaries, etc.) put in operation dynamically computed by the model in order to obtain the total material demand by transportation and other sectors.
+• The recycling rate EOL determines which amount of the demand is covered by primary extraction.
+• Modelling of the stocks of materials in use for the rest of the economy: these data are extremely scarce and, in many cases, inexistent. For the sake of simplicity, we decided to take a stylized approach with the objective of capturing rather magnitude orders which could allow us to estimate approximate indicators of material scarcity. Initial stocks for the year 1995 when the model is initialized were taken from the WORLD7 model130 and then an average residence time of 40 years in the economy was assumed for all materials taking as average reference data existing in the literature.131
+• EV battery sub-technology allocation depending on material scarcities and ESOIs.
+The consistency in material accounting when replacing ICEVs by EVs during the simulations is ensured since we have assumed that all common materials demanded by the two types of vehicles are the same (which is embedded in the demand of the rest of the system's economy), the transportation module accounting just for the net demand increase of materials driven by EVs. The analysis presented in this paper is a sectoral study focusing on the transition of the transportation sector. Of course, in other sectors there will be different dynamics and materials substitution options which are beyond the scope of this paper.
+The modelling of the share of EV battery sub-technologies globally is a quite complex task. First, regional heterogeneities resulting from the differentiated behaviour of regional economic agents exist in EV markets. Partly, these are the result of patents for some technologies, e.g., NCA batteries are owned by Tesla and therefore this company will decide in which markets they should be deployed or not. A similar situation happens for Chinese companies such as BYD and CATL, which translates into the fact that the Chinese market is currently dominated by LFP batteries, the USA market by NCA batteries and the EU market by NMC batteries. Secondly, in such a dynamic and innovative market technical parameters are key: it should be noted that LMO batteries, which were dominant a decade ago, have been outperformed by new sub-technologies and are currently out of the market of newly sold vehicles. LFP batteries do not have such a poor performance as LMO batteries but they are far from NCA and NMC batteries and they also are significantly more heavy. Finally, material availability will be a third relevant factor: in the case that some critical materials may be affected by supply bottlenecks those batteries using them would be less attractive than other existing alternatives (these being other EV battery sub-technologies or in a broader sense other mobility options). In this work we aim at capturing the aforementioned second and third factors. Despite the impossibility to capture regional heterogeneities by the global-aggregated model applied in this work, the inherent uncertainty of predicting private companies’ business strategies should also be acknowledged. Hence, our results must be interpreted in the way that all sub-technologies would ultimately spread along the globe without significant restrictions.
+The MEDEAS-W modelling approach acknowledges that energy and material prices are subject to multiple influences (institutional framework, oligopolistic market structure, etc.), which prevent perfect competition from happening in both the short and long-term.132,133 And in the case of metals, given that most are extracted as co-products in multi-output processes individual price dynamics do not work well to modulate extraction;134 in fact, no correlation has been found between market prices and geological scarcity for many materials.135 And for the case of batteries, it has been showed that materials make a very significant part of both the monetary and energetic cost of the manufacturing of EV batteries.32,136 Hence, in this work, we use instead two biophysical factors as drivers of the EV battery sub-technologies allocation function: (i) the ESOI per battery which captures several storage attributes like efficiency or energy density in its denominator, but also the energy investments in its denominator,54 and (ii) a material scarcity indicator for each battery penalizing those batteries using more materials which are more depleted taking as reference the current levels of reserves and resources.
+To allocate the EV battery sub-technologies we apply the Modified Logit Allocation function (MLA)137 which is a modification of the standard logit allocation138,139 which, instead of computing shares on the basis of differences in the choice indicator, uses ratios. The MLA represents better markets with low inertia such as novel technology products, in our case, batteries. Or in other words, it represents the effect that worse performing technologies will lose market share more rapidly than they would in the standard Logit case. These choice functions are part of a family of that assume that the fitness of a choice alternative is a sum of two components, one determined entirely by the choice indicator and another determined by factors not captured in the model. This latter component is assumed to be random with some specified distribution. Eqn (5) shows the equation used to dynamically compute the share per type of EV battery (Si) over time using the ESOIdynst of a private 4-wheeler and the material abundance indicator per battery (MAB) over time as drivers: (5)where
+
+i: 1,…,N = 5, the five types of EV battery sub-technologies: LMO, NMC622, NMC811, NCA & LFP.
+
+α
+
+i
+ is the share-weight parameter, i.e., represents the current weight of inertia of the different batteries on the market. Given the lack of disaggregated data per EV battery technology over time at the global level, and also not to exogenously penalize the LMO technology which could act as a back-stop technology in the future in the case that materials (Ni and Co) required by the other more performant technologies could become too scarce. Hence, we set αi = 1/5 for all batteries.
+
+β is the logit coefficient and it determines how large a cost difference is needed to produce a given difference in the market share. Given that β > 0 favors higher values of the indicators, we apply β = 3.
+ESOI(t)dynst,i is the dynamic standard ESOI per battery i for a private 4-wheeler computed over the lifetime from a static perspective. We consider the static indicator as a better indicator to inform investments in the medium and long-term. For the sake of simplicity, we use as a proxy for the allocation of types of batteries for all modes of transport the differences in the ESOIdyn for EV 4-wheeled vehicles.
+MABi is the material abundance indicator per battery i. In order to compute it, three steps are necessary: (i) define an indicator of scarcity for each material m (MSm), (ii) compute an indicator of material scarcity per battery i (MSBi) and (iii) invert the previous indicator in order to compute an indicator of material abundance per battery i (MABi) which can properly feed the allocation function.
+MSm for each material m spans (0; 1) and is obtained comparing the cumulated extraction over time with the remaining reserves, remaining resources and the annual recycled flows as defined by eqn (6). Basically, we build the MS indicator in a way that it is equal to zero if there are still remaining reserves below the ground, and equal to 1 when the total amount of resources below the ground has been depleted, assuming a linear trend in between: (6)The material scarcity indicator per battery i (MSBi) is obtained by weighting the indicator of scarcity for each material MSm by the relative demand of material m by battery i with relation to the demand of this material by the 5 types of batteries (mrm,i) (see eqn (7)). This indicator also spans (0; 1) and has the property that  when there is any MSm > 0. Eqn (8) shows how mrm,i is calculated as the ratio between the mass of each material for each battery (MRm,i) with relation to the mass of this material required by the 5 types of battery. (7) (8)where M represents the total number of materials composing each battery.
+Finally, the material scarcity indicator per battery is transformed into an abundance indicator (see eqn (9)) (which we normalize in order to follow the property ) in order to be able to feed the allocation function (eqn (5)). This indicator reaches its maximum value 1 for a given battery when no material required by this battery has surpassed the remaining reserves, and will be 0 when for all materials the cumulated extraction surpasses the resources. (9)Fig. 3 shows a stock and flow diagram representing an overview of the modelling of the material requirements of transportation within the full model, including the allocation of EV battery sub-technologies. The system is divided into three main subsystems, each of a different colour along with a few variables common to all 3 systems (in black); the green subsystem deals with the demand and material recycling of the batteries of EV and of the variable renewable energy technologies represented in MEDEAS-W (solar, wind and photovoltaic), estimated as a function of the dynamic capacities being installed in the model and the material intensities (kg MW−1) and technical performance parameters; the purple subsystem deals with the demand and material stock of the rest of the economy which is estimated in a similar way but using instead monetary material intensities in terms of kg per $ and the GDP; and finally, the orange subsystem represents the dynamic allocation of EV batteries having as main inputs the ESOIdyn of the different types of batteries, the material demand of each battery and an indicator of material scarcity.
+
+3. Scenarios
+Four global decarbonisation transport scenarios have been simulated, designed and documented in detail in De Blas et al.,24 seeking to analyse the main dynamics of material requirements of global transport Targeting a 80% GHG reduction by 2050. For the sake of simplicity, the rest of the model follows current trends. The four simulated scenarios are:
+(1) Expected EV trends: in this scenario the target percentage of each vehicle type in 2050 is determined by the observed trends. The evolution of electrified transport up to 2050 is estimated by extrapolating past and current observed trends.
+(2) High EV: this is a hypothetical scenario of very high electrification in land transport. By 2050, it is assumed that all personal cars, buses and motorcycles, as well as light duty vehicles, will be replaced by battery electric vehicles and that 80% of heavy vehicles will be hybrid. This scenario does not pretend to be realistic, but serves as an example of extreme electrification with no changes in the cultural patterns of transportation.
+(3) E-bike: this scenario promotes personal mobility mainly based on very light electric vehicles. Most personal cars are replaced by 2-wheeled electric vehicles (60%), electric bicycles (20%) and non-motorized modes (8%). Light-duty vehicles shift to electricity. Heavy truck vehicles are still based on liquid fuels due to the limitations to generalize heavy batteries on a large scale, but a modal shift of ICE heavy trucks to electric rail of 30% is assumed, so the share of freight transportation activity covered by electric rail increases from current 30–60% by 2050.
+(4) Degrowth: this scenario meets the objectives of decarbonisation (−80% GHG emissions by 2050) and adaptation to peak oil by the reduction in the overall transportation passenger and freight demand for more affluent people (who concentrate today most of the transportation demand globally), combined with a modal shift of private transport to light and public modes and train for freight.20–23 The target share of vehicles by 2050 is the same as in the E-bike scenario but household transport demand is strongly reduced due to assumed deep changes in the cultural mobility patterns (average reduction of 60% for inland and water transport, and 85% for aviation vs. 2020 households demand). A modal shift from heavy trucks to railway as in scenario E-bike is also implemented. This scenario assumes the context of a future where serious and coordinated efforts are taken to change the present growth-oriented economy towards the one that fulfils human needs without the necessity for continuous growth, such as the one defended by the Degrowth scientific paradigm.15–18 This scenario targets a steady state economy of $5000 on global average per capita by 2050. Changes in urban planning are not modelled given the global scale of the applied model, which does not explicitly represent cities and the structure of urban areas.
+In addition, in the three, high EV, E-bike and Degrowth scenarios it is assumed that the current EOL recycling rates (cf.Table 10) are doubled in 2050 with two exceptions; for those that are currently below 10%, a target of 30% is established; for those that exceed 85%, a maximum limit has been set at this same value. We assume a mix of recycling technologies (cf. Appendix B) which altogether would deliver the target recycling rates for each metal.
+The main assumptions for the four scenarios are shown in Table 11, cf. also Table 14 in Appendix A for the list of main scenario inputs shared by all simulated scenarios.
+Table 11 Scenario inputs and assumptions (targets correspond to the year 2050). Parametrization as in De Blas et al.,24 except for those items marked with “*”. The shares represent the percentage of the number of vehicles
+
+
+
+
+
+
+Present (2015)
+Expected EV trends
+EV High
+E-bike
+Degrowth
+
+
+
+
+
+a Historical trends (1979–2014).
+b Uncertainty analysis shows that choosing between 10 and 21% for the lithium initial EOL recycling rate does not significantly alter the results.
+c Current 6500 1995 US$ per capita.
+
+
+
+
+
+Household vehicles (Share, %)
+4-wheelers
+Liquids 4w
+65.0%
+15.0%
+0.0%
+2.2%
+2.2%
+
+
+Electric 4w
+0.5%
+35.0%
+66.0%
+9.6%
+9.6%
+
+
+Hybrid 4w
+0.1%
+10.0%
+0.0%
+0.1%
+0.1%
+
+
+Gas 4w
+1.2%
+6.0%
+0.0%
+0.1%
+0.1%
+
+
+2-wheelers
+Liquids 2w
+23.7%
+6.8%
+0.0%
+0.0%
+0.0%
+
+
+electric 2w
+9.5%
+27.2%
+34.0%
+60.0%
+60.0%
+
+
+Additional substitutes
+e-Bikes
+0.0%
+0.0%
+0.0%
+20.0%
+20.0%
+
+
+Non-motorized
+0.0%
+0.0%
+0.0%
+8.0%
+8.0%
+
+
+Inland transport heavy vehicles (Share, %)
+Liquids HV
+99.8%
+99.8%
+20.0%
+98.0%
+98.0%
+
+
+Hybrid HV
+0.1%
+0.1%
+80.0%
+1.0%
+1.0%
+
+
+Gas HV
+0.1%
+0.1%
+0.0%
+1.0%
+1.0%
+
+
+Inland transport light vehicles (Share, %)
+Liquids LV
+98.9%
+23.0%
+0.0%
+18.0%
+18.0%
+
+
+Electric LV
+0.1%
+53.0%
+100.0%
+80.0%
+80.0%
+
+
+Hybrid LV
+0.1%
+15.0%
+0.0%
+1.0%
+1.0%
+
+
+Gas LV
+0.9%
+9.0%
+0.0%
+1.0%
+1.0%
+
+
+Buses (Share, %)
+Liquids buses
+100.0%
+23.0%
+0.0%
+19.0%
+19.0%
+
+
+Electric buses
+0.0%
+53.0%
+100.0%
+40.0%
+40.0%
+
+
+Hybrid buses
+0.0%
+15.0%
+0.0%
+40.0%
+40.0%
+
+
+Gas buses
+0.0%
+9.0%
+0.0%
+1.0%
+1.0%
+
+
+Trains (Share, %)
+Liquids train
+50.0%
+50.0%
+0.0%
+0.0%
+0.0%
+
+
+Electric train
+50.0%
+50.0%
+100.0%
+100.0%
+100.0%
+
+
+Modal shift HV to train (pct. increase in trains)
+—
+0.0%
+0.0%
+30.0%
+30.0%
+
+
+Use of EV batteries for electricity system storage*
+0%
+0%
+0%
+0%
+0%
+
+
+
+
+
+
+Recycling rate (EOL) of materials (%)
+Aluminium (Al)
+56%
+56%
+85%
+85%
+85%
+
+
+Cobalt (Co)
+32%
+32%
+64%
+64%
+64%
+
+
+Copper (Cu)
+48%
+48%
+85%
+85%
+85%
+
+
+Graphite
+0%
+0%
+30%
+30%
+30%
+
+
+Lithium (Li)
+15%b
+15%
+30%
+30%
+30%
+
+
+Manganese (Mn)
+53%
+53%
+85%
+85%
+85%
+
+
+Nickel (Ni)
+60%
+60%
+85%
+85%
+85%
+
+
+GDPpc planned (annual growth)
+1.4% per yeara
+1.4% per year
+1.4% per year
+1.4% per year
+Steady-state economy at 5000 1995 US$ per capitac
+
+
+Household demand-management (pct vs. 2020 Households demand)
+Inland transport
+—
+NO
+NO
+NO
+−60%
+
+
+Water transport
+—
+NO
+NO
+NO
+−60%
+
+
+Air transport
+—
+NO
+NO
+NO
+−85%
+
+
+
+
+In this study, different to De Blas et al. 2020 parametrization,24 we assume a static lifetime for EV batteries in order to focus here on the ESOI associated with the mobility factor.
+4. Results and discussion
+4.1. Static analysis
+Static results focus on the ESOI of EV batteries. Table 12 shows the considered parameters and the EnUs obtained which are used to compute the ESOI at standard and final level in a static way (over the lifetime) for the EV battery of a 4-wheeler, household private vehicle. Given the sensitivity of the results to the mileage we compute the results for 100000 (CF = 0.16%) and 200000 km (CF = 0.32%), and for CL, EaB&E and machining rate of EV batteries we apply an uncertainty analysis around the central values displayed in Table 12. These mileages are chosen based on the average vehicle usage (in kilometres) per capita in various countries, with Europe at slightly over 10000 kilometres per year and the United States at slightly over 20000 kilometres per year.118,119,140,141 CL varies depending on the charging speed of the EV battery, this charging efficiency usually varies in inverse relation to this speed and more or less losses are produced. EaB&E depends fundamentally on the ambient temperature where the vehicle is located, since the battery must be at a controlled temperature all the time.
+Table 12 Parameters and EnUMr used (including values for the uncertainty analysis) and rest of EnU obtained to feed the calculation of the ESOI of a 4-wheeled household private vehicle. *See tabs, “ESOIstatic 4W-car”, “ESOIstatic Ebus” and “ESOIstatic 4W-taxi” in the ESI, for the results for other types of vehicles
+
+
+
+
+
+
+CF (/1)
+Capacity power (MW·s per year)
+L (years)
+OL % (total battery capacity/hour)
+CL* (%)
+EaB&E* (%)
+
+g (share)
+EnUMr* (MJ k−1 W−1 h−1)
+EnUNew cap (MJ MW−1)
+EnUDecom (MJ MW−1)
+EnUG&S (MJ MW−1)
+EnUTra (ESOIst) (MJ MW−1)
+EnUTra (ESOIfinal) (MJ MW−1)
+
+
+
+
+LMO
+0.0032–0.0016
+3.15 × 107
+10
+0.014
+21.3 ± 10%
+35.4 ± 10%
+0.737
+200 (−50%; +100%)
+6.69 × 105
+9.1 × 104
+2.20 × 105
+3.44 × 104
+1.31 × 105
+
+
+NMC 622
+0.0032–0.0016
+3.15 × 107
+10
+0.014
+21.3 ± 10%
+35.4 ± 10%
+0.737
+200 (−50%; +100%)
+4.24 × 105
+6.65 × 104
+2.20 × 105
+1.69 × 104
+9.63 × 104
+
+
+NMC 811
+0.0032–0.0016
+3.15 × 107
+10
+0.014
+21.3 ± 10%
+35.4 ± 10%
+0.737
+200 (−50%; +100%)
+4.13 × 105
+6.55 × 104
+2.20 × 105
+1.69 × 104
+9.63 × 104
+
+
+NCA
+0.0032–0.0016
+3.15 × 107
+10
+0.014
+21.3 ± 10%
+35.4 ± 10%
+0.737
+200 (−50%; +100%)
+4.00 × 105
+6.41 × 104
+2.20 × 105
+1.67 × 104
+9.60 × 104
+
+
+LFP
+0.0032 –0.0016
+3.15 × 107
+10
+0.014
+21.3 ± 10%
+35.4 ± 10%
+0.737
+200 (−50%; +100%)
+4.30 × 105
+6.71 × 104
+2.20 × 105
+2.31 × 104
+1.09 × 105
+
+
+
+
+The contribution from the processing of the materials to manufacture the battery (EnUNewcap) is the largest component of the denominator with between 400 GJ MW−1 for NCA and 669 GJ MW−1 for the LMO (in the “EnU” tab of the ESI† you can also see the executed calculations and the contribution to the total embodied energy of each battery material in the graphical form), followed by the charger and the connection of the grid (EnUG&S), relevant for the ESOIfinal, which amount to 220 GJ MW−1. This reflects in around a doubler EnU for the transportation of materials at the final (109 GJ MW−1) than at the standard boundary level. The EnUs related to machining, decommissioning and transportation of materials (for the standard boundary) are around one order of magnitude below these but still far from negligible.
+• Table 13 shows the obtained ESOIst and ESOIfinal for two different mileages (200000 and 100000 km) for each type of EV battery. There are a number of remarks which can be extracted from these results: as expected, mileage has a substantial impact on the results since considering 100000 instead of 200000 km means halving the numerator of the ESOI.
+Table 13 Static ESOIst and ESOIfinal over the lifetime for two different mileages (200000 and 100000 km) for each type of EV battery for a 4-wheeled household private vehicle
+
+
+
+
+
+
+Mileage (km)
+LMO
+NMC 622
+NMC 811
+NCA
+LFP
+
+
+
+
+ESOIst
+200000
+1.1–1.5
+1.4–2.2
+1.4–2.2
+1.4–2.3
+1.4–2.1
+
+
+ESOIfinal
+200000
+0.4–0.7
+0.4–0.9
+0.4–0.9
+0.4–0.9
+0.4-0.9
+
+
+ESOIst
+100000
+0.5–0.7
+0.7–1.1
+0.7–1.1
+0.7–1.1
+0.7–1
+
+
+ESOIfinal
+100000
+0.2–0.4
+0.2–0.5
+0.2–0.5
+0.2–0.5
+0.2–0.5
+
+
+
+
+• As indicated above by the high contribution of EnUG&S, there is a substantial difference between the standard and final level of ESOI.
+• Even with the highest level of mileage considered, the ESOI levels are very modest for ESOIst (ranging 1.1–2.3:1 depending on the technology) and lower than 1 for the ESOIfinal (ranging 0.2–0.9:1). The latter indicates that from a metabolic point of view, the system of batteries + grid charger would require more energy to be manufactured than it would deliver in its full lifetime in the electric vehicles.
+• LMO stands out as the worse performing technology, with an ESOIst value of 1.1–1.5:1 and a ESOIfinal value of 0.4–0.7:1 (for the case where mileage is the highest 200000 km), while the other batteries are in the range of 1.4–2.3:1 for ESOIst and 0.4–0.9:1 for the ESOIfinal. This matches well with the overrun of LMO by the modern technologies in the EV battery market.
+• Uncertainty analysis performed on CL, EaB&E and EV batteries machining rate (cf. tab “ESOIstatic 4W-car” in the ESI†) shows that the uncertainty around these factors do not alter these conclusions.
+• The results for ESOIst are over 1 magnitude lower than the only previous estimate known in the literature of 32:1.54
+Regarding ESOI, Barnhart et al.54 obtained an ESOIst (primary/final energy) value of 10:1 for a LCO battery which we recall that cannot be used in electric vehicles due to their thermal instability. Anyway, if we apply the same g used in our work, we would obtain an ESOIst of 13.5:1 (final/final energy), which is quite high with respect to that obtained in the present study (with values between 0.5:1 and 2.3:1). The main reason for this discrepancy is that the denominator of their ESOI is around 4× lower than the ones we obtain here.
+Finally, in this work we have focused on a 4-wheeled household private vehicle; however, using this same type of vehicle as car sharing or a taxi, the ESOI would increase with mileage: e.g., for 300 and 400000 km an ESOIfinal of 0.5–1:1 and 0.6-1.7:1 would be obtained, respectively (only the OLs alter the linearity, as these losses depend on time and not directly on mileage, as discussed in Section 2.4, cf. “ESOIstatic 4W-car” tab in the ESI†). Linearity would not be maintained in the case of considering other types of EV, e.g., for an electric urban bus, considering the technical parameters of the model IVECO Bus e-way,142,143 an ESOIfinal values of 0.7–1.8:1 and 0.8–2.5:1 would be obtained for this same range of mileage 300 to 400000 km (for details, cf.Fig. 4 and tabs “ESOIstatic 4W-car”, “ESOIstatic Ebus” and “ESOIstatic 4W-taxi” in the ESI†).
+ Fig. 4  ESOI (standard and final) levels for a 4-wheeler using a NMC622 battery depending on its mileage. 
+The ESI† in the excel format allows the readers to adjust parameters by themselves to compute the ESOI of different types of vehicles.
+4.2. Dynamic analysis
+This section focuses on the dynamic results when running the scenarios described in section 3 with the submodule of material requirements of transportation fully operational within MEDEAS-W. Given that material scarcity does not feedback in MEDEAS-W (i.e., demand is not affected by supply constraints), we refer to de Blas et al.24 for the general results for each scenario in terms of macroeconomy, energy consumption and GHG emissions. Here, we focus on the specific results for the transportation sector including all the technologies covered in Methods: EV batteries and their grids and chargers, copper in EV and railway catenaries. Materials availability including the demand from low carbon technologies and the rest of the economy.
+
+4.2.1. ESOI, material scarcity and EV batteries share. 
+
+Fig. 5 shows the battery power put into service in EVs annually (TW) by scenario. Resulting from the strong policies enforced in 2020 the capacity installed in all scenarios increases strongly from current ∼0.7 TW and reaching by 2050 from almost 5 TW in the Degrowth scenario, ∼15 TW for E-bike and EV trends, and 40 TW for EV high. This means increasing ∼7× to 60× current EV battery power levels.
+ Fig. 5  Battery power put into service in EVs annually (TW/year) by scenario, for more details cf. de Blas et al.24 
+The number of batteries put into service by technology depends on the evolution of their ESOIdyn as well as on material scarcities (cf.eqn (5)).
+The ESOIdynst ranges 1.2–2.1:1 for all scenarios, types of batteries and period of time. The only dynamic parameter for ESOIdyn with relation to the static analysis is materials’ EOL recycling rates, which has a positive impact on the ESOIdyn, given that recycled materials have a lower embodied energy than virgin ones. The EOL recycling rates drive improvements in the ESOIdynst of ∼12–20% in the 2020–2050 period depending on the scenario and type of battery (see Fig. 6). The highest increases are obtained in the Degrowth scenario as a consequence of the higher RC recycling rates obtained (cf. Section 4.2.2). The improvement in the ESOIdynst levels is quite homogenous for all EV battery technologies within each scenario, so this dynamic factor does not significantly affect the allocation function of the EV batteries.
+Expanding the boundaries to the final level reduces the obtained range for all scenarios, types of batteries and period of time of ESOIdyn to 0.5–0.8:1. The EOL recycling rates drive a higher increase of this ratio during the 2020–2050 period (20–30%) which however does not allow any of the studied combinations to reach the 1:1 threshold. The leap after 2020 is related to the change introduced in the mix of electric vehicles via scenario inputs and their different battery sizes and charging assumptions (cf. de Blas et al.24 for details): following historical data, until 2020, the electric motorcycles (2 wheelers) dominate at world level. However, from that year following the scenario assumptions shown in Table 11, the number of households 4 wheelers and inland transport (freight and bus) electric vehicles is projected to strongly increase in all scenarios.
+ Fig. 6  ESOIdyn variation over time by EV battery for each scenario: ESOIdynst (panels a–d) and ESOIdynfinal (panels e–h). 
+Material availability includes the demand from low carbon technologies and the rest of the economy. Fig. 7 shows which are the materials whose scarcity affects the allocation of EV batteries: the cumulative extraction of nickel reaches the level of current resources in all simulations before 2050, and as soon as 2030 for the EV high scenario. Manganese becomes critical in all scenarios excepting Degrowth by 2050, and the cumulative extraction of lithium surpasses the level of current resources before 2050 for EV high. For copper, cobalt and graphite flakes, the cumulative extraction for all scenarios is between current reserves and resources.
+ Fig. 7  Material scarcity indicator for each simulation for the relevant materials in EV batteries. Materials availability include the demand from low carbon technologies and the rest of the economy. 
+The evolution of the EV battery technology share over time from 2015 for the different types of batteries and scenarios evaluated in the analysis is shown in Fig. 8. Given the lack of available data until 2015 the allocation mechanism starts to operate that year. The results show certain trends common to all scenarios. A similar dynamics between the different technologies is observed in all simulations. In the first years, the dominant technologies are NCA and NMC. However, when nickel and to a lower extent cobalt start to become scarcer, the share of LFP increases very fast. The LMO battery represents the lowest share in the market during all period for all simulations, reaching shares in 2050 between 3% and 6%. The main driver is its low ESOIdyn, and from 2030 the scarcity of manganese hampers its usage.
+ Fig. 8  Market share of EV batteries over time by scenario. 
+The LFP battery is the dominant technology during the studied period in all scenarios (and notably in Degrowth), reaching market share values between 28% and 35% in 2050. This is mainly due to the fact that it has a reasonably good ESOIdyn with relation to the other subtechnologies, and it is not dependent on the most critical materials (nickel, cobalt and manganese) as it is the case for the NMC and NCA. In second place, follows the NCA battery, reaching market with shares between 22% and 26% by 2050, and notably in the EV high scenario it reaches similar market shares than the LFP. The market share of the NMC battery ranges slightly lower between 18% and 22% in 2050. The LFP market share decreases in all simulations due to the fact that common materials become critical to all EV technologies (lithium, graphite) but the ESOIdyn of LFP is lower.
+
+
+4.2.2. RC recycling rates. 
+It must be noted that the relevant recycling rate affecting EnUs is the RC obtained endogenously in the simulations, showed in Fig. 9 (and not the EOL targeted in the scenario setting, cf.Table 11). The RC varies significantly as both the material demand and the amount of recycled material available at that time, both at the full economy level, substantially vary for each scenario. It is a noteworthy fact that even in the case of achieving high material EOL recycling target levels, these do not forcefully imply high recycling shares in the manufactured products (RC) due to the combined effect of continuous demand increase and the delay effect of the stock of materials trapped in-use. For example, for manganese, in 2050, the RC level for the scenario E-Bike and EV High is ∼50%, while in the scenario Degrowth is 70%, but the EOL recycling rate set for the 2050 target year is 85%.
+ Fig. 9  Recycling rate (RC) over time for a selection of materials. Comparison with the target EOL recycling rate for 2050 set in the policy-action simulations EV High, E-bike and Degrowth (in EV trends current EOL recycling rates are maintained). 
+Here we have assumed optimistic target EOL recycling rates for EV materials; however, the achievable potential of recycling is very uncertain (we assume a mix of recycling technologies (cf. Appendix B) which altogether would deliver the target recycling rates for each metal). Today, most materials are recycled very far from the thermodynamic maximum (and also quite far from the technical maximum,107,108,110–114 see Appendix B), and many materials assessed to be potentially critical are recycled at extremely low rates given that recycling generally implies a higher degree of technical complexity than using virgin raw materials directly.108,114 Hence, different factors are at play, including: lack of interest for recycling while raw material prices remain low which translates into lack of research and setting related business models, the fact that design tends to optimize cost and performance rather than recycling, the high energy expenditure in recycling certain products,144–146 technical complexity or the necessary initial investments to set-up recycling plants (as it is the case for EV batteries110,112). In this context, different organizations and institutions are promoting “Circular Economy” policies with the aim to minimize primary extraction,33,34,147,148 which seek to reduce the incorporation of virgin materials in the productive processes, turning the productive processes into different loops in which as few materials as possible enter or leave. However, economic and thermodynamic limits constrain its real potential.144
+
+
+4.2.3. Cumulated primary material demand vs current reserves and resources by 2050. 
+The following figures summarize the share of total cumulated primary demand by 2050 (low carbon technologies and rest of economy) for the main materials studied in this work with relation to their reserves (Fig. 10) and resources (Fig. 11), respectively, differentiating between the different technologies of transport electrification and the rest of the economy.
+ Fig. 10  Cumulated primary material demand until 2050 with relation to current reserves in the 4 scenarios. See data in tab “Material Requirements” in the ESI.† 
+ Fig. 11  Cumulated primary material demand until 2050 with relation to current resources in the 4 scenarios. See data in tab “Material Requirements” in the ESI.† 
+Six (copper, cobalt, lithium, manganese, nickel and graphite) out of the seven materials (except aluminium) analysed in more detail in this work surpass in at least one of the scenarios the level of current reserves. The demand from the rest of the economy is fairly similar (except for the Degrowth scenario where significantly lower levels are obtained). Copper has a high demand from the rest of the economy (105%–132% cumulated extraction 2050 vs. reserves), but also has a significant demand from EV batteries (6%–36%), the rest of components of the EV vehicles (1.5%–11%) and its charging and grid infrastructure (1%–9%) as well as from railway (2–9%). Cobalt is in high demand because of the manufacture of EV batteries (54%–356%) with the exception of the LFP battery that does not use this material; while its demand from the rest of the economy is generally lower (96%–125%). Lithium has a very high demand from all EV batteries (51%–300%) and a lower demand from the rest of the economy (1.4%), which may be explained by the very large difference in the weight of EV batteries and electronic appliances. The cumulated extraction of manganese for LMO and NMC batteries represents 2%–10% of the reserves, which is significantly lower than the demand of this material by the rest of the economy (136%–183%). Nickel has a high demand from NMC and NCA batteries (20%–138%) as well as from the rest of the economy (147%–185%). Flake graphite has a high demand coming from the rest of the economy (108%–140%) but this is not comparable to the demand coming from EV batteries (260%–1500%). However, it is important to note that it is a material that can also be obtained artificially from other more abundant types of carbon, but this is carried out in a process that involves a great expenditure of energy.149,150 In the case of aluminium, the requirement of materials from the rest of the economy stands out (11–14% depending on the scenario), with the requirement of batteries (0.3–2%) having little influence.
+With relation to current resources, only lithium, manganese and nickel cumulated primary extraction by 2050 surpass in at least one of the studied scenarios the level of current resources. Again, the demand from the rest of the economy is fairly similar (except for the Degrowth scenario where lower levels are obtained). With relation to the different alternative scenarios, the High EV is, as expected, the one putting more pressure on material resources. Cumulated primary extraction by 2050 of copper, cobalt, lithium, manganese, nickel and flake graphite surpass current resources.
+By scenarios, the most material intensive is the High EV, while the Degrowth scenario is the one putting less pressure on material endowments, the e-bike scenario standing somewhat in the middle. Charging infrastructure (chargers and additional grids), railroads and the copper used in electric vehicles can add up to ∼25% of the copper reserves requirement in the most unfavourable scenario (High EV) and 7% in the most favourable (Degrowth).
+Comparing our results with the literature, Valero et al.38 report in their results a depletion of almost all the materials evaluated with respect to the reserves, with a cumulative demand for the year 2050 for cobalt, nickel, manganese and copper that slightly exceeds 100%, lithium exceeds a demand of 200% and the only material that does not suffer a premature depletion is aluminium with a demand of 33%; Junne et al.39 show a high demand (over 400%) for cobalt and lithium with respect to their reserves by 2050; Tokimatsu et al.40 state a cumulative demand by electric vehicles higher than current reserves for lithium, cobalt, nickel and manganese in the year 2100; García Olivares et al.41 obtained demands that guarantee availability with respect to copper reserves for the next 40 years, lithium for the next 150 years and nickel for the next 50 years, taking only transport demand into account; Mangerber et al.42 present optimistic results in relation to the rest of the literature with cumulative demands with respect to reserves for 2060 of 4% for copper, 51% for lithium and 11% for nickel. Finally, Moreau et al.43 forecast material depletion for cobalt reserves between 2025 and 2050, for lithium between 2065 and 2360, for manganese around 2060 and for nickel between 2035 and 2045. Capellán-Pérez et al.52 state the cumulative extraction between 2015 and 2060 of the whole system with respect to reserves, obtaining an extraction of around 10% for aluminium, over 50% for lithium, around 100% for copper, over 115% for nickel and over 150% for manganese.
+
+4.3. Scope of implications
+This section includes implications in terms of ESOI, material availability, GHG emissions of EV vs ICEV as well as a list of limitations and further work which could address them.
+
+4.3.1 ESOI. 
+Our analysis represents, to the best of our knowledge, the first estimate of the ESOI of electric vehicle batteries in the literature. In this work, we have focused on domestic 4-wheeled vehicles, which is the main mode of transport in many countries, especially in wealthier ones.151 However, in reality, the ESOI depends on the type of electric battery and vehicle, as well as its use, as illustrated for the case of car sharing and city buses.
+Estimated ESOIst values for batteries in 4-wheeled electric vehicles range 1.1–2.3:1 and are lower than 1:1 if the boundaries of the analysis are extended to include networks and chargers (ESOIfinal). In the case of taxis and car sharing, ESOIst range of 1.6–4.6:1 and ESOIfinal range of 0.5–1.7:1 have been estimated, respectively. Finally, for city buses an ESOIst of 2.3–6.4:1 and an ESOIfinal of 0.7–2.5:1 have been obtained (cf. ESI†). The net energy results show two main insights: first, batteries from EVs reach their life time performing a much lower number of cycles than they could technically perform, particularly in the case of private vehicles; second, their use implies high energy losses. Despite the high efficiency of electric motors, the vehicle loses significant amounts of energy in transporting the battery itself, through self-discharge, auxiliary systems or the charging process. Overall losses would increase if expanding the boundary of the analysis and accounting also for the electric power transmission and distribution losses (TDL) (an aspect that is dealt in detail in Section 4.3.3). The current market demands electrified vehicles with as long as possible autonomy,152 seeking to avoid recharging as much as possible due to the reduced existing infrastructure153 and the long recharging time. This has led to the installation of large batteries whose day-to-day use would be less for the bulk of the population,118,119 leading to an underutilisation of these systems and resulting in greater losses corresponding to acclimatising and dragging a large battery. This, together with the need to install a large charging infrastructure,154,155 the energy losses of electric transport and the difficulty of manufacturing and obtaining raw materials for batteries,156 significantly reduces the energy and monetary profitability of this type of vehicle. Some manufacturers157 have already realised this and are reducing the size of their batteries by focusing the use of electric vehicles on the daily commute of a typical person, seeking to increase its use by reducing its associated losses.
+From the point of view of net energy analysis, the relevant amount of energy is the net energy which can be enjoyed by the society, after the energy inputs to make the energy system work have been discounted.73 This so-called discretionary energy is available to produce goods and services. Given that these batteries are used for mobility and not strictly for system storage, the metabolic implications of the ESOI are, in this case, not so straightforward as it is the case for EROI or grid system storage.73 In this sense, our results show that it would be recommendable to favor those EVs transport modes with higher ESOI, such as shared and public transportation. Overall, switching to more energy-intensive mobility services would decrease the amount of net energy for other discretionary uses of the society, which would go in the direction of hampering well-being. A robust comparison with fossil-fuel mobility technologies is beyond the scope of the present paper since it should compare the ESOI extended in end-use terms including also the fuel tank and internal combustion engine of an ICEV, the motor of an EV together with the battery,158 as well as consider that the vehicle cycle energy conversion efficiency (i.e., the ratio of forward tractive energy required to move the vehicle over a drive cycle to the fuel energy consumed over that cycle) of EVs is typically assessed to be 2–3x better than ICEVs. In this sense, EVs require more up-front energy in the phase of manufacturing but less supply grid-to-wheel energy than its ICEVs counterparts during the operation phase (which from a dynamic perspective is a similar situation to RES vs fossil fuel-based generation).52 However, this study represents a first step in order to be able to incorporate this factor into broader EROI-system analyses, which would allow such issues as the potential of using the EV batteries as an electricity system back-up (vehicle-to-grid)159,160 and second-use of batteries for utility-scale batteries161 to be analysed. Vehicle-to-grid would allow the CF of EV batteries to be increased, and hence contribute to increasing their ESOI at the expense of faster degradation. Second-use would also tend to increase the ESOI without the issues related to worsening technical performance, but it would contribute to the delay in the availability of secondary raw materials.52
+
+
+4.3.2 Material availability. 
+With relation to the method applied, it must be highlighted that this is a sectoral study which by definition excludes possible substitutions in other sectors. Hence, the results for the total economy obtained should be taken with caution. Moreover, given the uncertainty in the data of reserves and resources MEDEAS considers them static and takes a prudent approach by computing potential material scarcities as “warnings” which are not feed-backed to the demand.44
+In order to shed some light on the contribution of the transportation sector to overall material scarcities, a screening analysis of the material data from EXIOBASE162 has been performed, showing that, for the materials available in that database, the material footprint (final consumption) for transport sectors has ranged ∼5–15% with relation to the total material requirements of the economy globally between 1995 and 2015 (see Appendix C for the details on the method performed and the results per material). Hence, despite transportation will be likely a relevant contributor to the increase in the future demand of several key materials (Co, Li and graphite), for others such as Al, Cu, Mn and Ni material availability will be likely mainly determined by the interaction of the material demand of the whole economy (cf. Section 4.2.3).
+With relation to the obtained results in terms of material requirements, we estimate that the cumulative extraction of copper, cobalt, lithium, manganese, nickel and graphite would exceed current estimated reserves in at least one of the scenarios studied. In this respect, it is worth noting that the flake graphite used in batteries can be manufactured from other, much more common types of graphite, but at a high monetary, energy and environmental cost (not considered here).149,150
+Neither are there any trends in the substitution of the minerals present in batteries beyond the actual change from one type of battery to another.163 This aspect is causing the LFP battery, which is made of more abundant materials in terms of resources and reserves164,165 (which also translates into a lower monetary cost) to be widely used in countries with a large number of electric vehicles such as China166 and has great prospects for the future.167
+Recycling is an important strategy to reduce criticalities, but its effectiveness is limited due to several factors. First, and linked to the very use of the manufactured tools, materials are trapped for long periods of time in the system. Second, as further elaborated in Appendix B, economic and standardisation drawbacks are hampering the most efficient recycling methods in terms of material recovery and environmental friendliness, resulting in a large amount of batteries currently being recycled being subjected to pyrometallurgical recycling processes in Asia.108,111
+Potential material scarcities will be exacerbated by the growth-oriented nature of the current economic paradigm, which tends to increase consumption (and associated natural resources) over time. Degrowth is the scenario that puts the least pressure on material endowments in our simulations, but other literature15–18,168,169 also advocates Degrowth and sharing economy scenarios that seek to reduce facilities, machines and ultimately the demand for systems and resources. While such policies may help to control and reduce mineral demand with respect to the current economic paradigm, even in this case we find that copper, cobalt, manganese and nickel reserves and nickel resources could be exhausted before 2050.
+Lastly, it must be noted that IAMs allow projections and not predictions to be performed. In fact, one of the values of this type of analyses is precisely to allow the anticipation of future material bottlenecks, given that technology development requires time. In this sense, for example, the dozens of publications warning for the potential scarcity of silver in PV37 have likely some responsibility in the current intense race to develop alternative technologies not using it or reducing its use radically.
+
+
+4.3.3 GHG emissions EV vs. ICEV. 
+Reducing urban pollution and mitigating climate change are the main motivations to enforce policies promoting the rapid transformation of the transport sector, today mostly based on the replacement of ICEV by EV. Despite the fact that many ambitious policies in this regard have already been adopted, there is still a controversy in the scientific literature with relation to the GHG footprint of both types of vehicles in the current systems.58
+As the electric motor is much more efficient than the combustion engine and in the electric mix there are sources that do not directly emit CO2, it is generally expected that, in a relatively short time of use, the EV would emit less than the ICEV (reach the break-even point). In fact, most LCA-based studies have estimated EV emissions to be less than ICEV over the lifetime of vehicles and over typical mileages of use.170,171 There is some consensus in LCAs that EV carbon emissions are higher in the manufacturing phase (due to the processing of minerals and materials until the vehicle leaves the factory), especially due to batteries,158,170–172 while in the use phase there is more discussion because emissions depend on case study parameters such as the considered mileage of the vehicle and the electric mix that feeds it. Most studies do not include charging devices and related losses. Although in minority, recent case studies in Lithuania170 (with an electrical mix of relatively low 46.3% fossil) or China173 (with an electrical mix mainly based in coal) give higher emissions with a mileage of 150000 km for the BEV than for the ICEV. Even for the same mileages, there are several factors of difference between the emissions estimated by different studies, although almost systematically the EV emits less than the ICEV in the internal comparisons of each study (cf.Fig. 6 of Del Pero et al.171). In addition, the reviewed studies use criteria for the use phase based on regulations and theoretical values (such as the NEDC – New European Driving Cycle – or the WLTP – World Harmonized Light-duty Vehicle Test Procedure) that are usually lower or much lower than those of the actual consumption under real conditions.174,175 Moreover, the differences may not be symmetric when comparing ICEV with EV, as found by a report comparing real driving conditions of ICEVs and PHEVs in the Swiss canton of Valais, which shows that driving ICEV fuel consumption (and therefore emissions) is on an average 26% higher than expected by the WLTP and 116% higher for the PHEV compared to the WLTP criteria.176 It is also important to note that almost no study extends the system boundaries beyond vehicles, forgetting the necessary infrastructures. Counter examples are the study by Lucas et al.96 (which we have used as a base for our analysis of batteries and their associated infrastructures) or the study by Kawamoto et al.172 (which considers power plants and their transportation networks, but does not consider chargers and their associated infrastructure). Hence, summarizing, the dispersion of results in the literature can be explained by three main factors: dependence on specific case study parameters, uncertainty or lack of technical data (or use of theoretical ones), and different boundaries of the analysis.
+Considering the state-of-the-art, although our work does not focus on the estimation of GHGs, we attempt an estimation of GHG emissions of EVs combining some of the aforementioned studies with our estimates of embedded energy. Even though our system boundary is narrower as it does not include the vehicle and focuses on batteries, it is a more in-depth, current and complete study than the rest of the studies to date on the battery and its associated infrastructures, so it can be used to expand the LCAs that consider only on the vehicle:
+• The study by Lucas et al.96 concludes that the emissions in terms of CO2 eq km−1 associated with infrastructures, although small relative to the total, are several times higher in the EV than in the ICEV, indicating that in the case of the EV these are no longer negligible. In our case study, the energy embedded in the batteries is 400–430 GJ MW−1 (for NCA, NMC or LFP batteries) and in the chargers and cables 220 GJ MW−1, so the latter require an energy of 50–55% compared to the manufacture of the battery.
+• The study by Kawamoto et al.,172 takes into account more parameters than most studies, such as maintenance and associated infrastructures (although still do not consider the chargers, and uses theoretical consumption criteria even lower than WLTP) and uses 5 different regions or countries (Japan, European Union, USA, Australia and China) and different mileages. They find that the BEV emits no less than 75% of the CO2 emissions during its lifecycle than an ICEV, and, in several cases, the BEV emits more CO2 emissions than the ICEV. They find that, depending on the country, BEV vehicles would emit about 30–40 TCO2 in 200000 km, gasoline ICEV 35–50 TCO2 and diesel ICEV 30–35 TCO2. In their analysis they use an average of 177 kgCO2 kW−1 h−1 of emissions from the batteries, which for our 60 kW h batteries would emit about 10.6 TCO2 in their production. If the charger infrastructures were considered, and assuming the same share of emissions with relation to the embedded energy with respect to the battery (50–55% of the 10.6 TCO2), we could then add more than 5 TCO2 to Kawamoto et al.172 estimation so that BEV vehicles would emit about 35–45 TCO2 in 200000 km, similar to or larger than their ICEV counterparts.
+• Volvo (2020)158 recently published a study which compares the same model of electric and combustion vehicle with a mileage of 200000 km that somewhat expands the system boundaries of many studies by including the consumption of its vehicle assembly factories and the transportation of materials, parts, batteries and vehicles, although it does not take into account the infrastructure associated with the battery, suppose that no replacement of the battery is necessary during the mileage and uses a WLTP criterion that we know underestimates consumption compared to the real use. Its result is that the emissions for its ICEV are 58 TCO2 and 54 TCO2 for its EV in a global average electrical mix, and only in a hypothetical 100% renewable mix powered by wind energy (but with the same current manufacturing system) emissions would be 27 TCO2. If the CO2 emissions associated with the infrastructures were added (>5 TCO2), we would again conclude that in the current global mix, an ICEV vehicle does not necessarily emit more, even at 200000 km of mileage, than an EV vehicle of the same model (even more so likely if an extended ESOI is taken into account).
+Therefore, our analysis shows that incorporating more comprehensive material requirements and expanding the boundary of the analysis to include the charging phase, on average, currently EV could be as CO2 intensive or more than its ICEV counterparts.
+To finalize this section, we would like to make two remarks. First, more environmental dimensions than contribution to climate change should be addressed when comparing the EV and ICEV vehicles. In fact, most LCA studies of EV (>80%) estimate some parameter related to climate change, far fewer LCA studies find parameters (<50%) in other impact categories such as energy demand, resource depletion, damage to air, water and land and human health (human toxicity).177 The results reflected in the literature in those other problems in fact are more consistent and consensual, and indicate that in many parameters the impacts of BEV are greater (resource depletion other than fossil fuels, damages to air, water and land) or much greater (human toxicity) than that of the corresponding ICEV.170,171,177 This is due to the large input and the long chain of materials used, where the factor of battery production significantly affects the results of impacts.172 This, let us remember, without adding the material infrastructures that we have made here for the battery. In this way, depletion and criticality are also coupled to the discussion (which the review by Dolganova et al.177 shows is still insufficient in the LCA literature). Second, the fact that the dominant narrative of environmental problems in the transport sector, in particular with passenger vehicles, focuses on technological solutions that reinforce the techno-optimistic imaginary in turn, seeking confirmation (and advertising) that BEVs replacing ICEVs will be part fundamental in the solution to carbon emissions associated with the transport sector, but forgetting or tiptoeing around other problems that a complex society and environment interrelate58 and requiring plans and developments in other technological sectors to go in unison and without cracks or bottlenecks (rapid transition to a renewable electricity and primary energy mix, resolution of the problem of depletion and criticality of materials, resolution of other environmental impacts, etc.38,44,58,177,178).
+
+
+4.3.4 Limitations and further work. 
+We identify three main types of limitations of the analysis carried out, which may be addressed in future work:
+• First, the lack of coverage of some transport technologies not being present in the MEDEAS-W model, such as hydrogen vehicles and shared vehicles. The analysis of some minerals present in permanent magnet electric motors has also not been included, since it has been assumed for the sake of simplicity that all electric motors are induction motors. The inclusion of all these technologies would enlarge the number of potential critical materials studied (notably Nd, Dy, Pt).39,179 Furthermore, the increased electrification of transport would require increasing the amount of electric grids,180 a dimension which is also not represented in the current version of the MEDEAS-World.
+• Second, a number of simplifications and assumptions had to be made in the absence of proper data about transport electrification at the granularity of the applied model, as well as about current recycling rates of materials globally. To address this, we focused on the bulk of the most relevant materials for the different components of the represented transport technologies, and particularly in the net demand increase of materials driven by EVs with relation to ICEV, which lie in the battery and the extra copper used in the wiring, inverter and electric motor. Future work may attempt to include more comprehensively the material requirements of transport technologies in a bottom-up way, as well as cover potentially relevant trade-offs in the substitutions of materials options such as the case of Pt when confronting the reduction of ICEV (catalyzers) with the eventual increase of electrolysers (membranes). Also, some types of batteries assessed to have great potential currently under R&D, such as LiS8, solid electrolyte or LiO2, could not be integrated in the analysis. In addition, there was uncertainty for the length of additional grids to connect the EV charging points or the number of charging points per vehicle, although uncertainty analysis shows (cf. Fig. 223–232 in Pulido et al. 202093) that these are not relevant with relation to other variables. Data for additional copper per type of vehicle had also to be estimated, taking the total vehicle weights as proxy. Standardization was applied for the sake of simplicity in some cases, such as railway catenary or the types of chargers evaluated. Lack of historical data about the global share of EV batteries by type and the change over time of their technical performance prevented us from calibrating the EV battery allocation function with historical data. Available data of current recycling rates of materials globally (e.g., UNEP107) are scarce, subject to uncertainties and partially outdated.
+• Third, sectoral approach: the analysis presented in this paper is a sectoral study focusing on the electrification of the transportation sector. Of course, in other sectors there will be different dynamics and materials substitution options for the bulk and technology materials studied which are beyond the scope of this paper. Table 17 shows which are the sectors which consume nowadays more materials, beside Manufacture of motor vehicles, trailers and semi-trailers: Construction stands out, with very significant shares of Al, Ni and Cu ranging from ∼20-30%, as well as Manufacture of machinery and equipment n.e.c with shares of these materials ranging from 8–13%. Follow the related mining sectors, the Manufacture of electrical machinery and apparatus (copper), Manufacture of furniture; Manufacturing n.e.c. (gold and silver) and Health and social work (copper). Two trends should be differentiated: current and future trends. Nickel is today used mainly to make stainless steel and other alloys stronger and better able to withstand extreme temperatures and corrosive environments. Copper has unique conductive characteristics (heat and electricity), and as such is massively used in electrical equipment such as wiring and motors, having as well uses in construction and industrial machinery. Aluminium has low density, is non-toxic, has a high thermal conductivity, has excellent corrosion resistance and can be easily cast, machined and formed and is hence used in a huge variety of products when lightness is important, as well as highly reflective coating. In general, current trends of economic global expansion and increase in the production of goods and services, urbanization, increase of transportation, telecommunications, digitalization, etc.179,181 will tend to increase the demand from the abovementioned sectors and hence their material requirements. Telecommunications have seen a shift from copper to carbon fibre demand. Electric grids are a significant part of current copper and aluminium demand, which are substitutable although with current preference for aluminium for high voltage transport and copper in low voltage applications. The transition towards renewables will likely tend to increase the amount of grids to host higher shares of variable and lower capacity factor generation.180 In this work the grid has been assumed as constant (excepting new lines to connect to the chargers) but it is likely that all the grid will require to be reinforced to supply high amounts of EVs. Future recycling rates to be achieved in these sectors are ultimately totally dependent on the design of products in each industry.107 A robust full analysis of potential material scarcities in the future should review the realistic possibilities for material substitution in the current most-material intensive sectors. Future work should hence be directed to incorporate in the model the material demands in a bottom-up way for those sectors more relevant from the point of view of potential material scarcities relevant for the electrification of transport.
+• Fourth, assumptions had to be made when dynamizing the analysis and setting the scenarios. Further work should deepen the implications for modelling allocations of material scarcity and ESOIdyn, which are assumed independent in this work for the sake of simplicity, given that in MEDEAS material scarcities are not fed-back due to the high uncertainty over material endowments globally. Hence, the model allows for a material to continue to be mined after the current level of assessed resources has been totally depleted, although the developed allocation function does penalize those batteries more affected by material scarcities. In reality, material scarcity and ESOI are linked through the increasing energy requirements to extract materials when their ore grade decreases.134,182–186 Furthermore, representing the mobility and EV battery ESOIdyn per type of transport mode (through the future bottom-up submodule of transport187 in connection with the households submodule188 of the WILIAM model) would allow income and household expenditure to be incorporated, thus improving the whole modelling of transport demand. Note for example that it does not seem very consistent with the Degrowth narrative that NCA batteries, the ones used by Tesla vehicles which are the most expensive, should be dominant by 2050. Representing these relationships in the modelling framework would improve the consistency of the modelling, allowing a more dynamic and realistic ESOIdyn to be obtained, which would in turn feed the EV allocation function with more rigour.
+
+5. Conclusions
+Electrification is today the most relevant policy being promoted worldwide to decarbonize the transport sector, being especially suitable for light vehicles. The development of a specific module of transport electrification materials, within a dynamic modelling framework, allows us to analyse different decarbonisation strategies, taking into account the feedback between the energy and material dimensions. A large amount of information in the form of technical performance factors and material intensities has been introduced into the IAM MEDEAS-World to cover the most relevant EV battery technologies and types of vehicles, as well as information concerning the infrastructures necessary for their operation. The simulation of the submodule within the full model, applying 3 different global transport transition strategies (EV High, e-bike and Degrowth), has allowed a better understanding of the characteristics of mobility electrification and to reach some relevant conclusions. The main outputs from the dynamic analysis are the market shares as well as the dynamic ESOIst and ESOIfinal of the EV battery sub-technologies studied, the recycling content material recycling rates and the shares of primary cumulative demand vs current reserves and resources of relevant materials analysed.
+With relation to the EV batteries studied, the NCA and NMC have, in general, the lowest material intensities of aluminium, copper, lithium, graphite, cobalt, manganese and nickel. The LFP battery has the advantage of not requiring nickel, cobalt or manganese. On the other hand, LFP is the battery that requires the most copper, aluminium and lithium for the same power, which penalizes its total weight. The LMO battery does not require cobalt and nickel, but overall it is the most material intensive and has the worst technical performance of all the batteries evaluated. Depending on the scenario, we find that by 2050, the EV batteries can require 0.3%–2% of today aluminium reserves, 6%–36% of copper, 54%–360% of cobalt, 50%–300% of lithium, 2%–10% of manganese, 20%–138% of nickel and 260%–1500% of graphite flakes. The charging and grid infrastructure may require almost 9% of total copper reserves. This, together with the demand for railway electrification, which may reach over 9% of the reserves of this material, and the additional copper present in electric vehicles with relation to internal combustion engine vehicles, whose demand also reaches 11% of their reserves, add up to a large amount of copper required in the simulated scenarios. Given the existing uncertainties on the endowments of materials and the stylized nature of the materials module in the model used, material scarcities are not feedbacked in this paper. Despite transportation will be likely a relevant contributor to the increase in the demand of several key materials (Co, Li and graphite), for others such as Al, Cu, Mn and Ni material availability will be mainly determined by the material use of the rest of the economy. Hence, future work should be directed to feedback material scarcities and incorporate in the model the material demands in a bottom-up way for those sectors more relevant from the point of view of potential material scarcities.
+Regarding the ESOI levels of the EV batteries, for household 4-wheelers, we obtain ESOIst values ∼0.7–2.1:1 and ESOIfinal values ∼0.2–0.9:1, depending on the mileage (100–200000 km), with the exception of the LMO battery, with significantly lower levels (ESOIst = 0.5–1.5:1 and ESOIfinal = 0.2–0.7:1), which indicates that this technology has been outperformed by its competitors, which is in fact consistent with current EV batteries market developments. Technical performance, together with material availability, is the key aspect that influence such market characteristics as the price of batteries.32,136 From an energy metabolic perspective, our results show that it would be recommendable to favorise those EVs transport modes which higher ESOI, such as shared and public transportation. EVs require more up-front energy in the phase of manufacturing but less supply grid-to-wheel energy than its ICEVs counterparts during the operation phase (which from a dynamic perspective is a similar situation to RES vs fossil fuel-based generation).52 Given the low ESOI obtained for EV vehicles in this analysis coupled with the high dependence on fossil fuels that we have today,3 the environmental costs and GHG emissions of EV vehicles will not decrease significantly until the energy mix radically changes.172
+It is worth noting that, even in the case of achieving high material EOL recycling target levels, these do not forcefully imply high recycling shares in the manufactured products (RC). This is due to the combined effect of continuous demand increase and the delay effect of the stock of materials trapped in-use.
+Of the four scenarios simulated, the one based on the principles of Degrowth24 is the only one in line with the GHG emission reductions required by global international targets, as well as being the scenario which puts less pressure on material endowments, but even in that case the current reserves of copper, cobalt, manganese and nickel, as well as the nickel resources, would be depleted by 2050. Further work should go deeper into the configuration of a Degrowth scenario in global transportation fully consistent with material endowments. This would be an opportunity to improve some of the limitations of the analysis carried out which could include further novel transportation and EV batteries technologies as well as material intensities as better data become available, the modelling of battery secondary life and the dynamization of electric grids, as well as more rich linkage with the forthcoming WILIAM model (https://www.locomotion-h2020.eu/). The latter, in particular with a more detailed bottom-up modelling of transport as well as with the materials module in order to feedback material scarcity to the rest of the system. Further work could also expand the scope to include features related to the management of energy variability such as smart charging, vehicle-to-grid and second-use of batteries for utility-scale batteries.
+Glossary
+
+BEVBattery electric vehicle
+CFCapacity factor
+CLCharge loss ratio
+EaB&EEnergy used at battery and electronics
+ECLEnergy charging losses
+EnUEnergy used
+EOLEnd-of-life
+EROIEnergy return on energy invested
+ESOIEnergy stored on energy invested
+ESOIfinESOI final
+ESOIstESOI standard
+EVElectric vehicle
+gFinal-to-primary ratio
+GETGreen energy technology
+GHGGreenhouse gas
+HEVHybrid electric vehicle
+IAMIntegrated assessment model
+ICEInternal combustion engine
+LLifetime
+LCTLow carbon technology
+LFPLithium–iron-phosphate
+LMOLiMnO2
+MABMaterial abundance indicator per battery
+MSMaterial scarcity indicator
+MSBMaterial scarcity indicator per battery
+NCANickel–cobalt–aluminium
+NMCNickel–manganese–cobalt
+OLOperational losses
+PHEVPlug-in electric vehicle
+RCRecycled content
+RESRenewable energy source
+TDLTransport and distribution losses
+
+Glossary types of vehicles in MEDEAS-W
+
+Households (private vehicles). 
+
+H4w HEV4-wheeled hybrid electric vehicle
+H4w BEV4-wheeled battery electric vehicle
+H2w BEV2-wheeled hybrid electric vehicle
+SEVSingle-person electric vehicle
+
+
+
+Commercial vehicles. 
+
+HV HEVHeavy vehicle hybrid electric vehicle
+LC BEVLight cargo battery electric vehicle
+LC HEVLight cargo hybrid electric vehicle
+Bus HEVBus hybrid electric vehicle
+Bus BEVBus battery electric vehicle
+
+
+Author contributions
+Conceptualization: all authors; data curation: D. P.-S.; formal Analysis: all authors; funding acquisition: I. C.-P, C. D. and F. F.; investigation: all authors; methodology: all authors; project administration: I. C.-P.; software: D. P.-S. and I. C.-P.; supervision: I. C.-P., C. D. and F. F.; validation: D. P.-S. and I. C.-P.; visualization: D. P.-S. and I.C-P; writing – original draft: D.P-S & I.C-P; and writing – review and editing: all authors.
+Conflicts of interest
+There are no conflicts of interest to declare.
+Appendix A: scenario inputs
+Table 14 Overview of the most relevant common assumptions and inputs for the simulated scenarios. For additional details cf. de Blas et al. 202024 and Capellán-Pérez et al. 202044
+
+
+
+
+Socioeconomy:
+
+
+• Population growth: SSP2 (stabilization at 10000 million people by 2100)
+
+
+• GDPpc planned: scenario-dependent
+
+
+• Target labor share (2050): 52%
+
+
+• A matrix: constant (2009)
+
+
+• Efficiency improvements (final energy intensity by sector): trends by sector/households and fuel, own estimation
+
+
+Energy:
+
+
+• Annual capacity growth of RES for electricity/Techno-sustainable potential:
+
+
+ ∘ Hydroelectricity: 3.8% per year/1 TW
+
+
+ ∘ Geothermal: 4.2% per year/0.3 TW
+
+
+ ∘ Bioenergy shared potential for heat, liquids and electricity: 7.8% per year
+
+
+ ∘ Oceanic: 20% per year/0.05 TW
+
+
+ ∘ Wind onshore: 20% per year/1 TW
+
+
+ ∘ Wind offshore: 20% per year/0.25 TW
+
+
+ ∘ Solar PV: 20% per year/200 MHa shared on land + PV rooftop
+
+
+ ∘ Solar CSP: 20% per year/100 MHa
+
+
+ ∘ Pumped hydro storage: 15% per year/0.25 TW
+
+
+• Target capacity of RES for heat (2050) (commercial and non-commercial): 4.4 TW
+
+
+• Bioenergy:
+
+
+ ∘ Marginal lands: 386 MHa189
+
+
+ ∘ Second generation cropland + 11% per year
+
+
+ ∘ Third generation cropland (starting in 2025) 11% per year
+
+
+ ∘ Residues (starting in 2025) 20% per year 11 EJ per year
+
+
+ ∘ Nuclear installed capacity: constant at current level
+
+
+Material resources:
+
+
+• Non-renewable energies depletion curves:
+
+
+ ∘ Oil190
+
+
+ ∘ Gas190
+
+
+ ∘ Coal Best Guess191
+
+
+ ∘ Uranium192
+
+
+• Recycling rates of materials (19 materials): current recycling rates (EOL) scenario-dependent
+
+
+Land-use:
+
+
+• Global afforestation program? No
+
+
+Activation of model switches:
+
+
+• Climate Change impacts: not activated
+
+
+• EROI feedback: activated (cf. Capellán-Pérez et al. 201952)
+
+
+• Energy limits feedback: activated (cf. Nieto et al. 2019193)
+
+
+• Inter-final energy replacements: activated (cf. de Blas et al. 2019128)
+
+
+
+
+Appendix B: recycling methods for recycling EV batteries
+A key assumption for modelling future scenarios is the realistic setting of future recycling rates EOL targets for each material. Together with recycling methods, design is the key, as well as chains of value so recycling can be more profitable than extraction.107,108,114 The dominant methods for recycling EV batteries today are pyrometallurgy, physical processes and hydrometallurgy.110–112
+• The pyrometallurgical process consists of introducing the batteries into furnaces in order to melt them. Sometimes simple crushers can be used to facilitate the melting of materials (mechanical process). This process requires a large input of energy, a large amount of material is lost and toxic, polluting and GHGs are created. On the other hand, it is the process with the least technical complexity and low production costs. This method is being used prominently in China at present and is the most widely used method for battery recycling at present.108
+• In the physical processes the battery is crushed in crushers with a controlled atmosphere to avoid ignitions, after this, by means of the use of sieves, filters, etc. the recovery of the materials begins. This process is the one that allows us to recover more material, and the one that has less harmful effects on the environment, but it is also the most expensive process, not currently allowing its standardization.
+• The hydrometallurgical method is based on the recovery of the metals present in the battery by means of leaching, precipitation and solvent extraction. The battery is usually broken down in industrial shredders beforehand (mechanical process). Hydrometallurgy allows us to obtain some materials with high purity, but it uses abundant solvents and acid baths that are very harmful to the environment and it is difficult to carry out continuously.
+Chen et al.110 and Harper et al.112 report the advantages and disadvantages of each method, although in practice these methods are often combined in order to increase the effectiveness and efficiency of the processes. Fig. 12 shows the trend over time of these process combinations.
+ Fig. 12  Trends EV batteries recycling process. 
+Also, the mass percentages of mineral recovered in each process can be seen in the table below (Table 15):
+Table 15 Recycling rates of the different minerals according to the process used in battery recycling. Sources110,111,113
+
+
+
+
+Minerals
+Pyrometallurgical (%)
+Mechanical + Pyrometallurgical (%)
+Mechanical + Pyrometallurgical + hydrometallurgical (%)
+Physical processes (%)
+Mechanical + hydrometallurgical (%)
+Mechanical + physical processes+ hydrometallurgical (%)
+
+
+
+
+Lithium
+0
+0
+57
+94
+94
+94
+
+
+Nickel
+94
+94
+94
+97
+97
+97
+
+
+Cobalt
+95
+95
+95
+∼99
+∼99
+∼99
+
+
+Manganese
+0
+0
+0
+∼99
+∼99
+∼99
+
+
+Graphite
+0
+0
+0
+0
+0
+∼99
+
+
+Aluminium
+0
+0
+∼99
+∼99
+∼99
+∼99
+
+
+Copper
+∼99
+∼99
+∼99
+∼99
+∼99
+∼99
+
+
+
+
+The economic and standardization disadvantages are weighing down the most efficient recycling methods from the point of view of material recovery and environmental care, which means that the large amount of batteries that are currently recycled end up being subjected to pyrometallurgical processes in Asia.108,111 This, added to the great number of batteries (not only of vehicles) that at the moment are not recycled due to the lack of procedures to carry out their recycling (procedures that they are carried out to a greater extent with the batteries of the traditional combustion cars) causes that all the materials that could be recovered of these are not recovered and causes a high energy expense together with the emission of noxious gases.
+Appendix C: material footprint of transport manufacture sectors with relation to the total of the economy
+In order to estimate the material footprint of transport manufacture sectors with relation to the total of the economy, a screening analysis of the material data from EXIOBASE162 has been performed for the sectors “Manufacture of motor vehicles, trailers and semi-trailers” and “Manufacture of other transport equipment”. These data are for final consumption of all economic agents (households, firms, etc.), i.e., exclude intermediary consumption which is assessed to be minor altogether for both sectors (matrix D_cba in EXIOBASE).
+
+Table 16 shows the obtained results for the average between 1995 and 2015 for the list of materials represented in EXIOBASE.
+Table 16 Average share, minimum and maximum values for the period 1995–2015 of material footprint of transport manufacture sectors (91 and 92) with relation to the total of the economy globally. In bold those materials studied in this work. Platinum group metals include ruthenium, rhodium, palladium, osmium, iridium, and platinum. Source: own work from EXIOBASE162
+
+
+
+
+
+
+Gold (%)
+Iron Ore (%)
+Platinum group metals (%)
+Aluminium (%)
+Nickel (%)
+Silver (%)
+Copper (%)
+Zinc (%)
+Tin (%)
+Lead (%)
+
+
+
+
+1995–2015 Average
+13.8
+11.6
+11.4
+10.2
+8.3
+7.6
+6.6
+5.2
+5.1
+3.7
+
+
+Minimum
+9.4
+6.1
+8.5
+6.7
+6.1
+5.2
+5.3
+4.0
+3.2
+2.3
+
+
+Maximum
+18.6
+15.4
+15.4
+12.3
+11.5
+11.8
+8.1
+6.3
+7.1
+4.9
+
+
+
+
+
+Table 17 shows the shares >5% of material footprint with relation to the total of the economy by material and sector.
+Table 17 >5% shares of material footprint with relation to the total of the economy by material and sector (empty cells represent shares <5%). Source: own work from EXIOBASE.162 n.e.c.: not elsewhere classified
+
+
+
+
+Sector name
+Sector number
+Gold
+Iron Ore
+Platinum group metals
+Aluminium
+Nickel
+Silver
+Copper
+Zinc
+Tin
+Lead
+
+
+
+
+Mining of iron ores
+25
+
+
+6.0%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Mining of copper ores and concentrates
+26
+
+
+
+
+
+
+
+
+
+
+
+
+
+10.0%
+
+
+
+
+
+
+
+
+
+Mining of nickel ores and concentrates
+27
+
+
+
+
+
+
+
+
+
+6.6%
+
+
+
+
+
+
+
+
+
+
+
+
+
+Mining of aluminium ores and concentrates
+28
+
+
+
+
+
+
+
+5.6%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Mining of precious metal ores and concentrates
+29
+11.4%
+
+
+14.6%
+
+
+
+
+12.3%
+
+
+
+
+
+
+
+
+
+
+Mining of lead, zinc and tin ores and concentrates
+30
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9.0%
+10.1%
+8.0%
+
+
+Precious metals production
+74
+5.0%
+
+
+
+
+
+
+
+
+5.7%
+
+
+
+
+
+
+
+
+
+
+Lead, zinc and tin production
+78
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5.1%
+
+
+
+
+Manufacture of machinery and equipment n.e.c.
+86
+6.1%
+11.8%
+11.4%
+
+12.8%
+
+
+7.9%
+
+5.8%
+
+7.9%
+
+
+
+
+
+
+
+
+
+Manufacture of electrical machinery and apparatus n.e.c.
+88
+
+
+
+
+
+
+
+
+
+
+
+
+
+6.5%
+
+
+
+
+
+
+
+
+
+Manufacture of motor vehicles, trailers and semi-trailers
+91
+12.6%
+8.4%
+10.3%
+
+7.9%
+
+
+6.5%
+
+6.5%
+
+5.2%
+
+
+
+
+
+
+
+
+
+Manufacture of furniture; manufacturing n.e.c.
+93
+7.0%
+
+
+
+
+
+
+
+
+7.8%
+
+
+
+
+
+
+
+
+
+
+Construction
+113
+15.2%
+28.7%
+15.4%
+
+19.2%
+
+
+28.5%
+
+14.5%
+
+22.5%
+
+32.2%
+35.5%
+36.7%
+
+
+Health and social work
+138
+
+
+
+
+
+
+
+
+
+
+
+
+
+5.0%
+
+
+
+
+
+
+
+
+
+
+
+Acknowledgements
+This work has been partially developed under the LOCOMOTION project, funded by the European Union's Horizon 2020 research and innovation programme under grant agreement no 821105. The authors are thankful as well for the support of MODESLOW (Modeling and Simulation of scenarios towards a LOW-carbon transition: The Spanish case), a Spanish national research project funded under the Spanish National Research, Development and Innovation Program (Ministry of Economy and Competitiveness of Spain, ref. ECO2017-85110-R). Iñigo Capellán-Pérez also acknowledges financial support from a Juan de la Cierva-Incorporación Research Fellowship of the Ministry of Economy and Competitiveness of Spain (no. IJC2020-046215-I). We thank Harald U. Sverdrup and Anna H. Olafsdottir for providing us with WORLD7 timeseries data, Emmanuel Aramendia from Leeds University for providing us with the data for material footprint of transport manufacture sectors with relation to the total of the economy, and the whole Group of Energy, Economy and Dynamics Systems (GEEDS) of the University of Valladolid for indirectly contributing to this work during group discussions.
+References
+
+          IEA, Greenhouse Gas Emissions from Energy: Overview, https://www.iea.org/reports/greenhouse-gas-emissions-from-energy-overview.
+
+          M. Cardama, A. Cortez, N. Cruz, A. Enriquez, E. Hosek, K. Peet, N. Medimorec, A. Steinvorth and A. Yiu, SLOCAT Transport and Climate Change Global Status Report: Tracking Trends in a Time of Change: The Need for Radical Action Towards Sustainable Transport Decarbonisation,  2021.
+IPCC, 2022.
+European Union, REGULATION (EC) No 715/2007 OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 20 June 2007 on type approval of motor vehicles with respect to emissions from light passenger and commercial vehicles (Euro 5 and Euro 6) and on access to vehicle repair and maintenance information, https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex%3A32007R0715.
+
+          M. Karstadt and B. Callaghan, The Plain English Guide to the Clean Air Act, Environmental Protection Agency,  1993 Search PubMed.
+GOV UK, Future of mobility, https://www.gov.uk/government/publications/future-of-mobility.
+IEA, IEA World Energy Statistics and Balances, https://www.oecd-ilibrary.org/energy/data/iea-world-energy-statistics-and-balances_enestats-data-en.
+J. Friedrichs, Energy Policy, 2010, 38, 4562–4569 CrossRef.
+I. Capellán-Pérez, M. Mediavilla, C. de Castro, Ó. Carpintero and L. J. Miguel, Energy, 2014, 77, 641–666 CrossRef.
+J. Wang, L. Feng, X. Tang, Y. Bentley and M. Höök, Futures, 2017, 86, 58–72 CrossRef.
+H. Haberl, D. Wiedenhofer, D. Virág, G. Kalt, B. Plank, P. Brockway, T. Fishman, D. Hausknost, F. Krausmann, B. Leon-Gruchalski, A. Mayer, M. Pichler, A. Schaffartzik, T. Sousa, J. Streeck and F. Creutzig, Environ. Res. Lett., 2020, 15, 065003 CrossRef.
+J. Freire-González, Energy Policy, 2017, 102, 270–276 CrossRef.
+P. E. Brockway, S. Sorrell, G. Semieniuk, M. K. Heun and V. Court, Renewable Sustainable Energy Rev., 2021, 141, 110781 CrossRef.
+J. Hickel and G. Kallis, New Polit. Econ., 2020, 25, 469–486 CrossRef.
+J. Hickel, P. Brockway, G. Kallis, L. Keyßer, M. Lenzen, A. Slameršak, J. Steinberger and D. Ürge-Vorsatz, Nat. Energy, 2021, 6, 766–768 CrossRef.
+L. T. Keyßer and M. Lenzen, Nat. Commun., 2021, 12, 2676 CrossRef PubMed.
+T. Wiedmann, M. Lenzen, L. T. Keyßer and J. K. Steinberger, Nat. Commun., 2020, 11, 3107 CrossRef CAS PubMed.
+S. D’Alessandro, A. Cieplinski, T. Distefano and K. Dittmer, Nat. Sustainability, 2020, 3, 329–335 CrossRef.
+
+          European parliament,  2020.
+I. Cosme, R. Santos and D. W. O’Neill, J. Clean. Prod., 2017, 149, 321–334 CrossRef.
+P. Moriarty and D. Honnery, Futures, 2008, 40, 865–872 CrossRef.
+C. Kerschner, P. Wächter, L. Nierling and M.-H. Ehlers, J. Clean. Prod., 2018, 197, 1619–1636 CrossRef.
+S. Alexander and P. Yacoumis, J. Clean. Prod., 2018, 197, 1840–1848 CrossRef.
+I. de Blas, M. Mediavilla, I. Capellán-Pérez and C. Duce, Energy Strategy Rev., 2020, 32, 100543 CrossRef.
+OICA, Vehicles
+in use, http://www.oica.net/category/vehicles-in-use/.
+UIC, Railway handbook 2013, https://uic.org/IMG/pdf/2013_uic-iea_railway_handbook_web_high.pdf.
+UIC statistics, https://uic.org/support-activities/statistics/.
+
+          M. Tuchschmid, W. Knörr, A. Schacht, M. Mottschall and M. Schmied, Report commissioned by International Union of Railways (UIC), IFEU-Institut and Öko-Istitut, available at: https://uic.org/IMG/pdf/uic_rail_infrastructure_111104.pdf.
+T. Watari, K. Nansai and K. Nakajima, Resour., Conserv. Recycl., 2020, 155, 104669 CrossRef.
+S. van den Brink, R. Kleijn, B. Sprecher and A. Tukker, Resour., Conserv. Recycl., 2020, 156, 104743 CrossRef.
+P. Greim, A. A. Solomon and C. Breyer, Nat. Commun., 2020, 11, 4570 CrossRef CAS PubMed.
+A. Leader, G. Gaustad and C. Babbitt, Mater. Renewable Sustainable Energy, 2019, 8, 8 CrossRef.
+European Comission, Critical raw materials, https://ec.europa.eu/growth/sectors/raw-materials/specific-interest/critical_en.
+European Commission. Directorate General for Internal Market, Industry, Entrepreneurship and SMEs., Critical raw materials for strategic technologies and sectors in the EU: a foresight study, https://data.europa.eu/doi/10.2873/58081.
+OECD, Global Material Resources Outlook to 2060: Economic Drivers and Environmental Consequences,  DOI:10.1787/9789264307452-en.
+World Bank Group, Minerals for Climate Action: The Mineral Intensity of the Clean Energy Transition, https://pubdocs.worldbank.org/en/961711588875536384/Minerals-for-Climate-Action-The-Mineral-Intensity-of-the-Clean-Energy-Transition.pdf.
+IEA, The Role of Critical Minerals In Clean Energy Transtions, https://www.iea.org/reports/the-role-of-critical-minerals-in-clean-energy-transitions.
+A. Valero, A. Valero, G. Calvo and A. Ortego, Renewable Sustainable Energy Rev., 2018, 93, 178–200 CrossRef.
+T. Junne, N. Wulff, C. Breyer and T. Naegler, Energy, 2020, 211, 118532 CrossRef CAS.
+K. Tokimatsu, H. Wachtmeister, B. McLellan, S. Davidsson, S. Murakami, M. Höök, R. Yasuoka and M. Nishio, Appl. Energy, 2017, 207, 494–509 CrossRef.
+A. García-Olivares, J. Ballabrera-Poy, E. García-Ladona and A. Turiel, Energy Policy, 2012, 41, 561–574 CrossRef.
+A. Månberger and B. Stenqvist, Energy Policy, 2018, 119, 226–241 CrossRef.
+V. Moreau, P. Dos Reis and F. Vuille, Resources, 2019, 8, 29 CrossRef.
+I. Capellán-Pérez, I. de Blas, J. Nieto, C. de Castro, L. J. Miguel, Ó. Carpintero, M. Mediavilla, L. F. Lobejón, N. Ferreras-Alonso, P. Rodrigo, F. Frechoso and D. Álvarez-Antelo, Energy Environ. Sci., 2020, 13, 986–1017 RSC.
+D. Pulido Sanchez, I. Capellan Perez, M. Mediavilla Pascual, C. De Castro Carranza and F. A. Frechoso Escudero, DYNA, 2021, 96, 207–213 CrossRef.
+
+          E. Dominish, N. Florin and S. Teske, Responsible minerals sourcing for renewable energy, https://www.uts.edu.au/sites/default/files/2019-04/ISFEarthworks_Responsible%20minerals%20sourcing%20for%20renewable%20energy_Report.pdf.
+D. Kushnir and B. A. Sandén, Resour. Policy, 2012, 37, 93–103 CrossRef.
+C. Grosjean, P. H. Miranda, M. Perrin and P. Poggi, Renewable Sustainable Energy Rev., 2012, 16, 1735–1744 CrossRef.
+A. de Koning, R. Kleijn, G. Huppes, B. Sprecher, G. van Engelen and A. Tukker, Resour., Conserv. Recycl., 2018, 129, 202–208 CrossRef.
+M. Carbajales-Dale, C. J. Barnhart and S. M. Benson, Energy Environ. Sci., 2014, 7, 1538 RSC.
+M. Carbajales-Dale, C. J. Barnhart, A. R. Brandt and S. M. Benson, Nat. Clim. Change, 2014, 4, 524–527 CrossRef.
+I. Capellán-Pérez, C. de Castro and L. J. Miguel González, Energy Strategy Rev., 2019, 26, 100399 CrossRef.
+C. A. S. Hall, J. G. Lambert and S. B. Balogh, Energy Policy, 2014, 64, 141–152 CrossRef.
+C. J. Barnhart and S. M. Benson, Energy Environ. Sci., 2013, 6, 1083 RSC.
+S. Davidsson Kurland and S. M. Benson, Sustainable Energy Fuels, 2019, 3, 1182–1190 RSC.
+C. J. Barnhart, M. Dale, A. R. Brandt and S. M. Benson, Energy Environ. Sci., 2013, 6, 2804 RSC.
+J. Solé, R. Samsó, E. García-Ladona, A. García-Olivares, J. Ballabrera-Poy, T. Madurell, A. Turiel, O. Osychenko, D. Álvarez, U. Bardi, M. Baumann, K. Buchmann, Í. Capellán-Pérez, M. Černý, Ó. Carpintero, I. De Blas, C. De Castro, J.-D. De Lathouwer, C. Duce, L. Eggler, J. M. Enríquez, S. Falsini, K. Feng, N. Ferreras, F. Frechoso, K. Hubacek, A. Jones, R. Kaclíková, C. Kerschner, C. Kimmich, L. F. Lobejón, P. L. Lomas, G. Martelloni, M. Mediavilla, L. J. Miguel, D. Natalini, J. Nieto, A. Nikolaev, G. Parrado, S. Papagianni, I. Perissi, C. Ploiner, L. Radulov, P. Rodrigo, L. Sun and M. Theofilidi, Renewable Sustainable Energy Rev., 2020, 132, 110105 CrossRef.
+L. J. Di Felice, A. Renner and M. Giampietro, Environ. Sci. Policy, 2021, 123, 1–10 CrossRef.
+S. Carrara and T. Longden, Transp. Res. Part Transp. Environ., 2017, 55, 359–372 CrossRef.
+
+          A. J. Friedemann, When trucks stop running: Energy and the future of transportation, Springer,  2015 Search PubMed.
+A. García-Olivares, J. Solé and O. Osychenko, Energy Convers. Manage., 2018, 158, 266–285 CrossRef.
+L. Fulton, Transport, energy and CO2: moving towards sustainability, International Energy Agency, Paris, 2009, https://www.iea.org/reports/transport-energy-and-co2 Search PubMed.
+IEA and OECD, The Future of Trucks. Implications for Energy and the Environment, https://webstore.iea.org/the-future-of-trucks.
+IEA, Energy Technology Perspectives 2016, Towards Sustainable Urban Energy Systems, https://iea.blob.core.windows.net/assets/37fe1db9-5943-4288-82bf-13a0a0d74568/Energy_Technology_Perspectives_2016.pdf.
+
+          S. P. Michaux,  DOI:10.13140/RG.2.2.34895.00160.
+K. Hacatoglu, M. A. Rosen and I. Dincer, Int. J. Hydrogen Energy, 2012, 37, 9933–9940 CrossRef CAS.
+M. Mori, M. Jensterle, T. Mržljak and B. Drobnič, Int. J. Life Cycle Assess., 2014, 19, 1810–1822 CrossRef CAS.
+European Commission, A hydrogen strategy for a climate-neutral Europe, https://knowledge4policy.ec.europa.eu/publication/communication-com2020301-hydrogen-strategy-climate-neutral-europe_en.
+Citroën,
+CITROËN C4 AND Ë-C4 ELECTRIC, https://www.citroen.co.uk/models/c4-e-c4.html.
+Staff Writer, Renault, Valeo to Build Rare Earth-Free Electric Motor, https://www.autofutures.tv/2022/02/10/renault-valeo-rare-earth-free-motor/.
+Chris Young, BMW's Fifth-Generation Electric Motor Is a Magnet-Free Masterpiece, https://interestingengineering.com/bmws-fifth-generation-electric-motor-is-a-magnet-free-masterpiece.
+Eric Onstad, China frictions steer electric automakers away from rare earth magnets, https://www.reuters.com/business/autos-transportation/china-frictions-steer-electric-automakers-away-rare-earth-magnets-2021-07-19/#:~:text=Tesla%20started%<?pdb_no 20in?><?pdb_no 20in?>20in<?pdb END?><?pdb END?>%<?ccdc_no 202019?>202019<?ccdc END?>%<?pdb_no 20to?><?pdb_no 20to?>20to<?pdb END?><?pdb END?>,'%20driving%20range%<?pdb_no 20by?><?pdb_no 20by?>20by<?pdb END?><?pdb<?db_id PDB?> END?>%2010%25.
+C. de Castro and I. Capellán-Pérez, Energies, 2020, 13, 3036 CrossRef CAS.
+K. Zhu, C. Wang, Z. Chi, F. Ke, Y. Yang, A. Wang, W. Wang and L. Miao, Front. Energy Res., 2019, 7, 123 CrossRef.
+
+          A. E. Rodríguez, PROTAGONISMO DE LAS MATERIAS PRIMAS MINERALES EN EL DESARROLLO DEL VEHÍCULO ELÉCTRICO, https://dialnet.unirioja.es/servlet/articulo?codigo=6932916.
+
+          J. B. Dunn, L. Gaines, M. Barnes, J. L. Sullivan and M. Wang, Material and Energy Flows in the Materials Production, Assembly, and End-of-Life Stages of the Automotive Lithium-Ion Battery Life Cycle,  2014 Search PubMed.
+J. B. Dunn, L. Gaines, J. C. Kelly, C. James and K. G. Gallagher, Energy Environ. Sci., 2015, 8, 158–168 RSC.
+
+          L. Gaines and P. Nelson, Lithium-Ion Batteries: Possible Materials Issues, https://www.researchgate.net/publication/267550161_Lithium-Ion_Batteries_Possible_Materials_Issues.
+C. Iclodean, B. Varga, N. Burnete, D. Cimerdean and B. Jurchiş, IOP Conf. Ser. Mater. Sci. Eng., 2017, 252, 012058 CrossRef.
+Hyundai, Hyundai Kona data, https://www.hyundai.co.uk/new-cars/kona-electric.
+Hyundai, Hyundai ioniq data, https://www.hyundai.co.uk/new-cars/ioniq/electric.
+NISSAN, 2011 leaf, First Responder's Guide, https://www.nissan-techinfo.com/refgh0v/og/FRG/2011-Nissan-LEAF-FRG.pdf.
+EVSpecifications, Renault ZOE specifications, https://www.evspecifications.com/en/model/d323ad.
+EVSpecifications, Tesla model 3 specifications, https://www.evspecifications.com/en/model/445a110.
+
+          M. Kane, 2016 BYD e6 To Get Increased Range, https://insideevs.com/news/326110/2016-byd-e6-to-get-increased-range/.
+H. Zhang, L. K. Ono, G. Tong, Y. Liu and Y. Qi, Nat. Commun., 2021, 12, 4738 CrossRef CAS PubMed.
+M. J. Wang, E. Kazyak, N. P. Dasgupta and J. Sakamoto, Joule, 2021, 5, 1371–1390 CrossRef CAS.
+Mark Kane, Mercedes-Benz eCitaro G Enters Market With Solid-State Battery Option, https://insideevs.com/news/444449/mercedes-benz-ecitaro-g-solid-state-battery/.
+M. Balaish, A. Kraytsberg and Y. Ein-Eli, Phys. Chem. Chem. Phys., 2014, 16, 2801 RSC.
+G. Girishkumar, B. McCloskey, A. C. Luntz, S. Swanson and W. Wilcke, J. Phys. Chem. Lett., 2010, 1, 2193–2203 CrossRef CAS.
+RENAULT, Renault ZOE data, https://www.renault.co.uk/electric-vehicles/zoe.html.
+BYD, e6 data, https://en.byd.com/wp-content/uploads/2017/06/e6_cutsheet.pdf.
+
+          D. Pulido Sánchez, Análisis de los requerimientos materiales de la transición hacia una movilidad eléctrica, http://uvadoc.uva.es/handle/10324/41646.
+Volkswagen, The ID.3 Brochure and price list, https://www.volkswagen.co.uk/order-a-brochure/id3.
+
+          F. Ni, How Important are Electric Vehicles for Future Copper Demand, https://copperalliance.org/wp-content/uploads/2017/05/How_Important_are_EVs_Electromobility.pdf.
+A. Lucas, C. Alexandra Silva and R. Costa Neto, Energy Policy, 2012, 41, 537–547 CrossRef.
+Ministerio de ciencia y tecnología, Guia tecnica de aplicacion- Caidas de tensión, Anexo 2, http://www.uco.es/electrotecnia-etsiam/reglamentos/Guia_Tecnica_REBT/guia_bt_anexo_2_sep03R1.pdf.
+S. Bumby, E. Druzhinina, R. Feraldi, D. Werthmann, R. Geyer and J. Sahl, Environ. Sci. Technol., 2010, 44, 5587–5593 CrossRef CAS PubMed.
+HidroCantábrico distribusión electrica S.A.U., Especificacion tecnica de las canalizaciones subterraneas de baja y media tensión, https://www.hcenergia.com/recursos/doc/Colaboradores/Proveedores/Electricidad/Ingenieria/2116218461_2772011142751.pdf.
+ATS energia, Vida útil de elementos de transmisión, https://www.cne.cl/wp-content/uploads/2018/04/informe-vida-util-ATS.pdf.
+ADIF, Memoria descriptiva CA-220, https://www.seguridadferroviaria.es/recursos_aesf/1DAEAFAF-ADC0-4BFE-8958-4BC6AD3AC4F6/144042/017CA2203kV_2012.pdf.
+Aurubis, Cu-ETP Material datasheet, https://www.aurubis-stolberg.com/wdb/band/eng/Copper/Cu-ETP-PNA%20211_EN.pdf.
+
+          A. Garcalvarez, La Doble v??a en Espa??a y el sentido de circulaci??n de los trenes por ella,  2017 Search PubMed.
+PLASSER ESPAÑOLA, Rendimiento, precisión y fiabilidad en la construcción de catenaria, https://www.plasser.es/pdf/publicaciones/via_libre-2008-004.pdf.
+USGS, Mineral Commodity Summaries, https://pubs.er.usgs.gov/publication/70140094.
+
+          USGS, Principles of a resource/reserve classification for minerals, United States Geological Survey, 1980.
+UNEP, Recycling rates of metals. A status report, International Resource Panel. United Nations Environment Programme, Nairobi, Kenya, 2011.
+H. E. Melin, Circ. Energy Storage, 2019, 1, 1–57 Search PubMed.
+H. U. Sverdrup, K. V. Ragnarsdottir and D. Koca, J. Clean. Prod., 2017, 140, 359–372 CAS.
+M. Chen, X. Ma, B. Chen, R. Arsenault, P. Karlson, N. Simon and Y. Wang, Joule, 2019, 3, 2622–2646 CrossRef CAS.
+
+          N. Lebedeva, F. D. Persio and L. Boon-Brett, 80.
+G. Harper, R. Sommerville, E. Kendrick, L. Driscoll, P. Slater, R. Stolkin, A. Walton, P. Christensen, O. Heidrich, S. Lambert, A. Abbott, K. Ryder, L. Gaines and P. Anderson, Nature, 2019, 575, 75–86 CrossRef CAS PubMed.
+Ecofriendly recycling of lithium-ion batteries, https://www.duesenfeld.com/recycling_en.html.
+Metal recycling, UNEP Publications, 2013, https://wedocs.unep.org/handle/20.500.11822/8423.
+Volkswagen, Warranty – Terms and Conditions, https://www.volkswagen.co.uk/owners-and-drivers/my-car/warranties/new-car-terms.
+Hyundai, Hyundai 5 Year Warranty Terms and Conditions, https://www.hyundai.co.uk/5-year-warranty/5_year_warranty-terms-and-conditions.pdf.
+Geotab, Electric Vehicle Battery Degradation Tool, https://www.geotab.com/fleet-management-solutions/ev-battery-degradation-tool/.
+U.S. Department of Transportation, Average Annual Miles per Driver by Age Group, https://www.fhwa.dot.gov/ohim/onh00/bar8.htm.
+Enerdata, CHANGE IN DISTANCE TRAVELLED BY CAR, https://www.odyssee-mure.eu/publications/efficiency-by-sector/transport/distance-travelled-by-car.html#:~:text=Large%20discrepancy%20of%20the%20average,km%2Fyear%20for%20the%20EU.
+
+          A. D. Duce, P. Egede, G. Öhlschläger, T. Dettmer, H.-J. Althaus, T. Bütler and E. Szczechowicz,  DOI:10.13140/RG.2.1.2782.8244.
+
+          C. Jones and G. Hammond, Embodied energy and carbon – The ICE database, https://www.circularecology.com/embodied-energy-and-carbon-footprint-database.html#.XpWW4cgzZPZ.
+P. Zhai, J. A. Isaacs and M. J. Eckelman, Appl. Energy, 2016, 173, 624–634 CrossRef CAS.
+J. Porzio and C. D. Scown, Adv. Energy Mater., 2021, 11, 2100771 CrossRef CAS.
+E. G. Hertwich, T. Gibon, E. A. Bouman, A. Arvesen, S. Suh, G. A. Heath, J. D. Bergesen, A. Ramirez, M. I. Vega and L. Shi, Proc. Natl. Acad. Sci. U. S. A., 2015, 112, 6277–6282 CrossRef CAS PubMed.
+
+          M. Schmied and W. Knörr, 2012.
+Z. Kis, N. Pandya and R. H. E. M. Koppelaar, Energy Policy, 2018, 120, 144–157 CrossRef.
+
+          S. Teske, Achieving the paris climate agreement goals: global and regional 100% renewable energy scenarios with non-energy GHG pathways for +1.5c and +2c, Springer Berlin Heidelberg, New York, NY,  2018 Search PubMed.
+I. de Blas, L. J. Miguel and I. Capellán-Pérez, Energy Strategy Rev., 2019, 26, 100419 CrossRef.
+
+          I. De Blas, M. Mediavilla, I. Capellán and C. Duce, MEDEAS, https://www.medeas.eu/model/medeas-model.
+
+          H. U. Sverdrup, A. H. Olafsdottir and K. V. Ragnarsdottir, in Feedback Economics, ed. R. Y. Cavana, B. C. Dangerfield, O. V. Pavlov, M. J. Radzicki and I. D. Wheat, Springer International Publishing, Cham,  2021, pp. 247–283 Search PubMed.
+
+          T. Norgate, EP135565 CSIRO Aust., 2013, 2.
+R. B. Norgaard, J. Environ. Econ. Manage., 1990, 19, 19–25 CrossRef.
+D. B. Reynolds, Ecol. Econ., 1999, 31, 155–166 CrossRef.
+P. Nuss and M. J. Eckelman, PLoS One, 2014, 9, e101298 CrossRef PubMed.
+M. L. C. M. Henckens, E. C. van Ierland, P. P. J. Driessen and E. Worrell, Resour. Policy, 2016, 49, 102–111 CrossRef.
+Watson & Eggert, 2020, 10.
+J. F. Clarke and J. A. Edmonds, Energy Econ., 1993, 15, 123–129 CrossRef.
+
+          K. E. Train, Discrete choice methods with simulation, Cambridge University Press,  2009 Search PubMed.
+
+          D. McFadden, Conditional Logit Analysis of Qualitative Choice Behavior, in Frontiers in Econometrics, ed. P. Zarembka, Academic Press,  1973, pp. 105–142 Search PubMed.
+EEA, 2020.
+C. Focas and P. Christidis, Transp. Res. Procedia, 2017, 25, 531–550 CrossRef.
+IVECO Group, Enlighten your way with IVECO BUS's product family, ready for the mobility of tomorrow, https://media.ivecogroup.com/emea-english/iveco-bus/enlighten-your-way-with-iveco-bus-s-product-family--ready-for-the-mobility-of-tomorrow/s/ee0c88c4-f1a5-4291-8305-db14c8053e1c.
+Car.info, IVECO Bus E-Way data, https://www.car.info/en-se/iveco-bus/e-way/e-way-107-m-350-kwh-2020-25856576.
+M. Giampietro and S. O. Funtowicz, Environ. Sci. Policy, 2020, 109, 64–72 CrossRef.
+J. B. Dunn, L. Gaines, J. Sullivan and M. Q. Wang, Environ. Sci. Technol., 2012, 46, 12704–12710 CrossRef CAS PubMed.
+H. Hao, Q. Qiao, Z. Liu and F. Zhao, Resour., Conserv. Recycl., 2017, 122, 114–125 CrossRef.
+OECD, The Circular Economy in Cities and Regions, https://www.oecd.org/cfe/regionaldevelopment/Circular-economy-brochure.pdf.
+NREL, A Circular Economy for Lithium-Ion Batteries Used in Mobile and Stationary Energy Storage: Drivers, Barriers, Enablers, and U.S. Policy Considerations, https://www.nrel.gov/docs/fy21osti/77035.pdf.
+J. Peng, N. Chen, R. He, Z. Wang, S. Dai and X. Jin, Angew. Chem., 2017, 129, 1777–1781 CrossRef.
+J. Tu, J. Wang, S. Li, W.-L. Song, M. Wang, H. Zhu and S. Jiao, Nanoscale, 2019, 11, 12537–12546 RSC.
+
+Climate change 2014: mitigation of climate change: Working Group III contribution to the Fifth Assessment Report of the Intergovernmental
+Panel on Climate Change, ed. O. Edenhofer, Cambridge University Press, New York, NY,  2014 Search PubMed.
+NISSAN motor company, Electric vehicle lithium-ion battery, https://www.nissan-global.com/EN/INNOVATION/TECHNOLOGY/ARCHIVE/LI_ION_EV/.
+M. O. Metais, O. Jouini, Y. Perez, J. Berrada and E. Suomalainen, Renewable Sustainable Energy Rev., 2022, 153, 111719 CrossRef.
+
+          M. Nicholas, URL https://theicct.org/wp-content/uploads/2021/06/ICCT_EV_Charging_Cost_20190813.pdf.
+H. S. Das, M. M. Rahman, S. Li and C. W. Tan, Renewable Sustainable Energy Rev., 2020, 120, 109618 CrossRef.
+Nikkei Asia, Battery costs rise as lithium demand outstrips supply, https://www.ft.com/content/31870961-dee4-4b79-8dca-47e78d29b420.
+MAZDA, MAZDA MX-30 RIGHT SIZED BATTERY STRATEGY, https://www.mazda.co.uk/why-mazda/news-and-events/mazda-news/articles/mazda-mx-30-right-sized-battery-strategy/#:~:text=A%20stylish%20and%20versatile%20crossover,meet%20125A%20Combo%20Charging%20standards.
+Volvo, 2021.
+C. Guille and G. Gross, Energy Policy, 2009, 37, 4379–4390 CrossRef.
+B. K. Sovacool, L. Noel, J. Axsen and W. Kempton, Environ. Res. Lett., 2018, 13, 013001 CrossRef.
+S. Bobba, F. Mathieux and G. A. Blengini, Resour., Conserv. Recycl., 2019, 145, 279–291 CrossRef PubMed.
+
+          Konstantin Stadler, Richard Wood, Tatyana Bulavskaya, Carl-Johan Södersten, Moana Simas, Sarah Schmidt, Arkaitz Usubiaga, José Acosta-Fernández, Jeroen Kuenen, Martin Bruckner, Stefan Giljum, Stephan Lutter, Stefano Merciai, Jannick H. Schmidt, Michaela C. Theurl, Christoph Plutzar, Thomas Kastner, Nina Eisenmenger, Karl-Heinz Erb, Arjan Koning and Arnold Tukker, 2021.
+
+          F. Lambert, Tesla is already using cobalt-free LFP batteries in half of its new cars produced, https://electrek.co/2022/04/22/tesla-using-cobalt-free-lfp-batteries-in-half-new-cars-produced/.
+Swarajya Staff, Battle of Batteries: Lithium Iron Phosphates Are Good, But Not When Monopolised By China, https://swarajyamag.com/news-brief/battle-of-batteries-lithium-iron-phosphates-are-good-but-not-when-monopolised-by-china.
+
+          H. Jin, Tesla looks to pave the way for Chinese battery makers to come to U.S., https://www.reuters.com/article/tesla-battery-idCNL4N2RH04S.
+argus, China's November power battery output hits new high, https://www.argusmedia.com/en/news/2282543-chinas-november-power-battery-output-hits-new-high.
+
+          A. Colthorpe, LFP to dominate 3TWh global lithium-ion battery market by 2030, https://www.energy-storage.news/lfp-to-dominate-3twh-global-lithium-ion-battery-market-by-2030/.
+R. He and M. J. Small, Environ. Sci. Technol., 2022, 56, 2709–2717 CrossRef CAS PubMed.
+P. Christmann, Nat. Resour. Res., 2018, 27, 159–177 CrossRef.
+K. Petrauskienė, M. Skvarnavičiūtė and J. Dvarionienė, J. Clean. Prod., 2020, 246, 119042 CrossRef.
+F. D. Pero, M. Delogu and M. Pierini, Procedia Struct. Integr., 2018, 12, 521–537 CrossRef.
+R. Kawamoto, H. Mochizuki, Y. Moriguchi, T. Nakano, M. Motohashi, Y. Sakai and A. Inaba, Sustainability, 2019, 11, 2690 CrossRef.
+J. Yang, F. Gu and J. Guo, Resour., Conserv. Recycl., 2020, 156, 104713 CrossRef.
+G. Fontaras, B. Ciuffo, N. Zacharof, S. Tsiakmakis, A. Marotta, J. Pavlovic and K. Anagnostopoulos, Transp. Res. Procedia, 2017, 25, 3933–3943 CrossRef.
+FULLY CHARGED, Electric vehicle database, https://ev-database.org/#sort:path~type~order=.rank~number~desc|range-slider-range:prev~next=0~1200|range-slider-acceleration:prev~next=2~23|range-slider-topspeed:prev~next=110~450|range-slider-battery:prev~next=10~200|range-slider-towweight:prev~next=0~2500|range-slider-fastcharge:prev~next=0~1500|paging:currentPage=0|paging:number=9.
+
+          J. Métrailler and M. Muller, 2022.
+I. Dolganova, A. Rödl, V. Bach, M. Kaltschmitt and M. Finkbeiner, Resources, 2020, 9, 32 CrossRef.
+A. Ortego, G. Calvo, A. Valero, M. Iglesias-Émbil, A. Valero and M. Villacampa, Resour., Conserv. Recycl., 2020, 161, 104968 CrossRef.
+EU JRC, Critical Raw Materials for Strategic Technologies and Sectors in the EU - A Foresight Study, European Commission Joint Research Centre Institute for Environment and Sustainability, Luxembourg: Publications Office of the European Union, 2020, 2020.
+S. Deetman, H. S. de Boer, M. Van Engelenburg, E. van der Voet and D. P. van Vuuren, Resour., Conserv. Recycl., 2021, 164, 105200 CrossRef CAS.
+W. S. Steffen, W. B. Broadgate, L. D. Deutsch, O. G. Gaffney and C. L. Ludwig, Anthr. Rev., 2015, 2(1), 81–98 Search PubMed.
+G. Calvo, G. Mudd, A. Valero and A. Valero, Resources, 2016, 5, 36 CrossRef.
+J. H. M. Harmsen, A. L. Roes and M. K. Patel, Energy, 2013, 50, 62–73 CrossRef.
+G. M. Mudd, Resour. Policy, 2010, 35, 98–115 CrossRef.
+R. Magdalena, A. Valero and J. L. Palacios, J. Sustain. Min., 2021, 20, 5 Search PubMed.
+F. Fizaine and V. Court, Ecol. Econ., 2015, 110, 106–118 CrossRef.
+
+          H. Óllafsdóttir, et al., LOCOMOTION. Models of Energy technologies, D.7.3,  2021 Search PubMed.
+
+          K. Katrena, et al., LOCOMOTION. Household/Consumption sub-module, Report D4.1,  2021 Search PubMed.
+C. B. Field, J. E. Campbell and D. B. Lobell, Trends Ecol. Evol., 2008, 23, 65–72 CrossRef PubMed.
+
+          J. Laherrère, Oil & gas production forecasts (1900–2200),  2018 Search PubMed.
+S. H. Mohr, J. Wang, G. Ellem, J. Ward and D. Giurco, Fuel, 2015, 141, 120–135 CrossRef CAS.
+
+          W. Zittel, J. Zerhusen, M. Zerta and N. Arnold, Fossil and Nuclear Fuels – the Supply Outlook, Energy Watch Group,  2013, https://www.energywatchgroup.org/fossil-and-nuclear-fuels-supply-outlook/ Search PubMed.
+J. Nieto, Ó. Carpintero, L. J. Miguel and I. de Blas, Energy Policy, 2019, 111090 Search PubMed.
+M. A. Pellow, C. J. M. Emmott, C. J. Barnhart and S. M. Benson, Energy Environ. Sci., 2015, 8, 1938–1952 RSC.
+S. Sgouridis, M. Carbajales-Dale, D. Csala, M. Chiesa and U. Bardi, Nat. Energy, 2019, 4, 456–465 CrossRef CAS.
+ZE PERFS, Citroën C4 1.2 PureTech 130 PS (2021) technical specifications and performance figures, https://zeperfs.com/en/fiche9095-citroen-c4-iii-1-2-puretech.htm.
+ZE PERFS, Citroën C4 e 136 PS (2021) technical specifications and performance figures, https://zeperfs.com/en/fiche9119-citroen-c4-iii-e.htm.
+PSA powertrains, EB2ADTX EURO 6 2 Petrol Engine Automotive application version, https://site.groupe-psa.com/content/uploads/sites/32/2018/04/EB2ADTX.pdf.
+
+Footnotes† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2ee00802e‡ We use the standard concept “low carbon technologies” to refer to all energy technologies that are typically being proposed to mitigate GHG emissions (renewables, electric storage, nuclear, CCS, etc.). This term is used for practical purposes independently of the opinions of the authors of this article about their potential to contribute to the transition towards a sustainable energy system.§ Other studies such as Pellow et al. (2015)194 and Sgouridis et al. (2019)195 derive/take their estimates from this original estimate.¶ Note that despite aiming at this ambitious mitigation target only the Degrowth scenario reaches this target, the other ranging between +20% (expected EV trends) and −15% and −30% for EV High and E-bike, respectively. See De Blas et al.24 for details.|| The Citroën C4 EV is 294 kg heavier than its ICEV equivalent.196,197 Given the capacity of the battery (50 kW h), this difference can be attributed almost entirely to the battery as a whole (which weighs approximately 300 kg based on the examples collated in Table 3). Account must also be taken of the extra 20 kg of copper in the electric vehicle (cf.Table 5) and the 36 kg of fuel that the combustion vehicle weighs (50 litres of petrol). This indicates that the weight of the combustion engine and gearbox (about 140–150 kg,198 almost entirely made of steel) is similar to or slightly less (<10 kg) than the weight of the electric motor, power electronics, inverter and battery support structure (which, without taking into account the copper already accounted for above, are almost entirely made of steel). Hence, the steel weights of the two types of vehicles should be similar. Of course, there are some differences related to specificities of the ICEV such as the need for catalysers, which affect the demand of other metals not studied here such as platinum.179** The latter point is one of the key methodological differences in relation to the static analysis carried out by Pulido et al. (2020).45This journal is © The Royal Society of Chemistry 2022
+Table Content:
+
+Broader context
+The transport sector contributed to 27% of global CO2 emissions in 20191 (with large regional heterogeneity), with an increased mobility demand trend in most countries. The electrification of transport is one of the cornerstones of decarbonisation strategies, potentially addressing ∼2/3 of current GHG transport emissions (i.e., excluding shipping, aviation and long-haul heavy trucks).2 In this work, we aim to shed light on two biophysical limitations: potential material bottlenecks and net energy returns. We find that the net energy return of a typical household 4-wheeler including grids and chargers is almost zero, i.e., the same amount of energy is invested in its manufacturing than it is given back for mobility use during its lifetime. Model simulation under 3 different transition strategies in the transportation sector by 2050 allows us to estimate the EV battery market shares, the recycling content rates and the shares of cumulative extraction vs. current reserves and resources. We find that reserves of copper, cobalt, lithium, manganese, nickel and graphite would be depleted in at least one of the scenarios studied. Recycling is an important strategy to reduce criticalities, but with limited effectiveness due to the overall system effects. The perspective of net energy analysis recommends to favor those EV transport modes with higher ESOI, such as shared and public transportation. From an energy societal metabolic point of view, switching to more energy-intensive mobility services would decrease the amount of net energy for other discretionary uses of the society, which would go in the direction of hampering well-being. Further work should perform a thorough comparison of the full energy lifecycle of EVs and ICEVs.
+
+
+García olivares et al. (2012)41	NO (including in detail other LCTs)	Static	Electrified railroad	• Expected trends	Copper	NO
+Light EV vehicles	Cobalt
+Heavy electric vehicles	Nickel
+EV batteries (Li-ion & Zebra Na-NiCl2)	
+
+
+
+Tokimatsu et al. (2017)40	NO (including in detail other LCTs)	Dynamic	Light EV vehicles	• Target 2 °C (gas and renewables)	Cobalt	NO
+EV batteries (LMO & NCA (LiNi0.8Co0.15Al0.05O2))	• Target 2 °C (coal and nuclear)	Lithium
+Hybrid vehicles	• IRENA Global Energy Transition: 2050dREmap scenario	Manganese
+Heavy electric vehicles	• (IEA) 2018dSustainable development Scenario	Nickel
+Electrified railroad	IEA ETP B2deg Scenario	
+
+
+	• Jacobson et al. 100% clean and renewable energy roadmaps for 139 countries with an assessment of stationary storage demand	
+
+• LUT University and Energy Watch Group global energy system based on 100% renewable energy
+
+
+Valero et al. (2018)38	YES (including in detail other LCTs)	Static	Light EV vehicles	• Expected trends	Aluminium	NO
+EV battery NCA	Copper
+Electric motors	Cobalt
+Heavy electric vehicles	Lithium
+Hybrid vehicles	Manganese
+
+	Nicke
+
+
+Koning et al. (2018)49	YES (including in detail other LCTs)	Static	EV batteries (NiMH & LMO)	• Business-as-usual (BAU) scenario, including efficiency improvements	Aluminium	NO
+Electric motors	• Technological Scenario (TS)	Copper
+Heavy electric vehicles	• Blue Map electricity supply (BMES) scenario of IEA	Lithium
+Hybrid vehicles	• Rare Earth Metals (REM) scenario.	Nickel
+Light EV vehicles	
+	
+
+
+
+Mangerber and Stenqvist (2018)42	NO (excepting other LCTs)	Static	EV battery NMC111, NMC442, NMC532 & NMC622	• ‘Beyond 2 degree’ (B2D) scenario from the energy technology perspective study by IEA (2017a)	Cobalt	NO
+Electric motors	Copper
+Heavy electric vehicles	Dysprosium
+Hybrid vehicles	Gallium
+Hydrogen vehicles	Lithium
+Light EV vehicles	Indium
+
+	Neodymium
+
+	Nickel
+
+	Platinum
+
+	Selenium
+
+	Silver
+
+	Tellurium
+
+
+Moreau et al. (2019)43	NO (excepting other LCTs)	Static	EV batteries (NCA, NMC622, NMC811, LFP, Zebra NaNiCl)	• IPCC	Aluminium	NO
+Biofuels	• Ecofys and WWF
+• IEA ETP B2deg Scenario
+• IEA high ren
+• IRENA Global Energy Transition: 2050 REmap scenario
+
+	
+	Cobalt
+
+	
+	Copper
+
+	
+	Indium
+
+	
+	Iron
+
+	
+	Lithium
+
+	
+	Magnesium
+
+	
+	Manganese
+
+	
+	Neodymium
+
+	
+	Nickel
+
+	
+	Palladium
+
+	
+	Platinum
+
+
+Capellán-Pérez et al. (2019)*44	YES (including in detail other LCTs)	Dynamic	EV battery LMO	GG-50%	Aluminium	NO
+Light EV vehicles	GG-75%	Copper
+Heavy electric vehicles	GG-100%	Lithium
+Hybrid vehicles	
+	Manganese
+Electrified railroad	
+	
+
+
+
+Junne et al. (2020)39	YES (including in detail other LCTs)	Dynamic	EV batteries (NMC, NCA, LFP, LMO, LiS8, LiO2)	• Greenpeace Evolution 2015	Cobalt	NO
+Electric motors	• Advanced Energy scenario	Lithium
+Heavy electric vehicles	
+	Dysprosium
+Hybrid vehicles	
+	Neodymium
+Hydrogen vehicles	
+	
+
+Light EV vehicles	
+	
+
+
+
+This work	YES (including in detail other LCTs)	Static and Dynamic	EV batteries (LMO, NCA, NMC622, NMC811, LFP)	• Expected EV trends	Aluminium	YES
+Electric motors copper	• EV High	Copper
+Heavy electric vehicles	• E-bike	Cobalt
+Hybrid vehicles	• Degrowth	Lithium
+Light EV vehicle	
+	Manganese
+Electrified railroad	
+	Nickel
+Electric chargers and connection to the grid (including auxiliary elements)	
+	Flake graphite
+
+ 	Fig. 1  Workflow of the analysis.	 
+
+
+
+Walking	•	—	—	—
+Single person vehicle	•	•	—	—
+Shared single person vehicle	X	X	—	—
+Car	—	•	•	•
+Shared car	—	X	X	X
+Motorcycle	—	•	•	•
+Bike	•	•	—	•
+Shared bike	—	X	—	—
+Bus	—	•	•	•
+Cab	—	•	•	•
+Small truck/van	—	•	•	•
+Long-distance truck (Lorry)	—	—	•	•
+Subway/suburban train	—	•	•	X
+Medium and long-distance train	—	•	•	X
+Freight train	—	•	•	X
+
+Battery mass	kg	∼294	∼330	∼330	∼478	∼700
+Battery capacity	kW h	∼24	∼55	∼55	∼80.5	∼85
+Examples of vehicle models using each type of battery	—	Nissan Leaf	Hyundai Kona; Ioniq	Renault ZOE	Tesla Model 3	BYD e6
+Ref.	—	
+82
+	
+80, 81 and 83
+	
+83 and 91
+	
+84
+	
+85 and 92
+
+
+
+Aluminium	1396.5	756	756	759.1	939
+Copper	807.2	468	468	463	543
+Iron	0	0	0	0	486
+Lithium	96	78	66	48	61
+Manganese	1422	120	60	0	0
+Nickel	0	367	451	402	0
+Cobalt	0	120	60	63	0
+Phosphorus	0	0	0	0	270
+Graphite flake	865.8	442	442	385	524
+Rest (plastics, electronics…)	1933.5	915.8	989.5	1168.8	1560.2
+Oxygena	829.03	333.23	307.58	274.16	556.96
+TOTAL	7350	3600	3600.1	3563.1	4940.1
+Ref.	
+76 and 77
+	
+75–77
+	
+75–77
+	
+75–77
+	
+75–78
+
+
+
+Inverter	0	0.31	0.3	0.31	1
+Electric motor	0	5	5	9.9	20
+High voltage connection	0	5	5	5	11
+Low voltage connection	18	23	23	23	40
+Others	5	5	5	5	5
+TOTAL (excluding battery)	23	38.3	38.3	43.2	77
+
+Material intensity	Copper	kg per unit	∼0.7	∼1.5	120
+Iron	kg per unit	0	0	180
+Cement	kg per unit	0	1200	2400
+Stainless steel	kg per unit	3.5	2.14	90
+PVC	kg per unit	7.5	0	0
+ABS, Fiberglass…	kg per unit	0	52.5	380
+Lifetime. Source: ref. 96	Years	15	10	12
+
+Private vehicles	H4w BEV	
+96
+	1	0.25	0.15
+H4w HEV	HEV do not require chargers	0	0	0
+H2w BEV	Own estimation, see text	1	0.25	0
+SEV	Own estimation, see text	0	0	0
+Commercial vehicles	HV HEV	HEV do not require chargers	0	0	0
+LC BEV	Own estimation, see text	1	0.25	0
+LC HEV	HEV do not require chargers	0	0	0
+Bus HEV	HEV do not require chargers	0	0	0
+Bus BEV	Own estimation, see text	0	1	0
+
+
+Material intensity	Copper	kg m−1	0.044	0	0	0
+Aluminium	kg m−1	0	0.173	1.215	1.215
+Galvanized steel	kg m−1	0	0	0.45	0.45
+Steel bar	kg m−1	0	0	2.48	2.48
+Cement	kg m−1	0	0	180	180
+PVC	kg m−1	0	0	11	11
+Lifetime100	years	40
+
+Length of railroads	km	1142014
+Share of electrified railroads	%	27%
+Share of single tracks	%	50%
+Lifetime of the tracks	years	60
+Lifetime of the catenary	years	20
+Copper railroad (single track)	kg km−1	10791.25
+Traction substation (single track)	kg km−1	50
+
+
+Resources	Mt	
+52
+	40	130	145	1030	7.5 × 104	2100	670
+Reserves	Mt	
+52
+	14	81	7.2	570	2.8 × 104	720	21
+Current estimated recycling rates EOL	%	
+114
+	15a	60	32	53	56	48	0
+
+ 	Fig. 2  Boundaries taken for ESOIfinal and ESOIst.	 
+	(1)
+	(2)
+ECL = Electricity stored over the lifetime·CL	(3)
+	(4)
+
+ 	Fig. 3  Stock-flow diagram of the material flow analysis developed for MEDEAS-W. VenSIM has a visual interface that allows us to relate variables by means of arrows (arithmetic operations) and to establish stocks (variables in boxes) together with flows (arrows that enter and leave the boxes). Stocks take an initial value (set by the user) at the beginning of the simulation, and then vary depending on the related flows.	 
+	(5)
+	(6)
+	(7)
+	(8)
+	(9)
+
+
+Household vehicles (Share, %)	4-wheelers	Liquids 4w	65.0%	15.0%	0.0%	2.2%	2.2%
+Electric 4w	0.5%	35.0%	66.0%	9.6%	9.6%
+Hybrid 4w	0.1%	10.0%	0.0%	0.1%	0.1%
+Gas 4w	1.2%	6.0%	0.0%	0.1%	0.1%
+2-wheelers	Liquids 2w	23.7%	6.8%	0.0%	0.0%	0.0%
+electric 2w	9.5%	27.2%	34.0%	60.0%	60.0%
+Additional substitutes	e-Bikes	0.0%	0.0%	0.0%	20.0%	20.0%
+Non-motorized	0.0%	0.0%	0.0%	8.0%	8.0%
+Inland transport heavy vehicles (Share, %)	Liquids HV	99.8%	99.8%	20.0%	98.0%	98.0%
+Hybrid HV	0.1%	0.1%	80.0%	1.0%	1.0%
+Gas HV	0.1%	0.1%	0.0%	1.0%	1.0%
+Inland transport light vehicles (Share, %)	Liquids LV	98.9%	23.0%	0.0%	18.0%	18.0%
+Electric LV	0.1%	53.0%	100.0%	80.0%	80.0%
+Hybrid LV	0.1%	15.0%	0.0%	1.0%	1.0%
+Gas LV	0.9%	9.0%	0.0%	1.0%	1.0%
+Buses (Share, %)	Liquids buses	100.0%	23.0%	0.0%	19.0%	19.0%
+Electric buses	0.0%	53.0%	100.0%	40.0%	40.0%
+Hybrid buses	0.0%	15.0%	0.0%	40.0%	40.0%
+Gas buses	0.0%	9.0%	0.0%	1.0%	1.0%
+Trains (Share, %)	Liquids train	50.0%	50.0%	0.0%	0.0%	0.0%
+Electric train	50.0%	50.0%	100.0%	100.0%	100.0%
+Modal shift HV to train (pct. increase in trains)	—	0.0%	0.0%	30.0%	30.0%
+Use of EV batteries for electricity system storage*	0%	0%	0%	0%	0%
+Recycling rate (EOL) of materials (%)	Aluminium (Al)	56%	56%	85%	85%	85%
+Cobalt (Co)	32%	32%	64%	64%	64%
+Copper (Cu)	48%	48%	85%	85%	85%
+Graphite	0%	0%	30%	30%	30%
+Lithium (Li)	15%b	15%	30%	30%	30%
+Manganese (Mn)	53%	53%	85%	85%	85%
+Nickel (Ni)	60%	60%	85%	85%	85%
+GDPpc planned (annual growth)	1.4% per yeara	1.4% per year	1.4% per year	1.4% per year	Steady-state economy at 5000 1995 US$ per capitac
+Household demand-management (pct vs. 2020 Households demand)	Inland transport	—	NO	NO	NO	−60%
+Water transport	—	NO	NO	NO	−60%
+Air transport	—	NO	NO	NO	−85%
+
+LMO	0.0032–0.0016	3.15 × 107	10	0.014	21.3 ± 10%	35.4 ± 10%	0.737	200 (−50%; +100%)	6.69 × 105	9.1 × 104	2.20 × 105	3.44 × 104	1.31 × 105
+NMC 622	0.0032–0.0016	3.15 × 107	10	0.014	21.3 ± 10%	35.4 ± 10%	0.737	200 (−50%; +100%)	4.24 × 105	6.65 × 104	2.20 × 105	1.69 × 104	9.63 × 104
+NMC 811	0.0032–0.0016	3.15 × 107	10	0.014	21.3 ± 10%	35.4 ± 10%	0.737	200 (−50%; +100%)	4.13 × 105	6.55 × 104	2.20 × 105	1.69 × 104	9.63 × 104
+NCA	0.0032–0.0016	3.15 × 107	10	0.014	21.3 ± 10%	35.4 ± 10%	0.737	200 (−50%; +100%)	4.00 × 105	6.41 × 104	2.20 × 105	1.67 × 104	9.60 × 104
+LFP	0.0032 –0.0016	3.15 × 107	10	0.014	21.3 ± 10%	35.4 ± 10%	0.737	200 (−50%; +100%)	4.30 × 105	6.71 × 104	2.20 × 105	2.31 × 104	1.09 × 105
+
+ESOIst	200000	1.1–1.5	1.4–2.2	1.4–2.2	1.4–2.3	1.4–2.1
+ESOIfinal	200000	0.4–0.7	0.4–0.9	0.4–0.9	0.4–0.9	0.4-0.9
+ESOIst	100000	0.5–0.7	0.7–1.1	0.7–1.1	0.7–1.1	0.7–1
+ESOIfinal	100000	0.2–0.4	0.2–0.5	0.2–0.5	0.2–0.5	0.2–0.5
+
+ 	Fig. 4  ESOI (standard and final) levels for a 4-wheeler using a NMC622 battery depending on its mileage.	 
+
+ 	Fig. 5  Battery power put into service in EVs annually (TW/year) by scenario, for more details cf. de Blas et al.24	 
+
+ 	Fig. 6  ESOIdyn variation over time by EV battery for each scenario: ESOIdynst (panels a–d) and ESOIdynfinal (panels e–h).	 
+
+ 	Fig. 7  Material scarcity indicator for each simulation for the relevant materials in EV batteries. Materials availability include the demand from low carbon technologies and the rest of the economy.	 
+
+ 	Fig. 8  Market share of EV batteries over time by scenario.	 
+
+ 	Fig. 9  Recycling rate (RC) over time for a selection of materials. Comparison with the target EOL recycling rate for 2050 set in the policy-action simulations EV High, E-bike and Degrowth (in EV trends current EOL recycling rates are maintained).	 
+
+ 	Fig. 10  Cumulated primary material demand until 2050 with relation to current reserves in the 4 scenarios. See data in tab “Material Requirements” in the ESI.†	 
+
+ 	Fig. 11  Cumulated primary material demand until 2050 with relation to current resources in the 4 scenarios. See data in tab “Material Requirements” in the ESI.†	 
+BEV	Battery electric vehicle
+CF	Capacity factor
+CL	Charge loss ratio
+EaB&E	Energy used at battery and electronics
+ECL	Energy charging losses
+EnU	Energy used
+EOL	End-of-life
+EROI	Energy return on energy invested
+ESOI	Energy stored on energy invested
+ESOIfin	ESOI final
+ESOIst	ESOI standard
+EV	Electric vehicle
+g	Final-to-primary ratio
+GET	Green energy technology
+GHG	Greenhouse gas
+HEV	Hybrid electric vehicle
+IAM	Integrated assessment model
+ICE	Internal combustion engine
+L	Lifetime
+LCT	Low carbon technology
+LFP	Lithium–iron-phosphate
+LMO	LiMnO2
+MAB	Material abundance indicator per battery
+MS	Material scarcity indicator
+MSB	Material scarcity indicator per battery
+NCA	Nickel–cobalt–aluminium
+NMC	Nickel–manganese–cobalt
+OL	Operational losses
+PHEV	Plug-in electric vehicle
+RC	Recycled content
+RES	Renewable energy source
+TDL	Transport and distribution losses
+H4w HEV	4-wheeled hybrid electric vehicle
+H4w BEV	4-wheeled battery electric vehicle
+H2w BEV	2-wheeled hybrid electric vehicle
+SEV	Single-person electric vehicle
+HV HEV	Heavy vehicle hybrid electric vehicle
+LC BEV	Light cargo battery electric vehicle
+LC HEV	Light cargo hybrid electric vehicle
+Bus HEV	Bus hybrid electric vehicle
+Bus BEV	Bus battery electric vehicle
+Socioeconomy:
+• Population growth: SSP2 (stabilization at 10000 million people by 2100)
+• GDPpc planned: scenario-dependent
+• Target labor share (2050): 52%
+• A matrix: constant (2009)
+• Efficiency improvements (final energy intensity by sector): trends by sector/households and fuel, own estimation
+Energy:
+• Annual capacity growth of RES for electricity/Techno-sustainable potential:
+ ∘ Hydroelectricity: 3.8% per year/1 TW
+ ∘ Geothermal: 4.2% per year/0.3 TW
+ ∘ Bioenergy shared potential for heat, liquids and electricity: 7.8% per year
+ ∘ Oceanic: 20% per year/0.05 TW
+ ∘ Wind onshore: 20% per year/1 TW
+ ∘ Wind offshore: 20% per year/0.25 TW
+ ∘ Solar PV: 20% per year/200 MHa shared on land + PV rooftop
+ ∘ Solar CSP: 20% per year/100 MHa
+ ∘ Pumped hydro storage: 15% per year/0.25 TW
+• Target capacity of RES for heat (2050) (commercial and non-commercial): 4.4 TW
+• Bioenergy:
+ ∘ Marginal lands: 386 MHa189
+ ∘ Second generation cropland + 11% per year
+ ∘ Third generation cropland (starting in 2025) 11% per year
+ ∘ Residues (starting in 2025) 20% per year 11 EJ per year
+ ∘ Nuclear installed capacity: constant at current level
+Material resources:
+• Non-renewable energies depletion curves:
+ ∘ Oil190
+ ∘ Gas190
+ ∘ Coal Best Guess191
+ ∘ Uranium192
+• Recycling rates of materials (19 materials): current recycling rates (EOL) scenario-dependent
+Land-use:
+• Global afforestation program? No
+Activation of model switches:
+• Climate Change impacts: not activated
+• EROI feedback: activated (cf. Capellán-Pérez et al. 201952)
+• Energy limits feedback: activated (cf. Nieto et al. 2019193)
+• Inter-final energy replacements: activated (cf. de Blas et al. 2019128)
+
+ 	Fig. 12  Trends EV batteries recycling process.	 
+
+Lithium	0	0	57	94	94	94
+Nickel	94	94	94	97	97	97
+Cobalt	95	95	95	∼99	∼99	∼99
+Manganese	0	0	0	∼99	∼99	∼99
+Graphite	0	0	0	0	0	∼99
+Aluminium	0	0	∼99	∼99	∼99	∼99
+Copper	∼99	∼99	∼99	∼99	∼99	∼99
+
+1995–2015 Average	13.8	11.6	11.4	10.2	8.3	7.6	6.6	5.2	5.1	3.7
+Minimum	9.4	6.1	8.5	6.7	6.1	5.2	5.3	4.0	3.2	2.3
+Maximum	18.6	15.4	15.4	12.3	11.5	11.8	8.1	6.3	7.1	4.9
+
+Mining of iron ores	25	
+	6.0%	
+	
+	
+	
+	
+	
+	
+	
+
+Mining of copper ores and concentrates	26	
+	
+	
+	
+	
+	
+	
+10.0%
+	
+	
+	
+
+Mining of nickel ores and concentrates	27	
+	
+	
+	
+	
+6.6%
+	
+	
+	
+	
+	
+
+Mining of aluminium ores and concentrates	28	
+	
+	
+	
+5.6%
+	
+	
+	
+	
+	
+	
+
+Mining of precious metal ores and concentrates	29	11.4%	
+	14.6%	
+	
+	12.3%	
+	
+	
+	
+
+Mining of lead, zinc and tin ores and concentrates	30	
+	
+	
+	
+	
+	
+	
+	9.0%	10.1%	8.0%
+Precious metals production	74	5.0%	
+	
+	
+	
+	5.7%	
+	
+	
+	
+
+Lead, zinc and tin production	78	
+	
+	
+	
+	
+	
+	
+	
+	5.1%	
+
+Manufacture of machinery and equipment n.e.c.	86	6.1%	11.8%	11.4%	
+12.8%
+	
+7.9%
+	5.8%	
+7.9%
+	
+	
+	
+
+Manufacture of electrical machinery and apparatus n.e.c.	88	
+	
+	
+	
+	
+	
+	
+6.5%
+	
+	
+	
+
+Manufacture of motor vehicles, trailers and semi-trailers	91	12.6%	8.4%	10.3%	
+7.9%
+	
+6.5%
+	6.5%	
+5.2%
+	
+	
+	
+
+Manufacture of furniture; manufacturing n.e.c.	93	7.0%	
+	
+	
+	
+	7.8%	
+	
+	
+	
+
+Construction	113	15.2%	28.7%	15.4%	
+19.2%
+	
+28.5%
+	14.5%	
+22.5%
+	32.2%	35.5%	36.7%
+Health and social work	138	
+	
+	
+	
+	
+	
+	
+5.0%
+	
+	
+	
+
+Footnotes
+† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2ee00802e
+‡ We use the standard concept “low carbon technologies” to refer to all energy technologies that are typically being proposed to mitigate GHG emissions (renewables, electric storage, nuclear, CCS, etc.). This term is used for practical purposes independently of the opinions of the authors of this article about their potential to contribute to the transition towards a sustainable energy system.
+§ Other studies such as Pellow et al. (2015)194 and Sgouridis et al. (2019)195 derive/take their estimates from this original estimate.
+¶ Note that despite aiming at this ambitious mitigation target only the Degrowth scenario reaches this target, the other ranging between +20% (expected EV trends) and −15% and −30% for EV High and E-bike, respectively. See De Blas et al.24 for details.
+|| The Citroën C4 EV is 294 kg heavier than its ICEV equivalent.196,197 Given the capacity of the battery (50 kW h), this difference can be attributed almost entirely to the battery as a whole (which weighs approximately 300 kg based on the examples collated in Table 3). Account must also be taken of the extra 20 kg of copper in the electric vehicle (cf.Table 5) and the 36 kg of fuel that the combustion vehicle weighs (50 litres of petrol). This indicates that the weight of the combustion engine and gearbox (about 140–150 kg,198 almost entirely made of steel) is similar to or slightly less (<10 kg) than the weight of the electric motor, power electronics, inverter and battery support structure (which, without taking into account the copper already accounted for above, are almost entirely made of steel). Hence, the steel weights of the two types of vehicles should be similar. Of course, there are some differences related to specificities of the ICEV such as the need for catalysers, which affect the demand of other metals not studied here such as platinum.179
+** The latter point is one of the key methodological differences in relation to the static analysis carried out by Pulido et al. (2020).45
+
+This journal is © The Royal Society of Chemistry 2022

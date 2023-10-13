@@ -1,0 +1,1036 @@
+Benchmarking triplet–triplet annihilation photon upconversion schemes   - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/C8CP00588E View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C8CP00588E
+(Paper)
+Phys. Chem. Chem. Phys., 2018, 20, 12182-12192Benchmarking triplet–triplet annihilation photon upconversion schemes†
+
+        
+          
+            Anders S. 
+            Gertsen‡
+*, 
+      
+        
+          
+            Mads 
+            Koerstz
+          
+        
+       and 
+
+        
+          
+            Kurt V. 
+            Mikkelsen
+          
+        
+      *
+      Department of Chemistry, University of Copenhagen, Universitetsparken 5, DK-2100 Copenhagen Ø, Denmark. E-mail: kmi@chem.ku.dk
+Received 
+      26th January 2018
+    , Accepted 6th April 2018First published on 6th April 2018AbstractPhoton upconversion facilitated by triplet–triplet annihilation in molecular systems is a promising path toward utilization of sub bandgap photons in photovoltaic devices. Prior to the challenging synthesis of new molecules, quantum chemical computations can aid the design process and provide suggestions for new and optimal systems. Here, we benchmark time-dependent density functional methods by their ability to describe relevant photophysical quantities of a range of different types of sensitizer/annihilator pairs to provide guidelines for future computational studies of potential new pairs. Using meta-GGA, hybrid, and range-separated hybrid functionals, we find that the hybrid functionals B3LYP and PBE0 (incorporating low to medium fractions of exact exchange of 20% and 25%, respectively) describe singlet absorptions the best, while triplet energetics are best described by the meta-GGA functionals M06-L and M11-L (incorporating no exact exchange), respectively. Furthermore, we find that the Tamm–Dancoff approximation of time-dependent density functional theory in general does not improve the description of neither singlet nor triplet energies of sensitizer/annihilator pairs.
+1 Introduction
+In general, photon upconversion (UC) is the process of combining two low-energy photons to one high-energy photon. The phenomenon of upconversion is observed in different materials, and especially nanocrystals doped with ions of rare-earth elements are being widely used by researchers in a broad range of fields such as bioimaging1,2 and solar cell enhancement.3,4 In the context of this paper, the focus will be solely on photon upconversion by molecular triplet–triplet annihilation (TTA-UC). In 1965, Parker, Hatchard, and Joyce introduced this concept by reporting delayed anti-Stokes acceptor fluorescence selectively sensitized by a range of donors.5 In Fig. 1, an illustrative diagram of TTA-UC is shown. It involves two triplet donors (henceforward referred to as sensitizers, S) and two triplet acceptors (from now referred to as annihilators, A). First, the two ground state sensitizer molecules 1S absorb one low-energy photon each and are excited to their first excited singlet states 1S*. These states then undergo fast intersystem crossing (ISC) to the sensitizers' lowest triplet states 3S*. Via a triplet–triplet energy transfer (TTET, described in detail in ESI†) the sensitizers transfer their energy to the lowest triplet states of the two annihilators 3A*. These two triplet annihilators then undergo another type of energy transfer, namely triplet–triplet annihilation (TTA, described in detail in ESI†), eventually causing one of the annihilators to end up in its first excited singlet state 1A* and the other to end up in its singlet ground state 1A. The excited annihilator then fluoresces and thereby emits a single photon of higher energy than that of the principal ones which excited the sensitizers. The full process can be written as: (1)with the net reaction being 2hν1 → hν2 where hν1 < hν2. TTA-UC relies not only on the spin-forbidden process of ISC, but also on highly specific energy profiles of the sensitizers and annihilators.5,6 Some general requirements for efficient TTA-UC include:
+ Fig. 1  A simple Jablonski diagram of triplet–triplet annihilation photon upconversion. The two insets are schematics of the electron rearrangements in the highest occupied molecular orbitals (HOMOs) and lowest unoccupied molecular orbitals (LUMOs) of the sensitizers, S, and annihilators, A, during triplet–triplet energy transfer (TTET) and triplet–triplet annihilation (TTA). ISC denotes intersystem crossing. 
+(i) The triplet energy of the annihilator should be lower than, or at least equal to, that of the sensitizer (i.e.3A* ≤ 3S*) to ensure the presence of an energetic pathway for the TTET process;
+(ii) The energy of the first excited singlet state of the annihilator should be higher than, or at least equal to, twice that of its triplet state (i.e. 23A* ≥ 1A*) to enable the TTA process;
+(iii) The triplet states involved should be long-lived (a least on the order of several μs) since both TTET and TTA are diffusion controlled processes;7,8
+(iv) Both the ISC quantum yield of the sensitizer and the fluorescence quantum yield of the annihilator should be close to unity.
+These strict requirements can be met due to the possibility of tuning the molecular properties of sensitizers and annihilators synthetically.9,10 Further advantages of TTA-UC over other upconversion techniques include the need for only low excitation power densities and the possibility of excitation by non-coherent light,7 enabling e.g. upconversion of sunlight and in vivo detection of for example cancer cells.11,12 Recently, the field has attracted much interest due to these possible applications of TTA-UC systems, and particularly intriguing is the utilization of sub-bandgap photons in solar harvesting systems,13–15 thus making it possible to circumvent the Shockley–Queisser limit for single bandgap crystalline silicon solar cells16 and corresponding limits for organic photovoltaics (OPVs)17 and closed-cycle molecular thermal solar energy storage systems (MOST-systems).18 Practical applications of TTA-UC to solar harvesting systems, however, demand high TTA-UC efficiencies even under non-coherent, low excitation power light to be feasible,19,20 but to our knowledge, the highest TTA-UC quantum yields reported are approximately 16% measured under coherent laser excitations;21–23 we note that the maximum TTA-UC quantum yield is intrinsically 50% since two low-energy photons are absorbed and one high-energy photon emitted, and that reported values herein are thus corrected correspondingly in case they were not in the original publications. The reader is referred to ref. 14 for further discussions of this. Furthermore, TTA-UC solutions have to be deaerated or in nanoconfinement due to oxygen quenching of the triplet states involved in the process,24,25 while applications in photovoltaics would benefit from films or polymeric materials instead of solutions.26,27 There is hence still progress to be made in the field.
+This paper addresses TTA-UC systems relevant for solar harvesting applications and aims to build a foundation for future theoretical investigations of new and more efficient TTA-UC sensitizer/annihilator pairs. As a first stepping stone towards theoretical modeling of these pairs, we must be able to a least reproduce the energetics depicted in Fig. 1 which are summarized as the above listed requirements. Of these, quantum chemical methods can routinely model the first three. We strongly urge the reader to refer to Section S1 in the ESI† for a short theoretical introduction to TTET and TTA if the reader is not familiar with the physics behind these processes, especially to gain an understanding of the limitations of electronic structure methods in this respect. Taking these limitations into account and comparing our calculations to experimental data, we seek to benchmark linear response time-dependent density functional theory (TD-DFT) methods and thereby enable future suggestions of new sensitizer/annihilator pairs and modifications to existing ones in order to optimize the TTA-UC process.
+2 Computational considerations
+As mentioned, the scope of this paper is to investigate the performance of different density functional theory (DFT) functionals in describing relevant properties of the sensitizer/annihilator pairs and to recommend a suitable level of theory for future studies. While much literature investigating methods for calculating properties of a wide range of e.g. organometallics applicable in the field of organic light-emitting diodes (OLEDs) exists,28,29 and likewise for the optical properties of extended π-systems,30,31 no literature addressing the basis-set and functional dependence of the sensitizer/annihilator combinations (TTA-UC pairs) to our knowledge exists.
+Choosing the test-set
+With an objective of diversity of molecular classes, high upconversion efficiency, but also computational feasibility, nine different sensitizer/annihilator pairs were chosen from the literature (see Scheme 1). Since transition metal octaethylporphyrin complexes (MOEPs) combined with 9,10-diphenylanthracene annihilators (DPAs) are the most routinely employed sensitizer/annihilator pair,7,14,32,33 we chose to investigate both ZnOEP, PdOEP, and PtOEP to be able to compare computed trends to experiment within this same class of compounds. The upconversion quantum yields, ΦUC, in chlorobenzene for these three pairs are 0.060, 0.125, and 0.150, respectively,33 when corrected to a maximum of 50% (cf. discussion in ref. 14). Furthermore, due to the considerable size of these MOEPs, their corresponding unsubstituted transition metal porphyrins (MPs) were included in this study too; the ethyl substituents are not expected to significantly alter the ISC efficiencies or excited state energetics but merely the solubility, which is why the MPs can be employed as model systems in more demanding computations.
+ Scheme 1  The annihilators (blue) and sensitizers (red) investigated herein. 
+In addition to the MOEPs, we have chosen to investigate the organometallics [Ru(bpy)3]2+ and Ir(ppy)3. While it has been proven that the octa-methylated version of the former, namely [Ru(dmb)3]2+, sensitizes DPA and that Ir(ppy)3 sensitizes pyrene to yield upconverted emission visible to the naked eye, their absolute upconversion efficiencies were not determined in the literature.34,35 We have chosen to study [Ru(bpy)3]2+ instead of [Ru(dmb)3]2+ in order to decrease computational costs, justified by the fact that the effect of the methyl substituents on the excited state energies is negligible.36,37
+In order to have a fully organic TTA-UC pair and furthermore small systems for test calculations, 2,3-butanedione (biacetyl) and 2,5-diphenyloxazole (PPO) were chosen, since they, to our knowledge, represent the smallest working TTA-UC pair (ΦUC = 0.0058).38 As further representatives for organic systems, the iodo-substituted BODIPY derivatives BI, BI-1, and BI-2 were chosen as sensitizers for the perylene annihilator.23,39 These pairs furthermore exhibit high TTA-UC quantum yields, comparable to the MOEP/DPA systems, with upconversion quantum yields of 0.054 in acetonitrile,39 and 0.165 and 0.103 in toluene, respectively.23 In addition, 1-CBPEA, BA, and CBP were chosen to widen the range of annihilators and assess their applicabilities in TTA-UC. The upconversion quantum yields and other photophysical experimental parameters are listed in Table 1 for the investigated TTA-UC pairs.
+Table 1 Intersystem crossing quantum yields for the sensitizers ΦISC,Sens. calculated from Ermolev's rule (ΦISC ≈ 1 − Φfl), fluorescence quantum yields for the annihilators Φfl,Anni., and triplet–triplet annihilation photon upconversion quantum yields ΦUC of the sensitizer/annihilator pairs corrected to a maximum of 50% (cf. discussion in ref. 14)
+
+
+
+
+Sensitizer/annihilator
+
+Φ
+ISC,Sens.
+
+
+Φ
+fl,Anni.
+
+
+Φ
+UC
+
+Solvent
+
+
+
+
+
+a No measurement of absolute upconversion quantum yield performed, but it is in ref. 35 estimated to be “somewhat larger” than 1%.
+
+
+
+
+
+Biacetyl/PPO
+0.85540
+0.85038
+0.005838
+Benzene
+
+
+ZnOEP/DPA
+0.95941
+0.96042
+0.06033
+PhCl
+
+
+PdOEP/DPA
+≃1.0033
+0.96042
+0.12533
+PhCl
+
+
+PtOEP/DPA
+≃1.0043
+0.96042
+0.15033
+PhCl
+
+
+BI/perylene
+0.93739
+0.93044
+0.05439
+MeCN
+
+
+BI-1/perylene
+0.92523
+0.93044
+0.16523
+Toluene
+
+
+BI-2/perylene
+0.87623
+0.93044
+0.10323
+Toluene
+
+
+[Ru(dmb)3]2+/DPA
+n/a
+0.96042
+n/a
+MeCN
+
+
+Ir(ppy)3/pyrene
+>0.90045
+0.3535
+>0.010a
+DCM
+
+
+
+
+Methodology
+Our studies (see ESI†) have shown that the medium-sized Pople style basis-set 6-311+G(d) provided similar accuracy to the computationally significantly more demanding cc-pVQZ basis-set for the ZnP/DPA pair in a test-set consisting of nine basis-sets (both Pople style, Dunning's correlation consistent, and polarization consistent), and within DFT, 6-311+G(d) is thus recommended.
+Due to the inclusion of heavy transition elements (ruthenium, palladium, iridium, and platinum) and iodine in some of the sensitizers investigated (see Fig. 1), it is required to reduce the number of basis-functions by utilizing effective core potentials (ECPs). Here, it has been chosen to use the ECPs parameterized from fully relativistic treatments and their corresponding aug-cc-pVTZ-PP basis-sets for both ruthenium and palladium,46 iridium and platinum,47 and iodine48,49 from the Stuttgart/Cologne suite of ECPs. For ruthenium, palladium, and iodine, the chosen ECPs model the effect of the 28 innermost electrons by an effective pseudopotential, while the ones used for iridium and platinum does so for the 60 innermost electrons.
+All DFT calculations are carried out in Gaussian 0950 or Gaussian 16.51 Initially, rotary conformer searches were performed for the compounds with relevant degrees of freedom (MOEPs, DPA, and BI-2) using the genetic algorithm implemented in The Open Babel Package, version 2.4.1,52 and the corresponding lowest energy conformers were chosen for subsequent geometry optimizations in Gaussian. Those of the organometallic sensitizers (MPs, MOEPs, [Ru(bpy)3]2+, and Ir(ppy)3) were performed at the M06-L/6-311+G(d)/aug-cc-pVTZ-PP level of theory, while the ones for the remainder of the compounds investigated (biacetyl, BI, BI-1, BI-2, PPO, DPA, perylene, 1-CBPEA, pyrene, BA, and DBP) were performed at the M06-2X/6-311+G(d)/aug-cc-pVTZ-PP level of theory. These were then confirmed as energy minima by harmonic frequency analyses. The vertical excitation energies to both singlet and triplet excited states were calculated using the linear response formalism of TD-DFT as implemented in Gaussian 09 and Gaussian 16 using the same basis-sets as in the geometry optimizations. Further details of methodology are given continuously before presenting the corresponding results.
+Solvent effects were modeled by the polarizable continuum model in the integral equation formalism (IEFPCM)53 for toluene, benzene, chlorobenzene (PhCl), dichloromethane (DCM), and acetonitrile (MeCN). We use the same solvents in the calculations as the ones that have been used in the corresponding experiments. No systematic study of solvent dependency is, however, performed herein, and we have instead chosen to focus on the functional dependence within TD-DFT and hence investigate a range of six widely used functionals, including both semi-empirical meta-GGA functionals (M06-L54 and M11-L55), semi-empirical global hybrids (B3LYP56–58 and M06-2X59), a semi-empirical range-separated hybrid (CAM-B3LYP60), and a non-empirical global hybrid (PBE061,62). Our choices of functionals are based on both diversity and literature recommendations: M06-2X is fitted to experimental data of only non-metallic systems by 32 parameters and thus represents a very flexible functional. By thorough benchmarking, it has been shown that M06-2X performs very well for main-group thermochemistry, kinetics, and non-covalent interactions,59 and it thus represents a good general-purpose functional that is expected to yield good descriptions of the ground state properties of the annihilators63 and the BODIPY sensitizers,64 which is why the geometry optimizations of these are performed using M06-2X. Regarding the organometallic sensitizers, comparative studies have shown that M06-L outperforms a wide range of other exchange–correlation functionals, including B3LYP, especially for thermochemistry of transition metal complexes and inorganometallics.54,59,63 It is thus expected to describe at least the ground state properties of the organometallic sensitizers in this paper well, which is why the geometry optimizations of these are performed using M06-L. A later local exchange–correlation functional from the Minnesota group, namely M11-L, is fitted to 48 free parameters to ensure optimal fitting to 338 experimental chemical data, including sets of organometallics and semiconductors, and it is shown to have the best average performance of all Minnesota functionals and several others, including range-separated hybrids, for the databases investigated.55 The M11-L functional is included to determine if the dual-range exchange functional improves the description of excited states for the organometallic sensitizers.
+Although B3LYP is often regarded as the general-purpose functional, it can fail for some properties related to long-range interactions. Niehaus and co-workers have, however, in a recent study determined B3LYP to be surprisingly accurate in describing excited states of phosphorescent organometallics,28 and it has thus been decided to include B3LYP in the TD-DFT studies. The long-range corrected version of B3LYP, namely CAM-B3LYP, has by several reviews been shown to greatly improve the description of long-range properties such as Rydberg and charge-transfer (CT) excitations (the latter of which is expected to be relevant for the ruthenium and iridium complexes) while performing similarly well for short-range properties such as bond-lengths and local excitations for organic molecules,30,31,65 and it thus seems like a functional one cannot omit. PBE0 is included in this paper too due to it being non-empirical and thus expected to yield results of a similar accuracy across different systems (unless sensitive to non-localities). Its use herein is furthermore justified by the calculation of remarkably accurate TD-DFT excitation energies, especially for π → π* transitions.31,62
+3 Results
+The search of new, efficient TTA-UC sensitizer/annihilator pairs has up until present only been carried out in the experimental laboratories, while quantum chemical calculations have played a minor role. In general, the few calculations performed in the field of TTA-UC often employ the B3LYP/6-31G(d) level of theory.23,39 However, in order to routinely use DFT methods to predict the relevant energetics of new sensitizer/annihilator pairs, thorough benchmarking of different functionals must be performed. The below results represent some first steps towards this.
+Benchmarking functionals within TD-DFT
+We have employed the six exchange–correlation functionals described above (B3LYP, M06-2X, M06-L, CAM-B3LYP, M11-L, and PBE0) both within standard linear response TD-DFT and within the Tamm–Dancoff approximation of TD-DFT. The Tamm–Dancoff approximation (TDA) originates in part from the 1945 paper by Mandelshtam and Tamm66 and in part from the 1950 paper by Dancoff.67 Both papers addressed a many-body weak coupling theory for nonrelativistic quantum mechanics and independently arrived at equivalent approximations. In 1999, Hirata and Head-Gordon68 extended the TDA to TD-DFT, implemented it, and showed that TD-DFT/TDA yielded results very similar to TD-DFT and in the case of triplet excitations and Rydberg states for hybrid functionals even better results than TD-DFT. More recently, Peach and co-workers have substantiated the superiority of TD-DFT/TDA in describing triplet properties using hybrid functionals and especially range-separated hybrid functionals.69–71 They conclude that problems of low orbital overlap excitations and triplet instabilities in TD-DFT can be overcome using the TD-DFT/TDA method.69 We thus submitted the singlet ground states of both the sensitizers and annihilators to triplet instability analyses and found that all compounds but biacetyl were triplet instable in their Hartree–Fock wavefunctions. Based on this, the TD-DFT/TDA vertical excitation energies were calculated for all compounds in addition to the standard TD-DFT vertical excitation energies. These are listed for all compounds in Table 2 for the first excited singlet states, i.e. S0 → S1, with their corresponding experimental absorption peaks and in Table 3 for their lowest triplet states, i.e. S0 → T1, with their corresponding experimental phosphorescence peak values.
+Table 2 Vertical S0 → S1 absorptions in eV of sensitizers and annihilators from the singlet ground state geometries calculated at the M06-L/6-311+G(d)/aug-cc-pVTZ-PP level of theory for the transition metal complexes and at the M06-2X/6-311+G(d)/(aug-cc-pVTZ-PP) level of theory for the remainder of the compounds. The vertical absorptions are calculated at the TD-DFT/XC/6-311+G(d)/(aug-cc-pVTZ-PP) level of theory where XC denotes the different DFT exchange–correlation functionals used. Results are given as the standard TD-DFT value followed by the value calculated using the Tamm–Dancoff approximation in brackets. Experimental values are those of the lowest energy absorption peak. MSE: mean signed error; MAE: mean absolute error
+
+
+
+
+Sensitizers
+B3LYP
+M06-2X
+M06-L
+CAM-B3LYP
+M11-L
+PBE0
+Exp.
+Solvent
+
+
+
+
+
+a All calculated values for PdOEP are in a vacuum while the experimental value is in PhCl.
+
+
+
+
+
+Biacetyl
+2.73 (2.76)
+2.75 (2.84)
+2.77 (2.78)
+2.93 (2.97)
+2.94 (2.95)
+2.77 (2.80)
+2.8138
+Benzene
+
+
+ZnP
+2.41 (2.46)
+2.43 (2.56)
+2.36 (2.42)
+2.35 (2.50)
+2.30 (2.35)
+2.44 (2.51)
+n/a
+PhCl
+
+
+ZnOEP
+2.36 (2.42)
+2.38 (2.51)
+2.33 (2.38)
+2.29 (2.45)
+2.26 (2.31)
+2.39 (2.46)
+2.1833
+PhCl
+
+
+PdP
+2.52 (2.58)
+2.54 (2.66)
+2.49 (2.54)
+2.47 (2.62)
+2.41 (2.46)
+2.56 (2.62)
+n/a
+PhCl
+
+
+PdOEPa
+2.46 (2.52)
+2.47 (2.60)
+2.43 (2.49)
+2.41 (2.56)
+2.35 (2.40)
+2.50 (2.56)
+2.3033
+PhCl
+
+
+PtP
+2.59 (2.65)
+2.62 (2.74)
+2.55 (2.60)
+2.56 (2.70)
+2.46 (2.51)
+2.63 (2.69)
+n/a
+PhCl
+
+
+PtOEP
+2.53 (2.58)
+2.55 (2.68)
+2.49 (2.54)
+2.49 (2.64)
+2.40 (2.45)
+2.56 (2.63)
+2.3233
+PhCl
+
+
+BI
+2.66 (2.85)
+2.75 (2.98)
+2.47 (2.60)
+2.78 (3.00)
+2.60 (2.76)
+2.71 (2.92)
+2.3439
+MeCN
+
+
+BI-1
+2.51 (2.63)
+2.67 (2.87)
+2.20 (2.25)
+2.70 (2.90)
+2.26 (2.31)
+2.59 (2.74)
+2.3323
+Toluene
+
+
+BI-2
+2.45 (2.57)
+2.64 (2.83)
+2.16 (2.21)
+2.67 (2.86)
+2.21 (2.27)
+2.53 (2.67)
+2.3623
+Toluene
+
+
+[Ru(bpy)3]2+
+2.47 (2.48)
+3.22 (3.23)
+1.95 (1.95)
+3.12 (3.13)
+2.18 (2.19)
+2.64 (2.66)
+2.7037
+MeCN
+
+
+Ir(ppy)3
+2.88 (2.89)
+3.70 (3.77)
+2.44 (2.45)
+3.54 (3.60)
+2.62 (2.62)
+3.05 (3.07)
+3.2635
+DCM
+
+
+
+
+
+
+MSE
+0.05 (0.12)
+0.28 (0.53)
+−0.15 (−0.11)
+0.26 (0.39)
+−0.09 (−0.04)
+0.13 (0.21)
+—
+—
+
+
+MAE
+0.20 (0.26)
+0.29 (0.41)
+0.28 (0.30)
+0.26 (0.39)
+0.22 (0.24)
+0.20 (0.47)
+—
+—
+
+
+
+
+
+
+Annihilators
+B3LYP
+M06-2X
+M06-L
+CAM-B3LYP
+M11-L
+PBE0
+Exp.
+Solvent
+
+
+
+
+PPO
+3.74 (3.87)
+4.15 (4.30)
+3.62 (3.74)
+4.11 (4.25)
+3.47 (3.57)
+3.84 (3.98)
+3.8738
+Benzene
+
+
+DPA
+3.08 (3.28)
+3.42 (3.64)
+2.96 (3.13)
+3.40 (3.62)
+2.83 (2.99)
+3.16 (3.36)
+3.1533
+PhCl
+
+
+Perylene
+2.78 (2.97)
+3.11 (3.30)
+2.70 (2.88)
+3.09 (3.28)
+2.56 (2.73)
+2.86 (3.05)
+2.8839
+MeCN
+
+
+1-CBPEA
+2.39 (2.56)
+2.71 (2.89)
+2.27 (2.44)
+2.69 (2.88)
+2.18 (2.34)
+2.45 (2.63)
+2.5839
+MeCN
+
+
+Pyrene
+3.65 (3.80)
+4.00 (4.09)
+3.53 (3.70)
+3.95 (4.06)
+3.38 (3.55)
+3.74 (3.88)
+3.6535
+MeCN
+
+
+BA
+3.36 (3.50)
+3.77 (3.93)
+3.20 (3.32)
+3.74 (3.91)
+3.06 (3.19)
+3.46 (3.60)
+3.4074
+Toluene
+
+
+DBP
+3.22 (3.36)
+3.63 (3.79)
+3.05 (3.18)
+3.60 (3.76)
+2.94 (3.06)
+3.32 (3.46)
+n/a
+Toluene
+
+
+
+
+
+
+MSE
+−0.09 (0.08)
+0.27 (0.44)
+−0.21 (−0.05)
+0.24 (0.41)
+−0.34 (−0.19)
+−0.003 (0.16)
+—
+—
+
+
+MAE
+0.09 (0.08)
+0.27 (0.44)
+0.21 (0.07)
+0.24 (0.41)
+0.34 (0.19)
+0.06 (0.16)
+—
+—
+
+
+
+
+Table 3 Vertical S0 → T1 absorptions in eV of sensitizers and annihilators from the singlet ground state geometries calculated at the M06-L/6-311+G(d)/aug-cc-pVTZ-PP level of theory for the transition metal complexes and at the M06-2X/6-311+G(d)/(aug-cc-pVTZ-PP) level of theory for the remainder of the compounds. The vertical absorptions are calculated at the TD-DFT/XC/6-311+G(d)/(aug-cc-pVTZ-PP) level of theory where XC denotes the different DFT exchange–correlation functionals used. Results are given as the standard TD-DFT value followed by the value calculated using the Tamm–Dancoff approximation in brackets. Experimental values are those of the highest energy phosphorescence peaks. MSE: mean signed error; MAE: mean absolute error
+
+
+
+
+Sensitizers
+B3LYP
+M06-2X
+M06-L
+CAM-B3LYP
+M11-L
+PBE0
+Exp.
+Solvent
+
+
+
+
+
+a All calculated values for PdOEP are in a vacuum while the experimental value is in PhCl.
+b Solvent not stated.
+c A possible range from 1.36–1.82 eV is reported for BPEA in ref. 78 but 1.36 eV is used for MSE and MAE calculations.
+
+
+
+
+
+Biacetyl
+2.15 (2.38)
+2.32 (2.38)
+2.21 (2.28)
+2.32 (2.39)
+2.48 (2.53)
+2.12 (2.20)
+2.3838
+Benzene
+
+
+ZnP
+1.75 (1.93)
+1.69 (2.03)
+1.81 (1.93)
+1.24 (1.87)
+1.90 (1.97)
+1.66 (1.91)
+n/a
+PhCl
+
+
+ZnOEP
+1.77 (1.94)
+1.68 (1.99)
+1.85 (1.95)
+1.24 (1.85)
+1.89 (1.94)
+1.68 (1.92)
+1.7841
+PhCl
+
+
+PdP
+1.90 (2.06)
+1.82 (2.14)
+1.97 (2.08)
+1.43 (2.00)
+2.02 (2.09)
+1.80 (2.05)
+n/a
+PhCl
+
+
+PdOEPa
+1.88 (2.02)
+1.78 (2.07)
+1.96 (2.05)
+1.41 (1.94)
+1.97 (2.01)
+1.80 (2.01)
+1.8533
+PhCl
+
+
+PtP
+1.99 (2.15)
+1.93 (2.23)
+2.05 (2.16)
+1.57 (2.10)
+2.09 (2.16)
+1.90 (2.14)
+n/a
+PhCl
+
+
+PtOEP
+1.96 (2.09)
+1.89 (2.15)
+2.02 (2.10)
+1.54 (2.03)
+2.03 (2.07)
+1.89 (2.09)
+1.9137
+PhCl
+
+
+BI
+1.59 (1.69)
+1.58 (1.74)
+1.63 (1.70)
+1.39 (1.68)
+1.72 (1.78)
+1.52 (1.67)
+n/a
+MeCN
+
+
+BI-1
+1.56 (1.66)
+1.55 (1.72)
+1.60 (1.67)
+1.36 (1.65)
+1.68 (1.73)
+1.50 (1.65)
+n/a
+Toluene
+
+
+BI-2
+1.55 (1.65)
+1.54 (1.71)
+1.59 (1.65)
+1.35 (1.64)
+1.65 (1.70)
+1.49 (1.64)
+n/a
+Toluene
+
+
+[Ru(bpy)3]2+
+2.32 (2.36)
+2.90 (2.95)
+1.87 (1.89)
+2.67 (2.90)
+2.12 (2.13)
+2.41 (2.49)
+1.9737
+MeCN
+
+
+Ir(ppy)3
+2.63 (2.70)
+3.12 (3.22)
+2.34 (2.37)
+2.77 (3.03)
+2.52 (2.54)
+2.66 (2.79)
+2.3835
+DCM
+
+
+
+
+
+
+MSE
+0.07 (0.18)
+0.24 (0.42)
+−0.003 (0.06)
+−0.05 (0.31)
+0.12 (0.16)
+0.04 (0.21)
+—
+—
+
+
+MAE
+0.15 (0.23)
+0.32 (0.42)
+0.10 (0.13)
+0.41 (0.31)
+0.12 (0.16)
+0.19 (0.27)
+—
+—
+
+
+
+
+
+
+Annihilators
+B3LYP
+M06-2X
+M06-L
+CAM-B3LYP
+M11-L
+PBE0
+Exp.
+Solvent
+
+
+
+
+PPO
+2.61 (2.82)
+3.05 (3.21)
+2.61 (2.79)
+2.58 (2.97)
+2.64 (2.76)
+2.54 (2.83)
+2.4875
+Benzene
+
+
+DPA
+1.82 (2.07)
+2.15 (2.36)
+1.80 (2.03)
+1.61 (2.15)
+1.88 (2.04)
+1.68 (2.05)
+1.7776
+PhCl
+
+
+Perylene
+1.61 (1.84)
+1.96 (2.15)
+1.61 (1.81)
+1.45 (1.97)
+1.67 (1.80)
+1.50 (1.84)
+1.55b77
+Toluene
+
+
+1-CBPEA
+1.34 (1.55)
+1.61 (1.82)
+1.34 (1.51)
+1.09 (1.65)
+1.40 (1.51)
+1.22 (1.54)
+1.36c78
+MeCN
+
+
+Pyrene
+2.23 (2.48)
+2.59 (2.81)
+2.23 (2.45)
+2.02 (2.57)
+2.31 (2.46)
+2.10 (2.47)
+2.0977
+MeCN
+
+
+BA
+2.14 (2.39)
+2.53 (2.73)
+2.12 (2.35)
+1.97 (2.49)
+2.20 (2.35)
+2.01 (2.38)
+2.0479
+Toluene
+
+
+DBP
+2.11 (2.34)
+2.49 (2.69)
+2.09 (2.28)
+1.95 (2.47)
+2.15 (2.28)
+2.00 (2.34)
+1.8577
+Toluene
+
+
+
+
+
+
+MSE
+0.10 (0.34)
+0.46 (0.66)
+0.09 (0.30)
+−0.07 (0.45)
+0.16 (0.29)
+−0.01 (0.33)
+—
+—
+
+
+MAE
+0.11 (0.34)
+0.46 (0.66)
+0.10 (0.30)
+0.12 (0.45)
+0.16 (0.29)
+0.07 (0.33)
+—
+—
+
+
+
+
+The lowest 15 singlet excited states and lowest 15 triplet excited states were calculated in each TD-DFT and each TD-DFT/TDA calculation, and the energies of the lowest energy singlet states with non-zero transition amplitudes and those of the lowest energy triplet states are the ones presented in Tables 2 and 3, respectively. The mean signed errors (MSEs) and mean absolute errors (MAEs) relative to the experimental values listed are given for each functional.
+Looking at Table 2, the best general description of the sensitizer absorptions is provided by the B3LYP and PBE0 functionals, both yielding acceptable MAEs of 0.20 eV using standard TD-DFT, while M11-L performs almost equally good with an MAE of 0.22 eV using standard TD-DFT. It is clear that the meta-GGA functionals in general underestimate the absorption energies (negative MSEs), while the hybrid functionals in general overestimate them (positive MSEs). Considering individual types of compounds, the meta-GGA functionals in general outperform the hybrids for the MOEPs and BODIPY sensitizers while their significant underestimations of [Ru(bpy)3]2+ and Ir(ppy)3 absorptions impede their overall MAEs. For these, PBE0 performs best. It should be noted that singlet absorptions of BODIPY compounds are notoriously difficult cases for many TD-DFT methods,72 and previous investigations by Momeni and Brown suggest the use of more advanced electronic structure methods for this purpose, but also that if TD-DFT methods are to be used to describe these, range-separated hybrids in combination with empirical corrections are recommended.73 Their studies, however, did not include the M06-L and M11-L functionals which in the present work are shown to perform well for BODIPY singlet absorptions.
+Moving on, it can be seen that invoking the Tamm–Dancoff approximation increases the MAEs for all functionals, but while it has only a minor effect on the meta-GGA functionals (of which M11-L still describes the absorptions fairly well within the TDA with an MAE of 0.24 eV), the effect is more significant for the hybrids.
+Looking at the results for the annihilator absorptions, the best description is obtained using standard TD-DFT with the PBE0 functional, yielding a MAE of only 0.06 eV. PBE0 has previously been determined to be one of the best functionals available for describing molecular absorptions in a review comparing the vertical absorptions of almost 30 functionals to 614 experimental λmax values (having an MAE of 0.21 eV),30 and it was thus expected to perform well for this test-set too. More surprising are the performances of both B3LYP and M06-L within the TDA with MAEs of 0.08 and 0.07 eV, respectively. The performance of M11-L is improved significantly within the TDA too, while the predictions from the hybrids (apart from B3LYP) again is worsened within the TDA. Although this test-set of course is small, the results suggest that the Tamm–Dancoff approximation introduces significant errors to hybrid functionals' description of singlet vertical absorptions contrary to data presented in ref. 69 and 70.
+Moving on to Table 3, it must first and foremost be noted that experimental values for the triplet energies of the BODIPY sensitizers BI, BI-1, and BI-2 were not accessible since they are non-phosphorescent.23,39 We can, however, be confident that their triplet energies are larger than or at least similar to the 1.55 eV of perylene since they exhibit high TTA-UC quantum yields, but for consistency, the calculated MSEs and MAEs are only relative to the MOEP and biacetyl experimental values. Looking at the standard TD-DFT values, it is seen that the lowest MAE for the sensitizers of only 0.10 eV is achieved with M06-L, but M11-L and B3LYP describe the triplet states fairly well too with MAEs of 0.12 eV and 0.15 eV, respectively. These are also the only three functionals that we can be confident are not underestimating the BODIPY sensitizer triplet energies. In general, a trend of underestimation of MOEP triplet energies is seen for the hybrids, especially CAM-B3LYP, while the meta-GGA functionals tend to overestimate these. For [Ru(bpy)3]2+ and Ir(ppy)3, all hybrid functionals significantly overestimate the triplet energies, while M06-L, and to some degree M11-L, perform really well for these.
+Turning our attention to the TD-DFT/TDA values, it is seen that the TDA only improves the triplet description relative to standard TD-DFT for the sensitizers using CAM-B3LYP. This improvement is in full correspondence with the literature,69–71 but no improvements are seen for the remainder of the hybrid functionals although all compounds except biacetyl have a wavefunction triplet instability. Curiously, the description of biacetyl is significantly improved within the TDA for all functionals but M11-L with the TDA value being quantitatively correct for both B3LYP, M06-2X, and CAM-B3LYP. No immediate explanation can, however, be given for this.
+The triplet state energies of the annihilators are described well within standard TD-DFT with all functionals but M06-2X, with the MAE of 0.07 eV for PBE0 being the best. Again, M06-L yields acceptable values for the annihilators with an MAE of 0.10 eV, while B3LYP is accurate too with an MAE of 0.11 eV. Employing the Tamm–Dancoff approximation significantly worsens the description of annihilator triplet states for all functionals.
+In conclusion, the most consistent functional for describing both singlet and triplet vertical absorptions of both sensitizers and annihilators is B3LYP within standard TD-DFT. If the goal is to compute triplet energies, the meta-GGA functionals M06-L and M11-L perform equally well as B3LYP for both sensitizers and annihilators. We note that while our approach is the most commonly employed, elaborate work by Jacquemin and co-workers comparing calculated adiabatic and zero-point corrected excitation energies to experimental 0–0 absorptions has shown that the inclusion of these effects might improve the description of singlet absorptions.80 Their approach, however, comes with a significant, and perhaps even a prohibitive, increase in computational costs for many systems relevant for TTA-UC since it relies on excited state Hessian evaluations and would thus not be optimal for screening studies of new sensitizer/annihilator pairs.
+Modeling triplet–triplet energy transfer requirements
+As mentioned above, the triplet energetic profile of a sensitizer must match that of an annihilator in order for TTET to be efficient (preferably, an energetic pathway should be present, i.e.3S* ≥ 3A*). A comparison across all functionals visualizing their pairwise ability to predict the correct relative triplet state energies of the experimental proven-to-work sensitizer/annihilator pairs (listed in Table 1) is presented in Fig. 2 for standard TD-DFT and in Fig. 3 for TD-DFT/TDA. The values presented are the deviations of the relative differences in calculated and experimental sensitizer/annihilator triplet energy gaps: (Ecalc(3S*) − Ecalc(3A*)) − (Eexp(3S*) − Eexp(3A*)). A value of 0.00 eV in the plot thus corresponds to a perfect prediction and is marked with a green square, while positive (negative) values corresponds to an overestimation (underestimation) of the sensitizer/annihilator triplet gaps by the calculations. Our chosen “window of accepted accuracy” is ±0.10 eV, and all green shaded squares lie within this window. As seen, the M11-L/M11-L combination is quite successful across all TTA-UC pairs, while it is clear that using the M06-2X functional for describing annihilator triplet states in conjunction with almost all of the investigated functionals for describing sensitizer triplet states leads to significant underestimations of relative triplet gaps due to the severe overestimations of the annihilator triplet energies by M06-2X (cf.Table 3). CAM-B3LYP is correspondingly an equally poor choice for describing the sensitizers due to its severe underestimations of their triplet energies, thus leading to underestimations of the sensitizer/annihilator triplet gaps. Quantifying the standard TD-DFT results of Fig. 2, it can be seen in Table 4 that the mean absolute errors of the calculated sensitizer/annihilator triplet energy gaps are lowest for the M11-L/M11-L combination with only 0.009 eV, while the M11-L/B3LYP and M11-L/M06-L (sensitizer/annihilator) combinations perform second and third best with MAEs of 0.013 and 0.015 eV, respectively. The worst performing combination is CAM-B3LYP/M06-2X with an MAE of 0.151 eV. Table 4 also presents the TD-DFT/TDA results of Fig. 3 (values in brackets), and in general, using the Tamm–Dancoff approximation can not be recommended. The quantitative analysis of the TD-DFT/TDA results shows that the sensitizer/annihilator triplet energy gaps are only rarely better predicted than with standard TD-DFT with the sensitizer CAM-B3LYP descriptions being a notable exception. In general, the description of sensitizer triplet energies are improved using the TDA approximation for functionals including a high fraction of exact exchange as discussed above, and the triplet gap descriptions are thus improved accordingly.
+ Fig. 2  Visualization of the calculated differences in energy of the 3S* and 3A* states as predicted for the TTA-UC pairs by the 36 combinations of functionals investigated herein for standard TD-DFT. All values are corrected for the experimental spectral mismatch so that the colorbar represents the deviation of the calculated value from the experimental value in eV (in lieu of the experimental triplet energies for the range of BODIPY sensitizers, the calculated Gibbs free energies for the triplet states are used; these are calculated at the UM06-2X/6-311+G(d)/aug-cc-pVTZ-PP level of theory). 
+ Fig. 3  Visualization of the calculated differences in energy of the 3S* and 3A* states as predicted for the TTA-UC pairs by the 36 combinations of functionals investigated herein for TD-DFT within the Tamm–Dancoff approximation. All values are corrected for the experimental spectral mismatch so that the colorbar represents the deviation of the calculated value from the experimental value in eV (in lieu of the experimental values for the range of BODIPY sensitizers, the calculated Gibbs free energies for the triplet states are used; these are calculated at the UM06-2X/6-311+G(d)/aug-cc-pVTZ-PP level of theory). 
+Table 4 Mean absolute errors in eV of the calculated sensitizer/annihilator triplet energy gaps relative to experiment by functional pair using standard TD-DFT. The rows are related to the sensitizers while the columns are related to the annihilators
+
+
+
+
+
+
+B3LYP
+M06-2X
+M06-L
+CAM-B3LYP
+M11-L
+PBE0
+
+
+
+
+B3LYP
+0.030 (0.042)
+0.095 (0.115)
+0.030 (0.036)
+0.054 (0.064)
+0.037 (0.035)
+0.039 (0.041)
+
+
+M06-2X
+0.063 (0.060)
+0.113 (0.103)
+0.062 (0.055)
+0.071 (0.077)
+0.070 (0.054)
+0.057 (0.059)
+
+
+M06-L
+0.024 (0.060)
+0.105 (0.138)
+0.026 (0.051)
+0.042 (0.086)
+0.031 (0.051)
+0.030 (0.058)
+
+
+CAM-B3LYP
+0.095 (0.069)
+0.151 (0.117)
+0.094 (0.064)
+0.075 (0.086)
+0.102 (0.063)
+0.080 (0.069)
+
+
+M11-L
+0.013 (0.039)
+0.077 (0.117)
+0.015 (0.030)
+0.054 (0.065)
+0.009 (0.030)
+0.041 (0.036)
+
+
+PBE0
+0.046 (0.051)
+0.108 (0.116)
+0.045 (0.046)
+0.047 (0.072)
+0.053 (0.045)
+0.037 (0.051)
+
+
+
+
+4 Conclusions
+To summarize, we have performed an extensive benchmark study on 12 sensitizers, seven annihilators, and nine sensitizer/annihilator pairs for triplet–triplet annihilation photon upconversion. This benchmark comprised six different functionals including meta-GGAs (M06-L and M11-L), hybrids (B3LYP, M06-2X, and PBE0), and a range-separated hybrid (CAM-B3LYP) using time-dependent density functional theory both in its standard linear response formalism and within the Tamm–Dancoff approximation. Having investigated the performance of these functionals for calculating both singlet and triplet energies, it should first of all be mentioned that we in general can not recommend using the Tamm–Dancoff approximation for the investigated computations. Looking at the standard TD-DFT results, it can be concluded that the M11-L/M11-L combination is the best for describing the relative triplet energetics of sensitizer/annihilator pairs having a mean absolute error of less than 0.01 eV. For the individual molecules, B3LYP and PBE0 describe the singlet absorptions quite well with mean absolute errors of 0.20 eV for sensitizers and less than 0.10 eV for annihilators, and for the triplet energies, the meta-GGA functional M06-L yields the smallest mean absolute errors of only 0.10 eV for both sensitizers and annihilators. However, if only a single functional were to be recommended for calculating all quantities presented herein, B3LYP has proven itself to be fairly consistent across sensitizers and annihilators as well as singlet and triplet energies and would thus be a reasonable choice for further studies of specific interactions.81,82
+With this study, guidelines for future density functional theory investigations of new and existing sensitizers, annihilators, and pairs of these have been provided, thus aiding the design process of potential new triplet–triplet annihilation photon upconversion schemes.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+The authors thank the Center for Exploitation of Solar Energy at University of Copenhagen and Danish e-Infrastructure Cooperation for financial support.
+References
+M. Haase and H. Schäfer, Upconverting nanoparticles, Angew. Chem., Int. Ed., 2011, 50(26), 5808–5829 CrossRef CAS PubMed .
+F. Wang, D. Banerjee, Y. Liu, X. Chen and X. Liu, Upconversion nanoparticles in biological labeling, imaging, and therapy, Analyst, 2010, 135, 1839–1854 RSC .
+A. Shalav, B. Richards and M. Green, Luminescent layers for enhanced silicon solar cell performance: Up-conversion, Sol. Energy Mater. Sol. Cells, 2007, 91(9), 829–842 CrossRef CAS .
+B. M. van der Ende, L. Aarts and A. Meijerink, Lanthanide ions as spectral converters for solar cells, Phys. Chem. Chem. Phys., 2009, 11, 11081–11095 RSC .
+C. A. Parker, C. G. Hatchard and T. A. Joyce, Selective and mutual sensitization of delayed fluorescence, Nature, 1965, 205, 1282–1284 CrossRef CAS .
+T. N. Singh-Rachford and F. N. Castellano, Photon upconversion based on sensitized triplet–triplet annihilation, Coord. Chem. Rev., 2010, 254, 2560–2573 CrossRef CAS .
+A. Monguzzi, J. Mezyk, F. Scotognella, R. Tubino and F. Meinardi, Upconversion-induced fluorescence in multicomponent systems: Steady-state excitation power threshold, Phys. Rev. B: Condens. Matter Mater. Phys., 2008, 78, 195112 CrossRef .
+A. Monguzzi, R. Tubino, S. Hoseinkhani, M. Campione and F. Meinardi, Low power, non-coherent sensitized photon up-conversion: Modelling and perspectives, Phys. Chem. Chem. Phys., 2012, 14, 4322–4332 RSC .
+J. Zhao, W. Wu, J. Sun and S. Guo, Triplet photosensitizers: From molecular design to applications, Chem. Soc. Rev., 2013, 42, 5323–5351 RSC .
+J. Zhou, Q. Liu, W. Feng, Y. Sun and F. Li, Upconversion luminescent materials: Advances and applications, Chem. Rev., 2015, 115(1), 395–465 CrossRef CAS PubMed .
+O. S. Kwon, H. S. Song, J. Conde, H.-I. Kim, N. Artzi and J.-H. Kim, Dual-color emissive upconversion nanocapsules for differential cancer bioimaging in vivo, ACS Nano, 2016, 10(1), 1512–1521 CrossRef CAS PubMed .
+Q. Liu, T. Yang, W. Feng and F. Li, Blue-emissive upconversion nanoparticles for low-power-excited bioimaging in vivo, J. Am. Chem. Soc., 2012, 134(11), 5390–5397 CrossRef CAS PubMed .
+T. F. Schulze, J. Czolk, Y.-Y. Cheng, B. Fückel, R. W. MacQueen, T. Khoury, M. J. Crossley, B. Stannowski, K. Lips, U. Lemmer, A. Colsmann and T. W. Schmidt, Efficiency enhancement of organic and thin-film silicon solar cells with photochemical upconversion, J. Phys. Chem. C, 2012, 116(43), 22794–22801 CAS .
+V. Gray, D. Dzebo, M. Abrahamsson, B. Albinsson and K. Moth-Poulsen, Triplet–triplet annihilation photon-upconversion: Towards solar energy applications, Phys. Chem. Chem. Phys., 2014, 16, 10345–10352 RSC .
+S. P. Hill, T. Banerjee, T. Dilbeck and K. Hanson, Photon upconversion and photocurrent generation via self-assembly at organic–inorganic interfaces, J. Phys. Chem. Lett., 2015, 6(22), 4510–4517 CrossRef CAS PubMed .
+W. Shockley and H. J. Queisser, Detailed balance limit of efficiency of p–n junction solar cells, J. Appl. Phys., 1961, 32(3), 510–519 CrossRef CAS .
+M. J. Y. Tayebjee, L. C. Hirst, N. J. Ekins-Daukes and T. W. Schmidt, The efficiency limit of solar cells with molecular absorbers: A master equation approach, J. Appl. Phys., 2010, 108(12), 124506 CrossRef .
+K. Börjesson, A. Lennartson and K. Moth-Poulsen, Efficiency limit of molecular solar thermal energy collecting devices, ACS Sustainable Chem. Eng., 2013, 1(6), 585–590 CrossRef .
+N. J. Ekins-Daukes and T. W. Schmidt, A molecular approach to the intermediate band solar cell: The symmetric case, Appl. Phys. Lett., 2008, 93(6), 063507 CrossRef .
+J. A. Briggs, A. C. Atre and J. A. Dionne, Narrow-bandwidth solar upconversion: Case studies of existing systems and generalized fundamental limits, J. Appl. Phys., 2013, 113(12), 124509 CrossRef .
+R. S. Khnayzer, J. Blumhoff, J. A. Harrington, A. Haefele, F. Deng and F. N. Castellano, Upconversion-powered photoelectrochemistry, Chem. Commun., 2012, 48, 209–211 RSC .
+X. Cao, B. Hu and P. Zhang, High upconversion efficiency from hetero triplet–triplet annihilation in multiacceptor systems, J. Phys. Chem. Lett., 2013, 4(14), 2334–2338 CrossRef CAS .
+Y. Chen, J. Zhao, L. Xie, H. Guo and Q. Li, Thienyl-substituted BODIPYs with strong visible light-absorption and long-lived triplet excited states as organic triplet sensitizers for triplet–triplet annihilation upconversion, RSC Adv., 2012, 2, 3942–3953 RSC .
+S. Baluschev, K. Katta, Y. Avlasevich and K. Landfester, Annihilation upconversion in nanoconfinement: Solving the oxygen quenching problem, Mater. Horiz., 2016, 3, 478–486 RSC .
+J.-H. Kim and J.-H. Kim, Encapsulated triplet–triplet annihilation-based upconversion in the aqueous phase for sub-band-gap semiconductor photocatalysis, J. Am. Chem. Soc., 2012, 134(42), 17478–17481 CrossRef CAS PubMed .
+Y. C. Simon and C. Weder, Low-power photon upconversion through triplet–triplet annihilation in polymers, J. Mater. Chem., 2012, 22, 20817–20830 RSC .
+T. Ogawa, N. Yanai, A. Monguzzi and N. Kimizuka, Highly efficient photon upconversion in self-assembled light-harvesting molecular systems, Sci. Rep., 2015, 5, 10882 CrossRef CAS PubMed .
+T. A. Niehaus, T. Hofbeck and H. Yersin, Charge-transfer excited states in phosphorescent organo-transition metal compounds: a difficult case for time dependent density functional theory?, RSC Adv., 2015, 5, 63318–63329 RSC .
+X.-N. Li, Z.-J. Wu, Z.-J. Si, H.-J. Zhang, L. Zhou and X.-J. Liu, Injection, transport, absorption and phosphorescence properties of a series of blue-emitting Ir(III) emitters in OLEDs: A DFT and time-dependent DFT study, Inorg. Chem., 2009, 48(16), 7740–7749 CrossRef CAS PubMed .
+A. D. Laurent and D. Jacquemin, TD-DFT benchmarks: A review, Int. J. Quantum Chem., 2013, 113(17), 2019–2039 CrossRef CAS .
+D. Jacquemin, E. A. Perpete, G. E. Scuseria, I. Ciofini and C. Adamo, TD-DFT performance for the visible absorption spectra of organic dyes: Conventional versus long-range hybrids, J. Chem. Theory Comput., 2008, 4(1), 123–135 CrossRef CAS PubMed .
+A. Monguzzi, R. Tubino and F. Meinardi, Upconversion-induced delayed uorescence in multicomponent organic systems: Role of Dexter energy transfer, Phys. Rev. B: Condens. Matter Mater. Phys., 2008, 77, 155122 CrossRef .
+Y. V. Aulin, M. van Sebille, M. Moes and F. C. Grozema, Photochemical upconversion in metal-based octaethyl porphyrin-diphenylanthracene systems, RSC Adv., 2015, 5, 107896–107903 RSC .
+R. R. Islangulov, D. V. Kozlov and F. N. Castellano, Low power upconversion using MLCT sensitizers, Chem. Commun., 2005, 3776–3778 RSC .
+W. Zhao and F. N. Castellano, Upconverted emission from pyrene and di-tert-butylpyrene using Ir(ppy)3 as triplet sensitizer, J. Phys. Chem. A, 2006, 110(40), 11440–11445 CrossRef CAS PubMed .
+K. Kalyanasundaram, Photophysics, photochemistry and solar energy conversion with tris(bipyridyl)ruthenium(II) and its analogues, Coord. Chem. Rev., 1982, 46, 159–244 CrossRef CAS .
+A. E. Curtright and J. K. McCusker, Static and time-resolved spectroscopic studies of low-symmetry Ru(II) polypyridyl complexes, J. Phys. Chem. A, 1999, 103(35), 7032–7041 CrossRef CAS .
+T. N. Singh-Rachford and F. N. Castellano, Low power visible-to-UV
+upconversion, J. Phys. Chem. A, 2009, 113(20), 5912–5917 CrossRef CAS PubMed .
+W. Wu, H. Guo, W. Wu, S. Ji and J. Zhao, Organic triplet sensitizer library derived from a single chromophore (BODIPY) with long-lived triplet excited state for triplet–triplet annihilation based upconversion, J. Org. Chem., 2011, 76(17), 7056–7064 CrossRef CAS PubMed .
+G. M. Almy and P. R. Gillette, The quantum yield of diacetyl uorescence, J. Chem. Phys., 1943, 11(4), 188–195 CrossRef CAS .
+G.-Z. Wu, W.-X. Gan and H.-K. Leung, Photophysical properties of mesosubstituted octaethylporphines and their zinc complexes, J. Chem. Soc., Faraday Trans., 1991, 87, 2933–2937 RSC .
+G. Heinrich, S. Schoof and H. Gusten, 9,10-diphenylanthracene as a fluorescence quantum yield standard, J. Photochem., 1974, 3(2), 315–320 CrossRef CAS .
+A. Bansal, W. Holzer, A. Penzkofer and T. Tsuboi, Absorption and emission spectroscopic characterization of platinum-octaethyl-porphyrin (PtOEP), Chem. Phys., 2006, 330(1–2), 118–129 CrossRef CAS .
+N. I. Nijegorodov and W. S. Downey, The influence of planarity and rigidity on the absorption and fluorescence parameters and intersystem crossing rate constant in aromatic molecules, J. Phys. Chem., 1994, 98(22), 5639–5643 CrossRef CAS .
+T. Hofbeck and H. Yersin, The triplet state of fac-Ir(ppy)3, Inorg. Chem., 2010, 49(20), 9290–9299 CrossRef CAS PubMed .
+K. A. Peterson, D. Figgen, M. Dolg and H. Stoll, Energy-consistent relativistic pseudopotentials and correlation consistent basis sets for the 4d elements Y-Pd, J. Chem. Phys., 2007, 126(12), 124101 CrossRef PubMed .
+D. Figgen, K. A. Peterson, M. Dolg and H. Stoll, Energy-consistent pseudopotentials and correlation consistent basis sets for the 5d elements Hf-Pt, J. Chem. Phys., 2009, 130(16), 164108 CrossRef PubMed .
+K. A. Peterson, D. Figgen, E. Goll, H. Stoll and M. Dolg, Systematically convergent basis sets with relativistic pseudopotentials. II. Small-core pseudopotentials and correlation consistent basis sets for the post-d group 16–18 elements, J. Chem. Phys., 2003, 119(21), 11113–11123 CrossRef CAS .
+K. A. Peterson, B. C. Shepler, D. Figgen and H. Stoll, On the spectroscopic and thermochemical properties of ClO, BrO, IO, and their anions, J. Phys. Chem. A, 2006, 110(51), 13877–13883 CrossRef CAS PubMed .
+
+          M. J. Frisch, G. W. Trucks, H. B. Schlegel, G. E. Scuseria, M. A. Robb, J. R. Cheeseman, G. Scalmani, V. Barone, B. Mennucci, G. A. Petersson, et al., Gaussian 09 Revision E.01, Gaussian Inc., Wallingford CT,  2009 Search PubMed .
+
+          M. J. Frisch, G. W. Trucks, H. B. Schlegel, G. E. Scuseria, M. A. Robb, J. R. Cheeseman, G. Scalmani, V. Barone, G. A. Petersson, H. Nakatsuji, et al., Gaussian 16 Revision A.03, Gaussian Inc., Wallingford CT,  2016 Search PubMed .
+N. M. O'Boyle, M. Banck, C. A. James, C. Morley, T. Vandermeersch and G. R. Hutchison, Open Babel: An open chemical toolbox, J. Cheminf., 2011, 3(1), 33 Search PubMed .
+J. Tomasi, B. Mennucci and R. Cammi, Quantum mechanical continuum solvation models, Chem. Rev., 2005, 105(8), 2999–3094 CrossRef CAS PubMed .
+Y. Zhao and D. G. Truhlar, A new local density functional for main-group thermochemistry, transition metal bonding, thermochemical kinetics, and noncovalent interactions, J. Chem. Phys., 2006, 125(19), 194101 CrossRef PubMed .
+R. Peverati and D. G. Truhlar, M11-L: A local density functional that provides improved accuracy for electronic structure calculations in chemistry and physics, J. Phys. Chem. Lett., 2012, 3(1), 117–124 CrossRef CAS .
+A. D. Becke, Density functional thermochemistry.
+III. The role of exact exchange, J. Chem. Phys., 1993, 98(7), 5648–5652 CrossRef CAS .
+C. Lee, W. Yang and R. G. Parr, Development of the Colle-Salvetti correlation energy formula into a functional of the electron density, Phys. Rev. B: Condens. Matter Mater. Phys., 1988, 37, 785–789 CrossRef CAS .
+P. J. Stephens, F. J. Devlin, C. F. Chabalowski and M. J. Frisch, Ab initio calculation of vibrational absorption and circular dichroism spectra using density functional force fields, J. Phys. Chem., 1994, 98, 11623–11627 CrossRef CAS .
+Y. Zhao and D. G. Truhlar, The M06 suite of density functionals for main group thermochemistry, thermochemical kinetics, noncovalent interactions, excited states, and transition elements: Two new functionals and systematic testing of four M06-class functionals and 12 other functionals, Theor. Chem. Acc., 2008, 120, 215–241 CrossRef CAS .
+T. Yanai, D. P. Tew and N. C. Handy, A new hybrid exchange–correlation functional using the Coulomb-attenuating method (CAM-B3LYP), Chem. Phys. Lett., 2004, 393, 51–57 CrossRef CAS .
+J. P. Perdew, K. Burke and M. Ernzerhof, Generalized gradient approximation made simple, Phys. Rev. Lett., 1996, 77, 3865–3868 CrossRef CAS PubMed .
+C. Adamo and V. Barone, Toward reliable density functional methods without adjustable parameters: The PBE0 model, J. Chem. Phys., 1999, 110, 6158–6169 CrossRef CAS .
+Y. Zhao and D. G. Truhlar, Applications and validations of the Minnesota density functionals, Chem. Phys. Lett., 2011, 502(1–3), 1–13 CrossRef CAS .
+A. D. Laurent, C. Adamo and D. Jacquemin, Dye chemistry with time-dependent density functional theory, Phys. Chem. Chem. Phys., 2014, 16, 14334–14356 RSC .
+L. Goerigk and S. Grimme, Assessment of TD-DFT methods and of various spin scaled CIS(D) and CC2 versions for the treatment of low-lying valence excitations of large organic dyes, J. Chem. Phys., 2010, 132(18), 184103 CrossRef .
+L. Mandelshtam and I. E. Tamm, The uncertainty between energy and time in nonrelativistic quantum mechanics, J. Phys., 1945, 9, 449 Search PubMed .
+S. M. Dancoff, Non-adiabatic meson theory of nuclear forces, Phys. Rev., 1950, 78, 382–385 CrossRef .
+S. Hirata and M. Head-Gordon, Time-dependent density functional theory within the Tamm–Dancoff approximation, Chem. Phys. Lett., 1999, 314(3–4), 291–299 CrossRef CAS .
+M. J. G. Peach and D. J. Tozer, Overcoming low orbital overlap and triplet instability problems in TDDFT, J. Phys. Chem. A, 2012, 116(39), 9783–9789 CrossRef CAS PubMed .
+M. J. G. Peach, M. J. Williamson and D. J. Tozer, Influence of triplet instabilities in TDDFT, J. Chem. Theory Comput., 2011, 7(11), 3578–3585 CrossRef CAS PubMed .
+M. J. Peach, N. Warner and D. J. Tozer, On the triplet instability in TDDFT, Mol. Phys., 2013, 111(9–11), 1271–1274 CrossRef CAS .
+B. Le Guennic and D. Jacquemin, Taking up the cyanine challenge with quantum tools, Acc. Chem. Res., 2015, 48(3), 530–537 CrossRef CAS PubMed .
+M. R. Momeni and A. Brown, Why do TD-DFT excitation energies of BODIPY/aza-BODIPY families largely deviate from experiment? Answers from electron correlated and multireference methods, J. Chem. Theory Comput., 2015, 11(6), 2619–2632 CrossRef CAS PubMed .
+A. M. Rivera-Figueroa, K. A. Ramazan and B. J. Finlayson-Pitts, Fluorescence, absorption, and excitation spectra of polycyclic aromatic hydrocarbons as a tool for quantitative analysis, J. Chem. Educ., 2004, 81(2), 242 CrossRef CAS .
+F. Dainton, T. Morrow, G. A. Salmon and G. F. Thompson, The radiation-induced formation of excited states of aromatic hydrocarbons in benzene and cyclohexane. II. Yields of excited singlet and triplet state solute molecules, Proc. R. Soc. London, Ser. A, 1972, 328(1575), 457–479 CrossRef CAS .
+J. Brinen and J. Koren, The lowest triplet state of 9, 10 diphenylanthracene, Chem. Phys. Lett., 1968, 2(8), 671–672 CrossRef CAS .
+J. B. Birks and M. A. Slifkin, Pi-electronic excitation and ionization energies of condensed ring aromatic hydrocarbons, Nature, 1961, 191, 761–764 CrossRef CAS .
+T.-S. Fang, J. Lin, R. Schneider, T. Yamada and L. A. Singer, Studies on triplet–singlet energy transfer with 1,3-dibromo-9,10-bis-(phenylethynyl)-anthracene, Chem. Phys. Lett., 1982, 92(3), 283–287 CrossRef CAS .
+D. S. McClure, Triplet–singlet transitions in organic molecules. Lifetime measurements of the triplet state, J. Chem. Phys., 1945, 17(10), 905–913 CrossRef .
+D. Jacquemin, A. Planchat, C. Adamo and B. Mennucci, TD-DFT assessment of functionals for optical 0–0 transitions in solvated dyes, J. Chem. Theory Comput., 2012, 8(7), 2359–2372 CrossRef CAS PubMed .
+N. A. Murugan, J. Kongsted, Z. Rinkevicius, K. Aidas, K. V. Mikkelsen and H. Agren, Hybrid density functional theory/molecular mechanics calculations of two-photon absorption of dimethylamino nitro stilbene in solution, Phys. Chem. Chem. Phys., 2011, 13(27), 12506–12516 RSC .
+J. Elm, M. Bilde and K. V. Mikkelsen, Assessment of binding energies of atmospherically relevant clusters, Phys. Chem. Chem. Phys., 2013, 15(39), 16442–16445 RSC .
+
+Footnotes† Electronic supplementary information (ESI) available: Notes on TTET and TTA; basis-set investigation; molecular structures. See DOI: 10.1039/c8cp00588e‡ Present address: Department of Energy Conversion and Storage, Technical University of Denmark, Frederiksborgvej 399, DK-4000 Roskilde, Denmark. askov@dtu.dkThis journal is © the Owner Societies 2018
+Table Content:
+	(1)
+
+ 	Fig. 1  A simple Jablonski diagram of triplet–triplet annihilation photon upconversion. The two insets are schematics of the electron rearrangements in the highest occupied molecular orbitals (HOMOs) and lowest unoccupied molecular orbitals (LUMOs) of the sensitizers, S, and annihilators, A, during triplet–triplet energy transfer (TTET) and triplet–triplet annihilation (TTA). ISC denotes intersystem crossing.	 
+
+ 	Scheme 1  The annihilators (blue) and sensitizers (red) investigated herein.	 
+
+
+Biacetyl/PPO	0.85540	0.85038	0.005838	Benzene
+ZnOEP/DPA	0.95941	0.96042	0.06033	PhCl
+PdOEP/DPA	≃1.0033	0.96042	0.12533	PhCl
+PtOEP/DPA	≃1.0043	0.96042	0.15033	PhCl
+BI/perylene	0.93739	0.93044	0.05439	MeCN
+BI-1/perylene	0.92523	0.93044	0.16523	Toluene
+BI-2/perylene	0.87623	0.93044	0.10323	Toluene
+[Ru(dmb)3]2+/DPA	n/a	0.96042	n/a	MeCN
+Ir(ppy)3/pyrene	>0.90045	0.3535	>0.010a	DCM
+
+
+Biacetyl	2.73 (2.76)	2.75 (2.84)	2.77 (2.78)	2.93 (2.97)	2.94 (2.95)	2.77 (2.80)	2.8138	Benzene
+ZnP	2.41 (2.46)	2.43 (2.56)	2.36 (2.42)	2.35 (2.50)	2.30 (2.35)	2.44 (2.51)	n/a	PhCl
+ZnOEP	2.36 (2.42)	2.38 (2.51)	2.33 (2.38)	2.29 (2.45)	2.26 (2.31)	2.39 (2.46)	2.1833	PhCl
+PdP	2.52 (2.58)	2.54 (2.66)	2.49 (2.54)	2.47 (2.62)	2.41 (2.46)	2.56 (2.62)	n/a	PhCl
+PdOEPa	2.46 (2.52)	2.47 (2.60)	2.43 (2.49)	2.41 (2.56)	2.35 (2.40)	2.50 (2.56)	2.3033	PhCl
+PtP	2.59 (2.65)	2.62 (2.74)	2.55 (2.60)	2.56 (2.70)	2.46 (2.51)	2.63 (2.69)	n/a	PhCl
+PtOEP	2.53 (2.58)	2.55 (2.68)	2.49 (2.54)	2.49 (2.64)	2.40 (2.45)	2.56 (2.63)	2.3233	PhCl
+BI	2.66 (2.85)	2.75 (2.98)	2.47 (2.60)	2.78 (3.00)	2.60 (2.76)	2.71 (2.92)	2.3439	MeCN
+BI-1	2.51 (2.63)	2.67 (2.87)	2.20 (2.25)	2.70 (2.90)	2.26 (2.31)	2.59 (2.74)	2.3323	Toluene
+BI-2	2.45 (2.57)	2.64 (2.83)	2.16 (2.21)	2.67 (2.86)	2.21 (2.27)	2.53 (2.67)	2.3623	Toluene
+[Ru(bpy)3]2+	2.47 (2.48)	3.22 (3.23)	1.95 (1.95)	3.12 (3.13)	2.18 (2.19)	2.64 (2.66)	2.7037	MeCN
+Ir(ppy)3	2.88 (2.89)	3.70 (3.77)	2.44 (2.45)	3.54 (3.60)	2.62 (2.62)	3.05 (3.07)	3.2635	DCM
+
+
+MSE	0.05 (0.12)	0.28 (0.53)	−0.15 (−0.11)	0.26 (0.39)	−0.09 (−0.04)	0.13 (0.21)	—	—
+MAE	0.20 (0.26)	0.29 (0.41)	0.28 (0.30)	0.26 (0.39)	0.22 (0.24)	0.20 (0.47)	—	—
+
+PPO	3.74 (3.87)	4.15 (4.30)	3.62 (3.74)	4.11 (4.25)	3.47 (3.57)	3.84 (3.98)	3.8738	Benzene
+DPA	3.08 (3.28)	3.42 (3.64)	2.96 (3.13)	3.40 (3.62)	2.83 (2.99)	3.16 (3.36)	3.1533	PhCl
+Perylene	2.78 (2.97)	3.11 (3.30)	2.70 (2.88)	3.09 (3.28)	2.56 (2.73)	2.86 (3.05)	2.8839	MeCN
+1-CBPEA	2.39 (2.56)	2.71 (2.89)	2.27 (2.44)	2.69 (2.88)	2.18 (2.34)	2.45 (2.63)	2.5839	MeCN
+Pyrene	3.65 (3.80)	4.00 (4.09)	3.53 (3.70)	3.95 (4.06)	3.38 (3.55)	3.74 (3.88)	3.6535	MeCN
+BA	3.36 (3.50)	3.77 (3.93)	3.20 (3.32)	3.74 (3.91)	3.06 (3.19)	3.46 (3.60)	3.4074	Toluene
+DBP	3.22 (3.36)	3.63 (3.79)	3.05 (3.18)	3.60 (3.76)	2.94 (3.06)	3.32 (3.46)	n/a	Toluene
+
+
+MSE	−0.09 (0.08)	0.27 (0.44)	−0.21 (−0.05)	0.24 (0.41)	−0.34 (−0.19)	−0.003 (0.16)	—	—
+MAE	0.09 (0.08)	0.27 (0.44)	0.21 (0.07)	0.24 (0.41)	0.34 (0.19)	0.06 (0.16)	—	—
+
+
+Biacetyl	2.15 (2.38)	2.32 (2.38)	2.21 (2.28)	2.32 (2.39)	2.48 (2.53)	2.12 (2.20)	2.3838	Benzene
+ZnP	1.75 (1.93)	1.69 (2.03)	1.81 (1.93)	1.24 (1.87)	1.90 (1.97)	1.66 (1.91)	n/a	PhCl
+ZnOEP	1.77 (1.94)	1.68 (1.99)	1.85 (1.95)	1.24 (1.85)	1.89 (1.94)	1.68 (1.92)	1.7841	PhCl
+PdP	1.90 (2.06)	1.82 (2.14)	1.97 (2.08)	1.43 (2.00)	2.02 (2.09)	1.80 (2.05)	n/a	PhCl
+PdOEPa	1.88 (2.02)	1.78 (2.07)	1.96 (2.05)	1.41 (1.94)	1.97 (2.01)	1.80 (2.01)	1.8533	PhCl
+PtP	1.99 (2.15)	1.93 (2.23)	2.05 (2.16)	1.57 (2.10)	2.09 (2.16)	1.90 (2.14)	n/a	PhCl
+PtOEP	1.96 (2.09)	1.89 (2.15)	2.02 (2.10)	1.54 (2.03)	2.03 (2.07)	1.89 (2.09)	1.9137	PhCl
+BI	1.59 (1.69)	1.58 (1.74)	1.63 (1.70)	1.39 (1.68)	1.72 (1.78)	1.52 (1.67)	n/a	MeCN
+BI-1	1.56 (1.66)	1.55 (1.72)	1.60 (1.67)	1.36 (1.65)	1.68 (1.73)	1.50 (1.65)	n/a	Toluene
+BI-2	1.55 (1.65)	1.54 (1.71)	1.59 (1.65)	1.35 (1.64)	1.65 (1.70)	1.49 (1.64)	n/a	Toluene
+[Ru(bpy)3]2+	2.32 (2.36)	2.90 (2.95)	1.87 (1.89)	2.67 (2.90)	2.12 (2.13)	2.41 (2.49)	1.9737	MeCN
+Ir(ppy)3	2.63 (2.70)	3.12 (3.22)	2.34 (2.37)	2.77 (3.03)	2.52 (2.54)	2.66 (2.79)	2.3835	DCM
+
+
+MSE	0.07 (0.18)	0.24 (0.42)	−0.003 (0.06)	−0.05 (0.31)	0.12 (0.16)	0.04 (0.21)	—	—
+MAE	0.15 (0.23)	0.32 (0.42)	0.10 (0.13)	0.41 (0.31)	0.12 (0.16)	0.19 (0.27)	—	—
+
+PPO	2.61 (2.82)	3.05 (3.21)	2.61 (2.79)	2.58 (2.97)	2.64 (2.76)	2.54 (2.83)	2.4875	Benzene
+DPA	1.82 (2.07)	2.15 (2.36)	1.80 (2.03)	1.61 (2.15)	1.88 (2.04)	1.68 (2.05)	1.7776	PhCl
+Perylene	1.61 (1.84)	1.96 (2.15)	1.61 (1.81)	1.45 (1.97)	1.67 (1.80)	1.50 (1.84)	1.55b77	Toluene
+1-CBPEA	1.34 (1.55)	1.61 (1.82)	1.34 (1.51)	1.09 (1.65)	1.40 (1.51)	1.22 (1.54)	1.36c78	MeCN
+Pyrene	2.23 (2.48)	2.59 (2.81)	2.23 (2.45)	2.02 (2.57)	2.31 (2.46)	2.10 (2.47)	2.0977	MeCN
+BA	2.14 (2.39)	2.53 (2.73)	2.12 (2.35)	1.97 (2.49)	2.20 (2.35)	2.01 (2.38)	2.0479	Toluene
+DBP	2.11 (2.34)	2.49 (2.69)	2.09 (2.28)	1.95 (2.47)	2.15 (2.28)	2.00 (2.34)	1.8577	Toluene
+
+
+MSE	0.10 (0.34)	0.46 (0.66)	0.09 (0.30)	−0.07 (0.45)	0.16 (0.29)	−0.01 (0.33)	—	—
+MAE	0.11 (0.34)	0.46 (0.66)	0.10 (0.30)	0.12 (0.45)	0.16 (0.29)	0.07 (0.33)	—	—
+
+ 	Fig. 2  Visualization of the calculated differences in energy of the 3S* and 3A* states as predicted for the TTA-UC pairs by the 36 combinations of functionals investigated herein for standard TD-DFT. All values are corrected for the experimental spectral mismatch so that the colorbar represents the deviation of the calculated value from the experimental value in eV (in lieu of the experimental triplet energies for the range of BODIPY sensitizers, the calculated Gibbs free energies for the triplet states are used; these are calculated at the UM06-2X/6-311+G(d)/aug-cc-pVTZ-PP level of theory).	 
+
+ 	Fig. 3  Visualization of the calculated differences in energy of the 3S* and 3A* states as predicted for the TTA-UC pairs by the 36 combinations of functionals investigated herein for TD-DFT within the Tamm–Dancoff approximation. All values are corrected for the experimental spectral mismatch so that the colorbar represents the deviation of the calculated value from the experimental value in eV (in lieu of the experimental values for the range of BODIPY sensitizers, the calculated Gibbs free energies for the triplet states are used; these are calculated at the UM06-2X/6-311+G(d)/aug-cc-pVTZ-PP level of theory).	 
+
+B3LYP	0.030 (0.042)	0.095 (0.115)	0.030 (0.036)	0.054 (0.064)	0.037 (0.035)	0.039 (0.041)
+M06-2X	0.063 (0.060)	0.113 (0.103)	0.062 (0.055)	0.071 (0.077)	0.070 (0.054)	0.057 (0.059)
+M06-L	0.024 (0.060)	0.105 (0.138)	0.026 (0.051)	0.042 (0.086)	0.031 (0.051)	0.030 (0.058)
+CAM-B3LYP	0.095 (0.069)	0.151 (0.117)	0.094 (0.064)	0.075 (0.086)	0.102 (0.063)	0.080 (0.069)
+M11-L	0.013 (0.039)	0.077 (0.117)	0.015 (0.030)	0.054 (0.065)	0.009 (0.030)	0.041 (0.036)
+PBE0	0.046 (0.051)	0.108 (0.116)	0.045 (0.046)	0.047 (0.072)	0.053 (0.045)	0.037 (0.051)
+Footnotes
+† Electronic supplementary information (ESI) available: Notes on TTET and TTA; basis-set investigation; molecular structures. See DOI: 10.1039/c8cp00588e
+‡ Present address: Department of Energy Conversion and Storage, Technical University of Denmark, Frederiksborgvej 399, DK-4000 Roskilde, Denmark. askov@dtu.dk
+
+This journal is © the Owner Societies 2018

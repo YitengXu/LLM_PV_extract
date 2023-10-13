@@ -1,0 +1,571 @@
+A time and resource efficient machine learning assisted design of non-fullerene small molecule acceptors for P3HT-based organic solar cells and green  ...  - Journal of Materials Chemistry A (RSC Publishing) DOI:10.1039/D1TA04742F View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D1TA04742F
+(Paper)
+J. Mater. Chem. A, 2021, 9, 15684-15695A time and resource efficient machine learning assisted design of non-fullerene small molecule acceptors for P3HT-based organic solar cells and green solvent selection†
+
+        
+          
+            Asif 
+            Mahmood
+          
+        
+       and 
+
+        
+          
+            Jin-Liang 
+            Wang
+          
+        
+      *
+      Key Laboratory of Cluster Science of Ministry of Education, Beijing Key Laboratory of Photoelectronic/Electrophotonic Conversion Materials, School of Chemistry and Chemical Engineering, Beijing Institute of Technology, Beijing, 100081, China. E-mail: jinlwang@bit.edu.cn
+Received 
+      5th June 2021
+    , Accepted 21st June 2021First published on 22nd June 2021AbstractThe power conversion efficiency (PCE) of organic solar cells (OSCs) is increasing continuously, however, commercialization is far from being achieved due to the very high synthetic cost of materials and toxic solvents. Poly(3-hexylthiophene) (P3HT) is the cheapest donor, however, its PCE has remained relatively low for a long time. Recently, a PCE of over 9% has been reported. This study was performed with the aim of predicting the performance of P3HT based organic solar cells through statistical data fit, bypassing the complexity of OSC devices. For this purpose, we have used machine learning to explore data from previously reported devices. Molecular descriptors were used to train machine learning models. We have identified the descriptors that have a positive impact on the PCE. Various machine learning models are used to classify non-fullerene acceptors (NFAs) on the basis of their PCEs. We have also developed various regression models to predict the PCE. The support vector machine showed the best predictive capability. Machine learning models were also trained to predict the energy levels. Over 3000 NFAs were designed using high performing and easily synthesizable building blocks. For virtual screening of new molecules, energy levels were predicted through the already trained model. Acceptors with suitable energy levels matching with those of P3HT were selected. The PCEs of these selected acceptors were also predicted. 87 acceptors with >7.5% PCE were selected. Green solvents were selected on the basis of Hansen solubility parameters predicted using machine learning. Green solvent-containing organic solar cells have better scope of commercialization due to their environment-friendly nature. This study will pave the way for the cheap and fast design of materials for efficient P3HT-based organic solar cells. This study will help to select potential candidates and speed up the breakthroughs.
+1. Introduction
+Organic solar cells (OSCs) are famous for their unique characteristics such as flexibility, lightweight, transparency and low-cost.1–4 In the past two years, power conversion efficiency (PCE) has significantly increased.5 The great success is the result of device architecture design, design of active layer materials and film processing.6–8 New design ideas were obtained from the knowledge acquired from expensive and time-consuming synthesis, characterization and device optimization. The results are further used for redesigning of new active layer materials.9,10 Time consuming and laborious trial and error methods are currently used in the selection of materials. In this scenario, computer assisted prediction of the performance of organic solar cells is the ultimate need.
+Scharber's model was developed to predict the photovoltaic efficiency of organic solar cells.11 It is based on few assumptions that limit its scope, and its performance is quite poor.12–14 Few electronic parameters of donor and acceptor materials are used as the input. It is hard to include other descriptors such as structural, topological and thermodynamic descriptors. Therefore, it is difficult to improve its performance.
+In recent years, a new paradigm called data science has emerged.15–17 Data science assisted material discovery and design is an effective way to utilize relevant information. Machine learning, a branch of artificial intelligence, is used to explore past data and make predictions. It is useful for screening potential candidates.18–20
+In the early stage of organic solar cell research, the major improvement in PCE resulted from donor design. Therefore, many donor polymers have been synthesized. Poly(3-hexylthiophene) (P3HT) is a potential candidate for the fabrication of large area OSCs,21–23 because it can be synthesized in a large scale with low cost. It is the only polymer truly available in large quantities (over 10 kg).24,25 Prof. Hou, one of the famous researchers in the field of organic solar cells, mentioned that P3HT will remain the cheapest polymer material for OSCs.26 P3HT was paired with fullerene-based acceptors, however, the PCE remained low.27 Fullerenes offer limited scope for modification, therefore NFAs are more suitable due to their structural versatility. Zhou's group reported various A–D–A type NFAs for P3HT.28–34 They contributed to improving the open-circuit voltage (Voc) of P3HT-based OSCs and achieved a Voc of 1.22 V which is double that of the P3HT:PC61BM-based control device (about 0.6 V).31 Peng et al. achieved a PCE of 8.25% for the P3HT:2,7,12-tris(2-(3-oxo-2,3-dihydroinden-1-ylidene)malononitrile-7-benzothiadiazole-2-)truxene (TrBTIC) based device through the optimization of treatment conditions.35 It is worth mentioning that a green solvent was used for device fabrication. Recently, Hou et al. have reported the highest PCE for a P3HT based device (9.46%).26 They have synthesized a new NFA (ZY-4Cl) by the structural engineering of BTP-4Cl,36 wherein four cyano groups were removed to uplift the energy level. This structural change has provided suitable energy level matching with that of P3HT.
+A large number of NFAs can be designed due to their structural versatility. Now an important question is that whether every NFA can perform well with P3HT and how to obtain more efficient P3HT/NFA devices? Machine learning can provide the answer to this question in a short time and without experimentation.
+The use of machine learning for organic solar cell research is not new.37–41 In some studies, data were extracted from the Harvard Clean Energy Project (HCEP) and energy levels calculated using DFT were used as the input for Scharber's model to calculate the PCE.13,14,42–44 However, molecules reported in the literature are usually much more complicated than those in the HCEP. Energy calculated using DFT and Scharber's model both are not accurate. There are some studies in which multiple donors and acceptors were used.45–48 In some studies, data of various donors were collected for few acceptors.12,49 In few studies, just energy levels were used to train models and ignore other properties.50–52 In the present study, we have collected the data for 283 non-fullerene acceptors against a single donor (P3HT). This will reduce the degree of freedom and will help to understand the effect of the chemistry of acceptor materials because the donor material is the same. Leszczynski et al. performed QSPR modelling on the data of 59 fullerene acceptors paired with P3HT.53 In the present study, classification and regression analysis have been done on the data of 283 P3HT based OSC devices through various machine-learning approaches. Over 3000 molecular descriptors were used. Machine learning models were also trained to predict HOMO and LUMO values. Over 3000 easily synthesizable NFAs were designed and screened. Finally, 87 potential candidates with >7.5% PCE and suitable energy levels were selected. Green solvents were also selected as potential candidates. The whole study is summarized in Fig. 1. This study will pave the way for the cheap and fast design of materials for efficient P3HT-based organic solar cells.
+ Fig. 1  Brief description of the whole study. (a) Model training. (b) Library generation and screening of potential candidates. 
+2. Methodology
+2.1. Dataset
+The data of 283 OSC devices, where P3HT was the donor and NFAs were the electron acceptors, were collected from the literature. The highest PCE was considered. NFAs just differing in the alkyl chain were considered once to avoid artificial good prediction due to similar entries. To obtain a more general model, polymers and small molecules were mixed together in the database. This dataset is large enough to study the correlation between the molecular properties of NFAs and the performance of OSC devices. The distribution of PCE in the dataset is shown in Fig. S1.† Majority of the devices had a PCE of <5.0%.
+In the majority of papers, P3HT was bought from commercial sources. No information about its molecular weight and polydispersity is available. Commercially, P3HT is available with different molecular weights. No doubt, the molecular weight and polydispersity of P3HT somehow affect the performance of OSCs.54,55 This aspect is ignored to collect sufficient data. Further differentiation can reduce the data significantly.
+2.2. Descriptor calculation and selection
+The structures of non-fullerene acceptors were obtained using Gauss view 6 and optimized using the semiempirical AM1 method. DFT calculations were carried out by using Gaussian 09.56 More than 3000 molecular descriptors were calculated using the web-based platforms OCHEM57 and ChemDes.58 The large pool of descriptors was reduced using various measures. Firstly, descriptors with constant values and missing values were removed. Secondly, highly intercorrelated descriptors (r = 0.9) were removed. In the third step “multistage” stepwise regression analysis was performed to remove less important descriptors from the initial large pool of descriptors.
+2.3. Machine learning analysis
+Machine learning analysis was performed using KNIME and Weka. KNIME is an open-source platform for machine learning and data mining.59 Weka is a collection of machine learning algorithms for data mining tasks. Weka contains tools for data pre-processing, classification, regression, clustering, association rules, and visualization.60
+3. Results and discussion
+The correlation between the descriptors and solar cell parameters is an excellent indicator of their importance. An initial insight on the data can be obtained by studying the correlation between the PCE, Voc, Jsc, FF, HOMO and LUMO of acceptor materials. The Pearson correlation coefficients between different experimental parameters are given in Fig. 2. Jsc (r = 0.993) strongly correlated with PCE and the correlation of Voc with PCE was 0.256. Surprisingly, FF showed much lower correlation with PCE (r = 0.01). HOMO and LUMO values of acceptors showed very low correlation with PCE. It indicates that energy levels are not major factors responsible for PCE change. Therefore, molecular descriptors were calculated to understand the effect of the acceptor chemistry on the performance of P3HT based devices. The descriptors having high correlation with PCE are given in Table 1. Molecular descriptors are mathematical and logical representations of molecules. They also include the distinctive factors of the structures. Simply, molecular descriptors provide information on the chemistry of materials. In the present study, a large number of descriptors are calculated to explicitly consider every chemical and structural aspect of molecules in a dataset.
+ Fig. 2  Correlation between experimental parameters. 
+Table 1 Descriptors and their correlation between them and PCE
+
+
+
+
+No.
+Name
+Category
+Description
+Correlation with PCE
+
+
+
+
+1
+MLFER_S
+Quantum chemical descriptor
+Combined dipolarity/polarizability
+0.636
+
+
+2
+SpAD_EA(dm)
+Edge adjacency indices
+Spectral absolute deviation from edge adjacency mat. weighted by the dipole moment
+0.596
+
+
+3
+RDF40m
+RDF descriptor
+Radial distribution function-040/weighted by the relative mass
+0.556
+
+
+4
+Eig06_EA(dm)
+Edge adjacency indices
+Eigenvalue n. 6 from edge adjacency mat. weighted by the dipole moment
+0.536
+
+
+5
+Eig03_AEA(dm)
+Edge adjacency indices
+Eigenvalue n. 3 from augmented edge adjacency mat. weighted by the dipole moment
+0.523
+
+
+6
+F06[N-O]
+2D atom pairs
+Frequency of N–O at topological distance 6
+0.505
+
+
+7
+TIC1
+Information indices
+Total information content index (neighborhood symmetry of 1-order)
+0.504
+
+
+
+
+3.1. Classification
+The selection of an appropriate ML algorithm plays a key role because it significantly affects the prediction performance. There is no single best method for all cases. Therefore, we have tried various models such as k-nearest neighbor (kNN), support vector machine (SVM), random forest (RF), artificial neural network (ANN), naive Bayes and CN2 rule inducer. For classification, we have divided PCE values into three groups: group A (<3%), group B (<6%) and group C (<10%). Data points in group C (7) are much less as compared to group A (237) and group B (39). Firstly, all the seven descriptors (Table 1) were used as the input to train the model. In the second step, the 7th descriptor (TIC1) was removed and remaining six descriptors were used. In the same way, descriptors were removed one by one, finally only the 1st descriptor (MLFER_S) was used to train ML models. As shown in Table 2, the performance of all the ML models slightly changed with the change of number of descriptors as the input. Naive Bayes and CN2 rule inducer showed lower classification accuracy. A confusion matrix is used for graphical representation of classification results. The confusion matrix for kNN, SVM, RF and ANN with their highest classification accuracy is given in Fig. 3. The row and column represent the actual and predicted classifications of the PCE, respectively, such that the diagonal line corresponds to the correct answer. In most of the cases, the data point of group C falsely falls in other groups and the reason behind it is the relatively lower number of data points in this group because only a very small number of P3HT-based OSCs showed higher performance.
+Table 2 Classification accuracy of various classifiers developed using the various descriptors
+
+
+
+
+Model/no. of descriptors
+7
+6
+5
+4
+3
+2
+1
+
+
+
+kNN
+0.837
+0.855
+0.859
+0.859
+0.859
+0.855
+0.841
+
+
+SVM
+0.876
+0.873
+0.859
+0.855
+0.866
+0.859
+0.823
+
+
+Random forest
+0.852
+0.845
+0.866
+0.866
+0.859
+0.859
+0.802
+
+
+ANN
+0.883
+0.887
+0.873
+0.880
+0.873
+0.855
+0.845
+
+
+Naive Bayes
+0.763
+0.792
+0.770
+0.816
+0.841
+0.841
+0.837
+
+
+CN2 rule inducer
+0.816
+0.823
+0.845
+0.837
+0.816
+0.827
+0.823
+
+
+
+
+ Fig. 3  Confusion matrix for classification (CA = classification accuracy). 
+The test set is split from the training set to check the performance of models. Data points were randomly selected for the training set and test set. The range of response values of both subsets covers the lowest to the highest value. Various ratios were tried using two methods (ANN and RF). A good model performs in the same way on both training and test sets. Both models performed better at 70–30% ratio (Table 3).
+Table 3 Effect of training and test sampling on the accuracy of ML models developed using artificial neural network (7 descriptor) and random forest (4 descriptor)
+
+
+
+
+Model
+70–30%
+75–25%
+80–20%
+85–15%
+90–10%
+
+
+Training set
+Test set
+Training set
+Test set
+Training set
+Test set
+Training set
+Test set
+Training set
+Test set
+
+
+
+
+ANN
+0.894
+0.833
+0.897
+0.857
+0.894
+0.821
+0.867
+0.786
+0.882
+0.821
+
+
+RF
+0.854
+0.869
+0.822
+0.843
+0.872
+0.786
+0.880
+0.833
+0.855
+0.893
+
+
+
+
+3.2. Regression
+Classification classifies the given data points in predefined groups. Lesser the groups, higher will be the classification accuracy. Using classification we can predict in which group the PCE of a specific semiconductor will fall. To predict the PCE values of semi-conductors, regression analysis was performed. For this purpose, four and seven descriptors were used. Pearson correlation between the experimental PCE and predicted PCE calculated through random forest (RF) and support vector machine (SVM) using 4 and 7 descriptors is shown in Fig. 4. r values for k-nearest neighbor (k-NN), artificial neural network (ANN) and linear regression (LR) are given in Fig. S2.†k-NN showed a very low r value for the test set as compared with the training set. The behavior of RF was strongly descriptor dependent; in the case of 7 descriptors, the difference between r values for the training and test sets became so wide. SVM is the best model, the difference between the r value for the training and test sets is less and its values are almost independent of the number of descriptors. In the case of ANN, the model trained using 4 descriptors showed a wide difference between r values for the training and test sets. However, using 7 descriptors the r value for the test set increased significantly. The LR performed poorly for both 4 and 7 descriptors. We expect that our models will be somehow less accurate in the prediction of high efficiency values due to the lack of training points in the high efficiency region.
+ Fig. 4  Pearson correlation between the experimental PCE and predicted PCE calculated through random forest (RF) and support vector machine (SVM) using 4 and 7 descriptors. 
+3.3. Energy level prediction
+It is generally recognized that energy-level offset between the donor and acceptor should be higher than 0.30 eV to achieve sufficient driving force for efficient exciton dissociation. However, some NFA-based OSCs showed efficient exciton dissociation with extremely small energy-level offsets and achieved high performance due to the reduced Eloss.61,62 In the case of majority of devices, minor energy-level offset leads to less exciton dissociation efficiency, which reduces the device performance.63,64 Therefore, suitable energy level match between the donor and acceptor materials is very important. ITIC is one of the most successful and widely used NFAs.65 Its performance was varied by changing the donor polymer, P3HT (1.25%),66 PTB7-Th (6.8%),67 PBDB-T (11.21%),68 and PBDTS-TDZ (12.80%).69 The P3HT:TrBTIC based device showed a PCE of 8.25%, however, when TrBTIC was paired with other polymers, low PCEs were obtained (2.05% for PTB7-Th, 0.79% for PBDB-T, and 0.22% for PM6).35 There are various reported values for the highest occupied molecular orbital (HOMO) levels and lowest unoccupied molecular orbital (LUMO) levels of P3HT. −5.0 eV for HOMO and −3.0 eV for LUMO is considered in the parent study. A large number of NFAs cannot be used with P3HT due to their low-lying HOMO and LUMO energy levels, particularly their low-lying LUMO energy level. Therefore, prediction of HOMO and LUMO levels is very important. The key point in the success of machine learning is to predict an outcome with minimum computational cost. Calculation of HOMO and LUMO values using density functional theory (DFT) is time consuming and expensive, making it nearly impossible to screen materials with high speed. Additionally, energy levels calculated using DFT are not accurate.70,71 In this situation, machine learning prediction of HOMO and LUMO values using experimental HOMO and LUMO values as inputs is a highly feasible method. To train the ML model for the prediction of HOMO and LUMO values, data of 764 small molecule organic semiconductors were collected from the literature. Molecular descriptors were calculated from the optimized files using online resources: OCHEM and ChemDes. Various ML models were tried. r values for the three best ones are given in Table 4. The whole dataset was split into training and test sets with 70:30 ratio. The performance of LR is better than that of RF and SVM. The LR model was also applied to predict the HOMO and LUMO of some NFAs that are not included in the training and test sets. Results are given in Table S1.† An error of less than 0.09 eV is found. For a parallel comparison, we have collected research papers where both the experimental and DFT calculated HOMO and LUMO values were reported. Experimental and DFT calculated HOMO and LUMO as well as the difference between experimental and calculated values are given in Table S2.† DFT calculations were performed using the B3LYP functional and various basis sets. Errors vary from 0 to 2.65 eV; in the majority of cases, the error was >0.5 eV. Machine learning is more accurate, it requires less computational cost and time. To predict HOMO and LUMO values of one molecule, ML needs few minutes and DFT needs more than one day.
+Table 4 Pearson correlation (r) between the experimental and predicted HOMO and LUMO values
+
+
+
+
+
+
+HOMO
+LUMO
+
+
+Training set
+Test set
+Training set
+Test set
+
+
+
+
+LR
+0.57
+0.58
+0.53
+0.53
+
+
+RF
+0.54
+0.59
+0.47
+0.44
+
+
+SVM
+0.52
+0.53
+0.50
+0.48
+
+
+
+
+3.4. Designing new compounds
+The major goal of this study is to identify the electron acceptors to pair with P3HT. In this regard two considerations are important: (i) what is the target chemical space; and (ii) how to explore the space. Chemical space is considered to be the set of all possible molecules. The structural versatility of organic semi-conductors leads to large number of candidate molecules, making it difficult to explore the large chemical space. Therefore, there is a need to impose constraints on the construction of chemical space keeping in mind the limitations of cost and time. As a large number of acceptors cannot pair with P3HT due to its high lying energy levels, human filters and manual selection were used to specify the building blocks and their combinations. We have defined the chemical space in such a way that the number of potential candidates is reduced. Synthesizability of building blocks was also kept in mind. Knowledge based wise sampling of chemical fragments can lead to a smaller chemical space that will be easier to explore.
+NFAs used in OSCs are composed of different types of building blocks such as the donor (D), acceptor (A), π-spacer (π) and end-capping (C) units. A suitable combination of electron-rich and electron-deficient groups helps to achieve push–pull systems that facilitate hole–electron separation by polarizing the electronic cloud. π-Spacers help to enhance the π-conjugation. End capping groups play a very important role in intermolecular charge transfer. There are many possible ways to modify the structure of moieties and their arrangements such as A–D–A, A–π–D–π–A, A–D–D–D–A, A–A–D–A–A, A–π–A–π–A etc. Naphthalene diimide (NDI) and perylene diimide (PDI) groups were not considered because of the low performance of acceptors based on them, when they paired with P3HT. Indaceno[1,2-b:5,6-b′]dithiophene (IDT) and indacenodithieno[3,2-b]thiophene (IDTT) derivatives with varying extension of conjugation, various heteroatoms and different out of plane groups were used for designing NFAs. Unfused cores were also designed, for example, difluorobenzothiadiazole flanked by two cyclopentadithiophene units. New compounds were also designed by moifying the core of famous Y6. Some groups were used both as the central core and π-spacer. A large number of terminal electron-deficient groups were used. Except dicyanomethylene, all compounds are the derivatives of dicyanomethylene-3-indanone. In a large number of terminal groups, the dicyano group was removed to uplift the energy levels. Conjugation was also increased. Thiophene was also used instead of benzene. Various electron-deficient and electron-rich atoms or small groups of atoms were also introduced on the peripheries. The synthesis strategy of terminal groups is similar.
+We have designed >3000 small molecule acceptors using various building blocks (Fig. 5). Geometries were optimized using the semiempirical AM1 method. Molecular descriptors were calculated using web-based services (OCHEM and ChemDes). We have used a two-step screening approach. In the first step, we have predicted the HOMO and LUMO values using the LR model. As mentioned in the previous section, P3HT has relatively high HOMO and LUMO values. Therefore, predicted HOMO and LUMO values have helped us to screen a large number of NFAs. We have selected 500 NFAs and predicted their PCEs using SVM regression analysis. In the second step, 87 NFAs with PCE > 7.50% were selected. Their HOMO, LUMO, PCE values and structures are given in Table S3.† Five potential NFAs among them are given in Fig. 6. From Fig. 4 and S2,† it is clear that different ML models showed some variation especially in the high PCE region. Good and bad correlation also cannot be ignored. NFAs based on indacenodithiophene (IDT) and indacenodithienothiophene (IDTT) derivatives showed higher PCE. They have already proven to be excellent acceptor materials.65 However, it is necessary to make it clear that IDT and IDTT based NFAs are large in number in the training set and the newly designed NFAs. The availability of a more balanced dataset, i.e. more points in the high efficiency region, can increase the prediction ability of machine models. A combination of machine learning and molecular dynamics simulations can help to design electron-acceptors with higher performance. PCE close to 15% for P3HT-based organic solar cells can be achieved in the near future.
+ Fig. 5  Building blocks used to design new NFAs. 
+ Fig. 6  Chemical structure, HOMO, LUMO and PCE of the five potential NFAs for P3HT based OSCs. (The number in black on the left side is the index of the molecule in Table S2.†) 
+3.5. Green solvent selection using Hansen solubility parameters
+State-of the-art OSC devices are processed using hazardous halogenated solvents that hinder their eventual commercialization. Green-solvent-processed OSCs are the ultimate need. It is expensive and tedious to experimentally try many solvents. In this regard, fast prediction of solubility can be helpful. It is challenging to accurately predict the solubility, it depends on the physical and chemical properties of both solute and solvent. Hansen solubility parameters (HSPs) are useful for this purpose.72 Generally, three principal types of interactions govern the solubility of a solute in a specific solvent: (i) dispersion interactions, (ii) permanent dipolar interactions, and (iii) hydrogen bonding interactions. For the three interactions, there are three Hansen solubility parameters: δ2 = δD2 + δP2 + δH2(1)here δD, δP, and δH are the Hansen solubility parameters (HSPs). The dataset of 252 solvents was collected from the literature. Machine learning models were trained using these data. Various machine learning models such as k-nearest neighbor, support vector machine, random forest, artificial neural network and linear regression were tried. Random forest showed higher prediction ability. The scatter plots of correlation between reported and predicted Hansen solubility parameters are given in Fig. 7. High r values are achieved for the prediction of Hansen solubility parameters.
+ Fig. 7  Correlation between reported and predicted Hansen solubility parameters. 
+The majority of data of solvents was taken from Hansen's textbook,72 HSPs of solvents have been calculated using the group contribution method or statistical thermodynamics. Therefore, the term “reported” instead of experimental is used in Fig. 7.
+Before using the trained model to predict the HSPs of the designed NFAs, HSPs of five small molecule organic semiconductors were predicted. The reported values and ML predicted values are given in Table 5. In the case of δD, ML predicted values are close to the reported values. The differences between predicted and reported values increased in the case of δP. In the case of δH, the ML model showed little more difference between the reported and predicted values. Experimentally, HSPs are hard to measure, statistical thermodynamics is not fast and easy as machine learning is. The HSPs are dependent on solubility limit73,74 and method of determination.75δP and δH of small molecule acceptors showed a variation of 2 MPa0.5 on the change of the solubility limit.73 Even the HSP values of P3HT determined by two different groups using the same method showed a difference of almost 0.5 MPa0.5.76,77 Keeping this situation in mind, the easy and fast prediction of HSPs using machine learning is a better option for the screening of a large number of solvents for a large number of organic semi-conductors. Therefore, little more inaccuracy using the ML methods comparative to tedious and expensive experimental methods is acceptable.
+Table 5 Difference between reported and predicted HSPs (unit is MPa0.5)
+
+
+
+
+Molecule
+Exp. δD
+Pred. δD
+Diff.
+Exp. δP
+Pred. δP
+Diff.
+Exp. δH
+Pred. δH
+Diff.
+Ref.
+
+
+
+
+DPP(PhTT)2
+19.64
+18.50
+1.14
+3.54
+5.14
+1.6
+6.12
+8.11
+1.99
+
+76
+
+
+
+DPP(TBFu)2
+19.33
+18.50
+0.83
+4.78
+6.47
+1.69
+6.26
+7.74
+1.48
+
+76
+
+
+
+F8NODIPS
+18.48
+19.71
+1.23
+2.62
+4.37
+1.75
+3.24
+6.13
+2.89
+
+76
+
+
+
+il(TT)2
+21.70
+20.42
+1.28
+2.90
+4.14
+1.24
+4.70
+7.11
+2.41
+
+83
+
+
+
+N(Ph-2T-DCN-Et)3
+19.09
+18.99
+0.10
+8.96
+8.25
+0.71
+3.47
+6.09
+2.62
+
+73
+
+
+
+
+
+The HSPs for 87 NFAs are predicted using already trained random forest models. A violin plot of HSP values is given in Fig. 8. Most of the NFAs showed high δD values (18–19 MPa0.5) due to the highly conjugated systems and strong π–π stacking. The solubility of these NFAs will be relatively lower in non-aromatic solvents due to their lower δD values. δP and δH values were relatively lower and their values fall in a broad range comparative to δD values.
+ Fig. 8  Violin plot of the HSP values of NFAs. 
+It is hard to draw the line that determines which solvent is green and which one is not. In the OSC literature, some toxic solvents such as carbon disulfide, xylenes and toluene are reported as “green”.78 Therefore, the “greenness” of a specific solvent should be assessed by keeping in mind the health and safety concerns and ecological impacts of production, recycling, and disposal.79 Help was taken from some published papers where solvents were classified keeping in mind their reactivity, flammability, human and ecosystem health concerns and waste treatment.80–82
+As different materials with similar HSPs show high affinity for each other,72 NFAs will be more soluble in the solvents having similar HSPs. The total of HSP values was used for the selection purpose. Five green solvents for 87 NFAs were selected (Table S4†). The solubility of NFAs can lower in green solvents compared to well-known solvents. However, green solvents can pave the way for the environment-friendly commercialization of OSCs. The 3D scatter plot of solvents, P3HT and five NFAs (structures are given in Fig. 6) is given Fig. 9. Already reported HSP values of P3HT are used.76 The HSP values of five NFAs are quite close to each other. The HSP of P3HT is little far from those of NFAs. It indicates that P3HT will not easily mix with NFAs, which may be helpful to achieve the optimal domain size. The large mixing of the donor with the acceptor leads to a small domain size, while very little mixing leads to a large domain size. Optical domain size is good to achieve high charge generation and transport.
+ Fig. 9  3D scatter plot of the HSPs of solvents, P3HT and five newly designed NFAs. 
+4. Future directions
+The working of organic solar cells is complex. Their performance depends on multiple factors. In the current study, Hansen solubility parameters are used to select green solvents. They can also be used to study other aspects related to solvents such as the effect of solvent polarity on PCE. How charge mobility affects the PCE for P3HT-based OSCs significantly can be studied by collecting the data of charge mobility. There can be an indirect method to correlate the reorganization energy with PCE.84 Basically, reorganization energy is a descriptor for charge mobility. Various features of film morphology such as domain size can be studied using deep learning. The images from various techniques such as atomic force microscopy (AFM) and transmission electron microscopy (TEM) can be used as inputs to train a model. However, extensive research is required for efficient use of deep learning to study film morphology features of P3HT-based OSCs. Here, we like to suggest few articles for further study.85–87
+5. Conclusions
+In conclusion, machine learning was used to predict the efficiency of P3HT based OSCs through statistical data fit, bypassing the complexity of OSC devices. Energy levels have not shown noticeable correlations with PCE. Molecular descriptors that represent the chemistry of materials were used as inputs to feed machine learning models. Important descriptors that influence the performance of P3HT-based OSCs are identified. A chemical space of >3000 new NFAs was constructed through knowledge based wise sampling of easily synthesizable and high performing organic moieties. The potential candidates were screened through two phase discovery pipelines. In the first phase, a pool of molecules was reduced on the basis of predicted HOMO and LUMO values. 500 NFAs having suitable energy level matching with P3HT were selected. In the second phase, the PCE of these NFAs was predicted. 87 NFAs with PCE > 7.5% were selected. Green solvents were selected using Hansen solubility parameters which were predicted through machine learning to speed up the selection process because experimental and statistical thermodynamic methods are complicated. Green solvent-processed OSCs are safe for the environment and ideal for commercialization. This study will pave the way for the cheap and fast design of materials for efficient P3HT-based organic solar cells. Fast screening with marginal computational cost can reduce the expensive experimental investigations, by reducing the number of target candidates. Machine learning assisted design and discovery pipeline will reduce the dependence of scientists on the brute-force screening approach and the road to target materials should be shortened.
+Data availability
+All the data used in this study are available from authors at reasonable request.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+The authors thank the support from the National Natural Science Foundation of China (No. 21971014, 21672023, 21950410533) and the National Key Research and Development Program of China (2018YFA0901800). Jin-Liang Wang was supported by the Thousand Youth Talents Plan of China and BIT Teli Young Fellow Recruitment Program. The authors thank the Analysis & Testing Center, Beijing Institute of Technology for NMR experiments.
+References
+L. Xu, W. Tao, H. Liu, J. Ning, M. Huang, B. Zhao, X. Lu and S. Tan, J. Mater. Chem. A, 2021, 9, 11734–11740 RSC .
+J.-M. Park, T. H. Lee, D. W. Kim, J. W. Kim, H. Y. Chung, J. Heo, S. Y. Park, W. S. Yoon, J. Y. Kim and S. Y. Park, J. Mater. Chem. A, 2021, 9, 10846–10854 RSC .
+C. Yang, Q. An, H.-R. Bai, H.-F. Zhi, H. S. Ryu, A. Mahmood, X. Zhao, S. Zhang, H. Y. Woo and J.-L. Wang, Angew. Chem., Int. Ed., 2021, 60 DOI:10.1002/anie.202104766 .
+X. Huang, J. Oh, Y. Cheng, B. Huang, S. Ding, Q. He, F. Wu, C. Yang, L. Chen and Y. Chen, J. Mater. Chem. A, 2021, 9, 5711–5719 RSC .
+M. H. Elsayed, B.-H. Jiang, Y.-P. Wang, P.-Y. Chang, Y.-C. Chiu, R.-J. Jeng, H.-H. Chou and C.-P. Chen, J. Mater. Chem. A, 2021, 9, 9780–9790 RSC .
+J.-L. Wang, K.-K. Liu, J. Yan, Z. Wu, F. Liu, F. Xiao, Z.-F. Chang, H.-B. Wu, Y. Cao and T. P. Russell, J. Am. Chem. Soc., 2016, 138, 7687–7697 CrossRef PubMed .
+S.-S. Wan, X. Xu, Z. Jiang, J. Yuan, A. Mahmood, G.-Z. Yuan, K.-K. Liu, W. Ma, Q. Peng and J.-L. Wang, J. Mater. Chem. A, 2020, 8, 4856–4867 RSC .
+A. Mahmood and J.-L. Wang, Sol. RRL, 2020, 4, 2000337 CrossRef .
+W. Chen and Q. Zhang, J. Mater. Chem. C, 2017, 5, 1275–1302 RSC .
+H. Sun, X. Song, J. Xie, P. Sun, P. Gu, C. Liu, F. Chen, Q. Zhang, Z.-K. Chen and W. Huang, ACS Appl. Mater. Interfaces, 2017, 9, 29924–29931 CrossRef PubMed .
+M. C. Scharber, D. Mühlbacher, M. Koppe, P. Denk, C. Waldauf, A. J. Heeger and C. J. Brabec, Adv. Mater., 2006, 18, 789–794 CrossRef .
+D. Padula, J. D. Simpson and A. Troisi, Mater. Horiz., 2019, 6, 343–349 RSC .
+S. A. Lopez, B. Sanchez-Lengeling, J. de Goes Soares and A. Aspuru-Guzik, Joule, 2017, 1, 857–870 CrossRef .
+E. O. Pyzer-Knapp, G. N. Simm and A. Aspuru Guzik, Mater. Horiz., 2016, 3, 226–233 RSC .
+X. Rodríguez-Martínez, E. Pascual-San-José, Z. Fei, M. Heeney, R. Guimerà and M. Campoy-Quiles, Energy Environ. Sci., 2021, 14, 986–994 RSC .
+R. Ding, Y. Ding, H. Zhang, R. Wang, Z. Xu, Y. Liu, W. Yin, J. Wang, J. Li and J. Liu, J. Mater. Chem. A, 2021, 9, 6841–6850 RSC .
+Y. Zhang, B. Sa, N. Miao, J. Zhou and Z. Sun, J. Mater. Chem. A, 2021, 9, 10882–10892 RSC .
+A. Mahmood and J.-L. Wang, Energy Environ. Sci., 2021, 14, 90–105 RSC .
+G. H. Gu, J. Noh, I. Kim and Y. Jung, J. Mater. Chem. A, 2019, 7, 17096–17117 RSC .
+Z. Shi, X. Yuan, Y. Yan, Y. Tang, J. Li, H. Liang, L. Tong and Z. Qiao, J. Mater. Chem. A, 2021, 9, 7656–7666 RSC .
+M. T. Dang, L. Hirsch and G. Wantz, Adv. Mater., 2011, 23, 3597–3602 CrossRef .
+J. Wang, G. Cai, B. Jia, H. Lu, X. Lu, X. Zhan and X. Chen, J. Mater. Chem. A, 2021, 9, 6520–6528 RSC .
+S. Chatterjee, S. Jinnai and Y. Ie, J. Mater. Chem. A, 2021 10.1039/D1TA03219D .
+R. Po, A. Bernardi, A. Calabrese, C. Carbonera, G. Corso and A. Pellegrino, Energy Environ. Sci., 2014, 7, 925–943 RSC .
+S. Holliday, R. S. Ashraf, A. Wadsworth, D. Baran, S. A. Yousaf, C. B. Nielsen, C.-H. Tan, S. D. Dimitrov, Z. Shang, N. Gasparini, M. Alamoudi, F. Laquai, C. J. Brabec, A. Salleo, J. R. Durrant and I. McCulloch, Nat. Commun., 2016, 7, 11585 CrossRef PubMed .
+C. Yang, S. Zhang, J. Ren, M. Gao, P. Bi, L. Ye and J. Hou, Energy Environ. Sci., 2020, 13, 2864–2869 RSC .
+X. Guo, C. Cui, M. Zhang, L. Huo, Y. Huang, J. Hou and Y. Li, Energy Environ. Sci., 2012, 5, 7943–7949 RSC .
+B. Xiao, M. Du, X. Wang, Z. Xiao, G. Li, A. Tang, L. Ding, Y. Geng, X. Sun and E. Zhou, ACS Appl. Mater. Interfaces, 2020, 12, 1094–1102 CrossRef .
+Q. Zhang, B. Xiao, M. Du, G. Li, A. Tang and E. Zhou, J. Mater. Chem. C, 2018, 6, 10902–10909 RSC .
+H. Huang, B. Xiao, C. Huang, J. Zhang, S. Liu, N. Fu, B. Zhao, T. Qin, E. Zhou and W. Huang, J. Mater. Chem. C, 2018, 6, 12347–12354 RSC .
+B. Xiao, A. Tang, J. Yang, Z. Wei and E. Zhou, ACS Macro Lett., 2017, 6, 410–414 CrossRef CAS .
+B. Xiao, A. Tang, J. Zhang, A. Mahmood, Z. Wei and E. Zhou, Adv. Energy Mater., 2017, 7, 1602269 CrossRef .
+B. Xiao, A. Tang, L. Cheng, J. Zhang, Z. Wei, Q. Zeng and E. Zhou, Sol. RRL, 2017, 1, 1700166 CrossRef .
+J. Yang, Y. Geng, J. Li, B. Zhao, Q. Guo and E. Zhou, J. Phys. Chem. C, 2020, 124, 24616–24623 CrossRef CAS .
+X. Xu, G. Zhang, L. Yu, R. Li and Q. Peng, Adv. Mater., 2019, 31, 1906045 CrossRef CAS .
+Y. Cui, H. Yao, L. Hong, T. Zhang, Y. Tang, B. Lin, K. Xian, B. Gao, C. An, P. Bi, W. Ma and J. Hou, Natl. Sci. Rev., 2019, 7, 1239–1246 CrossRef .
+X. Du, L. Lüer, T. Heumueller, J. Wagner, C. Berger, T. Osterrieder, J. Wortmann, S. Langner, U. Vongsaysy, M. Bertrand, N. Li, T. Stubhan, J. Hauch and C. J. Brabec, Joule, 2021, 5, 495–506 CrossRef CAS .
+Z.-W. Zhao, M. del Cueto, Y. Geng and A. Troisi, Chem. Mater., 2020, 32, 7777–7787 CrossRef CAS .
+K. Kranthiraja and A. Saeki, Adv. Funct. Mater., 2021, 2011168 CrossRef CAS .
+X. Rodríguez-Martínez, E. Pascual-San-José and M. Campoy-Quiles, Energy Environ. Sci., 2021, 14, 3301–3322 RSC .
+N. G. An, D. Vak and J. Y. Kim, Energy Environ. Sci., 2021, 14, 3438–3446 RSC .
+J. Hachmann, R. Olivares-Amaya, A. Jinich, A. L. Appleton, M. A. Blood-Forsythe, L. R. Seress, C. Román-Salgado, K. Trepte, S. Atahan-Evrenk, S. Er, S. Shrestha, R. Mondal, A. Sokolov, Z. Bao and A. Aspuru-Guzik, Energy Environ. Sci., 2014, 7, 698–704 RSC .
+W. Sun, M. Li, Y. Li, Z. Wu, Y. Sun, S. Lu, Z. Xiao, B. Zhao and K. Sun, Adv. Theory Simul., 2019, 2, 1800116 CrossRef .
+S.-P. Peng and Y. Zhao, J. Chem. Inf. Model., 2019, 59, 4993–5001 CrossRef CAS PubMed .
+M.-H. Lee, Org. Electron., 2020, 76, 105465 CrossRef CAS .
+Y. Wu, J. Guo, R. Sun and J. Min, npj Comput. Mater., 2020, 6, 120 CrossRef CAS .
+D. Padula and A. Troisi, Adv. Energy Mater., 2019, 9, 1902463 CrossRef CAS .
+W. Sun, Y. Zheng, K. Yang, Q. Zhang, A. A. Shah, Z. Wu, Y. Sun, L. Feng, D. Chen, Z. Xiao, S. Lu, Y. Li and K. Sun, Sci. Adv., 2019, 5, eaay4275 CrossRef CAS .
+H. Sahu, W. Rao, A. Troisi and H. Ma, Adv. Energy Mater., 2018, 8, 1801032 CrossRef .
+M.-H. Lee, Adv. Energy Mater., 2019, 9, 1900891 CrossRef .
+M.-H. Lee, Adv. Intell. Syst., 2020, 2, 1900108 CrossRef .
+M.-H. Lee, Energy Technol., 2020, 8, 1900974 CrossRef CAS .
+S. Kar, N. Sizochenko, L. Ahmed, V. S. Batista and J. Leszczynski, Nano Energy, 2016, 26, 677–691 CrossRef .
+W. Ma, J. Y. Kim, K. Lee and A. J. Heeger, Macromol. Rapid Commun., 2007, 28, 1776–1780 CrossRef .
+Y. S. Kim, Y. Lee, W. Lee, H. Park, S.-H. Han and S.-H. Lee, Curr. Appl. Phys., 2010, 10, 329–332 CrossRef .
+
+          G. W. T. M. J. Frisch, H. B. Schlegel, G. E. Scuseria, M. A. Robb, J. R. Cheeseman, G. Scalmani, V. Barone, B. Mennucci, G. A. Petersson, H. Nakatsuji, M. Caricato, X. Li, H. P. Hratchian, A. F. Izmaylov, J. Bloino, G. Zheng, J. L. Sonnenberg, M. Hada, M. Ehara, K. Toyota, R. Fukuda, J. Hasegawa, M. Ishida, T. Nakajima, Y. Honda, O. Kitao, H. Nakai, T. Vreven, J. A. Montgomery Jr, J. E. Peralta, F. Ogliaro, M. J. Bearpark, J. Heyd, E. N. Brothers, K. N. Kudin, V. N. Staroverov, R. Kobayashi, J. Normand, K. Raghavachari, A. P. Rendell, J. C. Burant, S. S. Iyengar, J. Tomasi, M. Cossi, N. Rega, N. J. Millam, M. Klene, J. E. Knox, J. B. Cross, V. Bakken, C. Adamo, J. Jaramillo, R. Gomperts, R. E. Stratmann, O. Yazyev, A. J. Austin, R. Cammi, C. Pomelli, J. W. Ochterski, R. L. Martin, K. Morokuma, V. G. Zakrzewski, G. A. Voth, P. Salvador, J. J. Dannenberg, S. Dapprich, A. D. Daniels, Ö. Farkas, J. B. Foresman, J. V. Ortiz, J. Cioslowski and D. J. Fox, Gaussian 09 (Revision A.01), Gaussian, Inc., Wallingford CT,  2009 Search PubMed .
+I. Sushko, S. Novotarskyi, R. Körner, A. K. Pandey, M. Rupp, W. Teetz, S. Brandmaier, A. Abdelaziz, V. V. Prokopenko, V. Y. Tanchuk, R. Todeschini, A. Varnek, G. Marcou, P. Ertl, V. Potemkin, M. Grishina, J. Gasteiger, C. Schwab, I. I. Baskin, V. A. Palyulin, E. V. Radchenko, W. J. Welsh, V. Kholodovych, D. Chekmarev, A. Cherkasov, J. Aires-de-Sousa, Q.-Y. Zhang, A. Bender, F. Nigsch, L. Patiny, A. Williams, V. Tkachenko and I. V. Tetko, J. Comput.-Aided Mol. Des., 2011, 25, 533–554 CrossRef .
+J. Dong, D.-S. Cao, H.-Y. Miao, S. Liu, B.-C. Deng, Y.-H. Yun, N.-N. Wang, A.-P. Lu, W.-B. Zeng and A. F. Chen, J. Cheminf., 2015, 7, 60 Search PubMed .
+M. R. Berthold, N. Cebron, F. Dill, T. R. Gabriel, T. Kötter, T. Meinl, P. Ohl, K. Thiel and B. Wiswedel, SIGKDD Explor. Newsl., 2009, 11, 26–31 CrossRef .
+M. Hall, E. Frank, G. Holmes, B. Pfahringer, P. Reutemann and I. H. Witten, SIGKDD Explor., 2009, 11, 10–18 CrossRef .
+J. Liu, S. Chen, D. Qian, B. Gautam, G. Yang, J. Zhao, J. Bergqvist, F. Zhang, W. Ma, H. Ade, O. Inganäs, K. Gundogdu, F. Gao and H. Yan, Nat. Energy, 2016, 1, 16089 CrossRef .
+J.-L. Wang, K.-K. Liu, L. Hong, G.-Y. Ge, C. Zhang and J. Hou, ACS Energy Lett., 2018, 3, 2967–2976 CrossRef .
+P. Cheng, M. Zhang, T.-K. Lau, Y. Wu, B. Jia, J. Wang, C. Yan, M. Qin, X. Lu and X. Zhan, Adv. Mater., 2017, 29, 1605216 CrossRef PubMed .
+H. Liu, M. Li, H. Wu, J. Wang, Z. Ma and Z. Tang, J. Mater. Chem. A, 2021 10.1039/D1TA00576F .
+F. Zhao, H. Zhang, R. Zhang, J. Yuan, D. He, Y. Zou and F. Gao, Adv. Energy Mater., 2020, 10, 2002746 CrossRef .
+Y. Qin, M. A. Uddin, Y. Chen, B. Jang, K. Zhao, Z. Zheng, R. Yu, T. J. Shin, H. Y. Woo and J. Hou, Adv. Mater., 2016, 28, 9416–9422 CrossRef PubMed .
+Y. Lin, J. Wang, Z.-G. Zhang, H. Bai, Y. Li, D. Zhu and X. Zhan, Adv. Mater., 2015, 27, 1170–1174 CrossRef PubMed .
+W. Zhao, D. Qian, S. Zhang, S. Li, O. Inganäs, F. Gao and J. Hou, Adv. Mater., 2016, 28, 4734–4739 CrossRef PubMed .
+X. Xu, T. Yu, Z. Bi, W. Ma, Y. Li and Q. Peng, Adv. Mater., 2018, 30, 1703973 CrossRef PubMed .
+A. Mahmood, M. HussainTahir, A. Irfan, B. Khalid and A. G. Al-Sehemi, Bull. Korean Chem. Soc., 2015, 36, 2615–2620 CrossRef .
+A. Mahmood, M. I. Abdullah and S. U.-D. Khan, Spectrochim. Acta, Part A, 2015, 139, 425–430 CrossRef PubMed .
+
+          C. Hansen, Hansen Solubility Parameters, CRC Press, Boca Raton,  2007 Search PubMed .
+I. Burgués-Ceballos, F. Machui, J. Min, T. Ameri, M. M. Voigt, Y. N. Luponosov, S. A. Ponomarenko, P. D. Lacharmoise, M. Campoy-Quiles and C. J. Brabec, Adv. Funct. Mater., 2014, 24, 1449–1457 CrossRef .
+F. Machui, S. Langner, X. Zhu, S. Abbott and C. J. Brabec, Sol. Energy Mater. Sol. Cells, 2012, 100, 138–146 CrossRef .
+O. Segarceanu and M. Leca, Prog. Org. Coat., 1997, 31, 307–310 CrossRef .
+D. T. Duong, B. Walker, J. Lin, C. Kim, J. Love, B. Purushothaman, J. E. Anthony and T.-Q. Nguyen, J. Polym. Sci., Part B: Polym. Phys., 2012, 50, 1405–1413 CrossRef .
+U. Vongsaysy, B. Pavageau, G. Wantz, D. M. Bassani, L. Servant and H. Aziz, Adv. Energy Mater., 2014, 4, 1300752 CrossRef .
+C. McDowell and G. C. Bazan, Curr. Opin. Green Sustain. Chem., 2017, 5, 49–54 CrossRef .
+C. Capello, U. Fischer and K. Hungerbühler, Green Chem., 2007, 9, 927–934 RSC .
+R. K. Henderson, C. Jiménez-González, D. J. C. Constable, S. R. Alston, G. G. A. Inglis, G. Fisher, J. Sherwood, S. P. Binks and A. D. Curzons, Green Chem., 2011, 13, 854–862 RSC .
+F. P. Byrne, S. Jin, G. Paggiola, T. H. M. Petchey, J. H. Clark, T. J. Farmer, A. J. Hunt, C. Robert McElroy and J. Sherwood, Sustainable Chem. Processes, 2016, 4, 7 CrossRef .
+D. Prat, A. Wells, J. Hayler, H. Sneddon, C. R. McElroy, S. Abou-Shehada and P. J. Dunn, Green Chem., 2016, 18, 288–296 RSC .
+K. R. Graham, P. M. Wieruszewski, R. Stalder, M. J. Hartel, J. Mei, F. So and J. R. Reynolds, Adv. Funct. Mater., 2012, 22, 4801–4813 CrossRef CAS .
+S. Atahan-Evrenk and F. B. Atalay, J. Phys. Chem. A, 2019, 123, 7855–7863 CrossRef CAS .
+B. Huang, Z. Li and J. Li, Nanoscale, 2018, 10, 21320–21326 RSC .
+R. S. Hegde, Nanoscale Adv., 2020, 2, 1007–1023 RSC .
+A. Krull, P. Hirsch, C. Rother, A. Schiffrin and C. Krull, Commun. Phys., 2020, 3, 54 CrossRef .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1ta04742fThis journal is © The Royal Society of Chemistry 2021
+Table Content:
+
+ 	Fig. 1  Brief description of the whole study. (a) Model training. (b) Library generation and screening of potential candidates.	 
+
+ 	Fig. 2  Correlation between experimental parameters.	 
+
+1	MLFER_S	Quantum chemical descriptor	Combined dipolarity/polarizability	0.636
+2	SpAD_EA(dm)	Edge adjacency indices	Spectral absolute deviation from edge adjacency mat. weighted by the dipole moment	0.596
+3	RDF40m	RDF descriptor	Radial distribution function-040/weighted by the relative mass	0.556
+4	Eig06_EA(dm)	Edge adjacency indices	Eigenvalue n. 6 from edge adjacency mat. weighted by the dipole moment	0.536
+5	Eig03_AEA(dm)	Edge adjacency indices	Eigenvalue n. 3 from augmented edge adjacency mat. weighted by the dipole moment	0.523
+6	F06[N-O]	2D atom pairs	Frequency of N–O at topological distance 6	0.505
+7	TIC1	Information indices	Total information content index (neighborhood symmetry of 1-order)	0.504
+Model/no. of descriptors	7	6	5	4	3	2	1
+
+kNN	0.837	0.855	0.859	0.859	0.859	0.855	0.841
+SVM	0.876	0.873	0.859	0.855	0.866	0.859	0.823
+Random forest	0.852	0.845	0.866	0.866	0.859	0.859	0.802
+ANN	0.883	0.887	0.873	0.880	0.873	0.855	0.845
+Naive Bayes	0.763	0.792	0.770	0.816	0.841	0.841	0.837
+CN2 rule inducer	0.816	0.823	0.845	0.837	0.816	0.827	0.823
+
+ 	Fig. 3  Confusion matrix for classification (CA = classification accuracy).	 
+
+
+ANN	0.894	0.833	0.897	0.857	0.894	0.821	0.867	0.786	0.882	0.821
+RF	0.854	0.869	0.822	0.843	0.872	0.786	0.880	0.833	0.855	0.893
+
+ 	Fig. 4  Pearson correlation between the experimental PCE and predicted PCE calculated through random forest (RF) and support vector machine (SVM) using 4 and 7 descriptors.	 
+
+
+LR	0.57	0.58	0.53	0.53
+RF	0.54	0.59	0.47	0.44
+SVM	0.52	0.53	0.50	0.48
+
+ 	Fig. 5  Building blocks used to design new NFAs.	 
+
+ 	Fig. 6  Chemical structure, HOMO, LUMO and PCE of the five potential NFAs for P3HT based OSCs. (The number in black on the left side is the index of the molecule in Table S2.†)	 
+δ2 = δD2 + δP2 + δH2	(1)
+
+ 	Fig. 7  Correlation between reported and predicted Hansen solubility parameters.	 
+
+DPP(PhTT)2	19.64	18.50	1.14	3.54	5.14	1.6	6.12	8.11	1.99	
+76
+
+DPP(TBFu)2	19.33	18.50	0.83	4.78	6.47	1.69	6.26	7.74	1.48	
+76
+
+F8NODIPS	18.48	19.71	1.23	2.62	4.37	1.75	3.24	6.13	2.89	
+76
+
+il(TT)2	21.70	20.42	1.28	2.90	4.14	1.24	4.70	7.11	2.41	
+83
+
+N(Ph-2T-DCN-Et)3	19.09	18.99	0.10	8.96	8.25	0.71	3.47	6.09	2.62	
+73
+
+
+ 	Fig. 8  Violin plot of the HSP values of NFAs.	 
+
+ 	Fig. 9  3D scatter plot of the HSPs of solvents, P3HT and five newly designed NFAs.	 
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1ta04742f
+
+This journal is © The Royal Society of Chemistry 2021

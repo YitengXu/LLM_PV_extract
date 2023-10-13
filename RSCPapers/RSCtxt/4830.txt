@@ -1,0 +1,680 @@
+Data-driven design of novel halide perovskite alloys   - Energy & Environmental Science (RSC Publishing) DOI:10.1039/D1EE02971A View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D1EE02971A
+(Paper)
+Energy Environ. Sci., 2022, 15, 1930-1949Data-driven design of novel halide perovskite alloys†
+
+        
+          
+            Arun 
+            Mannodi-Kanakkithodi
+          
+        
+      *ab and 
+
+        
+          
+            Maria K. Y. 
+            Chan
+          
+        
+      b
+aSchool of Materials Engineering, Purdue University, West Lafayette, IN 47907, USA
+bCenter for Nanoscale Materials, Argonne National Laboratory, Argonne, IL 60439, USA. E-mail: amannodi@purdue.edu; mchan@anl.gov
+Received 
+      22nd September 2021
+    , Accepted 21st March 2022First published on 21st March 2022AbstractThe great tunability of the properties of halide perovskites presents new opportunities for optoelectronic applications as well as significant challenges associated with exploring combinatorial chemical spaces. In this work, we develop a framework powered by high-throughput computations and machine learning for the design and prediction of mixed cation halide perovskite alloys. In a chemical space of ABX3 perovskites with a selected set of options for A, B, and X species, pseudo-cubic structures with B-site mixing are simulated using density functional theory (DFT) and several properties are computed, including stability, lattice constant, band gap, vacancy formation energy, refractive index, and optical absorption spectrum, using both semi-local and hybrid functionals. Neural networks (NN) are used to train predictive models for every property using tabulated elemental properties of A, B, and X site species as descriptors. Starting from a DFT dataset of 229 points, we use the trained NN models to predict the structural, energetic, electronic, and optical properties of an extensive dataset of 17955 compounds, and perform high-throughput screening in terms of stability, band gap, and defect tolerance, to obtain 392 promising compounds that are ranked as potential absorbers according to their photovoltaic figure of merit. Compositional trends in the screened set of attractive mixed cation halide perovskites are revealed and additional computations are performed on selected compounds. The data-driven design framework developed here is promising for designing novel mixed compositions and can be extended to a wider perovskite chemical space in terms of A, B, and X species, different kinds of mixing at the A, B, or X sites, non-cubic phases, and other properties of interest.
+
+Broader context
+New solar cell absorbers with improved stability, attractive optical and electronic properties, and tolerance to defect formation are sought to tackle the world's ever increasing renewable energy demands. Experimental identification of novel compositions is prohibitive and can be significantly accelerated with computational screening. Here, we present the largest known computational dataset of ABX3 halide perovskite alloys where mixing occurs at the B-site. Computed properties include density functional theory (DFT)-optimized pseudo-cubic lattice constants, decomposition energies, electronic band gaps, optical absorption spectra, and vacancy formation energies for 229 compounds. Machine learning (ML) models trained upon the DFT data using known elemental or molecular properties as descriptors enable the instant prediction of all properties of ∼18 000 novel compounds, leading to screening of 392 stable candidates with suitable band gaps, defect tolerance, and photovoltaic figure of merit. The DFT+ML approach provides a way to rapidly search for new solar cell absorbers and are also shown to be easily extended to mixing at other sites, different mixing fractions, and even incorporation of new elements. Such data-driven strategies continue to transform materials design and discovery and hold great promise for further optimization of halide perovskites and single and tandem solar cell devices.
+
+Introduction
+The confluence of high-throughput computation, machine learning, and targeted synthesis has been key to the accelerated discovery of new materials in recent times. This nexus has made it possible to create better electronics,1 dielectrics,2,3 catalysts4, and photovoltaic absorbers,5,6 and has increasingly become a necessary component of every materials design endeavor.7,8 The thriving research area of halide perovskites has also benefited from data-driven studies. There are many examples of computational screening being effectively performed for exploring the compositional space,9–11 replacing Pb with similar divalent cations,12–14 exploring defects and impurities,15,16 and predicting electronic and optical properties17,18 of halide perovskites. Machine learning (ML) approaches applied on computational or experimental data have been successful in identifying stable halide perovskite compositions, predicting new properties, and elucidating synthesis and stabilization pathways.19,20
+New halide perovskite compositions with tailored optical, electronic, and defect properties can lead to improved performance in applications ranging from solar cells to light emitting diodes to electronics to qubits. Indeed, the engineering of known semiconductors in terms of their compositions and in terms of functional defects and impurities has been a common methodology for obtaining properties that are better than known pure compositions.21 Halide perovskites provide a very fertile space for exploration and improvements based on composition, impurities, interfaces, and dimensionality. The general consensus is that as a class of materials, halide perovskites have a high ceiling of performances that can be achieved, and we are still only scratching the surface. Of special interest in this regard is the engineering of the perovskite composition via mixing at the cation or anion sites.
+A quick survey of more than 50 journal articles22–79 on ABX3 halide perovskites with mixed compositions (i.e., alloying at A, B, and/or X sites) revealed that (a) 66% reported experimental data and 44% reported computational properties; (b) 44% involved A-site mixing, 44% involved B-site mixing, and 52% involved X-site mixing; and (c) a wide variety of properties such as band gaps, effective masses, exciton binding energies, photoluminescence spectra, and photon conversion efficiencies are studied and reported. It is clear that there is tremendous interest in optimizing halide perovskite alloys, and quick predictions and screening of new compositions may be key to continuous improvements in properties and performance. A few important observations from this literature survey are explained below:
+1. One of the primary motivations for exploring mixed compositions originates from the seemingly inherent instability of some of the most commonly used compounds—MAPbI3, MAPbBr3, CsPbI3, etc.—that manifests in the form of thermal degradation, phase segregation, and photo-induced halide segregation.40,48,61,70 On the A-site, organic monovalent molecular cations such as methylammonium (MA) and formamidinium (FA) serve to enhance the structural stability of the perovskite lattice, and it has been suggested that using two or three cations simultaneously (e.g. MAxFAyCs1−x−y) makes the perovskite more robust and thermally stable.29,34,38,48,55,61,64,65,68,70 Many compounds also have a propensity to decompose into their constituent halides, that is, ABX3 → AX + BX2, or oxidize into a double perovskite variant, that is, 2ABX3 → A2BX6.40,70
+2. Most ABX3 perovskites with standard choices of A, B, and X species display a narrow range of band gap values. A key advantage of mixing at A, B, or X sites is the existence of band gap or stability “bowing”, wherein the properties may significantly rise or drop for intermediate compositions as compared to linear interpolations or even end point values.23,25,31,34,40,43,55,62
+3. Although the organic cation MA+ enhances the perovskite's structural robustness, it also increases the risk of chemical instability when encountering moisture, oxidizing environment, and heat. Mixing cations, particularly when including cesium cation (Cs+), proves to be an effective way of improving both stability and optoelectronic performances of hybrid perovskite films applied in solar cells.40,44,70
+4. Pb is the most commonly used divalent cation at the B-site, but there is tremendous effort focused on the reduction or complete removal of Pb from the perovskite lattice owing to its toxicity. Pb2+ also shows a tendency to be oxidized to Pb4+ in the presence of air and moisture, which accelerates photovoltaic (PV) degradation.72 However, the caveat remains that removing Pb entirely has so far reduced the stability and worsened the PV performance.73,74
+5. There is evidence that ASnX3 perovskites are more resilient to decomposition than APbX3, and adding Sn to Pb can certainly increase the stability.72–79 However, it is also suggested that combining Pb–Sn mixing at the B-site with A-site mixing, such as adding Cs to FA, may be necessary for further stability improvement.40
+The wealth of halide perovskite literature emerging every single day, and the analysis presented here of a small subset of this literature, suggests that enabling efficient exploration of mixed perovskite compositions would be beneficial to the semiconductor and halide perovskite communities. Although unequivocal predictions of multiple properties of all perovskite compositions and the ability to design novel structures with desired properties would be invaluable, they are inevitably complicated by the combinatorial nature of the chemical space. There are dozens to hundreds of possibilities for ions at the A, B, and X sites, and there is a veritable infinitude of fractions in which they could combine to create new compositions, not even accounting for competing phases, octahedral distortions, etc. A complete understanding of the structure and properties of halide perovskite chemical spaces both broad (choices of A, B, and X) and deep (mixing several components in tiny or large fractions at any site) is missing, and not conducive to brute-force experimentation or even computation.
+Density functional theory (DFT) computations are widely applied towards the in-depth studies of halide perovskites from first principles,80 serving both as validation or explanation of experimental observations and in screening procedures alluded to earlier. DFT can reliably predict the low energy crystal structures, electronic band gaps and band edges, optical absorption coefficients, dielectric constants, and defect formation energies of halide perovskites, among many other properties. One of the biggest challenges with DFT computations for halide perovskites is the absence of universal benchmarking of DFT-computed properties, and the identification of an acceptable level of theory. Standard DFT calculations using semi-local Generalized Gradient Approximation (GGA) functionals such as Perdew–Burke–Ernzerhof (PBE) are often insufficient for electronic and defect properties, but can reasonably estimate relative energies and aid in initial screening of properties prior to the application of more accurate but expensive functionals.81–83 The use of the Heyd–Scuseria–Ernzerhof (HSE) functionals such as HSE06 or HSE03, or Greens function-based GW approximation, along with the incorporation of spin–orbit coupling (SOC), has been suggested to be important for accurate band gaps and charge-dependent defect formation energies.15,84–86 It has also been reported that for Sn-containing halide perovskites, HSE06 may be necessary for formation energies and HSE + SOC needed for correct band edges.72 However, PBE calculations have also been shown to work well, generally via a cancellation of errors, for band gaps and defect charge transition levels.15,87
+Since both computing and researcher time is finite in nature, DFT computations on halide perovskites, at a desirable level of theory, cannot be endlessly applied to all possible compositions. Approaches rooted in artificial intelligence (AI), ML, or data science can function as conduits for information transfer from a small portion of the chemical space to the entire region or dataset. DFT data generated on a subset of compositions that are representative of the entire chemical space can be coupled with ML techniques to train predictive models that take as input descriptors that uniquely identify every data point, or every composition, and give as output the properties of interest with acceptable error bars. DFT+ML frameworks have frequently been applied for quick prediction and screening over large chemical spaces.80 The identification of appropriate descriptors, the generation of sufficient quantity of accurate DFT data, and the adoption of a suitable ML algorithm (such as neural networks) following standard data science practices are key to the development of accurate, generalizable models that can significantly accelerate materials discovery.
+Motivated by the challenges and prospects of halide perovskites and a DFT+ML materials design methodology, we develop a data-driven framework for the prediction of structural, electronic, optical and defect properties of a selected chemical space of halide perovskite alloys with B-site mixing. This framework is powered by high-throughput DFT computations performed using both the PBE and HSE06 functionals, and neural network regression models trained upon the resulting datasets using mean elemental properties of various constituent atoms or molecules as input descriptors. The DFT properties computed for a dataset of 229 ABX3 pure and mixed composition compounds include estimates of the perovskite lattice parameter, stability (in terms of decomposition to various possible species), electronic band gap, PV figure of merit based on optical absorption spectrum, vacancy formation energies at different chemical potential conditions (X-rich, medium-X, and B-rich), and vacancy charge transition levels—thus covering many necessary initial attributes that should be optimized for promising solar cells absorbers. Neural network (NN) models are trained upon this data with rigorous tuning of hyperparameters, training-test splits, and cross-validation, following which the models are deployed for predictions upon a larger dataset of 17955 compounds, leading to screening of stable materials with appropriate band gaps, optical absorption, and defect tolerance. The general outline of this work is captured in Fig. 1. Each computed property is listed in Fig. 1(a), divided into the type of DFT functional used and type of property. A typical NN architecture used to train models from the DFT data is shown in Fig. 1(b), and the ML-based screening funnel is presented in Fig. 1(c), showing how quick enumeration and predictions over the 17955 compounds can be used to obtain stable materials with suitable band gaps and defect tolerance.
+ Fig. 1  (a) DFT properties computed for 229 perovskite compounds at the PBE and HSE06 levels of theory. (b) Typical neural network architecture used to train predtictive models from DFT data. (c) Screening performed on ML predicted dataset of 17955 perovskite compounds in terms of their stability, band gaps, and defect tolerance. 
+The perovskite design framework demonstrated here is, to our knowledge, one of the most comprehensive computation-driven studies of halide perovskite alloys thus far. The strategy can easily be extended to additional properties, choices of A, B, and X species, and mixing in fractions other than factors of 1/8, since the ML models in theory apply to any type of mixing within the considered chemical space, as explained later. With the consideration of multiple functionalities including the electronic structure, optical behavior, and defect formation, the data-driven design framework promises to benefit a variety of optoelectronic applications. Although screening has been demonstrated for the specific example of solar cell absorbers here, this framework can help identify stable materials with suitable band gaps for IR sensors and UV lasers, suitable defect levels which can be used as qubits for quantum computing, suitable electronic structure for white light emission, and wide band gap semiconductors for power electronics. In the following sections, we describe in detail the methods applied for DFT computations and training neural networks, the different sets of properties predicted, a visualization of the atom–composition–property space, best predictive performances for various properties, and screening of promising materials followed by a visualization of the screened chemical space. We end with a discussion of the predictive power and possible limitations of the current framework, and the extensions being pursued in the near future.
+Methods
+Perovskite chemical space
+The ABX3 perovskite chemical space in this work is chosen to reflect the predominant choices of atomic or molecular species in the literature. A majority of halide perovskites are MA/FA-based, but Cs, Rb, and K are frequently added at the A-site. While B is generally Pb and X is generally I or Br, there are many studies on adding to or replacing Pb with Sn, Ge, and other 2+ oxidation state elements such as Sr, while also adding Cl at the X-site. Keeping such trends in mind, we restrict our study to the following choices of A, B, and X species: A ∈ [FA, MA, Cs, Rb, K], B ∈ [Ca, Sr, Ba, Ge, Sn, Pb] (with mixing), and X ∈ [I, Br, Cl]. This leads to 5 × 6 × 3 = 90 pure ABX3 compounds; we allow mixing at the B-site, for any number of atoms, in stoichiometries of [0, 1/8, 2/8, 3/8, … 1], which results in a total number of 17955 unique compositions in this space. A set of DFT computations are performed to predict a total of 16 different properties for 229 compounds, selected such that every A, B, and X species appears roughly equally frequently, forming just about 1.3% of the total chemical space.
+DFT details
+DFT computations were performed on 2 × 2 × 2 supercells of pseudo-cubic ABX3 structures, such that there are 8 ABX3 formula units, which facilitates alloying at the B-site in factors of 1/8. We begin with the optimized cubic structure of an end-point composition (that is, a pure ABX3 compound with no alloying) and perform varying degrees of B-site substitution in the 2 × 2 × 2 supercell to simulate alloys with special quasi-random structures.88,89 A total of 229 compositions are selected from the entire space of 17955 possible compounds, where 90 systems correspond to pure compositions and there are 139 alloy compositions. For every compound, geometry optimization is first performed to obtain the low energy pseudo-cubic lattice constant and the formation, decomposition, and mixing energies, following which a series of additional computations are performed, namely: a static calculation to obtain band edges and band gap, an optical absorption calculation to obtain absorption coefficients as a function of incident photon energy, density functional perturbation theory (DFPT) calculations to obtain the static dielectric constant, and finally, optimization of A-site or X-site vacancy containing systems to obtain defect formation energies and charge transition levels. A comprehensive list of every property computed in this work is presented in Fig. 1(a).
+As mentioned earlier, key questions remain about the choice of DFT functional that provides reasonably accurate estimates of the structures and properties of halide perovskites. To explore the effect of the level of theory, we performed calculations using both the GGA-PBE functional as well as the hybrid HSE06 functional. All computations were performed using the Vienna Ab initio Simulation Package (VASP),90,91 applying the GGA-PBE functional83 and using the projector-augmented wave (PAW) pseudopotentials.92 For PBE geometry optimization calculations, the plane wave energy cut-off was set at 500 eV and all atomic structures were relaxed until forces on all atoms were less than 0.05 eV Å−1. Brillouin zone integration was performed using a 3× 3 × 3 Monkhorst–Pack mesh, and later expanded to a 4× 4 × 4 mesh for more accurate electronic density of states, DFPT, and optical absorption calculations. Band structure calculations were performed using high-symmetry k-points93,94 to obtain accurate band gaps. DFPT computations were performed in a static manner to generate the electronic components of the dielectric tensor using the independent particle approximation, and the electronic dielectric constant is reported as the trace of the tensor. The optical absorption spectra are obtained from calculations of the frequency-dependent dielectric function, which yield coefficients of absorption as a function of incident energy. We further calculate the degree of overlap between the computed absorption spectrum and the AM1.5 solar spectral irradiance data reported by NREL95 to determine a PV figure of merit, higher values of which indicate better suitability for single-junction solar cell absorption.
+Vacancy containing systems are simulated by removing one A-site (VA) or X-site (VX) atom in the supercell, and performing DFT optimization (using the same convergence conditions as before, keeping cell shape and size fixed) in the neutral and charged states (−1 for VA and +1 for VX), to obtain both the neutral state formation energy of vacancies and the charge transition levels created by them relative to the valence band edge. Multiple symmetry-inequivalent vacancy sites are explored for alloyed systems and the lowest energy ones are chosen. All defect calculations are performed using PBE, to reduce the overall computational expense and because it has been previously shown to work well for halide perovskites.15,16,87 Finally, HSE06 calculations (which are between one and two orders of magnitude more expensive than corresponding PBE calculations) are performed for complete structure optimization of the 229 compounds, initially employing Gamma-point only unconstrained relaxation, followed by a static calculation using a 2 × 2 × 2 Monkhorst–Pack mesh. The exact exchange mixing parameter α is chosen to be 0.25, and the same convergence conditions are used as listed above for PBE calculations. Thus, lattice constants, energetics, and band gaps were calculated from both PBE and HSE, whereas dielectric constants, absorption spectra, and vacancy energetics were obtained from PBE only. Additional PBE and HSE calculations with the same convergence criteria are performed on the elemental standard states and known halide compounds of all A, B, and X species (all such starting structures taken from the Materials Project database96), in order to calculate the formation and decomposition energies.
+Based on the calculations described above, the following properties are predicted from PBE or HSE:
+1. Lattice constant: computed with both PBE and HSE, the optimized simulation cell volume (V) is used to determine the pseudo-cubic lattice constant (a) for one ABX3 formula unit using the formula a = (1/2) × V1/3.
+2. Formation energy: this quantity, computed from both PBE (ΔHPBEform) and HSE (ΔHHSEform), determines the stability of the ABX3 compound w.r.t. decomposition to elemental or molecular standard states of A, B, and X. For a general perovskite alloy represented as AB*X3 (where B* represents the mixed B-site species such as Sn0.5Pb0.5, Ba0.25Ge0.25Sn0.5, etc.), the formation energy is calculated as  where wi is the mixed fraction of element Bi.
+3. Decomposition energy: this quantity, computed from both PBE (ΔHPBEdecomp) and HSE (ΔHHSEdecomp), determines the stability of the ABX3 compound w.r.t. decomposition to the halide compounds of A and all B atoms, and is given by the formula: .
+4. Mixing energy: this quantity, computed from both PBE (ΔHPBEmix) and HSE (ΔHHSEmix), determines the stability of the mixed-cation ABX3 compound w.r.t. decomposition to pure ABX3 perovskites (or end-point compositions), and is given by the formula: .
+5. Band gap: this is computed in eV from both PBE (EPBEgap) and HSE (EHSEgap).
+6. Dielectric constant and refractive index: the static electronic component of the dielectric constant (εelec) is computed using DFPT, and the refractive index (η) is reported as a square root of εelec.
+7. Optical absorption spectrum and PV Figure of Merit (FOM): Absorption coefficients (α) are calculated as a function of incident photon energy, and used to determine the FOM based on the degree of overlap with the AM1.5 standard solar spectrum. Computed absorption and solar irradiance intensity are expressed as functions of wavelength λ as α (λ) and Is (λ), respectively, and the FOM is calculated as follows: (1)Is values are used in units of Wm−2 nm−1 and α in units of cm−1, leading to FOM values of (∼103 to 106) cm−1, expressed ultimately in log10 scale.
+8. Vacancy defect formation energy: For VA and VX defects in the AB*X3 perovskite, DFT energies obtained from neutral and charged calculations are used in the equations below to estimate their charge and Fermi level dependent formation energies, and their charge transition levels: Ef (vacq) = E(AB*X3 − vacq) − E(AB*X3) + μ + q (EF + Evbm) + Ecorr(2) (3)In eqn (2), E(AB*X3-vacq) is the total DFT energy of the AB*X3 supercell with a vacancy at the A or X sites and a total system charge = q, μ is the chemical potential of A (μA) or X (μX), depending on whether we are considering VA or VX, Evbm is the valence band maximum (VBM) of AB*X3, EF is the Fermi level as it goes from the VBM to the conduction band minimum (CBM), and Ecorr is the correction energy necessary to account for the periodic interaction between charges. Chemical potential values of A, B, and X species are referenced to their elemental standard states (e.g. Pb in the FCC phase), collected from the Materials Project database,96 and selected from calculated ranges of stability for every compound based on the formation energies of the ABX3 perovskite phase and the halide compounds AX and BX2.15,16,87,98 As an example, chemical potential diagrams are shown for MAPbBr3 and MAPbCl3 in Fig. S1 (ESI†); from across the highlighted region of thermodynamic equilibrium, we select halide-rich, medium-halide, and B-rich type chemical potential conditions. The formation energy of defects and resulting equilibrium conductivity can be tuned by changing the synthesis conditions, and thus the chemical potential conditions. Ecorr values are determined using the Freysoldt charge correction scheme,99,100 utilizing εelec estimated above from DFPT as dielectric constant input. Eqn (3) will yield the Fermi level where VA displays a (0/−1) charge transition or where VX displays a (+1/0) transition.15,16,101,102 Based on these equations, four types of defect properties are thus computed, namely the two vacancy charge transition levels, the equilibrium defect formation energy (D.F.E.), and the equilibrium Fermi level EF; the latter two are estimated based on the charge neutrality condition.15,16,99
+To identify stable compounds with attractive optoelectronic properties, we will look for low ΔHform, ΔHdecomp, and ΔHmix values, Egap values that lie in suitable ranges, and high FOM values. Assuming vacancies are the most likely point defects to exist in halide perovskites (a reasonable assumption from earlier studies of intrinsic point defects across many halide perovskites15,16), defect tolerance can be tested based on the formation energies and transition levels of VA and VX. A low vacancy formation energy with a transition level deep in the band gap must be avoided to prevent the spontaneous creation of active defects that can cause nonradiative recombination of charge carriers and a potential reduction in PV efficiency. The condition for restricting the spontaneous formation of vacancies with transition levels deep in the perovskite band gap is captured in Fig. 1(c) as (D.F.E + EF)/EPBEgap > 1 and D.F.E. − EF > 0 eV (which prevents D.F.E. from being negative anywhere in the band gap region) under any chemical potential condition, VA (0/−1) being less than 0.5 eV from the VBM, and VX (+1/0) being less than 0.5 eV from the CBM.
+Training neural network models
+NNs find utility in a wide variety of applications that deal with large datasets and demands of high accuracy, and are a staple in materials informatics studies today, with examples including accelerating molecular dynamics simulations, mapping the structure-synthesis-property spaces of materials, and on-demand prediction of properties.18,103,104 NN-based models can be trained on materials datasets to obtain regression models, classification boundaries, and generative design of novel structures.103–107 The key aspects of an NN framework (example pictured in Fig. 1(b)) include an input layer with multiple nodes corresponding to different descriptors, hidden layers with multiple nodes each, and an output layer with one or more nodes corresponding to the properties of interest that need to be predicted. Using the DFT dataset of 229 compounds, NN models are trained for every property listed in Fig. 1(a), using a common set of descriptors emerging from an averaging of different tabulated elemental/molecular properties of the ions that constitute the A, B, and X sites, leading to instant predictions of the same properties for the entire set of 17955 compounds.
+The 15 elemental/molecular properties used in this work are listed for every A, B, and X species in Fig. S2 (ESI†). Each ABX3 compound is thus represented as a 45-dimensional vector, with 15 dimensions each for the properties of A, B, and X; the dimensions corresponding to B are averaged over each species that is mixed at the B-site. For example, for a compound CsSn0.5Sr0.25Ba0.25Cl3, the first 15 dimensions will be the elemental properties of Cs (ElemA = ElemCs), the next 15 dimensions will be a weighted average of the elemental properties of Sn, Sr, and Ba (that is, ElemB = 0.5 × ElemSn + 0.25 × ElemSr + 0.25 × ElemBa), and the final 15 dimensions will be the elemental properties of Cl (ElemX = ElemCl). The NN input layer thus contains 45 nodes corresponding to the 45 descriptor dimensions. The number of hidden layers are restricted to be two in this work, making the NN a shallow network. Different types of output layers are used, corresponding to multiple combinations of properties as output nodes; however, it is observed that best performances are obtained by training separate NN models for every property which is a single node in the output layer, and the results presented in this work reflect that.
+We follow standard ML practices7,8 in training each predictive model. The DFT dataset is first divided into training (80%) and test (20%) sets, and the test set is kept aside while the NN model is trained using the training set data. The training-test split is fixed at 80–20 for every model in this work. Five-fold cross-validation is applied to tackle over-fitting. The error metric used in this work is the root mean square error (RMSE) between the DFT values and NN model predictions, calculated separately on the training and test sets. Hyperparameter optimization is accomplished by applying a grid-search strategy to six important hyperparameters, namely the number of neurons in the first (n1) and second (n2) hidden layers, the learning rate (lr, which defines how quickly a network updates its parameters), the dropout value (dp, which is a regularization technique used to handle overfitting), the number of epochs (ep, defining the number of times training is performed on the entire dataset), and the batch size (bs, the number of training samples propagated through the network).108,109 The final models for all properties after complete optimization are reported as ML vs. DFT parity plots, making distinctions between training and test set points. Other regression algorithms, including random forests and Gaussian processes, were also tested on the data, but did not improve on the performance of the best NN models.
+Results and discussion
+Visualization of DFT data
+We begin with a visualization of the DFT dataset through a series of plots, highlighting some critical trends and correlations. Even before venturing into the behavior of perovskite alloys, it is important to consider the stability and trends in properties of the 90 pure ABX3 compositions. The most commonly used measures for perovskite stability are the octahedral (o) and tolerance (t) factors110, defined below in terms of the ionic radii of A (rA), B (rB), and X (rX): o = rB/rX(4) (5)
+For robust stability of perovskite compounds, o is suggested to lie in the range 0.442–0.895 while t should be in the range 0.813–1.107. The o and t values of the 90 ABX3 compounds are visualized using heatmaps in Fig. 2(a) and (b), respectively. Nearly all B–X combinations satisfy the octahedral factor requirement, except for Ge-iodides. The tolerance factor falls just outside the stability range for certain combinations of A and B, such as FA–Ge and K–Ba, clearly because rA and rB need to proportionally change with each other to maintain stability, something that works well with combinations such as MA–Pb–I, MA–Sn–Br, Cs–Ge–Br, etc. The PBE and HSE computed ΔHdecomp values are plotted against o and t for the entire DFT dataset of 229 compounds (calculated using weighted averages for the B site when there is mixing), in Fig. 2(c) and (d), respectively. It is seen that a majority of the MA and FA containing compounds, and some Cs bromides and Rb chlorides, lie in the range of low ΔHdecomp and suitable μ and t. However, a number of compounds that are stable w.r.t. decomposition fall outside the acceptable ranges for o or t, indicating that perovskite stability measures ought to be captured using more complex relationships as are being pursued in recent literature.97,110–112 One such tolerance factor proposed by Bartel et al.97, represented as τ, was estimated for all 229 compounds using eqn (6). ΔHPBEdecomp and ΔHHSEdecomp are plotted against τ in Fig. 2(e) and (f), respectively. Using the suggested stability condition of τ < 4.18, it is seen that nearly all FA and MA compounds are stable w.r.t. both τ and ΔHdecomp, while several Cs and Rb compounds may be included by relaxing the τ condition. Almost all the compounds satisfying the τ condition have ΔHdecomp < 0.5 eV, except for a few Cs-chlorides, but a number of compounds with ΔHdecomp ∈ (0.0, 0.5) eV fall outside the desired τ range. τ = rX/rB − [1 − (rA/rB)/ln(rA/rB)](6)
+ Fig. 2  (a) Perovskite octahedral factor o, and (b) tetrahedral factor t calculated for every A–B–X combination. (c) PBE computed and (d) HSE computed decomposition energy (ΔHdecomp) plotted against the perovskite tetrahedral factor t for the entire DFT dataset. Symbol sizes are directly proportional to perovskite octahedral factor o. (e) PBE computed and (f) HSE computed decomposition energy (ΔHdecomp) plotted against the Bartel perovskite tetrahedral factor97τ for the entire DFT dataset. In (c)–(f), the shaded region represents compounds with low ΔHdecomp and suitable t or τ values. 
+Next, a series of properties, namely ΔHPBEdecomp, EPBEgap, ΔHHSEdecomp, and EHSEgap, are plotted for all pure ABX3 compounds as heatmaps in Fig. 3. The ΔHdecomp values reveal large instabilities for all K and Rb iodides, but stability increases for the corresponding bromides and some chlorides. On the other hand, nearly all Cs, MA, and FA based iodides are stable, as are most of the corresponding bromides and chlorides, except for Cs chlorides. In order to account for the level of accuracy of DFT energies and the possible contribution of entropic stabilization or realization of kinetically trapped metastable phases, we adopt a relaxed ΔHdecomp screening criterion, shown in Fig. 1(c), of <0.5 eV, from both PBE and HSE. The formation energies are found to be large negative values throughout the dataset, while the mixing energies of perovskite alloys are discussed later.
+ Fig. 3  Heatmaps for properties of 90 pure ABX3 perovskites: (a) PBE computed ΔHdecomp, (b) PBE computed Egap, (a) HSE06 computed ΔHdecomp and (b) HSE06 computed Egap. 
+When it comes to band gap, it is seen that Ca, Sr, and Ba containing compounds show the largest EPBE (EHSEgap) values for a given halogen atom, lying around 3.5 eV (4.5 eV) for iodides, ∼4 eV (5 eV) for bromides and ∼5 eV (6 eV) for chlorides. Completely inorganic perovskites with (Cs,Rb,K)–(Ge,Sn) A–B combinations show the lowest band gap values, with the iodides showing EPBEgap (EHSEgap) ∼ 0.5 eV (1.5 eV), bromides ∼1 eV (2 eV) and chlorides ∼1.5 eV (2.5 eV). The MA and FA perovskites with Ge and Sn show larger band gaps for each halogen atom. All the Pb-based perovskites have higher band gaps than corresponding Ge and Sn compounds; MA and FA halides with Pb show EPBEgap (EHSEgap) ∼ 2 eV (3 eV) for iodides, ∼2.5 eV (3.5 eV) for bromides and ∼3 eV (4 eV) for chlorides. The Cs, Rb, and K halides with Pb show band gaps that are approximately lower by ∼1 eV than their MA and FA counterparts. It should be noted here that due to general uncertainty about the exact accuracies of PBE and HSE band gaps, we adopt a screening criterion as shown in Fig. 1(c) of EPBEgap ∈ (0, 2.5) eV and EHSEgap ∈ (0, 3.5) eV for suitable solar cell absorbers. It is observed here that many Pb-based perovskites do occupy this acceptable range of band gaps, and their band gaps could potentially be reduced further by adding Sn or Ge, or increased by adding Ba, Sr, or Ca. Incorporating spin–orbit coupling with HSE calculations will bring down band gaps, as has been reported in the literature,84–87 but trends will largely remain the same.
+The A-site and X-site vacancy defect properties—namely, the equilibrium defect formation energy (D.F.E.) and Fermi level (EF) for different chemical potential conditions, and the charge transition levels—are visualized next for the set of 90 pure ABX3 compounds in Fig. 4. This allows the evaluation of the perovskite dataset in terms of defect tolerance, another important stability metric. For any given compound, using eqn (4), the charge-dependent formation energies of VA and VX defects are plotted against EF as it goes from the VBM to the CBM, and the equilibrium EF is determined by applying charge neutrality conditions. The equilibrium D.F.E. and EF change as the chemical potential changes from halide-rich to medium halide to B-rich conditions, such that the equilibrium conductivity may transition between n-type, p-type, or intrinsic. Further, we expect the relevant defect charge transition levels for VA and VX to be (0/−1) and (+1/0) respectively, given that the dominant charges resulting from the two vacancies would respectively be −1 and +1, and transitions to the neutral state have been observed for halide perovskites before;15,87 these are calculated using eqn (5).
+ Fig. 4  Heatmaps for defect properties of 90 pure ABX3 perovskites: (a) equilibrium D.F.E. under medium halide chemical potential conditions, (b) VA (0/−1) charge transition level relative to VBM, (c) VX (+1/0) charge transition level relative to CBM, and equilibrium EF as a fraction of the PBE band gap at (d) halide rich, (e) medium halide, and (f) B-rich chemical potential conditions. 
+It can be seen from Fig. 4(a) that the lowest D.F.E. values (pictured here for medium-X conditions) are shown by Rb and K compounds while Cs, MA, and FA generally show higher D.F.E. values. The transition levels, plotted as a fraction of EPBEgap in Fig. 4(b) and (c), appear to generally be <0.2 for VA (0/−1) for all halides except for (Rb,K)–Ba compounds, while for VX (+1/0), there is a much higher tendency for deeper values (between 0.2 and 0.8), with (MA,Cs)–(Ge,Sn) compounds being primary culprits. Several Ca, Sr, and Ba containing perovskites show VX (+1/0) levels inside the VB or CB and would thus be safer w.r.t deeper defect levels. Finally, the equilibrium EF, plotted as a fraction of EPBEgap for X-rich, medium-X, and B-rich conditions in Fig. 4(d)–(f) respectively, shows a general tendency for p-type conductivity under X-rich conditions that gradually becomes more n-type under B-rich conditions. All K and Rb iodides, and Ge, Sn, and Pb based bromides and chlorides, are strongly p-type under X-rich conditions and only become slightly less p-type under medium-X or B-rich conditions. All Cs, MA, and FA containing halides are p-type under X-rich, intrinsic under medium-X, and n-type under B-rich conditions, which is consistent with our previous reports on MAPbX3 perovskites and other published computational literature.15,16,87
+Next, the entire DFT dataset of 229 compounds, containing both pure and mixed cation compositions, is visualized in the form of plots between different properties of interest in Fig. 5 and 6. It can be seen from Fig. 5(a), (b) and (d) respectively that the PBE and HSE computed lattice constant, ΔHdecomp, and ΔHform values respectively correlate highly and often match very well with each other, indicating that the structure and energetics from the PBE functional provide sufficient accuracy. Fig. 5 also shows PBE vs. HSE linear regression equations which could be used for predicting the expensive HSE level information using the moderate PBE data, with R2 values of 0.97, 0.99, and 0.99 respectively for lattice constant, ΔHdecomp, and ΔHform. ΔHmix is more sensitive to the functional as can be seen from Fig. 5(c), with some of the FA-based compounds showing a difference in the relative energetics of pure and mixed composition compounds from PBE and HSE energies. While the entire DFT dataset falls within an acceptable stability range for ΔHform and ΔHmix, results are much more interesting for ΔHdecomp, where the shaded region of stability in Fig. 5(b) shows that while nearly all FA and MA compounds are resistant to decomposition, many Cs, Rb, and K compounds, mostly chlorides, are not. Further, a plot between EPBEgap and EHSEgap in Fig. 5(e) shows a clear linear correlation between the two, with an R2 value of 0.94 and the HSE band gaps generally about 7% + 0.8 eV higher than PBE, and the shaded region of favorability showing the existence of many iodides, some bromides, and few chlorides. Fig. S3 (ESI†) shows εelec plotted against EPBEgap and EHSEgap, showing an inverse relationship between the electronic dielectric constant and band gap as expected.
+ Fig. 5  A comparison between the PBE and HSE computed lattice constants (a), ΔHdecomp (b), ΔHmix (c), ΔHform (d) and Egap (e) for the DFT dataset of 229 compounds. PBE vs. HSE linear regression equations and R2 values are also pictured. Further, the computed optical absorption properties are shown as a refractive index vs. Figure of Merit (as a log value of the computed FOM in cm−1) plot in (f). 
+ Fig. 6  Computed defect properties for the dataset of 229 perovskite compounds: equilibrium D.F.E. vs. EF (as fractions of Egap) plots are shown for (a) halide rich, (b) medium halide, and (c) B-rich chemical potential conditions. The shaded region represents materials that satisfy a relaxed defect tolerance condition. The VA (0/−1) and VX (+1/0) charge transition levels are plotted in (d), with respect to the VBM and CBM respectively, and the shaded region represents cases with defect levels < 0.5 eV from band edges while the remaining materials have deep vacancy defect levels. 
+Finally, the PV FOM (in log10 scale) estimated from the optical absorption spectrum is plotted against the refractive index η in Fig. 5(f) to complete the list of the electronic/dielectric/optical properties being studied here. Some examples of calculated absorption coefficients are presented in Fig. S4 (ESI†) along with the solar irradiance intensities, as a function of wavelength. We performed additional computations for some well known semiconductors, namely Si, SiC, GaAs, CdTe, and CdSe (all in the zinc blende structure), and their absorption spectra are shown in Fig. S4(a) (ESI†) to obtain an idea of how their overlap looks like with the AM1.5 spectrum. Calculated spectra for some selected halide perovskite alloys are shown in Fig. S4(b) (ESI†). Rather than a region of favorability, what we seek as a screening criterion here is a high value of FOM to maximize absorption in the visible range. FOM values values for the dataset lie between 3 and 6 in the log scale; in Table SI (ESI†), we listed the calculated FOM values of known semiconductors as well as some example perovskite compounds from our dataset. The FOM values of Si and GaAs are close to 6, similar to peak values in our dataset.
+The defect properties for the 229 compounds are visualized in Fig. 6, in the form of plots between equilibrium D.F.E. and EF (a–c) and between VA (0/−1) and VX (+1/0) (d). In the D.F.E. vs. EF (as a fraction of EPBEgap) plots, the shaded region indicates a relaxed screening condition where (D.F.E + EF)/EPBEgap > 0.5 and D.F.E. − EF > −0.5 eV, showing the compounds which have sufficiently large defect formation energies. It can be seen from Fig. 6(a)–(c) that very few compounds satisfy this condition, and are dominated by FA and MA containing perovskites. The number of defect tolerant compounds increases from X-rich to medium-X to B-rich chemical potential conditions, with the number of defect-tolerant Cs and Rb based compounds also consequently increasing. From Fig. 6(d), it is seen that a lot more compounds satisfy the charge transition level criterion, and in particular, many K, Rb, and Cs containing perovskites have VA and VX defects that are shallow in nature. On the other hand, many FA and MA compounds may create deeper defect levels, which could be a problem if they do not exist in the shaded region in Fig. 6(a)–(c). It should be noted that the definition of what constitutes a deep defect level can vary and the criterion we apply here is slightly relaxed (<0.5 eV from the band edges) by considering the level of accuracy expected in DFT (PBE) computed defect levels.
+Neural network models
+Rigorously optimized, cross-validated, and tested NN predictive models for various properties of interest—roughly divided in terms of the type of properties—are presented in Fig. 7–9. We first report predictions for the structure and energetics of halide perovskites in terms of the lattice constant and ΔHdecomp from PBE and HSE in Fig. 7. The lattice constants are predicted with similar training and test RMSE of <0.1 Å, which is an error of ∼7% given the range of values adopted across the dataset. ΔHdecomp is also predicted with a high accuracy of ∼0.1 eV test RMSE for both PBE and HSE, which is a remarkably small error of ∼2.5% given the total range of values, and comparable or better than machine-learned formation energy errors in the literature.113–115 It should be noted from the definitions of ΔHdecomp, ΔHform, and ΔHmix that there is an interdependence between them, meaning that given ΔHdecomp and the energies of all elemental or molecular standard states and halide compounds of A, B, and X species, ΔHform and can be estimated as well. The NN models presented in Fig. 7 may be applied to predict, at the PBE and HSE levels, the lattice constant, decomposition energy, formation energy, and mixing energy of every compound in the dataset of 17955.
+ Fig. 7  Neural network models trained for (a) PBE lattice constant, (b) PBE ΔHdecomp, (c) HSE06 lattice constant, and (d) HSE06 ΔHdecomp. 
+ Fig. 8  Neural network models trained for (a) PBE Egap, (b) HSE06 Egap, (c) refractive index, and (d) PV figure of merit. The last two properties are computed at the PBE level of theory. 
+ Fig. 9  Neural network models trained for (a) equilibrium D.F.E. and (b) equilibrium EF, both at medium halide chemical potential conditions, (c) VA (0/−1) charge transition level and (d) VX (+1/0) charge transition level, both in eV with respect to VBM. All defect properties are calculated at the PBE level of theory. 
+Next, models are trained for the electronic, dielectric, and optical properties, namely EPBEgap, EHSEgap, η, and FOM, and the results are presented in Fig. 8. The test RMSE for PBE and HSE band gaps are 0.22 eV and 0.24 eV respectively, which are similar to or better than most ML-based band gap predictions in the literature.3,8,17,116–118 The errors in band gap predictions lie around 5% of the respective ranges of PBE and HSE computed values. η can be predicted with a very high accuracy, showing a test RMSE of 0.05, corresponding to ∼3% of the range of values in the dataset, while the FOM test RMSE converges to 0.18 (in log10), which is ∼5% of the range of values. Thus, the band gaps, electronic dielectric constant or refractive index, and PV figure of merit can all be predicted for the halide perovskite dataset with an error of 5% or less, and these predictions can be used to screen compounds with suitable band gaps and large PV figures of merit. Finally, we look at the defect properties, and train separate models for the equilibrium D.F.E. and EF under X-rich, medium-X, and B-rich chemical potential conditions, and transition levels VA (0/−1) and VX (+1/0). In Fig. 9, NN models are presented for D.F.E. and EF under medium-X conditions, and for VA (0/−1) and VX (+1/0).
+Prediction performances for defect properties reveal slightly higher errors as compared to the structural, energetic, electronic, and optical properties discussed earlier. There are additional factors at play when it comes to determining the behavior of point defects, such as the defect-induced distortions in the perovskite structure, which means that the descriptors that have worked so well thus far—elemental/molecular properties of A, B, and X species—may need to be fortified with more information for better predictions. Our past work shows that ML-defect predictions are significantly improved by using cheaper unit cell defect calculated properties as descriptors in addition to elemental properties of the defect atom.15,101 Nevertheless, keeping in mind the desire for simplicity in an ML model and the convenience of common inputs for predicting multiple properties, we report the best predictions here for all defect properties using only elemental/molecular descriptors. As shown in Fig. 9, D.F.E. and EF under medium-X chemical potential conditions can both be predicted with a test RMSE of ∼0.3 eV, which is an error of less than 10% for both properties. However, a larger difference between the training and test RMSE values are seen here as compared to earlier properties, indicating a possible tendency for over-fitting despite rigorous optimization. NN models for VA (0/−1) and VX (+1/0) show test RMSE of 0.11 eV and 0.22 eV respectively, which are both less than 10% of the total ranges of values. Predictions for D.F.E. and EF under X-rich and B-rich conditions are presented in Fig. S5 (ESI†), revealing similar accuracies as the models presented in Fig. 9. Thus, predictions can reliably be made, generally with an error of no more than 10%, of the entire vacancy defect formation energy picture (considering only A-site and X-site vacancies) of all halide perovskite compounds, and this information can be used to screen for defect tolerant compounds. The training and test set prediction RMSE values for every property is listed in Table 1. Corresponding training and test set errors for optimized random forest and Gaussian process regression models are presented in Table SII (ESI†); we find that both methods yield similar or worse test predictions than NN, and show a higher tendency for overfitting.
+Table 1 NN model training and test prediction RMSEs for every property
+
+
+
+
+Property
+Training Set RMSE
+Test Set RMSE
+
+
+
+
+PBE Lattice Constant
+0.09 Å
+0.10 Å
+
+
+HSE Lattice Constant
+0.06 Å
+0.06 Å
+
+
+ΔHdecomp (PBE)
+0.05 eV
+0.11 eV
+
+
+ΔHdecomp (HSE)
+0.05 eV
+0.09 eV
+
+
+
+E
+PBEgap
+
+0.20 eV
+0.22 eV
+
+
+
+E
+HSEgap
+
+0.19 eV
+0.24 eV
+
+
+Refractive Index (PBE)
+0.04
+0.05
+
+
+PV FOM (log10) (PBE)
+0.14
+0.18
+
+
+X-rich D.F.E. (PBE)
+0.12 eV
+0.23 eV
+
+
+X-rich EF (PBE)
+0.06 eV
+0.19 eV
+
+
+Medium-X D.F.E. (PBE)
+0.18 eV
+0.29 eV
+
+
+Medium-X EF (PBE)
+0.11 eV
+0.30 eV
+
+
+B-rich D.F.E. (PBE)
+0.11 eV
+0.30 eV
+
+
+B-rich EF (PBE)
+0.11 eV
+0.25 eV
+
+
+VA (0/−1) (PBE)
+0.07 eV
+0.11 eV
+
+
+VX (+1/0) (PBE)
+0.19 eV
+0.22 eV
+
+
+
+
+High-throughput prediction and screening
+The optimized NN models were deployed for predictions of every property of interest over the entire space of 17955 halide perovskite compositions. The ML predicted property space is visualized in Fig. S6 and S7 (ESI†), similar to the way DFT data was visualized earlier. Since regression is an interpolative approach, the ML predicted ranges of each property are similar to the DFT dataset, especially since the chemical space of 17955 compounds is well represented within the 229 compounds chosen for DFT computations. The trends in structural, energetic, electronic, optical, and defect properties remain the same as before, with many more compounds occupying the shaded regions of favorability—immediately highlighting the advantage of a DFT+ML high-throughput screening approach. We discuss ML predictions at both the PBE and HSE levels here, since different functionals are suitable for different compositions or may be desired for future predictions of even higher-fidelity data, as explained more later.
+As shown in Fig. S6(a), (b) and (d) (ESI†), the lattice constant, ΔHdecomp, and ΔHform at the PBE and HSE levels yield similar predictions, with a lot more MA and FA compounds in the low ΔHdecomp region. ΔHPBEmix and ΔHmix in Fig. S6(c) (ESI†) remain uncorrelated for many compounds but across the dataset, ΔHmix values lie below the desired threshold of 0.5 eV. ML predicted EPBEgap and EHSEgap plotted in Fig. S6(e) (ESI†) also show similar trends as in the DFT dataset, with several hundred more fresh compounds in the desirable region. Further, the ML predicted FOM vs. η plot captures a large number of Cs, Rb, and K-containing perovskites—many of them occupying the desired band gap region—that do quite well when it comes to absorption within the solar spectrum. The ML predicted defect properties presented in Fig. S7 (ESI†), again, capture the same trends as in the DFT dataset. A large majority of Cs, Rb, and K perovskites fail to satisfy the D.F.E./EF criterion and will thus not be defect-tolerant, while the number of FA and MA compounds with large enough defect energies increase from X-rich (a) to medium-X (b) to B-rich (c) conditions. The VA (0/−1) vs. VX (+1/0) plot in Fig. S7(d) (ESI†) once again shows a predominance of Cs, Rb, and K compounds in the desired shallow defect level region, with an enormous number of FA and MA bromides and chlorides containing deeper level vacancy defects. Finally, Fig. S8 (ESI†) shows ML predicted εelec plotted against EPBEgap and EHSE, further confirming the inverse relationship mentioned earlier.
+A closer look at the DFT/ML data reveals reasons for the popularity of (FA,MA)(Pb,Sn)(I,Br)3 perovskites, which have high FOM values of >5.2, suitable band gaps between 1 eV and 2 eV, low decomposition energies, and high defect formation energies. A majority of purely inorganic Cs, Rb, and K-based perovskites show high FOM values and fewer deep defect levels, but are plagued by instability to decomposition and may need to be further stabilized, e.g., by entropic contributions with more B-site cations. Based on the screening funnel identified in Fig. 1(c), we use the ML predicted properties across the dataset of 17955 perovskites to identify compounds with sufficiently low formation, decomposition, and mixing energies (from PBE and HSE), band gaps in suitable ranges (from PBE and HSE), and defect tolerance based on equilibrium defect formation energies and transition levels. This screening process is presented in Fig. 10, using pie charts to display statistics and the frequency of occurrence of each A, B, and X species. It is seen that 12533 compounds out of 17955 are identified as stable, 4102 of which have suitable EPBEgap and EHSEgap values, and finally, 392 compounds are left which display robust vacancy defect-tolerance as well.
+ Fig. 10  A visualization of the perovskite compositional space through the screening process, in terms of the fractions of each type of A, B and X atoms remaining in the set of compounds. 
+It is interesting to note the prevalence of certain species and the absence of certain other species through the screening process. A majority of the stable compounds are FA and MA-based, while a large number of K-based compounds are eliminated during the stability screening. All B-site atoms are equally represented at this stage while Br is much more prevalent than I or Cl, indicating that the bromides of FA and MA with any combinations of B atoms are more likely to be stable than other combinations. At the band gap screening stage, there is a rearrangement of the frequencies of occurrences: more FA and MA based compounds are eliminated, so that there is more of a balance between the 5 types of A species. Pb, Sn, and Ge are now the majority occurring B-site atoms, and fading numbers of Ca, Sr, and Ba are seen, while the number of chlorides further reduces, presumably because of their larger than desired band gaps. Iodides and bromides are both well represented at this point. After the defect tolerance screening stage, it can be seen that all the K-based compounds are eliminated, there are small numbers of Cs and Rb compounds left, and a majority of the perovskites have MA or FA at the A-site. Pb is the most common B-site element followed by Sn and Ge, with group II elements Ca, Sr, and Ba playing the role of low fraction substituents in certain compositions. All the chlorides are also eliminated and ∼80% of the compounds are now iodides, indicating that MA and FA-based iodide perovskites are much more likely to be defect-tolerant than the corresponding bromides.
+To further scrutinize the screened space of compounds, the fractions (corresponding to the amount of mixing at the B-site) of different types of B-site cations are plotted for all the screened iodides and bromides of FA, MA, Cs, and Rb in Fig. 11. It is noted from Fig. 11(a) that in Rb-based compounds, Pb and Sn occur in smaller fractions of 0.125–0.375, whereas Ge occurs in fractions of 0.500–0.875, and Ca/Sr/Ba only ever occur in fractions of 0.125. In Cs-based compounds captured in Fig. 11(b), Pb and Sn occur in both lower and higher fractions (0.125–1.0) although Ge continues to adopt higher fractions as well, while Ca/Sr/Ba occur in fractions of 0.125 or 0.25. Trends in MA- and FA-based compounds in Fig. 11(c) and (d) are similar to each other, with a clear prevalence of both Pb and Sn atoms from low to high fractions (0.125–1.0), relatively fewer occurrences of Ge in fractions of 0.25–0.75, and some occurrences of Ca/Sr/Ba in fractions of 0.125–0.5. An increase of the radius of A-site species from Rb to Cs to MA to FA predictably leads to a higher occurrence of larger B-site cations like Pb and Sn that also show suitable band gaps and defect tolerance. It is seen that group II cations usually prefer smaller substitutions of more common B-site atoms like Pb and Sn. The symbol sizes in Fig. 11 are proportional to the PV FOM, revealing that a number of Cs-based perovskites with small fractions of Sn/Ca/Sr/Ba/Pb and large fractions of Ge, as well as a number of MA-based compounds with small fractions of Pb/Ge and larger fractions of Sn, show some of the largest absorption within the solar spectrum range. Finally, given the enduring pursuit for Pb-free halide perovskites, it is prudent to look at how many of the screened compounds contain no Pb at all. It is seen that 23 of the 392 compounds contain no Pb, which constitutes about 5.9% of the set. Therefore, while >90% of compositions that have desirable properties contain Pb, removing Pb from the perovskite composition and still achieving high stability and desirable optoelectronic and defect properties is still a possibility.
+ Fig. 11  Visualizing the compositional space of the screened (a) Rb, (b) Cs, (c) MA and (d) FA iodide and bromide perovskites. The size of each scatter point is proportional to the calculated figure of merit. 
+A selected list of 25 screened compounds are presented in Table 2, along with their ML predicted decomposition and mixing energies (at the HSE level), PBE and HSE band gaps, PV FOM (log10), and nature of equilibrium conductivity under medium-halide chemical potential conditions as determined by A-site and X-site vacancies. Some of the compounds listed or their close derivatives are part of the experimental literature and have been suggested as candidates for solar cell absorption. Additional computations were performed on some of the screened compounds. The electronic band structures of three selected novel mixed cation perovskites, namely CsBa0.125Ge0.875I3, MAPb0.125Sn0.75Ca0.125I3, and FAPb0.75Ba0.25I3, were computed from PBE and are presented in Fig. 12, along with the electronic density of states and the optical absorption spectrum, which shows the absorption coefficients (in cm−1) plotted against incident photon energy (in eV), and also shows EPBEgap as a vertical line on the x-axis. The three compounds have direct band gaps of 1.03 eV, 1.04 eV and 2.14 eV, respectively.
+Table 2 Selected examples of screened perovskites
+
+
+
+
+Perovskite formula
+HSE ΔHdecomp (eV p.f.u.)
+HSE ΔHmix (eV p.f.u.)
+PBE Egap (eV)
+HSE Egap (eV)
+PV FOM (log10 cm−1)
+Eqm. Cond. (Med. X)
+
+
+
+
+CsCa0.125Ge0.75Sn0.125I3
+0.09
+0.06
+0.95
+1.60
+5.35
+mod. p-type
+
+
+CsCa0.125Ge0.875I3
+0.12
+0.08
+1.04
+1.66
+5.35
+intrinsic
+
+
+CsSr0.125Ge0.875I3
+0.12
+0.07
+1.05
+1.65
+5.34
+intrinsic
+
+
+CsBa0.125Ge0.875I3
+0.15
+0.06
+1.05
+1.63
+5.35
+mod. p-type
+
+
+CsSr0.125Ge0.75Sn0.125I3
+0.10
+0.06
+1.00
+1.62
+5.34
+mod. p-type
+
+
+RbGe0.75Pb0.25Br3
+-0.04
+-0.02
+0.56
+1.51
+5.41
+very p-type
+
+
+CsCa0.125Ge0.75Pb0.125I3
+0.12
+0.07
+0.96
+1.63
+5.33
+mod. p-type
+
+
+RbGe0.625Sn0.125Pb0.25Br3
+-0.03
+-0.03
+0.57
+1.48
+5.40
+very p-type
+
+
+MASnI3
+0.35
+0.00
+0.87
+2.47
+5.51
+very p-type
+
+
+MASn0.875Pb0.125I3
+0.37
+0.00
+0.90
+2.46
+5.48
+very p-type
+
+
+CsSr0.125Ge0.75Pb0.125I3
+0.13
+0.08
+1.01
+1.65
+5.33
+mod. p-type
+
+
+CsCa0.125Ge0.625Pb0.25I3
+0.12
+0.07
+0.96
+1.64
+5.30
+mod. p-type
+
+
+MASn0.75Pb0.25I3
+0.39
+0.00
+0.94
+2.46
+5.47
+very p-type
+
+
+MAGe0.125Sn0.75Pb0.125I3
+0.41
+0.04
+0.88
+2.46
+5.48
+very p-type
+
+
+MAGe0.125Sn0.875I3
+0.40
+0.05
+0.86
+2.47
+5.49
+very p-type
+
+
+FACa0.375Ba0.125Pb0.5I3
+−0.43
+−0.05
+2.29
+3.23
+4.76
+mod. n-type
+
+
+MACa0.25Ge0.25Pb0.5Br3
+−0.04
+0.13
+2.07
+3.35
+4.74
+mod. p-type
+
+
+FACa0.25Sr0.125Ba0.125Pb0.5I3
+−0.44
+−0.03
+2.32
+3.24
+4.76
+mod. n-type
+
+
+FACa0.25Sr0.25Pb0.5I3
+−0.44
+−0.02
+2.31
+3.24
+4.75
+mod. n-type
+
+
+MACa0.125Sr0.125Ge0.25Pb0.5Br3
+−0.04
+0.13
+2.13
+3.38
+4.73
+mod. p-type
+
+
+FACa0.125Sr0.25Ba0.125Pb0.5I3
+−0.45
+−0.02
+2.37
+3.26
+4.76
+mod. n-type
+
+
+FACa0.125Sr0.375Pb0.5I3
+−0.44
+−0.01
+2.36
+3.26
+4.75
+mod. n-type
+
+
+MACa0.25Sn0.125Pb0.625Br3
+−0.07
+0.06
+2.23
+3.47
+4.74
+mod. p-type
+
+
+MACa0.25Ge0.125Pb0.625Br3
+−0.05
+0.10
+2.18
+3.44
+4.73
+mod. p-type
+
+
+MACa0.125Sr0.125Ge0.125Pb0.625Br3
+−0.05
+0.09
+2.25
+3.48
+4.72
+mod. p-type
+
+
+
+
+ Fig. 12  PBE-computed electronic band structure, density of states, and anisotropic optical absorption spectra (also showing band gaps as vertical dotted lines) of three compounds selected from the screened list: (a) CsBa0.125Ge0.875I3, (b) MAPb0.125Sn0.75Ca0.125I3, and (c) FAPb0.75Ba0.25I3. All band structure and optical absorption plots are made using Sumo.94 
+Next, we looked at two binaries of interest, Pb–Sn and Pb–Ba, of the iodide, bromide and chloride perovskites of Cs, MA, and FA. Fig. 13 shows the ML predicted decomposition energies, mixing energies and band gaps of entire series of Pb–Sn and Pb–Ba compositions, at the HSE level; corresponding ML results at the PBE level are plotted in Fig. S9 (ESI†). As seen from Fig. 13(a), ΔHHSEdecomp shows a decreasing trend for Pb–Sn compounds for all A–X combinations with increasing Sn content, while ΔHHSEmix in Fig. 13(b) shows a more irregular trend with both downward and upward facing curves. CsPb1−xSnxCl3 and MAPb1−xSnxI3 show increased stability for intermediate compositions compared to the end points, whereas FAPb1−xSnxBr3 and FAPb1−xSnxCl3 lead to intermediate compositions with reduced stability. Band gaps of all Pb–Sn binaries, plotted in Fig. 13(c), show a decreasing trend with increasing Sn, with the change much more drastic in the all inorganic CsPb1−xSnxX3 compounds compared to their organic–inorganic counterparts. From Fig. 13(f), it can be seen that the band gaps of Pb–Ba binaries show the opposite trend, increasing all the way from Pb to Ba with increasing Ba content, for all A–X combinations. ΔHHSEdecomp of Pb–Ba binaries in Fig. 13(d) show irregular trends while ΔHHSEmix in Fig. 13(e) shows both downward and upward facing trends. CsPb1−xBaxCl3, FAPb1−xBaxI3, MAPb1−xBaxI3, and MAPb1−xBaxCl3 show more stable intermediate compositions than the respective end points while FAPb1−xBaxBr3 and FAPb1−xBaxCl3 compositions show the opposite trend. ML predicted properties can be used to quickly produce such plots for any desired binaries, ternaries, and more.
+ Fig. 13  ML (HSE) predicted decomposition energies, mixing energies (with added entropic contribution) and band gaps of Pb–Sn (a–c) and Pb–Ba (d–f) binary ABX3 perovskites with A = Cs, MA or FA and X = I, Br or Cl, plotted as a function of Sn or Ba content. 
+Predictive power and future work
+The data-driven design framework demonstrated in this work, powered by high-throughput DFT computations and neural networks, works quite well for a constrained problem where only certain atoms, compositions, phases, and levels of theory are at play. Since ML approaches being applied here are interpolative in nature, a natural question arises over how far the applicability of these predictive models could be stretched. Do they only work well for the set of ∼18000 compounds selected here, or could they be used for other related compositions which may be considered out-of-sample by some definitions? A few examples of such out-of-sample data points may include:
+1. Extensions to more A-site species such ethylammonium (EA) and dimethylammonium (DMA), and B-site species such as lanthanides (La, Eu), Cd, Zn, etc.
+2. Mixing fractions other than n/8 (where n is an integer between 0 and 8, necessitated by the consideration of 2 × 2 × 2 supercells for all computations).
+3. Mixing at A-site or X-site, as well as simultaneous mixing at two or three sites.
+4. Consideration of non-cubic perovskite phases, such as orthorhombic, tetragonal, and hexagonal.
+In theory, using the suitable weighted averages of elemental/molecular properties as input, our predictive models can be applied to compositions such as MACa0.06Ba0.47Sn0.22Pb0.25I3 and CsPb0.33Sn0.33Ge0.33Br3 which involve arbitrary cation-site mixing, as well as compounds with new types of atoms at different sites or mixing at A and X sites. To test the true predictive power of current models on out-of-sample points, we performed some additional calculations and collected some data from past work. Three types of new data points were included: (a) 15 compounds with random A-site and X-site mixing (considering the same set of A, B, and X species as before), (b) 15 compounds with new B-site cations (Mg, Si, Cd, Zn, etc.) mixed in fractions of 1/8 with Pb at the B-site in MA(B)(X3) compounds, collected from our past works,15,16,119 and (c) 5 new MAPbX3 3 × 3 × 3 supercell calculations with Sn/Ba/Sr mixing at the Pb-site. Fig. 14 shows the ML predicted decomposition energies and band gaps (at the PBE level) plotted against DFT results—showing excellent correspondence. The 35 compounds considered for testing out-of-sample predictive power are listed in Table SIII (ESI†).
+ Fig. 14  ML (PBE) predicted decomposition energies and band gaps compared with DFT computed values for out-of-sample data points, namely new A-site and X-site mixed compounds (orange), B-site mixing with new elements (blue), and alloys simulated in a 3 × 3 × 3 MAPbX3 supercell (green). RMSE values for the three sub-datasets are also shown. 
+The 3 × 3 × 3 supercell calculations, which represent new types of B-site mixing fractions, are very accurately predicted, with RMSE values of 0.02 eV and 0.14 eV for ΔHPBEdecomp and EPBEgap, respectively. For both A/X-site mixing and new B-site systems, ΔHPBEdecomp RMSE values are quite low at 0.05 eV and 0.10 eV respectively. Band gaps are slightly worse for A/X-site mixing points with an RMSE of 0.34 eV, while predictions for new B-site points lie at 0.25 eV. These results are remarkable, and already prove that for pseudo-cubic halide perovskites, ML models based on tabulated elemental or molecular properties are quite sufficient to universally predict the stability and band gaps of any possible composition, even if significantly different from the training dataset. We expect that inclusion of these out-of-sample points in the ML training step would further improve these predictions. Presently, we are extending the dataset to include many more A-site mixed, X-site mixed, and multi-site mixed points, compositions from mixing in larger supercells, as well as alternative perovskite phases. To elucidate the effect of the perovskite structure—that is, to study how the stability and band gap differ for non-cubic perovskite phases—we performed a few additional PBE computations on tetragonal, orthorhombic, and hexagonal phases of 31 pure and mixed composition perovskites. This data is presented in Fig. S11 (ESI†) in terms of comparisons between DFT/ML – PBE/HSE cubic and PBE non-cubic decomposition energy and band gap. We find that the mean absolute difference in PBE ΔHdecomp values from cubic to non-cubic phases is 0.08 eV, indicating a closeness in stability of all phases. PBE band gap values between cubic and non-cubic phases often vary significantly, showing a mean absolute difference of 0.46 eV, with the largest difference of 1.18 eV seen for CsGeCl3. It can be concluded that the perovskite phase does indeed make a big difference, and present work is very much limited to a consideration of cubic phases; additional DFT data and descriptor dimensions to represent the crystal structure can enable extension of the ML models to other phases.
+Another limitation in this work is the lack of consideration of entropic contributions to the decomposition energies, which may stabilize previously unstable or metastable mixed compositions. While the detailed calculation of vibrational, electronic and configurational entropies from first principles thermodynamics is beyond the scope of this work, we can obtain rough estimates for the mixing entropy contributions in alloys110 as  where xi is the mixing fraction (between 0 and 1) of the ith element at the B-site, kB is the Boltzmann constant, and T is the growth temperature. Fig. S10 (ESI†) shows this value in eV, calculated at 100 °C for the entire dataset of 17955 perovskites, plotted against their ML-predicted ΔHPBEdecomp. It can be seen that the mixing entropy contribution ranges between −0.06 eV and 0 eV, meaning there would only be a sight shift in the stability threshold (shown using dashed vertical lines in Fig. S10, ESI†) if it is added to ΔHdecomp, and very few compounds would be added that were eliminated during the screening test earlier. Future work may involve better estimates of entropy terms for select materials, ab initio molecular dynamics simulations to unravel the time-dependent thermal stability of screened perovskite compounds, and computation of phonon properties to reveal dynamic stability and vibrational free energies.
+A note should also be made about the inherent uncertainties of using density functional theory. Universal benchmarking of DFT functionals for different properties of interest in the halide perovskite chemical space is not a solved problem. Although the HSE06 functional has been used here to improve the estimates, as compared to PBE, of the structure, energetics, and certainly the electronic properties, further improvements may be necessary in terms of tuning the mixing parameter in HSE06 (fixed at 0.25 in this work), consideration of spin–orbit coupling for band gaps and defect formation energies, and the use of GW approximations for both electronic and optical properties.120 To assess the accuracy compared to experiments, we collected measured band gaps of 36 pure and mixed composition perovskites from the aforementioned surveyed literature. The ML or DFT (when available for cubic or non-cubic phases) predicted PBE/HSE band gaps are plotted against measured values in Fig. S12 (ESI†). It is seen that PBE band gaps have a much lower RMSE of 0.36 eV while HSE band gaps have an RMSE of 1.08 eV. It stands to reason that ignoring SOC leads to an overestimation of the HSE band gap, while cancellation of errors (especially for organic–inorganic perovskites such as MAPbI3 and FASn0.25Pb0.75I3) tends to make PBE band gaps more accurate. HSE band gaps predictions are much better for purely inorganic perovskites such as CsPbBr3 and CsSn0.5Pb0.5Br3. Going forward, there will be a focus on the collection of more experimental data and the improvement of predictions with extensions to higher level theory. Since most of these extensions involve fairly expensive computations, they can initially be performed on a restricted set of compounds—such as the screened set of 392 in this work—prior to being applied on a much larger dataset. This also opens the door to the use of multi-fidelity learning approaches, wherein large amounts of lower-accuracy data (e.g., PBE calculations) combined with more modest higher-accuracy estimates (e.g., HSE06 or GW calculations, or even experimental measurements) can lead to very accurate ML models for high-fidelity predictions.80,101
+Despite the many promising aspects of a DFT+ML screening process studied here, there are still significant hurdles towards experimental realization. There is a heavy imbalance between compounds studied from DFT and related approaches, and compounds that are actually synthesized, characterized and tested for their electrical, electronic, optical, and dielectric properties. Additional variables in the set of descriptors and output properties would be added in future work that account for the likelihood of synthesis of screened compounds and possible reaction pathways to make them happen. Current work also ignores the presence of metastable structures, or perovskite phases that constitute unexplored local minima in the energy landscape. The NN framework only takes the atoms and composition into account, and makes predictions for what is assumed to be the global minimum energy structure of the given halide perovskite composition. Future extensions will include computations on metastable phases and retraining of NN models to reflect that, explicitly studying how the free energy is influenced by polymorphism, configurational entropy, surface energies, octahedral rotation and distortion, and non-stoichiometric compounds.
+Conclusions
+In summary, a data-driven framework was developed for the on-demand prediction and design of novel pseudo-cubic mixed-cation halide perovskites, using high-throughput DFT computations and rigorously optimized neural network models. DFT data was generated for multiple properties, including the lattice constant, formation/decomposition/mixing energy, band gap, refractive index, photovoltaic figure of merit based on optical absorption spectrum, and the formation energies and charge transition levels of vacancy defects, using two different levels of theory, for ∼1.3% of the entire possible set of compounds. NN regression models were trained on the DFT data, using the elemental or molecular properties of A, B, and X species as descriptors, and following standard machine learning practices, leading to predictions of all properties over the entire dataset. Screening of compounds with suitable stability, band gaps, and defect tolerance reveals the predominance of MA and FA-based iodides, with B-site mixing involving larger fractions of Pb and Sn and smaller fractions of Ge, Ba, Sr, and Ca. Selected compounds were subjected to additional computations and certain perovskite binaries of interest were examined in terms of their stability and band gaps. The predictive models also showed impressive accuracy for out-of-sample points, which included A-site and X-site mixing, new types of B-site cations, and larger supercell calculations, indicating the robustness and wide applicability of the design framework. We highlighted the limitations of this work and the extensions being pursued for continuous improvement. The next few years will undoubtedly witness innovative applications of methods rooted in AI, ML, and data science on halide perovskite chemical spaces, and the accelerated design of novel structures, compositions, and synthesis pathways for next generation optoelectronics, power devices, and related applications.
+Data and code availability
+The entire DFT dataset, including full PBE and HSE06 relaxation, static, optical absorption, dielectric, and vacancy defect calculations for 229 compounds, can be accessed from Materials Data Facility.121 Tabulated DFT properties, descriptors for ML, scripts to train and optimize neural network models, and all ML predictions are available on Github: https://github.com/mannodiarun/perovs_ml.git.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+Extensive discussions with and scientific feedback from UC San Diego researchers David Fenning and Rishi Kumar are acknowledged. This work was performed, partly at the Center for Nanoscale Materials, a U.S. Department of Energy Office of Science User Facility, and supported by the U.S. Department of Energy, Office of Science, under Contract No. DE-AC02-06CH11357, and partly at Purdue University, under startup account F.10023800.05.002. This research used resources of the National Energy Research Scientific Computing Center, a DOE Office of Science User Facility supported by the Office of Science of the U.S. Department of Energy under Contract No. DE-AC02-05CH11231. We gratefully acknowledge the computing resources provided on Bebop, a high-performance computing cluster operated by the Laboratory Computing Resource Center at Argonne National Laboratory.
+Notes and references
+A. Saeki and K. Kranthiraja, Jpn. J. Appl. Phys., 2019, 59, SD0801 CrossRef .
+A. Takahashi, Y. Kumagai, J. Miyamoto, Y. Mochizuki and F. Oba, Phys. Rev. Mater., 2020, 4, 103801 CrossRef CAS .
+A. Mannodi-Kanakkithodi, A. Chandrasekaran, C. Kim, T. D. Huan, G. Pilania, V. Botu and R. Ramprasad, Mater. Today, 2018, 21, 785–796 CrossRef CAS .
+P. Schlexer-Lamoureux, K. T. Winther, J. A. Garrido-Torres, V. Streibel, M. Zhao, M. Bajdich, F. Abild-Pedersen and T. Bligaard, ChemCatChem, 2019, 11, 3581–3601 CrossRef CAS .
+J. Munshi, W. Chen, T. Chien and G. Balasubramanian, J. Chem. Inf. Model., 2021, 61, 134–142 CrossRef CAS PubMed .
+H.-J. Feng, K. Wu and Z.-Y. Deng, Cell Rep. Phys. Sci., 2020, 1, 100179 CrossRef .
+J. Schmidt, M. R. G. Marques, S. Botti and M. A. L. Marques, npj Comput. Mater., 2019, 5, 83 CrossRef .
+R. Ramprasad, R. Batra, G. Pilania, A. Mannodi-Kanakkithodi and C. Kim, npj Comput. Mater., 2017, 3, 54 CrossRef .
+H. Choubisa, M. Askerka, K. Ryczko, O. Voznyy, K. Mills, I. Tamblyn and E. H. Sargent, Matter, 2020, 3, 433–448 CrossRef .
+T. Wu and J. Wang, ACS Appl. Mater. Interfaces, 2020, 12, 57821–57831 CrossRef CAS PubMed .
+H. C. Herbol, W. Hu, P. Frazier, P. Clancy and M. Poloczek, npj Comput. Mater., 2018, 4, 51 CrossRef .
+S. Lu, Q. Zhou, Y. Ouyang, Y. Guo, Q. Li and J. Wang, Nat. Commun., 2018, 9, 3405 CrossRef PubMed .
+W. Pu, W. Xiao, J. Wang, X. Li and L. Wang, Mater. Design, 2021, 198, 109387 CrossRef CAS .
+T. Nakajima and K. Sawada, J. Phys. Chem. Lett., 2017, 8, 4826–4831 CrossRef CAS PubMed .
+A. Mannodi-Kanakkithodi, J.-S. Park, N. Jeon, D. H. Cao, D. J. Gosztola, A. B. F. Martinson and M. K. Y. Chan, Chem. Mater., 2019, 31, 3599–3612 CrossRef CAS .
+A. Mannodi-Kanakkithodi, J.-S. Park, A. B. F. Martinson and M. K. Y. Chan, J. Phys. Chem. C, 2020, 124, 16729–16738 CrossRef CAS .
+V. Gladkikh, D. Y. Kim, A. Hajibabaei, A. Jana, C. W. Myung and K. S. Kim, J. Phys. Chem. C, 2020, 124, 8905–8918 CrossRef CAS .
+W. A. Saidi, W. Shadid and I. E. Castelli, npj Comput. Mater., 2020, 6, 36 CrossRef CAS .
+S. Sun, N. T. Hartono, Z. D. Ren, F. Oviedo, A. M. Buscemi, M. Layurova, D. X. Chen, T. Ogunfunmi, J. Thapa, S. Ramasamy, C. Settens, B. L. DeCost, A. G. Kusne, Z. Liu, S. I. Tian, I. M. Peters, J.-P. Correa-Baena and T. Buonassisi, Joule, 2019, 3, 1437–1451 CrossRef CAS .
+X. Chen, C. Wang, Z. Li, Z. Hou and W.-J. Yin, Sci. China Mater., 2020, 63, 1024–1035 CrossRef CAS .
+F. Oba and Y. Kumagai, Appl. Phys. Express, 2018, 11, 060101 CrossRef .
+Z. Muhammad, P. Liu, R. Ahmad, S. Jalali Asadabadi, C. Franchini and I. Ahmad, Phys. Chem. Chem. Phys., 2020, 22, 11943–11955 RSC .
+S. Kim, T. Eom, Y.-S. Ha, K.-H. Hong and H. Kim, Chem. Mater., 2020, 32, 4265–4272 CrossRef CAS .
+D. W. Boukhvalov, I. S. Zhidkov, A. F. Akbulatov, A. I. Kukharenko, S. O. Cholakh, K. J. Stevenson, P. A. Troshin and E. Z. Kurmaev, J. Phys. Chem. A, 2020, 124, 135–140 CrossRef CAS PubMed .
+L. T. Schelhas, Z. Li, J. A. Christians, A. Goyal, P. Kairys, S. P. Harvey, D. H. Kim, K. H. Stone, J. M. Luther, K. Zhu, V. Stevanovic and J. J. Berry, Energy Environ. Sci., 2019, 12, 1341–1348 RSC .
+S. Zhu, J. Ye, Y. Zhao and Y. Qiu, J. Phys. Chem. C, 2019, 123, 20476–20487 CrossRef CAS .
+R. Sa, W. Zha, Z. Ma, R. Yuan and D. Liu, Spectrochim. Acta, Part A, 2020, 239, 118493 CrossRef CAS PubMed .
+P. Basera, M. Kumar, S. Saini and S. Bhattacharya, Phys. Rev. B, 2020, 101, 054108 CrossRef CAS .
+A. Banerjee, S. Chakraborty and R. Ahuja, ACS Appl. Energy Mater., 2019, 2, 6990–6997 CrossRef CAS .
+K. Hossain, S. Khanom, F. Israt, M. Hossain, M. Hossain and F. Ahmed, Solid State Commun., 2020, 320, 114024 CrossRef CAS .
+J. S. Bechtel and A. Van der Ven, Phys. Rev. Mater., 2018, 2, 045401 CrossRef CAS .
+R. Rajeswarapalanichamy, A. Amudhavalli, R. Padmavathy and K. Iyakutti, Mater. Sci. Eng., B, 2020, 258, 114560 CrossRef CAS .
+I. Ornelas-Cruz, A. Trejo, R. Oviedo-Roa, F. Salazar, E. Carvajal, A. Miranda and M. Cruz-Irisson, Comput. Mater. Sci., 2020, 178, 109619 CrossRef CAS .
+A. Boziki, D. J. Kubicki, A. Mishra, S. Meloni, L. Emsley, M. Grätzel and U. Rothlisberger, Chem. Mater., 2020, 32, 2605–2614 CrossRef CAS .
+L. Guan, X. Xu, Y. Liang, S. Han, J. Guo, J. Wang and X. Li, Phys. Lett. A, 2020, 384, 126173 CrossRef CAS .
+M. Shakil, A. Akram, I. Zeba, R. Ahmad, S. S. A. Gillani and M. A. Gadhi, Mater. Res. Express, 2020, 7, 025513 CrossRef CAS .
+H. Liu, X. Li, Y. Zeng and L. Meng, Comput. Mater. Sci., 2020, 177, 109576 CrossRef CAS .
+J. Chang, H. Chen, G. Wang, B. Wang, X. Chen and H. Yuan, RSC Adv., 2019, 9, 7015–7024 RSC .
+Z.-K. Tang, Z.-F. Xu, D.-Y. Zhang, S.-X. Hu, W.-M. Lau and L.-M. Liu, Sci. Rep., 2017, 7, 7843 CrossRef PubMed .
+G. M. Dalpian, X.-G. Zhao, L. Kazmerski and A. Zunger, Chem. Mater., 2019, 31, 2497–2506 CrossRef CAS .
+F. Hao, C. C. Stoumpos, R. P. H. Chang and M. G. Kanatzidis, J. Am. Chem. Soc., 2014, 136, 8094–8099 CrossRef CAS PubMed .
+M.-J. Wu, C.-C. Kuo, L.-S. Jhuang, P.-H. Chen, Y.-F. Lai and F.-C. Chen, Adv. Energy Mater., 2019, 9, 1901863 CrossRef CAS .
+S. Khatun, A. Maiti and A. J. Pal, Appl. Phys. Lett., 2020, 116, 012104 CrossRef CAS .
+J. Ding, S. Du, T. Zhou, Y. Yuan, X. Cheng, L. Jing, Q. Yao, J. Zhang, Q. He, H. Cui, X. Zhan and H. Sun, J. Phys. Chem. C, 2019, 123, 14969–14975 CrossRef CAS .
+E. M. Mozur, M. A. Hope, J. C. Trowbridge, D. M. Halat, L. L. Daemen, A. E. Maughan, T. R. Prisk, C. P. Grey and J. R. Neilson, Chem. Mater., 2020, 32, 6266–6277 CrossRef CAS .
+Y. Ogomi, A. Morita, S. Tsukamoto, T. Saitho, N. Fujikawa, Q. Shen, T. Toyoda, K. Yoshino, S. S. Pandey, T. Ma and S. Hayase, J. Phys. Chem. Lett., 2014, 5, 1004–1011 CrossRef CAS PubMed .
+Y. Wang, X. Zhang, D. Wang, X. Li, J. Meng, J. You, Z. Yin and J. Wu, ACS Appl. Mater. Interfaces, 2019, 11, 28005–28012 CrossRef CAS PubMed .
+C. Greenland, A. Shnier, S. K. Rajendran, J. A. Smith, O. S. Game, D. Wamwangi, G. A. Turnbull, I. D. W. Samuel, D. G. Billing and D. G. Lidzey, Adv. Energy Mater., 2020, 10, 1901350 CrossRef CAS .
+X. Jia, C. Zuo, S. Tao, K. Sun, Y. Zhao, S. Yang, M. Cheng, M. Wang, Y. Yuan, J. Yang, F. Gao, G. Xing, Z. Wei, L. Zhang, H.-L. Yip, M. Liu, Q. Shen, L. Yin, L. Han, S. Liu, L. Wang, J. Luo, H. Tan, Z. Jin and L. Ding, Sci. Bull., 2019, 64, 1532–1539 CrossRef CAS .
+R. Prasanna, T. Leijtens, S. P. Dunfield, J. A. Raiford, E. J. Wolf, S. A. Swifter, J. Werner, G. E. Eperon, C. de Paula, A. F. Palmstrom, C. C. Boyd, M. F. A. M. van Hest, S. F. Bent, G. Teeter, J. J. Berry and M. D. McGehee, Nat. Energy, 2019, 4, 939–947 CrossRef CAS .
+F. Serrano-Sánchez, J. Conesa, J. Rodrigues, C. Marini, J. Martínez and J. Alonso, J. Alloys Compd., 2020, 821, 153414 CrossRef .
+Y. Yin, S. Fu, S. Zhou, Y. Song, L. Li, M. Zhang, J. Wang, P. Mariyappan, S. M. Alshehri, T. Ahamad and Y. Yamauchi, Electron. Mater. Lett., 2020, 16, 224–230 CrossRef CAS .
+H. Zhang, R. Li, M. Zhang and M. Guo, Ceram. Int., 2020, 46, 14038–14047 CrossRef CAS .
+N. Rybin, D. Ghosh, J. Tisdale, S. Shrestha, M. Yoho, D. Vo, J. Even, C. Katan, W. Nie, A. J. Neukirch and S. Tretiak, Chem. Mater., 2020, 32, 1854–1863 CrossRef CAS .
+B. Subedi, C. Li, M. M. Junda, Z. Song, Y. Yan and N. J. Podraza, J. Chem. Phys., 2020, 152, 064705 CrossRef CAS PubMed .
+Z. Xiao, Q. Wang, X. Wu, Y. Wu, J. Ren, Z. Xiong and X. Yang, Org. Electron., 2020, 77, 105546 CrossRef CAS .
+T. G. Liashenko, E. D. Cherotchenko, A. P. Pushkarev, V. Pakštas, A. Naujokaitis, S. A. Khubezhov, R. G. Polozkov, K. B. Agapev, A. A. Zakhidov, I. A. Shelykh and S. V. Makarov, Phys. Chem. Chem. Phys., 2019, 21, 18930–18938 RSC .
+F. Alam, K. D. Wegner, S. Pouget, L. Amidani, K. Kvashnina, D. Aldakov and P. Reiss, J. Chem. Phys., 2019, 151, 231101 CrossRef PubMed .
+S. Nagane, D. Ghosh, R. L. Z. Hoye, B. Zhao, S. Ahmad, A. B. Walker, M. S. Islam, S. Ogale and A. Sadhanala, J. Phys. Chem. C, 2018, 122, 5940–5947 CrossRef CAS .
+R. Szostak, J. C. Silva, S.-H. Turren-Cruz, M. M. Soares, R. O. Freitas, A. Hagfeldt, H. C. N. Tolentino and A. F. Nogueira, Sci. Adv., 2019, 5, eaaw6619 CrossRef CAS PubMed .
+B. Charles, M. T. Weller, S. Rieger, L. E. Hatcher, P. F. Henry, J. Feldmann, D. Wolverson and C. C. Wilson, Chem. Mater., 2020, 32, 2282–2291 CrossRef CAS .
+T. Handa, A. Wakamiya and Y. Kanemitsu, APL Mater., 2019, 7, 080903 CrossRef .
+W. M. J. Franssen, C. M. M. van Heumen and A. P. M. Kentgens, Inorg. Chem., 2020, 59, 3730–3739 CrossRef CAS PubMed .
+R. E. Beal, N. Z. Hagström, J. Barrier, A. Gold-Parker, R. Prasanna, K. A. Bush, D. Passarello, L. T. Schelhas, K. Brüning, C. J. Tassone, H.-G. Steinrück, M. D. McGehee, M. F. Toney and A. F. Nogueira, Matter, 2020, 2, 207–219 CrossRef .
+S. H. Chang, P.-C. Tseng, S.-E. Chiang, J.-R. Wu, Y.-T. Chen, C.-J. Chen, C.-T. Yuan and S.-H. Chen, Solar Energy Mater. Solar Cells, 2020, 210, 110478 CrossRef CAS .
+S.-Y. Kim, H.-C. Lee, Y. Nam, Y. Yun, S.-H. Lee, D. H. Kim, J. H. Noh, J.-H. Lee, D.-H. Kim, S. Lee and Y.-W. Heo, Acta Mater., 2019, 181, 460–469 CrossRef CAS .
+Z. Yang, X. Zhang, W. Yang, G. E. Eperon and D. S. Ginger, Chem. Mater., 2020, 32, 2782–2794 CrossRef CAS .
+H. T. Pham, T. Duong, W. D. A. Rickard, F. Kremer, K. J. Weber and J. Wong-Leung, J. Phys. Chem. C, 2019, 123, 26718–26726 CrossRef CAS .
+M. Zhang, H. Yu, M. Lyu, Q. Wang, J.-H. Yun and L. Wang, Chem. Commun., 2014, 50, 11727–11730 RSC .
+D. P. McMeekin, G. Sadoughi, W. Rehman, G. E. Eperon, M. Saliba, M. T. Hörantner, A. Haghighirad, N. Sakai, L. Korte, B. Rech, M. B. Johnston, L. M. Herz and H. J. Snaith, Science, 2016, 351, 151–155 CrossRef CAS PubMed .
+Z. Yang, A. Rajagopal, S. B. Jo, C.-C. Chueh, S. Williams, C.-C. Huang, J. K. Katahara, H. W. Hillhouse and A. K.-Y. Jen, Nano Lett., 2016, 16, 7739–7747 CrossRef CAS PubMed .
+P. Basera, M. Kumar, S. Saini and S. Bhattacharya, Phys. Rev. B, 2020, 101, 054108 CrossRef CAS .
+Y. Takahashi, R. Obara, Z.-Z. Lin, Y. Takahashi, T. Naito, T. Inabe, S. Ishibashi and K. Terakura, Dalton Trans., 2011, 40, 5563–5568 RSC .
+S. D. Stranks and H. J. Snaith, Nat. Nanotechnol., 2015, 10, 391–402 CrossRef CAS PubMed .
+R. Prasanna, T. Leijtens, S. P. Dunfield, J. A. Raiford, E. J. Wolf, S. A. Swifter, J. Werner, G. E. Eperon, C. de Paula, A. F. Palmstrom, C. C. Boyd, M. F. A. M. van Hest, S. F. Bent, G. Teeter, J. J. Berry and M. D. McGehee, Nat. Energy, 2019, 4, 939–947 CrossRef CAS .
+F. Hao, C. C. Stoumpos, R. P. H. Chang and M. G. Kanatzidis, J. Am. Chem. Soc., 2014, 136, 8094–8099 CrossRef CAS PubMed .
+Y. Yin, S. Fu, S. Zhou, Y. Song, L. Li, M. Zhang, J. Wang, P. Mariyappan, S. M. Alshehri, T. Ahamad and Y. Yamauchi, Electron. Mater. Lett., 2020, 16, 224–230 CrossRef CAS .
+T. Handa, A. Wakamiya and Y. Kanemitsu, APL Mater., 2019, 7, 080903 CrossRef .
+Z. Yang, X. Zhang, W. Yang, G. E. Eperon and D. S. Ginger, Chem. Mater., 2020, 32, 2782–2794 CrossRef CAS .
+A. Mannodi-Kanakkithodi and M. K. Chan, Trends Chem., 2021, 3, 79–82 CrossRef CAS .
+M. Chan and G. Ceder, Phys. Rev. Lett., 2010, 105, 196403 CrossRef CAS PubMed .
+K. Burke and L. O. Wagner, Int. J. Quantum Chem., 2013, 113, 96–101 CrossRef CAS .
+J. P. Perdew, K. Burke and M. Ernzerhof, Phys. Rev. Lett., 1996, 77, 3865–3868 CrossRef CAS PubMed .
+J. S. Park, S. Kim, Z. Xie and A. Walsh, Nat. Rev. Mater., 2018, 3, 194–210 CrossRef CAS .
+A. M. Ganose, S. Matsumoto, J. Buckeridge and D. O. Scanlon, Chem. Mater., 2018, 30, 3827–3835 CrossRef CAS PubMed .
+A. Amat, E. Mosconi, E. Ronca, C. Quarti, P. Umari, M. K. Nazeeruddin, M. Grätzel and F. De Angelis, Nano Lett., 2014, 14, 3608–3616 CrossRef CAS PubMed .
+T. Shi, W.-J. Yin, F. Hong, K. Zhu and Y. Yan, Appl. Phys. Lett., 2015, 106, 103902 CrossRef .
+S.-H. Wei, L. G. Ferreira, J. E. Bernard and A. Zunger, Phys. Rev. B: Condens. Matter Mater. Phys., 1990, 42, 9622–9649 CrossRef CAS PubMed .
+Z. Jiang, Y. Nahas, B. Xu, S. Prosandeev, D. Wang and L. Bellaiche, J. Phys.: Condens. Matter, 2016, 28, 475901 CrossRef PubMed .
+G. Kresse and J. Hafner, Phys. Rev. B: Condens. Matter Mater. Phys., 1994, 49, 14251–14269 CrossRef CAS PubMed .
+G. Kresse and J. Furthmüller, Phys. Rev. B: Condens. Matter Mater. Phys., 1996, 54, 11169–11186 CrossRef CAS PubMed .
+P. E. Blöchl, Phys. Rev. B: Condens. Matter Mater. Phys., 1994, 50, 17953–17979 CrossRef PubMed .
+Y. Hinuma, G. Pizzi, Y. Kumagai, F. Oba and I. Tanaka, Comput. Mater. Sci., 2017, 128, 140–184 CrossRef CAS .
+A. M. Ganose, A. J. Jackson and D. O. Scanlon, J. Open Source Software, 2018, 3, 717 CrossRef .
+C. A. Gueymard, Sol. Energy, 2004, 76, 423–453 CrossRef .
+A. Jain, S. P. Ong, G. Hautier, W. Chen, W. D. Richards, S. Dacek, S. Cholia, D. Gunter, D. Skinner, G. Ceder and K. A. Persson, APL Mater., 2013, 1, 011002 CrossRef .
+C. J. Bartel, C. Sutton, B. R. Goldsmith, R. Ouyang, C. B. Musgrave, L. M. Ghiringhelli and M. Scheffler, Sci. Adv., 2019, 5, eaav0693 CrossRef CAS PubMed .
+Y.-H. Kye, C.-J. Yu, U.-G. Jong, Y. Chen and A. Walsh, J. Phys. Chem. Lett., 2018, 9, 2196–2201 CrossRef CAS PubMed .
+C. Freysoldt, J. Neugebauer and C. G. Van de Walle, Phys. Rev. Lett., 2009, 102, 016402 CrossRef PubMed .
+C. Freysoldt, B. Grabowski, T. Hickel, J. Neugebauer, G. Kresse, A. Janotti and C. G. Van de Walle, Rev. Mod. Phys., 2014, 86, 253–305 CrossRef .
+A. Mannodi-Kanakkithodi, M. Y. Toriyama, F. G. Sen, M. J. Davis, R. F. Klie and M. K. Chan, npj Comput. Mater., 2020, 6, 39 CrossRef CAS .
+A. Mannodi-Kanakkithodi, X. Xiang, L. Jacoby, R. Biegaj, S. Dunham, D. Gamelin and M. Chan, Patterns, 2022, 3(3), 100450 CrossRef .
+M. Wen, S. M. Blau, E. W. C. Spotte-Smith, S. Dwaraknath and K. A. Persson, Chem. Sci., 2021, 12, 1858–1868 RSC .
+J. Noh, J. Kim, H. S. Stein, B. Sanchez-Lengeling, J. M. Gregoire, A. Aspuru-Guzik and Y. Jung, Matter, 2019, 1, 1370–1384 CrossRef .
+T. Xie and J. C. Grossman, Phys. Rev. Lett., 2018, 120, 145301 CrossRef CAS PubMed .
+D. Scott, P. Coveney, J. Kilner, J. Rossiny and N. N. Alford, J. Eur. Ceram. Soc., 2007, 27, 4425–4435 CrossRef CAS .
+K. Rajan, Annu. Rev. Mater. Res., 2015, 45, 153–169 CrossRef CAS .
+C.-W. Tsai, C.-H. Hsia, S.-J. Yang, S.-J. Liu and Z.-Y. Fang, Appl. Soft Comput., 2020, 88, 106068 CrossRef .
+H. Cho, Y. Kim, E. Lee, D. Choi, Y. Lee and W. Rhee, IEEE Access, 2020, 8, 52588–52608 Search PubMed .
+M. D. Sampson, J. S. Park, R. D. Schaller, M. K. Y. Chan and A. B. F. Martinson, J. Mater. Chem. A, 2017, 5, 3578–3588 RSC .
+W. Travis, E. N. K. Glover, H. Bronstein, D. O. Scanlon and R. G. Palgrave, Chem. Sci., 2016, 7, 4548–4556 RSC .
+Z. Li, M. Yang, J.-S. Park, S.-H. Wei, J. J. Berry and K. Zhu, Chem. Mater., 2016, 28, 284–292 CrossRef CAS .
+G. G. C. Peterson and J. Brgoch, J. Phys.: Energy, 2021, 3, 022002 CAS .
+Y. Mao, H. Yang, Y. Sheng, J. Wang, R. Ouyang, C. Ye, J. Yang and W. Zhang, ACS Omega, 2021, 6, 14533–14541 CrossRef CAS PubMed .
+C. Chen, W. Ye, Y. Zuo, C. Zheng and S. P. Ong, Chem. Mater., 2019, 31, 3564–3572 CrossRef CAS .
+G. Pilania, A. Mannodi-Kanakkithodi, B. P. Uberuaga, R. Ramprasad, J. E. Gubernatis and T. Lookman, Sci. Rep., 2016, 6, 19375 CrossRef CAS PubMed .
+Y. Zhuo, A. Mansouri Tehrani and J. Brgoch, J. Phys. Chem. Lett., 2018, 9, 1668–1673 CrossRef CAS PubMed .
+V. Gladkikh, D. Y. Kim, A. Hajibabaei, A. Jana, C. W. Myung and K. S. Kim, J. Phys. Chem. C, 2020, 124, 8905–8918 CrossRef CAS .
+
+          A. Mannodi-Kanakkithodi and M. Chan, under review, 2021.
+F. Aryasetiawan and O. Gunnarsson, Rep. Prog. Phys., 1998, 61, 237–312 CrossRef CAS .
+
+          A. Mannodi-Kanakkithodi, M. K. Chan, J. Yang and P. Manganaris, High-Throughput DFT Dataset of Halide Perovskite Alloys, 2022, https://petreldata.net/mdf/detail/abx3_perovs_alloys_v1.1.
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1ee02971aThis journal is © The Royal Society of Chemistry 2022
+Table Content:
+
+Broader context
+New solar cell absorbers with improved stability, attractive optical and electronic properties, and tolerance to defect formation are sought to tackle the world's ever increasing renewable energy demands. Experimental identification of novel compositions is prohibitive and can be significantly accelerated with computational screening. Here, we present the largest known computational dataset of ABX3 halide perovskite alloys where mixing occurs at the B-site. Computed properties include density functional theory (DFT)-optimized pseudo-cubic lattice constants, decomposition energies, electronic band gaps, optical absorption spectra, and vacancy formation energies for 229 compounds. Machine learning (ML) models trained upon the DFT data using known elemental or molecular properties as descriptors enable the instant prediction of all properties of ∼18 000 novel compounds, leading to screening of 392 stable candidates with suitable band gaps, defect tolerance, and photovoltaic figure of merit. The DFT+ML approach provides a way to rapidly search for new solar cell absorbers and are also shown to be easily extended to mixing at other sites, different mixing fractions, and even incorporation of new elements. Such data-driven strategies continue to transform materials design and discovery and hold great promise for further optimization of halide perovskites and single and tandem solar cell devices.
+
+
+ 	Fig. 1  (a) DFT properties computed for 229 perovskite compounds at the PBE and HSE06 levels of theory. (b) Typical neural network architecture used to train predtictive models from DFT data. (c) Screening performed on ML predicted dataset of 17955 perovskite compounds in terms of their stability, band gaps, and defect tolerance.	 
+	(1)
+Ef (vacq) = E(AB*X3 − vacq) − E(AB*X3) + μ + q (EF + Evbm) + Ecorr	(2)
+	(3)
+o = rB/rX	(4)
+	(5)
+τ = rX/rB − [1 − (rA/rB)/ln(rA/rB)]	(6)
+
+ 	Fig. 2  (a) Perovskite octahedral factor o, and (b) tetrahedral factor t calculated for every A–B–X combination. (c) PBE computed and (d) HSE computed decomposition energy (ΔHdecomp) plotted against the perovskite tetrahedral factor t for the entire DFT dataset. Symbol sizes are directly proportional to perovskite octahedral factor o. (e) PBE computed and (f) HSE computed decomposition energy (ΔHdecomp) plotted against the Bartel perovskite tetrahedral factor97τ for the entire DFT dataset. In (c)–(f), the shaded region represents compounds with low ΔHdecomp and suitable t or τ values.	 
+
+ 	Fig. 3  Heatmaps for properties of 90 pure ABX3 perovskites: (a) PBE computed ΔHdecomp, (b) PBE computed Egap, (a) HSE06 computed ΔHdecomp and (b) HSE06 computed Egap.	 
+
+ 	Fig. 4  Heatmaps for defect properties of 90 pure ABX3 perovskites: (a) equilibrium D.F.E. under medium halide chemical potential conditions, (b) VA (0/−1) charge transition level relative to VBM, (c) VX (+1/0) charge transition level relative to CBM, and equilibrium EF as a fraction of the PBE band gap at (d) halide rich, (e) medium halide, and (f) B-rich chemical potential conditions.	 
+
+ 	Fig. 5  A comparison between the PBE and HSE computed lattice constants (a), ΔHdecomp (b), ΔHmix (c), ΔHform (d) and Egap (e) for the DFT dataset of 229 compounds. PBE vs. HSE linear regression equations and R2 values are also pictured. Further, the computed optical absorption properties are shown as a refractive index vs. Figure of Merit (as a log value of the computed FOM in cm−1) plot in (f).	 
+
+ 	Fig. 6  Computed defect properties for the dataset of 229 perovskite compounds: equilibrium D.F.E. vs. EF (as fractions of Egap) plots are shown for (a) halide rich, (b) medium halide, and (c) B-rich chemical potential conditions. The shaded region represents materials that satisfy a relaxed defect tolerance condition. The VA (0/−1) and VX (+1/0) charge transition levels are plotted in (d), with respect to the VBM and CBM respectively, and the shaded region represents cases with defect levels < 0.5 eV from band edges while the remaining materials have deep vacancy defect levels.	 
+
+ 	Fig. 7  Neural network models trained for (a) PBE lattice constant, (b) PBE ΔHdecomp, (c) HSE06 lattice constant, and (d) HSE06 ΔHdecomp.	 
+
+ 	Fig. 8  Neural network models trained for (a) PBE Egap, (b) HSE06 Egap, (c) refractive index, and (d) PV figure of merit. The last two properties are computed at the PBE level of theory.	 
+
+ 	Fig. 9  Neural network models trained for (a) equilibrium D.F.E. and (b) equilibrium EF, both at medium halide chemical potential conditions, (c) VA (0/−1) charge transition level and (d) VX (+1/0) charge transition level, both in eV with respect to VBM. All defect properties are calculated at the PBE level of theory.	 
+
+PBE Lattice Constant	0.09 Å	0.10 Å
+HSE Lattice Constant	0.06 Å	0.06 Å
+ΔHdecomp (PBE)	0.05 eV	0.11 eV
+ΔHdecomp (HSE)	0.05 eV	0.09 eV
+
+E
+PBEgap
+	0.20 eV	0.22 eV
+
+E
+HSEgap
+	0.19 eV	0.24 eV
+Refractive Index (PBE)	0.04	0.05
+PV FOM (log10) (PBE)	0.14	0.18
+X-rich D.F.E. (PBE)	0.12 eV	0.23 eV
+X-rich EF (PBE)	0.06 eV	0.19 eV
+Medium-X D.F.E. (PBE)	0.18 eV	0.29 eV
+Medium-X EF (PBE)	0.11 eV	0.30 eV
+B-rich D.F.E. (PBE)	0.11 eV	0.30 eV
+B-rich EF (PBE)	0.11 eV	0.25 eV
+VA (0/−1) (PBE)	0.07 eV	0.11 eV
+VX (+1/0) (PBE)	0.19 eV	0.22 eV
+
+ 	Fig. 10  A visualization of the perovskite compositional space through the screening process, in terms of the fractions of each type of A, B and X atoms remaining in the set of compounds.	 
+
+ 	Fig. 11  Visualizing the compositional space of the screened (a) Rb, (b) Cs, (c) MA and (d) FA iodide and bromide perovskites. The size of each scatter point is proportional to the calculated figure of merit.	 
+
+CsCa0.125Ge0.75Sn0.125I3	0.09	0.06	0.95	1.60	5.35	mod. p-type
+CsCa0.125Ge0.875I3	0.12	0.08	1.04	1.66	5.35	intrinsic
+CsSr0.125Ge0.875I3	0.12	0.07	1.05	1.65	5.34	intrinsic
+CsBa0.125Ge0.875I3	0.15	0.06	1.05	1.63	5.35	mod. p-type
+CsSr0.125Ge0.75Sn0.125I3	0.10	0.06	1.00	1.62	5.34	mod. p-type
+RbGe0.75Pb0.25Br3	-0.04	-0.02	0.56	1.51	5.41	very p-type
+CsCa0.125Ge0.75Pb0.125I3	0.12	0.07	0.96	1.63	5.33	mod. p-type
+RbGe0.625Sn0.125Pb0.25Br3	-0.03	-0.03	0.57	1.48	5.40	very p-type
+MASnI3	0.35	0.00	0.87	2.47	5.51	very p-type
+MASn0.875Pb0.125I3	0.37	0.00	0.90	2.46	5.48	very p-type
+CsSr0.125Ge0.75Pb0.125I3	0.13	0.08	1.01	1.65	5.33	mod. p-type
+CsCa0.125Ge0.625Pb0.25I3	0.12	0.07	0.96	1.64	5.30	mod. p-type
+MASn0.75Pb0.25I3	0.39	0.00	0.94	2.46	5.47	very p-type
+MAGe0.125Sn0.75Pb0.125I3	0.41	0.04	0.88	2.46	5.48	very p-type
+MAGe0.125Sn0.875I3	0.40	0.05	0.86	2.47	5.49	very p-type
+FACa0.375Ba0.125Pb0.5I3	−0.43	−0.05	2.29	3.23	4.76	mod. n-type
+MACa0.25Ge0.25Pb0.5Br3	−0.04	0.13	2.07	3.35	4.74	mod. p-type
+FACa0.25Sr0.125Ba0.125Pb0.5I3	−0.44	−0.03	2.32	3.24	4.76	mod. n-type
+FACa0.25Sr0.25Pb0.5I3	−0.44	−0.02	2.31	3.24	4.75	mod. n-type
+MACa0.125Sr0.125Ge0.25Pb0.5Br3	−0.04	0.13	2.13	3.38	4.73	mod. p-type
+FACa0.125Sr0.25Ba0.125Pb0.5I3	−0.45	−0.02	2.37	3.26	4.76	mod. n-type
+FACa0.125Sr0.375Pb0.5I3	−0.44	−0.01	2.36	3.26	4.75	mod. n-type
+MACa0.25Sn0.125Pb0.625Br3	−0.07	0.06	2.23	3.47	4.74	mod. p-type
+MACa0.25Ge0.125Pb0.625Br3	−0.05	0.10	2.18	3.44	4.73	mod. p-type
+MACa0.125Sr0.125Ge0.125Pb0.625Br3	−0.05	0.09	2.25	3.48	4.72	mod. p-type
+
+ 	Fig. 12  PBE-computed electronic band structure, density of states, and anisotropic optical absorption spectra (also showing band gaps as vertical dotted lines) of three compounds selected from the screened list: (a) CsBa0.125Ge0.875I3, (b) MAPb0.125Sn0.75Ca0.125I3, and (c) FAPb0.75Ba0.25I3. All band structure and optical absorption plots are made using Sumo.94	 
+
+ 	Fig. 13  ML (HSE) predicted decomposition energies, mixing energies (with added entropic contribution) and band gaps of Pb–Sn (a–c) and Pb–Ba (d–f) binary ABX3 perovskites with A = Cs, MA or FA and X = I, Br or Cl, plotted as a function of Sn or Ba content.	 
+
+ 	Fig. 14  ML (PBE) predicted decomposition energies and band gaps compared with DFT computed values for out-of-sample data points, namely new A-site and X-site mixed compounds (orange), B-site mixing with new elements (blue), and alloys simulated in a 3 × 3 × 3 MAPbX3 supercell (green). RMSE values for the three sub-datasets are also shown.	 
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1ee02971a
+
+This journal is © The Royal Society of Chemistry 2022

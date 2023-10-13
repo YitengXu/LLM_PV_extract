@@ -1,0 +1,1486 @@
+Dye chemistry with time-dependent density functional theory  - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/C3CP55336A View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C3CP55336A
+(Perspective)
+Phys. Chem. Chem. Phys., 2014, 16, 14334-14356Dye chemistry with time-dependent density functional theory
+
+        
+          
+            Adèle D. 
+            Laurent
+          
+          
+        
+      a, 
+      
+        
+          
+            Carlo 
+            Adamo
+          
+          
+        
+      *bc and 
+
+        
+          
+            Denis 
+            Jacquemin
+          
+          
+        
+      *ac
+aChimie Et Interdisciplinarité, Synthèse, Analyse, Modélisation (CEISAM), UMR CNRS no. 6230, BP 92208, Université de Nantes, 2, Rue de la Houssinière, 44322 Nantes, Cedex 3, France. E-mail: denis.jacquemin@univ-nantes.fr
+bEcole Nationale Supérieure de Chimie de Paris, Laboratoire LECIME, UMR CNRS-ENSCP no. 7575, 11, rue Pierre et Marie Curie, F-75321 Paris Cedex 05, France. E-mail: carlo-adamo@chimie-paristech.fr
+cInstitut Universitaire de France, 103, blvd Saint-Michel, F-75005 Paris Cedex 05, France
+Received 
+      19th December 2013
+    , Accepted 30th January 2014First published on 30th January 2014AbstractIn this perspective, we present an overview of the determination of excited-state properties of “real-life” dyes, and notably of their optical absorption and emission spectra, performed during the last decade with time-dependent density functional theory (TD-DFT). We discuss the results obtained with both vertical and adiabatic (vibronic) approximations, choosing relevant examples for several series of dyes. These examples include reproducing absorption wavelengths of numerous families of coloured molecules, understanding the specific band shape of amino-anthraquinones, optimising the properties of dyes used in solar cells, mimicking the fluorescence wavelengths of fluorescent brighteners and BODIPY dyes, studying optically active biomolecules and photo-induced proton transfer, as well as improving the properties of photochromes.
+Adèle D. Laurent
+Adèle D. Laurent (born in 1985) received her PhD in 2010 under the supervision of Prof. Assfeld from the University of Nancy. Next she spent two months at the Polytechnic University of Catalonia (Prof. Aleman) before moving to the University of Southern California for a post-doctoral stay (Prof. Krylov). In October 2012 she obtained a permanent CNRS researcher position at the University of Nantes. Her work focusses on the modelling of photoprocesses in biomolecules and the development of hybrid methods.
+Carlo Adamo
+Carlo Adamo (born in 1963) obtained his PhD in Theoretical Chemistry from the University “Federico II” of Naples (1995). Between 1993 and 2000 he was Assistant Professor at the University of Basilicata (Italy). In 2000, he moved to ENSCP (France) as Associate Professor where he became Full Professor in Theoretical Chemistry in 2004. In 2011 he was admitted to the Institute Universitaire de France as a senior member. His main research interests concern the development of new DFT approaches and their application to various fields of chemistry, including those related to energy production.
+Denis Jacquemin
+Denis Jacquemin (born in 1974) obtained his PhD under the supervision of Prof. André from the University of Namur (1998). He next moved to the University of Florida for a post-doctoral stay with Prof. Öhrn in Quantum Theory Project. He came back to Europe, where he was appointed as research associate of the Belgian FNRS (2003) and next Professor at the University of Nantes in France (2010). He obtained an ERC starting grant (2011) and he is a junior member of the Institut Universitaire de France since 2012. His research is focused on modelling the electronically excited-states in dyes and photochromes.
+1 Introduction
+Dye chemistry is one of the key research domains that has stimulated the rapid development of chemical sciences in the late nineteenth century. Indeed, the economical interest to industrially produce large quantities of dyes dates back to that time. Amongst the earliest synthesis of coloured compounds, one could certainly point out the discovery of mauveine, the first artificial dye, by Perkin,1 as well as the work of von Baeyer devoted to indigo.2 Clearly, the original economic goal was to obtain dyes from synthesis rather than plant extraction. This was an astonishing success, e.g., the synthesis of alizarin (1,2-OH-9,10-anthraquinone), a red compound that was originally extracted from madder (Rubia tinctorum), rapidly led to the collapse of the madder market, and hence of the agricultural regions producing this plant. This fierce dye rush can also be illustrated by the fact that patents related to the synthesis of alizarin were filled within one day by English (Perkin) and German (Graebe and Liebermann) chemists. Relatively rapidly, the rational development of new (non-naturally known) dyes became the focus of many experimental investigations, and, consequently, the a priori predictions of the colour, or more specifically of the longest wavelength of maximal absorption (λmax), became a prized goal. Experimentally, dye design can be performed by synthesising a series of molecules with limited chemical variations, so as to identify the chromophore and to appraise the impact of various secondary groups (so-called auxochromes). During the sixties, this task was performed by Luttke and collaborators for indigo, and it allowed identification of the H-shaped indigoid chromophore, but it implied very intense experimental efforts.3–5 The first theoretical methods to predict λmax relied on tables listing empirical (and incremental) auxochromic effects, determined from known spectral measurements obtained for the most important classes of chromogens. A very good example of this approach was proposed by Labhart in 1957 for anthraquinones.6 However, such scheme is inherently limited because it cannot deal with unknown auxochromes or new chromophoric cores. The second widely popular approach was the ZINDO model (Zerner's Intermediate Neglect of Differential Overlap), a semi-empirical method specifically parameterized to reproduce UV/Vis signatures.7 ZINDO is very successful for several families of coloured molecules (e.g., methylene blue, coumarins, etc.)8,9 but can be rather poor for simple dyes (e.g., anthraquinones)10 and even fails miserably for indigo derivatives.11,12 Though ZINDO is an ultra-fast method on modern computer architectures, the obtained accuracy can hardly be crystal-balled, and some alternative semi-empirical approaches have been proposed to quickly reach more consistent estimates of the experimental λmax, although fine-tuning of the parameters is often required.13,14
+During the last three scores, the emergence of powerful ab initio methods allowed one to probe more accurately the electronically excited states of conjugated molecules. On top of the CIS (configuration interaction singles) method15 that delivers an accuracy for excited-states (ES) comparable to that of the Hartree–Fock (HF) method for the ground states (GS), that is, not very satisfying, one can split these ab initio approaches into two categories: wavefunction-based and density-based schemes. In the former category, one first finds the CAS-SCF (complete active space self-consistent field) approach,16 which has often been applied to investigate photochemical reactions, but is not the most suited scheme for accurately simulating the spectral signatures as the dynamical correlation is not accounted for. Next, one has a series of highly correlated schemes, e.g., CAS-PT2 (CAS second-order perturbation theory),17 MR-CI (multi-reference CI),18 EOM-CC (equation-of-motion coupled cluster),19,20 ADC (algebraic diagrammatic construction),21 SAC-CI (symmetry adapted cluster CI),22etc. and all these approaches generally yield accurate data particularly for the challenging doubly excited states and open-shell molecules but at a computational cost impeding applications on a large set of molecules due to unfavourable scaling.23 The most affordable method of the wavefunction series, CC2, can be used to model medium-sized compounds (ca. 50 atoms), but the obtained absolute accuracy remains a matter of debate in the literature, though it is recognised that CC2 restores the chemical trends very satisfactorily in most cases.24–34 The extension of the GS density functional theory (DFT) to the ES, time-dependent DFT (TD-DFT), has the advantage to be a formally exact theory,35 and Casida indeed provided an exact expression for calculating the excitation energies.36 Nevertheless, the vast majority of TD-DFT's applications require two approximations: on the one hand, the adiabatic approximation (that is considering frequency-independent exchange and correlation kernel, which induces a loss of memory effects) and, on the other hand, the choice of an adequate exchange–correlation functional.37 In the series of available methods used for ES simulations, we also wish to highlight the GW38,39 and the Bethe–Salpeter (BSE)40,41 Green's function many-body perturbation theories, which can be viewed as an extension of HF or DFT methods. GW and BSE have become increasingly popular in the chemical community during the last few years, and several convincing applications on both small and medium sized molecules appeared,42–47 though it is probably too early to assess the pros and cons of these two methods in the framework of dye chemistry. Indeed, up to now, the BSE method has provided an accuracy for organic dyes similar to the one obtained with carefully performed TD-DFT calculation.
+Despite the two above-mentioned limits, TD-DFT clearly remains the most applied theory for evaluating the spectral properties of medium and large dyes (ca. 1000 papers in 2013, one order of magnitude above CC2, for instance). This popularity can be traced back to (i) the simplicity of this single-reference method,48 which does not imply complex or system-dependent inputs; (ii) the speed of computation, chemicals with ca. 3000 basis functions can be treated routinely even when hybrid functionals are used,49 and even larger systems can be tackled if simplified schemes are applied;50 (iii) the availability of both analytic first (gradients)51–53 and second (Hessian) derivatives54,55 making the exploration of the ES potential energy surface (PES) possible on a systematic basis, consequently allowing one to efficiently model fluorescence spectra and vibronic couplings; (iv) the possibility to couple TD-DFT with a series of environmental models, applicable for solvents,56–61 biomolecules,62–65 cages,66,67 metals68 and solids69–71 (for specific discussion about environmental effects and TD-DFT, we redirect the reader to our 2011 PCCP perspective article).72 Altogether, these advances allow one to tackle complex chemical problems – though in an approximate way – and this includes modern dye chemistry challenges, e.g., designing compounds with large Stokes shifts through excited-state intramolecular proton transfer (ESIPT), enhancing the light harvesting character of dyes used in DSSC (dye-sensitised solar cells), producing white light emitting organic diodes, optimising the contrast in multiphotochromic molecules, finding new probes for pollutants, boosting the properties of fluorescent proteins and tuning the FRET (fluorescence resonance energy transfer).
+In this perspective, we do not intend to discuss the fundamentals of TD-DFT, a subject tackled in several excellent books, reviews, tutorials and perspectives previously,23,48,69,72–93 nor to present alternatives to the conventional TD-DFT model, e.g., spin-flip, dressed or constricted variational approaches,94–102 nor to propose the selection of appropriate exchange–correlation functionals, a subject that requires the analysis of large TD-DFT benchmarks, a topic recently reviewed by us.37 Indeed, our focus here will be set on the applications of the “standard” TD-DFT model to solve different aspects of dye chemistry problems. For this reason, this perspective is split in terms of chemical cases and their applications and is not divided by level of theories. Nevertheless, the next section provides a brief overview of the main approaches used.
+2 Methodological overview
+The comparison of experimental and theoretical absorption and emission spectra of real-life structures is not straightforward, as one should model not only the transition energy from the GS to a given ES, but also its probability (oscillator strength), and more importantly the overlap between the vibrational wavefunctions of the two electronic states. In that framework, one could state that the properties that allow meaningful comparisons between measurements and simulations are, on the one hand, the vibrationally resolved band shapes, and, on the other hand, the so-called 0–0 energies (E0–0, see Fig. 1). The former can be obtained from the computation of Franck–Condon (and/or Herzberg–Teller) factors – at least in the harmonic approximation103–111 – whereas it is admitted that the latter can be compared to the crossing point between absorption and fluorescence bands (AFCP).31,112,113E0–0 corresponds to the difference between ES and GS energies at their respective minima, corrected for zero-point vibrational energies (ZPVE): E0–0 = Eadia + ΔEZPVE(1) Eadia = EES(RES) − EGS(RGS)(2) ΔEZPVE = EZPVE(RES) − EZPVE(RGS)(3)Obviously, these two comparisons involve the determination of the ES vibrational frequencies, and are therefore costly in terms of computational resources. Indeed, in practice, it becomes almost technically impossible to compute ΔEZPVE for compounds containing more than 150 atoms using a full TD-DFT approach in gas phase or with implicit solvent. For this reason, and, due to the non-availability of analytical TD-DFT derivatives in widely available codes prior to ca. 2008, many studies have focussed on the vertical absorption energies, which do not require the exploration of the ES geometry, Evert-abso = EES(RGS) − EGS(RGS),(4)For large systems, there are no reliable vertical experimental data available, so that one is left with comparisons between theoretical Evert-abso and experimental λmax, which cannot be viewed as well-grounded. Despite this limitation that will certainly disappoint diehard theoreticians, such approximation might be useful for dye design, at least in a homologous series of structures. Indeed, one can often consider the geometric and vibrational relaxation as constant in such series, so that auxochromic shifts can be computed rapidly and efficiently within the vertical approximation.
+ Fig. 1  Simplified potential energy curve diagram representing only two singlet states free of intersections. Adapted with permission from D. Jacquemin, A. Planchat, C. Adamo and B. Mennucci, J. Chem. Theory Comput., 2012, 8, 2359–2372. Copyright 2012, American Chemical Society. 
+For fluorescence, one can of course limit the investigation to the vertical contribution, Evert-fluo = EES(RES) − EGS(RES)(5)but it nevertheless requires the optimisation of the ES structure, a task possible up to ca. 250 atoms.114 These calculations can be fast and allow estimation of the Stokes shift (ΔSS) by a simple difference with the vertical absorption data. This is efficient but completely neglects vibrational effects.
+Although most examples treated herein are related to organic dyes, it is certainly worth mentioning that for compounds containing heavy atoms, relativistic (spin–orbit) effects might significantly affect both absorption and emission spectra and should therefore be accounted for.115,116
+When the dye is embedded in an environment, it is important to determine how the medium is reacting to the change of electronic state of the chromophore. Irrespective of the environmental model, one often distinguishes the non-equilibrium and the equilibrium regimes. In the former, only the electrons of the surroundings do react to the change of the chromophore, the nuclei being frozen. This is adequate for fast phenomena (absorption and fluorescence). In the latter regime, a full relaxation (both electrons and nuclei) takes place, an approach adapted to optimise the geometry of the ES.117 Modelling the spectroscopic properties of dyes in a complex environment such as solvents, proteins, DNA or even membranes is of prime importance to compare theoretical results with experiment for “real-life” cases. Implicit models such as the polarisable continuum model (PCM) of Tomasi and coworkers,117 Truhlar's solvent models (SMx)118 and the three-dimensional reference interaction site model (3D-RISM)119,120 are widely used in the dye community for their great efficiency and ease of use. They can be applied to account for solvatochromic effects or even to crudely reproduce a protein medium. Actually, many results presented in this perspective rely on such implicit models which are also known to present two major drawbacks: (i) the specific interactions between the dye and its surroundings are (mostly) neglected; and (ii) the surrounding is considered to be uniform and isotropic. Therefore for some solvated dyes, e.g., when considering a protic solvent, solute–solvent proton transfers…, it is more valuable to account for explicit solvent molecules lying within the first solvation shell which are themselves embedded in an implicit model. In a more complex scale such as a probe into a protein/DNA matrix, it is obvious that both the absorption and emission of the chromophore are highly sensitive to the variation of its local environment. The heterogeneity therefore has to be modelled with careful attention as implicit models typically yield poor results. We however point out that a formulation of the IEF-PCM model has been developed to describe the heterogeneity of a lipid bilayer using a position dependent permittivity function.121 Nevertheless, for complex environments, reasonable and convenient schemes are hybrid quantum mechanics and molecular mechanics (QM/MM) methods. A large panel of schemes exist in the literature and they differ by the QM/MM cutting procedure and/or the selected MM method.122 Basically the chromophore and some of its nearest neighbour residues/molecules are described using TD-DFT and the rest of the system (cage, protein, enzyme, DNA…) is represented using a force field. While for a rather long time, only the mechanical and electrostatic embeddings were considered, many recent efforts have been directed towards the development of polarisable force field explicitly accounting for the polarisation embedding, i.e., when a chromophore absorbs light, the electronic response of the surrounding can be included. These QM/MM methods are now frequently used to model dyes embedded in a macromolecule. Of course, effects related to structural variations due to thermal disorder are also of importance and dynamical simulations are often a preliminary step.
+3 Colour chemistry
+Without doubts, the main application of dyes in terms of industrial impact remains the production of coloured materials, through absorption of the incoming photons and observation of the reflected or transmitted light. In this field, one generally classifies the molecules either by the dyeing process (vat, acid, direct, disperse, etc. dyes) or by chemical family.123–129 In Table 1, we have presented a series of theoretical vertical TD-DFT studies following this second classification. Our selection was made considering several factors, e.g., the industrial importance of the studied family, the number of molecules considered, the level of theory selected, etc. Of course, several general studies encompassing multiple series of chromophoric families are available as well.11,130–135 Note that the relatively small number of inorganic or metal-containing structures listed in Table 1 is the consequence of the dual difficulty to obtain a large set of consistent experimental measurements performed on closely related inorganic structures, and the challenge of analysing experimental spectra that often present overlapping bands, making the use of a convolution procedure a prerequisite.136 Consequently, most TD-DFT studies dealing with inorganic dyes treated a rather small number of chemically relevant cases, rather than a statistically significant number of dyes.137–143
+Table 1 Selected vertical TD-DFT studies performed on chromophores. We indicate the dye family, the nature of the ES considered and their number (Nb). Method indicates the functional and atomic basis set used in the TD-DFT part of the calculations. The mean absolute errors (MAE) are computed from a straightforward statistical comparison between Evert-abso and experimental λmax, and are given in eV
+
+
+
+
+Family
+Nature
+Nb
+Method
+MAE
+Ref.
+
+
+
+
+
+a Spin-flip TDA calculations.
+b Combining the data in these six publications.
+c Part of a large set of NIR dyes.
+
+
+
+
+
+Anthocyanine
+π → π*
+23
+B3P86/6-311+G(d,p)
+0.25
+
+144
+
+
+
+Anthraquinone
+π → π*
+66
+PBE0/6-31G(d,p)
+0.09
+
+145
+
+
+
+π → π*
+101
+PBE0/6-31G(d,p)
+0.10
+
+146
+
+
+
+π → π*
+8
+B3LYP/6-311++G(d,p)
+0.13
+
+147
+
+
+
+Aza-BODIPY
+Cyanine/charge-transfer
+8
+BMK/6-311+G(2d,p)
+0.18
+
+148
+
+
+
+Azobenzene
+n → π* and π → π*
+187
+CAM-B3LYP/6-311+G(d,p)
+0.10
+
+149
+
+
+
+n → π* and π → π*
+15
+PBE0/TZVP
+0.15
+
+150
+
+
+
+π → π*
+38
+B3LYP/cc-pVDZ
+0.18
+
+151
+
+
+
+Azoalkane
+n → π*
+24
+PBE0/6-311+G(d,p)
+0.06
+
+152
+
+
+
+Benzodifuranone
+π → π*/charge-transfer
+18
+M06-2X/6-311+G(2d,p)
+0.05
+
+153
+
+
+
+Benzylideneaniline
+π → π*
+68
+PBE0/6-311+G(2d,p)
+0.19
+
+154
+
+
+
+Coumarin
+π → π*
+127
+PBE0/6-311+G(2d,2p)
+0.18
+
+155
+
+
+
+Charge-transfer
+5
+B3LYP/6-31+G(d,p)
+0.24
+
+156
+
+
+
+Charge-transfer
+21
+PBE0/6-31+G(d,p)
+0.21
+
+157
+
+
+
+Croconate
+Mixed valence
+18
+B3LYP/6-311G(d,p)a
+0.12
+
+96
+
+
+
+Cyclohexanone/piperidone
+π → π*
+9
+B3LYP/6-31G
+0.09
+
+158
+
+
+
+Cyanine
+Cyanine
+9
+B3LYP/6-311G(d)
+0.31
+
+159
+
+
+
+Diazonium salt
+π → π*
+15
+PBE0/6-311G(2d,2p)
+0.07
+
+160
+
+
+
+Diphenylaniline
+π → π*/charge-transfer
+27
+PBE0/6-311++G(2d,p)
+0.06
+
+161
+
+
+
+Dithienylethene
+π → π*
+78
+Tuned-CAM-B3LYP/6-311G(d,p)
+0.03
+
+162
+
+
+
+π → π*
+329
+PBE0/6-311+G(2d,p)
+0.15
+
+163–168
+
+
+
+
+
+Epicocconone
+π → π*
+17
+B3LYP/6-31++G(d,p)
+0.30
+
+169
+
+
+
+Formazan
+π → π*
+10
+PBE0/6-311G(2d,2p)
+0.03
+
+170
+
+
+
+Fulgide
+π → π*
+22
+M06/6-311G(d,p)
+0.06
+
+171
+
+
+
+Hydrazone
+π → π*
+82
+PBE0/6-311+G(2d,p)
+0.12
+
+172
+
+
+
+Indigo
+π → π*
+86
+B3LYP/6-311+G(2d,p)
+0.02
+
+12
+
+
+
+Naphthoquinone
+π → π*
+69
+PBE0/6-311+G(2d,p)
+0.10
+
+173
+
+
+
+π → π*
+151
+PBE0/6-311+G(2d,p)
+0.11
+
+174
+
+
+
+1,8-Naphthalimide
+π → π*
+39
+PBE0/6-31+G(d)
+0.21
+
+175
+
+
+
+π → π*
+23
+PBE0/6-31+G(d)
+0.13
+
+176
+
+
+
+Nitroso
+n → π*
+22
+PBE0/6-311++G(3d,3p)
+0.05
+
+177
+
+
+
+
+N-methylmaleimide
+π → π*/charge-transfer
+20
+B3LYP/6-31+G(d,p)
+0.10
+
+178
+
+
+
+Organoboron-azole
+π → π*
+12
+B3LYP/6-311++G(d,p)
+0.15
+
+179
+
+
+
+Oxazine
+π → π*/cyanine
+10
+M06/6-311++G(d,p)
+0.08
+
+180
+
+
+
+Pechmann
+π → π*
+12
+BMK/DGDZVP
+0.12
+
+181
+
+
+
+π → π*
+6
+PBE0/DZVP
+0.17
+
+182
+
+
+
+Phthalocyanine
+π → π*
+6
+B3LYP/6-31G(d)
+0.11
+
+183
+
+
+
+π → π*
+10
+BP86/6-31G(d)
+0.13
+
+184
+
+
+
+Polyphenol (flavonoid)
+π → π*
+30
+B3P86/6-311+G(d,p)
+0.19
+
+185
+
+
+
+π → π*
+9
+B3LYP/6-31+G(d)
+0.10
+
+186
+
+
+
+Porphyrin (and related)
+π → π*
+7
+B3LYP/6-31G(d)
+0.07
+
+187
+
+
+
+π → π*
+11
+PBE0/6-31+G(d)
+0.25
+
+188
+
+
+
+π → π*
+20
+PBE0/6-31+G(d)
+0.23
+
+189
+
+
+
+Pyrene
+π → π*
+43
+B3LYP/cc-pVTZ
+0.22
+
+190
+
+
+
+Pyridylazulene
+n → π* and π → π*
+24
+PBE0/6-311++G(2d,2p)
+0.20
+
+191
+
+
+
+Ru/Os polypyridyl
+π → π*/charge-transfer
+10
+PBE0/6-31G(d)/CEP-121
+0.11
+
+192
+
+
+
+π → π*/charge-transfer
+6
+PBE0/LanL2DZ
+0.12
+
+193
+
+
+
+Spirooxazine (open isomer)
+Cyanine
+25
+TPSSh/6-311+G(2d,p)
+0.24
+
+194
+
+
+
+Squaraine
+Cyanine
+39
+BLYP/6-311G(d,p)
+0.14
+
+195
+
+
+
+Cyanine
+13
+PBE0/SVP
+0.31
+
+29
+
+
+
+Streptopolymethine
+Cyanine
+7
+BLYP/6-311+G(d,p)
+0.64
+
+134
+
+
+
+
+
+Thienopyrazine
+Charge-transfer
+21
+CAM-B3LYP/6-311+G(2d,p)
+0.12
+
+196
+
+
+
+Thiocarbonyl
+n → π*
+102
+B3LYP/6-311+G(2df,p)
+0.07
+
+197
+
+
+
+n → π* and π → π*
+29
+B3LYP/6-31+G(d)
+0.20
+
+198
+
+
+
+Thioindigo
+π → π*
+170
+PBE0/6-311+G(2d,p)
+0.03
+
+199
+
+
+
+Triazene
+π → π*
+5
+PBE0/6-311+G(2d,p)
+0.11
+
+200
+
+
+
+Triphenylamine (DSSC)
+Charge-transfer
+21
+BHandHLYP/6-311+G(2d,2p)
+0.28
+
+201
+
+
+
+Triphenylcarbocationic
+π → π*/cyanine
+45
+PBE0/6-311G(d,p)
+0.27
+
+202
+
+
+
+
+
+In terms of methodology, one notices in Table 1 a clear domination of B3LYP203,204 and PBE0205,206 calculations, and this is due to not only the early availability of these hybrid exchange–correlation functionals in many quantum chemical packages, but also their ability to produce reasonably accurate data in the vertical model.132,133 Nevertheless, if most of the errors reported in Table 1 are quite small (several below 0.1 eV), this should not be viewed as an empirical proof of the validity of the vertical TD-DFT approximation, but more as the illustration that a careful selection of a specific exchange–correlation functional can yield extremely satisfying estimates. Indeed, several of the listed studies implied an initial methodological assessment in order to pinpoint the most adequate functional/basis set combination. However, two types of problematic states emerge: on the one hand, charge-transfer (CT) transitions and the associated spurious excited-states, a well-identified difficulty11,207–212 that can be solved using range-separated hybrid functionals,30,213–228 and, on the other hand, cyanine derivatives, for which TD-DFT almost systematically produces too large transition energies, a topic discussed in the literature,229–236 but not yet fully mastered. In the following, we present a few specific classes of dyes to illustrate the typical “colour chemistry” analysis that can be made with the TD-DFT tool, with and beyond the vertical approach.
+3.1 Anthraquinones
+9,10-Anthraquinones are particularly versatile dyes,125,127,128 and vertical TD-DFT investigations have been performed.10,130,145–147,237–240 They indicated that conventional hybrid functionals, B3LYP and PBE0, provided accurate results. Indeed, for the 189 neutral derivatives of ref. 145, 146 and 240, the mean absolute error (MAE) is 0.10 eV irrespective of the use of B3LYP or PBE0. If one wishes to further refine the “raw” TD-DFT values, multiple linear regression can be a handy tool,81 (6)where the wavelengths are in nm and the vertical energies in eV. This equation yields a MAE of 0.08 eV and limits the number of large deviations (>0.15 eV) to less than 15%, therefore outperforming both B3LYP and PBE0 but at the price of two TD-DFT calculations for a single dye.81 Whilst such an approach allows a rapid estimation of the position of the absorption band of unknown anthraquinone, it cannot be considered as completely satisfying, as it gives no information on the experimental band shapes, and several hydroxy- and amino-anthraquinones are known to present multiple absorption peaks in the visible domain.125,241,242 These multiple maxima have been associated with several effects, including aggregation,243 tautomeric equilibrium244–246 and vibrational couplings.247 The actual origin has been fully resolved with TD-DFT for 1,4-NH2-9,10-anthraquinone (see representation in Fig. 2).248,249 The applied strategy was first to discard the tautomeric origin. Indeed, DFT clearly indicates that the equilibrium is strongly displaced on the keto-amine side, all possible enol-imine isomers being much less stable (ca. 0.5 eV), preventing their formation on the ground-state. On top of that, these non-canonical structures do not correspond to true minima of the ES PES, so that tautomers cannot be formed after absorption. It is nevertheless worth noting that this conclusion does not necessarily hold for anionic hydroxy-anthraquinones, for which specific tautomers may play a role in the observed spectrum.250 Secondly, the existence of dimers or larger clusters in solution was examined and it was found that these structures are too weakly bonded to significantly impact the measured spectra.248 Eventually, the computation of Franck–Condon factors at the ωB97X-D/6-31++G(d,p) level251 allowed the perfect reproduction of the measurement (see Fig. 2), confirming the vibronic origin of the band shape.248 Note that the use of a range-separated hybrid or a functional including a large share of exact exchange may be useful to avoid qualitatively incorrect description of the ES PES.111,112,252–254 As can be seen in Fig. 2, only a few individual vibrational modes significantly contribute to the topology of the observed spectrum. The first band can be attributed to the bending of the amino groups and the breathing of the aromatic ring bearing the two amines whereas the most intense maximum is related to stretching in the same ring and vibrations of the hydrogen atoms of the amines. This refines the original assumption of strong couplings with the C–N vibrational modes.247 In a subsequent investigation, we have shown that these vibronic effects have a significant impact on the perceived colour for other amino-substituted anthraquinones.249 This was made possible by transforming the computed absorption spectra into colorimetric coordinates.255,256 Indeed, a vertical calculation would predict a yellow hue for Solvent Blue 35 (SB35, 1,4-NHBu-9,10-anthraquinone), whereas it obviously appears blue experimentally. This is just one clear-cut illustration of the usefulness of the calculations of the ES Hessian that pave the way towards more complete (and often more accurate) spectral analysis.
+ Fig. 2  Comparisons between simulated (both stick and convoluted) and measured (top left panel) visible absorption spectra of 1,4-NH2-9,10-anthraquinone. Adapted with permission from D. Jacquemin, E. Brémond, A. Planchat, I. Ciofini and C. Adamo, J. Chem. Theory Comput., 2011, 7, 1882–1892. Copyright 2011, American Chemical Society. The top left panel is adapted with permission from M. S. Khan and Z. H. Khan, Spectrochim. Acta, Part A, 2003, 59, 1409–1426. Copyright 2003, Elsevier. 
+3.2 n → π* chromogens
+Most coloured molecules possess at least one strongly dipole-allowed low-lying ES, typically a valence π → π* or a metal-to-ligand charge-transfer ES for organic and inorganic molecules, respectively. However, there also exist n → π* chromogens, where the perceived colour finds its origin in a nearly dipole-forbidden ES. Of course, these ES can only play a significant role in the visible absorption when they are well separated from other ES on the energy scale. Three organic chromophores are known to present such feature: NN (diazo), NO (nitroso) and CS (thiocarbonyl).123 It has been shown that TD-DFT reasonably reproduces n → π* transition energies, even in the vertical approximation, irrespective of the applied exchange–correlation functional, provided a hybrid is selected.257 PBE0 results are shown in Fig. 3 for several series of dyes and the very satisfying correlation between measurements and TD-DFT predictions is obvious. Indeed, adding together the data set of ref. 152, 177, 197 and 258 one obtains a set of 169 n → π* transitions, characterised by a MAE of 19 nm (0.12 eV). For this panel, a simple linear regression leads to an R2 of 0.96, a correlation slope very close to 1 (0.985) and an intercept very close to 0 (−1.7 nm).
+ Fig. 3  Comparisons between experimental λmax and vertical absorption wavelengths computed with PBE0. Original data used various basis sets.152,177,197,258 All data are in nm. The central line indicates a perfect match between experiment and theory. 
+3.3 Cyanines
+The prototypical cyanine dyes (streptocyanines) are charged dyes constituted of a chain, containing an odd number of sp2 carbon atoms, that is capped at its extremities by amino groups. These relatively compact dyes present a sharp absorption band with a shoulder at higher energies, and develop extremely large extinction coefficients.124 Cyanines remain the focus of intense experimental developments, notably in the bioimaging field.259–261 As stated above, comparisons between TD-DFT Evert-abso and experimental λmax for cyanines lead to very disappointing results, that is large to huge theoretical overestimations of the transition energies are noticed,134,229,230 despite the apparent simplicity of the problem (indeed, the simple “electron in the box” approach is successful for mimicking the so-called “vinyl shift” of increasingly long cyanines).262 This methodological difficulty has been related, on the one hand, to the incomplete description of the electron correlation difference between the GS and the ES, and, on the other hand, to the fact that the measured λmax significantly deviates from verticality in simple cyanines.37,231–236 For the latter aspect, we redirect the reader to Section 4.2 for applications accounting for structural and vibrational relaxation effects in cyanine-related compounds.
+Despite this limitation, TD-DFT remains a useful tool in the cyanine field as chemical ranking is often preserved.159,263–272 For instance, Champagne and coworkers have demonstrated that the use of a simple linear correction of the TD-DFT energies allows one to calculate experimental λmax with a 10 nm (ca. 0.05 eV) accuracy for nine diverse cyanines, while the presence of the hallmark shoulder could be reproduced by applying vibronic corrections.159 Bertolino et al. successfully modelled solvatochromic effects in a series of cyanines using a TD-B3LYP approach,263 whereas Leszczynski's group found, with a similar protocol, that counterions may play a crucial role by significantly tuning the transition energies in the Cy5 dye.270 Eilmes performed similar studies for ketocyanines.271
+3.4 Charge transfer dyes
+As mentioned in the start of this section, one of the limitations of global hybrids is the modelling of intramolecular charge transfer states. Actually, intramolecular CT transitions that are formed when light absorption induces a “jump” of electronic charge from one part of the dye to another moiety are actively investigated, as they play a key role in light emitting diodes, photosynthesis and solar cells.273–281 Consequently, the accurate prediction of their spectral properties, that is at hand with range-separated hybrids, mobilised huge TD-DFT efforts, especially during the last few years.190,226–228,282–296 At the same time, several metrics have been designed to quantify the intensity of CT: (i) the Λ diagnostic of Tozer based on the overlap between occupied and virtual orbitals;222,223 (ii) the dCT distance of Le Bahers that measures the separation between the barycentres of density depletion and gain;297,298 and (iii) Guido et al.'s Δr that relies on the centroids of the orbitals involved in the excitation.299 Using the second model (see Fig. 4), we have shown that in rod like dyes presenting an electron donor (D) and an electron acceptor (A) separated by a π-linker (Π, see Fig. 5), the three components should be simultaneously optimised to maximise the CT, e.g., adding a very strong electroactive group at the extremity of a poor linker is useless.300
+ Fig. 4  Density difference plots (blue regions: decrease of electron density, red regions: increase of electron density) between the ES and GS for a typical D–Π–A dye. The green arrow indicates the CT vector, as computed from Le Bahers' method. Adapted with permission from I. Ciofini, T. Le Bahers, C. Adamo, F. Odobel, D. Jacquemin J. Phys. Chem. C, 2012, 116, 11946–11955. Copyright 2012, American Chemical Society. 
+ Fig. 5  Sketch of a CT dye adsorbed over a semiconductor surface. 
+Indeed, a particular application of charge transfer dyes is in the field of DSSC. These dyes are composed of a D–Π–A chromophore, the electron acceptor being located close to the surface (see Fig. 5). The two moieties can be separated by a linker and the electronic excitation is spatially directed toward the surface. Upon absorption of light, the dye molecules are excited in an ES that is normally higher in energy than the bottom edge of the semiconductor conduction band (CB) so that injection of electrons into the latter is thermodynamically favourable.139 This first basic requirement for DSSC applications can be found in several CT dyes301–304 and an in silico screening of the most-suitable dyes could be made by adequately adjusting the energetic levels involved, through ad hoc chemical modifications of the chromophore.305
+However, considering isolated dyes allows only a first screening of molecules used in devices, and a more throughout description is often required, a feat accessible with TD-DFT. Indeed the surface has a direct effect on the dye in polarising its electron density and an indirect one in modifying its 3D structure.71 Both effects not only modify the dye absorption spectrum but also rule the electron injection efficiency, thus affecting the global yield of the solar cell. Focusing on the electronic properties, the spectral modifications can be due to a simple energy shift of the involved orbitals, as in pyridinium dyes,306 or to a change of the orbital involved in the active electronic transitions.307 Therefore, these effects can be only analysed (and sometimes predicted) by a TD-DFT protocol taking into account the effect of the surface.
+4 Fluorophores
+Several key technological applications of dyes are not related to their absorption, but rather to their emission. It is therefore without surprise that a considerable effort has been put in the simulation of the fluorescence of experimentally emitting structures with TD-DFT, which is almost the only reliable theoretical tool available for such studies. Typical goals are to increase the Stokes shift, to redshift the emission, to improve the quantum yield (Φf, which often decreases with increasing wavelength), to optimise emission for the biological window, or even to create double emitters allowing one to produce white OLEDs. We review here several calculations performed on key classes of fluorophores.
+4.1 Coumarins and naphthalimides
+Pyranones and naphthalimides can be considered as the two most notable groups of organic fluorescent brighteners,126 the total world production of these substances exceeding 40000 tons per year.129 While pyranones may be divided into two subgroups (coumarins and chromones), three naphthalimide subclasses differing by the relative positions of the three aromatic rings exist: 1,2- 2,3- and 1,8-derivatives. Coumarin has been known since the nineteenth century for its specific flavour and was synthesised for the first time by Perkin in 1882. Besides their interest in pharmaceutical science (anticoagulants), coumarin derivatives are highly fluorescent molecules often absorbing UV photons to emit visible light. In addition, several coumarins exist in cationic and anionic forms, constituting pH-dependent fluorophores.308–310 1,8-Naphthalimides typically absorb in the 350–450 nm window and emit at significantly longer wavelengths (370–560 nm).311–314
+Due to their popularity and relatively small sizes, one can find numerous TD-DFT studies devoted to coumarins,315 especially in the framework of DSSC applications.156,226,283,285,316–319 In addition, these dyes are often used by the quantum chemistry community for assessing the validity of environmental models,58,60,282,320–324 as significant solvatochromic effects have been measured, especially in push–pull coumarins. In that framework, Improta, Santoro and Barone have been the first to demonstrate an impressive reproduction of band shapes for the solvated C153 coumarin,322 a success impossible to reach with gas phase calculations. Besides these rather methodological investigations often limited to a few compounds, there exist investigations tackling coumarin's fluorescence with TD-DFT for a large panel of derivatives.325–332 The most statistically significant coumarin set is probably in ref. 326. With a TD-PBE0 approach, the MAE obtained by comparing Evert-fluo to experimental λemi is 0.28 eV for 54 cases, the theory almost systematically undershooting the experimental wavelength. This error is however rather systematic and can be reduced to 0.07 eV by applying a simple linear regression correction.326 With the rather simple solvation model used in ref. 326, the ΔSS values were found to have ca. 25% error, but this discrepancy can be reduced when more refined solvation approaches are used.58,323,332 For instance, the ordering of the emission wavelengths of coumarin and its methyl derivatives was better reproduced with a state-specific PCM model than with the standard linear-response approach by Barone and coworkers.323
+For naphthalimides, and more specifically 1,8-naphthalimides, there are, to the best of our knowledge, less available TD-DFT studies,175,176,333–338 and only a few of these tackled emission signatures.176,333–336 For the 24 cases treated in ref. 176, the MAE obtained on the position of the emission band within the vertical approximation is as small as 0.16 eV, similar to the one reached for absorption in the same set (0.13 eV), but such accuracy can only be obtained when solvent effects are accounted for (the gas phase error is 0.25 eV on fluorescence energies). This means that TD-DFT can be used to analyse the emission spectra of molecules with implicit solvation models,335,336e.g., in ref. 335 the authors investigated the relative twisting of nitro and dialkylamino groups in both the ground and the excited states of several derivatives, and related their results to experimental spectral trends.
+4.2 BODIPY and related dyes
+Among the existing organic chromophores, boron-dipyrromethene (BODIPY) and related fluoroborate structures have been the centre of countless experimental studies during the last decade due to their exceptionally sharp and intense emission bands that constitute hallmarks of these constrained cyanines.339–347 In Fig. 6, typical cores of these fluoroborate structures are sketched, and one generally distinguishes them by their atomic sequence, that is, N–B–N, N–B–O and O–B–O fluorophores. In terms of TD-DFT simulations, one can find several TD-DFT Evert-abso computations on these structures148,348–363 but this of course does not grant access to the emission properties. During the last three years, several studies used TD-DFT gradients to model the ES geometrical relaxation and the Stokes shifts,113,364–373 but only a few additionally included ES Hessian calculations, giving access to E0–0.113,369–373
+ Fig. 6  Representation of typical fluoroborate dyes. From left to right: NBN (BODIPY with X = CH or aza-BODIPY with X = N), NBO and OBO cores. 
+By cumulating the M06-2X374E0–0 calculations performed in ref. 113, 370 and 371 we obtain a set of 102 fluoroborate dyes for which direct comparisons with the experimental absorption-fluorescence crossing point can be performed (see Fig. 7).375 In that figure, one notices that theory tends to overshoot the transition energies, but the chemical trends are very nicely reproduced, only one clear outlier (a push–pull N–B–O derivative) being detectable. For the full set, the obtained MAE is 0.17 eV and the corresponding R2 is 0.96, despite the disparity of the dyes that present both CT and cyanine ES natures. We underline that there are several examples of impressive reproduction of the band shapes of fluoroborate derivatives,113,370–373 and Fig. 8 provides just one striking illustration of a nearly perfect match between theory and experiment.
+ Fig. 7  Comparison between experimental AFCP and theoretical E0–0 energies for 9 aza-BODIPY (green triangles),370 68 BODIPY (red circles)113 and 25 NBO (blue squares)371 derivatives.375 The central line indicates a perfect match between theory and experiment. 
+ Fig. 8  Comparison between experimental (top left panel) and theoretical absorption spectra of two N–B–N fluorophores. Adapted with permission from S. Chibani, B. Le Guennic, A. Charaf-Eddin, A. D. Laurent and D. Jacquemin, Chem. Sci., 2013, 4, 1950–1963. Copyright 2013, Royal Society of Chemistry. The top left panel is reprinted with permission from Y. Zhou, Y. Xiao, D. Li, M. Fu and X. Qian, J. Org. Chem., 2008, 73, 1571–1574. Copyright 2008, American Chemical Society. 
+Given the previous examples, it is crystal clear that TD-DFT can be used for optimising the absorption and emission energies as well as for designing molecules with a redshifted emission. However, an extra important factor is the fluorescence quantum yield. To estimate Φf, one should not only rely on the determined oscillator strengths that provide incomplete information, but more properly estimate the presence of competitive deexcitation paths. For molecules that do not undergo photochemical processes, the vibrational relaxation can be estimated by computing the Huang–Rhys factors that are a by-product of vibronic calculations.376,377 Jin and coworkers have performed such kind of investigation for four anilido-pyridine fluoroborates.369 On top of helping to rationalise the relationship between ΔSS and geometrical constraints, they found that the smaller the Huang–Rhys factors, the larger the fluorescence rates, confirming that non-radiative decay can be estimated from TD-DFT calculations.369 We obtained also a similar reverse correlation between experimental fluorescence quantum yields and computed Huang–Rhys factors for meso-substituted BODIPY.113
+4.3 Photoacids and ESIPT
+There is a growing interest in fluorescent dyes presenting large structural changes in their ES, and the most exploited phenomenon is excited-state intramolecular proton transfer taking place in molecules presenting (at least) one strong internal hydrogen bond.378,379 In ESIPT dyes, the most stable isomer differs at the ground and excited states, as a consequence of the increase of the acidity of one proton. The prototypical case is an enol/keto tautomerism displaced to the enol side in the GS, but to the keto side in the ES. Such fluorophores generally present very large Stokes shift and can be used to design ratiometric sensors380–383 or to build devices presenting dual emission when the ES tautomeric equilibrium is not fully displaced to the keto isomer, allowing partial emission from the enol.384
+As this ESIPT reactivity is related to the variation of the acidity between the GS and the ES, the calculation of the pKa*, which can be performed with TD-DFT using a Born–Haber cycle,385,386 can provide the first key information. Indeed experimentally pKa* measurements are quite cumbersome. Photoacidity calculations have been performed for several families of dyes including coumarins,387,388 cyanonaphthols,389 green fluorescent protein chromophores,390 quinolines,391 seminaphthofluorones392 and stilbenes.389 It was generally noticed that, on the one hand, the calculations are rather sensitive to the exact details of the selected environmental model, and, on the other hand, an accuracy of 1–3 pKa units can be reached with hybrid exchange–correlation functionals.
+The modelling of ESIPT can be performed with single-reference approaches, and several convincing examples of TD-DFT simulations of ESIPT fluorophores can be found in the literature,329,393–414 but a significant portion of these reports deals with model dyes or compact biomolecules. One of the earliest studies confirming the validity of TD-DFT for predicting ESIPT reaction profiles was performed by Aquino and coworkers: they studied five molecules, obtained CC2 or CAS-PT2 reference values, and concluded that TD-DFT (B3LYP) is a valuable approach.395 Let us briefly present two recent applications. In ref. 409, the authors investigated salicylideneaniline derivatives and could rationalise the impact of the incoming photon energy on the dynamics of the process. Indeed, with a 370 nm light, only planar structures are excited, and the ESIPT is extremely rapid (50 fs), whereas with a 350 nm incoming beam, mostly twisted molecules were excited and a torsional relaxation has to take place before ESIPT, implying a slower process (see Fig. 9).409 Recently, Houari et al. explored the GS and ES PES of two large (ca. 60 atoms) hydroxyphenylbenzoxazole dyes, one presenting single keto emission and one displaying dual fluorescence.384,414 On the energy scale, they found a small ESIPT barrier for both dyes (0.06 and 0.12 eV), but this barrier disappears for the first structure when vibrational corrections are included, indicating a barrier-less transfer for that compound, in perfect match with experimental findings. For the dual-emissive fluorophore, vibronic simulations were performed and allowed estimation of the relative quantum yields of enol and keto emission by comparing theoretical and measured band shapes, which due to overlapping emission bands of the two tautomers could not be straightforwardly analysed by direct experimental means.384,414
+ Fig. 9  Qualitative representation of the S1 PES of N-salicylideneaniline inferred from both experiment and TD-DFT simulations. Reprinted with permission from T. Sekikawa, O. Schalk, G. Wu, A. E. Boguslavskiy and A. Stolow, J. Phys. Chem. A, 2013, 117, 2971–2979. Copyright 2013, American Chemical Society. 
+4.4 Biodyes
+The TD-DFT method has also been widely employed to describe absorption and emission spectra of biological systems which are of great interest in medical imaging, biology, neuroscience… In that vein, one often investigates the fluorescent emission at a specific frequency for which there is no significant background from the excitation light, a task possible because relatively few cellular components are naturally (intrinsically or auto) fluorescent. In addition, a protein or another component can be “labeled” with an extrinsic fluorophore, a fluorescent dye that can be a small molecule or a quantum dot. We describe below a few examples in that line of research.
+Many area of life science have been revolutionised by the discovery, gene cloning, and expression of the green fluorescent protein (GFP) and other fluorescent proteins that are photostable, present large quantum yield, are non-toxic415 and are characterised by an emission in the visible domain of the electromagnetic spectrum. Numerous TD-DFT studies have been performed in gas phase and in solution over the last two decades on well-defined FP chromophore models in order to understand and reproduce the experimental spectra416–422 but studies relying on more complex methods have also been performed to explore the reactivity of their chromophores and the structural changes from one protein to another (see also Section 5).423–428 Clearly one key challenge is to model how the spectral characteristics of fluorescent proteins are influenced by a structurally fluctuating surrounding. Let us point out two recent QM/MM studies performed with TD-DFT on the FPs. In the first,429 the impact of mutations on the enhanced cyan fluorescent protein spectra could only be reproduced accurately (ca. 10 nm/0.05 eV deviations) with a model accounting for the full electronic response of the surrounding (ERS).66,143,430–432 In that investigation, it was also demonstrated that the geometric deformation, electrostatic component and electronic contribution to the absorption of the chromophore differ significantly for each protein of the series: none can be neglected. In the second recent paper, Amat and Nifosi have investigated chromophore–protein interactions and optical properties using a TD-DFT QM/MM methodology on a very large set of FP derivatives encompassing YFP, Dronpa, mTFP0.7 and the S65T mutant of GFP.433 Overall, the authors found that CAM-B3LYP excitation energies are considerably blue-shifted (ca. 0.8 eV) with respect to the experimental values. Moreover, the shift within the different FPs is only partially reproduced by TD-DFT. Interestingly, it was found that CASPT2 values are also blue shifted with respect to experimental values and that only SAC-CI reasonably matches the measurements.433
+Human serum albumin (HSA) has been the subject of several QM/MM studies as this protein is abundant in human circulation and is the obligatory way for transporting and storing fatty acids, hormones, metals and, more interestingly, drugs. Using their own QM/MM method434–437 Assfeld's group modelled the absorption spectra of the tryptophan present in the HSA.431 The isolated tryptophan presents intense absorption bands at ca. 270 nm and 250 nm. The absorption spectrum of the chromophore extracted from HSA protein is very similar to that of solvated tryptophan indicating that no large structural modification has been undergone by tryptophan in HSA. The inclusion of electrostatic embedding induces a red-shift with two well-defined and intense maxima at 301 and 345 nm, whereas accounting for “implicit” polarisation using the ERS scheme yields a blue-shifted spectrum (297 and 333 nm).431 This indicates that the electrostatic contribution due to the surrounding is the prevailing effect (+60 nm) and that the polarisation component is small and has the opposite direction (ca. −12 nm). Aidas et al. proposed an investigation of the optical properties of two probes (acridine yellow and proflavin) embedded in different binding sites of HSA.438 They performed a preliminary molecular dynamics simulation to capture the fluctuations of the protein and computed the spectra on the basis of 80 snapshots performed using a polarisable force field for modelling the protein environment. As HSA is characterised by a multitude of binding sites, finding the most favourable site is an issue and Aida et al. investigated several sites (denoted BS1, BS2, heme-BS, see Fig. 10). The authors found no preferential site for acridine yellow, but concluded that the cationic proflavin probably binds to the BS2 site as this is the only site among the three sites that leads to a spectral shift in the line of the experiment (ca. −0.2 eV).438 The same group has made a lot of effort in this direction by performing calculations using the TD-DFT QM/MM method to obtain linear and nonlinear optical properties of the N-acetylaladanamide probe in a POPC membrane439 but also on the importance of accounting for the polarisation effect.440–442
+ Fig. 10  Domain structure of HSA. Coloured ligands indicate considered binding sites of HSA-BS1 (magenta), BS2 (mauve), and heme-BS (lime). Reprinted with permission from K. Aidas, J. M. H. Olsen, J. Kongsted and H. Agren, J. Phys. Chem. B, 2013, 117, 2069–2080. Copyright 2013, American Chemical Society. 
+Agren and coworkers used a protocol starting with Car–Parrinello molecular dynamics followed by TD-DFT QM/MM computations to address the structural and optical properties of the nile red solvatochromic probe in a β-lacto globulin enzyme.443 The excitation energies of nile red have been computed in the hydrophobic protein cavity, on the surface of the protein as well as in the bulk. Going from the hydrophobic cavity to the bulk, the geometrical changes induce a −33 nm displacement of the absorption maximum while the electrostatic embedding was evaluated to produce a +8/+22/+33 nm shift within the protein cavity/surface/bulk. Within the bulk the authors reported a large effect of the polarisation of the water molecules (+29 nm), but they logically stated that this effect becomes smaller in the hydrophobic pocket in which the probe is no more in close contact with its environment. Overall a +93 nm solvatochromic shift has been computed going from the bulk to the protein cavity and this fits the experimental value of +110 nm.443
+Metalloproteins, e.g., wild-type copper proteins444–448 and ferritins,449 have also been the focus of studies combining QM/MM and TD-DFT methodologies, and the same holds for chromophores embedded in DNA. For instance, Mennucci's group has studied the DAPI fluorescent probe (4′,6-diamidino-2-phenylindole), a well-recognised marker for DNA, intercalated at two different positions within the double stranded DNA (minor grove and binding pocket).450 Using TD-DFT coupled with PCM and/or MM, they observed that the complexation induced a reduced flexibility of DAPI. For the two sites, the qualitative agreement with experiment is remarkable for both absorption and emission spectra.450 Mennucci and collaborators compared QM and MM treatments of the DNA pocket. In the minor groove, the differences between both theoretical protocols are trifling whereas for the intercalated situation, the methodological effect is slightly larger, though it still does not modify the Stokes shift. In the same line, let us point out the investigations of thiazole orange451 and the polypyridyl ruthenium complex430,452 intercalated in DNA, both of which led to nice reproduction of the experimental trends.
+Recently single molecule fluorescence spectroscopy has become an attractive tool453 for studying the fundamental aspects of biomolecular interactions at the individual molecule scale but also for exploring excitation energy transfer and quantifying the separation between selected amino acid or nucleic acid residues.454 The use of Förster resonance energy transfer (FRET)455 to determine distances in biomolecular systems relies on the relationship between fluorescence intensity (or lifetime) and inter-dye separation. Indeed, the rate of energy transfer or efficiency of this dipole–dipole interaction is dependent on many factors such as the spectral overlap between the emission of the donor and the absorption of the acceptor, the distance between the donor and the acceptor, the relative orientations of transition dipoles (κ), the refractive index of the media, the donor quantum yield and the donor fluorescent lifetime in the excited state in the absence of the acceptor. In that framework, many groups have worked on the simulation of FRET with methods like the transition density cube method456,457 as well as improved approaches.458–465 There has been much debate on which dipole orientation value (κ2) should be assigned for particular FRET. If there is no crystal structure available, there is no reliable experimental method to obtain this factor, and an isotropic value is commonly used, considering rapidly rotating dipoles (〈κ〉2 = 2/3). However, by doing so, one assumes that the distance between the donor and the acceptor is uncorrelated with the orientation of the probes.466 Consequently, several theoretical studies have been dedicated to the evaluation of κ.65,467–471 In 2011 Speelman et al. established a strategy for generating the donor–acceptor electronic coupling using molecular dynamics trajectories. In this approach, electronic couplings have been calculated within the induced dipole approximation and the transition density cube method, using the computed transition dipole moments of the donor and the acceptor as well as their full transition densities. The two transition dipole moments are next mapped onto the trajectories. Therefore the κ and the distance between the donor and the acceptor are estimated. For more details, we redirect the interested reader to a recent perspective on the topic.472
+5 Photoswitches
+Of course, TD-DFT has also been used to investigate photochromes, that is molecules presenting two (or more) stable isomers, the conversion from one to the other being triggered by light absorption. Successful photochromes possess large reaction quantum yields, are highly stable and, importantly, present a strong contrast between the two forms, e.g., one form is coloured/conductive whereas the other is uncoloured/isolating.473,474 TD-DFT is clearly a method of choice to optimise such contrast, and such task has been performed for the absorption spectra of several series of switches, including diarylethenes,162–168,475 hemi-indigoids,476 spiro derivatives194,477–478 and fulgides171 (see Table 1). For instance, Nakano and coworkers have used a tuned CAM-B3LYP approach to obtain very accurate estimates of the λmax of dithienylethenes.162 In 2012, Fihey et al. analysed a panel of diarylethenes substituted by donor and acceptor groups using the B1B95 hybrid functional and evaluated the relationships between several chemically intuitive parameters (bond length alternation, HOMO–LUMO gap, aromaticity, etc.) and the predicted absorption spectra.475 They found that a large positive Hammet parameter (σR) allows one to optimise the contrast, that is to obtain large differences of absorption wavelengths between the open and closed isomers.475 In the same line, Castet, Champagne and coworkers have proposed, in a series of studies, to maximise the hyperpolarisability contrast between the two isomers of photochromes (notably spiro derivatives) with the help of theoretical schemes, including DFT and TD-DFT,479–485 and recently published a complete account of the topic.486 These authors have particularly focussed on the switches sensitive to the acidity or to the presence of cations in the environment, e.g., they designed a selective cation spiro-based sensor relying on nonlinear switching,485 but they have also investigated the impact of the enol/keto isomerism on the first hyperpolarisability response,484 as well as dihydroazulene/vinylheptafulvene photochromes.482 A similar investigation of non-linear optical properties of molecular switches has recently been performed by Scuseria's group for fulgides.487
+In optoelectronic devices, switches are generally attached to noble metal electrodes or nano-particles and should retain their photochromic properties after anchoring on the surface. It has been shown that the preservation of the cyclisation reaction depends on the nature of the spacer linking the molecule to the surface:488 for diarylethenes linked to a gold nanoparticle through a phenyl aromatic ring, the photochromic properties are preserved whereas adding a thiophene linker inhibits the ring-closure reaction. To access the properties of these systems, the strategy developed by Perrier and coworkers consists in modelling the surface by gold aggregates, Aun (n = 3, 13, 25), and computing the UV-Vis absorption spectrum using TD-DFT with a range-separated hybrid. This approach was shown to provide reliable information on the loss or preservation of the photochromic properties after immobilisation on a gold surface once the involved molecular orbitals are analysed.489,490
+For studying the actual photochromic mechanisms, the usual adiabatic approximation of TD-DFT is often unsuited. Indeed, it cannot be viewed as adequate for searching for conical intersections that often play a key role in effective switches. However, several loopholes have been designed to circumvent this limitation of TD-DFT.23,406,491,492 For instance, Masunov and coworkers have not only studied the ground-state properties of diarylethenes,493–495 but also used the a posteriori Tamm–Dancoff approximation (TDA) of TD-DFT to probe the shape of the potential energy surfaces of the two first excited states for these photochromes.496 Likewise, Olivucci and Truhlar et al. have shown that spin-flip TDA can be used to investigate the isomerisation of conjugated chains.497
+During the last three years, TD-DFT has also been applied to understand the activity of large multiphotochromic structures, especially those containing coupled diarylethene(s),49,498–512 that present specific experimental challenges compared to single photochromes, including a larger rate of side reactions leading to photoinactive products and a smaller efficiency of the cyclisation reactions than in the “isolated” monomers.513–529 Due to the size of these molecules (some have several hundreds of atoms), only qualitative investigations are possible. The generally applied protocol is to use TD-DFT to probe the nature of the excited-states so as to determine if a Franck–Condon excitation at a particular wavelength is able to induce an electronic reorganisation triggering photochromism on a given site. We redirect the interested readers to a recent account on the topic.509
+Several biological systems possess a photoswitchable character such as for derivatives of fluorescent proteins (Dronpa, IrisFP, DsRed, EosFP, AsFP595…), the photoactivable yellow protein (PYP), rhodopsins, etc. Although a wide panel of theoretical studies have been performed on biological photochromes, it is known that conventional TD-DFT is not the most convenient approach, as in many cases, excited states presenting a doubly excited nature play a key role. For this reason, most studies rely on CAS or EOM-CC approaches,530–538 and the same holds for the rapidly growing field of bioluminescence.539–541 There are nevertheless available TD-DFT studies. In 2006, Nemukhin et al. thoroughly investigated the chromophore of the fluorescent protein asFP595 in gas phase and in different solvents for various protonation states of both the cis and trans isomers.542 Vallverdu and coworkers have performed molecular dynamics simulation at two different pH on Cerulean green fluorescent protein (a variant of enhanced cyan fluorescent protein (ECFP)) in order to tackle open experimental questions. They have rationalised that the blue shift observed when increasing the pH is due to a trans-to-cis isomerisation.543 Kongsted's team have found a negligible shift of the lowest-lying bright electronic excitation of the deprotonated p-coumaric acid (pCA−) within the PYP and explained this surprising outcome as the result of a subtle balance between hypsochromic and bathochromic effects.544 More specifically, it was found that the change in the excitation energy related to the disruption of the planarity of pCA− inside PYP is nearly canceled by the shift induced by the intermolecular interactions between the chromophore and the protein.544
+6 Summary
+Since antiquity, dyes have an attractive effect on human beings, either for their colour or, in the more recent modern age, for their chemistry. The possibility to control their electronic structure, through ad hoc modifications of the chemical skeleton, and to tune the associated optical properties, giving colour shades, is not only an example of how chemistry is related to beauty, but also of the crossing point between science and technology. Indeed dye chemistry opens the way to a number of technological and industrial applications, from textile to organic electronics and renewable energies.
+In this context, computational chemistry brings its contribution with models and methods able to describe all the subtle phenomena ruling the excited state properties of “real-life” dyes. In particular, time-dependent density functional theory emerged in the last decade as one of the most reliable (and easy-to-use) approaches allowing the determination of all the energetic quantities involved in light-molecule interactions. These include not only vertical absorption and emission phenomena but also adiabatic energies and 0–0 excitations. If other methods could be sometimes (and for some molecules) more precise, they are not generally applicable, due to their unfavourable computer-power scaling or the difficulty in handling all non-electronic effects. This is even more true since TD-DFT methods can be easily coupled with models describing complex chemical environments (solvent, molecular cage, surfaces) which tune the electronic properties of the dyes, and are consequently vital when aiming at modelling “real” dye in “real” devices. Finally it should be mentioned that beyond their intrinsic properties, photoswitches and photoacids represent reactive systems, and they thus show how TD-DFT methods could be applied to systems far from energy minima.
+Acknowledgements
+The authors acknowledge Y. Houari (Nantes) and A. Perrier (Paris) for their kind help. D.J. acknowledges the European Research Council (ERC) and the Région des Pays de la Loire for financial support in the framework of a Starting Grant (Marches – 278845) and a recrutement sur poste stratégique, respectively. The COST-CMTS Action CM1002: COnvergent Distributed Environment for Computational Spectroscopy (CODECS) and its members are acknowledged.
+References
+W. H. Perkin, J. Chem. Soc., Trans., 1879, 35, 717–732 RSC .
+A. Baeyer and V. Drewson, Ber. Dtsch. Phys. Ges., 1882, 15, 2856–2864 CrossRef .
+M. Klessinger and W. Lüttke, Chem. Ber., 1966, 99, 2136–2145 CrossRef CAS .
+H. Hermann and W. Lüttke, Chem. Ber., 1971, 104, 492–512 CrossRef CAS .
+R. Hasenkamp, U. Luhmann and W. Lüttke, Chem. Ber., 1980, 113, 1708–1722 CrossRef CAS .
+H. Labhart, Helv. Chim. Acta, 1957, 40, 1410–1421 CrossRef CAS .
+J. E. Ridley and M. Zerner, Theor. Chim. Acta, 1973, 32, 111–134 CrossRef CAS .
+M. Caricato, B. Mennucci and J. Tomasi, J. Phys. Chem. A, 2004, 108, 6248–6256 CrossRef CAS .
+M. Caricato, B. Mennucci and J. Tomasi, Mol. Phys., 2006, 104, 875–887 CrossRef CAS .
+D. Jacquemin, X. Assfeld, J. Preat and E. A. Perpète, Mol. Phys., 2007, 105, 325–331 CrossRef CAS .
+J. Fabian, Theor. Chem. Acc., 2001, 106, 199–217 CrossRef CAS .
+D. Jacquemin, J. Preat, V. Wathelet and E. A. Perpète, J. Chem. Phys., 2006, 124, 074104 CrossRef PubMed .
+M. Matsuura, H. Sato, W. Sotoyama, A. Takahashi and M. Sakurai, THEOCHEM, 2008, 860, 119–127 CrossRef .
+M. R. Silva-Junior and W. Thiel, J. Chem. Theory Comput., 2010, 6, 1546–1564 CrossRef CAS .
+J. B. Foresman, M. Head-Gordon, J. A. Pople and M. J. Frisch, J. Phys. Chem., 1992, 96, 135–149 CrossRef CAS .
+D. Hegarty and M. A. Robb, Mol. Phys., 1979, 38, 1795–1812 CrossRef CAS .
+K. Andersson, P. Malmqvist and B. O. Roos, J. Chem. Phys., 1992, 96, 1218–1226 CrossRef CAS .
+R. J. Buenker and S. D. Peyerimh, Theor. Chim. Acta, 1968, 12, 183–199 CrossRef CAS .
+J. F. Stanton and R. J. Bartlett, J. Chem. Phys., 1993, 98, 7029–7039 CrossRef CAS .
+M. Kállay and J. Gauss, J. Chem. Phys., 2004, 121, 9257–9269 CrossRef PubMed .
+J. Schirmer and A. B. Trofimov, J. Chem. Phys., 2004, 120, 11449–11464 CrossRef CAS PubMed .
+H. Nakatsuji and M. Ehara, J. Chem. Phys., 1993, 98, 7179–7184 CrossRef CAS .
+L. González, D. Escudero and L. Serrano-Andrès, ChemPhysChem, 2012, 13, 28–51 CrossRef PubMed .
+E. Fabiano, F. Della Sala, G. Barbarella, S. Lattante, M. Anni, G. Sotgiu, C. Hättig, R. Cingolani and G. Gigli, J. Phys. Chem. B, 2006, 110, 18651–18660 CrossRef CAS PubMed .
+E. Fabiano, F. Della Sala, G. Barbarella, S. Lattante, M. Anni, G. Sotgiu, C. Hättig, R. Cingolani and G. Gigli, J. Phys. Chem. B, 2006, 111, 490 Search PubMed .
+M. Schreiber, M. R. Silva-Junior, S. P. A. Sauer and W. Thiel, J. Chem. Phys., 2008, 128, 134110 CrossRef PubMed .
+A. Hellweg, S. A. Grün and C. Hättig, Phys. Chem. Chem. Phys., 2008, 10, 4119–4127 RSC .
+M. Piacenza, M. Zambianchi, G. Barbarella, G. Gigli and F. Della Sala, Phys. Chem. Chem. Phys., 2008, 10, 5363–5373 RSC .
+A. D. Quartarolo, E. Sicilia and N. Russo, J. Chem. Theory Comput., 2009, 5, 1849–1857 CrossRef CAS .
+B. M. Wong, M. Piacenza and F. Della Sala, Phys. Chem. Chem. Phys., 2009, 11, 4498–4508 RSC .
+L. Goerigk and S. Grimme, J. Chem. Phys., 2010, 132, 184103 CrossRef .
+M. R. Silva-Junior, S. P. A. Sauer, M. Schreiber and W. Thiel, Mol. Phys., 2010, 108, 453–465 CrossRef CAS .
+A. D. Quartarolo and N. Russo, J. Chem. Theory Comput., 2011, 7, 1073–1081 CrossRef CAS .
+N. O. C. Winter, N. K. Graf, S. Leutwyler and C. Hattig, Phys. Chem. Chem. Phys., 2013, 15, 6623–6630 RSC .
+E. Runge and E. K. U. Gross, Phys. Rev. Lett., 1984, 52, 997–1000 CrossRef CAS .
+
+          M. E. Casida, in Time-Dependent Density-Functional Response Theory for Molecules, ed. D. P. Chong, World Scientific, Singapore,  1995, vol. 1, pp. 155–192 Search PubMed .
+A. D. Laurent and D. Jacquemin, Int. J. Quantum Chem., 2013, 113, 2019–2039 CrossRef CAS .
+F. Aryasetiawan and O. Gunnarsson, Rep. Prog. Phys., 1998, 61, 237 CrossRef CAS .
+
+          W. G. Aulbur, L. Jönsson and J. W. Wilkins, in Solid State Physics, ed. H. Ehrenreich and F. Spaepen, Academic Press,  1999, vol. 54, pp. 1–218 Search PubMed .
+L. J. Sham and T. M. Rice, Phys. Rev., 1966, 144, 708–714 CrossRef CAS .
+S. Albrecht, L. Reining, R. Del Sole and G. Onida, Phys. Rev. Lett., 1998, 80, 4510–4513 CrossRef CAS .
+X. Blase and C. Attaccalite, Appl. Phys. Lett., 2011, 99, 171909 CrossRef .
+I. Duchemin, T. Deutsch and X. Blase, Phys. Rev. Lett., 2012, 109, 167801 CrossRef CAS PubMed .
+C. Faber, I. Duchemin, T. Deutsch and X. Blase, Phys. Rev. B: Condens. Matter Mater. Phys., 2012, 86, 155315 CrossRef .
+B. Baumeier, D. Andrienko, Y. Ma and M. Rohlfing, J. Chem. Theory Comput., 2012, 8, 997–1002 CrossRef CAS .
+M. J. van Setten, F. Weigend and F. Evers, J. Chem. Theory Comput., 2013, 9, 232–246 CrossRef CAS .
+F. Bruneval and M. A. L. Marques, J. Chem. Theory Comput., 2013, 9, 324–329 CrossRef CAS .
+A. Dreuw and M. Head-Gordon, Chem. Rev., 2005, 105, 4009–4037 CrossRef CAS PubMed .
+L. Ordronneau, V. Aubert, V. Guerchais, A. Boucekkine, H. Le Bozec, A. Singh, I. Ledoux and D. Jacquemin, Chem.–Eur. J., 2013, 19, 5845–5849 CrossRef CAS PubMed .
+S. Grimme, J. Chem. Phys., 2013, 138, 244104 CrossRef PubMed .
+C. van Caillie and R. D. Amos, Chem. Phys. Lett., 1999, 308, 249–255 CrossRef CAS .
+F. Furche and R. Ahlrichs, J. Chem. Phys., 2002, 117, 7433–7447 CrossRef CAS .
+G. Scalmani, M. J. Frisch, B. Mennucci, J. Tomasi, R. Cammi and V. Barone, J. Chem. Phys., 2006, 124, 094107 CrossRef PubMed .
+F. Liu, Z. Gan, Y. Shao, C. P. Hsu, A. Dreuw, M. Head-Gordon, B. T. Miller, B. R. Brooks, J. G. Yu, T. R. Furlani and J. Kong, Mol. Phys., 2010, 108, 2791–2800 CrossRef CAS .
+J. Liu and W. Z. Liang, J. Chem. Phys., 2011, 135, 184111 CrossRef PubMed .
+M. Cossi and V. Barone, J. Chem. Phys., 2001, 115, 4708–4717 CrossRef CAS .
+M. Caricato, B. Mennucci, J. Tomasi, F. Ingrosso, R. Cammi, S. Corni and G. Scalmani, J. Chem. Phys., 2006, 124, 124520 CrossRef PubMed .
+R. Improta, V. Barone, G. Scalmani and M. J. Frisch, J. Chem. Phys., 2006, 125, 054103 CrossRef PubMed .
+B. Mennucci, C. Cappelli, C. A. Guido, R. Cammi and J. Tomasi, J. Phys. Chem. A, 2009, 113, 3009–3020 CrossRef CAS PubMed .
+A. V. Marenich, C. J. Cramer, D. G. Truhlar, C. G. Guido, B. Mennucci, G. Scalmani and M. J. Frisch, Chem. Sci., 2011, 2, 2143–2161 RSC .
+X. Zhou, J. Kaminsky and T. A. Wesolowski, Phys. Chem. Chem. Phys., 2011, 13, 10565–10576 RSC .
+D. Riccardi, P. Schaefer, Y. Yang, H. Yu, N. Ghosh, X. Prat-Resina, P. Konig, G. Li, D. Xu, H. Guo, M. Elstner and Q. Cui, J. Phys. Chem. B, 2006, 110, 6458–6469 CrossRef CAS PubMed .
+M. Wanko, M. Hoffmann, J. Frähmcke, T. Frauenheim and M. Elstner, J. Phys. Chem. B, 2008, 112, 11468–11478 CrossRef CAS PubMed .
+C. Konig and J. Neugebauer, Phys. Chem. Chem. Phys., 2011, 13, 10475–10490 RSC .
+C. Curutchet, J. Kongsted, A. Munoz-Losa, H. Hossein-Nejad, G. D. Scholes and B. Mennucci, J. Am. Chem. Soc., 2011, 133, 3078–3084 CrossRef CAS PubMed .
+D. Jacquemin, E. A. Perpète, A. D. Laurent, X. Assfeld and C. Adamo, Phys. Chem. Chem. Phys., 2009, 11, 1258–1262 RSC .
+G. Garca, I. Ciofini, M. Fernández-Gómez and C. Adamo, J. Phys. Chem. Lett., 2013, 4, 1239–1243 CrossRef PubMed .
+A. Sanchez-Gonzalez, S. Corni and B. Mennucci, J. Phys. Chem. C, 2011, 115, 5450–5460 CAS .
+G. Onida, L. Reining and A. Rubio, Rev. Mod. Phys., 2002, 74, 601–659 CrossRef CAS .
+A. Tilocca and E. Fois, J. Phys. Chem. C, 2009, 113, 8683–8687 CAS .
+F. Labat, T. Le Bahers, I. Ciofini and C. Adamo, Acc. Chem. Res., 2012, 45, 1268–1277 CrossRef CAS PubMed .
+D. Jacquemin, B. Mennucci and C. Adamo, Phys. Chem. Chem. Phys., 2011, 13, 16987–16998 RSC .
+J. R. Chelikowsky, L. Kronik and I. Vasiliev, J. Phys.: Condens. Matter, 2003, 15, R1517–R1547 CrossRef CAS .
+A. Rosa, D. Riccardi, O. V. Gritsenko and E. J. Baerends, Struct. Bonding, 2004, 112, 49–116 CrossRef CAS .
+J. P. Perdew, A. Ruzsinsky, J. Tao, V. N. Staroverov, G. E. Scuseria and G. I. Csonka, J. Chem. Phys., 2005, 123, 062201 CrossRef PubMed .
+K. Burke, J. Werschnik and E. K. U. Gross, J. Chem. Phys., 2005, 123, 062206 CrossRef PubMed .
+
+Time-Dependent Density Functional Theory, ed. M. A. L. Marques, C. A. Ullrich, F. Nogueira, A. Rubio, K. Burke and E. K. U. Gross, Springer-Verlag, Heidelberg,  2006, vol. 706, p. 591 Search PubMed .
+V. Barone and A. Polimeno, Chem. Soc. Rev., 2007, 36, 1724–1731 RSC .
+V. Barone, R. Improta and N. Rega, Acc. Chem. Res., 2008, 41, 605–616 CrossRef CAS PubMed .
+F. Neese, Coord. Chem. Rev., 2009, 253, 526–563 CrossRef CAS .
+D. Jacquemin, E. A. Perpète, I. Ciofini and C. Adamo, Acc. Chem. Res., 2009, 42, 326–334 CrossRef CAS PubMed .
+M. E. Casida, THEOCHEM, 2009, 914, 3–18 CrossRef CAS .
+M. E. Casida, D. Jacquemin and H. Chermette, THEOCHEM, 2009, 914, 1–2 CrossRef CAS .
+A. Rubio and A. Marquez, Phys. Chem. Chem. Phys., 2009, 11, 4436 RSC .
+M. A. L. Marques and A. Rubio, Phys. Chem. Chem. Phys., 2009, 11, 4436 RSC .
+M. van Faasen and K. Burke, Phys. Chem. Chem. Phys., 2009, 11, 4437–4450 RSC .
+N. A. Besley and F. A. Asmuruf, Phys. Chem. Chem. Phys., 2010, 12, 12024–12039 RSC .
+R. Baer, E. Livshits and U. Salzner, Annu. Rev. Phys. Chem., 2010, 61, 85–109 CrossRef CAS PubMed .
+R. Baer, L. Kronik and S. Kümmel, Chem. Phys., 2011, 391, 1–176 CrossRef .
+
+Fundamentals of Time-Dependent Density Functional Theory, ed. M. A. L. Marques, F. M. S. Nogueira, E. K. U. Gross and A. Rubio, Springer-Verlag, Heidelberg,  2012, vol. 837, p. 592 Search PubMed .
+
+          C. Ullrich, Time-Dependent Density-Functional Theory: Concepts and Applications, Oxford University Press, New York,  2012 Search PubMed .
+M. E. Casida and M. Huix-Rotllant, Annu. Rev. Phys. Chem., 2012, 63, 287–323 CrossRef CAS PubMed .
+C. Adamo and D. Jacquemin, Chem. Soc. Rev., 2013, 42, 845–856 RSC .
+Y. Shao, M. Head-Gordon and A. I. Krylov, J. Chem. Phys., 2003, 118, 4807–4818 CrossRef CAS .
+R. J. Cave, F. Zhang, N. T. Maitra and K. Burke, Chem. Phys. Lett., 2004, 389, 39–42 CrossRef CAS .
+A. Thomas, K. Srinivas, C. Prabhakar, K. Bhanuprakash and V. J. Rao, Chem. Phys. Lett., 2008, 454, 36–41 CrossRef CAS .
+M. Huix-Rotllant, A. Ipatov, A. Rubio and M. E. Casida, Chem. Phys., 2011, 391, 120–129 CrossRef CAS .
+K. Yang, R. Peverati, D. G. Truhlar and R. Valero, J. Chem. Phys., 2011, 135, 044118 CrossRef PubMed .
+Y. A. Bernard, Y. Shao and A. I. Krylov, J. Chem. Phys., 2012, 136, 204103 CrossRef PubMed .
+Z. Li and W. Liu, J. Chem. Phys., 2012, 136, 024107 CrossRef PubMed .
+T. Ziegler, M. Krykunov and J. Cullen, J. Chem. Phys., 2012, 136, 124107 CrossRef PubMed .
+M. P. Shandura, V. P. Yakubovskyi and Y. P. Kovtun, Org. Biomol. Chem., 2013, 11, 835–841 CAS .
+M. Dierksen and S. Grimme, J. Phys. Chem. A, 2004, 108, 10225–10237 CrossRef CAS .
+R. Fortrie and H. Chermette, J. Chem. Theory Comput., 2007, 3, 852–859 CrossRef CAS .
+F. Santoro, A. Lami, R. Improta, J. Bloino and V. Barone, J. Chem. Phys., 2008, 128, 224311 CrossRef PubMed .
+J. Guthmuller, F. Zutterman and B. Champagne, J. Chem. Theory Comput., 2008, 4, 2094–2100 CrossRef CAS .
+R. Improta, F. Santoro, V. Barone and A. Lami, J. Phys. Chem. A, 2009, 113, 15346–15354 CrossRef CAS PubMed .
+B. Klaumuenzer, D. Kroener and P. Saalfrank, J. Phys. Chem. B, 2010, 114, 10826–10834 CrossRef PubMed .
+G. V. Lopez, C.-H. Chang, P. M. Johnson, G. E. Hall, T. J. Sears, B. Markiewicz, M. Milan and A. Teslja, J. Phys. Chem. A, 2012, 116, 6750–6758 CrossRef CAS PubMed .
+B. Nebgen, F. L. Emmert, III and L. V. Slipchenko, J. Chem. Phys., 2012, 137, 084112 CrossRef PubMed .
+A. Charaf-Eddin, A. Planchat, B. Mennucci, C. Adamo and D. Jacquemin, J. Chem. Theory Comput., 2013, 9, 2749–2760 CrossRef CAS .
+D. Jacquemin, A. Planchat, C. Adamo and B. Mennucci, J. Chem. Theory Comput., 2012, 8, 2359–2372 CrossRef CAS .
+S. Chibani, B. Le Guennic, A. Charaf-Eddin, A. D. Laurent and D. Jacquemin, Chem. Sci., 2013, 4, 1950–1963 RSC .
+Let us also point out that studies coupling TD-DFT to molecular mechanics have still an hard time in treating the optimization of the QM part in its excited-state.
+I. Alperovich, G. Smolentsev, D. Moonshiram, J. W. Jurss, J. J. Concepcion, T. J. Meyer, A. Soldatov and Y. Pushkar, J. Am. Chem. Soc., 2011, 133, 15786–15794 CrossRef CAS PubMed .
+A. R. G. Smith, M. J. Riley, P. L. Burn, I. R. Gentle, S.-C. Lo and B. J. Powell, Inorg. Chem., 2012, 51, 2821–2831 CrossRef CAS PubMed .
+J. Tomasi, B. Mennucci and R. Cammi, Chem. Rev., 2005, 105, 2999–3094 CrossRef CAS PubMed .
+C. J. Cramer and D. G. Truhlar, Acc. Chem. Res., 2008, 41, 760–768 CrossRef CAS PubMed .
+A. Kovalenko and F. Hirata, J. Chem. Phys., 1999, 110, 10095 CrossRef CAS .
+A. Kovalenko and F. Hirata, J. Chem. Phys., 2000, 112, 10391 CrossRef CAS .
+G. Parisio, A. Marini, A. Biancardi, A. Ferrarini and B. Mennucci, J. Phys. Chem. B, 2011, 115, 9980–9989 CrossRef CAS PubMed .
+H. M. Senn and W. Thiel, Angew. Chem., Int. Ed., 2009, 48, 1198–1229 CrossRef CAS PubMed .
+
+          J. Griffiths, Colour and Constitution of Organic Molecules, Academic Press, London,  1976 Search PubMed .
+
+          J. Fabian and H. Hartmann, Reactivity and Structure Concepts in Organic Chemistry, Light Absorption of Organic Colorants, Springer-Verlag, Berlin,  1980, vol. 12 Search PubMed .
+
+          F. J. Green, The Sigma-Aldrich Handbook of Stains, Dyes and Indicators, Aldrich Chemical Company, Inc, Milwaukee, Wisconsin,  1990 Search PubMed .
+
+          R. M. Christie, Colour Chemistry, The Royal Society of Chemistry, Cambridge, UK,  1991, p. 228 Search PubMed .
+
+          J. Shore, D. Patterson and G. Hallas, Colorants and auxiliaries, Society of Dyers and Colourists, Hampshire, UK, 2nd edn,  2002 Search PubMed .
+
+          K. Hunger, Industrial Dyes, Wiley-VCH, Weinheim,  2003 Search PubMed .
+
+          H. Zollinger, Color Chemistry, Syntheses, Properties and Applications of Organic Dyes and Pigments, Wiley-VCH, Weinheim, 3rd edn,  2003, p. 647 Search PubMed .
+D. Guillaumont and S. Nakamura, Dyes Pigm., 2000, 46, 85–92 CrossRef CAS .
+J. Fabian, L. A. Diaz, G. Seifert and T. Niehaus, THEOCHEM, 2002, 594, 41–53 CrossRef CAS .
+D. Jacquemin, E. A. Perpète, G. E. Scuseria, I. Ciofini and C. Adamo, J. Chem. Theory Comput., 2008, 4, 123–135 CrossRef CAS .
+D. Jacquemin, V. Wathelet, E. A. Perpète and C. Adamo, J. Chem. Theory Comput., 2009, 5, 2420–2435 CrossRef CAS .
+J. Fabian, Dyes Pigm., 2010, 84, 36–53 CrossRef CAS .
+D. Jacquemin, J. Preat, E. A. Perpète and C. Adamo, Int. J. Quantum Chem., 2010, 110, 2121–2129 CrossRef CAS .
+F. Lachaud, C. Jeandon, M. Beley, R. Ruppert, P. C. Gros, A. Monari and X. Assfeld, J. Phys. Chem. A, 2012, 116, 10736–10744 CrossRef CAS PubMed .
+P. Persson and M. J. Lundqvist, J. Phys. Chem. B, 2005, 109, 11918–11924 CrossRef CAS PubMed .
+M. Nazeeruddin, F. De Angelis, S. Fantacci, A. Selloni, G. Viscardi, P. Liska, S. Ito, T. Bessho and M. Grätzel, J. Am. Chem. Soc., 2005, 127, 16835–16847 CrossRef CAS PubMed .
+W. R. Duncan and O. V. Prezhdo, Annu. Rev. Phys. Chem., 2007, 58, 143–184 CrossRef CAS PubMed .
+F. De Angelis, S. Fantacci, A. Selloni, M. K. Nazeeruddin and M. Grätzel, J. Am. Chem. Soc., 2007, 129, 14156–14157 CrossRef CAS PubMed .
+P. G. Bomben, K. C. D. Robson, P. A. Sedach and C. P. Berlinguette, Inorg. Chem., 2009, 48, 9631–9643 CrossRef CAS PubMed .
+A. Monari, X. Assfeld, M. Beley and P. C. Gros, J. Phys. Chem. A, 2011, 115, 3596–3603 CrossRef CAS PubMed .
+A. Chantzis, T. Very, A. Monari and X. Assfeld, J. Chem. Theory Comput., 2012, 8, 1536–1541 CrossRef CAS .
+L. Rustioni, F. D. Meo, M. Guillaume, O. Failla and P. Trouillas, Food Chem., 2013, 141, 4349–4357 CrossRef CAS PubMed .
+E. A. Perpète, V. Wathelet, J. Preat, C. Lambert and D. Jacquemin, J. Chem. Theory Comput., 2006, 2, 434–440 CrossRef .
+D. Jacquemin, V. Wathelet, J. Preat and E. A. Perpète, Spectrochim. Acta, Part A, 2007, 67, 334–341 CrossRef PubMed .
+M. Savko, S. Kascakova, P. Gbur, P. Miskovsky and J. Ulicny, THEOCHEM, 2007, 823, 78–86 CrossRef CAS .
+B. Le Guennic, O. Maury and D. Jacquemin, Phys. Chem. Chem. Phys., 2012, 14, 157–164 RSC .
+D. Jacquemin, J. Preat, E. A. Perpète, D. P. Vercauteren, J.-M. André, I. Ciofini and C. Adamo, Int. J. Quantum Chem., 2011, 111, 4224–4240 CrossRef CAS .
+D. Escudero, S. Trupp, B. Bussemer, G. J. Mohr and L. González, J. Chem. Theory Comput., 2011, 7, 1062–1072 CrossRef CAS .
+P. C. Chen, Y.
+C. Chieh and J. C. Wu, THEOCHEM, 2005, 715, 183–189 CrossRef CAS .
+D. Jacquemin, E. A. Perpète, I. Ciofini and C. Adamo, Theor. Chem. Acc., 2008, 120, 405–410 CrossRef CAS .
+J. P. Cerón-Carrasco, A. Ripoche, F. Odobel and D. Jacquemin, Dyes Pigm., 2012, 92, 1144–1152 CrossRef .
+D. Jacquemin, A. D. Laurent, E. A. Perpète and J. M. André, Int. J. Quantum Chem., 2009, 109, 3506–3515 CrossRef CAS .
+J. Preat, D. Jacquemin, V. Wathelet, J. M. André and E. A. Perpète, J. Phys. Chem. A, 2006, 110, 8144–8150 CrossRef CAS PubMed .
+Y. Kurashige, T. Nakajima, S. Kurashige, K. Hirao and Y. Nishikitani, J. Phys. Chem. A, 2007, 111, 5544–5548 CrossRef CAS PubMed .
+C.-R. Zhang, L. Liu, Z.-J. Liu, Y.-L. Shen, Y.-T. Sun, Y.-Z. Wu, Y.-H. Chen, L.-H. Yuan, W. Wang and H.-S. Chen, J. Mol. Graphics Modell., 2012, 38, 419–429 CrossRef CAS PubMed .
+E. A. Badaeva, T. V. Tomofeeva, A. Masunov and S. Tretiak, J. Phys. Chem. A, 2005, 109, 7276–7284 CrossRef CAS PubMed .
+B. Champagne, M. Guillaume and F. Zutterman, Chem. Phys. Lett., 2006, 425, 105–109 CrossRef CAS .
+D. Jacquemin, J. Preat and E. A. Perpète, Chem. Phys. Lett., 2005, 410, 254–259 CrossRef CAS .
+D. Jacquemin, M. Bouhy and E. A. Perpète, J. Chem. Phys., 2006, 124, 204321 CrossRef PubMed .
+K. Okuno, Y. Shigeta, R. Kishi and M. Nakano, Chem. Phys. Lett., 2013, 585, 201–206 CrossRef CAS .
+D. Jacquemin and E. A. Perpète, Chem. Phys. Lett., 2006, 429, 147–152 CrossRef CAS .
+E. A. Perpète and D. Jacquemin, J. Photochem. Photobiol., A, 2007, 187, 40–44 CrossRef .
+D. Jacquemin and E. A. Perpète, C. R. Chim., 2007, 10, 1227–1233 CrossRef CAS .
+A. D. Laurent, J. M. André, E. A. Perpète and D. Jacquemin, J. Photochem. Photobiol., A, 2007, 192, 211–219 CrossRef CAS .
+E. A. Perpète, F. Maurel and D. Jacquemin, J. Phys. Chem. A, 2007, 111, 5528–5535 CrossRef PubMed .
+F. Maurel, A. Perrier, E. A. Perpète and D. Jacquemin, J. Photochem. Photobiol., A, 2008, 199, 211–223 CrossRef CAS .
+O. A. Syzgantseva, V. Tognetti, L. Joubert, A. Boulange, P. A. Peixoto, S. Leleu and X. Franck, J. Phys. Chem. A, 2012, 116, 8634–8643 CrossRef CAS PubMed .
+H. Tezcan and N. Tokay, Spectrochim. Acta, Part A, 2010, 75, 54–60 CrossRef PubMed .
+M. B. Tsinberg, S. Y. Lew and J. D. Gough, J. Lumin., 2012, 132, 1929–1934 CrossRef CAS .
+S.-I. Lu, Chem. Phys. Lett., 2010, 494, 198–201 CrossRef CAS .
+D. Jacquemin, J. Preat, V. Wathelet and E. A. Perpète, Chem. Phys., 2006, 328, 324–332 CrossRef CAS .
+E. A. Perpète, C. Lambert, V. Wathelet, J. Preat and D. Jacquemin, Spectrochim. Acta, Part A, 2007, 68, 1326–1333 CrossRef PubMed .
+L. Miao, Y. Yao, F. Yang, Z. Wang, W. Li and J. Hu, THEOCHEM, 2008, 865, 79–87 CrossRef CAS .
+D. Jacquemin, E. A. Perpete, G. Scalmani, I. Ciofini, C. Peltier and C. Adamo, Chem. Phys., 2010, 372, 61–66 CrossRef CAS .
+D. Jacquemin and E. A. Perpète, Chem. Phys. Lett., 2006, 420, 529–533 CrossRef CAS .
+Y. Shigemitsu, K. Komiya, N. Mizuyama and Y. Tominaga, THEOCHEM, 2008, 855, 92–101 CrossRef CAS .
+P. Kiprof, J. C. Carlson, D. R. Anderson and V. N. Nemykin, Dalton Trans., 2013, 42, 15120–15132 RSC .
+S. Fleming, A. Mills and T. Tuttle, Beilstein J. Org. Chem., 2011, 7, 432–441 CrossRef CAS PubMed .
+E. A. B. Kantchev, T. B. Norsten and M. B. Sullivan, Org. Biomol. Chem., 2012, 10, 6682–6692 CAS .
+T. B. Norsten, E. A. B. Kantchev and M. B. Sullivan, Org. Lett., 2010, 12, 4816–4819 CrossRef CAS PubMed .
+I. Infante and F. Lelj, Chem. Phys. Lett., 2003, 367, 308–318 CrossRef CAS .
+V. N. Nemykin, R. G. Hadt, R. V. Belosludov, H. Mizuseki and Y. Kawazoe, J. Phys. Chem. A, 2007, 111, 12901–12913 CrossRef CAS PubMed .
+E. H. Anouar, J. Gierschner, J.-L. Duroux and P. Trouillas, Food Chem., 2012, 131, 79–89 CrossRef CAS .
+A. Amat, C. Clementi, F. De Angelis, A. Sgamellotti and S. Fantacci, J. Phys. Chem. A, 2009, 113, 15118–15126 CrossRef CAS PubMed .
+M. P. Balanay and D. H. Kim, Phys. Chem. Chem. Phys., 2008, 10, 5121–5127 RSC .
+A. D. Quartarolo, N. Russo, E. Sicilia and F. Lelj, J. Chem. Theory Comput., 2007, 3, 860–869 CrossRef CAS .
+L. Petit, A. Quartarolo, C. Adamo and N. Russo, J. Phys. Chem. B, 2006, 110, 2398–2404 CrossRef CAS PubMed .
+A. G. Crawford, A. D. Dwyer, Z. Liu, A. Steffen, A. Beeby, L.-O. Pålsson, D. J. Tozer and T. B. Marder, J. Am. Chem. Soc., 2011, 133, 13349–13362 CrossRef CAS PubMed .
+D. Jacquemin, A. Lewalle and E. A. Perpète, Chem. Phys. Lett., 2008, 457, 91–95 CrossRef CAS .
+J.-F. Guillemoles, V. Barone, L. Joubert and C. Adamo, J. Phys. Chem. A, 2002, 106, 11354–11360 CrossRef CAS .
+C.-R. Zhang, L.-H. Han, J.-W. Zhe, N.-Z. Jin, D.-B. Wang, X. Wang, Y.-Z. Wu, Y.-H. Chen, Z.-J. Liu and H.-S. Chen, Comput. Theor. Chem., 2013, 1017, 99–108 CrossRef CAS .
+A. Perrier, F. Maurel, E. A. Perpète, V. Wathelet and D. Jacquemin, J. Phys. Chem. A, 2009, 113, 13004–13012 CrossRef CAS PubMed .
+K. Srinivas, C. Prabhakar, C. Devi, K. Yesudas, K. Bhanuprakash and V. Rao, J. Phys. Chem. A, 2007, 111, 3378–3386 CrossRef CAS PubMed .
+J. P. Céron-Carrasco, A. Siard and D. Jacquemin, Dyes Pigm., 2013, 99, 972–978 CrossRef .
+D. Jacquemin, V. Wathelet and E. A. Perpète, J. Phys. Chem. A, 2006, 110, 9145–9152 CrossRef CAS PubMed .
+M. Petiau and J. Fabian, THEOCHEM, 2001, 538, 253–260 CrossRef CAS .
+D. Jacquemin, J. Preat, V. Wathelet, M. Fontaine and E. A. Perpète, J. Am. Chem. Soc., 2006, 128, 2072–2083 CrossRef CAS PubMed .
+J. Preat, C. Michaux, A. Lewalle, E. A. Perpète and D. Jacquemin, Chem. Phys. Lett., 2008, 451, 37–42 CrossRef CAS .
+J. Preat, D. Jacquemin, C. Michaux and E. Perpète, Chem. Phys., 2010, 376, 56–68 CrossRef CAS .
+J. Preat, V. Wathelet, J. M. André, D. Jacquemin and E. A. Perpète, Chem. Phys., 2007, 335, 177–186 CrossRef CAS .
+A. D. Becke, J. Chem. Phys., 1993, 98, 5648–5652 CrossRef CAS .
+P. J. Stephens, F. J. Devlin, C. F. Chabalowski and M. J. Frisch, J. Phys. Chem., 1994, 98, 11623–11627 CrossRef CAS .
+C. Adamo and V. Barone, J. Chem. Phys., 1999, 110, 6158–6170 CrossRef CAS .
+M. Ernzerhof and G. E. Scuseria, J. Chem. Phys., 1999, 110, 5029–5036 CrossRef CAS .
+D. J. Tozer, R. D. Amos, N. C. Handy, B. O. Roos and L. Serrano-Andrès, Mol. Phys., 1999, 97, 859–868 CrossRef CAS .
+Z. L. Cai, K. Sendt and R. Remiers, J. Chem. Phys., 2002, 117, 5543–5549 CrossRef CAS .
+D. J. Tozer, J. Chem. Phys., 2003, 119, 12697–12699 CrossRef CAS .
+M. S. Liao, Y. Lu and S. Scheiner, J. Comput. Chem., 2003, 24, 623–631 CrossRef CAS PubMed .
+O. V. Gritsenko and E. J. Baerends, J. Chem. Phys., 2004, 121, 655–660 CrossRef CAS PubMed .
+A. Dreuw and M. Head-Gordon, J. Am. Chem. Soc., 2004, 126, 4007–4016 CrossRef CAS PubMed .
+T. Tawada, T. Tsuneda, S. Yanagisawa, T. Yanai and K. Hirao, J. Chem. Phys., 2004, 120, 8425–8433 CrossRef PubMed .
+E. Rudberg, P. Salek, T. Helgaker and H. Agren, J. Chem. Phys., 2005, 123, 184108 CrossRef PubMed .
+M. Chiba, T. Tsuneda and K. Hirao, J. Chem. Phys., 2006, 124, 144106 CrossRef PubMed .
+Z. L. Cai, M. J. Crossley, J. R. Reimers, R. Kobayashi and R. D. Amos, J. Phys. Chem. B, 2006, 110, 15624–15632 CrossRef CAS PubMed .
+R. Kobayashi and R. D. Amos, Chem. Phys. Lett., 2006, 420, 106–109 CrossRef CAS .
+Y. Zhao and D. G. Truhlar, J. Phys. Chem. A, 2006, 110, 13126–13130 CrossRef CAS PubMed .
+R. J. Magyar and S. Tretiak, J. Chem. Theory Comput., 2007, 3, 976–987 CrossRef CAS .
+A. W. Lange, M. A. Rohrdanz and J. M. Herbert, J. Phys. Chem. B, 2008, 112, 6304–6308 CrossRef CAS PubMed .
+R. Huenerbein and S. Grimme, Chem. Phys., 2008, 343, 362–371 CrossRef CAS .
+M. J. G. Peach, P. Benfield, T. Helgaker and D. J. Tozer, J. Chem. Phys., 2008, 128, 044118 CrossRef PubMed .
+M. J. G. Peach, C. R. Le Sueur, K. Ruud, M. Guillaume and D. J. Tozer, Phys. Chem. Chem. Phys., 2009, 11, 4465–4470 RSC .
+T. Stein, L. Kronik and R. Baer, J. Am. Chem. Soc., 2009, 131, 2818–2820 CrossRef CAS PubMed .
+K. A. Nguyen, P. N. Day and R. Pachter, J. Chem. Phys., 2011, 135, 074109 CrossRef PubMed .
+P. Dev, S. Agrawal and N. J. English, J. Chem. Phys., 2012, 136, 224301 CrossRef PubMed .
+M. J. Lee, M. P. Balanay and D. H. Kim, Theor. Chem. Acc., 2012, 131, 1269–1280 CrossRef .
+S. Kupfer, J. Guthmuller and L. González, J. Chem. Theory Comput., 2013, 9, 543–554 CrossRef CAS .
+M. Schreiber, V. Bub and M. P. Fülscher, Phys. Chem. Chem. Phys., 2001, 3, 3906–3912 RSC .
+D. Jacquemin, E. A. Perpète, G. Scalmani, M. J. Frisch, R. Kobayashi and C. Adamo, J. Chem. Phys., 2007, 126, 144105 CrossRef PubMed .
+S. Grimme and F. Neese, J. Chem. Phys., 2007, 127, 154116 CrossRef PubMed .
+A. E. Masunov, Int. J. Quantum Chem., 2010, 110, 3095–3100 CrossRef CAS .
+K. Meguellati, S. Ladame and M. Spichty, Dyes Pigm., 2011, 90, 114–118 CrossRef CAS .
+R. Send, O. Valsson and C. Filippi, J. Chem. Theory Comput., 2011, 7, 444–455 CrossRef CAS .
+D. Jacquemin, Y. Zhao, R. Valero, C. Adamo, I. Ciofini and D. G. Truhlar, J. Chem. Theory Comput., 2012, 8, 1255–1259 CrossRef CAS .
+B. Moore II and J. Autschbach, J. Chem. Theory Comput., 2013, 9, 4991–5003 CrossRef .
+D. Jacquemin, J. Preat, M. Charlot, V. Wathelet, J. M. André and E. A. Perpète, J. Chem. Phys., 2004, 121, 1736–1743 CrossRef CAS PubMed .
+D. Jacquemin, J. Preat, V. Wathelet, J. M. André and E. A. Perpète, Chem. Phys. Lett., 2005, 405, 429–433 CrossRef CAS .
+L. Shen, H. F. Ji and H. Y. Zhang, THEOCHEM, 2006, 758, 221–224 CrossRef CAS .
+J. Preat, D. Jacquemin and E. A. Perpète, Dyes Pigm., 2007, 72, 185–191 CrossRef CAS .
+
+          H. H. Perkampus, UV/Vis. Atlas of Organic Compounds, VCH, Weinheim, 2nd edn,  1992 Search PubMed .
+M. S. Khan and Z. H. Khan, Spectrochim. Acta, Part A, 2003, 59, 1409–1426 CrossRef .
+C. H. Giles and C. D. Shah, Trans. Faraday Soc., 1969, 65, 2508–2515 RSC .
+D. Wegerle, J. Soc. Dyers Colour., 1973, 89, 54–55 CAS .
+V. Y. Fain, B. E. Zaitsev and M. A. Ryabov, Russ. J. Org. Chem., 2009, 45, 374–382 CrossRef CAS .
+V. Y. Fain, B. E. Zaitsev, M. A. Ryabov and P. V. Strashnov, Russ. J. Gen. Chem., 2010, 80, 1986–1995 CrossRef CAS .
+R. S. Sinclair and E. Mc Alpine, J. Soc. Dyers Colour., 1975, 91, 399–405 CrossRef CAS .
+D. Jacquemin, E. Brémond, A. Planchat, I. Ciofini and C. Adamo, J. Chem. Theory Comput., 2011, 7, 1882–1892 CrossRef CAS .
+D. Jacquemin, E. Brémond, I. Ciofini and C. Adamo, J. Phys. Chem. Lett., 2012, 3, 468–471 CrossRef CAS PubMed .
+J. Preat, A. D. Laurent, C. Michaux, E. A. Perpète and D. Jacquemin, THEOCHEM, 2009, 901, 24–30 CrossRef CAS .
+J. D. Chai and M. Head-Gordon, Phys. Chem. Chem. Phys., 2008, 10, 6615–6620 RSC .
+P. Wiggins, J. A. Gareth Williams and D. J. Tozer, J. Chem. Phys., 2009, 131, 091101 CrossRef PubMed .
+J. Plötner, D. J. Tozer and A. Dreuw, J. Chem. Theory Comput., 2010, 6, 2315–2324 CrossRef .
+C. A. Guido, B. Mennucci, D. Jacquemin and C. Adamo, Phys. Chem. Chem. Phys., 2010, 12, 8016–8023 RSC .
+M. E. Beck, Int. J. Quantum Chem., 2005, 101, 683–689 CrossRef CAS .
+
+          J. Schanda, Colorimetry: Understanding the CIE System, Wiley, Hoboken, New Jersey,  2007 Search PubMed .
+D. Jacquemin, E. A. Perpète, O. A. Vydrov, G. E. Scuseria and C. Adamo, J. Chem. Phys., 2007, 127, 094102 CrossRef PubMed .
+D. Jacquemin, E. A. Perpète, G. E. Scuseria, I. Ciofini and C. Adamo, Chem. Phys. Lett., 2008, 465, 226–229 CrossRef CAS .
+A. Mishra, R. K. Behera, P. K. Behera, B. K. Mishra and G. B. Behera, Chem. Rev., 2000, 100, 1973–2011 CrossRef CAS PubMed .
+F. Wang, W. B. Tan, Y. Zhang, X. Fan and M. Wang, Nanotechnology, 2006, 17, R1 CrossRef CAS .
+M. S. T. Gonçalves, Chem. Rev., 2009, 109, 190–212 CrossRef PubMed .
+H. Kuhn, J. Chem. Phys., 1949, 17, 1198–1212 CrossRef CAS .
+C. A. Bertolino, A. M. Ferrari, C. Barolo, G. Viscardi, G. Caputo and S. Coluccia, Chem. Phys., 2006, 330, 52–59 CrossRef CAS .
+M. Guillaume, V. Liégeois, B. Champagne and F. Zutterman, Chem. Phys. Lett., 2007, 446, 165–169 CrossRef CAS .
+T. Geiger, S. Kuster, J.-H. Yum, S.-J. Moon, M. K. Nazeeruddin, M. Grätzel and F. Nüesch, Adv. Funct. Mater., 2009, 19, 2720–2727 CrossRef CAS .
+L. Beverina, R. Ruffo, G. Patriarca, F. De Angelis, D. Roberto, S. Righetto, R. Ugo and G. A. Pagani, J. Mater. Chem., 2009, 19, 8190–8197 RSC .
+Y.-L. Fu, W. Huang, C.-L. Li, L.-Y. Wang, Y.-S. Wei, Y. Huang, X.-H. Zhang, Z.-Y. Wen and Z.-X. Zhang, Dyes Pigm., 2009, 82, 409–415 CrossRef CAS .
+X.-H. Zhang, L.-Y. Wang, G.-H. Zhai, Z.-Y. Wen and Z.-X. Zhang, THEOCHEM, 2009, 906, 50–55 CrossRef CAS .
+P. A. Bouit, C. Aronica, L. Toupet, B. Le Guennic, C. Andraud and O. Maury, J. Am. Chem. Soc., 2010, 132, 4328–4335 CrossRef CAS PubMed .
+A. Bamgbelu, J. Wang and J. Leszczynski, J. Phys. Chem. A, 2010, 114, 3551–3555 CrossRef CAS PubMed .
+A. Eilmes, Comput. Theor. Chem., 2011, 972, 32–38 CrossRef CAS .
+S. Valleau, S. K. Saikin, M.-H. Yung and A. Aspuru Guzik, J. Chem. Phys., 2012, 137, 034109 CrossRef PubMed .
+K. Kalyanasundaram and M. Grätzel, Coord. Chem. Rev., 1998, 177, 347–414 CrossRef CAS .
+A. Vogler and H. Kunkely, Coord. Chem. Rev., 2004, 248, 273–278 CrossRef CAS .
+O. Kwon, S. Barlow, S. A. Odom, L. Beverina, N. J. Thompson, E. Zojer, J.-L. Brédas and S. R. Marder, J. Phys. Chem. A, 2005, 109, 9346–9352 CrossRef CAS PubMed .
+S. Ardo and G. J. Meyer, Chem. Soc. Rev., 2009, 38, 115–164 RSC .
+G. Zhou, C.-L. Ho, W.-Y. Wong, Q. Wang, D. Ma, L. Wang, Z. Lin, T. B. Marder and A. Beeby, Adv. Funct. Mater., 2008, 18, 499–511 CrossRef CAS .
+H. C. Lin and B. Y. Jin, Materials, 2010, 3, 4214–4251 CrossRef CAS .
+F. Odobel, L. Le Pleux, Y. Pellegrin and E. Blart, Acc. Chem. Res., 2010, 43, 1063–1071 CrossRef CAS PubMed .
+M. Planells, L. Pelleja, J. N. Clifford, M. Pastore, F. De Angelis, N. Lopez, S. R. Marder and E. Palomares, Energy Environ. Sci., 2011, 4, 1820–1829 CAS .
+Y. Zhao and W. Liang, Chem. Soc. Rev., 2012, 41, 1075–1087 RSC .
+K. A. Nguyen, P. N. Day and R. Pachter, J. Chem. Phys., 2007, 126, 094303 CrossRef PubMed .
+B. M. Wong and J. G. Cordaro, J. Chem. Phys., 2008, 129, 214703 CrossRef PubMed .
+N. Govind, M. Valiev, L. Jensen and K. Kowalski, J. Phys. Chem. A, 2009, 113, 6041–6043 CrossRef CAS PubMed .
+T. Stein, L. Kronik and R. Baer, J. Chem. Phys., 2009, 131, 244119 CrossRef PubMed .
+M. Pastore, E. Mosconi, F. De Angelis and M. Grätzel, J. Phys. Chem. C, 2010, 114, 7205–7212 CAS .
+I. D. Petsalakis, D. G. Georgiadou, M. Vasilopoulou, G. Pistolis, D. Dimotikali, P. Argitis and G. Theodorakopoulos, J. Phys. Chem. A, 2010, 114, 5580–5587 CrossRef CAS PubMed .
+P. J. Aittala, O. Cramariuc and T. I. Hukka, J. Chem. Theory Comput., 2010, 6, 805–816 CrossRef CAS .
+A. Baheti, P. Singh, C.-P. Lee, K. R. J. Thomas and K.-C. Ho, J. Org. Chem., 2011, 76, 4910–4920 CrossRef CAS PubMed .
+M. E. Reish, S. Nam, W. Lee, H. Y. Woo and K. C. Gordon, J. Phys. Chem. C, 2012, 116, 21255–21266 CAS .
+S. I. Bokarev, O. S. Bokareva and O. Kuhn, J. Chem. Phys., 2012, 136, 214305 CrossRef PubMed .
+M. Akhtaruzzaman, Y. Seya, N. Asao, A. Islam, E. Kwon, A. El-Shafei, L. Han and Y. Yamamoto, J. Mater. Chem., 2012, 22, 10771–10778 RSC .
+F. Yang, M. Akhtaruzzaman, A. Islam, T. Jin, A. El-Shafei, C. Qin, L. Han, K. A. Alamry, S. A. Kosa, M. A. Hussein, A. M. Asiri and Y. Yamamoto, J. Mater. Chem., 2012, 22, 22550–22557 RSC .
+J. Massin, A. Charaf-Eddin, F. Appaix, Y. Bretonniere, D. Jacquemin, B. van der Sanden, C. Monnereau and C. Andraud, Chem. Sci., 2013, 4, 2833–2843 RSC .
+F. B. Anne, F. D. Purpan and D. Jacquemin, Chem. Phys. Lett., 2013, 581, 52–56 CrossRef CAS .
+P. Dev, S. Agrawal and N. J. English, J. Phys. Chem. A, 2013, 117, 2114–2124 CrossRef CAS PubMed .
+T. Le Bahers, C. Adamo and I. Ciofini, J. Chem. Theory Comput., 2011, 7, 2498–2506 CrossRef CAS .
+D. Jacquemin, T. Le Bahers, C. Adamo and I. Ciofini, Phys. Chem. Chem. Phys., 2012, 14, 5383–5388 RSC .
+C. A. Guido, P. Cortona, B. Mennucci and C. Adamo, J. Chem. Theory Comput., 2013, 9, 3118–3126 CrossRef CAS .
+I. Ciofini, T. Le Bahers, C. Adamo, F. Odobel and D. Jacquemin, J. Phys. Chem. C, 2012, 116, 11946–11955 CAS ; I. Ciofini, T. Le Bahers, C. Adamo, F. Odobel and D. Jacquemin, J. Phys. Chem. C, 2012, 116, 14736 Search PubMed  , Erratum.
+W. H. Howie, F. Claeyssens, H. Miura and L. M. Peter, J. Am. Chem. Soc., 2008, 130, 1367–1375 CrossRef CAS PubMed .
+H. Imahori, T. Umeyama and S. Ito, Acc. Chem. Res., 2009, 42, 1809–1818 CrossRef CAS PubMed .
+T. Le Bahers, F. Labat, T. Pauporté, P. P. Lainé and I. Ciofini, J. Am. Chem. Soc., 2011, 133, 8005–8013 CrossRef CAS PubMed .
+A. Yella, R. Humphry-Baker, B. F. E. Curchod, N. Ashari Astani, J. Teuscher, L. E. Polander, S. Mathew, J.-E. Moser, I. Tavernelli, U. Rothlisberger, M. Grätzel, M. K. Nazeeruddin and J. Frey, Chem. Mater., 2013, 25, 2733–2739 CrossRef CAS .
+S. Namuangruk, R. Fukuda, M. Ehara, J. Meeprasert, T. Khanasa, S. Morada, T. Kaewin, S. Jungsuttiwong, T. Sudyoadsuk and V. Promarak, J. Phys. Chem. C, 2012, 116, 25653–25663 CAS .
+F. Labat, I. Ciofini, H. P. Hratchian, M. J. Frisch, K. Raghavachari and C. Adamo, J. Am. Chem. Soc., 2009, 131, 14290–14298 CrossRef CAS PubMed .
+T. Le Bahers, T. Pauporté, P. P. Lainé, F. Labat, C. Adamo and I. Ciofini, J. Phys. Chem. Lett., 2013, 4, 1044–1050 CrossRef CAS PubMed .
+O. S. Wolfbeis and G. Uray, Monatsh. Chem., 1978, 109, 123–136 CrossRef CAS .
+T. Moriya, Bull. Chem. Soc. Jpn., 1988, 61, 1873–1886 CrossRef CAS .
+J. Seixas de Melo and P. F. Fernandes, J. Mol. Struct., 2001, 565–566, 69–78 CrossRef CAS .
+M. S. Alexiou, V. Tychopoulos, S. Ghorbanian, J. H. P. Tyman, R. G. Brown and P. I. Brittain, J. Chem. Soc., Perkin Trans. 2, 1990, 837–842 RSC .
+V. Wintgens, P. Valat, J. Kossanyi, L. Biczok, A. Demeter and T. Berces, J. Chem. Soc., Faraday Trans., 1994, 90, 411–421 RSC .
+A. Demeter, T. Berces, L. Biczok, V. Wintgens, P. Valat and J. Kossanyi, J. Phys. Chem., 1996, 100, 2001–2011 CrossRef CAS .
+I. Grabchev, S. Dumas, J. M. Chovelon and A. Nedelcheva, Tetrahedron, 2008, 64, 2113–2119 CrossRef CAS .
+A web of science search revealed more than 150 papers on the topic.
+R. Sánchez-de Armas, J. Oviedo, M. Á. San Miguel and J. F. Sanz, J. Phys. Chem. C, 2011, 115, 11293–11301 Search PubMed .
+F. J. Avila Ferrer, R. Improta, F. Santoro and V. Barone, Phys. Chem. Chem. Phys., 2011, 13, 17007–17012 RSC .
+S. Agrawal, P. Dev, N. J. English, K. R. Thampi and J. M. D. MacElroy, J. Mater. Chem., 2011, 21, 11101–11108 RSC .
+R. Sanchez-de Armas, M. A. San Miguel, J. Oviedo and J. F. Sanz, Phys. Chem. Chem. Phys., 2012, 14, 225–233 RSC .
+M. Sulpizi, P. Carloni, J. Hutter and U. Rothlisberger, Phys. Chem. Chem. Phys., 2003, 5, 4798–4805 RSC .
+F. Ingrosso, B. M. Ladanyi, B. Mennucci and G. Scalmani, J. Phys. Chem. B, 2006, 110, 4953–4962 CrossRef CAS PubMed .
+R. Improta, V. Barone and F. Santoro, Angew. Chem., Int. Ed., 2007, 46, 405–408 CrossRef CAS PubMed .
+R. Improta, G. Scalmani, M. J. Frisch and V. Barone, J. Chem. Phys., 2007, 127, 074504 CrossRef PubMed .
+R. Improta, V. Barone and F. Santoro, J. Phys. Chem. B, 2007, 111, 14080–14082 CrossRef CAS PubMed .
+I. Georgieva, N. Trendafilova, A. Aquino and H. Lischka, J. Phys. Chem. A, 2005, 109, 11860–11869 CrossRef CAS PubMed .
+D. Jacquemin, E. A. Perpète, G. Scalmani, M. J. Frisch, X. Assfeld, I. Ciofini and C. Adamo, J. Chem. Phys., 2006, 125, 164324 CrossRef PubMed .
+D. Jacquemin, E. A. Perpète, X. Assfeld, G. Scalmani, M. J. Frisch and C. Adamo, Chem. Phys. Lett., 2007, 438, 208–212 CrossRef CAS .
+T. Tsuji, M. Onoda, Y. Otani, T. Ohwada, T. Nakajima and K. Hirao, Chem. Phys. Lett., 2009, 473, 196–200 CrossRef CAS .
+L. Xie, Y. Chen, W. Wu, H. Guo, J. Zhao and X. Yu, Dyes Pigm., 2012, 92, 1361–1369 CrossRef CAS .
+D. Jacquemin and C. Adamo, Int. J. Quantum Chem., 2012, 112, 2135–2141 CrossRef CAS .
+D. Huang, Y. Chen and J. Zhao, Dyes Pigm., 2012, 95, 732–742 CrossRef CAS .
+A. Pedone, J. Bloino and V. Barone, J. Phys. Chem. C, 2012, 116, 17807–17818 CAS .
+D. Jacquemin, E. A. Perpète, G. Scalmani, M. J. Frisch, I. Ciofini and C. Adamo, Chem. Phys. Lett., 2007, 448, 3–6 CrossRef CAS .
+J. Coronado, E. Martin, L. Montero, J. Fierro and J. delaVega, J. Phys. Chem. A, 2007, 111, 9724–9732 CrossRef CAS PubMed .
+P. Kucheryavy, G. Li, S. Vyas, C. Hadad and K. D. Glusac, J. Phys. Chem. A, 2009, 113, 6453–6461 CrossRef CAS PubMed .
+D. Cheshmedzhieva, P. Ivanova, S. Stoyanov, D. Tasheva, M. Dimitrova, I. Ivanov and S. Ilieva, Phys. Chem. Chem. Phys., 2011, 13, 18530–18538 RSC .
+S. S. Bag, M. K. Pradhan, R. Kundu and S. Jana, Bioorg. Med. Chem. Lett., 2013, 23, 96–101 CrossRef CAS PubMed .
+E. V. Ganin, A. E. Masunov, A. V. Siminel and M. S. Fonari, J. Phys. Chem. C, 2013, 117, 18154–18162 CAS .
+J. Killoran, L. Allen, J. F. Gallagher, W. M. Gallagher and D. F. O'Shea, Chem. Commun., 2002, 1862–1863 RSC .
+A. Loudet and K. Burgess, Chem. Rev., 2007, 107, 4891–4932 CrossRef CAS PubMed .
+G. Ulrich, R. Ziessel and A. Harriman, Angew. Chem., Int. Ed., 2008, 47, 1184–1201 CrossRef CAS PubMed .
+P. Zhao, R. Li, H. Wang, F. Jian and H. Guo, Spectrochim. Acta, Part A, 2009, 74, 87–93 CrossRef PubMed .
+S. L. Niu, G. Ulrich, R. Ziessel, A. Kiss, P. Renard and A. Romieu, Org. Lett., 2009, 11, 2049–2052 CrossRef CAS PubMed .
+G. Ulrich, S. Goeb, A. De Nicola, P. Retailleau and R. Ziessel, J. Org. Chem., 2011, 76, 4489–4505 CrossRef CAS PubMed .
+T. Bura, N. Leclerc, S. Fall, P. Leveque, T. Heiser, P. Retailleau, S. Rihn, A. Mirloup and R. Ziessel, J. Am. Chem. Soc., 2012, 134, 17404–17407 CrossRef CAS PubMed .
+A. B. Nepomnyashchii and A. J. Bard, Acc. Chem. Res., 2012, 45, 1844–1853 CrossRef CAS PubMed .
+W.-J. Shi, J.-Y. Liu and D. K. P. Ng, Chem.–Asian. J., 2012, 7, 196–200 CrossRef CAS PubMed .
+A. D. Quartarolo, N. Russo and E. Sicilia, Chem.–Eur. J., 2006, 12, 6797–6803 CrossRef CAS PubMed .
+S. Bakalova, F. Mendicuti, O. Castano and J. Kaneti, Chem. Phys. Lett., 2009, 478, 206–210 CrossRef CAS .
+J. Yoshino, A. F. T. Kambe, H. Itoi, N. Kano, T. Kawashima, Y. Ito and M. Asashima, Chem.–Eur. J., 2010, 16, 5026–5035 CrossRef CAS PubMed .
+T. Lazarides, T. M. McCormick, K. C. Wilson, S. Lee, D. W. McCamant and R. Eisenberg, J. Am. Chem. Soc., 2011, 133, 350–364 CrossRef CAS PubMed .
+Q. Bellier, S. Pegaz, C. Aronica, B. Le Guennic, C. Andraud and O. Maury, Org. Lett., 2011, 13, 22–25 CrossRef CAS PubMed .
+H. Guo, Y. Jing, X. Yuan, S. Ji, J. Zhao, X. Lib and Y. Kan, Org. Biomol. Chem., 2011, 9, 3844–3853 CAS .
+S. G. Awuah, J. Polreis, V. Biradar and Y. You, Org. Lett., 2011, 13, 3884–3887 CrossRef CAS PubMed .
+M. Nakamura, T. Tahara, K. Takahashi, T. Nagata, H. Uoyama, D. Kuzuhara, S. Mori, T. Okujima, H. Yamada and H. Uno, Org. Biomol. Chem., 2012, 10, 6840–6849 CAS .
+L. Gai, H. Lu, B. Zou, G. Lai, Z. Shen and Z. Li, RSC Adv., 2012, 2, 8840–8846 RSC .
+M. J. Leonardi, M. R. Topka and P. H. Dinolfo, Inorg. Chem., 2012, 51, 13114–13122 CrossRef CAS PubMed .
+T. K. Khan, M. S. Shaikh and M. Ravikanth, Dyes Pigm., 2012, 94, 66–73 CrossRef CAS .
+Y. Ni, W. Zeng, K. W. Huang and J. Wu, Chem. Commun., 2013, 49, 1217–1219 RSC .
+X. Liu, Z. Xu and J. M. Cole, J. Phys. Chem. C, 2013, 117, 16584–16595 CAS .
+L. Gai, J. Mack, H. Liu, Z. Xu, H. Lu and Z. Li, Sens. Actuators, B, 2013, 182, 1–6 CrossRef CAS .
+Z. Li, Y. Chen, X. Lv and W.-F. Fu, New J. Chem., 2013, 37, 3755–3761 RSC .
+L. Wang, B. Verbelen, C. Tonnele, D. Beljonne, R. Lazzaroni, V. Leen, W. Dehaen and N. Boens, Photochem. Photobiol. Sci., 2013, 12, 835–847 CAS .
+K. Jagtap, D. Maity, A. Ray, K. Dasgupta and S. Ghosh, Appl. Phys. B: Lasers Opt., 2011, 103, 917–924 CrossRef CAS .
+X. Zhang, H. Yu and Y. Xiao, J. Org. Chem., 2012, 77, 669–673 CrossRef CAS PubMed .
+N. Boens, V. Leen, W. Dehaen, L. Wang, K. Robeyns, W. Qin, X. Tang, D. Beljonne, C. Tonnele, J. M. Paredes, M. J. Ruedas-Rama, A. Orte, L. Crovetto, E. M. Talavera and J. M. Alvarez-Pez, J. Phys. Chem. A, 2012, 116, 9621–9631 CrossRef CAS PubMed .
+Y. Chen, J. Zhao, H. Guo and L. Xiz, J. Org. Chem., 2012, 77, 2192–2206 CrossRef CAS PubMed .
+M. J. Calhorda, C. H. Suresh, P. T. Gomes, R. E. Di Paolo and A. L. Macanita, Dalton Trans., 2012, 41, 13210–13217 RSC .
+J. L. Jin, H. B. Li, Y. Geng, Y. Wu, Y. A. Duan and Z. M. Su, ChemPhysChem, 2012, 13, 3714–3722 CrossRef CAS PubMed .
+S. Chibani, B. Le Guennic, A. Charaf-Eddin, O. Maury, C. Andraud and D. Jacquemin, J. Chem. Theory Comput., 2012, 8, 3303–3313 CrossRef CAS .
+S. Chibani, A. Charaf-Eddin, B. Le Guennic and D. Jacquemin, J. Chem. Theory Comput., 2013, 9, 3127–3135 CrossRef CAS .
+B. Le Guennic, S. Chibani, A. Charaf-Eddin, J. Massue, R. Ziessel, G. Ulrich and D. Jacquemin, Phys. Chem. Chem. Phys., 2013, 15, 7534–7540 RSC .
+A. Zakrzewska, R. Zalesny, E. Kolehmainen, B. Osmialowski, B. Jedrzejewska, H. Agren and M. Pietrzak, Dyes Pigm., 2013, 99, 957–965 CrossRef CAS .
+Y. Zhao and D. G. Truhlar, Theor. Chem. Acc., 2008, 120, 215–241 CrossRef CAS .
+Note that these results
+have been obtained with the widely available LR(equilibrium) PCM model. Calculations with more refined solvation models can be found in the original papers.
+M. Andrzejak and M. T. Pawlikowski, J. Phys. Chem. A, 2008, 112, 13737–13744 CrossRef CAS PubMed .
+R. S. Sanchez-Carrera, M. C. R. Delgado, C. C. Ferron, R. M. Osuna, V. Hernandez, J. T. L. Navarrete and A. Aspuru-Guzik, Org. Electron., 2010, 11, 1701–1712 CrossRef CAS .
+K. Das, N. Sarkar, A. K. Ghosh, D. Majumdar, D. N. Nath and K. Bhattacharyya, J. Phys. Chem., 1994, 98, 9126–9132 CrossRef CAS .
+
+          K. L. Han and G. J. Zhao, Hydrogen Bonding and Transfer in the Excited State, Wiley-VCH,  2011 Search PubMed .
+M. M. Henary, Y. Wu and C. J. Fahrni, Chem.–Eur. J., 2004, 10, 3015–3025 CrossRef CAS PubMed .
+Y. Wu, X. Peng, J. Fan, S. Gao, M. Tian, J. Zhao and S. Sun, J. Org. Chem., 2007, 72, 62–70 CrossRef CAS PubMed .
+J. Wu, W. Liu, J. Ge, H. Zhang and P. Wang, Chem. Soc. Rev., 2011, 40, 3483–3495 RSC .
+L. Tang, M. Cai, P. Zhou, J. Zhao, K. Zhong, S. Hou and Y. Bian, RSC Adv., 2013, 3, 16802–16809 RSC .
+J. Massue, G. Ulrich and R. Ziessel, Eur. J. Org. Chem., 2013, 5701–5709 CrossRef CAS .
+M. Born, Ber. Dtsch. Phys. Ges., 1919, 21, 13–24 CAS .
+F. Haber, Ber. Dtsch. Phys. Ges., 1919, 21, 750–768 CAS .
+D. Jacquemin, E. A. Perpète, I. Ciofini and C. Adamo, J. Phys. Chem. A, 2008, 112, 794–796 CrossRef CAS PubMed .
+Y. Houari, D. Jacquemin and A. D. Laurent, Chem. Phys. Lett., 2013, 583, 218–221 CrossRef CAS .
+Y. Houari, D. Jacquemin and A. D. Laurent, Phys. Chem. Chem. Phys., 2013, 15, 11875–11882 RSC .
+M. S. Baranov, K. A. Lukyanov, A. O. Borissova, J. Shamir, D. Kosenkov, L. V. Slipchenko, L. M. Tolbert, I. V. Yampolsky and K. M. Solntsev, J. Am. Chem. Soc., 2012, 134, 6025–6032 CrossRef CAS PubMed .
+T. Le Bahers, C. Adamo and I. Ciofini, J. Phys. Chem. A, 2010, 114, 5932–5939 CrossRef CAS PubMed .
+E. Bremond, M. E. Alberto, N. Russo, G. Ricci, I. Ciofini and C. Adamo, Phys. Chem. Chem. Phys., 2013, 15, 10019–10027 RSC .
+A. L. Sobolewski and W. Domcke, Phys. Chem. Chem. Phys., 1999, 1, 3065–3072 RSC .
+R. de Vivie-Riedle, V. De Waele, L. Kurtz and E. Riedle, J. Phys. Chem. A, 2003, 107, 10591–10599 CrossRef CAS .
+A. J. A. Aquino, H. Lischka and C. Hattig, J. Phys. Chem. A, 2005, 109, 3201–3208 CrossRef CAS PubMed .
+I. S. Irgibaeva, D. A. Birilzhaniva and N. N. Barashkov, Int. J. Quantum Chem., 2008, 108, 2700–2710 CrossRef CAS .
+A. J. A. Aquino, F. Plasser, M. Barbatti and H. Lischka, Croat. Chem. Acta, 2009, 82, 105–114 CAS .
+F. Plasser, M. Barbatti, A. J. A. Aquino and H. Lischka, J. Phys. Chem. A, 2009, 113, 8490–8499 CrossRef CAS PubMed .
+H.-H. G. Tsai, H.-L. S. Sun and C.-J. Tan, J. Phys. Chem. A, 2010, 114, 4065–4079 CrossRef CAS PubMed .
+J. Ortiz-Sánchez, R. Gelabert, M. Moreno, J. Lluch, J. Anglada and J. Bofill, Chem.–Eur. J., 2010, 16, 6693–6703 CrossRef PubMed .
+C. Randino, M. Ziolek, R. Gelabert, J. A. Organero, M. Gil, M. Moreno, J. M. Lluch and A. Douhal, Phys. Chem. Chem. Phys., 2011, 13, 14960–14972 RSC .
+G. Cui, Z. Lan and W. Thiel, J. Am. Chem. Soc., 2012, 134, 1662–1672 CrossRef CAS PubMed .
+C. Randino, M. Moreno, R. Gelabert and J. M. Lluch, J. Phys. Chem. B, 2012, 116, 14302–14310 CrossRef CAS PubMed .
+S. Park, J. E. Kwon and S. Y. Park, Phys. Chem. Chem. Phys., 2012, 14, 8878–8884 RSC .
+S. Hayaki, Y. Kimura and H. Sato, J. Phys. Chem. B, 2013, 117, 6759–6767 CrossRef CAS PubMed .
+N. Minezawa, J. Chem. Phys., 2013, 138, 244101 CrossRef PubMed .
+M. Moreno, J. M. Ortiz-Sanchez, R. Gelabert and J. M. Lluch, Phys. Chem. Chem. Phys., 2013, 15, 20236–20246 RSC .
+V. S. Padalkar, P. Ramasami and N. Sekar, J. Fluoresc., 2013, 23, 839–851 CrossRef CAS PubMed .
+T. Sekikawa, O. Schalk, G. Wu, A. E. Boguslavskiy and A. Stolow, J. Phys. Chem. A, 2013, 117, 2971–2979 CrossRef CAS PubMed .
+K. R. Phatangare, V. D. Gupta, A. B. Tathe, V. S. Padalkar, V. S. Patil, P. Ramasami and N. Sekar, Tetrahedron, 2013, 69, 1767–1777 CrossRef CAS .
+Y. Syetov, J. Fluoresc., 2013, 23, 689–696 CrossRef CAS PubMed .
+M. Zhang, D. Yang, B. Ren and D. Wang, J. Fluoresc., 2013, 23, 761–766 CrossRef CAS PubMed .
+H. Roohi, F. Hejazi, N. Mohtamedifar and M. Jahantab, Spectrochim. Acta, Part A, 2013, 118, 228–238 CrossRef PubMed .
+Y. Houari, A. Charaf-Eddin, A. D. Laurent, J. Massue, R. Ziessel, G. Ulrich and D. Jacquemin, Phys. Chem. Chem. Phys., 2014, 16, 1319–1321 RSC .
+Exception exists as the Killer Red FP which is capable of killing cells upon exposure to light and in presence of oxygen.
+N. Reuter, H. Lin and W. Thiel, J. Phys. Chem. B, 2002, 106, 6310–6321 CrossRef CAS .
+X. Lopez, M. Marques, A. Castro and A. Rubio, J. Am. Chem. Soc., 2005, 127, 12329–12337 CrossRef CAS PubMed .
+R. Nifosì, P. amat and V. Tozzini, J. Comput. Chem., 2007, 28, 2366–2377 CrossRef PubMed .
+Q. K. Timerghazin, H. J. Carlson, C. Liang, R. E. Campbell and A. Brown, J. Phys. Chem. B, 2008, 112, 2533–2541 CrossRef CAS PubMed .
+I. Polyakov, E. Epifanovsky, B. Grigorenko, A. I. Krylov and A. Nemukhin, J. Chem. Theory Comput., 2009, 5, 1907–1914 CrossRef CAS .
+N. H. List, J. M. Olsen, T. Rocha-Rinza, O. Christiansen and J. Kongsted, Int. J. Quantum Chem., 2012, 112, 789–800 CrossRef CAS .
+M. Uppsten and B. Durbeej, J. Comput. Chem., 2012, 33, 1892–1901 CrossRef CAS PubMed .
+A. K. Das, J.-Y. Hasegawa, T. Miyahara, M. Ehara and H. Nakatsuji, J. Comput. Chem., 2003, 24, 1421–1431 CrossRef CAS PubMed .
+C. Filippi, M. Zaccheddu and F. Buda, J. Chem. Theory Comput., 2009, 5, 2074–2087 CrossRef CAS .
+E. Epifanovsky, I. Polyakov, B. Grigorenko, A. Nemukhin and A. I. Krylov, J. Chem. Theory Comput., 2009, 5, 1895–1906 CrossRef CAS .
+P. Coto, D. Roca-Sanjuán, L. Serrano-Andrés, A. Martn-Pendás, S. Mart and J. Andrés, J. Chem. Theory Comput., 2009, 5, 3032–3038 CrossRef CAS .
+K. Bravaya, B. Grigorenko, A. Nemukhin and A. Krylov, Acc. Chem. Res., 2011, 45, 265–275 CrossRef PubMed .
+R. Ma, Q. Yao, X. Yang and M. Xia, J. Fluorine Chem., 2012, 137, 93–98 CrossRef CAS .
+A. Laurent and X. Assfeld, Interdiscip. Sci.: Comput. Life Sci., 2010, 2, 38–47 CrossRef PubMed .
+T. Very, S. Despax, P. Hébraud, A. Monari and X. Assfeld, Phys. Chem. Chem. Phys., 2012, 14, 12496–12504 RSC .
+A. Monari, J.-L. Rivail and X. Assfeld, Acc. Chem. Res., 2013, 46, 596–603 CrossRef CAS PubMed .
+T. Etienne, T. Very, E. A. Perpète, A. Monari and X. Assfeld, J. Phys. Chem. B, 2013, 117, 4973–4980 CrossRef CAS PubMed .
+P. Amat and R. Nifos, J. Chem. Theory Comput., 2012, 9, 497–508 CrossRef .
+X. Assfeld and J. L. Rivail, Chem. Phys. Lett., 1996, 263, 100–106 CrossRef CAS .
+N. Ferré, X. Assfeld and J.-L. Rivail, J. Comput. Chem., 2002, 23, 610–624 CrossRef PubMed .
+A. Fornili, Y. Moreau, M. Sironi and X. Assfeld, J. Comput. Chem., 2006, 27, 515–523 CrossRef CAS PubMed .
+P.-F. Loos and X. Assfeld, AIP Conf. Proc., 2007, 963, 308–315 CrossRef CAS .
+K. Aidas, J. M. H. Olsen, J. Kongsted and H. Ågren, J. Phys. Chem. B, 2013, 117, 2069–2080 CrossRef CAS PubMed .
+N. A. Murugan, R. Apostolov, Z. Rinkevicius, J. Kongsted, E. Lindahl and H. Agren, J. Am. Chem. Soc., 2013, 135, 13590–13597 CrossRef CAS PubMed .
+K. Sneskov, T. Schwabe, J. Kongsted and O. Christiansen, J. Chem. Phys., 2011, 134, 104108 CrossRef PubMed .
+A. H. Steindal, K. Ruud, L. Frediani, K. Aidas and J. Kongsted, J. Phys. Chem. B, 2011, 115, 3027–3037 CrossRef CAS PubMed .
+J. J. Eriksen, S. P. A. Sauer, K. V. Mikkelsen, H. J. A. Jensen and J. Kongsted, J. Comput. Chem., 2012, 33, 2012–2022 CrossRef CAS PubMed .
+N. Murugan, J. Kongsted, Z. Rinkevicius and H. Ågren, Phys. Chem. Chem. Phys., 2011, 14, 1107–1112 RSC .
+S. Sinnecker and F. Neese, J. Comput. Chem., 2006, 27, 1463–1475 CrossRef CAS PubMed .
+M. Cascella, A. Magistrato, I. Tavernelli, P. Carloni and U. Rothlisberger, Proc. Natl. Acad. Sci. U. S. A., 2006, 103, 19641–19646 CrossRef CAS PubMed .
+D. N. LeBard and D. V. Matyushov, J. Phys. Chem. B, 2008, 112, 5218–5227 CrossRef CAS PubMed .
+K. Ando, J. Phys. Chem. B, 2008, 112, 250–256 CrossRef CAS PubMed .
+A. Monari, T. Very, J.-L. Rivail and X. Assfeld, Comput. Theor. Chem., 2012, 990, 119–125 CrossRef CAS .
+T. V. Harris and K. Morokuma, Inorg. Chem., 2013, 52, 8551–8563 CrossRef CAS PubMed .
+A. Biancardi, T. Biver, F. Secco and B. Mennucci, Phys. Chem. Chem. Phys., 2013, 15, 4596–4603 RSC .
+A. Biancardi, T. Biver, A. Marini, B. Mennucci and F. Secco, Phys. Chem. Chem. Phys., 2011, 13, 12595–12602 RSC .
+A. Chantzis, T. Very, C. Daniel, A. Monari and X. Assfeld, Chem. Phys. Lett., 2013, 578, 133–137 CrossRef CAS .
+P. Tinnefeld and M. Sauer, Angew. Chem., Int. Ed., 2005, 44, 2642–2671 CrossRef CAS PubMed .
+
+          J. R. Lakowicz, Principles of Fluorescence Spectroscopy, Springer, New York, 3rd edn,  2006 Search PubMed .
+T. Förster, Ann. Phys., 1948, 2, 55–75 CrossRef .
+B. Krueger, G. Scholes and G. Fleming, J. Phys. Chem. B, 1998, 102, 5378–5386 CrossRef CAS .
+G. D. Scholes, Annu. Rev. Phys. Chem., 2003, 54, 57–87 CrossRef CAS PubMed .
+S. Tretiak, V. Chernyak and S. Mukamel, J. Am. Chem. Soc., 1997, 119, 11408–11419 CrossRef CAS .
+C. P. Hsu, M. Head-Gordon, T. Head-Gordon and G. R. Fleming, J. Chem. Phys., 2001, 114, 3065–3072 CrossRef CAS .
+M. F. Iozzi, B. Mennucci, J. Tomasi and R. Cammi, J. Chem. Phys., 2004, 120, 7029–7040 CrossRef CAS PubMed .
+G. Schröder, U. Alexiev and H. Grubmüller, Biophys. J., 2005, 89, 3757–3770 CrossRef PubMed .
+C. Curutchet, G. D. Scholes, B. Mennucci and R. Cammi, J. Phys. Chem. B, 2007, 111, 13253–13265 CrossRef CAS PubMed .
+A. Munoz-Losa, C. Curutchet, I. Fdez. Galvan and B. Mennucci, J. Chem. Phys., 2008, 129, 034104 CrossRef CAS PubMed .
+C.-P. Hsu, Acc. Chem. Res., 2009, 42, 509–518 CrossRef CAS PubMed .
+Z.-Q. You and C.-P. Hsu, Int. J. Quantum Chem., 2014, 114, 102–115 CrossRef CAS .
+D. VanBeek, M. Zwier, J. Shorb and B. Krueger, Biophys. J., 2007, 92, 4168–4178 CrossRef CAS PubMed .
+M. Hoefling, N. Lima, D. Haenni, C. A. M. Seidel, B. Schuler and H. Grubmüller, PLoS One, 2011, 6, e19791 CAS .
+A. L. Speelman, A. Muñoz-Losa, K. L. Hinkle, D. B. VanBeek, B. Mennucci and B. P. Krueger, J. Phys. Chem. A, 2011, 115, 3997–4008 CrossRef CAS PubMed .
+T. Ansbacher, H. K. Srivastava, T. Stein, R. Baer, M. Merkx and A. Shurki, Phys. Chem. Chem. Phys., 2012, 14, 4109–4117 RSC .
+A. Angioni, S. Corni and B. Mennucci, Phys. Chem. Chem. Phys., 2013, 15, 3294–3303 RSC .
+C. Curutchet, V. I. Novoderezhkin, J. Kongsted, A. Muñoz-Losa, R. van Grondelle, G. D. Scholes and B. Mennucci, J. Phys. Chem. B, 2013, 117, 4263–4273 CrossRef CAS PubMed .
+B. Mennucci and C. Curutchet, Phys. Chem. Chem. Phys., 2011, 13, 11538–11550 RSC .
+M. Irie, Chem. Rev., 2000, 100, 1685–1716 CrossRef CAS PubMed .
+H. Tian and S. Yang, Chem. Soc. Rev., 2004, 33, 85–97 RSC .
+A. Fihey, A. Perrier and F. Maurel, J. Photochem. Photobiol., A, 2012, 247, 30–41 CrossRef CAS .
+A. D. Laurent, J. M. André, E. A. Perpète and D. Jacquemin, Chem. Phys. Lett., 2007, 436, 84–88 CrossRef CAS .
+Y. Sheng, J. Leszczynski, A. A. Garcia, R. Rosario, D. Gust and J. Springer, J. Phys. Chem. B, 2004, 108, 16233–16243 CrossRef CAS .
+F. Maurel, J. Aubard, P. Millie, J. P. Dognon, M. Rajzmann, R. Guglielmetti and A. Samat, J. Phys. Chem. A, 2006, 110, 4759–4771 CrossRef CAS PubMed .
+L. Sanguinet, J.-L. Pozzo, M. Guillaume, B. Champagne, F. Castet, L. Ducasse, E. Maury, J. Soulié, F. Mançois, F. Adamietz and V. Rodriguez, J. Phys. Chem. B, 2006, 110, 10672–10682 CrossRef CAS PubMed .
+F. Mançois, L. Sanguinet, J.-L. Pozzo, M. Guillaume, B. Champagne, V. Rodriguez, F. Adamietz, L. Ducasse and F. Castet, J. Phys. Chem. B, 2007, 111, 9795–9802 CrossRef PubMed .
+A. Plaquet, M. Guillaume, B. Champagne, F. Castet, L. Ducasse, J. L. Pozzo and V. Rodriguez, Phys. Chem. Chem. Phys., 2008, 10, 6223–6232 RSC .
+A. Plaquet, B. Champagne, F. Castet, L. Ducasse, E. Bogdan, V. Rodriguez and J.-L. Pozzo, New J. Chem., 2009, 33, 1349–1356 RSC .
+F. Mançois, J. L. Pozzo, J. Pan, F. Adamietz, V. Rodriguez, L. Ducasse, F. Castet, A. Plaquet and B. Champagne, Chem.–Eur. J., 2009, 15, 2560–2571 CrossRef PubMed .
+E. Bogdan, A. Plaquet, L. Antonov, V. Rodriguez, L. Ducasse, B. Champagne and F. Castet, J. Phys. Chem. C, 2010, 114, 12760–12768 CAS .
+B. Champagne, A. Plaquet, J.-L. Pozzo, V. Rodriguez and F. Castet, J. Am. Chem. Soc., 2012, 134, 8101–8103 CrossRef CAS PubMed .
+F. Castet, V. Rodriguez, J.-L. Pozzo, L. Ducasse, A. Plaquet and B. Champagne, Acc. Chem. Res., 2013, 46, 2656–2665 CrossRef CAS PubMed .
+A. J. Garza, O. I. Osman, N. A. Wazzan, S. B. Khan, G. E. Scuseria and A. M. Asiri, Comput. Theor. Chem., 2013, 1022, 82–85 CrossRef CAS .
+T. Kudernac, S. J. van der Molen, B. J. van Wees and B. L. Feringa, Chem. Commun., 2006, 3597–3599 RSC .
+A. Perrier, F. Maurel and J. Aubard, J. Phys. Chem. A, 2007, 111, 9688–9698 CrossRef CAS PubMed .
+A. Perrier, S. Tesson, D. Jacquemin and F. Maurel, Comput. Theor. Chem., 2012, 990, 167–176 CrossRef CAS .
+D. Casanova, J. Chem. Phys., 2012, 137, 084105 CrossRef PubMed .
+Q. Ou and J. E. Subotnik, J. Phys. Chem. C, 2013, 117, 19839–19849 CAS .
+P. D. Patel and A. E. Masunov, J. Phys. Chem. A, 2009, 113, 8409–8414 CrossRef CAS PubMed .
+P. D. Patel, I. A. Mikhailov, K. D. Belfield and A. E. Masunov, Int. J. Quantum Chem., 2009, 109, 3711–3722 CrossRef CAS .
+P. D. Patel and A. E. Masunov, J. Phys. Chem. C, 2011, 115, 10292–10297 CAS .
+I. A. Mikhailov, K. D. Belfield and A. E. Masunov, J. Phys. Chem. A, 2009, 113, 7080–7089 CrossRef CAS PubMed .
+X. Xu, S. Gozem, M. Olivucci and D. G. Truhlar, J. Phys. Chem. Lett., 2013, 4, 253–258 CrossRef CAS PubMed .
+D. Jacquemin, E. A. Perpète, F. Maurel and A. Perrier, J. Phys. Chem. Lett., 2010, 1, 434–438 CrossRef CAS .
+D. Jacquemin, E. A. Perpète, F. Maurel and A. Perrier, J. Phys. Chem. Lett., 2010, 1, 434–438 CrossRef CAS .
+D. Jacquemin, C. Michaux, E. A. Perpète, F. Maurel and A. Perrier, Chem. Phys. Lett., 2010, 488, 193–197 CrossRef CAS .
+D. Jacquemin, E. A. Perpète, F. Maurel and A. Perrier, Phys. Chem. Chem. Phys., 2010, 12, 7994–8000 RSC .
+D. Jacquemin, E. A. Perpète, F. Maurel and A. Perrier, J. Phys. Chem. Lett., 2010, 1, 2104–2108 CrossRef CAS .
+D. Jacquemin, E. A. Perpète, F. Maurel and A. Perrier, Phys. Chem. Chem. Phys., 2010, 12, 13144–13152 RSC .
+A. Perrier, F. Maurel, I. Ciofini and D. Jacquemin, Chem. Phys. Lett., 2011, 502, 77–81 CrossRef CAS .
+A. Perrier, F. Maurel and D. Jacquemin, J. Phys. Chem. C, 2011, 115, 9193–9203 CAS .
+A. Perrier, F. Maurel and D. Jacquemin, Phys. Chem. Chem. Phys., 2011, 13, 13791–13799 RSC .
+A. Staykov, J. Areephong, W. R. Browne, B. L. Feringa and K. Yoshizawa, ACS Nano, 2011, 5, 1165–1178 CrossRef CAS PubMed .
+M. Cipolloni, A. Heynderickx, F. Maurel, A. Perrier, D. Jacquemin, O. Siri, F. Ortica and G. Favaro, J. Phys. Chem. C, 2011, 115, 23096–23106 CAS .
+A. Perrier, F. Maurel and D. Jacquemin, Acc. Chem. Res., 2012, 45, 1173–1182 CrossRef CAS PubMed .
+H. Nitadori, L. Ordronneau, J. Boixel, D. Jacquemin, A. Boucekkine, A. Singh, M. Akita, I. Ledoux, V. Guerchais and H. L. Bozec, Chem. Commun., 2012, 48, 10395–10397 RSC .
+A. Perrier, F. Maurel, W. R. Browne and D. Jacquemin, Chem. Commun., 2013, 49, 4247–4249 RSC .
+K. A. Belfon and J. D. Gough, Chem. Phys. Lett., 2013, 585, 63–68 CrossRef CAS .
+A. Peters and N. R. Branda, Adv. Mater. Opt. Electron., 2000, 10, 245–249 CrossRef CAS .
+K. Higashiguchi, K. Matsuda, M. Matsuo, T. Yamada and M. Irie, J. Photochem. Photobiol., A, 2002, 152, 141–146 CrossRef CAS .
+T. Kaieda, S. Kobatake, H. Miyasaka, M. Murakami, N. Iwai, Y. Nagata, A. Itaya and M. Irie, J. Am. Chem. Soc., 2002, 124, 2015–2024 CrossRef CAS PubMed .
+S. Kobatake and M. Irie, Tetrahedron, 2003, 59, 8359–8364 CrossRef CAS .
+A. J. Myles, T. J. Wigglesworth and N. R. Branda, Adv. Mater., 2003, 15, 745–748 CrossRef CAS .
+K. Higashiguchi, K. Matsuda, N. Tanifuji and M. Irie, J. Am. Chem. Soc., 2005, 127, 8922–8923 CrossRef CAS PubMed .
+H. Choi, I. Jung, K. H. Song, K. Song, D. S. Shin, S. O. Kang and J. Ko, Tetrahedron, 2006, 62, 9059–9065 CrossRef CAS .
+J. Areephong, J. H. Hurenkamp, M. T. W. Milder, A. Meetsma, J. L. Herek, W. R. Browne and B. L. Feringa, Org. Lett., 2009, 11, 721–724 CrossRef CAS PubMed .
+M. T. W. Milder, J. L. Herek, J. Areephong, B. L. Feringa and W. R. H Browne, J. Phys. Chem. A, 2009, 113, 7717–7724 CrossRef CAS PubMed .
+M. T. W. Milder, J. Areephong, B. L. Feringa, W. R. H Browne and J. L. Herek, Chem. Phys. Lett., 2009, 479, 137–139 CrossRef CAS .
+M. N. Roberts, C. J. Carling, J. K. Nagle, N. R. Branda and M. O. Wolf, J. Am. Chem. Soc., 2009, 131, 16644–16645 CrossRef CAS PubMed .
+J. Areephong, H. Logtenberg, W. R. Browne and B. L. Feringa, Org. Lett., 2010, 12, 2132–2135 CrossRef CAS PubMed .
+G. Sevez, J. Gan, S. Delbaere, G. Vermeersch, L. Sanguinet, E. Levillain and J. L. Pozzo, Photochem. Photobiol. Sci., 2010, 9, 131–135 CAS .
+W. Tan, X. Li, J. Zhang and H. Tian, Dyes Pigm., 2011, 89, 260–265 CrossRef CAS .
+H.-H. Liu and Y. Chen, J. Mater. Chem., 2011, 21, 1246–1249 RSC .
+Y.-M. Hervault, C. M. Ndiaye, L. Norel, C. Lagrost and S. Rigaut, Org. Lett., 2012, 14, 4454–4457 CrossRef CAS PubMed .
+M. Bälter, S. Li, J. R. Nilsson, J. Andréasson and U. Pischel, J. Am. Chem. Soc., 2013, 135, 10230–10233 CrossRef PubMed .
+A. Strambi, P. Coto, L. Frutos, N. Ferré and M. Olivucci, J. Am. Chem. Soc., 2008, 130, 3382–3388 CrossRef CAS PubMed .
+M. Olivucci and F. Santoro, Angew. Chem., Int. Ed., 2008, 47, 6322–6325 CrossRef CAS PubMed .
+A. Altun, S. Yokoyama and K. Morokuma, J. Phys. Chem. B, 2009, 112, 16883–16890 CrossRef .
+L. Li, E. A. Gibson, P. Qin, G. Boschloo, M. Gorlov, A. Hagfeldt and L. Sun, Adv. Mater., 2010, 22, 1759–1762 CrossRef CAS PubMed .
+L. W. Chung, X. Li, H. Sugimoto, Y. Shiro and K. Morokuma, J. Am. Chem. Soc., 2010, 132, 11993–12005 CrossRef CAS PubMed .
+I. Schapiro, M. N. Ryazantsev, L. M. Frutos, N. Ferré, R. Lindh and M. Olivucci, J. Am. Chem. Soc., 2011, 133, 3354–3364 CrossRef CAS PubMed .
+S. Gozem, I. Schapiro, N. Ferré and M. Olivucci, Science, 2012, 337, 1225–1228 CrossRef CAS PubMed .
+F. Melaccio, N. Ferré and M. Olivucci, Phys. Chem. Chem. Phys., 2012, 14, 12485–12495 RSC .
+M. Huix-Rotllant, M. Filatov, S. Gozem, I. Schapiro, M. Olivucci and N. Ferré, J. Chem. Theory Comput., 2013, 9, 3917–3932 CrossRef CAS .
+S.-F. Chen, I. Navizet, D. Roca-Sanjuán, R. Lindh, Y.-J. Liu and N. Ferré, J. Chem. Theory Comput., 2012, 8, 2796–2807 CrossRef CAS .
+S.-F. Chen, N. Ferré and Y.-J. Liu, Chem.–Eur. J., 2013, 19, 8466–8472 CrossRef CAS PubMed .
+I. Navizet, D. Roca-Sanjuán, L. Yue, Y.-J. Liu, N. Ferré and R. Lindh, Photochem. Photobiol., 2013, 89, 319–325 CrossRef CAS PubMed .
+A. V. Nemukhin, I. A. Topol and S. K. Burt, J. Chem. Theory Comput., 2006, 2, 292–299 CrossRef CAS .
+G. Vallverdu, I. Demachy, F. Mérola, H. Pasquier, J. Ridard and B. Lévy, Proteins, 2010, 78, 1040–1054 CrossRef CAS PubMed .
+T. Rocha-Rinza, K. Sneskov, O. Christiansen, U. Ryde and J. Kongsted, Phys. Chem. Chem. Phys., 2011, 13, 1585–1589 RSC .
+
+This journal is © the Owner Societies 2014
+Table Content:
+
+Adèle D. Laurent
+	Adèle D. Laurent (born in 1985) received her PhD in 2010 under the supervision of Prof. Assfeld from the University of Nancy. Next she spent two months at the Polytechnic University of Catalonia (Prof. Aleman) before moving to the University of Southern California for a post-doctoral stay (Prof. Krylov). In October 2012 she obtained a permanent CNRS researcher position at the University of Nantes. Her work focusses on the modelling of photoprocesses in biomolecules and the development of hybrid methods.
+
+Carlo Adamo
+	Carlo Adamo (born in 1963) obtained his PhD in Theoretical Chemistry from the University “Federico II” of Naples (1995). Between 1993 and 2000 he was Assistant Professor at the University of Basilicata (Italy). In 2000, he moved to ENSCP (France) as Associate Professor where he became Full Professor in Theoretical Chemistry in 2004. In 2011 he was admitted to the Institute Universitaire de France as a senior member. His main research interests concern the development of new DFT approaches and their application to various fields of chemistry, including those related to energy production.
+
+Denis Jacquemin
+	Denis Jacquemin (born in 1974) obtained his PhD under the supervision of Prof. André from the University of Namur (1998). He next moved to the University of Florida for a post-doctoral stay with Prof. Öhrn in Quantum Theory Project. He came back to Europe, where he was appointed as research associate of the Belgian FNRS (2003) and next Professor at the University of Nantes in France (2010). He obtained an ERC starting grant (2011) and he is a junior member of the Institut Universitaire de France since 2012. His research is focused on modelling the electronically excited-states in dyes and photochromes.
+E0–0 = Eadia + ΔEZPVE	(1)
+Eadia = EES(RES) − EGS(RGS)	(2)
+ΔEZPVE = EZPVE(RES) − EZPVE(RGS)	(3)
+Evert-abso = EES(RGS) − EGS(RGS),	(4)
+
+ 	Fig. 1  Simplified potential energy curve diagram representing only two singlet states free of intersections. Adapted with permission from D. Jacquemin, A. Planchat, C. Adamo and B. Mennucci, J. Chem. Theory Comput., 2012, 8, 2359–2372. Copyright 2012, American Chemical Society.	 
+Evert-fluo = EES(RES) − EGS(RES)	(5)
+
+
+Anthocyanine	π → π*	23	B3P86/6-311+G(d,p)	0.25	
+144
+
+Anthraquinone	π → π*	66	PBE0/6-31G(d,p)	0.09	
+145
+
+π → π*	101	PBE0/6-31G(d,p)	0.10	
+146
+
+π → π*	8	B3LYP/6-311++G(d,p)	0.13	
+147
+
+Aza-BODIPY	Cyanine/charge-transfer	8	BMK/6-311+G(2d,p)	0.18	
+148
+
+Azobenzene	n → π* and π → π*	187	CAM-B3LYP/6-311+G(d,p)	0.10	
+149
+
+n → π* and π → π*	15	PBE0/TZVP	0.15	
+150
+
+π → π*	38	B3LYP/cc-pVDZ	0.18	
+151
+
+Azoalkane	n → π*	24	PBE0/6-311+G(d,p)	0.06	
+152
+
+Benzodifuranone	π → π*/charge-transfer	18	M06-2X/6-311+G(2d,p)	0.05	
+153
+
+Benzylideneaniline	π → π*	68	PBE0/6-311+G(2d,p)	0.19	
+154
+
+Coumarin	π → π*	127	PBE0/6-311+G(2d,2p)	0.18	
+155
+
+Charge-transfer	5	B3LYP/6-31+G(d,p)	0.24	
+156
+
+Charge-transfer	21	PBE0/6-31+G(d,p)	0.21	
+157
+
+Croconate	Mixed valence	18	B3LYP/6-311G(d,p)a	0.12	
+96
+
+Cyclohexanone/piperidone	π → π*	9	B3LYP/6-31G	0.09	
+158
+
+Cyanine	Cyanine	9	B3LYP/6-311G(d)	0.31	
+159
+
+Diazonium salt	π → π*	15	PBE0/6-311G(2d,2p)	0.07	
+160
+
+Diphenylaniline	π → π*/charge-transfer	27	PBE0/6-311++G(2d,p)	0.06	
+161
+
+Dithienylethene	π → π*	78	Tuned-CAM-B3LYP/6-311G(d,p)	0.03	
+162
+
+π → π*	329	PBE0/6-311+G(2d,p)	0.15	
+163–168
+
+
+
+Epicocconone	π → π*	17	B3LYP/6-31++G(d,p)	0.30	
+169
+
+Formazan	π → π*	10	PBE0/6-311G(2d,2p)	0.03	
+170
+
+Fulgide	π → π*	22	M06/6-311G(d,p)	0.06	
+171
+
+Hydrazone	π → π*	82	PBE0/6-311+G(2d,p)	0.12	
+172
+
+Indigo	π → π*	86	B3LYP/6-311+G(2d,p)	0.02	
+12
+
+Naphthoquinone	π → π*	69	PBE0/6-311+G(2d,p)	0.10	
+173
+
+π → π*	151	PBE0/6-311+G(2d,p)	0.11	
+174
+
+1,8-Naphthalimide	π → π*	39	PBE0/6-31+G(d)	0.21	
+175
+
+π → π*	23	PBE0/6-31+G(d)	0.13	
+176
+
+Nitroso	n → π*	22	PBE0/6-311++G(3d,3p)	0.05	
+177
+
+
+N-methylmaleimide	π → π*/charge-transfer	20	B3LYP/6-31+G(d,p)	0.10	
+178
+
+Organoboron-azole	π → π*	12	B3LYP/6-311++G(d,p)	0.15	
+179
+
+Oxazine	π → π*/cyanine	10	M06/6-311++G(d,p)	0.08	
+180
+
+Pechmann	π → π*	12	BMK/DGDZVP	0.12	
+181
+
+π → π*	6	PBE0/DZVP	0.17	
+182
+
+Phthalocyanine	π → π*	6	B3LYP/6-31G(d)	0.11	
+183
+
+π → π*	10	BP86/6-31G(d)	0.13	
+184
+
+Polyphenol (flavonoid)	π → π*	30	B3P86/6-311+G(d,p)	0.19	
+185
+
+π → π*	9	B3LYP/6-31+G(d)	0.10	
+186
+
+Porphyrin (and related)	π → π*	7	B3LYP/6-31G(d)	0.07	
+187
+
+π → π*	11	PBE0/6-31+G(d)	0.25	
+188
+
+π → π*	20	PBE0/6-31+G(d)	0.23	
+189
+
+Pyrene	π → π*	43	B3LYP/cc-pVTZ	0.22	
+190
+
+Pyridylazulene	n → π* and π → π*	24	PBE0/6-311++G(2d,2p)	0.20	
+191
+
+Ru/Os polypyridyl	π → π*/charge-transfer	10	PBE0/6-31G(d)/CEP-121	0.11	
+192
+
+π → π*/charge-transfer	6	PBE0/LanL2DZ	0.12	
+193
+
+Spirooxazine (open isomer)	Cyanine	25	TPSSh/6-311+G(2d,p)	0.24	
+194
+
+Squaraine	Cyanine	39	BLYP/6-311G(d,p)	0.14	
+195
+
+Cyanine	13	PBE0/SVP	0.31	
+29
+
+Streptopolymethine	Cyanine	7	BLYP/6-311+G(d,p)	0.64	
+134
+
+
+
+Thienopyrazine	Charge-transfer	21	CAM-B3LYP/6-311+G(2d,p)	0.12	
+196
+
+Thiocarbonyl	n → π*	102	B3LYP/6-311+G(2df,p)	0.07	
+197
+
+n → π* and π → π*	29	B3LYP/6-31+G(d)	0.20	
+198
+
+Thioindigo	π → π*	170	PBE0/6-311+G(2d,p)	0.03	
+199
+
+Triazene	π → π*	5	PBE0/6-311+G(2d,p)	0.11	
+200
+
+Triphenylamine (DSSC)	Charge-transfer	21	BHandHLYP/6-311+G(2d,2p)	0.28	
+201
+
+Triphenylcarbocationic	π → π*/cyanine	45	PBE0/6-311G(d,p)	0.27	
+202
+
+	(6)
+
+ 	Fig. 2  Comparisons between simulated (both stick and convoluted) and measured (top left panel) visible absorption spectra of 1,4-NH2-9,10-anthraquinone. Adapted with permission from D. Jacquemin, E. Brémond, A. Planchat, I. Ciofini and C. Adamo, J. Chem. Theory Comput., 2011, 7, 1882–1892. Copyright 2011, American Chemical Society. The top left panel is adapted with permission from M. S. Khan and Z. H. Khan, Spectrochim. Acta, Part A, 2003, 59, 1409–1426. Copyright 2003, Elsevier.	 
+
+ 	Fig. 3  Comparisons between experimental λmax and vertical absorption wavelengths computed with PBE0. Original data used various basis sets.152,177,197,258 All data are in nm. The central line indicates a perfect match between experiment and theory.	 
+
+ 	Fig. 4  Density difference plots (blue regions: decrease of electron density, red regions: increase of electron density) between the ES and GS for a typical D–Π–A dye. The green arrow indicates the CT vector, as computed from Le Bahers' method. Adapted with permission from I. Ciofini, T. Le Bahers, C. Adamo, F. Odobel, D. Jacquemin J. Phys. Chem. C, 2012, 116, 11946–11955. Copyright 2012, American Chemical Society.	 
+
+ 	Fig. 5  Sketch of a CT dye adsorbed over a semiconductor surface.	 
+
+ 	Fig. 6  Representation of typical fluoroborate dyes. From left to right: NBN (BODIPY with X = CH or aza-BODIPY with X = N), NBO and OBO cores.	 
+
+ 	Fig. 7  Comparison between experimental AFCP and theoretical E0–0 energies for 9 aza-BODIPY (green triangles),370 68 BODIPY (red circles)113 and 25 NBO (blue squares)371 derivatives.375 The central line indicates a perfect match between theory and experiment.	 
+
+ 	Fig. 8  Comparison between experimental (top left panel) and theoretical absorption spectra of two N–B–N fluorophores. Adapted with permission from S. Chibani, B. Le Guennic, A. Charaf-Eddin, A. D. Laurent and D. Jacquemin, Chem. Sci., 2013, 4, 1950–1963. Copyright 2013, Royal Society of Chemistry. The top left panel is reprinted with permission from Y. Zhou, Y. Xiao, D. Li, M. Fu and X. Qian, J. Org. Chem., 2008, 73, 1571–1574. Copyright 2008, American Chemical Society.	 
+
+ 	Fig. 9  Qualitative representation of the S1 PES of N-salicylideneaniline inferred from both experiment and TD-DFT simulations. Reprinted with permission from T. Sekikawa, O. Schalk, G. Wu, A. E. Boguslavskiy and A. Stolow, J. Phys. Chem. A, 2013, 117, 2971–2979. Copyright 2013, American Chemical Society.	 
+
+ 	Fig. 10  Domain structure of HSA. Coloured ligands indicate considered binding sites of HSA-BS1 (magenta), BS2 (mauve), and heme-BS (lime). Reprinted with permission from K. Aidas, J. M. H. Olsen, J. Kongsted and H. Agren, J. Phys. Chem. B, 2013, 117, 2069–2080. Copyright 2013, American Chemical Society.	 
+
+This journal is © the Owner Societies 2014

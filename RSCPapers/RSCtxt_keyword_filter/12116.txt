@@ -1,0 +1,353 @@
+Advancing vapor-deposited perovskite solar cells via machine learning   - Journal of Materials Chemistry A (RSC Publishing) DOI:10.1039/D3TA00027C View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D3TA00027C
+(Communication)
+J. Mater. Chem. A, 2023, 11, 13201-13208Advancing vapor-deposited perovskite solar cells via machine learning†
+
+        
+          
+            Jiazheng 
+            Wang
+          
+        
+      a, 
+      
+        
+          
+            Yuchen 
+            Qi
+          
+        
+      a, 
+      
+        
+          
+            Haofeng 
+            Zheng
+          
+        
+      a, 
+      
+        
+          
+            Ruilong 
+            Wang
+          
+        
+      a, 
+      
+        
+          
+            Siyou 
+            Bai
+          
+        
+      a, 
+      
+        
+          
+            Yanan 
+            Liu
+          
+        
+      a, 
+      
+        
+          
+            Qi 
+            Liu
+          
+        
+      a, 
+      
+        
+          
+            Jin 
+            Xiao
+          
+        
+      a, 
+      
+        
+          
+            Dechun 
+            Zou
+          
+        
+      b and 
+
+        
+          
+            Shaocong 
+            Hou
+          
+        
+      *a
+aSchool of Electrical Engineering and Automation, Wuhan University Shenzhen Research Institute, Wuhan University, Wuhan 430072, China. E-mail: sc.hou@whu.edu.cn
+bBeijing National Laboratory for Molecular Sciences, College of Chemistry and Molecular Engineering, Peking University, Beijing 100871, China
+Received 
+      2nd January 2023
+    , Accepted 23rd February 2023First published on 24th February 2023AbstractThe last decade witnessed a rapid development in perovskite solar cells in both power conversion efficiency and device lifetimes, mainly relying on lab-scale solution-processing technologies. Vapor-deposited perovskite solar cells compatible with the existing large-scale electronic industry, however, have significantly lagged behind. In this study, we extracted 220 reliable data from peer-reviewed publications on thermally evaporated perovskite solar cells and utilized 20 features consisting of material components and fabrication parameters for machine learning (ML) training. By combining the random forest model with the genetic algorithm, we constructed a performance prediction model with a root mean square error (RMSE) of 3.16% and a Pearson coefficient of 0.67. The SHapley Additive exPlanations (SHAP) analysis shows that the ratio of cations to anions in the perovskite layer and the annealing temperature contribute the most to power conversion efficiency. After detailed screening of the multi-dimensional variable spaces, we suggested an optimum device architecture as well as its critical fabrication conditions, forecasting the highest PCE of 26.1%, which exceeds the state-of-the-art efficiency record reported so far. Our work helps to accelerate the development of vapor-deposited perovskite solar cells and push forward their industrial production.
+1. Introduction
+In the last decade, hybrid perovskite solar cells (PSCs) have received increasing attention from both academia and industry due to their excellent performance and low cost.1–3 These perovskite solar cells have been mainly fabricated via solution processes, ranging from lab-scale spin-coating4 to large-scale slot-die coating,5 exhibiting a record power conversion efficiency of 25.7% and a T80 lifetime of over 2000 hours.6–9 However, challenges remain for solution-processed perovskite solar cells, particularly during large-scale production, including precise control of precursor solutions, minimizing the toxicity of solvents as well as understanding the complexity of crystalline processes.10–12 Along with solution processes, vapor deposition has the advantages of high potential for large-area modules, facile integration with tandem solar cells, and compatibility with existing industrial manufacturing techniques, beneficial for industrial-scale fabrication.13,14 Since Snaith and coworkers15 demonstrated the first planar-heterojunction PSCs by thermally co-evaporating precursor solids with a power conversion efficiency (PCE) of 15.4% in 2013, different vapor-deposition methods, such as thermal evaporation,16–20 magnetron sputtering21,22 and chemical vapor deposition,23,24 have been developed to fabricate perovskite solar cells. Recently, Yi and co-workers have demonstrated an impressive PCE as high as 24.42% by sequential evaporation deposition.25 However, compared with their solution-processing counterpart, the development of vapor-deposited perovskite solar cells generally lagged behind, mainly due to limited access to the expensive fabrication equipment.26 Current works on vapor-deposited PSCs are largely dependent on trial-and-error experiments with only a few parameters of the material components and deposition parameters, which is inefficient and further increases the cost. Efficient methods to improve the device performance and understand the delicate relationships of experimental parameters are highly desirable.27–30
+Recently, machine learning has been increasingly applied to accelerate the research on perovskite materials and devices. It can combine theoretical calculations for the screening and optimization of PSC materials,31 or use experimental data for data mining and depicting the correlation of factors with device performance,32 which would be impossible for conventional empirical methods or first-principles methods. Thus, machine learning provides a huge opportunity for novel perovskite solar cells.
+In this study, we built a database of vapor-deposited perovskite solar cells and trained it with state-of-the-art machine-learning models utilizing 20 feature descriptors. The SHapley Additive exPlanations (SHAP) algorithm was further applied to explore the correlation of each feature in the large variable space. Finally, we systematically explored the material components, evaporation pressure and the annealing temperature, yielding the highest predicted PCE of 26.1%. This study not only helps to accelerate the improvement of vapor-deposited PSCs, but also provides a promising way to the industrial production of PSCs as well as other emerging photovoltaic technologies.
+2. Results and discussion
+2.1 Database construction
+The database of vapor-deposited perovskite solar cells was built in four steps as follows: (1) data extraction: 220 data points were extracted from 150 devices of thermally evaporated PSCs in the peer-reviewed publication reported between 2015 and 2022. (2) Data cleaning: low-quality data including low efficiency, extremely complicate device architecture as well as the duplicate ones with the same architecture were manually removed, and the sample size was reduced to 180. (3) Impution for missing data: a few missing values in the dataset were filled by the mode of data in each column. (4) Data augmentation: Gaussian noise was added to expand the small dataset, and the sample size increases by three times.33,34 The final dataset will be used to build predictive models and investigate the various variables that affect the performance of PSCs, as shown in Fig. 1.
+ Fig. 1  Flow chart of the ML model, consisting of four main parts: building the dataset, feature engineering, SHAP interpretation model, and model prediction. 
+2.2 Feature engineering
+We chose 20 feature descriptors as input variables based on the knowledge of their potential effects on the device performance as well as their availability in the literature. They generally fall into four categories: (1) material components, including the type of cations and anions as well as their ratios in the perovskite layer, (2) material properties, including work function of the front and back contacts, highest occupied/lowest unoccupied molecular orbitals (HOMO/LUMO) of the electron/hole transporting layers (ETL/HTL), (3) device architecture including normal and inverse architecture, and (4) fabrication methods including single-source evaporation, co-evaporation and sequential deposition, and its conditions including the thickness of the perovskite layer, deposition pressure and annealing temperature after deposition. Detailed descriptions of the input features could be found in Table 1. In addition, some factors such as charge mobilities and thicknesses of HTL and ETL materials that also play an important role in device performance have been selectively discarded as inputs because they are not described in most of the articles we collected. The output variables consisted of four photovoltaic (PV) characteristics, namely, short-circuit current density (JSC), open-circuit voltage (VOC), fill factor (FF), and PCE. The extracted values of these input and output features were directly used for coding, except for the evaporation method and the device architecture, for which one-hot encoding method was used. Fig. 2 describes the correlation matrix of all input and output features. The absolute value of the Pearson correlation coefficient (r) between the vast majority of every two input variables is less than 0.5, confirming that the features we collected are not redundant. Notably, the r values between cation ratios and between anion ratios are greater than 0.5 due to the fixed stoichiometric ratio of the perovskite structure, and they have been retained to allow a clearer exploration of the effect of each ion on device performance.
+Table 1 The 19 features used to input ML models and their meanings
+
+
+
+
+Input features
+Description
+
+
+
+
+Cs_ratio
+Ratio of Cs cations to all cations in the perovskite layer
+
+
+MA_ratio
+Ratio of MA cations to all cations in the perovskite layer
+
+
+FA_ratio
+Ratio of FA cations to all cations in the perovskite layer
+
+
+Br_ratio
+Ratio of Br anions to all anions in the perovskite layer
+
+
+I_ratio
+Ratio of I anions to all anions in the perovskite layer
+
+
+HTL1_HOMO
+HOMO of the first HTL layer
+
+
+HTL1_LUMO
+LUMO of the first HTL layer
+
+
+HTL2_HOMO
+HOMO of the second HTL layer
+
+
+HTL2_LUMO
+LUMO of the second HTL layer
+
+
+ETL1_HOMO
+HOMO of the first ETL layer
+
+
+ETL1_LUMO
+LUMO of the first ETL layer
+
+
+ETL2_HOMO
+HOMO of the second ETL layer
+
+
+ETL2_LUMO
+LUMO of the second ETL layer
+
+
+Sub_W
+Metal work function of substrate materials
+
+
+Back_W
+Metal work function of back contact materials
+
+
+Structure
+Normal and reverse architecture for devices
+
+
+Method
+Single-source evaporation, co-evaporation and sequential deposition
+
+
+Annealing temperature
+The annealing temperature after deposition
+
+
+Pressure
+The pressure during evaporation
+
+
+Thickness
+The thickness of perovskite layer
+
+
+
+
+ Fig. 2  Heat maps of Pearson correlation coefficients between the selected features. 
+2.3 Model training
+We then split the samples in the database into 80% of training sets and 80% of test sets, and trained them with ten machine learning (ML) models, namely, linear regression (LR), decision tree (DTree), gradient boosting (GBoost), multilayer perceptron (MLP), adaboost (ABoost), extra tree (ETree), random forest (RF), linear support vector regression (linear SVR), support vector regression (SVR), and xgboost (XGBoost). The hyperparameters of the above-mentioned models were adjusted using GridSearchCV, and the root mean square error (RMSE) and r were used as optimization criteria to assess the ML model's precision.
+In Fig. 3a, the prediction performance of different models is compared. Among them, the XGBoost and RF models had a higher accuracy on the training set (87.3% and 85.4%, respectively), whereas the RF model had the highest accuracy on the test set (60.2%). We therefore selected the modified RF model as the representative ML model in the following analysis. Furthermore, to enhance the generalization ability of the ML model, we combined it with the GA algorithm. As shown in Fig. 3b, the RF model with the GA algorithm has much higher accuracy in predicating the test set, increasing from 60.2% to 67.4%, which avoids overfitting to a certain extent. A typical prediction performance of our model on both the training and test sets is shown in Fig. 3c–f. For all predictions (PCE, VOC, FF and JSC), the predicted values are almost in perfectly linear relationship with the real experimental values, confirming the strong predictive power of our models. For both training and testing sets, the data points are more evenly distributed along the predicting line, although the deviation of JSC prediction is a bit larger. We speculate that this may come from the inconsistent value of JSC in the devices with strong hysteresis effect in the early studies in our database. In addition to evaluating the accuracy of the model, we also present the prediction results of the RF model on the training and test sets for the PV parameters (PCE, VOC, FF and JSC), as shown in Table 2. The r values on the test set all exceed 0.6, and the RMSE of PCE, VOC, JSC, and FF predication are as low as 3.16%, 24.2 mV, 1.4 mA cm−2 and 0.08, respectively; these results confirm the high accuracy and dependability of our model.
+ Fig. 3  (a) Comparison of the classification accuracies of different models on the training and test sets. (b) Accuracy after combining GA algorithm. Prediction performance of the ML models. PCE (c), JSC (d), VOC (e) and FF (f), prediction of both training and testing datasets using the random forest model. 
+Table 2 Accuracy parameter values of ML model for each performance prediction
+
+
+
+
+
+
+
+r_train
+RMSE_train
+
+r_test
+RMSE_test
+
+
+
+
+PCE
+0.85
+2.12 (%)
+0.60
+3.16 (%)
+
+
+
+V
+OC
+
+0.81
+15.7 (mV)
+0.62
+24.2 (mV)
+
+
+
+J
+SC
+
+0.79
+0.96 (mA cm−2)
+0.59
+1.4 (mA cm−2)
+
+
+FF
+0.87
+0.06
+0.77
+0.08
+
+
+
+
+
+Fig. 4a analyzes the feature importance for PCE by the average value of the Gini index for feature contributions on each decision tree in the random forest model.35–38 The top ten most important features rank as the annealing temperature, MA ratio, Br ratio, pressure, HTL LUMO, ETL HOMO, I ratio, work function of back metal contact, FA ratio and HTL HOMO. Notably, the importance of the top four features (nearly 0.2 for the annealing temperature and more than 0.1 for MA ratio, Br ratio and the pressure each) contributed more than 50% of importance for the PCE. Fig. 4b further analyzes the positive or negative contribution of these features by the SHapley Additive exPlanations (SHAP) algorithm. Each row represents a feature, whereas each point represents a sample. The features are listed in the decreasing order of feature importance. Crowded points signify a lot of samples accumulated. The horizontal axis displays positive and negative SHAP values, whereas red indicates high feature values and blue indicates low feature values. For the annealing temperature, the data points with a large value in red color and the ones with a small value in blue color locate at the left side, which means a negative contribution to PCE. The purple points corresponding to a medium temperature positively contribute to the PCE. The ratio of MA, FA, Br and I has similar effects on PCE, and only a small ratio of these cations and anions will be beneficial for PCE. In contrast, the Cs ratio shows an opposite trend, and a higher ratio of Cs is beneficial for the device performance. For the charge transporting layer, high LUMO and low HOMO are good for HTL, while low LUMO and high HOMO are good for ETL. With regard to the thickness of the perovskite layer, too thick layers may lead to increased carrier transport distance, increased non-radiative process, and lower VOC, while too thin layers are not conducive to the enhancement in the light absorption capacity, which will reduce the JSC value and ultimately affect the PCE of PSCs. For other features, the largest SHAP value corresponds to ITO for the substrate, SnO2 for the first layer of ETL, BCP for the second layer of ETL, MeO-2PACz for the HTL, and Ag for the back contact, using the normal architecture and the sequential evaporation method.
+ Fig. 4  Feature importance (a) and contribution analysis of input features to PCE using SHAP (b). 
+2.4 Model predication
+As the MA ratio, FA ratio, Br ratio, annealing temperature and pressure contribute the most to the PCE of PSCs, we used the ML prediction function to screen this five-dimensional variable space and analyze their interactions. We first investigate the coupling effect of annealing temperature and FA ratio on PCE, and the heat map is shown in Fig. 5a. The PCE first increases and then decreases with the increase in annealing temperature and FA ratio. The maximum value of PCE can be achieved at an optimum annealing temperature of about 105 °C and a FA ratio of about 0.25. This is consistent with the experimental work reported before.39,40Fig. 5b shows the coupling effect of annealing temperature and MA ratio on the PCE. When the MA ratio value is less than 0.2, the effect of the annealing temperature on PCE is similar to that shown in Fig. 5a. However, when the MA ratio value is greater than 0.2, the PCE gradually decreases with the increase in the annealing temperature. The maximum PCE corresponds to an MA ratio of 0.25 and an annealing temperature of 90 °C. Fig. 5c shows the heat map of annealing temperature and Br ratio on the PCE. The effect of Br ratio is similar to that of FA ratio and MA ratio. The PCE increases with the increase in annealing temperature, when the Br ratio is greater than 0.2. The maximum value of PCE can be achieved at an optimum annealing temperature of about 90 °C and a Br ratio of about 0.25.
+ Fig. 5  Prediction graph using ML; the red pentagram represents the largest PCE point. (a) Effect of annealing temperature and FA on PCE. (b) Effect of annealing temperature vs. MA on PCE. (c) Effect of annealing temperature vs. Br on PCE. (d) Effect of annealing temperature vs. evaporation pressure on PCE. 
+Then, we investigated the coupling effect of the annealing temperature and evaporation pressure. In the heat map shown in Fig. 5d, too low or too high values of the annealing temperature (less than 75 °C or greater than 225 °C) and pressures (less than 2 × 10−5 mbar or greater than 8 × 10−5 mbar) are detrimental to the performance of the PSCs. The maximum PCE prediction points correspond to an annealing temperature and an evaporation pressure of 110 °C and 3.2 × 10−5 mbar, respectively. Through the above-mentioned coupling analysis, we narrowed down the range of annealing temperature between 80 °C and 120 °C, the range of pressure between 1 × 10−5 mbar and 4 × 10−5 mbar, and the optimal MA ratio, FA ratio, and Br ratio around 0.25.
+We further co-screened all of the five parameters (the annealing temperature, the evaporation pressure, and the ratios of MA, FA and Br) together in the prediction ML model. The maximum PCE of 26.1% can be achieved by utilizing a substrate material of ITO, a first layer of ETL material of SnO2, a second layer of ETL material of BCP, a perovskite layer of MA0.25FA0.25CS0.5Pb(I0.75Br0.25)3, a HTL material of MeO-2PACz and a back contact of Ag, as well as an annealing temperature range of 90–105 °C and an evaporation pressure range of 3 × 10−5 to 4 × 10−5 mbar. This result indicates that thermal evaporation has potential to compete with solution processes, and we expect that some specific treatments such as additive engineering and interface engineering not yet considered in this work will be used in future experiments to achieve exciting and record-breaking efficiency results.
+3. Conclusion
+We built a dataset involving 19 input features by collecting 220 data points from over a thousand publications in the past. The ML model was then trained to predict the PV parameters of the final PSCs. After feature engineering, the random forest model with GA has the highest r value (0.67) and the lowest RMSE (3.16%) for the PCE prediction. Finally, we predicted the highest PCE of 26.1% with an suggested device architecture of ITO/SnO2//BCP/FA0.25MA0.25Cs0.5Pb(I0.75Br0.25)3/MeO-2PACz/Ag with fabrication conditions of a deposition pressure of 3.5 × 10−5 mbar and an annealing temperature of 105 °C. Our work provides a novel approach to explore the fabrication of high-performance PSCs by thermal evaporation, which greatly accelerates the industrialization of emerging photovoltaic technologies.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+This work is supported by the National Natural Science Foundation of China (Grant No. 52273194) and Guangdong Basic and Applied Basic Research Foundation (Grant No. 2023A1515011642).
+References
+M. I. H. Ansari, A. Qurashi and M. K. Nazeeruddin, J. Photochem. Photobiol., C, 2018, 1, 24 Search PubMed.
+W. Li, M. U. Rothmann, Y. Zhu, W. Chen, C. Yang, Y. Yuan, Y. Y. Choo, X. Wen, Y.-B. Cheng and U. Bach, Nat. Energy, 2021, 624, 632 Search PubMed.
+N. J. Jeon, J. H. Noh, Y. C. Kim, W. S. Yang, S. Ryu and S. I. Seok, Nat. Mater., 2014, 897, 903 Search PubMed.
+N.-G. Park and K. Zhu, Nat. Rev. Mater., 2020, 333, 350 Search PubMed.
+C. Liu, Y.-B. Cheng and Z. Ge, Chem. Soc. Rev., 2020, 1653, 1687 Search PubMed.
+L. Zeng, S. Chen, K. Forberich, C. J. Brabec, Y. Mai and F. Guo, Energy Environ. Sci., 2020, 4666, 4690 Search PubMed.
+Y. Hu, W. Song, X. Wang, X. Shi, X. Jia, Z. He, S. Zhang, G. Yuan, M. Wang and J. Wang, Chem. Eng. J., 2022, 433, 134566 CrossRef CAS.
+S. Wang, X. Li, J. Wu, W. Wen and Y. Qi, Curr. Opin. Electrochem., 2018, 130, 140 Search PubMed.
+H. Ding, S. George, X. I. Leng, M. Ihnat, J.-X. Ma, G. Jiang, D. Margolis, J. Dumond and Y. Zhang, Mater. Today Adv., 2022, 14, 100232 CrossRef.
+W. A. Dunlap-Shohl, Y. Zhou, N. P. Padture and D. B. Mitzi, Chem. Rev., 2018, 3193, 3295 Search PubMed.
+Q. Ma, S. Huang, X. Wen, M. A. Green and A. W. Ho-Baillie, Adv. Energy Mater., 2016, 6, 1502202 CrossRef.
+X. Liu, X. Tan, Z. Liu, B. Sun, J. Li, S. Xi, T. Shi and G. Liao, J. Power Sources, 2019, 443, 227269 CrossRef CAS.
+X. Li, W. Zhang, X. Guo, C. Lu, J. Wei and J. Fang, Science, 2022, 434, 437 Search PubMed.
+J. Zhang, G. Hodes, Z. Jin and S. Liu, Angew. Chem., Int. Ed., 2019, 15596, 15618 Search PubMed.
+M. Liu, M. B. Johnston and H. J. Snaith, Nature, 2013, 501, 395–398 CrossRef CAS PubMed.
+J. Burschka, N. Pellet, S.-J. Moon, R. Humphry-Baker, P. Gao, M. K. Nazeeruddin and M. Grätzel, Nat, 2013, 316, 319 Search PubMed.
+S. Chen, X. Xiao, B. Chen, L. L. Kelly, J. Zhao, Y. Lin, M. F. Toney and J. Huang, Sci. Adv., 2021, 7, eabb2412 CrossRef CAS PubMed.
+L. K. Ono, M. R. Leyden, S. Wang and Y. Qi, J. Mater. Chem. A, 2016, 6693, 6713 Search PubMed.
+F. Fu, T. Feurer, T. Jäger, E. Avancini, B. Bissig, S. Yoon, S. Buecheler and A. N. Tiwari, Nat. Commun., 2015, 1, 9 Search PubMed.
+W. S. Subhani, K. Wang, M. Du, X. Wang and S. Liu, Adv. Energy Mater., 2019, 6, 1803785 CrossRef.
+D. Yang, R. Yang, J. Zhang, Z. Yang, S. F. Liu and C. Li, Energy Environ. Sci., 2015, 3208, 3214 Search PubMed.
+H. Wang, X. Gong, D. Zhao, Y.-B. Zhao, S. Wang, J. Zhang, L. Kong, B. Wei, R. Quintero-Bermudez and O. Voznyy, Joule, 2020, 1977, 1987 Search PubMed.
+P. Du, L. Wang, J. Li, J. Luo, Y. Ma, J. Tang and T. Zhai, Adv. Opt. Mater., 2022, 10, 2101770 CrossRef CAS.
+L. A. Frolova, D. V. Anokhin, A. A. Piryazev, S. Y. Luchkin, N. N. Dremova, K. J. Stevenson and P. A. Troshin, J. Phys. Chem. Lett., 2017, 67, 72 Search PubMed.
+H. Li, J. Zhou, L. Tan, M. Li, C. Jiang, S. Wang, X. Zhao, Y. Liu, Y. Zhang, Y. Ye, W. Tress and C. Yi, Sci. Adv., 2022, 8, eabo7422 CrossRef PubMed.
+T. Gallet, R. G. Poeira, E. M. Lanzoni, T. Abzieher, U. W. Paetzold and A. Redinger, ACS Appl. Mater. Interfaces, 2021, 2642, 2653 Search PubMed.
+M. B. Faheem, B. Khan, C. Feng, M. U. Farooq, F. Raziq, Y. Xiao and Y. Li, ACS Energy Lett., 2019, 290, 320 Search PubMed.
+P. S. Shen, J. S. Chen, Y. H. Chiang, M. H. Li, T. F. Guo and P. Chen, Adv. Mater. Interfaces, 2016, 3, 1500849 CrossRef.
+J. Feng, Y. Jiao, H. Wang, X. Zhu, Y. Sun, M. Du, Y. Cao, D. Yang and S. F. Liu, Energy Environ. Sci., 2021, 3035, 3043 Search PubMed.
+J. Yin, H. Qu, J. Cao, H. Tai, J. Li and N. Zheng, J. Mater. Chem. A, 2016, 13203, 13210 Search PubMed.
+S. Lu, Q. Zhou, Y. Ouyang, Y. Guo, Q. Li and J. Wang, Nat. Commun., 2018, 1, 8 Search PubMed.
+J. Li, B. Pradhan, S. Gaur and J. Thomas, Adv. Energy Mater., 2019, 9, 1901891 CrossRef CAS.
+J. Ma and D. Guo, Sol. Energy, 2020, 21, 29 Search PubMed.
+I. M. Pendleton, M. K. Caucci, M. Tynes, A. Dharna, M. A. N. Nellikkal, Z. Li, E. M. Chan, A. J. Norquist and J. Schrier, J. Phys. Chem. C, 2020, 13982, 13992 Search PubMed.
+B. Heung, C. E. Bulmer and M. G. Schmidt, Geoderma, 2014, 141, 154 Search PubMed.
+H. Li, J. Lin, X. Lei and T. Wei, Mater. Today Commun., 2022, 30, 103117 CrossRef CAS.
+Y. Li, C. Zou, M. Berecibar, E. Nanini-Maury, J. C.-W. Chan, P. Van den Bossche, J. Van Mierlo and N. Omar, Appl. Energy, 2018, 197, 210 Search PubMed.
+J. Huang, T. Duan, Y. Zhang, J. Liu, J. Zhang and Y. Lei, Adv. Civ. Eng., 2020, 11, 8863181 Search PubMed.
+A. Mishra, D. Hodges and R. Misra, Mater. Res. Express, 2017, 4, 096201 CrossRef.
+K. B. Lohmann, J. B. Patel, M. U. Rothmann, C. Q. Xia, R. D. Oliver, L. M. Herz, H. J. Snaith and M. B. Johnston, ACS Energy Lett., 2020, 710, 717 Search PubMed.
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d3ta00027cThis journal is © The Royal Society of Chemistry 2023
+Table Content:
+
+ 	Fig. 1  Flow chart of the ML model, consisting of four main parts: building the dataset, feature engineering, SHAP interpretation model, and model prediction.	 
+
+Cs_ratio	Ratio of Cs cations to all cations in the perovskite layer
+MA_ratio	Ratio of MA cations to all cations in the perovskite layer
+FA_ratio	Ratio of FA cations to all cations in the perovskite layer
+Br_ratio	Ratio of Br anions to all anions in the perovskite layer
+I_ratio	Ratio of I anions to all anions in the perovskite layer
+HTL1_HOMO	HOMO of the first HTL layer
+HTL1_LUMO	LUMO of the first HTL layer
+HTL2_HOMO	HOMO of the second HTL layer
+HTL2_LUMO	LUMO of the second HTL layer
+ETL1_HOMO	HOMO of the first ETL layer
+ETL1_LUMO	LUMO of the first ETL layer
+ETL2_HOMO	HOMO of the second ETL layer
+ETL2_LUMO	LUMO of the second ETL layer
+Sub_W	Metal work function of substrate materials
+Back_W	Metal work function of back contact materials
+Structure	Normal and reverse architecture for devices
+Method	Single-source evaporation, co-evaporation and sequential deposition
+Annealing temperature	The annealing temperature after deposition
+Pressure	The pressure during evaporation
+Thickness	The thickness of perovskite layer
+
+ 	Fig. 2  Heat maps of Pearson correlation coefficients between the selected features.	 
+
+ 	Fig. 3  (a) Comparison of the classification accuracies of different models on the training and test sets. (b) Accuracy after combining GA algorithm. Prediction performance of the ML models. PCE (c), JSC (d), VOC (e) and FF (f), prediction of both training and testing datasets using the random forest model.	 
+
+PCE	0.85	2.12 (%)	0.60	3.16 (%)
+
+V
+OC
+	0.81	15.7 (mV)	0.62	24.2 (mV)
+
+J
+SC
+	0.79	0.96 (mA cm−2)	0.59	1.4 (mA cm−2)
+FF	0.87	0.06	0.77	0.08
+
+ 	Fig. 4  Feature importance (a) and contribution analysis of input features to PCE using SHAP (b).	 
+
+ 	Fig. 5  Prediction graph using ML; the red pentagram represents the largest PCE point. (a) Effect of annealing temperature and FA on PCE. (b) Effect of annealing temperature vs. MA on PCE. (c) Effect of annealing temperature vs. Br on PCE. (d) Effect of annealing temperature vs. evaporation pressure on PCE.	 
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d3ta00027c
+
+This journal is © The Royal Society of Chemistry 2023

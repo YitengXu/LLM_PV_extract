@@ -1,0 +1,840 @@
+Tight binding models accurately predict band structures for copolymer semiconductors  - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/D0CP01833C View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D0CP01833C
+(Paper)
+Phys. Chem. Chem. Phys., 2020, 22, 19659-19671Tight binding models accurately predict band structures for copolymer semiconductors
+
+        
+          
+            Prithvi 
+            Tipirneni
+          
+        
+      , 
+      
+        
+          
+            Vishal 
+            Jindal
+          
+        
+      , 
+      
+        
+          
+            Michael J. 
+            Janik
+          
+        
+       and 
+
+        
+          
+            Scott T. 
+            Milner
+          
+        
+      *
+      Department of Chemical Engineering, The Pennsylvania State University, University Park, PA 16802, USA. E-mail: stm9@psu.edu
+Received 
+      4th April 2020
+    , Accepted 23rd July 2020First published on 28th July 2020AbstractConjugated polymers possess a wide range of desirable properties including accessible band gaps, plasticity, tunability, mechanical flexibility and synthetic versatility, making them attractive for use as active materials in organic photovoltaics (OPVs). In particular, push–pull copolymers, consisting of alternating electron-rich and electron-deficient moieties, offer broad optical absorption, tunable band gaps, and increased charge transfer between monomer units. However, the large number of possible monomer combinations to explore means screening OPV copolymers by first-principles quantum calculations is computationally intensive. If copolymer band structures could be rapidly computed from homopolymer data, potential materials could be screened more efficiently. In this work, we construct tight binding models of copolymer band structures with parameters determined by density functional theory (DFT) calculations on homopolymers. We use these models to predict copolymer valence and conduction bands, which compare well to direct DFT calculations of copolymer band structures.
+1 Introduction
+Conjugated polymers are the subject of intensive research, motivated by their potential applications in semiconducting devices.1–3 The conjugated backbone of these polymers enables conductivity along the polymer chain. Organic photovoltaics are solar cells that employ conjugated polymers as photoactive materials; potential advantages over their inorganic counterparts include flexibility, reduced weight, low-cost production by polymer synthesis,4 and convenient processing by roll-to-roll printing.5,6
+Alternating donor–acceptor or “push–pull” conjugated polymers have been a focus of recent development for organic photovoltaics. Their optical and electronic properties, including absorption spectra and HOMO/LUMO levels, can be tuned by controlling the intramolecular charge transfer from donor to acceptor moieties. Rational design of the molecular structures of constituent polymers has been enabling for rapid advances in material properties and device performance.7
+Solar cells using homopolymers in the donor phase and PCBM ([6,6]-phenyl-C61-butyric acid methyl ester) in the acceptor phase delivered only limited power conversion efficiencies.8,9 These performance limits have been attributed to the narrow absorption spectra of the homopolymers, and their non-ideal frontier molecular orbital energies.10,11 In the past five years, device efficiencies have more than doubled,12 in part by tuning electronic properties of conjugated copolymers to optimize the overlap of electronic absorption with the solar spectrum.13
+Combining different monomer units in an alternating copolymer provides a potent way to tune electronic properties like the absorption spectrum, by taking advantage of the broad variation in frontier orbitals and band gaps afforded by different monomer structures. Development of push–pull narrow band gap copolymers as donor materials has enabled power conversion efficiencies of over 11 percent.14–18
+Synthesis of new alternating copolymers is time consuming; the parameter space we can explore in designing new copolymers is large, and prohibitive to fully explore experimentally.19,20 As a result, computational screening of copolymers before synthesis and testing is an appealing option.21 Several groups have used high-throughput computational approaches to aid the discovery of organic materials with promising properties.21–23 Most such efforts calculated properties of small molecule analogs, because computing the electronic structure of a large oligomer can be computationally expensive.
+Several studies describe how to extrapolate energy gaps for conjugated oligomers to the limit of infinite chains.24–31 These methods can predict frontier orbital energies and band gaps for conjugated polymers, which are of primary interest in choosing donor and acceptor materials, or compatibility with electrodes in a working device. However, extrapolation methods can be time-consuming because they require calculations on large oligomers.24,25,31 Also, they do not provide information on band structure beyond the band gaps, which are needed for calculations of polaron and exciton structure and transport.
+Ideally, a computational screening method for push–pull alternating copolymer structures would predict copolymer electronic properties directly from the choice of monomers, without extrapolating from electronic structure calculations on alternating oligomers. To achieve this, we exploit and extend tight-binding models, which have been successful in describing the conduction and valence bands of homopolymer organic semiconductors.32–34
+Tight binding models provide a semi-empirical description of the quantum mechanics of extended systems. In a tight binding model, the full set of electronic degrees of freedom is greatly reduced, by retaining only a few local states on a set of sites to describe valence and conduction electrons. For an organic semiconductor, a natural choice of states and sites are the local HOMO and LUMO orbitals on the constituent monomers.
+The tight binding Hamiltonian is appealingly simple: for each site, there is an onsite energy for an electron to occupy a state on the site, and a hopping matrix element for the electron to hop to an adjacent site. For chains in crystals or amorphous melts, there are smaller hopping matrix elements that couple sites on a given chain to nearby sites on other chains. The onsite energies and hopping matrix elements can vary as the polymer configuration changes. Distortions of monomer shapes can change the onsite energies; dihedral twists can reduce the hopping matrix elements along a chain; and hopping matrix elements between chains vary strongly with distance between monomers.
+Because tight binding models have so few electronic degrees of freedom and such a simple Hamiltonian, they can be used to treat much larger systems, describe the effects of disorder, and model physical phenomena that are inaccessible to first-principles electronic structure calculations. In previous work, our group has used tight binding models to predict the effects of dihedral disorder on absorption spectra;32 the size of polarons stabilized by interactions with polarizable media;33 and the structure of excitons in bulk, at interfaces, and in applied electric fields.34
+To use a tight binding model, its parameters must be fitted, either to experiment or first-principles calculations. In previous work, Mesta et al.35 have used tight binding models to predict electronic and optical properties of donor–acceptor polymers using tight binding parameters determined from DFT calculations on monomers and dimers, which are computationally inexpensive even when using hybrid (B3LYP) functional. The onsite energies are determined from monomer HOMO and LUMO levels, while the hopping matrix element between moieties is determined by observing the splitting of energy levels in the dimer as compared to the monomer.
+However, this approach does not provide information on the full band structure at the DFT level. As we shall show, DFT band structures are helpful to validate the approximations made by the tight binding model, specifically the neglect of interactions between frontier orbitals other than the HOMO or LUMO most directly involved in a given band which is needed to calculate structure and transport of excitons and polarons.
+Alternatively, here as in our previous work we fit onsite energies and hopping matrix elements by comparing to one-dimensional band structures for single infinite chains computed using density functional theory (DFT) for periodic systems.32 These DFT calculations are tractable if the repeating unit of the chain is not too large.
+Since the tight binding model is intended to describe electronic properties of long chains, intuitively it seems preferable to fit parameters to periodic DFT calculations for long chains, which are no more computationally expensive than monomer and dimer calculations at the GGA level of theory, though they can become more expensive if exact-exchange is to be included in the exchange–correlation functional.
+In this paper, we present a computational approach to predict conduction and valence bands for semiconducting alternating copolymers, without the need for first principles calculations on the copolymer itself. For tight-binding parameters, we rely instead on values fitted to band structures for the constituent homopolymers, computed using DFT with periodic boundary conditions. The hopping matrix elements between different moieties in the copolymer do not vary tremendously over a range of similar moieties, and are approximated as the average of values fitted for the corresponding homopolymers.
+To validate this approach, we compare tight binding band structures for alternating copolymers, predicted using parameters from fits to band structures for the constituent homopolymers, to periodic plane-wave DFT results for the infinite copolymer. We also compare to direct tight-binding fits to the DFT copolymer results, to quantify the error introduced by relying only on homopolymer parameters.
+The paper is organized as follows. First, we present tight binding models for different homopolymer band structures, with parameters fit to DFT results. Fig. 1 displays the monomers studied in this work, which form the constituents of several polymers used in high performing OPVs. Then, we use these homopolymer tight binding fits as input to predict copolymer band structures, and compare them with DFT results for the copolymers.
+ Fig. 1  Structure of monomers studied with their labels used in this paper (grey = C, white = H, yellow = S, blue = N). 
+2 Methods
+2.1 Tight binding approximation
+The tight binding approximation is a coarse-grained quantum mechanical description of the electronic structure of extended systems, in which local frontier orbitals on a set of sites are connected by hopping matrix elements between adjacent sites to form valence and conduction bands. For semiconducting polymers, the natural choice for sites are the aromatic or polyaromatic monomers that make up the chain. These moieties are quite rigid and tightly coupled electronically, so their internal electronic structure is only weakly perturbed by the overall chain conformation.
+A polymer chain is thus modeled as a one-dimensional array of sites, in which each site represents a monomer. The corresponding tight binding Hamiltonian can be written (1)Here c†k and ck are creation and annihilation operators for an electron on site k, εk is the onsite energy on site k, and tk is the hopping matrix element that couples adjacent sites k and k + 1. The first term in H represents the onsite energy, and the second accounts for stabilization from delocalization by hopping between sites.
+For a single undistorted chain in a uniform environment, the value of εk depends only on the type of site k; the hopping matrix element tk likewise depends only on the types of the two sites it connects. For homopolymers, there is one single onsite energy ε and one hopping matrix element t. For alternating copolymers, there are two onsite energies εA and εB, and one hopping matrix element tAB.
+Correspondingly, the wavefunction ψ of an electron on the chain can be written as a superposition of localized molecular orbitals: (2)Here ak are numerical coefficients, and |ϕk〉 are the localized molecular orbitals. The localized orbitals can be written in terms of creation operators c†k and a reference state 0 as |ϕk〉 = c†k|0〉(3)Here the reference state represents the chain with all its electrons except those in the valence band (see below). Finally, the set of energy eigenvalues and wavefunctions for the system are found by solving the time-independent Schrodinger equation H|ψ〉 = E|ψ〉.
+In the tight binding model, the full Hamiltonian is replaced by considering just the valence and conduction electrons. This coarse-graining makes tight binding models computationally inexpensive. The singlet filling the HOMO of each monomer contributes two electrons to the valence band. In the ground state of the chain, the valence band is full and the conduction band empty.
+The valence and conduction bands spread out from the HOMO and LUMO levels respectively as a consequence of hopping between adjacent monomers. If the HOMO and LUMO are widely separated compared to the bandwidth, interactions between the HOMO and LUMO on adjacent sites can be neglected. In this case, the valence and conduction bands can be treated independently, with separate tight binding Hamiltonians of the general form of eqn (1). For some polymers with narrow band gaps, HOMO and LUMO orbitals of adjacent monomers couple sufficiently that the tight binding model must couple these orbitals to properly account for the band structure.
+For systems with a discrete periodic symmetry, of which infinite polymer chains are one example, Bloch's theorem constrains the form of the wavefunction to be an eigenfunction of the discrete translation operator. For the case of a discrete translational symmetry in one dimension, this leads to a wavefunction written as (4)Here q is the wavenumber, Δ the distance between adjacent sites along the chain, ϕ(r) is a localized wavefunction restricted to the unit cell (i.e., to within ±Δ/2 of the origin), and the sum  runs over all sites of the infinite chain. Evidently we have ψq(r + Δ) = eiqΔψq(r)(5)which shows that ψq(r) is an eigenfunction of the discrete translation operator with eigenvalue eiqΔ.
+For periodic systems like a polymer chain with a single repeating moiety, and thus a wavefunction of the form eqn (2), Bloch's theorem implies the coefficients ak can be written as plane waves: ak = aeiqkΔ(6)where Δ is the distance between adjacent sites and q is the wavenumber, ranging from q = 0 to the band edge q = π/Δ. The localized orbital ϕk then corresponds to the localized wavefunction ϕ(r − kΔ).
+The tight-binding wavefunction for a given q modulates the local orbitals, as can be seen from eqn (2) and (6). This modulation raises or lowers the energy of the state depending on the symmetry of local orbitals, as described below.
+Monomers used in organic semiconductors are often symmetric under reflection through a mirror plane normal to the chain axis. The HOMO orbital for such monomers will be either even or odd under this reflection, with the LUMO having the opposite parity. Fig. 2 shows the frontier orbitals of thiophene and benzothiadiazole. Both moieties are symmetric under reflection; thus, the frontier orbitals have definite symmetries under reflection, with both HOMOs odd and both LUMOs even. Similarly, thienothiophene is symmetric under inversion, and its HOMO and LUMO have corresponding even and odd symmetry.
+ Fig. 2  Frontier orbitals of some selected monomers. 
+If the local orbital is odd, it changes sign across the monomer. An unmodulated homopolymer wavefunction (with q = 0) constructed from such an orbital (e.g., the thiophene HOMO) will have a node on every bond between monomers. These nodes correspond to antibonding interactions between adjacent monomers, and increase the kinetic energy of the wavefunction. Modulating the wavefunction (finite q) progressively eliminates these nodes, which finally disappear at q = π/Δ, when adjacent local orbitals appear in the wavefunction with opposite signs. In the tight-binding model, this situation corresponds to a negative value of t, and an energy band that “runs downhill” from q = 0 to the band edge.
+If the local orbital is even (e.g., the thiophene LUMO), an unmodulated homopolymer wavefunction constructed from this orbital will have no nodes between monomers, corresponding to the lowest possible kinetic energy for this band. As the wavenumber increases, nodes are progressively introduced between monomers, increasing the kinetic energy. At the band edge, the amplitude changes sign on every other site, so that every bond between monomers has a node. This situation corresponds to a positive value of t, and a band that “runs uphill”.
+Likewise, for alternating copolymers, the frontier orbital symmetries of the two alternating monomers determine the direction that the bands run. Because there are now two moieties in the unit cell, there are two bands for a given pair of frontier orbitals (the HOMOs, say), formed respectively from modulations of the symmetric and antisymmetric superpositions inside the unit cell. As for the case of homopolymers, the resulting bands run uphill or downhill in energy as q increases from zero, depending on whether the increasing modulation adds or removes nodes from the wavefunction.
+2.2 
+          Ab initio calculations
+As described above, we fit tight-binding model parameters to DFT results for one-dimensional band structures of homopolymers and copolymers. Band structures are computed for periodic unit cells of polymer chains using plane-wave DFT, using the Vienna Ab initio Simulation Package (VASP), with the GGA PW91 functional and an energy cut-off of 450 eV. One-dimensional band structures are computed for chains in ideal all-trans geometries, with unit cell dimensions in the transverse direction of 20 Å, large enough so that chains interact negligibly with their periodic images.
+Solubilizing side chains do not significantly affect the band structure, so they are replaced with hydrogens for simplicity. All the polymers are geometrically optimized, and 45 k-points along the Γ–X direction are used to compute the 1d band structure. All energy levels are referenced to the vacuum potential for consistency.
+Non-periodic DFT calculations are perhaps more commonly used than plane-wave DFT to compute electronic properties of semiconducting monomers and oligomers. For comparison purposes, we have computed HOMO and LUMO levels of constituent monomers using Gaussian 09, with the B3LYP functional and 6-311G(d,p) basis set. All the monomers are geometrically optimized. Though we have not done so in this work, continuum solvent models are available to replace the vacuum between chains, approximating the interaction of a polarizable dielectric medium on the DFT band structure of the polymer chain. Parameterizing the tight-binding model to the resultant “solvated” band structure would then approximate the role of dielectric screening on the conjugated polymer electronic structure.
+Practical considerations influence our choice of functionals. B3LYP is a hybrid functional, which includes a portion of exact exchange. It is available within Gaussian, and is commonly used for electronic structure calculations on organic molecules. For plane-wave methods used in codes like VASP, exact exchange is computationally intense, with 10–100× longer calculation times than pure GGA functionals.
+The valence and conduction bands of the polymer arise from modulated superpositions of local HOMO and LUMO orbitals respectively. Therefore, we expect the monomer HOMO and LUMO energy levels to align roughly with the center of conduction and valence bands of their respective homopolymers. Fig. 3 displays the widths of homopolymer valence bands (blue) and conduction (orange) bands from VASP, and the corresponding monomer HOMO and LUMO levels from Gaussian.
+ Fig. 3  Monomer HOMO/LUMO levels (black) and valence and conduction bandwidths (blue and orange) of corresponding homopolymers, for polypyrrole (PY), polyphenylene (PH), polythiophene (TH), polythienothiophene (TT), polyfluorene (FL), and polybenzothiadiazole (BT). All energies relative to an electron in vacuum. 
+Examining Fig. 3, we see that different monomers have different band gaps, as well as different offsets relative to each other. For example, polythiophene has a similar band gap compared to polybenzothiadiazole, but both the conduction and valence band edges are elevated by about 1 eV. (Throughout this paper, energy levels are reported relative to an electron in vacuum, so that different moieties and polymers can be compared on an equal footing.) Such comparisons are important in the design of push–pull homopolymers, or interfaces between homopolymers in multicomponent devices.
+The monomer HOMO levels align well with the centers of the corresponding valence bands; however, some of the LUMO levels do not align well with the conduction band centers. This may result from the different functionals used in VASP (GGA PW91) and Gaussian (B3LYP) for band structure and monomer calculations respectively.
+More generally, DFT calculations are known to display systematic errors in their predictions for the energies of unoccupied orbitals, with disparities between values from different functionals. As a result, band gaps from DFT methods can be unreliable, and are often too small compared to experiment.36–38
+Improved values of excited state energies for monomers and oligomers can be obtained from a variety of computational methods that go beyond DFT. These include (1) time-dependent DFT (TDDFT),39,40 (2) multi-configuration self-consistent field (MCSCF) methods,41,42 and (3) calculations based on the Bethe–Salpeter equations (BSE) in the GW approximation. BSE + GW calculations can give reliable results for excited states of organic molecules, but are computationally costly and impractical for large molecules.43,44 TDDFT methods are widely used for excited state properties, but can exhibit shortcomings when applied to extended systems,45–48 depending on the functional used. MCSCF methods employ states consisting of multiple Slater determinants, which can mix occupied and unoccupied states. In principle, as the number of determinants increases, MCSCF methods approach the exact solution of the many-electron problem; in practice, the set of states treated this way is limited to a few orbitals nearest the HOMO–LUMO gap. Generally speaking, post-DFT calculations on monomers can be used to get improved values of the HOMO–LUMO gap, which can be used to fit tight-binding onsite energies.
+In contrast, the bandwidths of the unoccupied conduction bands depend ultimately on overlap integrals between orbitals on adjacent moieties, which are probably well represented in standard ground-state DFT calculations. As a result, tight-binding hopping matrix elements fitted to DFT band structures may be reasonably accurate, even if the band gap is incorrect.
+In this work, we focus on the ability of the tight-binding model to describe homopolymer and copolymer band structures, and the degree to which parameters derived from homopolymer DFT calculations can predict copolymer band structures. Thus, for simplicity here we neglect any systematic errors in DFT band structures, and fit tight-binding models to DFT band structures as if they were completely correct. Our tight-binding band gaps therefore echo any systematic errors in the DFT results, and can be improved by advances in the underlying DFT methods.
+3 Parameterization of tight binding models
+In this section, we present a sequence of tight binding models for polymers of increasing complexity. In the simplest case, the HOMO–LUMO energy difference is large enough that HOMO orbitals on a given monomer only couple to HOMOs on adjacent monomers, not to adjacent LUMOs (and likewise, LUMO orbitals only couples to adjacent LUMOs). This leads to a separate tight binding models for the conduction and valence bands.
+If the HOMO–LUMO gap is comparable in size to the hopping matrix element, then hopping from the HOMO on a given monomer to the adjacent LUMO becomes significant. This leads to a tight binding model in which HOMO and LUMO bands mix, and are computed together. In this section, we give examples of homopolymers for which HOMO–LUMO coupling is important, and show how it qualitatively changes the shape of the bands.
+In either case, we adjust the tight binding parameters ε and t to fit the DFT band structures. Choosing parameters so that tight binding and DFT bands agree at the band edges gives excellent agreement across the entire band, with no need for a least-squares fit of the bands with respect to the tight binding parameters. We quantify the error in the tight binding model by calculating the root mean square difference between the tight binding and DFT predictions, integrated over the valence and conduction bands.
+Tight binding models for copolymers can be constructed in two ways: (1) fit all parameters directly to DFT band structure calculations, or (2) use tight binding fits to homopolymers to generate the necessary parameters. In the latter case, we need a phenomenological recipe for the hopping matrix elements between adjacent monomers of different type, which are not present in the corresponding homopolymers. We obtain reasonable results by simply averaging the two homopolymer hopping matrix elements to obtain the hopping matrix element between alternating comonomers.
+3.1 Homopolymers
+
+Fig. 4 depicts a simple tight binding model for a homopolymer. The infinite chain consists of a 1-dimensional sequence of repeating sites, each with the same onsite energy ε, and identical hopping matrix elements t between sites. For the simple case of noninteracting HOMO and LUMO levels, we write separate tight binding models for the valence and conduction bands.
+ Fig. 4  Tight binding model for homopolymers and corresponding band structure. 
+With a wavefunction of the form eqn (2), and Bloch's theorem eqn (6), the wavefunction can be written (7)For an undistorted infinite chain, the tight-binding Hamiltonian eqn (1) takes the form (8)The time-independent Schrodinger equation Hψq = E(q)ψq leads to E(q) = ε − 2tcos(qΔ)(9)
+The dispersion relation eqn (9) is a cosine band. The wavenumber q runs up to q = π/Δ, which gives a wavefunction envelope eiqjΔ that oscillates in sign between adjacent sites. The bandwidth is 4t, and the band is centered on the onsite energy ε. The cosine band spreads out from the local orbital and its energy, as a result of hopping between adjacent moieties. If the hopping matrix element t is reduced to zero, the band flattens into disconnected localized states, with energies all equal to ε, independent of q.
+Although a homopolymer can be represented in a tight-binding model as a repeating sequence of a single monomer, for DFT calculations we must take a larger unit cell to accommodate the alternation of right-side-up and upside-down monomers in an all-trans chain. For example, an all-trans polythiophene chain consists of alternating monomers in which the sulfur points up or down (see Fig. 5a). To represent such a chain in periodic boundary conditions, the unit cell must contain two monomers.
+ Fig. 5  Homopolymer band structures from DFT (blue) and tight binding models (red), with unit cells shown above each graph, for polythiophene (a), polyphenylene (b), polypyrrole (c), and polythienothiophene (d). 
+A two-site unit cell gives “folded” cosine bands, as shown in Fig. 4. For the simplest comparison of tight binding model predictions to DFT results, we recast the tight-binding model with a two-site unit cell. (Since the two systems are physically the same, the results are completely equivalent to those obtained with the single-site unit cell.)
+For the two-site unit cell, Bloch's theorem dictates a wavefunction of the form (10)Here j indexes the unit cells; within each unit cell are two sites, with indices 2j and 2j + 1. The width of the unit cell is now 2Δ, where Δ is still the distance between adjacent sites. The wavenumber q now runs up to π/(2Δ).
+The Hamiltonian for the two-site model can be written in matrix form as (11)
+The two eigenvalues are E(q) = ε ± 2tcos(qΔ)(12)Eqn (12) gives the “folded cosine” shape evident in Fig. 4.
+
+Fig. 5 shows DFT band structures for four different homopolymers (blue) and corresponding tight binding model fits (red). For the folded cosine bands of eqn (12), the band center equals the onsite energy ε, and the bandwidth equals 4t. The fits here are performed by adjusting the valence and conduction ε and t so that the highest and lowest energies (at q = 0) coincide with DFT results. Evidently, the bands are well described by folded cosines.
+
+Table 1 presents the tight-binding parameters used in Fig. 5 and 8. The signs of hopping matrix elements t in the table reflect the symmetries of the constituent frontier orbitals. The values of t for thienothiophene and benzothiadiazole are smaller than for the other moieties, perhaps because the HOMO and LUMO orbitals are delocalized over a larger molecule, and so have less amplitude on the carbon where they overlap with the adjacent orbital on the bond between monomers.
+Table 1 Tight binding parameters (in eV) used in Fig. 5 and 8; for benzothiadiazole, the model includes HOMO–LUMO coupling
+
+
+
+
+Monomer
+Valence
+Conduction
+
+t
+HL
+
+
+
+
+ε
+
+
+t
+
+
+ε
+
+
+t
+
+
+
+
+
+Thiophene
+−6.29
+0.97
+−1.72
+0.8
+
+
+
+
+Pyrrole
+−5.62
+0.95
+−0.96
+0.52
+
+
+
+
+Phenylene
+−6.57
+0.83
+−1.3
+0.88
+
+
+
+
+Thienothiophene
+−5.84
+0.71
+−2.44
+0.46
+
+
+
+
+
+
+
+
+Benzothiadiazole
+−6.16
+0.55
+−3.63
+0.27
+0.5
+
+
+
+
+The DFT band structures capture all the energy states of the polymer, some of which are missing from the tight binding band structures. In particular, the DFT band structures all exhibit very flat bands (and therefore nearly localized states) around −6 eV, which are not present in the tight binding model. These states must be very weakly coupled to the valence bands, since the cosine shape of the valence bands are not much perturbed even at energies near −6 eV where the two states become nearly degenerate. Since the states are far from the Fermi level, and do not participate in the backbone conjugation that gives rise to extended states of interest for hole transport, we are justified in ignoring them in the tight binding model.
+We can identify the origin of these states by plotting the energy-filtered electron density, as shown in Fig. 6 for polythienothiophene. Evidently, the electron density in this energy range is primarily associated with the sulfur atoms, and corresponds to the lone pair on sulfur.
+ Fig. 6  Energy-filtered electron density for localized state around −6 eV in polythienothiophene, with charge density ranging from a minimum of 0.04 (blue) up to 0.3 (yellow-green). 
+
+3.1.1 HOMO–LUMO coupling. 
+Frontier orbitals on a given monomer may interact with more than one orbital on adjacent monomers. In such cases, the tight binding model must include additional hopping matrix elements to accurately predict the resulting band structures, which are not cosine-shaped. Fig. 7 presents a schematic of the tight binding model for a homopolymer with HOMO–LUMO coupling.
+ Fig. 7  Tight binding model for a homopolymer with HOMO–LUMO coupling. 
+The corresponding Hamiltonian can be written as (13)In eqn (13), the matrix elements of H are presented in a basis in which the entries in order are site 1 HOMO, site 2 HOMO, site 1 LUMO, site 2 LUMO. Without the HOMO–LUMO coupling terms along the “reverse diagonal”, H would be block diagonal, with independent blocks for the HOMO and LUMO bands.
+Polybenzothiadiazole has a rather low HOMO–LUMO gap, such that the LUMO on a given monomer couples with the HOMO on the adjacent monomer. (There is never coupling between HOMO and LUMO on the same monomer, because these states are orthogonal.) As shown by the black lines in Fig. 3, the HOMO–LUMO gap of BT (2.9 eV) is the lowest of all the monomers we studied, lower than that of TT (3.7 eV). Further, the band structure of polybenzothiadiazole (Fig. 8) shows a clear non-cosine nature. Including HOMO–LUMO coupling, the tight-binding model accurately describes the band structure of polybenzothiadiazole, as shown in Fig. 8. The shape of the bands are distinctly different from folded cosines, and a tight-binding model without HOMO–LUMO coupling between adjacent monomers would give a very poor fit to the DFT bands.
+ Fig. 8  Polybenzothiadiazole band structure from DFT (bands) and tight binding (red). 
+Indeed, one indication that HOMO–LUMO coupling should be included in the tight binding model is the non-cosine shape of the DFT valence and conduction bands. For the homopolymers studied in this paper, thiophene, thienothiophene, pyrrole, phenylene and fluorene all exhibit cosine-shaped conduction and valence bands, and thus do not require HOMO–LUMO coupling. More mechanistically, when the HOMO–LUMO gap is small enough that the hopping matrix elements are comparable to the gap, then we expect HOMO–LUMO coupling may play a role. This is evidently the case for polybenzothiadiazole; in the next section, we find that some copolymers containing benzothiadiazole also exhibit HOMO–LUMO coupling to adjacent monomers.
+
+
+3.1.2 Accuracy. 
+The accuracy of tight binding models is quantified by computing the root mean squared (RMS) difference between the tight binding and DFT band structures, integrated over the branch of the folded conduction and valence bands nearest the band gap, from q = 0 to the band edge. DFT band structures are computed at 45 k-points along Γ–X from q = 0 to the band edge; for the RMS error, tight binding energies are computed at the same k-points. Table 2 presents RMS error results for five homopolymers studied here. The small RMS errors reflect the close overlap of tight binding and DFT bands evident in Fig. 5 and 8.
+Table 2 Root mean squared error (in eV) of tight binding band structures versus DFT
+
+
+
+
+Monomer
+Valence
+Conduction
+
+
+
+
+Thiophene
+0.11
+0.09
+
+
+Pyrrole
+0.09
+0.06
+
+
+Phenylene
+0.08
+0.07
+
+
+Thienothiophene
+0.06
+0.12
+
+
+Benzothiadiazole
+0.01
+0.03
+
+
+
+
+
+3.2 Alternating copolymers
+Alternating copolymers consist of two different monomers alternating in sequence along the polymer chain. Push–pull copolymers are alternating copolymers in which the two constituent monomers are respectively “electron rich” (or “donor”) and “electron poor” (or “acceptor”). That is, they have HOMO and LUMO levels shifted with respect to each other, so that the donor moiety has higher energy levels than the acceptor.
+In the simplest case for alternating copolymers, the HOMO orbital on a given monomer couples only to the HOMO on adjacent comonomers, and likewise for the LUMO orbitals. The corresponding tight binding model has two sites in the unit cell, with different onsite energies. A single hopping matrix element couples the alternating moieties. (See Fig. 9.)
+ Fig. 9  Tight binding model for an alternating copolymer. 
+The reflection symmetries of frontier orbitals on the two comonomers again dictate the orientation of the bands. If the HOMO orbitals on the two comonomers have the same symmetry, the unmodulated state (q = 0) has the lowest and highest energies, corresponding to the symmetric and antisymmetric combination of HOMOs within the two-monomer unit cell. Whereas, if the monomers have opposite symmetries, modulations at the band edge (q = π/Δ, where Δ is now the total length of the two-monomer repeating unit) yield the lowest and the highest energies.
+When the comonomer frontier orbitals have the same symmetry, the Hamiltonian can be written (14)
+The resultant band structure is a folded cosine, similar to the two-site representation of a homopolymer, but with a gap opened at band edge q = π/Δ because of the different onsite energies (see Fig. 10a).
+ Fig. 10  Tight binding band structures for alternating copolymers, for comonomers with the same (left) and opposite (right) orbital symmetries. 
+When the comonomer frontier orbitals have opposite symmetry, the Hamiltonian takes the form (15)The resultant band structure is now an inverted folded cosine, with a gap opened at q = 0 by the different onsite energies (see Fig. 10b).
+The most direct way to determine parameters for copolymer tight binding models is to fit them to DFT band structures. Tight binding band structures computed in this way are shown as red curves in Fig. 11 for four representative alternating copolymers. In each case, the onsite energies ε1 and ε2 and hopping matrix element t for the conduction and valence bands were adjusted so that the tight-binding predictions coincide with DFT results at the band edges. The average onsite energy sets the band center, the hopping matrix element controls the bandwidth, and the difference in onsite energies sets the small gap.
+ Fig. 11  Copolymer band structures from DFT (blue), from copolymer tight-binding models fitted to DFT results (red), and from copolymer tight-binding models with parameters taken from homopolymer fits (green). 
+The tight-binding predictions are quite close to the DFT bands, with the expected interventions of localized states far from the Fermi level. These appear as sharp, nearly flat features in the full DFT band structure, but are not included in the tight-binding model.
+
+Fig. 11c and d displays results for alternating copolymers thiophene-co-phenylene and pyrrole-co-phenylene. As can be seen from the figures above the respective graphs, for these copolymers the periodic repeating unit for an all-trans chain requires that the unit cell must contain two repeats of the monomers (i.e., ABAB). This leads to a “doubly folded” band. In the tight-binding model for these copolymers, we have likewise written a four-site unit cell, and computed the bands accordingly. The small band gaps induced by different onsite energies of the two comonomers now appear at q = 0.
+Alternatively, we can parameterize tight binding models for copolymers by using values for onsite energies from fits to corresponding homopolymers. We also need the hopping matrix element between unlike comonomers, which is not directly available from homopolymer fits. We estimate this hopping matrix element simply by averaging the hopping matrix element between like monomers, which is available from homopolymer fits, as tAB = 1/2(tAA + tBB)(16)
+
+Fig. 11 shows tight binding predictions using parameters derived from homopolymer fits for band structures of several alternating copolymers (green curves). In most cases, the homopolymer-derived band structures are nearly as close to the DFT results as the explicitly fitted tight-binding band structures. In particular, bandwidths from the simple averaging approximation eqn (16) are quite close to the DFT bandwidths. Table 3 reports the tight binding parameters used to generate the results of Fig. 11.
+Table 3 Tight binding parameters (in eV) used in Fig. 11 and 13. For each copolymer, the first set of parameters are from homopolymer-parameterized models, (hopping matrix elements taken as average of homopolymer values); the second set (italics) are from tight binding model fits to DFT results. The last two entries include HOMO–LUMO coupling; dashes indicate bands computed without including the LUMO on phenylene or thienothiophene
+
+
+
+
+Monomers
+Valence
+Conduction
+
+t
+HL
+
+
+
+
+ε
+A
+
+
+ε
+B
+
+
+t
+
+
+ε
+A
+
+
+ε
+B
+
+
+t
+
+
+
+
+
+Thiophene/pyrrole
+−6.29
+−5.62
+0.96
+−1.72
+−0.96
+0.66
+
+
+
+
+
+−6.20
+
+
+−5.70
+
+
+0.96
+
+
+−1.57
+
+
+−1.13
+
+
+0.71
+
+
+
+
+
+
+
+
+
+Thienothiophene/phenylene
+−5.84
+−6.57
+0.77
+−2.44
+−1.30
+0.67
+
+
+
+
+
+−6.05
+
+
+−6.32
+
+
+0.80
+
+
+−1.99
+
+
+−1.78
+
+
+0.68
+
+
+
+
+
+
+
+
+
+Thiophene/phenylene
+−6.29
+−6.57
+0.9
+−1.72
+−1.30
+0.84
+
+
+
+
+
+−6.21
+
+
+−6.61
+
+
+0.91
+
+
+−1.80
+
+
+−1.30
+
+
+0.83
+
+
+
+
+
+
+
+
+
+Pyrrole/phenylene
+−5.62
+−6.57
+0.89
+−0.96
+−1.30
+0.70
+
+
+
+
+
+−5.69
+
+
+−6.45
+
+
+0.95
+
+
+−0.81
+
+
+−1.41
+
+
+0.80
+
+
+
+
+
+
+
+
+
+Phenylene/benzothiadiazole
+−6.57
+−6.16
+0.69
+—
+−3.63
+—
+0.5
+
+
+
+−6.29
+
+
+−6.20
+
+
+0.57
+
+—
+
+−3.64
+
+—
+
+0.54
+
+
+
+
+
+
+
+Thienothiophene/benzothiadiazole
+−5.84
+−6.16
+0.63
+—
+−3.63
+—
+0.5
+
+
+
+−5.68
+
+
+−6.08
+
+
+0.64
+
+—
+
+−3.94
+
+—
+
+0.54
+
+
+
+
+
+For poly thienothiophene-co-phenylene (Fig. 11b), the gaps at q = 0 are far off from the DFT results. One possible reason for this is that the DFT band structures show intervening states around −1.5 eV and −6 eV that apparently couple to some extent with the extended states. These localized states were not included in the tight-binding model, which hampers its ability to account for the shape of the bands. However, prediction for the band structure near the Fermi level are quite encouraging; both the homopolymer-fitted and explicitly fitted tight binding models follow the DFT results very closely in the most relevant part of the band structure.
+
+Table 3 presents the tight-binding parameters for alternating copolymers studied here. For each copolymer, the first row of values corresponds to predictions from homopolymer fits, while the second row (in italics) are obtained from direct fit of the copolymer tight binding model to DFT bands. In nearly all cases, the parameters are quite close, reflecting the close agreement in Fig. 11 of the direct fit (red curves) and homopolymer-derived predictions (green curves) to the DFT valence and conduction bands (blue curves).
+
+3.2.1 HOMO–LUMO coupling. 
+In some copolymers, when the LUMO on a given monomer is low, it may interact with the HOMO on adjacent monomers. This the case for some push–pull copolymers such as poly thienothiophene-co-benzothiadiazole, in which the thienothiophene HOMO interacts with both the HOMO and LUMO on benzothiadiazole. Examining HOMO–LUMO levels in Fig. 3, we can see that the “push” unit HOMO on all monomers shows a small gap to the “pull” LUMO on BT, suggesting HOMO–LUMO coupling will be required for all co-polymer systems including the BT monomer. No other copolymer systems show a cross-monomer HOMO–LUMO gap less than the BT homopolymer, suggesting that of the monomers considered here, only BT-containing copolymers require the inclusion of HOMO–LUMO coupling. To account for this, we generalize the tight-binding model to include a hopping matrix element between the HOMO on one comonomer and the LUMO on the other. The resulting model is shown schematically in Fig. 12.
+ Fig. 12  Tight binding schematic for an alternating copolymer with HOMO–LUMO coupling. 
+The Hamiltonian corresponding to the model of Fig. 12 takes the form (17)
+
+Fig. 13 displays results for tight-binding band structures of two alternating copolymers containing benzothiadiazole, comparing DFT results (blue curves) with explicit tight binding fits (red curves) and homopolymer-parameterized tight binding predictions (green curves), described further below. Only the portion of the band structure corresponding to the thienothiophene HOMO, benzothiadiazole HOMO, and benzothiadiazole LUMO are shown; the upper conduction band arising from the thienothiophene LUMO is omitted for simplicity.
+ Fig. 13  Band structure for alternating copolymers with HOMO/LUMO coupling from DFT (blue), explicitly fitted tight binding models (red), and homopolymer-parameterized tight binding models (green). 
+In the explicit tight binding fits, the onsite energies ε1H, ε1L, ε2 (HOMO), tH, and tHL are adjusted to agree with the corresponding DFT bands at the band edges (q = 0 and q = π/Δ). The resulting fits are in excellent agreement with DFT results. The conduction band (upper curve) for these copolymers has a rather narrow bandwidth, and a low curvature at the band gap corresponding to a large effective mass, which means these carriers would be relatively easily localized by inhomogeneous fields.
+Parameterizing the copolymer tight binding model with values derived from homopolymer fits alone is more challenging when HOMO–LUMO coupling is present. In particular, we must guess the value of tHL, the hopping matrix element between the thienothiophene HOMO and the benzothiadiazole LUMO. Here, we assume tHL is the same as for the benzothiadiazole homopolymer. We use the onsite energies from the respective homopolymer fits, and use the averaging rule for the hopping matrix element tH between thienothiophene and benzothiadiazole HOMOs.
+The resulting homopolymer-derived tight binding predictions are shown in Fig. 13 as the green curves (the corresponding parameters are given in Table 3). These predictions reproduce the bands nearest the Fermi level reasonably well, but fail to capture the deeper conduction band more than qualitatively. Still, the bandwidths and even the band gap of the homopolymer-derived model are rather close to the DFT results, without the need for an explicit DFT calculation for the actual copolymer.
+We again quantify the accuracy of tight binding predictions for copolymer band structures by computing the RMS error versus the DFT band structures, averaged over the valence and conduction bands nearest the Fermi level. These errors are given for a series of copolymers in Table 4. In nearly all cases, the average errors are less than 0.2 eV, which makes tight binding predictions useful for even sensitive electronic properties. The relatively large error (0.14 eV) for the thienothiophene–benzothiadiazole valence band is partly an artifact, as can be seen from Fig. 13b; because of the intervening localized state, the band predicted by the tight-binding model crosses between two different DFT bands around −6 eV.
+Table 4 Mean squared error for tight binding copolymer band structures versus DFT, from direct fits to DFT (left) and using homopolymer values (right); see main text for comment on starred value
+
+
+
+
+Copolymer
+Direct fit
+Homopolymer fit
+
+
+Valence
+Conduction
+Valence
+Conduction
+
+
+
+
+Thiophene/pyrrole
+0.11
+0.08
+0.13
+0.08
+
+
+Thienothiophene/phenylene
+0.11
+0.10
+0.06
+0.28
+
+
+Thiophene/phenylene
+0.12
+0.12
+0.08
+0.10
+
+
+Pyrrole/phenylene
+0.15
+0.15
+0.09
+0.10
+
+
+
+
+
+
+Phenylene/benzothiadiazole
+0.01
+0.01
+0.11
+0.05
+
+
+Thienothiophene/benzothiadiazole
+0.10
+0.02
+0.14*
+0.21
+
+
+
+
+
+4 Conclusions
+In this paper, we show that valence and conduction bands for homopolymer and alternating copolymer semiconductors can be accurately predicted using computationally inexpensive tight binding models. Tight binding models are useful complements to density functional theory because they drastically reduce the number of electronic degrees of freedom, while retaining sufficient chemical and electronic detail to describe the extended states relevant to charge transport.
+We have demonstrated our methods for a variety of copolymers constructed from commonly studied conjugated monomers including thiophene, thienothiophene, benzothiadiazole, pyrrole, and phenylene. Though not exhibited here, our approach is also applicable to copolymers that include conjugated “bridges” of one or more –CC– moieties, which are equivalent to acetylene oligomers. The tight binding approach can describe polyacetylene, with an onsite energy and hopping matrix element that match the homopolymer band structure, and extend to copolymers that contain –CC– moieties.
+We present straightforward schemes for fitting the tight binding model parameters, which are onsite energies and hopping matrix elements, by comparison to DFT band structures for homopolymers and alternating copolymers. The particular form of the tight binding model depends on the proximity of frontier orbital energy levels on adjacent monomers. In the simplest case, the HOMO and LUMO levels of adjacent monomers are far apart relative to the size of hopping matrix elements. Then, we can construct separate tight binding models for the valence and conduction bands, which emerge respectively from the monomer HOMO and LUMO levels. The resulting bands are cosine-shaped.
+For copolymers in which the LUMO on one comonomer is sufficiently close in energy to the HOMO on an adjacent comonomer, hopping matrix elements can couple the LUMO to the adjacent HOMO. This occurs in particular for “push–pull” copolymers, in which the differing electron affinities of the alternating moieties leads to a relative displacement of their HOMO and LUMO levels. This phenomenon can likewise occur even in homopolymers (such as polybenzothiadiazole), when the HOMO–LUMO gap is comparable in magnitude to hopping matrix elements.
+Among the homopolymers we studied, the BT monomer has the smallest HOMO–LUMO gap (2.9 eV) and was the only monomer requiring a HOMO–LUMO coupling. This suggests HOMO–LUMO coupling between adjacent monomers will be likewise needed in copolymer systems with cross-monomer HOMO–LUMO gaps less than or equal to this value. Further testing across more moieties would be needed to confirm that this criterion is sufficient for including HOMO–LUMO coupling in the tight-binding model. The need for HOMO–LUMO coupling is also evident from the “non-cosine” shape of the valence and conduction bands of these 1D polymer chains, though we caution that there may be other causes of non-cosine shapes in systems not studied here.
+For polymers in which HOMO–LUMO coupling is relevant, the appropriate tight-binding model include the corresponding hopping matrix elements. When they are included, tight binding model predictions for band structures are in very good agreement with DFT results, even when the shapes of the bands are far from cosine-shaped.
+The most straightforward way to parameterize alternating copolymer tight binding models is to fit them to copolymer band structures computed for periodic chains using DFT. Because there are O(N2) possible copolymers that can be constructed from N monomers, it would be convenient if tight binding parameters from fits to homopolymer band structures could be used to make predictions for copolymers, without having to compute DFT band structures for each copolymer. We present schemes for doing this, using the onsite energies obtained from homopolymer fits, and an averaging approximation for the hopping matrix element between unlike monomers. Predictions made in this way give good agreement with DFT band structures for the branches of the conduction and valence bands nearest the Fermi level.
+In this work, we have provisionally accepted DFT calculations (here performed using VASP with the GGA PW91 functional) as the “gold standard” for electronic structure, to explore the potential for tight binding models to cheaply reproduce these more expensive calculations. Of course, DFT calculations have their own limitations, chief among which is a tendency to systematic errors in predicting the band gap. Evidently, the accuracy of tight binding models parameterized by comparison to DFT results would be subject to the same systematic errors.
+However, the flexibility of the tight binding model allows us to adjust onsite energies to reproduce the experimental band gap, or higher-level calculations of monomer HOMO and LUMO levels. In particular, more accurate (and computationally expensive) “post-DFT” methods can be used for computing the energy levels of monomers or oligomers, which can be used to obtain improved values of onsite energies for use in tight binding models.
+Finally, we emphasize that well-parameterized tight binding models have broad application to predict electronic properties of homopolymer and copolymer systems, including absorption spectra of disordered chains, excitons at donor–acceptor interfaces, transport in 2d crystalline lamellae, and structure and transport of polarons and excitons. All these important applications are computationally feasible for tight-binding based theories, but are challenging or inaccessible to DFT calculations because of large system sizes, need for averaging over disorder, or coupling to the surrounding medium.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+Funding support from the Office of Naval Research under Award N00014-19-1-2453 is gratefully acknowledged.
+Notes and references
+J. H. Burroughes, D. D. C. Bradley, A. R. Brown, R. N. Marks, K. Mackay, R. H. Friend, P. L. Burns and A. B. Holmes, Nature, 1990, 347, 539 CrossRef CAS .
+F. Garnier, R. Hajlaoui, A. Yassar and P. Srivastava, Science, 1994, 265, 1684–1686 CrossRef CAS PubMed .
+N. S. Sariciftci, L. Smilowitz, A. J. Heeger and F. Wudl, Synth. Met., 1993, 59, 333–352 CrossRef CAS .
+S. R. Forrest, Nature, 2004, 428, 911–918 CrossRef CAS PubMed .
+C. J. Brabec, N. S. Sariciftci and J. C. Hummelen, Adv. Funct. Mater., 2001, 11, 15–26 CrossRef CAS .
+K. M. Coakley and M. D. McGehee, Chem. Mater., 2004, 16, 4533–4542 CrossRef CAS .
+C. Duan, F. Huang and Y. Cao, J. Mater. Chem., 2012, 22, 10416–10434 RSC .
+G. Yu, J. Hummelen, F. Wudl and A. Heeger, Science, 1995, 270, 1789–1791 CrossRef CAS .
+G. Li, V. Shrotriya, J. Huang, Y. Yao, T. Moriarty, K. Emery and Y. Yang, Nat. Mater., 2005, 4, 864–868 CrossRef CAS .
+G. Dennler, M. C. Scharber, T. Ameri, P. Denk, K. Forberich, C. Waldauf and C. J. Brabec, Adv. Mater., 2008, 20, 579 CrossRef CAS .
+G. Dennler, M. C. Scharber and C. J. Brabec, Adv. Mater., 2009, 21, 1323–1338 CrossRef CAS .
+M. A. Green, K. Emery, Y. Hishikawa, W. Warta and E. D. Dunlop, Prog. Photovoltaics Res. Appl., 2014, 22, 1–9 CrossRef .
+M. C. Scharber, D. Mühlbacher, M. Koppe, P. Denk, C. Waldauf, A. J. Heeger and C. J. Brabec, Adv. Mater., 2006, 18, 789–794 CrossRef CAS .
+H. Zhou, L. Yang, A. C. Stuart, S. C. Price, S. Liu and W. You, Angew. Chem., Int. Ed., 2011, 50, 2995–2998 CrossRef CAS PubMed .
+S. C. Price, A. C. Stuart, L. Yang, H. Zhou and W. You, J. Am. Chem. Soc., 2011, 133, 4625–4631 CrossRef CAS PubMed .
+C. M. Amb, S. Chen, K. R. Graham, J. Subbiah, C. E. Small, F. So and J. R. Reynolds, J. Am. Chem. Soc., 2011, 133, 10062–10065 CrossRef CAS PubMed .
+T.-Y. Chu, J. Lu, S. Beaupre, Y. Zhang, J.-R. Pouliot, S. Wakim, J. Zhou, M. Leclerc, Z. Li and J. Ding, J. Am. Chem. Soc., 2011, 133, 4250–4253 CrossRef CAS PubMed .
+C. E. Small, S. Chen, J. Subbiah, C. M. Amb, S.-W. Tsang, T.-H. Lai, J. R. Reynolds and F. So, Nat. Photonics, 2012, 6, 115 CrossRef CAS .
+A. Wadsworth, M. Moser, A. Marks, M. S. Little, N. Gasparini, C. J. Brabec, D. Baran and I. McCulloch, Chem. Soc. Rev., 2019, 48, 1596–1625 RSC .
+C. Yan, S. Barlow, Z. Wang, H. Yan, A. K. Y. Jen, S. R. Marder and X. Zhan, Nat. Rev. Mater., 2018, 3, 18003 CrossRef CAS .
+S. D. Oosterhout, N. Kopidakis, Z. R. Owczarczyk, W. A. Braunecker, R. E. Larsen, E. L. Ratcliff and D. C. Olson, J. Mater. Chem. A, 2015, 3, 9777–9788 RSC .
+V. Arora and A. Bakhshi, Chem. Phys., 2010, 373, 307–312 CrossRef CAS .
+I. Y. Kanal, S. G. Owens, J. S. Bechtel and G. R. Hutchison, J. Phys. Chem. Lett., 2013, 4, 1613–1623 CrossRef CAS PubMed .
+G. R. Hutchison, Y.-J. Zhao, B. Delley, A. J. Freeman, M. A. Ratner and T. J. Marks, Phys. Rev. B: Condens. Matter Mater. Phys., 2003, 68, 035204 CrossRef .
+J. Gierschner, J. Cornil and H.-J. Egelhaaf, Adv. Mater., 2007, 19, 173–191 CrossRef CAS .
+S. Yang, P. Olishevski and M. Kertesz, Synth. Met., 2004, 141, 171–177 CrossRef CAS .
+S. S. Zade and M. Bendikov, Org. Lett., 2006, 8, 5243–5246 CrossRef CAS PubMed .
+P. A. Derosa, J. Comput. Chem., 2009, 30, 1220–1228 CrossRef CAS PubMed .
+L. Zhang, K. Pei, M. Yu, Y. Huang, H. Zhao, M. Zeng, Y. Wang and J. Gao, J. Phys. Chem. C, 2012, 116, 26154–26161 CrossRef CAS .
+L. Zhang, M. Yu, H. Zhao, Y. Wang and J. Gao, Chem. Phys. Lett., 2013, 570, 153–158 CrossRef CAS .
+M. Wykes, B. Milián-Medina and J. Gierschner, Front. Chem., 2013, 1, 2296–2646 Search PubMed .
+J. H. Bombile, M. J. Janik and S. T. Milner, Phys. Chem. Chem. Phys., 2016, 18, 12521–12533 RSC .
+J. H. Bombile, M. J. Janik and S. T. Milner, Phys. Chem. Chem. Phys., 2018, 20, 317–331 RSC .
+J. H. Bombile, M. J. Janik and S. T. Milner, Phys. Chem. Chem. Phys., 2019, 21, 11999–12011 RSC .
+M. Mesta, J. H. Chang, S. Shil, K. S. Thygesen and J. M. G. Lastra, J. Phys. Chem. A, 2019, 123, 4980–4989 CrossRef CAS PubMed .
+L. J. Sham and M. Schlüter, Phys. Rev. Lett., 1983, 51, 1888 CrossRef .
+J. P. Perdew, Int. J. Quantum Chem., 1985, 28, 497–523 CrossRef .
+H. Xiao, J. Tahir-Kheli and W. A. Goddard III, J. Phys. Chem. Lett., 2011, 2, 212–217 CrossRef CAS .
+
+Time-Dependent Density Functional Theory, ed. M. A. L. Marques, C. A. Ulrich, F. Nogueira, A. Rubio, K. Burke and E. K. U. Gross, Springer-Verlag,  2006 Search PubMed .
+
+          U. Carsten, Time-Dependent Density-Functional Theory: Concepts and Applications, Oxford University Press,  2012 Search PubMed .
+
+          F. Jensen, Introduction to Computational Chemistry, John Wiley and Sons, Chichester, England,  2007 Search PubMed .
+
+          C. J. Cramer, Essentials of Computational Chemistry, John Wiley and Sons, Chichester, England,  2002 Search PubMed .
+F. Bruneval, S. M. Hamed and J. B. Neaton, J. Chem. Phys., 2015, 142, 244101 CrossRef PubMed .
+X. Blase, I. Duchemin and D. Jacquemin, Chem. Soc. Rev., 2018, 47, 1022–1043 RSC .
+H. Sun, Z. Hu, C. Zhong, S. Zhang and Z. Sun, J. Phys. Chem. C, 2016, 120, 8048–8055 CrossRef CAS .
+T. Stein, L. Kronik and R. Baer, J. Am. Chem. Soc., 2009, 131, 2818–2820 CrossRef CAS PubMed .
+J. Autschbach and M. Srebro, Acc. Chem. Res., 2014, 47, 2592–2602 CrossRef CAS PubMed .
+T. Körzdörfer and J.-L. Brédas, Acc. Chem. Res., 2014, 47, 3284–3291 CrossRef PubMed .
+
+This journal is © the Owner Societies 2020
+Table Content:
+
+ 	Fig. 1  Structure of monomers studied with their labels used in this paper (grey = C, white = H, yellow = S, blue = N).	 
+	(1)
+	(2)
+|ϕk〉 = c†k|0〉	(3)
+	(4)
+ψq(r + Δ) = eiqΔψq(r)	(5)
+ak = aeiqkΔ	(6)
+
+ 	Fig. 2  Frontier orbitals of some selected monomers.	 
+
+ 	Fig. 3  Monomer HOMO/LUMO levels (black) and valence and conduction bandwidths (blue and orange) of corresponding homopolymers, for polypyrrole (PY), polyphenylene (PH), polythiophene (TH), polythienothiophene (TT), polyfluorene (FL), and polybenzothiadiazole (BT). All energies relative to an electron in vacuum.	 
+
+ 	Fig. 4  Tight binding model for homopolymers and corresponding band structure.	 
+	(7)
+	(8)
+E(q) = ε − 2tcos(qΔ)	(9)
+
+ 	Fig. 5  Homopolymer band structures from DFT (blue) and tight binding models (red), with unit cells shown above each graph, for polythiophene (a), polyphenylene (b), polypyrrole (c), and polythienothiophene (d).	 
+	(10)
+	(11)
+E(q) = ε ± 2tcos(qΔ)	(12)
+
+
+Thiophene	−6.29	0.97	−1.72	0.8	
+
+Pyrrole	−5.62	0.95	−0.96	0.52	
+
+Phenylene	−6.57	0.83	−1.3	0.88	
+
+Thienothiophene	−5.84	0.71	−2.44	0.46	
+
+
+
+Benzothiadiazole	−6.16	0.55	−3.63	0.27	0.5
+
+ 	Fig. 6  Energy-filtered electron density for localized state around −6 eV in polythienothiophene, with charge density ranging from a minimum of 0.04 (blue) up to 0.3 (yellow-green).	 
+
+ 	Fig. 7  Tight binding model for a homopolymer with HOMO–LUMO coupling.	 
+	(13)
+
+ 	Fig. 8  Polybenzothiadiazole band structure from DFT (bands) and tight binding (red).	 
+
+Thiophene	0.11	0.09
+Pyrrole	0.09	0.06
+Phenylene	0.08	0.07
+Thienothiophene	0.06	0.12
+Benzothiadiazole	0.01	0.03
+
+ 	Fig. 9  Tight binding model for an alternating copolymer.	 
+	(14)
+
+ 	Fig. 10  Tight binding band structures for alternating copolymers, for comonomers with the same (left) and opposite (right) orbital symmetries.	 
+	(15)
+
+ 	Fig. 11  Copolymer band structures from DFT (blue), from copolymer tight-binding models fitted to DFT results (red), and from copolymer tight-binding models with parameters taken from homopolymer fits (green).	 
+tAB = 1/2(tAA + tBB)	(16)
+
+
+Thiophene/pyrrole	−6.29	−5.62	0.96	−1.72	−0.96	0.66	
+
+
+−6.20
+	
+−5.70
+	
+0.96
+	
+−1.57
+	
+−1.13
+	
+0.71
+	
+
+
+
+Thienothiophene/phenylene	−5.84	−6.57	0.77	−2.44	−1.30	0.67	
+
+
+−6.05
+	
+−6.32
+	
+0.80
+	
+−1.99
+	
+−1.78
+	
+0.68
+	
+
+
+
+Thiophene/phenylene	−6.29	−6.57	0.9	−1.72	−1.30	0.84	
+
+
+−6.21
+	
+−6.61
+	
+0.91
+	
+−1.80
+	
+−1.30
+	
+0.83
+	
+
+
+
+Pyrrole/phenylene	−5.62	−6.57	0.89	−0.96	−1.30	0.70	
+
+
+−5.69
+	
+−6.45
+	
+0.95
+	
+−0.81
+	
+−1.41
+	
+0.80
+	
+
+
+
+Phenylene/benzothiadiazole	−6.57	−6.16	0.69	—	−3.63	—	0.5
+
+−6.29
+	
+−6.20
+	
+0.57
+	—	
+−3.64
+	—	
+0.54
+
+
+
+Thienothiophene/benzothiadiazole	−5.84	−6.16	0.63	—	−3.63	—	0.5
+
+−5.68
+	
+−6.08
+	
+0.64
+	—	
+−3.94
+	—	
+0.54
+
+
+ 	Fig. 12  Tight binding schematic for an alternating copolymer with HOMO–LUMO coupling.	 
+	(17)
+
+ 	Fig. 13  Band structure for alternating copolymers with HOMO/LUMO coupling from DFT (blue), explicitly fitted tight binding models (red), and homopolymer-parameterized tight binding models (green).	 
+
+
+Thiophene/pyrrole	0.11	0.08	0.13	0.08
+Thienothiophene/phenylene	0.11	0.10	0.06	0.28
+Thiophene/phenylene	0.12	0.12	0.08	0.10
+Pyrrole/phenylene	0.15	0.15	0.09	0.10
+
+
+Phenylene/benzothiadiazole	0.01	0.01	0.11	0.05
+Thienothiophene/benzothiadiazole	0.10	0.02	0.14*	0.21
+
+This journal is © the Owner Societies 2020

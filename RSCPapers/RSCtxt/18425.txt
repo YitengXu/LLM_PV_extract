@@ -1,0 +1,847 @@
+Lattice thermal conductivity of semiconducting bulk materials: atomistic simulations  - Physical Chemistry Chemical Physics (RSC Publishing) DOI:10.1039/C2CP42394D View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C2CP42394D
+(Paper)
+Phys. Chem. Chem. Phys., 2012, 14, 16209-16222Show Chemical TermsLattice thermal conductivity of semiconducting bulk materials: atomistic simulations
+
+        
+          
+            Yuping 
+            He†
+a, 
+      
+        
+          
+            Ivana 
+            Savić†
+a, 
+      
+        
+          
+            Davide 
+            Donadio
+          
+        
+      b and 
+
+        
+          
+            Giulia 
+            Galli
+          
+        
+      *ac
+aDepartment of Chemistry, University of California, Davis, CA 95616, USA
+bMax Planck Institute for Polymer Research, Ackermannweg 10, 55128 Mainz, Germany
+cDepartment of Physics, University of California, Davis, CA 95616, USA. E-mail: gagalli@ucdavis.edu
+Received 
+      14th July 2012
+    , Accepted 17th September 2012First published on 18th September 2012AbstractThis paper presents a theoretical investigation of the microscopic mechanisms responsible for heat transport in bulk Si, Ge and SiGe alloys, with the goal of providing insight into design rules for efficient Si-based nanostructured thermoelectric semiconductors. We carried out a detailed atomistic study of the thermal conductivity, using molecular dynamics and the Boltzmann transport equation. We investigated in detail the effects of the physical approximations underlying each approach, as well as the effect of the numerical approximations involved in the implementation of the two different methods. Our findings permitted us to understand and reconcile apparently conflicting results reported in the literature.
+1 Introduction
+Efficient thermoelectric energy conversion and thermal management in nanoscale devices critically depend on the design of materials with tailored thermal transport properties. Decreasing the thermal conductivity of bulk semiconductors by nanostructuring represents a promising strategy in the search for efficient thermoelectric materials.1–3 For example, considerable improvements in the thermoelectric efficiency of semiconducting nanowires with increased surface roughness,4,5 and of superlattices6,7 and nanocomposites,8 have been attributed to a significantly reduced thermal conductivity (κ). On the other hand, nanostructured materials with a high thermal conductivity could be used to efficiently extract heat from specific regions of micro- and nano-electronic devices.1
+Fabrication and synthesis of nanostructures for thermoelectric and thermal management applications are formidable experimental tasks.1,9 Measuring the thermal transport properties of nanoscale materials is even more challenging.1 Atomistic simulations may complement experimental efforts and help to advance our understanding of thermal transport processes in nanoscale materials, as well as predict new routes for their control. Unlike continuum approaches, atomistic calculations can describe complex morphologies at the microscopic level, including interfaces, surfaces, impurities and defects.
+In recent years, several atomistic methods (e.g. molecular dynamics,10 Boltzmann transport equation,11 and Green's function approaches12) have been used to address different aspects of thermal transport phenomena in bulk and nanoscale materials. However, the effect of the physical approximations of each method on computed properties, e.g. the thermal conductivity, is not completely understood; in addition the control of numerical approximations in thermal transport calculations is still challenging, although some notable progress has been achieved. For instance, Schelling et al.10 and He et al.13 compared the performance of equilibrium and non-equilibrium molecular dynamics (EMD and NEMD) approaches for bulk crystalline Si and amorphous Si, respectively, and reported a good agreement between the two methods. Equilibrium MD simulations have also been compared with the Boltzmann transport equation (BTE) in the relaxation time approximation11 (RTA), with lifetimes obtained from the autocorrelation function of the potential energy of each phonon mode calculated within MD.14 A good agreement between the BTE-RTA and MD methods has been observed for bulk crystalline argon and silicon, and carbon nanotubes;14–17 however, such comparisons have so far been limited to supercells of relatively modest sizes (several thousand atoms14,15,17).
+One of the techniques commonly used to solve the BTE relies on a perturbative treatment of the phonon–phonon interactions, where the contributions of four or higher phonon scattering processes are neglected.11 To obtain phonon lifetimes in ordered materials, this method is in principle less computationally expensive than calculations of the potential energy autocorrelation functions needed, e.g. in the EMD approach, and allows for simulations of systems with a much larger effective number of atoms. Hereafter, we will refer to the aforementioned pertubative treatment of the BTE as simply the BTE.
+MD and BTE approaches treat the effect of disorder and phonon–phonon interactions at different levels of accuracy: in MD, both effects are described exactly (to all orders in the interaction) within a perturbative treatment of the heat current; in the BTE, the two effects are accounted for approximately. On the other hand, the phonon distribution is treated classically within MD simulations, while in the BTE the correct quantum distribution is used. It is therefore important to understand the relative performance of these methods and how their limitations affect the calculated values of the thermal conductivity.
+In addition to physical approximations, numerical approximations need to be controlled, in order to compare the results of different techniques. These include size effects (i.e. the size of the chosen simulation cells), simulation times in the case of MD and Brillouin zone (BZ) sampling in the case of the BTE.18–20 In many semiconductors, low frequency phonons have long lifetimes and mean free paths that may contribute significantly to the computed thermal conductivity.9 Consequently, large supercells and large sets of reciprocal space vectors should be used in MD simulations and BTE calculations, respectively, to ensure convergence. However in the literature convergence tests have often been limited to relatively small system sizes, especially in the case of MD simulations, due to high computational costs. This is definitely one of the reasons for a variety of different κ values reported for the same material, studied with the same method but with different numerical approximations.
+In this paper, we present a comprehensive comparison of EMD, NEMD and BTE-RTA approaches to the calculation of the thermal conductivity of bulk crystalline Si, Ge and SiGe alloys at room temperature, using Tersoff empirical interatomic potentials.21,22 We discuss physical and numerical approximations on the thermal conductivity of these materials. In the case of crystalline bulk Si and Ge, we found that systems as large as several hundred thousand atoms are required to obtain converged thermal conductivity values using either EMD or NEMD. We show that for crystalline Si, the NEMD approach for samples with a cross section of (2.2)2 nm2 and lengths up to 250 nm gives a value of κ in agreement with EMD at 1000 K, but 50% larger than that obtained with the EMD method at 300 K; however, when compared with EMD results for (2.2)3 nm3 cubic cells, the NEMD method gives only a 17% larger value of κ at 300 K. Using the BTE-RTA approach, we show that accounting for classical phonon statistics (as adopted in MD) instead of the quantum one leads to an underestimate of the calculated κ. This effect becomes more appreciable as the temperature decreases with respect to the Debye temperature (ΘD) of the material (e.g. in the case of Si, the underestimation is ∼13% at T = 300 K for the Tersoff potential). Neglecting higher than three-phonon scattering processes in the BTE-RTA leads to an overestimation of κ with respect to EMD (e.g. in the case of Si, the overestimation is ∼38% at T = 300 K). The differences found in the case of Si at room T (classical vs. quantum, three-phonon vs. all order phonon interactions) are less pronounced in the case of Ge since the ΘD of Ge (360 K) is closer to room temperature than that of Si (645 K). In the case of SiGe alloys, samples with ∼2 million atoms are required to approach convergence of EMD simulations. Using samples larger than ∼2 million atoms would require simulation times longer than >10 ns, at present limited by the statistical noise on the long range decay of the computed heat current autocorrelation functions. In contrast, we argue that the BTE-RTA approach applied to disordered SiGe supercells will give zero thermal conductivity in the limit of infinitely large disordered cells and we suggest that a level of theory higher than the BTE needs to be used to obtain a finite non-zero value of κ. However, physically well behaved BTE-RTA results can be obtained using a virtual crystal approximation23 and the calculated κ is ∼100% larger than that obtained with EMD.
+The rest of the paper is organized as follows: in Section 2, the atomistic simulation methods and interatomic potential used in this work are briefly described; in Section 3, the computed values of κ of bulk crystalline Si, Ge and SiGe alloys using different atomistic methods are discussed, and compared with existing theoretical and experimental results. Finally, we summarize our work in Section 4.
+2 Atomistic simulation methods
+2.1 Equilibrium molecular dynamics
+In a system at equilibrium within the microcanonical ensemble (NVE, where N is the number of atoms, V is the volume of the system, and E is the total energy), the average heat flux is zero. In a molecular dynamics simulation, the lattice thermal conductivity can be obtained from the variations in the instantaneous heat current using the Green–Kubo relation based on the fluctuation–dissipation theorem:24 (1)where kB is the Boltzmann constant, T is the temperature, and 〈Jα(t)Jα(0)〉 is the average heat current (J) autocorrelation function (HCACF) along the α direction.
+The heat current (J) can be calculated as: (2)Here ri is the position of atom i, and εi is the total energy density associated with atom i. For a simple pair potential, (3)and the heat current is given by: (4)For an effective many body potential, such as the Tersoff potential including both two and three body terms,21,22εi is given by: (5)where Wij and Wijk denote two and three body potential terms, respectively. The heat current is then expressed as follows:10,25 (6)where Fij = −∇rijWij and Fijk = −∇rijWijk − ∇rikWijk.
+The partition of three body terms in the definition of J(t) is not unique; however numerical tests have shown that the choice of this partition has a negligible effect on the final, average value of J(t).10 We note that while the definition of local energy (eqn (1)) is straightforward in the case of empirical potentials, it remains an open problem for ab initio Kohn–Sham Hamiltonians.
+2.2 Non-equilibrium molecular dynamics
+The thermal conductivity can also be computed using non-equilibrium molecular dynamics (NEMD). We implemented a NEMD method based on the approach proposed by Müller-Plathe.26 According to Fourier's law, in an isotropic system the thermal conductivity κz in the heat propagation direction z, is defined by the following formula: (7) Instead of computing the heat flux, one imposes a well defined heat flux on the system and then measures the resulting temperature gradient. To obtain the latter, the simulation box is divided into Ns equal slabs perpendicular to the z direction (see Fig. 1). Slab 0 is defined as the ‘hot’ slab and slabs Ns/2 and −Ns/2 are the ‘cold’ slabs. The heat flux is generated by interchanging the kinetic energy of the hottest atom in the cold slab and that of the coldest atom in the hot slab so as to decrease the temperature in the cold slab and increase it in the hot one. The simulation cell is periodically repeated. The instantaneous local temperature Tl in slab l is given by: (8)where nl is the number of atoms in the slab l, mi is the mass of the ith atom in the slab, and vi is its velocity. A temperature profile is then calculated by computing an average temperature. A temperature gradient ∂T/∂z is obtained by the slope of the least-square fit of the temperature profile. The imposed heat flux is given exactly by the kinetic energy transferred during the simulation: (9)where t is the total simulation time, vh,i is the velocity of the hottest atom in the cold slab, vc,i is the velocity of the coldest atom in the hot slab, Lx and Ly are the box lengths in x and y directions, respectively. The factor 2 in the denominator arises because the thermal energy flows symmetrically in two directions from the hot reservoir (see Fig. 1).
+ Fig. 1  Periodic simulation cell composed of Ns slabs used in non-equilibrium MD simulations. Slab 0 is the ‘hot’ slab, slab Ns/2 and −Ns/2 are ‘cold’ slabs (see the text). Thermal energy flows through the system from the hot to the cold side. The red color represents the hottest region while the blue color represents the coldest regions. 
+2.3 Lattice dynamics
+Unlike molecular dynamics, lattice dynamics approaches to thermal transport in semiconducting materials rely either on the harmonic approximation (e.g. harmonic Kubo27 or Green's function12 approaches), or account for anharmonic terms in a perturbative manner. The Boltzmann transport equation (BTE) method belongs to the latter class of lattice dynamics approaches. The general form of the BTE reads: (10) Here (q,s) denotes a phonon mode with reciprocal space vector q and branch index s, vq,s the group velocity, and nq,s the mode occupation. The first and second terms of eqn (10) describe diffusion and scattering processes, respectively. Usually, one assumes a small deviation of the mode occupations from equilibrium in the presence of a small temperature gradient and eqn (10) is written in a linearized form. If the relaxation time approximation (RTA) is used, the joint effect of all scattering processes on each mode can be expressed via a single lifetime by assuming that all other phonon modes are in equilibrium:11 (11)where τq,s is the lifetime, and nq,s0 the equilibrium mode occupation. Using the Fourier law, the thermal conductivity is then computed as:11,15 (12)where ωq,s is the frequency of the phonon mode (q,s), cq,s the heat capacity, and Nq is the number of q points.
+Phonon frequencies and eigenmodes are obtained by diagonalizing the dynamical matrix:11 (13)where Φαβ(0b, l′b′) are the harmonic force constants defined as the second derivatives of the potential energy W with respect to small atomic displacements u from equilibrium:  and l is the lth unit cell lattice vector, b represents an atom in the lth cell with mass mb, and α and β are Cartesian coordinates.
+The quantum heat capacity per mode cq,s is given by (14)where x = ħωq,s/kBT, ħ is Planck's constant. To compare our BTE-RTA results directly with classical MD approaches, We will use the classical expression for the specific heat capacity (the high temperature limit of the quantum expression: cq,s = kB).
+Group velocities are defined as vq,s = dωq,s/dq. We use first order perturbation theory to calculate the group velocities: (15) In the BTE-RTA, phonon lifetimes are calculated using Fermi's Golden Rule and taking into account the contribution of three-phonon processes (the lowest perturbative order):11,15 (16)where G is a reciprocal lattice vector and V3(qs, q′s′, q′′s′′) are the coupling elements among (q,s), (q′,s′) and (q′′,s′′) phonon modes:  Ψαβγ(0b,l′b′,l′′b′′) are the third order force constants defined as the third derivatives of the potential energy with respect to small atomic displacements from equilibrium:  
+Here eα(b|qs) represents the component of the phonon eigenmode |q,s〉 that corresponds to the atom b moving in the α direction. In eqn (16) we calculated delta functions using the linear tetrahedron method.28
+In the following, when we use the quantum specific heat capacity and mode occupation in solving the BTE, we will use the term quantum BTE-RTA. When we use classical specific heat capacities and mode occupation contributions to the lifetimes for comparison with MD results, we will use the term classical BTE-RTA.
+2.4 Interatomic potential
+Interatomic potentials for MD and lattice dynamics calculations may be chosen in two different ways: (i) from first principles (without resorting to any free parameters), e.g. using density functional theory (DFT);29 and (ii) empirically, by assuming an analytical form to describe the potential with parameters fitted to experimental data so as to reproduce desired physical properties. Recently, first principles approaches have been successfully combined with the BTE to calculate the thermal conductivity of several semiconducting materials30–33 with small unit cells. Coupling first principles Hamiltonians and MD thermal transport simulations is a much more challenging task, especially so in the case of equilibrium MD, where conceptual difficulties exist in defining a local energy (eqn (3) and (5)). Recently, a few attempts to carry out phonon lifetimes calculation using EMD have been reported, as well as thermal conductivity calculations using NEMD with Kohn–Sham Hamiltonians;34,35 these calculations were limited to small system sizes (up to 512 atoms) and short simulation times (30 ps).
+At present, empirical interatomic potentials are the only suitable class of potentials to compare results on the thermal conductivity of semiconducting systems using different levels of theory, in particular MD and the BTE. For Si and Ge several empirical interatomic potentials have been proposed in the literature: Stillinger–Weber,36 Pearson et al.,37 environment dependent interatomic potential (EDIP)38 and Tersoff.21,22 The Tersoff potential has been used to study surface reconstructions and the phase diagram of SiGe alloys,39 and has given results consistent with experiment.40 In addition, the Tersoff potential describes accurately the properties of nontetrahedral forms of Si.21 Therefore, the Tersoff parametrization has been the potential of choice in this work.
+3 Results and discussions
+3.1 Thermal conductivity of bulk crystalline silicon
+
+Experiments and previous simulations. 
+Bulk crystalline silicon (c-Si) is not a good candidate material for thermoelectric power generation, due to its large lattice thermal conductivity. Recent experimental and theoretical studies have shown that nanostructuring can tremendously enhance the thermoelectric efficiency of Si-based materials by reducing the lattice thermal conductivity without degrading the electronic properties.41,42 Since Si is an Earth abundant, cheap and nontoxic material, many research efforts in the field of thermoelectrics have focused on Si-based materials. At room temperature, the heat transport in Si is mainly dominated by lattice vibrations (phonons),43 and thus the study of the lattice thermal conductivity of c-Si is a key prerequisite to understand heat transfer in bulk elemental ordered semiconductors, as well as to provide a basis to devise design rules for efficient Si-based nanostructured thermoelectric semiconductors.
+The measured values of κ of natural silicon at 300 K range from 130 to 150 W m−1 K−1.43–48 In 1997, Capinski et al.46 used an optical pump-and-probe technique to measure κ of isotopically pure Si. Their ∼11 μm thick sample was made from 99.7% 28Si, and obtained by liquid phase epitaxy. They found a 60% increase in κ of isotopically pure silicon compared to that of natural samples at 300 K. Later Ruf et al.49 measured the κ of highly enriched 28Si (99.8588%) samples with the volume of ∼2 × 2 × 20 mm3 by means of a steady-state heat flow technique at room temperature. They obtained a result consistent with that of Capinski,46 but subsequently they reported a corrected 10% ratio between the κ of isotopically pure and natural Si.50 In 2004, Kremer and co-authors47,48 measured the κ of isotopically enriched 28Si independently in three laboratories on four samples of different shapes and degrees of isotope enrichment, and sizes of ∼2 × 2 × 20 mm3. They reported good agreement between the results obtained in different laboratories. They found that at room temperature the thermal conductivity of isotopically enriched 28Si exceeds the thermal conductivity of natural Si by only 10 ± 2%. As of yet no complete consensus has been reached about the measured value of κ of isotopically enriched 28Si. Recently Johnson et al.51 demonstrated that at room temperature, the thermal conductivity of c-Si samples of micron size significantly deviates from the one predicted by a simple diffusion model; they thus concluded that to achieve an accurate measurement of the κ of bulk Si, one may not use samples of micron size, but larger samples are required. The values of κ for c-Si obtained from existing experimental measurements are given in Table 1.
+Table 1 Experimental values of the thermal conductivity (κ) of bulk crystalline silicon (c-Si) at 300 K. (Natural Si:  = 28.0855, 28Si = 92.23%, 29Si = 4.67%, 30Si = 3.10%.)
+
+
+
+
+Experimental method
+
+κ (W m−1 K−1)
+Sample
+Sample size
+Ref.
+
+
+
+
+Absolute, steady-state, radial heat flow
+∼130
+Natural
+N/A
+
+44
+
+
+
+Variable state, thermal diffusivity
+∼142
+Natural
+0.9 × 0.9 × 6 cm3
+
+45
+
+
+
+Absolute, steady-state, radial heat flow
+∼156
+Natural
+2.6 × 2.6 × 13 cm3
+
+43
+
+
+
+Optical pump-and-probe technique
+∼150
+Natural
+11.7 μm thick film
+
+46
+
+
+
+Absolute, steady-state, radial heat
+∼145
+Natural
+∼2 × 2 × 23 mm3
+
+47, 48
+
+
+
+Optical pump-and-probe technique
+∼240
+
+28Si
+11.7 μm thick film
+
+46
+
+
+
+Absolute, steady-state, radial heat
+∼160
+
+28Si
+∼2 × 2 × 20 mm3
+
+47, 48
+
+
+
+
+
+On the theoretical side, the κ of c-Si using MD techniques was first computed by Volz and Chen25 in 2000. By direct integration of the heat current autocorrelation function obtained from the Green–Kubo formula, these authors computed κ using the Stillinger–Weber (SW) potential36 and equilibrium molecular dynamics. They found a strong size-dependence of the computed conductivity. For example, the calculated κ at 500 K could not be converged even when using cells with 8000 atoms. To obtain a converged result, Volz and Chen extrapolated the computed values using an estimated relaxation time obtained from the heat current autocorrelation function. The fitted results at 300 K are about 70% higher than the measured κ of natural Si. However, using the same empirical potential (SW), several authors (e.g. Schelling et al.,10 Sellan et al.20 and Goicochea et al.16) later reported a weaker size dependence of κ of c-Si. In particular Schelling claimed that a converged value of κ (≈66 W m−1 K−1 at 1000 K) may be obtained by performing EMD simulations with only 1728 atoms. Goicochea et al.16 found a value of κ of about 350 W m−1 K−1 at 300 K by using cells with 512 atoms (130% higher than measured ones). Convergence tests up to 4000 atoms were conducted in ref. 10, 16, and 20. A study of domain size effects on κ of c-Si was also reported by Sun and Murthy.19 Using the environment dependent interatomic potential (EDIP)38 and systems with up to about 30000 atoms, these authors claimed that a converged value of κ at 300 K may be obtained using a small system with 216 atoms. As we will see below, this is at variance from our results, reported in Section 3. Table 2 summarizes the values of κ of c-Si obtained from EMD simulations using different empirical potentials.
+Table 2 Theoretical values of the thermal conductivity (κ) of c-Si at 300 K reported in the recent literature, as obtained using equilibrium molecular dynamics (EMD), the Boltzmann transport equation solved self-consistently (BTE-SC) and in the relaxation time approximation (BTE-RTA). Interatomic potentials are given in the second column, where EDIP refers to the environment dependent potential of ref. 38. Stillinger–Weber and Tersoff potential are from ref. 36 and 22, respectively. First principles denotes results obtained using Kohn–Sham Hamiltonians within the local density approximation, using Von Barth and Car's norm-conserving pseudopotentials52 and a plane wave cutoff of 20–40 Ry. We report the system size in the third column, together with the number of q points (Nq) used to integrate the BTE. Gaussian quadrature was used in the BTE calculations, unless specified
+
+
+
+
+Method
+Potential
+System size
+
+κ (W m−1 K−1)
+Ref.
+
+
+
+
+EMD
+Stillinger–Weber
+8000 atoms
+∼255
+
+25
+
+
+
+EMD
+Stillinger–Weber
+512 atoms
+∼350
+
+16
+
+
+
+EMD
+EDIP
+216 atoms
+∼170
+
+19
+
+
+
+BTE-SC
+Stillinger–Weber
+2 atoms, 6912 Nq
+∼900
+
+53
+
+
+
+BTE-SC
+Tersoff
+2 atoms, 6912 Nq
+∼427
+
+53
+
+
+
+BTE-RTA
+Tersoff
+2 atoms, 6912 Nq
+∼370
+
+53
+
+
+
+BTE-SC
+EDIP
+2 atoms, 6912 Nq
+∼409
+
+53
+
+
+
+BTE-SC
+First principles
+2 atoms, 6912 Nq
+∼160
+
+30, 54
+
+
+
+BTE-SC
+First principles
+2 atoms, 32768 Nq
+∼150
+
+32, 54
+
+
+
+BTE-RTA
+First principles
+2 atoms, 303Nq uniform grid
+∼130
+
+31, 55
+
+
+
+BTE-RTA
+First principles
+2 atoms, 183Nq uniform grid, extrapolation to infinite Nq
+∼160
+
+56
+
+
+
+
+
+The first atomistic BTE calculations of the thermal conductivity of c-Si reported in the literature used an iterative solution of the linearized Boltzmann equation, but still relied on a relatively simple pairwise central interatomic potential.57 Subsequent papers53,58 explored in more detail the ability of different empirical interatomic potentials to describe the κ of c-Si, and obtained values that are at least 100% larger than experiment. Recently, first principles DFT Hamiltonians have been employed to self-consistently solve the BTE,30,32 yielding a very good agreement with the measurements of ref. 47 and 48. Other first principles BTE studies31,56 used the computationally less intensive relaxation time approximation and reported values similar to those obtained using a self-consistent procedure30 (see Table 2).
+
+
+Equilibrium MD results. 
+All our EMD simulations were carried out using the LAMMPS code,59 with periodic boundary conditions applied to all three directions, and a time step of 0.5 fs. The initial configurations of all bulk crystalline silicon (c-Si) samples considered in this study were obtained by replicating a cubic diamond unit cell with lattice constant a = 5.4 Å (experimental value). Each sample was equilibrated at 300 K and zero pressure (P) using the NPT ensemble first, to determine the equilibrium density, followed by simulations in the NVT ensemble. After equilibration, the heat current was obtained within the NVE ensemble using eqn (6), and the thermal conductivity was calculated by eqn (1). The heat current autocorrelation function was computed using fast Fourier transforms.60 The convergence of κ of c-Si as a function of simulation time was carefully tested. Our results showed that simulations of the order of 10 ns are necessary to obtain a converged value of κ for all sizes. Therefore, all MD runs for c-Si reported in Fig. 3 were carried out for 10 ns.
+We also tested the convergence of κ with respect to the truncation time used in the integration of the heat current autocorrelation function <J(t)J(0)> = CJ(t) in eqn (1). Fig. 2 shows the computed CJ(t) as a function of the correlation time and κ as a function of the truncation time for a silicon sample with 4096 atoms. A truncation time of 200 ps yielded well converged values. In order to test size effects, we carried out simulations for supercells of various sizes. We find that to obtain a converged value of κ of c-Si, one has to use cells with at least ∼64000 atoms. Convergence is not monotonic, as it depends on the quality of sampling phonons that act as heat carriers and phonon scatterers at the same time. As shown in Fig. 3, the calculated values of κ using supercells with 64000, 216000 and 1000000 atoms are the same within error bars. Our results on size convergence may explain the conflicting results for κ reported in the literature.16,19,25 Our converged value of κ of c-Si is 196.8 ± 33.3 W m−1 K−1. Given the complexity of real silicon materials (including defects, grain boundaries, and impurities), we consider the agreement with experiment satisfactory, although it clearly represents an overestimate of the experimental value.
+ Fig. 2  The normalized heat current autocorrelation function (CJ(t)) of a crystalline silicon sample with 4096 atoms at room temperature as a function of the correlation time (tcorr). The inset shows the calculated thermal conductivity (κ) as a function of truncation time (ttr). 
+ Fig. 3  Thermal conductivity (κ) of crystalline silicon as a function of the number of atoms in the simulation cell at 300 K, computed with equilibrium molecular dynamics, using the Green–Kubo formula. The blue shaded region indicates the range of measured κ of c-Si in the experiments where most values lie in the dark portion of the region (see Table 1). The final converged result of κ of c-Si in EMD is estimated by averaging the computed values of the three largest systems (64000, 216000 and 1000000 atoms). 
+
+
+Non-equilibrium MD results. 
+We also computed κ of c-Si using the NEMD method. This approach is analogous to experimental methods, where a temperature gradient is created within the material, and the thermal conductivity is obtained from the ratio between the measured heat flow and the temperature gradient. In order to use Fourier's law (eqn (7)) to calculate the thermal conductivity, one has to determine the linear response regime in which the inverse of the thermal conductivity linearly depends on the inverse of the sample length.
+In this work, we chose c-Si samples with a cross section of (2.2)2 nm2 at both 300 K and 1000 K. For the same cross section, the heat current is inversely proportional to the number of time steps (w) by which the velocities of cold and hot atoms are exchanged (see Fig. 4). By computing κ with various values of w (w = 20, 40, 60, 80, 100, 140 and 180) for a sample of dimensions 2.2 × 2.2 × 50 nm3, we found that linear temperature profiles can be obtained by using w = 100 steps, i.e. 50 fs.
+ Fig. 4  The exchange of kinetic energy between an atom in the cold slab and an atom in the hot slab (see Fig. 1) in non-equilibrium molecular dynamics simulations of crystalline Si. Here we used cells with 11520 atoms. Top panel: the black (red) curve shows the kinetic energy (Ek) of atoms with the largest (smallest) kinetic energy in the cold (hot) slab as a function of the simulation time. Bottom panel: heat flux as a function of simulation time. The inset shows the heat flux in the first 100 ps of the simulation. 
+In order to check whether a steady state was reached in our simulations, we computed the temperature profile of the systems for two different simulation times, as shown in Fig. 5 and 6. Before the system reaches a steady state, the temperature profile calculated from the instantaneous local kinetic temperature in each slab is changing abruptly as a function of the simulation time. After the steady state is reached, the temperature profile becomes smooth, and exhibits an equal value of the temperature gradient on both sides of the heat source.
+ Fig. 5  The temperature profile in the heat propagation direction for a bulk silicon sample simulated using non-equilibrium molecular dynamics in a cell of dimensions 2.2 × 2.2 × 50 nm3 (11520 atoms) at 1000 K. The simulation was run for 50 ps. The heat source and the heat sinks are located in the middle and at the two ends of the simulation box, respectively (see Fig. 1). The insets show the linear fits of the temperature gradient on the left and right hand sides of the heat source, respectively. 
+ Fig. 6  The temperature profile in the heat propagation direction for a bulk silicon system simulated using non-equilibrium molecular dynamics in a cell of dimensions 2.2 × 2.2 × 50 nm3 (11520 atoms) at 1000 K. The simulation was run for 2 ns (compare with Fig. 5, showing a 50 ps simulation). The heat source and the heat sinks are located in the middle and at the two ends of the simulation box, respectively (see Fig. 1). The insets show the linear fits of the temperature gradient on the left and right hand sides of the heat source, respectively. 
+Once the heat current is obtained from the transferred kinetic energy and the temperature gradient is computed from the temperature profile, the thermal conductivity is calculated from Fourier's law: . Fig. 7 shows the calculated κ of c-Si for various lengths (L) of the simulation cell at T = 300 K (L = 48.9, 65.2, 86.9, 119.5, 195.5, 249.8 nm) and T = 1000 K (L = 97.8, 152.1, 195.5 nm). The linear fit was done following Schelling's work.10 The linearly extrapolated value of κ at 1000 K is 58.5 ± 3.1 W m−1 K−1, compatible with our EMD result (48.9 ± 8.6 W m−1 K−1), obtained with cells of dimensions (2.2)3 nm3 (512 atoms) comparable to the cross section of (2.2)2 nm2 in NEMD.
+ Fig. 7  Calculated inverse of the thermal conductivity (κ) in bulk silicon as a function of the inverse of the size of the simulation cell (Lz) along the heat flow direction (z). Black circles correspond to 1000 K simulations and black squares to 300 K. Blue and red lines are linear fits to the 1000 K and 300 K results, respectively. 
+At 300 K, as we can see from Fig. 7, only the values obtained for the cells with lengths larger than ∼100 nm appear to be linear. The linearly fitted value of κ at 300 K is 295.8 ± 20.1 W m−1 K−1, which is not in agreement with our EMD converged result (196.8 ± 33.3 W m−1 K−1); however it is compatible with the value of κ = 253.3 ± 14.2 W m−1 K−1 obtained with EMD simulations and samples with 512 atoms (size: (2.2)2 nm2). The differences between EMD and NEMD results indicate that the κ of c-Si at room T, calculated by NEMD, depends both on the cross section and the length of the simulation cells. Sellan et al.20 argued that the linear extrapolation procedure used in NEMD is accurate only when the minimum size is comparable to the largest mean-free-paths of the phonons that dominate the thermal transport. They suggested that to obtain accurate κ of bulk silicon using NEMD, one needs to simulate systems with lengths of 3.3 μm at 500 K, and 1.5 μm at 1000 K, indicating that at 300 K NEMD simulations may need samples with length even larger than 3.3 μm. This claim is supported by the recent experiment of Johnson et al.51 Although the experimental study of Ju and Goodson61 reported that the effective mean-free path of the dominant phonons of c-Si at room temperature is ∼300 nm (comparable to the lengths used in our NEMD simulations), Johnson et al.51 claimed that at 300 K phonons with mean free paths larger than 1 μm could contribute to half of the value of the thermal conductivity of c-Si. Therefore, we concluded that the determination of the appropriate supercell size (in terms of both length and cross-section) needed in NEMD simulations to recover the regime of applicability of the Fourier law, and obtain converged κ at 300 K, is still an open question.
+Finally we note that the rate of change of 1/κ with 1/Lz is not temperature-dependent in our simulations, at variance from the findings of Schelling et al.10 who used a Stillinger–Weber potential. These discrepancies may be explained, at least in part, by the different empirical potentials and the sizes of simulated systems used here (Lz up to 200 nm at 300 K in this work, and up to 150 nm at 500 K in ref. 10).
+
+
+Lattice dynamics results. 
+In the BTE-RTA simulations of the thermal conductivity of c-Si, we considered cubic supercells that were relaxed at 300 K using a procedure similar to that reported for EMD simulations. We performed our calculations on a cubic supercell with 8 atoms and varied the number of wave vectors on a cubic grid to obtain converged results for κ, as shown in Fig. 8. We used a uniformly spaced q point grid that includes the zone center and edges. Our results demonstrate that using q point grids as large as ∼253 is necessary to ensure the convergence of κ. This grid size is consistent with the supercell sizes used in EMD simulations, although the convergence trends are different.
+ Fig. 8  Thermal conductivity of bulk crystalline Si at 300 K as a function of the number of wave vectors, computed using the Boltzmann transport equation (BTE) in the relaxation time approximation (RTA). We used cells with 8 atoms, and a uniform cubic wave vector grid that contains the zone center and edge points. The black (red) solid line shows the quantum (classical) BTE-RTA results (see the text). 
+We also computed κ using the classical BTE-RTA approach (red dashed line in Fig. 8) and compared our results with those of EMD. The convergence trends in the quantum and classical cases are very similar; however, the value of κ obtained by the classical BTE-RTA (κ = 270.9 W m−1 K−1) is smaller than the quantum one (κ = 310.1 W m−1 K−1), not surprisingly as the ΘD of Si, 645 K, is substantially larger than the simulated temperature of 300 K. As a result, the classical heat capacity is larger than that in the quantum case, and leads to an increase in the values of κ obtained from classical BTE-RTA with respect to the quantum case. On the other hand, as illustrated in Fig. 9(a), the classical BTE-RTA lifetimes are smaller than the quantum ones for a large range of frequencies (except for very high frequencies that contribute little to the heat conduction). This effect is dominant and the classical BTE-RTA value κ at 300 K is lower than the quantum value. A similar finding has been reported in ref. 62.
+ Fig. 9  (a) Lifetimes of bulk crystalline Si at 300 K as a function of frequency, calculated using the Boltzmann transport equation (BTE) in the relaxation time approximation (RTA). Black (red) circles show the quantum (classical) BTE-RTA results (see the text). (b) Lifetimes of bulk crystalline Si at 300 K as a function of frequency, computed using classical approaches. Red circles show the classical BTE-RTA results, while black circles represent lifetimes calculated from equilibrium molecular dynamics. 
+The classical BTE-RTA gives a 38% higher than EMD κ (κBTE = 270.9 W m−1 K−1 as opposed to κEMD = 196.8 ± 33.3 W m−1 K−1). To understand this result in more detail, we show classical BTE-RTA and EMD lifetimes as a function of frequency in Fig. 9(b). EMD lifetimes for each normal mode were obtained from the exponential decay of the autocorrelation function of the potential energy.14 Such simulations are computationally very intensive and here we show EMD lifetimes for a relatively small supercell (1000 atoms). Size effects are apparent in the low frequency part of the spectrum which are not properly probed by EMD with small cells. Nevertheless, the classical BTE-RTA and EMD lifetimes are comparable in the entire range of frequencies accessible to the EMD calculation. We speculate that at very low frequencies, lifetimes obtained with only three-phonon terms may be overestimated with respect to those we would obtain with calculations at all orders, thus leading to a higher value of κ within the BTE-RTA than that in EMD.
+We note that our calculated quantum BTE-RTA value of κ, 310 W m−1 K−1, is smaller than that reported in ref. 53 and obtained with the same potential and using the same physical approximations (κ ∼ 370 W m−1 K−1). One of the possible reasons for this discrepancy is the sparse q point quadrature grid used in ref. 53 that may exhibit a κ convergence trend opposite to ours (larger q point meshes give smaller κ, as reported in Fig. 1 of ref. 53). Therefore the value reported in ref. 53 may not be fully converged. The value of κ of c-Si obtained in our work (310 W m−1 K−1) is approximately 2 times larger than the experimental values47,48 and than that obtained with first principles BTE simulations.30,31,56 Our preliminary first principles BTE results63 suggest that the inadequacy of the Tersoff potential (and short-range potentials in general) to describe the transverse acoustic branches is the main reason for this disagreement.
+
+3.2 Thermal conductivity of bulk crystalline germanium
+
+Experiments and previous simulations. 
+The measured values of κ of natural c-Ge at 300 K range from 50 to 60 W m−1 K−143,64–67 at room temperature. The measured κ of enriched 70Ge is 70 W m−1 K−1 at 300 K66,67 (see Table 3). Only one theoretical result for κ of c-Ge obtained using MD simulations has been reported in the literature: ∼90 W m−1 K−1,68 while several studies have been published using the BTE.57,58 Recently, several papers employed first principles Hamiltonians to calculate κ of c-Ge,30–32 and reported a good agreement with the measurements reported in ref. 66 and 67. A summary of experimental and theoretical results is given in Tables 3 and 4, respectively.
+Table 3 Experimental values of the thermal conductivity (κ) of bulk crystalline germanium (c-Ge) at 300 K. (Natural Ge:  = 72.61, 74Ge = 35.94% , 72Ge = 27.66%, 70Ge = 21.23%, 73Ge = 7.73%, 76Ge = 7.44%.)
+
+
+
+
+Experimental method
+
+κ (W m−1 K−1)
+Sample
+Sample size
+Ref.
+
+
+
+
+Absolute, steady-state, longitudinal heat flow
+∼50
+Natural
+N/A
+
+64
+
+
+
+Variable state, thermal diffusivity
+∼50
+Natural
+0.6 × 0.6 × 5 cm3
+
+65
+
+
+
+Absolute, steady-state, radial heat flow
+∼60
+Natural
+2.6 × 2.6 × 13 cm3
+
+43
+
+
+
+Absolute, steady-state, radial heat flow
+∼60
+Natural
+∼2.5 × 2.5 × 30 mm3
+
+66, 67
+
+
+
+Absolute, steady-state, radial heat flow
+∼70
+
+70Ge
+∼2.5 × 2.5 × 30 mm3
+
+66, 67
+
+
+
+
+
+Table 4 Theoretical values of the thermal conductivity (κ) of c-Ge at 300 K reported in the recent literature, as obtained using equilibrium molecular dynamics (EMD), the Boltzmann transport equation solved self-consistently (BTE-SC) and in the relaxation time approximation (BTE-RTA). Interatomic potentials are also given, where the Tersoff potential is from ref. 22. First principles denotes results obtained using Kohn–Sham Hamiltonians within the local density approximation, using Von Barth and Car's norm-conserving pseudopotentials52 and a plane wave cutoff of ∼20 Ry. We report the system size in the third column, together with the number of q points (Nq) used to integrate the BTE. Gaussian quadrature was used in the BTE calculations, unless specified
+
+
+
+
+Method
+Potential
+System size
+
+κ (W m−1 K−1)
+Ref.
+
+
+
+
+EMD
+Tersoff
+216 atoms
+∼90 ± 6
+
+68, 69
+
+
+
+BTE-SC
+First principles
+2 atoms, 6912 Nq
+∼65
+
+30, 54
+
+
+
+BTE-SC
+First principles
+2 atoms, 32768 Nq
+∼65
+
+32, 54
+
+
+
+BTE-RTA
+First principles
+2 atoms, 303 uniform Nq
+∼60
+
+31, 55
+
+
+
+
+
+
+
+Equilibrium MD results. 
+The initial configurations of all bulk crystalline germanium (c-Ge) samples were obtained from replicas of the cubic diamond unit cell with lattice constant a = 5.66 Å (experimental value). As in the case of Si, each c-Ge sample was equilibrated at 300 K and zero pressure using NPT and NVT ensembles. After equilibration, the calculation of the heat current was carried out using eqn (6). The thermal conductivity was calculated using the Green–Kubo formula (see eqn (1)) and fast Fourier transforms.60 All MD simulations for c-Ge were 10 ns long.
+The truncation time was chosen at 200 ps according to the tests shown in Fig. 10. Size effects were also carefully tested. In order to do so, we carried out simulations for supercells of various sizes. We find that to obtain a converged value of κ of c-Ge, cells with at least 27000 atoms are required. The value of κ averaged over the three largest sizes (with 27000, 64000 and 216000 atoms) used in our simulations is 69.7 ± 12.5 W m−1 K−1. Compared with c-Si, the calculated κ of c-Ge is in better agreement with the experimental results (see Fig. 11). This is understandable since ΘD of Si is 645 K, and that of Ge is 360 K, and thus the use of EMD simulations, where a classical approximation for the phonon populations is employed, is more accurate for c-Ge than for c-Si at room T.
+ Fig. 10  The normalized heat current autocorrelation function (CJ(t)) of a crystalline Ge sample with 4096 atoms at room temperature as a function of the correlaton time (tcorr). The inset shows the calculated thermal conductivity as a function of truncation time (ttr). 
+ Fig. 11  Thermal conductivity of crystalline germanium as a function of the number of atoms in the simulation supercell at 300 K, computed with equilibrium molecular dynamics, using the Green–Kubo formula. The blue shaded region indicates the range of measured κ of c-Ge in the experiments (see Table 3). The final converged result of κ of c-Ge in EMD is estimated by averaging values of κ obtained for the three largest systems (27000, 64000 and 216000 atoms). 
+
+
+Lattice dynamics results. 
+To calculate the thermal conductivity of c-Ge using the BTE-RTA approach, we considered Ge samples whose geometry was relaxed in the same manner as reported for c-Si. The convergence of the thermal conductivity of c-Ge as a function of the number of wave vectors on the same cubic grid as described for c-Si is shown in Fig. 12. The convergence trends are similar to those observed in c-Si. The κ computed using the classical BTE-RTA approach is 82.6 W m−1 K−1 and it is smaller than the quantum value of 84.6 W m−1 K−1, but the difference between the two results is much smaller than that in c-Si, as expected from the values of ΘD in the two systems. We also find that the classical BTE-RTA gives a 26% higher κ than EMD (69.7 ± 12.5 W m−1 K−1) and this discrepancy is smaller than that in the case of Si. Our quantum BTE-RTA value for c-Ge calculated using the Tersoff potential overestimates the experimental measurements66,67 and first principles BTE calculations30,31 by ∼40%, most likely for the same reasons discussed for c-Si.
+ Fig. 12  Thermal conductivity of bulk crystalline Ge at 300 K as a function of the number of wave vectors, computed using the Boltzmann transport equation (BTE) in the relaxation time approximation (RTA). We used cells with 8 atoms, and a cubic, uniformly spaced wave vector grid contains the zone center and edge points. The black (red) solid line shows the quantum (classical) BTE-RTA results (see the text). 
+
+3.3 Thermal conductivity of bulk silicon germanium alloys
+
+Experiments and previous simulations. 
+Silicon germanium (SiGe) alloys are Si-based systems with structural order and mass disorder. They are promising candidates for thermoelectric applications due to a much lower thermal conductivity than Si and Ge, and they have long been used to build thermoelectric modules for the international Solar Polar mission to convert radio-isotope heat into electricity.70,71 However, the efficiency of thermoelectric devices built from bulk SiGe alloys has its peak at high temperature (∼1100 K) and is not yet high enough to make them competitive with conventional generators. Such devices can only work efficiently at high temperature. Recent progress in nanotechnology has triggered interest in trying to reduce the thermal conductivity of bulk SiGe alloys by using low dimensional and nano-confined structures.2
+In general, SiGe samples used in thermal conductivity measurements may have a different degree of crystallinity: the zone-leveled samples are closest to ideal single crystals, followed by those grown by the die-casting technique, and finally, the pressure sintered samples contain large amounts of grain boundaries. The measured thermal conductivity is expected to increase with a higher degree of crystallinity. Furthermore, the level of doping (from heavily n- to heavily p-doping) greatly varies in different samples, and this also affects the thermal conductivity values, as it affects the electronic contribution to κ. Here we considered single crystalline undoped samples, and therefore we compared our results with the measurements on lightly doped zone-leveled or die-cast samples. In such samples, the electronic contribution to κ is likely to be negligible. In Table 5 we summarized the relevant experimental thermal conductivities at room T for bulk SiGe with 65 to 75% of Si.
+Table 5 Experimental values of the thermal conductivity (κ) of lightly doped highly crystalline bulk Si1−xGex at ∼300 K. The sample preparation conditions are listed in column 1. Columns 2 and 3 list the Ge content and the doping level, respectively
+
+
+
+
+Samples
+
+x
+
+Doping
+Sample size
+
+κ (W m−1 K−1)
+Ref.
+
+
+
+
+Zone-level
+0.3
+
+σ
+p = 2.5 × 104 1/Ω
+∼0.6 × 0.6 × 5 cm3
+∼5.9
+
+23, 72
+
+
+
+Zone-level
+0.25
+
+n ≤ 2 × 1018 cm−3
+10 × 10 × 10 mm3
+∼7.7
+
+73
+
+
+
+Zone-level
+0.3
+
+n = 2.2 × 1018 cm−3
+10 × 10 × 10 mm3
+∼7.2
+
+73
+
+
+
+Die-cast
+0.35
+
+p ∼ 5 × 1018 cm−3
+20 × 20 × 3 mm3
+∼5.4
+
+74
+
+
+
+
+
+In previous atomistic simulations, the NEMD method has been used to estimate the thermal conductivity of bulk SiGe,75 and results were reported that are 4–6 times smaller than the experiments. The most likely reason for the discrepancy is that simulation cells were relatively small (∼16000 atoms) and convergence was not achieved, as we will show below. On the other hand, a recent BTE-RTA study,31 based on first principles density functional perturbation theory, has successfully reproduced the experimental κ of bulk SiGe. This was done by using the virtual crystal approximation, which we will discuss in more detail at the end of this section. A self-consistent BTE procedure based on the virtual crystal approximation76 gave results comparable to those of the BTE-RTA method. The theoretical values of κ of Si0.5Ge0.5 at 300 K reported in the literature are presented in Table 6.
+Table 6 Theoretical values of the thermal conductivity κ of bulk Si0.5Ge0.5 at 300 K reported in the recent literature, as obtained using non-equilibrium molecular dynamics (NEMD), the Boltzmann transport equation solved self-consistently (BTE-SC) and in the relaxation time approximation (BTE-RTA). Interatomic potentials are also given, where Stillinger–Weber potential is from ref. 36. First principles denotes results obtained using Kohn–Sham Hamiltonians within the local density approximation, using Von Barth and Car's norm-conserving pseudopotentials52 and a plane wave cutoff of ∼20 Ry. VCA corresponds to the virtual crystal approximation
+
+
+
+
+Method
+Potential
+System size
+
+κ (W m−1 K−1)
+Ref.
+
+
+
+
+NEMD
+Stillinger–Weber
+16384 atoms
+∼1
+
+75
+
+
+
+BTE-RTA, VCA
+First principles
+2 atoms, 303 uniform q point grid
+∼8
+
+31, 55
+
+
+
+BTE, VCA
+First principles
+2 atoms, 6912 Gaussian quadrature q point grid
+∼10
+
+54, 76
+
+
+
+
+
+
+
+Equilibrium MD results. 
+Here we present EMD calculations of the thermal conductivity of Si0.5Ge0.5. The heat current was computed using eqn (6) with 10–20 ns long simulations in the NVE ensemble. The thermal conductivity was calculated using the Green–Kubo formula (eqn (1)). Fig. 13 shows the calculated HCACF for a Si0.5Ge0.5 sample with 4096 atoms at 300 K as a function of the correlation time, and the inset shows κ as a function of the truncation time for the same sample.
+ Fig. 13  The normalized heat current auto-correlation function (CJ(t)) for a Si0.5Ge0.5 sample with 4096 atoms at 300 K as a function of the correlation time (tcorr). The inset shows the calculated thermal conductivity as a function of the truncation time (ttr). 
+To test the convergence of κ of Si0.5Ge0.5 with respect to the system size, we carried out simulations with supercells containing 1000 (53), 4096 (83), 8000 (103), 64000 (203), 216000 (303) and 1728000 (603) atoms (see Fig. 14). The larger cells are representative of more disordered and thus more realistic systems. We find that we cannot obtain a fully converged thermal conductivity of Si0.5Ge0.5 even when using a large cell with about 2 million atoms. Nevertheless we note that the value of κ for the 2 million atom sample is consistent with existing measurements, contrary to the results reported using NEMD.77 We also found that the EMD simulations of Si0.5Ge0.5 samples larger than 2 million atoms are limited by long truncation times. Contrary to c-Si and c-Ge, where the optimal truncation time was found to be independent of the size of the system, we find that in Si0.5Ge0.5, the truncation time strongly depends on the size of the simulation cell, varying from 20 ps to 400 ps for systems with 1000 up to 2 million atoms. For simulation cells larger than 2 million atoms, the truncation time must be larger than 400 ps.
+ Fig. 14  Thermal conductivity of the Si0.5Ge0.5 alloy as a function of the supercell size at 300 K, computed using equilibrium molecular dynamics simulations. Black circles represent results for Si0.5Ge0.5 using the Si–Ge Tersoff potential; the red square (green diamond) represents results obtained using the Ge(Si) Tersoff potential to describe all bonds in the system. The blue shaded region indicates the range of measured κ of Si1−xGex alloys with x = 0.2–0.3 (see Table 5). 
+Large statistical noise in the tail of the HCACF is another issue related to the convergence of SiGe κ using EMD. Fig. 15 shows the computed HCACF of Si0.5Ge0.5 samples with various sizes as a function of correlation time. It was previously established that the short time scale of HCACF is associated with high frequency vibrations, and the longer one is associated with low frequency vibrations.78 We found that the decay rate of the short time scale is similar for the different system sizes, while the decay rate of the longer time scale is significantly different, and gradually increases as the size of the systems increases. Since the decay rate of HCACF is proportional to the lifetime of vibrations, our results indicate that the low frequency vibrations and their large contribution to heat transport are responsible for the size-dependence of κ of the Si0.5Ge0.5 alloy observed in the MD simulations. At the same time, for samples containing more than 2 millions atoms, the density of low frequency modes is not sufficient to correct for the statistical noise of the long tail of HCACF. (See oscillations of the HCACF for long time scale in Fig. 15.)
+ Fig. 15  The normalized heat current autocorrelation function (CJ(t)) of Si0.5Ge0.5 samples with various sizes as a function of correlation time (tcorr). The black, red, green and blue curves represent results for cells with 1000, 8000 216000 and 1728000 atoms, respectively. The right (a) and left hand side (b) show the correlation function between 0 and 1 ps, and between 1 and 50 ps, respectively. 
+To further confirm our findings related to the behavior of the HCACF, indicating a slow decay of the low frequency vibrations that are dominant heat carriers, we carried out phonon lifetimes calculations within EMD with two different cell sizes, 1000 and 4096 atoms. The calculated lifetimes for the two systems (see Fig. 16) show that when the size of the simulation cell is increased, an increasing number of low frequency modes with increasing lifetime are explored, while the amplitude of the lifetime of high frequency modes in both systems is very similar and, as expected, much smaller than that at low frequency. These results confirm that sampling of the low frequency modes is crucial to reliably compute the κ of Si0.5Ge0.5 alloys.
+ Fig. 16  Lifetime (τ) of vibrational modes in Si0.5Ge0.5 computed in molecular dynamics simulations with cells with 1000 atoms (a) and cells with 4096 atoms (b) as a function of phonon frequency (ν). 
+To investigate whether mass disorder is the main effect in determining the low thermal conductivity of Si0.5Ge0.5, two simulations were carried out for a chosen cell size (216000 atoms): we considered one system with the same mass disorder as that in Si0.5Ge0.5, but whose Si and Ge bonds are described by the Si Tersoff potential; we then considered a system with the same mass disorder as that in Si0.5Ge0.5, but whose Si and Ge bonds are described by the Ge Tersoff potential. The results show that the difference in chemical bonds between Si and Ge plays a minor albeit not negligible role in determining the reduction of the value of κ, while mass disorder has a major effect (see Fig. 14).
+Most of the experimental values of κ pertain to Si1−xGex samples with x = 0.2–0.3. In order to compare with experimental results, we estimated the κ of Si1−xGex for x = 0.2–0.5 using a small system with 4096 atoms. Although the absolute values obtained in this way are unconverged and underestimate the converged values, the trends as a function of concentration are expected to be qualitatively correct. Our results show that κ of Si1−xGex alloys becomes composition-independent at 0.2 < x < 0.5, consistent with experiment. Therefore, we conclude that the calculated κ of Si0.5Ge0.5 is representative of and compatible with the experimental results23,73 at lower concentrations.
+
+
+Lattice dynamics results. 
+To compute the BTE-RTA thermal conductivity of SiGe alloys, one should consider large cubic supercells that explicitly account for mass and chemical bond disorder, and then increase the size of the supercell and the wave vector grid until convergence is achieved, similar to what is done in EMD simulations. This is a challenging computational task since the BTE algorithm scales as (N4Nq2).79 To overcome these difficulties, we implemented two approaches to calculate the thermal conductivity of large systems: (i) we fitted the lifetimes of small supercells to a power law (τ−1 = Aωb) for frequencies up to 200 cm−1 (higher frequencies contribute to the total κ less than a few percent e.g. for supercells with 512 atoms this contribution is 1%); we then used fitted lifetimes to compute κ of large systems through eqn (12); (ii) we developed an atomistic Monte Carlo approach to solve the BTE in the RTA.80 Both approaches give essentially the same results as the BTE-RTA method using exact integration for small supercells, but they are computationally less intensive than exact integration and allow for computations for large systems with supercells of several thousands of atoms.
+
+Fig. 17 shows our thermal conductivity results obtained using the procedure (i) described above as a function of the Si0.5Ge0.5 cubic supercell length. The convergence of κ is not achieved even for supercells as large as 13824 atoms and q point grids that amount to an effective number of atoms as large as 7 million. This is a consequence of the fact that, although lifetimes converge as a function of increasing cell size, group velocity decrease and eventually vanish for infinitely large disordered supercells27 (except for the zero frequency one, that does not contribute to heat conduction). The BTE value for κ in the limit of infinitely large disordered cells should therefore be zero, as pointed out in ref. 27. This finding suggests that higher-level lattice dynamics theories than the BTE need to be employed to obtain a finite non-zero κ for disordered systems.
+ Fig. 17  Thermal conductivity (κ) of Si0.5Ge0.5 at 300 K as a function of the simulated supercell length, computed using a simplified Boltzmann transport equation (BTE) approach in the relaxation time approximation (RTA) (see the text). The number of atoms in the supercell for each point on the graph is also given. The wave vector grid used is such that the effective, maximum number of atoms is ≈7 million. The red region denotes the range of thermal conductivity values expected from equilibrium molecular dynamics (EMD) simulations, the green region corresponds to experimental results for Si1−xGex samples with x = 0.25–0.35, and the blue region represents the range of thermal conductivity values estimated using the average mass approximation (see the text). 
+The convergence issue found here in solving the BTE for alloys (also reported in ref. 55) may be commonly circumvented by using a so called virtual crystal approximation (VCA).23 The basic assumption of this model is that the effect of mass disorder on SiGe κ is weak enough so that one may use the virtual crystal approximation. The virtual crystal is described by the interatomic potential, masses and lattice parameter interpolated between those of Si and Ge. Virtual impurities are accounted for via different masses than those of the virtual crystal (i.e. impurities have masses of Si or Ge). By treating these mass differences as weak perturbations, a phonon lifetime term due to mass disorder is derived and combined with three-phonon lifetimes (given in eqn (16)) via Matheissen's rule.31 Consequently, the group velocities are well defined in this model and converged κ values may be obtained.31,76 We have performed calculations similar to the VCA, using the interatomic potential of Si or Ge (so called average mass approximation). As shown in Fig. 17, our classical BTE-RTA results are approximately a factor of 2 larger than the EMD values. Reconciling this approach with more accurate lattice dynamics approaches that can account explicitly for disorder remains an open problem.
+
+4 Conclusions
+We explored the consequences of using different physical and numerical approximations to compute the thermal conductivity of bulk crystalline Si, Ge and SiGe alloys. Our results showed that equilibrium molecular dynamics is a robust method that can describe thermal transport in both ordered (Si, Ge) and disordered (SiGe) materials provided that large samples (105−106 atoms) are simulated over a long period of time (≥10 ns) at temperature close to or above the ΘD. Based on our comparison between results obtained with EMD and the quantum BTE-RTA approach, we conclude that EMD simulations using a classical statistics for the phonons tend to underestimate the thermal conductivity for T < ΘD, possibly as much as ∼15% in the case of Si at room T (although a precise value of this underestimate could not be obtained from such comparison). For crystalline Si, we showed that non-equilibrium molecular dynamics for samples with small cross-sections of the order of (2.2)2 nm2 gives slightly larger values than those of EMD on cubic samples with the same cross-section, and ∼50% larger values than converged EMD calculations at 300 K. These results, combined with the finding that to converge EMD simulations, tens of thousands to million atoms samples are necessary, suggest that extremely large samples (with over 106 atoms) with large cross-sections should be used in non-equilibrium simulations to obtain reliable thermal conductivity values. Therefore although appealing for its simplicity and its ease of generalization to include ab initio Hamiltonians, NEMD appears to pose serious efficiency issues, and to be much more computationally demanding than EMD.
+The lattice dynamics based Boltzmann transport approach in the relaxation time approximation gives converged thermal conductivity values for ordered Si and Ge materials for samples of effective sizes comparable to equilibrium molecular dynamics, but at a much lower computational effort. In the case of SiGe alloys, our simulations showed that the approximations used to derive the BTE within the RTA and even the linearized BTE are too crude to describe the thermal conductivity of mass disordered alloys. Unless further approximations (such as virtual crystal) are introduced to overcome the problem of vanishing group velocities for infinitely large cells, the BTE-RTA may not be used to compute conductivity of completely disordered alloys. In the case of ordered systems, one of the main advantages of the Boltzmann approach compared to EMD is the ability to compute phonon lifetimes and group velocities of large samples, and thus provide a detailed, atomistic interpretation of the various contributions to the conductivity and ultimately also of the EMD results. However, phonon lifetimes calculated with the BTE-RTA approach account for three-phonon scattering rates only, and we showed that higher phonon processes may give a non-negligible contribution to κ. e.g. in the case of c-Si, when using the Tersoff empirical interatomic potential.
+In summary, we have presented a comparative analysis of the thermal conductivity of Si, Ge and SiGe alloys obtained by using MD and the BTE-RTA, which establishes the limit of validity of the physical approximations underlying each approach. We have also presented an analysis of the numerical approximations involved in each calculation. Our findings provide important guidance for the comparison of simulation results with experiments as well as for the comparison of computed values of the conductivity in bulk and nanostructured SiGe based materials.
+Acknowledgements
+This research was supported by DOE/BES under Grant No. DEFG0206ER46262 and computational resources were provided by the University of California Shared Computer Center.
+References
+D. G. Cahill, W. K. Ford, K. E. Goodson, G. D. Mahan, A. Majumdar, H. J. Maris, R. Merlin and S. R. Phillpot, J. Appl. Phys., 2003, 93, 793–818 CrossRef CAS .
+M. Dresselhaus, G. Chen, M. Y. Tang, R. G. Yang, H. Lee, D. Z. Wang, Z. F. Ren, J.-P. Fleurial and P. Gogna, Adv. Mater., 2007, 19, 1043 CrossRef CAS .
+M. Zebarjadi, K. Esfarjani, M. S. Dresselhaus, Z. Ren and G. Chen, Energy Environ. Sci., 2012, 5, 5147 Search PubMed .
+A. I. Hochbaum, R. Chen, R. D. Delgado, W. Liang, E. C. Garnett, M. Najarian, A. Majumdar and P. Yang, Nature, 2008, 451, 163 CrossRef CAS .
+A. I. Boukai, Y. Bunimovich, J. Tahir-Kheli, J.-K. Yu, W. A. Goddard III and J. R. Heath, Nature, 2008, 451, 168 CrossRef CAS .
+R. Venkatasubramanian, E. Siivola, T. Colpitts and B. O'Quinn, Nature, 2001, 413, 597 CrossRef CAS .
+T. C. Harman, P. J. Taylor, M. P. Walsh and B. E. LaForge, Science, 2002, 297, 2229–2232 CrossRef CAS .
+B. Poudel, Q. Hao, Y. Ma, Y. Lan, A. Minnich, B. Yu, X. Yan, D. Wang, A. Muto, D. Vashaee, X. Chen, J. Liu, M. S. Dresselhaus, G. Chen and Z. Ren, Science, 2008, 320, 634–638 CrossRef CAS .
+A. J. Minnich, J. A. Johnson, A. J. Schmidt, K. Esfarjani, M. S. Dresselhaus, K. A. Nelson and G. Chen, Phys. Rev. Lett., 2011, 107, 095901 CrossRef CAS .
+P. K. Schelling, S. R. Phillpot and P. Keblinski, Phys. Rev. B: Condens. Matter Mater. Phys., 2002, 65, 144306 CrossRef .
+
+          G. P. Srivastava, The Physics of Phonons, Taylor & Francis Group, New York, U.S.A.,  1990 Search PubMed .
+N. Mingo and L. Yang, Phys. Rev. B: Condens. Matter Mater. Phys., 2003, 68, 245406 CrossRef .
+Y. He, D. Donadio and G. Galli, Appl. Phys. Lett., 2011, 98, 144101 CrossRef .
+A. J. H. McGaughey and M. Kaviany, Phys. Rev. B: Condens. Matter Mater. Phys., 2004, 69, 094303 CrossRef .
+J. E. Turney, E. S. Landry, A. J. H. McGaughey and C. H. Amon, Phys. Rev. B: Condens. Matter Mater. Phys., 2009, 79, 064301 CrossRef .
+J. V. Goicochea, M. Madrid and C. Amon, J. Heat Transfer, 2010, 132, 012401-1 Search PubMed .
+D. Donadio and G. Galli, Phys. Rev. Lett., 2007, 99, 255502 CrossRef .
+Q. Tang, Mol. Phys., 2004, 102, 1959–1964 CrossRef CAS .
+L. Sun and J. Y. Murthy, Appl. Phys. Lett., 2006, 89, 171919 CrossRef .
+D. P. Sellan, E. S. Landry, J. E. Turney, A. J. H. McGaughey and C. H. Amon, Phys. Rev. B: Condens. Matter Mater. Phys., 2010, 81, 214305 CrossRef .
+J. Tersoff, Phys. Rev. Lett., 1986, 56, 632–635 CrossRef CAS .
+J. Tersoff, Phys. Rev. B: Condens. Matter Mater. Phys., 1989, 39, 5566–5568 CrossRef .
+B. Abeles, Phys. Rev., 1963, 131, 1906–1911 CrossRef .
+
+          D. A. McQuarrie, Statistical Mechanics, University Science Books, Sausalito, CA,  2000 Search PubMed .
+S. G. Volz and G. Chen, Phys. Rev. B: Condens. Matter Mater. Phys., 2000, 61, 2651–2656 CrossRef CAS .
+F. Müller-Plathe, J. Chem. Phys., 1997, 106, 6082 CrossRef .
+P. B. Allen and J. L. Feldman, Phys. Rev. B: Condens. Matter Mater. Phys., 1993, 48, 12581–12588 CrossRef CAS .
+G. Lehmann and M. Taut, Phys. Status Solidi B, 1972, 54, 469 CrossRef CAS .
+W. Kohn and L. J. Sham, Phys. Rev., 1965, 140, A1133–A1138 CrossRef .
+D. A. Broido, M. Malorny, G. Birner, N. Mingo and D. A. Stewart, Appl. Phys. Lett., 2007, 91, 231922 CrossRef .
+J. Garg, N. Bonini, B. Kozinsky and N. Marzari, Phys. Rev. Lett., 2011, 106, 045901 CrossRef .
+A. Ward, D. A. Broido, D. A. Stewart and G. Deinzer, Phys. Rev. B: Condens. Matter Mater. Phys., 2009, 80, 125203 CrossRef .
+Z. Tian, J. Garg, K. Esfarjani, T. Shiga, J. Shiomi and G. Chen, Phys. Rev. B: Condens. Matter Mater. Phys., 2012, 85, 184303 CrossRef .
+N. de Koker, Phys. Rev. Lett., 2009, 103, 125902 CrossRef .
+S. Stackhouse, L. Stixrude and B. B. Karki, Phys. Rev. Lett., 2010, 104, 208501 CrossRef .
+F. H. Stillinger and T. A. Weber, Phys. Rev. B: Condens. Matter Mater. Phys., 1985, 31, 5262–5271 CrossRef CAS .
+E. Pearson, T. Takai, T. Halicioglu and W. A. Tiller, J. Cryst. Growth, 1984, 70, 33–40 CrossRef CAS .
+M. Z. Bazant and E. Kaxiras, Phys. Rev. Lett., 1996, 77, 4370 CrossRef CAS .
+P. C. Kelires and J. Tersoff, Phys. Rev. Lett., 1989, 63, 1164–1167 CrossRef CAS .
+K. L. Whiteaker, I. K. Robinson, J. E. Van Nostrand and D. G. Cahill, Phys. Rev. B: Condens. Matter Mater. Phys., 1998, 57, 12410–12420 CrossRef CAS .
+A. I. Hochbaum, R. Chen, R. D. Delgado, W. Liang, E. C. Garnett, M. Najarian, A. Majumdar and P. Yang, Nature, 2008, 451, 163–167 CrossRef CAS .
+J.-K. Yu, S. Mitrovic, D. Tham, J. Varghese and J. R. Heath, Nature, Nanotechnology, 2010, 5, 718–721 CAS .
+C. J. Glassbrenner and G. A. Slack, Phys. Rev., 1964, 134, A1058–A1069 CrossRef .
+A. D. Stuckes, Philos. Mag., 1960, 5, 84 CrossRef CAS .
+H. R. Shanks, P. D. Maycock, P. H. Sidles and G. C. Danielson, Phys. Rev., 1963, 130, 1743 CrossRef CAS .
+W. S. Capinski, H. J. Maris, E. Bauser, I. Silier, M. Asen-Palmer, T. Ruf, M. Cardona and E. Gmelin, Appl. Phys. Lett., 1997, 71, 2109 CrossRef CAS .
+R. Kremer, K. Graf, M. Cardona, G. Devyatykh, A. Gusev, A. Gibin, A. Inyushkin, A. Taldenkov and H.-J. Pohl, Solid State Commun., 2004, 131, 499–503 CrossRef CAS .
+A. V. Inyushkin, A. N. Taldenkov, A. M. Gibin, A. V. Gusev and H.-J. Pohl, Phys. Status Solidi C, 2004, 1, 2995 CrossRef CAS .
+T. Ruf, R. W. Henn, M. Asen-Palmer, E. Gmelin, M. Cardona, H. J. Pohl, G. G. Devyatych and P. G. Sennikov, Solid State Commun., 2000, 115, 243–247 CrossRef CAS .
+T. Ruf, R. Henn, M. Asen-Palmer, E. Gmelin, M. Cardona, H.-J. Pohl, G. Devyatych and P. Sennikov, Solid State Commun., 2003, 127, 257 CrossRef CAS .
+
+          J. A. Johnson, A. A. Maznev, J. Cuffe, J. K. Eliason, A. J. Minnich, T. Kehoe, C. M. Sotomayor Torres, G. Chen and K. A. Nelson, unpublished.
+A. Dal Corso, S. Baroni, R. Resta and S. de Gironcoli, Phys. Rev. B: Condens. Matter Mater. Phys., 1993, 47, 3588–3592 CrossRef CAS .
+D. A. Broido, A. Ward and N. Mingo, Phys. Rev. B: Condens. Matter Mater. Phys., 2005, 72, 014308 CrossRef .
+
+          D. Broido, private communication.
+
+          J. Garg, PhD thesis, MIT,  2011 .
+K. Esfarjani, G. Chen and H. T. Stokes, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 84, 085204 CrossRef .
+M. Omini and A. Sparavigna, Nuovo Cimento D, 1997, 19, 1537 Search PubMed .
+A. Sparavigna, Phys. Rev. B: Condens. Matter Mater. Phys., 2003, 67, 144305 CrossRef .
+
+          http://lammps.sandia.gov
+        .
+
+          M. P. Allen and D. J. Tildesley, Computer Simulation of Liquids, Clarendon Press, Oxford,  1987 Search PubMed .
+Y. S. Ju and K. E. Goodson, Appl. Phys. Lett., 1999, 74, 3005 CrossRef CAS .
+J. E. Turney, A. J. H. McGaughey and C. H. Amon, Phys. Rev. B: Condens. Matter Mater. Phys., 2009, 79, 224305 CrossRef .
+
+          É. D. Murray, I. Savić and G. Galli, unpublished.
+A. F. Ioffe, Can. J. Phys., 1956, 34, 1342 CrossRef CAS .
+B. Abeles, D. S. Beers, G. D. Cody and J. P. Dismukes, Phys. Rev., 1962, 125, 44–46 CrossRef CAS .
+V. Ozhogin, A. Inyushkin, A. Taldenkov, A. Tikhomirov, G. Popov, E. Haller and K. Itoh, JETP Lett., 1996, 63, 490–494 CrossRef .
+M. Asen-Palmer, K. Bartkowski, E. Gmelin, M. Cardona, A. P. Zhernov, A. V. Inyushkin, A. Taldenkov, V. I. Ozhogin, K. M. Itoh and E. E. Haller, Phys. Rev. B: Condens. Matter Mater. Phys., 1997, 56, 9431–9447 CrossRef CAS .
+J. H. Lee and J. C. Grossman, Appl. Phys. Lett., 2009, 95, 013106 CrossRef .
+
+          J. H. Lee, private communication.
+J. Yang and T. Caillat, MRS Bull., 2006, 31, 224–229 CrossRef CAS .
+X. W. Wang, H. Lee, Y. C. Lan, G. H. Zhu, G. Joshi, D. Z. Wang, J. Yang, A. J. Muto, M. Y. Tang, J. Klatsky, S. Song, M. S. Dresselhaus, G. Chen and Z. F. Ren, Appl. Phys. Lett., 2008, 93, 193121 CrossRef .
+B. Abeles, D. S. Beers, G. D. Cody and J. P. Dismukes, Phys. Rev., 1962, 125, 44–46 CrossRef CAS .
+J. P. Dismukes, L. Ekstrom, E. F. Steigmeier, I. Kudman and D. S. Beers, J. Appl. Phys., 1964, 35, 2899 CrossRef CAS .
+T. Baba, T. Iida, H. Hirahara, T. Itoh, M. Akasaka and Y. Takanashi, Mater. Res. Soc. Symp. Proc., 2006, 886, F11–10.1 Search PubMed .
+A. Skye and P. K. Schelling, J. Appl. Phys., 2008, 103, 113524 CrossRef .
+A. Kundu, N. Mingo, D. A. Broido and D. A. Stewart, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 84, 125426 CrossRef .
+A. Skye and P. K. Schelling, J. Appl. Phys., 2008, 103, 113524 CrossRef .
+A. J. H. McGaughey and M. Kaviany, Int. J. Heat Mass Transf., 2004, 47, 1783–1798 CrossRef CAS .
+For example, the calculation of a system with 512 atoms and 6 × 6 × 6 q point grid took ≈ 180 × 216 hours on 27 Intel Xeon E5620 nodes (8 cores per node).
+
+          I. Savić, D. Donadio, F. Gygi and G. Galli, (submitted, 2012).
+
+Footnote† These authors contributed equally to this work.This journal is © the Owner Societies 2012
+Table Content:
+	(1)
+	(2)
+	(3)
+	(4)
+	(5)
+	(6)
+	(7)
+	(8)
+	(9)
+
+ 	Fig. 1  Periodic simulation cell composed of Ns slabs used in non-equilibrium MD simulations. Slab 0 is the ‘hot’ slab, slab Ns/2 and −Ns/2 are ‘cold’ slabs (see the text). Thermal energy flows through the system from the hot to the cold side. The red color represents the hottest region while the blue color represents the coldest regions.	 
+	(10)
+	(11)
+	(12)
+	(13)
+
+ 		 
+	(14)
+	(15)
+	(16)
+
+ 		 
+
+ 		 
+
+Absolute, steady-state, radial heat flow	∼130	Natural	N/A	
+44
+
+Variable state, thermal diffusivity	∼142	Natural	0.9 × 0.9 × 6 cm3	
+45
+
+Absolute, steady-state, radial heat flow	∼156	Natural	2.6 × 2.6 × 13 cm3	
+43
+
+Optical pump-and-probe technique	∼150	Natural	11.7 μm thick film	
+46
+
+Absolute, steady-state, radial heat	∼145	Natural	∼2 × 2 × 23 mm3	
+47, 48
+
+Optical pump-and-probe technique	∼240	
+28Si	11.7 μm thick film	
+46
+
+Absolute, steady-state, radial heat	∼160	
+28Si	∼2 × 2 × 20 mm3	
+47, 48
+
+
+EMD	Stillinger–Weber	8000 atoms	∼255	
+25
+
+EMD	Stillinger–Weber	512 atoms	∼350	
+16
+
+EMD	EDIP	216 atoms	∼170	
+19
+
+BTE-SC	Stillinger–Weber	2 atoms, 6912 Nq	∼900	
+53
+
+BTE-SC	Tersoff	2 atoms, 6912 Nq	∼427	
+53
+
+BTE-RTA	Tersoff	2 atoms, 6912 Nq	∼370	
+53
+
+BTE-SC	EDIP	2 atoms, 6912 Nq	∼409	
+53
+
+BTE-SC	First principles	2 atoms, 6912 Nq	∼160	
+30, 54
+
+BTE-SC	First principles	2 atoms, 32768 Nq	∼150	
+32, 54
+
+BTE-RTA	First principles	2 atoms, 303Nq uniform grid	∼130	
+31, 55
+
+BTE-RTA	First principles	2 atoms, 183Nq uniform grid, extrapolation to infinite Nq	∼160	
+56
+
+
+ 	Fig. 2  The normalized heat current autocorrelation function (CJ(t)) of a crystalline silicon sample with 4096 atoms at room temperature as a function of the correlation time (tcorr). The inset shows the calculated thermal conductivity (κ) as a function of truncation time (ttr).	 
+
+ 	Fig. 3  Thermal conductivity (κ) of crystalline silicon as a function of the number of atoms in the simulation cell at 300 K, computed with equilibrium molecular dynamics, using the Green–Kubo formula. The blue shaded region indicates the range of measured κ of c-Si in the experiments where most values lie in the dark portion of the region (see Table 1). The final converged result of κ of c-Si in EMD is estimated by averaging the computed values of the three largest systems (64000, 216000 and 1000000 atoms).	 
+
+ 	Fig. 4  The exchange of kinetic energy between an atom in the cold slab and an atom in the hot slab (see Fig. 1) in non-equilibrium molecular dynamics simulations of crystalline Si. Here we used cells with 11520 atoms. Top panel: the black (red) curve shows the kinetic energy (Ek) of atoms with the largest (smallest) kinetic energy in the cold (hot) slab as a function of the simulation time. Bottom panel: heat flux as a function of simulation time. The inset shows the heat flux in the first 100 ps of the simulation.	 
+
+ 	Fig. 5  The temperature profile in the heat propagation direction for a bulk silicon sample simulated using non-equilibrium molecular dynamics in a cell of dimensions 2.2 × 2.2 × 50 nm3 (11520 atoms) at 1000 K. The simulation was run for 50 ps. The heat source and the heat sinks are located in the middle and at the two ends of the simulation box, respectively (see Fig. 1). The insets show the linear fits of the temperature gradient on the left and right hand sides of the heat source, respectively.	 
+
+ 	Fig. 6  The temperature profile in the heat propagation direction for a bulk silicon system simulated using non-equilibrium molecular dynamics in a cell of dimensions 2.2 × 2.2 × 50 nm3 (11520 atoms) at 1000 K. The simulation was run for 2 ns (compare with Fig. 5, showing a 50 ps simulation). The heat source and the heat sinks are located in the middle and at the two ends of the simulation box, respectively (see Fig. 1). The insets show the linear fits of the temperature gradient on the left and right hand sides of the heat source, respectively.	 
+
+ 	Fig. 7  Calculated inverse of the thermal conductivity (κ) in bulk silicon as a function of the inverse of the size of the simulation cell (Lz) along the heat flow direction (z). Black circles correspond to 1000 K simulations and black squares to 300 K. Blue and red lines are linear fits to the 1000 K and 300 K results, respectively.	 
+
+ 	Fig. 8  Thermal conductivity of bulk crystalline Si at 300 K as a function of the number of wave vectors, computed using the Boltzmann transport equation (BTE) in the relaxation time approximation (RTA). We used cells with 8 atoms, and a uniform cubic wave vector grid that contains the zone center and edge points. The black (red) solid line shows the quantum (classical) BTE-RTA results (see the text).	 
+
+ 	Fig. 9  (a) Lifetimes of bulk crystalline Si at 300 K as a function of frequency, calculated using the Boltzmann transport equation (BTE) in the relaxation time approximation (RTA). Black (red) circles show the quantum (classical) BTE-RTA results (see the text). (b) Lifetimes of bulk crystalline Si at 300 K as a function of frequency, computed using classical approaches. Red circles show the classical BTE-RTA results, while black circles represent lifetimes calculated from equilibrium molecular dynamics.	 
+
+Absolute, steady-state, longitudinal heat flow	∼50	Natural	N/A	
+64
+
+Variable state, thermal diffusivity	∼50	Natural	0.6 × 0.6 × 5 cm3	
+65
+
+Absolute, steady-state, radial heat flow	∼60	Natural	2.6 × 2.6 × 13 cm3	
+43
+
+Absolute, steady-state, radial heat flow	∼60	Natural	∼2.5 × 2.5 × 30 mm3	
+66, 67
+
+Absolute, steady-state, radial heat flow	∼70	
+70Ge	∼2.5 × 2.5 × 30 mm3	
+66, 67
+
+
+EMD	Tersoff	216 atoms	∼90 ± 6	
+68, 69
+
+BTE-SC	First principles	2 atoms, 6912 Nq	∼65	
+30, 54
+
+BTE-SC	First principles	2 atoms, 32768 Nq	∼65	
+32, 54
+
+BTE-RTA	First principles	2 atoms, 303 uniform Nq	∼60	
+31, 55
+
+
+ 	Fig. 10  The normalized heat current autocorrelation function (CJ(t)) of a crystalline Ge sample with 4096 atoms at room temperature as a function of the correlaton time (tcorr). The inset shows the calculated thermal conductivity as a function of truncation time (ttr).	 
+
+ 	Fig. 11  Thermal conductivity of crystalline germanium as a function of the number of atoms in the simulation supercell at 300 K, computed with equilibrium molecular dynamics, using the Green–Kubo formula. The blue shaded region indicates the range of measured κ of c-Ge in the experiments (see Table 3). The final converged result of κ of c-Ge in EMD is estimated by averaging values of κ obtained for the three largest systems (27000, 64000 and 216000 atoms).	 
+
+ 	Fig. 12  Thermal conductivity of bulk crystalline Ge at 300 K as a function of the number of wave vectors, computed using the Boltzmann transport equation (BTE) in the relaxation time approximation (RTA). We used cells with 8 atoms, and a cubic, uniformly spaced wave vector grid contains the zone center and edge points. The black (red) solid line shows the quantum (classical) BTE-RTA results (see the text).	 
+
+Zone-level	0.3	
+σ
+p = 2.5 × 104 1/Ω	∼0.6 × 0.6 × 5 cm3	∼5.9	
+23, 72
+
+Zone-level	0.25	
+n ≤ 2 × 1018 cm−3	10 × 10 × 10 mm3	∼7.7	
+73
+
+Zone-level	0.3	
+n = 2.2 × 1018 cm−3	10 × 10 × 10 mm3	∼7.2	
+73
+
+Die-cast	0.35	
+p ∼ 5 × 1018 cm−3	20 × 20 × 3 mm3	∼5.4	
+74
+
+
+NEMD	Stillinger–Weber	16384 atoms	∼1	
+75
+
+BTE-RTA, VCA	First principles	2 atoms, 303 uniform q point grid	∼8	
+31, 55
+
+BTE, VCA	First principles	2 atoms, 6912 Gaussian quadrature q point grid	∼10	
+54, 76
+
+
+ 	Fig. 13  The normalized heat current auto-correlation function (CJ(t)) for a Si0.5Ge0.5 sample with 4096 atoms at 300 K as a function of the correlation time (tcorr). The inset shows the calculated thermal conductivity as a function of the truncation time (ttr).	 
+
+ 	Fig. 14  Thermal conductivity of the Si0.5Ge0.5 alloy as a function of the supercell size at 300 K, computed using equilibrium molecular dynamics simulations. Black circles represent results for Si0.5Ge0.5 using the Si–Ge Tersoff potential; the red square (green diamond) represents results obtained using the Ge(Si) Tersoff potential to describe all bonds in the system. The blue shaded region indicates the range of measured κ of Si1−xGex alloys with x = 0.2–0.3 (see Table 5).	 
+
+ 	Fig. 15  The normalized heat current autocorrelation function (CJ(t)) of Si0.5Ge0.5 samples with various sizes as a function of correlation time (tcorr). The black, red, green and blue curves represent results for cells with 1000, 8000 216000 and 1728000 atoms, respectively. The right (a) and left hand side (b) show the correlation function between 0 and 1 ps, and between 1 and 50 ps, respectively.	 
+
+ 	Fig. 16  Lifetime (τ) of vibrational modes in Si0.5Ge0.5 computed in molecular dynamics simulations with cells with 1000 atoms (a) and cells with 4096 atoms (b) as a function of phonon frequency (ν).	 
+
+ 	Fig. 17  Thermal conductivity (κ) of Si0.5Ge0.5 at 300 K as a function of the simulated supercell length, computed using a simplified Boltzmann transport equation (BTE) approach in the relaxation time approximation (RTA) (see the text). The number of atoms in the supercell for each point on the graph is also given. The wave vector grid used is such that the effective, maximum number of atoms is ≈7 million. The red region denotes the range of thermal conductivity values expected from equilibrium molecular dynamics (EMD) simulations, the green region corresponds to experimental results for Si1−xGex samples with x = 0.25–0.35, and the blue region represents the range of thermal conductivity values estimated using the average mass approximation (see the text).	 
+Footnote
+† These authors contributed equally to this work.
+
+This journal is © the Owner Societies 2012

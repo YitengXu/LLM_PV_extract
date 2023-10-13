@@ -1,0 +1,1475 @@
+Modeling, simulation, and design criteria for photoelectrochemical water-splitting systems   - Energy & Environmental Science (RSC Publishing) DOI:10.1039/C2EE23187E View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C2EE23187E
+(Paper)
+Energy Environ. Sci., 2012, 5, 9922-9935Show CompoundsShow Chemical TermsModeling, simulation, and design criteria for photoelectrochemical water-splitting systems†
+
+        
+          
+            Sophia 
+            Haussener
+          
+        
+      *ab, 
+      
+        
+          
+            Chengxiang 
+            Xiang
+          
+        
+      c, 
+      
+        
+          
+            Joshua M. 
+            Spurgeon
+          
+        
+      c, 
+      
+        
+          
+            Shane 
+            Ardo
+          
+        
+      d, 
+      
+        
+          
+            Nathan S. 
+            Lewis
+          
+        
+      *cd and 
+
+        
+          
+            Adam Z. 
+            Weber
+          
+        
+      *a
+aJoint Center for Artificial Photosynthesis, Lawrence Berkeley National Laboratory, Berkeley, CA 94720, USA. E-mail: azweber@lbl.gov
+bInstitute of Mechanical Engineering, École Polytechnique Fédérale de Lausanne, 1015 Lausanne, Switzerland. E-mail: sophia.haussener@epfl.ch
+cJoint Center for Artificial Photosynthesis, California Institute of Technology, Pasadena, CA 91125, USA. E-mail: nslewis@caltech.edu
+dBeckman Institute and Kavli Nanoscience Institute, 1200 E. California Blvd., California Institute of Technology, Pasadena, CA 91125, USA
+Received 
+      15th August 2012
+    , Accepted 28th September 2012First published on 1st October 2012AbstractA validated multi-physics numerical model that accounts for charge and species conservation, fluid flow, and electrochemical processes has been used to analyze the performance of solar-driven photoelectrochemical water-splitting systems. The modeling has provided an in-depth analysis of conceptual designs, proof-of-concepts, feasibility investigations, and quantification of performance. The modeling has led to the formulation of design guidelines at the system and component levels, and has identified quantifiable gaps that warrant further research effort at the component level. The two characteristic generic types of photoelectrochemical systems that were analyzed utilized: (i) side-by-side photoelectrodes and (ii) back-to-back photoelectrodes. In these designs, small electrode dimensions (mm to cm range) and large electrolyte heights were required to produce small overall resistive losses in the system. Additionally, thick, non-permeable separators were required to achieve acceptably low rates of product crossover.
+
+Broader context
+Solar energy is the most abundant energy source, but it is distributed and intermittent, thereby necessitating its storage via conversion to a fuel (e.g. hydrogen, methanol, carbohydrates, etc.). A viable low-temperature route for the production of solar fuels is photosynthesis. Artificial photosynthetic devices use light-capturing semiconductors attached to electrodes covered by catalysts that generate hydrogen or hydrocarbons from protons and carbon dioxide, and produce oxygen from water through electrochemical reactions. Although much effort has been devoted to the development of suitable robust and scalable materials for solar-driven electrolysis, relatively little attention has been paid to the electrochemical system-engineering design aspects. These are crucial because the material combinations that provide optimal performance in such a system depend significantly on the architecture and operational conditions of the system itself. The work described herein introduces a validated computational multi-physics numerical model to analyze solar-driven photoelectrochemical devices. From the analysis, design criteria and guidelines can be established that account for the various performance tradeoffs such that practical artificial photosynthetic solar-fuel generators can be realized. The modeling has identified quantifiable gaps that warrant further research at the component level.
+
+1. Introduction
+An integrated electrochemical system that uses light-capturing semiconductors, combined with electrocatalysts in contact with an electrolyte, to generate oxygen and hydrogen via the electrolysis of water, is a promising route for the direct production of fuels from sunlight: 4H+ + 4e− → 2H2(1) 2H2O → O2 + 4H+ + 4e−(2)
+In this work we distinguish between designs of components and designs of a full system. The latter includes the form factors and geometries of the various constituents including the photoactive materials, catalysts, and separators needed to isolate the product gases persistently and suppress chemical product recombination, as well as pressure management control systems that regulate reactant supply, product egress, operating conditions and constraints for the system as a whole, etc.
+Significant effort has been devoted to the development of efficient, robust and scalable materials for the solar-driven electrolysis of water. Photochemical diodes have been proposed,1,2 as well as bi-component suspensions of photocatalysts either with, or without, co-catalysts.3 However, one needs to construct a system from such materials that does not co-evolve stoichiometric mixtures of H2 and O2 at the same location.
+In addition to the development of individual photoactive components, photoelectrochemical (PEC) cell designs have been proposed based on flat plates of single-junction light absorbers immersed in an electrolyte.4–6 Two-electrode cells based on a metallic counter electrode and a photoactive semiconducting electrode, such as SrTiO3 and KTaO3, have been proposed for the unassisted solar-driven electrolysis process.7,8 Multi-junction PEC cells have been proposed and in principle can provide increased photoelectrolysis efficiency through improvements in the sunlight absorption as well as through enhancements in the available photovoltage.5,6 Catalyst-coated triple-junction amorphous Si photoelectrodes have been shown to electrolyze water.9,10 Recently, designs based on micro- and nano-structured components have been investigated where nanoparticles11 or fibrous structures12 embedded in the electrolyte serve as light absorbers as well as electrocatalytic reaction sites. These designs provide larger specific surface area for the electrochemical reactions, relax the turnover frequency requirement of the catalyst, and enhance the absorption of incident sunlight due to their volumetric rather than surface absorption behavior. Additionally, these designs leverage the orthogonalization of the directions of light absorption and photogenerated minority charge-carrier collection so that semiconducting materials with low minority-carrier diffusion lengths can be employed as high-efficiency solar absorbers.
+Separators, such as porous media (e.g. fibrous asbestos or glass frit), thin capillaries, or polymer membranes,13–15 are expected to facilitate product extraction and to increase the performance and safety of the system as a whole. Separators serve to limit the electrolyte and product crossover, and limit recombination via dangerous exothermic chemical reactions. Recently, multi-functional membranes have been proposed, allowing for product separation, ionic conduction, radiation absorption (by the semiconductor substrates), reactivity, and structural support, usually based on micro- and/or nano-composite materials.16,17
+The design aspects of an entire solar-fuels-generator system are important because the material combinations that provide optimal performance depend significantly on the architecture of the system as a whole. Specifically, the design of such a PEC cell should minimize losses. Some of the major system design criteria include: (i) optimization of the potential distribution in the reactor to minimize the potential losses between the electrodes including the kinetic overpotential dominated by the sluggish oxygen-evolution reaction, eqn (2), concentration polarization effects, and resistances of the solution as well as of any separators; (ii) separation of the product gases to minimize chemical recombination/reaction (and consequently reduction in the product yield) and electrolyte crossover, and thus increase the system safety by maintaining the partial pressures of the gas mixtures below the flammability limit (i.e., 4% H2 in oxygen or air);18 and (iii) maximization of absorption of solar photons by the photoactive electrodes to maximize chemical product yield. The first two design criteria are common to both solar-driven electrolyzers and conventional, electrically driven, electrolysis systems. However, in the absence of solar-concentrating optics, solar-driven electrolyzers can only operate at a peak current density of 10 to 30 mA cm−2, whereas to minimize cost and size, the present electrically driven electrolysis systems operate at current densities of ∼1 A cm−2. These differences potentially change the acceptable, or optimal, system geometric parameters and overall system design for photoelectrolysis relative to electrically driven water splitting.
+Batch-10,19 or continuous-feed13 PEC reactors have been proposed, operating at current densities that result in partially to fully saturated solutions of reaction products. Full saturation allows for relatively simple product separation but has the disadvantage of issues arising from phase interfaces due to the multi-phase nature of the system (e.g. radiation scattering and/or reaction site blocking by bubbles).
+Modeling efforts of PEC cells are limited, but knowledge gained by multi-scale computational investigations of related technologies such as polymer-electrolyte fuel cells can support the development of PEC models. Extensive reviews of fuel-cell modeling activities and progress have been published,20,21 and recent efforts have focused on direct coupling to atomistic-scale models.22 For PEC devices, lumped-circuit models of a photocell in series with a current-dependent electrochemical load have been introduced by Rocheleau and Miller,23 in which the electrochemical load accounted for resistive losses in the electrolyte as well as kinetics-related overpotentials described by the Butler–Volmer relationships. A multidimensional model was introduced by Carver et al.13 and applied to a two-chamber flat-plate reactor, accounting for detailed electrochemical reactions and losses.
+In this work, two basic solar-fuel-generator system designs, schematically shown in Fig. 1, were investigated by the use of numerical modeling. These designs were selected because they encompass a vast majority of designs that have been proposed to date.4,6,9–11,14,15,24–30
+ Fig. 1  Schematics of the two basic designs studied (not to scale), where the modeled unit cell is denoted by the red box. (a) Design A consists of PV devices (violet) with ohmic electrical contacts at the bottom (dark grey), covered with TCO (blue) and catalyst layers (orange and green for the anode and cathode sides, respectively), separated by perpendicularly oriented separators (grey), and immersed in an electrolyte (light blue). (b) Design B consists of PV devices covered with TCO and catalyst layers separated with separators in the plane of the PVs and immersed in an electrolyte. 
+Design A consists of two light absorbers assembled side-by-side, each immersed in an electrolyte-filled channel separated from each other and electrically connected via an ohmic contact across the bottom. The separators were either (i) impermeable, ion-conducting polymeric membranes (e.g. Nafion) or (ii) permeable porous structures (e.g. fibrous asbestos, glass frit, microporous membrane). The former minimize convective crossover, while the latter do not inhibit product crossover but are perhaps less expensive and provided less resistive ionic pathways. The two light absorbers were both either planar photoelectrodes or photovoltaic (PV) devices that consisted of the same semiconductor material(s) as the photoelectrodes. In a variant of Design A, a transparent conducting oxide (TCO) layer was introduced onto the top of the PV device to provide lateral electron conduction and protection against corrosion. In this instance, the top of the PV–TCO assembly was covered by electrocatalysts that facilitated the hydrogen- (cathode side) and oxygen- (anode side) evolution reactions.
+Design B consists of at least one planar PV device (which also acted as a separator) covered by electrocatalysts at the electrolyte interface. This device was also modeled with and without a TCO layer at the interface between the light absorber and electrocatalysts. The PV–TCO–catalyst assembly was surrounded by a separator. Variations of Design B that were modeled include porous or perforated PV–TCO–catalyst assemblies that represented PEC device designs based on micro- or nano-structured light absorbers and reaction sites. In a further step, the pores and perforations were filled with a non-permeable, ion-conducting membrane, to represent, in a simplified form, PEC cells that use micro- or nano-structured multi-functional components.17 For all designs, no potential loss was assumed in the conductive connection for electron transport between the two electrodes.
+The modeling focused primarily on the transport-related losses in the PEC devices, specifically on the potential losses due to ion and electron transport, as well as on the product yield losses due to species and electrolyte crossover and recombination. Both these types of losses reduce the effective conversion of the incoming photons to harvestable fuel, and typically result in opposing trends in terms of design criteria.
+Herein, a validated multiphysics model is presented in terms of its mathematical formulation including governing equations, boundary conditions, and properties. An operational window for the potential and yield losses is then presented. The model is then used to (i) understand the impact of kinetics and TCO on the design behavior, (ii) quantify and compare potential losses, and (iii) calculate and compare convective and/or diffusive crossover, for both Design A and Design B and their variants, as described above.
+2. Theoretical
+2.1. Governing equations
+
+Fig. 1 presents the 2-D computational domains of the two types of designs that were investigated. The steady-state governing conservation and transport equations for both neutral and charged species were given by Nernst–Planck,31 0 = −∇·Ni + Rr,l(3)and Ni = −ziui,eFci∇Φl − Di,e∇ci + uci(4)where Ni is the molar flux vector, Ri is the reaction source term, u is the superficial liquid velocity vector, zi and ci are the valence and concentration of species i, respectively, F is Faraday's constant, and ui,e and Di,e are the effective mobility and diffusivity of species i, respectively, and Φl is the potential of the liquid phase. The values of ui,e and Di,e are related by the Nernst–Einstein relationship for charged species,31 (5)
+The term “effective” refers to non-bulk properties accounting for multi-phase media such as separators or porous electrodes.32,33 The use of eqn (4) assumes dilute-solution theory, in which the interactions among the solutes are not rigorously considered.31,34 However, this level of approximation is sufficient for the concentrations of the various species evaluated in this work. Eqn (4) is general for the ionic species of concern (i.e. H+ and OH− and their counterions) and simplifies to the convection–diffusion equation for the dissolved neutral species (i.e. H2 and O2) where zi = 0. The velocity term accounts for fluxes resulting from convective flow due to a pressure gradient, which were determined by solving the mass and momentum (laminar flow) conservation equations,35 ∇·u = 0(6) (7)where ρ is the density, ε is the porosity, p is the pressure, μ is the viscosity, and K is the permeability. The last term on the right side of the momentum conservation equation, eqn (7), is the Darcy extension and accounts for viscous resistances due to the presence of porous media, and tends to zero for a continuous fluid phase for which K is large.
+The transport of charge and subsequent calculation of the potential losses were determined by the definition of the current density, (8)where the subscript l (liquid) denotes the ion-conducting phase, and by the use of electroneutrality,31 (9)
+
+Eqn (8) results in Ohm's law, (10)if the current losses due to concentration gradients are neglected. In eqn (10), κl,e is the effective solution or electrolyte conductivity, which is expected to be constant for a well stirred or continuously flushed reactor. Similarly, Ohm's law governs the transport of charge in the solid, electron-conducting phase (e.g. TCO), is = −σs,e∇Φs(11)where the subscript s (solid) denotes the electron-conducting phase. For conservation of charge, one obtains31 ∇·is = −∇·i1 = A0iR(12)where iR is the reaction or transfer current between the ionic and electronic phases, and A0 is the specific surface area. The transfer current depends on the electrochemical reaction kinetics, which were expressed by the use of Butler–Volmer expressions for the oxygen evolution reaction (OER), eqn (2), and the hydrogen evolution reaction (HER), eqn (1),36 (13)where i0,OER and i0,HER are the OER and HER exchange current densities, respectively, and αa,i and αc,i are the OER and HER anodic and cathodic transfer coefficients, respectively. The overpotential is defined as ηop = Φs − Φl − U0(14)where U0 is the equilibrium potential, which is 0 V at the cathode and 1.23 V at the anode (i.e., a hydrogen reference electrode at the pH and operating conditions is assumed). The concentration terms in the kinetic equations are unity for a well-stirred, or continuously flushed reactor.
+
+Fig. 2 depicts the boundary conditions, and their mathematical formulations, that were used in the computational modeling and simulation of the two types of system designs. Because both of the catalytic layers were assumed to be relatively thin, the electrochemical reaction was modeled as a surface reaction that occurred at the electrolyte–TCO/PV interface. Symmetry boundary conditions for flow, species, and current densities were used for the vertical walls of both designs. A constant photocurrent density, ipc, was assumed at the electrode boundaries, because the photoactive components are expected to deliver a uniform flux of holes and electrons. The cathode was set to an arbitrary potential of 0 V. The electrolyte was assumed to be saturated with the produced species (hydrogen and oxygen for the cathode and anode side, respectively); although not shown, a simple calculation demonstrates that at significantly smaller applied current densities, the solutions would rapidly saturate with the gases for all the volumes that were evaluated in this work. All non-dissolved gas at the electrode is assumed to form bubbles which are immediately removed from the device; thus, no influence of a gas phase formation on radiation absorption, electrical conductivity, overpotential, kinetics, or overall system performance was included in this analysis.
+ Fig. 2  Computational domain and boundary conditions of Design A (a and c) and Design B (b and d) for species and charge conservation (a and b), and mass and momentum conservation (c and d). Concentration boundary conditions (green, red, blue) which account for operational condition options (i) to (iii) are described in the text. 
+For analysis of reagent/product crossover, several different conditions were considered, due to possible different operational strategies. These boundary conditions were: (i) zero concentration at the opposite (non-generating) electrode surface (green line), (ii) zero concentration within the opposite chamber, meaning zero concentration at the separator interface (red line), or (iii) saturated concentration within the opposite chamber (blue line). Option (i) represents a slow-flow reactor at steady state, where the crossover species diffuse to the electrode surface and recombine in the presence of the catalyst. Option (ii) represents a steady-state reactor that is continuously flushed by “fresh” or de-saturated, recycled electrolyte (hydrogen or oxygen concentrations are zero for the anode or cathode chamber, respectively). This scenario results in the largest diffusive crossover. Option (iii) represents a reactor at steady state with catalysts unsuitable for the recombination reaction, or a continuously flushed reactor with recycled, saturated electrolyte. This scenario results in no diffusive crossover.
+For analysis of convective effects, a pressure gradient was applied over the separator to account for pressure differences between the chambers in the system. The remaining boundaries were walls, for which a no-slip velocity condition was assumed.
+
+Fig. 2 also indicates the different device dimensions that were investigated in detail. These values include the separator thickness, tsep, the height of electrolyte, he, and the electrode length, lel, as well as for Design B, the device length, ld. Table 1 presents the range of dimensions/parameters that were investigated for the two designs. The horizontal and vertical directions are denoted by the variables x and y, respectively, and the out-of-plane direction is denoted by the variable z.
+Table 1 Values of the dimensions of the two designs investigated
+
+
+
+
+Design A
+Design B
+
+
+Variable
+Values (mm)
+Variable
+Values (mm)
+
+
+
+
+
+t
+sep
+
+0.01, 0.5
+
+t
+sep
+
+0.01, 0.5
+
+
+
+h
+e
+
+1, 5, 10, 50
+
+h
+e
+
+1, 5, 10, 50
+
+
+
+l
+el
+
+0.01, 0.05, 0.1, 1 to 40 (Δl = 1)
+
+l
+el
+
+0.01, 0.05, 0.1, 1 to 40 (Δl = 1)
+
+
+
+l
+el/ld
+0.5, 0.9
+
+
+
+
+A commercial finite-element solver, Comsol Multiphysics©,37 was used to solve the coupled equations with the corresponding boundary conditions. Quadratic element discretization and standard solvers were chosen. Mesh convergence and iteration independence were attained for mesh element numbers of 10000 (small dimensions) up to 7200000 (large dimensions). A relative tolerance of 10−3 for the corresponding variable was used as convergence criteria. Details on the mesh and iteration convergence, mesh generation, and solution procedure are given in the ESI and are depicted in Fig. S3.†
+2.2. Definitions
+
+2.2.1. Ohmic losses. 
+The ion-transport and resulting potential losses in the electrolyte determine the position-dependent potential drop between the anode and cathode (including losses through the separator). This loss was quantified as an averaged resistive solution loss (15)where ΔΦR is the area-averaged difference of the electrolyte potential at the same horizontal position away from the separator along the anode and the cathode (including losses in the separator), respectively, and was chosen to represent the actual solution resistive potential loss for a spatially varying potential distribution. The maximum solution resistive potential drop occurs between the centers of each electrode. This limits an actual photoelectrode because the drawn current at the center is reduced with increased potential difference due to the diode-shaped current–potential relationship of the photoelectrode.38
+A stringent upper limit for ΔΦR of 100 mV was used at an applied 20 mA cm−2 of photocurrent density. This limit resulted in a (reasonable) minimal photovoltage requirement of approximately 1.65 V (= 1.23 V equilibrium potential, ∼80 mV hydrogen-evolution reaction overpotential (Pt-based kinetics),39 ∼220 mV oxygen-evolution reaction overpotential (RuO2-based kinetics),40–42 and 100 mV electrolyte losses), comparable and competitive to conventional proton-exchange-membrane or alkaline electrolyzers. Additionally, this limit led to systems for which kinetic limitations (at the anode) were dominant, and hence improvement in the oxygen-evolution catalyst led to a direct increase in the device performance. Nevertheless, no additional losses (e.g. due to concentration polarization)43 can be tolerated in the system if this stringent upper limit for the potential drop is to be obeyed.
+
+
+2.2.2. Crossover losses. 
+Species and electrolyte crossover and recombination determine the fraction of produced fuel that is not harvested far from the electrodes. This loss was quantified by the Faradaic yield for hydrogen collection based on the normalized net reaction current, which accounted for the current lost due to diffusive and convective crossover of hydrogen from the cathode to the anode chamber, (16)where the normal (reaction) current density, i = i·, and the normal hydrogen molar flux, NH2 = NH2·, are interrelated by Faraday's law, (17)
+Crossover can occur either by diffusion through the electrolyte and/or separator, or by convection. Convective fluxes develop due to system design and control, as well as due to the natural pressure gradient that arises from the 2:1 H2–O2 stoichiometry of water electrolysis (see eqn (1) and (2)) if the system is not actively monitored and stringently controlled. In addition to impacting the fuel yield, crossover can also result in a safety hazard, due to the possible generation of a flammable mixture of hydrogen and oxygen gases. Fig. S1† describes an approximate mass-balance calculation, detailed in the ESI,† for an open system at a generation current density of 20 mA cm−2. This calculation helps to determine the hydrogen collection yield targets as well as the required sweep gas fluxes, Nsweep, that must be utilized to remain below the 4% H2 in O2 lower flammability limit. The calculation indicates that hydrogen collection yields of >0.98, independent of the current density, are required to stay below the flammability limit with no applied sweep gas. Interestingly, for a 20 mA cm−2 photocurrent density, a ∼20% solar-to-fuel power-conversion efficiency (= ipc·η·U0/100 mW cm−2) is obtained when η = 80%. This scenario maintains the <4% H2 in O2 limit in the presence of a sweep gas with Nsweep = 0.0047 mol m−2 s−1. 20% solar-to-fuel power-conversion efficiency is over an order of magnitude larger than a natural photosynthetic system (e.g. crops and algae operate at 1 to 3% solar-to-fuel)44 and up to four times larger than non-optimized solar fuels generator prototypes.5,10
+The above limits of 100 mV and 98% for ΔΦR and η (in the absence of sweep gases), respectively, will be used to guide the discussion of the different design metrics for Designs A and B.
+
+2.3. Model parameters
+
+Table 2 presents the various input parameters that were used in the transport and kinetic equations presented above. State-of-the-art catalysts and kinetic rates were chosen for the kinetic parameters. Hence, kinetic values representative of Pt- and RuO2-covered electrodes were selected for the HER39 and OER,40–42 respectively. For the HER, transfer coefficients between 1 and 2 have been reported;45 a value of αc,HER = αa,HER = 1 was assumed. For OER, αa,HER = 1.7 and αc,HER = 0.1 were used, which is consistent with the reported 35 mV per decade Tafel slope41 as well as an assumed negligible back reaction at the potential of interest, respectively.
+Table 2 Baseline parameters used in the simulations for both designs. See text for references
+
+
+
+
+Kinetics
+HER exchange current density, i0,HER
+10−3 A cm−2
+
+
+HER anodic transfer coefficient, αa,HER
+1
+
+
+HER cathodic transfer coefficient, αc,HER
+1
+
+
+OER exchange current density, i0,OER
+10−8 A cm−2
+
+
+OER anodic transfer coefficient, αa,OER
+1.7
+
+
+OER cathodic transfer coefficient, αc,OER
+0.1
+
+
+Electrolyte/solution
+Initial proton concentration, cH+,ini
+1 M (pH = 0)
+
+
+Diffusivity H2, DH2
+5.11 × 10−5 cm2 s−1
+
+
+Diffusivity O2, DO2
+2.42 × 10−5 cm2 s−1
+
+
+Diffusivity H+, DH+
+9.31 × 10−5 cm2 s−1
+
+
+Diffusivity HSO4−, DHSO4−
+1.38 × 10−5 cm2 s−1
+
+
+Membrane
+Diffusivity H2, Dm,H2
+1.3 × 10−5 cm2 s−1
+
+
+Diffusivity O2, Dm,O2
+6.1 × 10−6 cm2 s−1
+
+
+Diffusivity H+, Dm,H+
+2.4 × 10−5 cm2 s−1
+
+
+Diffusivity HSO4−, Dm,HSO4−
+3.5 × 10−6 cm2 s−1
+
+
+Conductivity, κm
+10 S m−1
+
+
+Porous medium
+Characteristic pore diameter, d
+10 μm
+
+
+TCO
+Thickness, tTCO
+10 μm
+
+
+Sheet resistance, Rs
+10 Ω □−1
+
+
+Operating conditions
+Temperature, T
+298 K
+
+
+Photocurrent density, ipc
+20 mA cm−2
+
+
+Saturation concentration H2, cH2,sat
+0.78 mol m−3
+
+
+Saturation concentration O2, cO2,sat
+1.23 mol m−3
+
+
+
+
+Sulfuric acid was taken as the supporting electrolyte, and the speciation was limited to account only for the presence of the HSO4− anion. The diffusivities in the electrolyte of protons, anions (HSO4−), hydrogen, and oxygen, respectively, were assumed to be the diffusivities of these species in water.18 Correspondingly, the conductivity of 1 M sulfuric acid is κl = 40 S m−1 at ambient temperature. Separators were modeled as either (i) a non-permeable, ion-conducting polymeric membrane or (ii) a permeable porous medium. The non-permeable, ion-conducting separator was based on perfluorosulfonic acid (PFSA) ionomers such as Nafion, for which the hydrogen and oxygen diffusivities and the membrane conductivity are known (see Table 2).46–49
+For separators that consisted of a permeable porous medium (e.g. fibrous asbestos, glass frit), effective values for the diffusivity, Di,e, and conductivity, κi,e, were calculated through the Bruggeman relationship,33,50 κl,e = κl·ε1.5(18)
+Permeable porous structures, in contrast to non-permeable separators, allow for convective flow and, therefore, require that the permeability be defined. A semi-empirical permeability model was used in this study, in which the permeability, K, was derived for a packed bed of spherical particles with a narrow particle-size distribution in a random, isotropic configuration, and is given by51 (19)
+The characteristic pore dimension, d, in the micro-structured permeable porous separators was chosen to be 10 μm. Simulations were also conducted with different semi-empirical permeability and conductivity models that have been derived for permeable porous separators consisting of ordered, fibrous-like structures (see the ESI†). The permeability and conductivity as a function of separator porosity are shown in Fig. S2.†
+The applied photocurrent density, ipc, was assumed to be constant at 20 mA cm−2. This value is theoretically deliverable by semiconductor materials that absorb much of the visible/near-infra-red region of the solar spectrum under Air Mass 1.5 conditions at a light intensity of 100 mW cm−2.
+Typical TCO materials, such as indium tin oxides (ITO), fluorine-doped tin oxides (FTO) and aluminium-doped zinc oxides (AZO), have reported sheet resistances in the range of Rs = 1/(tTCOσTCO) = 10 Ω □−1;52 this value was used in the simulations. To reduce the meshing expense, a transparent 10 μm thick TCO layer was used in the model. Thinner layers are often incorporated in physical devices to provide sufficient transparency to sunlight, but the use of thinner TCO layers did not affect the modeling results.
+A uniform ambient temperature of 25 °C was assumed. The saturation concentrations of hydrogen and oxygen in the electrolyte were taken to be their saturation concentrations in water.
+3. Results
+The computational model was validated, in terms of ohmic losses, by the use of an embedded electrode (ESI and Fig. S4†). As described below, the validated computational model was then used to evaluate the impacts of changes in various system parameters. First the variations in the rates of the electrode kinetic processes and/or in the conductivity of the TCO, on the behavior of the overall system, are examined. The potential losses in the system are subsequently presented for Designs A and B, in conjunction with a comparison of the overall cell performance of the two designs. The hydrogen collection yields of two designs are then presented and discussed. For each design, the diffusive and diffusive–convective components of the reagent crossover process have also been analyzed for two distinct types of separators (impermeable vs. permeable).
+3.1. TCO and kinetics
+
+Fig. 3 depicts the average resistive losses, expressed as the average ohmic potential drop in the system, eqn (15), for Designs A and B, with non-permeable, ion-conducting separators, as a function of the dimensions of the components of the system (see Table 1). Fig. 3 additionally presents the modeling results of such systems that also contained a TCO film on the surfaces of both semiconductor electrodes.
+ Fig. 3  Average ohmic potential drop as a function of electrode length for different electrolyte heights in Design A (a and b) and Design B (c and d) with TCO (solid lines) and without TCO (dotted lines). For Design A, tsep was varied: 10 μm (a) and 500 μm (b) whereas for Design B, tsep = 10 μm, but lel/ld = 0.5 (c) and lel/ld = 0.9 (d). 
+The TCO significantly reduced the ohmic losses because the electrons produced by the PV were redistributed laterally along the surfaces of the photoelectrodes. For example, Fig. 4 depicts the current distribution at the cathode catalyst layer in a specific subset of Design A systems. The TCO clearly redistributed the current closer to the separator interface, and thus closer to the other electrode, thereby minimizing the ionic-current path-length. This behavior was more significant for larger lel and smaller he.
+ Fig. 4  Current density distribution along the catalyst layer of the cathode for Design A (separator starts at x/lel/2 = 0.5) with TCO, he = 1 mm, tsep = 10 μm, and for cathode lengths 0.01 mm < lel < 40 mm. 
+The presence of the TCO did not affect the overall hydrogen collection yield, because although the current distribution was altered, the integrated current was not affected. A consequence of the current redistribution was that the regions of catalyst that are located closer to the separator experienced orders of magnitude larger current densities than ipc. For example, increasing lel above 5 mm for he = 1 mm led to larger current densities (i > ipc), and thus enhanced catalyst loads, within 20% of the electrode length at each end nearest to the separator (Fig. 4). When lel = 40 mm, this fraction was reduced even further, with 10% of the electrode length at each end carrying most of the current in the system (Fig. 4).
+For specific implementations of Design A, Fig. 5 depicts a breakdown of the various types of potential losses that contribute to the total overpotential, ΔΦs, needed to drive the water-splitting reactions. These losses consisted of ohmic losses (across both the electrolyte/solution and separator, ΔΦR, or across the separator only, ΔΦR,sep), as well as losses due to the reaction overpotential, ηop,a/c, at the two electrodes. Wider electrodes led to larger variations in potential along the electrode surface. In the presence of a TCO, lateral conduction produced non-uniform reaction overpotentials at the electrodes, in contrast to the non-TCO case, which produced constant reaction overpotentials along the surface of each photoelectrode.
+ Fig. 5  Average (lines) and variation along the electrode (bands around lines) for the total device overpotential (ΔΦs), ohmic losses (ΔΦR), potential losses over separator only (ΔΦR,sep), and anode/cathode reaction overpotentials (ηop,a/c) with TCO (a) and without TCO (b) as a function of lel, for Design A at he = 1 mm and tsep = 10 μm. 
+
+Fig. 6 presents the solution ohmic losses as a function of the scale factor, R, for Design A, at selected geometric dimensions for the system components. The value of R represents a surface roughness and/or equivalently represents an increase in the exchange current density (i*0a/c = i0a/c·R). The solution ohmic losses decreased in two distinct steps, with each step corresponding to the value of R at which the overpotentials for the HER and OER, respectively, become negligibly small compared to the other resistance losses in the specific system of interest. Two asymptotic regions were observed, for R < 1 and R > 1010. For slow kinetics (i.e. R < 1), the reaction could not sustain the specified interfacial electron-transfer rate, so the charge redistributed away from the membrane. In this situation, the overall system performance benefits of including the TCO were minimal. For rapid kinetics (i.e. R > 1010), the limiting factors were electron delivery to the catalysts near the separator due to insufficient conductivity of the TCO. Fig. 6 illustrates the tradeoff between the sheet resistance of the TCO and the potential drop in the electrolyte, for rapid kinetics. Generally, the variation in potential drop in the system (max. to min.) became smaller for non-limiting reaction rates (large R) in conjunction with non-limiting TCO conduction values (small Rs).
+ Fig. 6  Average, minimal and maximal potential drop in the solution for varying scale factor, R, i.e. reactions' exchange current densities, at Rs = 10 Ω □−1 (a), and for varying TCO sheet resistance, Rs, at R = 1012 (b), both for Design A, tsep = 10 μm, he = 1 mm, and lel = 5 mm. The black arrow in panel (a) depicts the reference case for the state-of-the-art catalysts and TCO resistance. The red arrows show the same R-Rs-conditions for the two different figures. 
+3.2. Solution ohmic losses
+The ohmic losses were evaluated for systems that included a TCO layer and electrode kinetics that were characteristic of the most active catalysts reported to date for the HER and OER (Table 2). Fig. S5† depicts the cathode potential distribution for Designs A and B using optimal values of these adjustable parameters. The current distribution (the current lines are roughly perpendicular to the potential lines) was non-uniform, with higher current being sustained closer to the separator (e.g., see Fig. 4). This behavior occurred because the solution ohmic losses were dominant, and the TCO produced a non-uniform current distribution at the electrode.
+To examine the geometric design space, the electrode length and electrolyte height (Fig. 2) were varied, for two different membrane thicknesses. Fig. 7 and 8 display the solution ohmic losses that were calculated between the electrodes for Designs A and B, respectively, as a function of the height of the electrolyte. The value of ΔΦR increased significantly with increases in lel, reflecting the longer average path-length that the ions must travel even though the reaction distribution was non-uniform due to the TCO layer. Increases in he led to a decrease in ΔΦR, with an observed asymptotic behavior, e.g. when lel/he < 1.5 for tsep = 10 μm in Design A. This asymptote arose due to the presence of additional conduction pathways in the electrolyte as the electrolyte height increased.
+ Fig. 7  Average (solid lines) and maximum (dotted lines) ohmic potential drop in the solution for Design A with a TCO as a function of electrode length, lel, for different electrolyte heights, he, and for tsep = 10 μm (a) and 500 μm (b). 
+ Fig. 8  Average ohmic potential drop in the solution for Design B with a TCO with (a) lel/ld = 0.5 and (b) lel/ld = 0.9 as a function of the electrode length, lel, for various electrolyte heights, he, and for tsep = 10 μm (solid line) and tsep = 500 μm (dotted line). 
+Generally, thicker membranes led to larger ΔΦR losses, due to the smaller conductivity in the membrane relative to the conductivity of the electrolyte. This increased ohmic drop was more pronounced for larger lel, smaller he, and, for Design B, for larger lel/ld. Thus, ohmic losses are minimized by the use of a thin membrane with a large electrolyte chamber.
+
+Fig. 9 presents the influence of varying the separator conductivity, for various design dimensions, for Designs A and B, respectively. The separator conductivity can be changed by adding more, or different, ionically conductive liquid into the polymer membrane; by changing the morphology of the mechanical and the ion-conducting phase of the polymer membrane; or by using permeable, porous media. All of these approaches can produce ohmic losses <100 mV for membranes having conductivities as low as 10−2 S m−1.
+ Fig. 9  Average ohmic potential drop of (a) Design A for he = 1 mm and lel = 1 mm (black), he = 1 mm and lel = 10 mm (red), he = 10 mm and lel = 1 mm (green), he = 10 mm and lel = 10 mm (blue); and (b) Design B for he = 1 mm and lel = 1 mm, as a function of separator's effective conductivity for tsep = 10 μm (thin lines) and tsep = 500 μm (thick lines). 
+
+Fig. 10 presents a comparison, at a constant separator conductivity (10 S m−1), of the cell polarization differences between Designs A and B, as a function of the dimensions of the components in the devices. Design A outperformed Design B, especially, for larger lel/ld, which is the condition most desired in Design B for optimal absorption of sunlight (in the absence of sunlight concentration or optical scatterers). However, for the same electrode length and for the same water splitting current, Design A required twice the area as Design B, because the electrically connected photoanode and photocathode are side-by-side, and not on top of each other. The polarization curves also indicated that concentrated solar irradiation (i.e. resulting in a larger overall current density) will lead to a nearly linear increase in the required potential and, correspondingly, will require even smaller device dimensions to achieve acceptable system potential drops (i.e. <100 mV).
+ Fig. 10  Overall cell polarization curves – average cell potential vs. photocurrent density – for Design A (black) and Design B (red) at lel/ld = 0.5 (solid red) and lel/ld = 0.9 (dotted red) for various electrode lengths and electrolyte heights, for (a) tsep = 10 μm and (b) tsep = 500 μm. The black arrows depict the reference position at ipc = 20 mA cm−2 (= 200 A m−2). The curves for lel = 1 mm and he = 1 mm, and lel = 1 mm and he = 10 mm overlap. 
+3.3. Crossover of products
+The crossover of fuel and of O2/reactant/electrolyte is driven by diffusion and convection. Impermeable separators (e.g. Nafion) prevent convective crossover even at relatively large pressure differentials (e.g. Nafion's permeability is approximately 1.8 × 10−18 m2), while permeable separators (e.g. porous materials) do not significantly impede crossover. Nevertheless, porous materials can provide economic benefits, reduce the system complexity and assembly, and allow high ionic conductivity. Systems that utilize impermeable separators, for which the crossover is solely due to diffusion, are discussed first, and the situation for permeable separators, for which both diffusion and convection play a role in crossover, is then evaluated.
+
+3.3.1. Diffusive crossover. 
+Three boundary conditions were introduced. Each chamber was saturated with the produced species (i.e. hydrogen at the cathode and oxygen at the anode) and (i) the opposite electrode surface was at zero concentration (e.g. no hydrogen at the anode surface); (ii) the opposite chamber was at zero concentration (e.g. no hydrogen in the anode chamber); or (iii) the opposite chamber was at saturation concentration (e.g. 0.78 mM hydrogen in the anode electrolyte). Fig. 11 depicts the hydrogen collection yield, defined by eqn (16), for both designs, with boundary conditions (i) and (ii), for various component dimensions of both Design A and Design B.
+ Fig. 11  Hydrogen collection yield, due to diffusion, of Design A (a and b) and Design B (c and d), for boundary condition option (i): the opposite electrode surface is at zero concentration (a and c) and option (ii): the opposite chamber is at zero concentration (b and d), for various component dimensions. 
+For condition (iii), the diffusive crossover was mitigated, due to the lack of a concentration gradient. In this situation, hydrogen collection yields of 1 were thus achieved for both designs, for all component dimensions. Nevertheless, in condition (iii) the amount of hydrogen needed to saturate the total electrolyte volume is effectively lost because it must be re-separated before it can be utilized as a fuel.
+The diffusive fluxes through the separator were non-uniform, and for condition (i), the fluxes exponentially decreased with the y-coordinate (Design A) or x-coordinate (Design B). Increasing he in Design A did not significantly change the hydrogen collection yield. The total diffusive fluxes converged to a constant value with increasing lel because above a certain electrode length, the diffusive layer was fully developed.
+For condition (ii), the diffusive fluxes through the separator were independent of the position along the photoelectrode. Reduced hydrogen collection yields were observed with increasing he for Design A, and with decreasing lel/ld for Design B, because in both cases the separator area was increasing. The hydrogen collection yields in Design B were independent of the electrode length, because the increased was compensated by the increase in the total current. Generally, thicker membranes increased the hydrogen collection yield, due to decreased species diffusivities in the separator.
+Condition (ii) led to the lowest hydrogen collection yields, due to the production of the largest concentration gradients over the membrane. A steady-state slow-flow reactor is therefore expected to show higher efficiencies than a continuously flushed (high-flow) reactor, unless the reactor is flushed with crossover-product-saturated electrolyte and a catalyst that is inactive towards recombination is used.
+
+
+3.3.2. Diffusive and convective crossover. 
+
+Fig. 12 depicts the hydrogen collection yield as a function of the separator porosity and, consequently, as a function of the separator permeability (eqn (19)), for Designs A and B. The dimensions of various components were varied, but the pressure differential was fixed to be 10 mbar across the separator. For separator porosities larger than 0.12, corresponding to permeabilities larger than 1.5 × 10−16 m2, convection-driven processes clearly dominated the crossover flux. The velocity (or mass flow) along the separator was nearly constant for the porosities of interest. Smaller he/lel in Design A and larger lel/ld in Design B led to smaller velocities. Hence, in such situations, larger porosities could be used to obtain the same hydrogen collection yield. Design B's system response was independent of the absolute values of he and lel, for the porosities investigated.
+ Fig. 12  (a and c) Current efficiency at Δp = 10 mbar as a function of separator porosity at tsep = 10 μm (thin lines) and tsep = 500 μm (thick lines) for various component dimensions in Design A (a), and for he = 1 mm and lel = 1 mm in Design B (c). (b and d) Differential pressure at η = 0.8 (black) and 0.98 (blue) as a function of separator porosity at tsep = 10 μm (thin lines) and tsep = 500 μm (thick lines) for he = 1 mm and lel = 1 mm in Design A (b), and Design B (d), where lel/ld = 0.5 (solid lines) and lel/ld = 0.9 (dotted lines). 
+
+Fig. 12 also describes the maximal separator porosities that were able to withstand various pressure differentials (1 mbar to 10 bar) at η = 0.8 and 0.98, for specific component dimensions, for both Design A and Design B. The actual pressure differential that will be produced in the system depends intimately on the control strategy implemented for the system as a whole. The hydrogen collection yields changed similarly when the pressure gradient increased or when tsep decreased, which is in accordance with Darcy's law, although the modeling in this work was explicitly for a two-dimensional flow field.
+The utilization of a permeable, porous separator introduced additional requirements for the separator porosity. Fig. 13 depicts the separator porosity-dependence (i.e., conductivity-dependence, see eqn (18)) on the ohmic losses in a system with a permeable, porous separator, for Designs A and B. The figure also indicates the importance of the potential losses across the separator relative to the total ohmic losses (dotted lines, representing ΔΦR − ΔΦR,sep). In accord with the analysis of the system performance for impermeable, ion-conducting separators (Section 3.2 and 3.3.1), the ohmic drop was minimal when the crossover was significant. Ohmic losses became smaller in Design A either when the cell height was increased or when the electrode length or separator thickness was decreased. For Design B, ohmic losses became smaller either when lel/ld or when the separator thickness was decreased. At low porosities, the separator conductivity dominated the ohmic losses in the system, however, the separator conductivity increased exponentially at larger porosities, until the conductivity of the separator became a negligible contributor to the overall system ohmic loss. For example, for Design A with tsep = 500 μm, he = 1 mm, and lel = 10 mm, the resistance through the separator contributed 50% to the total ohmic losses at εsep = 0.37. As shown in the ESI (see Fig. S7†), the porous separator's microstructure also was important, although the observed macroscopic performance trends were not dependent on this property. Nevertheless, the microstructure–property relationships (conductivity, permeability, etc.) are not well understood and, therefore, more accurate methodologies for the determination of properties based on the exact microstructure, e.g. by means of computed tomography,33,53,54 are crucial for setting specific design criteria for the separator.
+ Fig. 13  Average ohmic potential drop, ΔΦR (solid line), and average ohmic potential drop minus the average potential drop over the separator, ΔΦR − ΔΦR,sep (dotted line), as a function of separator porosity for tsep = 10 μm (thin lines) and tsep = 500 μm (thick lines), for various dimensions of Design A (a) and Design B at he = 1 mm and lel = 1 mm (b). 
+
+4. Discussion
+4.1. TCO and kinetics
+For a given current density, the TCO film attenuated the total overpotential required in the system, by linearizing the direct relationship between the electrode length and potential drop. The TCO also reduced the variation in potential drop along the electrode, because the larger solution ohmic losses at the center of the electrode were compensated by the lower reaction overpotential at the same electrode location. With the TCO, the area-averaged solution ohmic losses were closer to the maximum ohmic loss in the specific system of interest, because a relatively small areal fraction of the electrode actually operated at i > ipc (Fig. 4). The variations in ΔΦs along the electrode were due to limitations in the TCO resistance and/or in the kinetics of the catalysts.
+The lateral redistribution of electrons due to the presence of the TCO was limited by the kinetic parameters associated with the ability of the catalyst to pass large currents at low overpotentials. This behavior determines whether the catalysts are able to function efficiently with a rapid turnover rate (i.e. at low overpotentials), or if the electrons are redistributed back from the separator interface (i.e. the current density becomes more uniform) because the catalysts cannot keep up with the delivered electrons.
+For larger electrodes, deposition of a catalyst nearer to the macroscopic electrode/separator interface is crucial for achieving optimal system performance, because the catalyst that is located further from the interface passes less charge in the system. In fact, if the catalyst layer were confined to the outer 40% of the electrode surface (20% at each end), <1% of the current would need to be redistributed, when lel > 10 mm. Such an approach may be particularly advantageous for systems that utilize catalysts that exhibit large absorption or reflection coefficients in the visible region of the solar spectrum.
+4.2. Ohmic potential drop in the electrolyte
+For both designs, an increase in the height of the electrolyte is beneficial in terms of solution ohmic drop. This benefit shows an asymptotic limit above which no further reduction in the ohmic drop is achieved even with increased he. The thinner the membrane, the larger the lel/he ratio that is required to reach this asymptotic condition. Obviously, the larger electrolyte reservoirs may deleteriously affect the overall desirability of such designs in actual operating systems.
+For Design B, decreases in lel/ld produced exponential reductions in the solution ohmic drop. An asymptotic limit was present below which no further reduction in ohmic losses was observed even at lower lel/ld. However, such decreases resulted in smaller fractions of the system area being active for absorption of light, which is not desirable for an actual PEC device unless the solar radiation is concentrated. Even so, concentrated radiation would lead to larger current densities, which would result in the need for even smaller device dimensions to be able to sustain the required ohmic losses (<100 mV).
+4.3. Effects of the separator porosity
+An impermeable, ion-conducting separator effectively blocks convective flow, but reduces the ionic conductivity and increases the complexity and expense of the separator component of the system. Porous media are expected to relax some of the constraints associated with the use of impermeable, ion-conducting separators. Nevertheless, without modeling and simulation, it is not clear whether such a system can function efficiently, and what transport characteristics are required from the separator. The electrolyte in the void phase of the porous structure acts as the ion-conducting phase. The transport properties of the porous separator are crucial for the system performance, i.e. increased permeability (or porosity) allows flow between the anode and cathode sides, increasing species crossover and, consequently, decreasing the hydrogen yield. On the other hand, increased permeability (or porosity) increases separator effective conductivity and thus decreases the ohmic losses.
+Increases in the separator thickness afford a straightforward design adaptation to withstand higher pressure differentials. However, such an approach results in a corresponding increase in ohmic drop in the system. In fibrous-like materials, convection dominated H2 crossover rates at low porosities, due to the high permeability of the separator even at low porosities (see Fig. S6†). Hence, a working system using permeable separators requires separators with small porosities or high tortuosity (e.g. interdigitated random structures). Since low porosities might be unpractical, thicker separators are also an option that merits consideration.
+4.4. Trade-off between solution ohmic losses and crossover
+Depending on the design, system components, and operational conditions, minimizing the solution ohmic losses and maximizing the hydrogen collection yields involve competing system requirements in terms of dimensions and component transport properties. Table 3 summarizes the requirements and trade-offs for Design A operated under condition (ii) – leading to the most stringent crossover requirements – using an impermeable, ion-conducting separator (conductivity 10 S m−1). This design did not enable the required solution ohmic drops and hydrogen collection yields, for thin separators and large electrolyte and electrode heights.
+Table 3 Electrode lengths, lel, required to operate in the specified η and ΔΦR windows for specified electrolyte heights, he, and a non-permeable separator of thickness, tsep, for Design A with TCO operating under species boundary condition option (ii). Red, italic table entries denote designs for which the hydrogen collection yield operational specification can only be achieved with potential drops larger than that specified by the operational target (i.e. <100 mV)
+
+
+
+
+ 
+
+h
+e (mm)
+1
+5
+10
+50
+
+
+
+
+
+t
+sep = 10 μm
+
+
+
+η > 0.80
+
+l
+el (mm) >
+0.97
+4.86
+9.73
+
+48.6
+
+
+
+
+η > 0.98
+
+l
+el (mm) >
+9.73
+
+
+
+
+
+
+
+
+
+
+
+ΔΦR,max < 100 mV
+
+l
+el (mm) <
+10.9
+21.6
+27.5
+33.1
+
+
+ΔΦR,mean < 100 mV
+
+l
+el (mm) <
+13.6
+26.4
+33.6
+42.9
+
+
+ 
+
+
+
+t
+sep = 500 μm
+
+
+
+η > 0.80
+
+l
+el (mm) >
+0.02
+0.10
+0.19
+0.97
+
+
+
+η > 0.98
+
+l
+el (mm) >
+0.19
+0.97
+1.95
+9.73
+
+
+ΔΦR,max < 100 mV
+
+l
+el (mm) <
+7.82
+18.6
+24.4
+29.7
+
+
+ΔΦR,mean < 100 mV
+
+l
+el (mm) <
+9.04
+21.8
+29.0
+37.2
+
+
+
+
+Design B was restricted in electrode length only by the ohmic losses, which were dependent on he and lel/ld. For this design, the hydrogen collection yields were generally large, and, for the most stringent operational conditions (condition (ii)), were independent of the electrode length. The use of thicker membranes and larger lel/ld resulted in efficiencies that were above the 98% safety requirement.
+
+Tables 4 and 5 present the minimal separator conductivities for various electrode lengths, electrolyte heights, and separator thicknesses, for Design A, as well as for various lel/ld values for Design B. Thinner separators allowed for lower minimum conductivities to achieve a less than 100 mV potential drop, but were not generally able to meet the requirement on the maximum allowable crossover flux for operation of the system below the lower explosive limit of the gas mixture.
+Table 4 Separator conductivity required to stay below 100 mV potential losses for specified electrolyte heights, electrode lengths, and separator thicknesses of Design A, and corresponding hydrogen collection yield operating under species boundary condition option (ii)
+
+
+
+
+ 
+
+h
+e (mm)
+1
+1
+10
+10
+
+
+ 
+
+l
+el (mm)
+1
+10
+1
+10
+
+
+
+t
+sep = 10 μm
+
+
+ΔΦR < 100 mV
+
+κ
+l,e (S m−1) >
+0.011
+0.304
+0.002
+0.016
+
+
+
+η
+
+ 
+0.81
+0.98
+0
+0.81
+
+
+ 
+
+
+
+t
+sep = 500 μm
+
+
+ΔΦR < 100 mV
+
+κ
+l,e (S m−1) >
+0.545
+14.3
+0.091
+0.832
+
+
+
+η
+
+ 
+1
+1
+0.96
+1
+
+
+
+
+Table 5 Separator conductivity required to stay below 100 mV potential losses for specified separator thickness and electrode length to device length fractions of Design B, and corresponding crossover efficiency operating under species boundary condition (ii). Crossover efficiencies below 98% require additional control mechanisms in the system
+
+
+
+
+ 
+
+l
+el/ld
+0.5
+0.9
+
+
+
+t
+sep = 10 μm
+
+
+ΔΦR < 100 mV
+
+κ
+l,e (S m−1) >
+0.021
+0.020
+
+
+
+η
+
+ 
+0.9
+1
+
+
+ 
+
+
+
+t
+sep = 500 μm
+
+
+ΔΦR < 100 mV
+
+κ
+l,e (S m−1) >
+1.06
+9.82
+
+
+
+η
+
+ 
+1
+1
+
+
+
+
+In general, for both design criteria to be met, the separator porosity must be 10 to 20%. Larger porosities resulted in increased crossover, whereas smaller porosities resulted in increased ohmic losses. Tables 6 and 7 present the porosity ranges for systems that yielded less than 100 mV ohmic losses and 98% and 80% crossover efficiencies in Design A and Design B, respectively.
+Table 6 Required separator porosity to operate in the specified η or ΔΦR windows at Δp = 10 mbar for various electrode lengths, electrolyte heights, and separator thicknesses for Design A with TCO. Red, italic table entries show designs for which a hydrogen collection yield below 98% can only be achieved with potential drops larger than 100 mV
+
+
+
+
+ 
+
+t
+e (mm)
+1
+10
+
+
+
+t
+sep = 10 μm, lel = 1 mm
+
+
+
+η > 0.80
+
+ε
+sep ≤
+0.16
+0.08
+
+
+
+η > 0.98
+
+ε
+sep ≤
+0.08
+0.02
+
+
+ΔΦR < 100 mV
+
+ε
+sep ≥
+0
+0
+
+
+ 
+
+
+
+t
+sep = 10 μm, lel = 10 mm
+
+
+
+η > 0.80
+
+ε
+sep ≤
+0.26
+0.16
+
+
+
+η > 0.98
+
+ε
+sep ≤
+0.16
+0.08
+
+
+ΔΦR < 100 mV
+
+ε
+sep ≥
+0.04
+0
+
+
+ 
+
+
+
+t
+sep = 500 μm, lel = 1 mm
+
+
+
+η > 0.80
+
+ε
+sep ≤
+0.35
+0.23
+
+
+
+η > 0.98
+
+ε
+sep ≤
+0.22
+0.14
+
+
+ΔΦR < 100 mV
+
+ε
+sep ≥
+0.06
+0
+
+
+ 
+
+
+
+t
+sep = 500 μm, lel = 10 mm
+
+
+
+η > 0.80
+
+ε
+sep ≤
+0.52
+0.35
+
+
+
+η > 0.98
+
+ε
+sep ≤
+
+
+
+0.22
+
+
+ΔΦR < 100 mV
+
+ε
+sep ≥
+0.50
+0.08
+
+
+
+
+Table 7 Required separator porosity to operate in the specified η or ΔΦR windows at Δp = 10 mbar for various electrode-to-device-length fraction and separator thicknesses for Design B with TCO. Red, italic table entries show designs for which a hydrogen collection yield of 98% can only be achieved with potential drops larger than 100 mV
+
+
+
+
+ 
+
+l
+el/ld
+0.5
+0.9
+
+
+
+
+
+t
+sep = 10 μm
+
+
+
+η > 0.80
+
+ε
+sep <
+0.188
+0.287
+
+
+
+η > 0.80
+
+ε
+sep <
+0.105
+0.183
+
+
+ΔΦR < 100 mV
+
+ε
+sep >
+0
+0.029
+
+
+ 
+
+
+
+t
+sep = 500 μm
+
+
+
+η > 0.80
+
+ε
+sep <
+0.391
+0.590
+
+
+
+η > 0.80
+
+ε
+sep <
+0.255
+
+
+
+
+
+ΔΦR < 100 mV
+
+ε
+sep >
+0.089
+0.392
+
+
+
+
+4.5. Comparison of Design A and Design B
+Design A outperformed Design B in terms of ohmic potential losses for comparable dimensions and components. Hydrogen collection yields, on the other hand, were less critical for Design B than for Design A – especially for small dimensions – allowing for straightforward minimization of the ohmic losses in Design B without the need for careful consideration of hydrogen crossover.
+Non-permeable separators with lower proton conductivity were better tolerated in Design A compared to Design B, for similar ohmic potential losses. Generally, the properties of the non-permeable separator were more crucial for Design B than for Design A, especially at large lel/ld of Design B, which is desirable for commercial, large scale systems. The influence of the permeable separator porosity on the ohmic drop and hydrogen collection yield only depended on lel/ld and separator thickness but not on the other dimensions (lel and he) of Design B, while for Design A these dimensions also influenced the porosity vs. ohmic drop and the hydrogen collection yield behavior.
+The orthogonalization of radiation absorption and the main ionic transport path – as presented in Design A – allows decoupling of the absorber area from the area for ion exchange between the electrodes, unlike in Design B.
+Design A allowed independent dimensioning of the two channel or electrode lengths for compensation of the slower OER kinetics or for current matching of two different photoelectrode materials. Nevertheless, for the same electrode length and reaction current, Design A requires twice the surface area to capture solar light due to the side-by-side vs. back-to-back photoelectrode alignment.
+5. Summary and conclusions
+A validated multi-physics, multi-phase (solid and liquid phases) model was developed to couple charge and species transport, fluid flow, and electrochemical reactions. Two different design types were evaluated as a function of the dimensions of various components in each type of system.
+Smaller ohmic losses in the full system were achieved by the use of transparent-conducting-oxide (TCO) layers on top of the photoactive semiconductor, because these layers allowed for current redistribution toward the electrode–separator interface, thereby resulting in shorter ionic-current path lengths. In the presence of TCO layers, the catalysts nearer to the electrode–separator interface required higher turnover rates. This effect was more pronounced for longer electrodes and thinner electrolyte heights, and was less pronounced for slower reaction kinetics and smaller TCO layer conductivities. Generally, the potential variations along an electrode were reduced in the presence of a TCO layer, because the larger ohmic potential losses were compensated by lower reaction overpotentials at the same location.
+For both designs, smaller electrode lengths, larger electrolyte heights, and thinner separators led to reduced ohmic losses. An asymptotic limit was observed for the device height, above which no further reduction in potential losses was observed. In addition, smaller fill fractions in Design B resulted in smaller potential losses. These approaches may be difficult to implement in practice, where a bias may lie toward systems that have small electrolyte volumes as well as large solar-active photoelectrode areas.
+Depending on the dimensions of the design components, separator conductivities as low as 10−2 S m−1 resulted in an acceptable ohmic loss in the system. The polarization curves suggested that Design A outperformed Design B, i.e. the former design produced a smaller total overpotential at the same current density.
+Diffusive crossover depended on the operational condition of the system, with the crossover being largest for continuously flushed reactors, for which the concentration gradient over the separator was largest. Design A exhibited lower hydrogen collection yields for smaller electrode lengths and larger he/tsep ratios. For Design B, the hydrogen collection yield was independent of the electrode length, but decreased with the decreased separator thickness and fill fraction. Enhanced diffusive crossover yields are possible through incorporation of recombination-inactive catalysts in slow-flow reactors or through the use of reactors that are flushed with product-saturated electrolyte.
+Convective crossover became important when pressure differentials were present over the separator (also dependent on the device control strategy) or for highly permeable separators. The calculations indicate that porosities in the range of 10 to 20%, corresponding to permeabilities of 10−17 to 10−15 m2, respectively, afford a compliant system in terms of ohmic losses as well as crossover efficiencies at a pressure differential of 1 bar. Stringent pressure control can relax these requirements and accordingly can increase the hydrogen collection yields. If practical separator porosities are to be used, thicker separators are required to minimize product crossover, but thicker separators result in increased ohmic losses. Controlling the morphology of the separator, i.e. using packed-bed-like structures instead of fibrous-like structures, could lead to more practical systems with large hydrogen collection yields. Nevertheless, further analysis of the morphology–property relationships of porous separators is required to understand which, if any, morphologies allow for advantageous transport properties and, consequently, acceptable system performance.
+6. Nomenclature
+6.1. Latin symbols
+
+
+A
+0
+Specific surface (m−1)
+
+A
+Surface area (m2)
+
+c
+Concentration (mol m−3)
+
+D
+Diffusivity (m2 s−1)
+
+F
+Faraday's constant (A s mol−1)
+
+h
+Height (m)
+
+i
+Current density vector
+
+i
+Current density (A m−2)
+
+i
+0
+Exchange current density (A m−2)
+
+k
+Kozeny constant
+
+K
+Permeability (m−2)
+
+l
+Length (m)
+
+
+Inner unit normal vector
+
+n
+Number of electrons
+
+N
+Molar flux vector
+
+N
+Molar flux (mol s−1 m−2)
+
+p
+Pressure (Pa)
+RRoughness factor
+
+R
+Ideal gas constant (J mol−1 K−1)
+
+R
+s
+Sheet resistance (Ω □−1)
+
+R
+r
+Reaction source term (mol m−3 s−1)
+
+t
+Thickness (m)
+
+T
+Temperature (K)
+
+u
+Velocity vector (m s−1)
+
+u
+Mobility (mol s kg−1)
+
+U
+0
+Equilibrium potential (V)
+
+z
+Valence of species
+
+6.2. Greek symbols
+
+
+α
+Transfer coefficient
+
+ε
+Porosity
+ΔΦRAveraged ohmic losses in electrolyte (V)
+
+κ
+Ionic conductivity (S m−1)
+
+μ
+Viscosity (Pa s)
+
+ρ
+Density (kg m−3)
+
+σ
+Conductivity (S m−1)
+
+η
+Hydrogen collection yield
+
+Φ
+Potential (V)
+
+6.3. Subscripts
+
+aAnode
+cCathode
+dDevice
+eEffective, electrolyte
+elElectrode
+lLiquid
+mMembrane
+opOverpotential
+oxOxidation
+pcPhotocurrent
+RReaction
+redReduction
+sSolid
+satSaturation
+sepSeparator
+xCrossover
+
+Acknowledgements
+We acknowledge the Joint Center for Artificial Photosynthesis, a DOE Energy Innovation Hub, supported through the Office of Science of the U.S. Department of Energy under award number DE-SC0004993. S.A. acknowledges support from a U.S. Department of Energy, Office of Energy Efficiency and Renewable Energy (EERE) Postdoctoral Research Award under the EERE Fuel Cell Technologies Program. We thank Sivagaminathan Balasubramanian for fruitful discussions.
+References
+A. J. Nozik, Appl. Phys. Lett., 1976, 29, 150–153 CrossRef CAS .
+A. J. Nozik, Appl. Phys. Lett., 1977, 30, 567–569 CrossRef CAS .
+K. Maeda and K. Domen, J. Phys. Chem. Lett., 2010, 1, 2655–2661 CrossRef CAS .
+A. Fujishima and K. Honda, Nature, 1972, 238, 37–38 CrossRef CAS .
+N. A. Kelly and T. L. Gibson, Int. J. Hydrogen Energy, 2006, 31, 1658–1673 CrossRef CAS .
+O. Khaselev and J. A. Turner, Science, 1998, 280, 425–427 CrossRef CAS .
+K. Domen, S. Naito, M. Soma, T. Onishi and K. Tamaru, J. Chem. Soc., Chem. Commun., 1980, 543–544 RSC .
+H. Kato and A. Kudo, Chem. Phys. Lett., 1998, 295, 487–492 CrossRef CAS .
+R. E. Rocheleau, E. L. Miller and A. Misra, Energy Fuels, 1998, 12, 3–10 CrossRef CAS .
+S. Y. Reece, J. A. Hamel, K. Sung, T. D. Jarvi, A. J. Esswein, J. J. H. Pijpers and D. G. Nocera, Science, 2011, 334, 645–648 CrossRef CAS .
+
+          B. James, G. Baum, J. Perez and K. Baum, Technoeconomic Analysis of Photoelectrochemical (PEC) Hydrogen Production, Directed Technologies Inc., Technical report,  2009 Search PubMed .
+Y. J. Hwang, C. H. Wu, C. Hahn, H. E. Jeong and P. Yang, Nano Lett., 2012, 12, 1678–1682 CrossRef CAS .
+C. Carver, Z. Ulissi, C. Ong, S. Dennison, G. Kelsall and K. Hellgardt, Int. J. Hydrogen Energy, 2012, 37, 2911–2923 CrossRef CAS .
+F. E. Osterloh and B. A. Parkinson, MRS Bull., 2011, 36, 17–22 CrossRef CAS .
+B. Seger and P. V. Kamat, J. Phys. Chem. C, 2009, 113, 18946–18952 CAS .
+A. Hochbaum and P. Yang, Chem. Rev., 2010, 110, 527–546 CrossRef CAS .
+J. M. Spurgeon, M. G. Walter, J. Zhou, P. A. Kohl and N. S. Lewis, Energy Environ. Sci., 2011, 4, 1772–1780 CAS .
+
+          W. Haynes, CRC Handbook of Chemistry and Physics, Taylor & Francis,  2011 Search PubMed .
+N. A. Kelly and T. L. Gibson, Int. J. Hydrogen Energy, 2006, 31, 1658–1673 CrossRef CAS .
+A. Z. Weber and J. Newman, Chem. Rev., 2004, 104, 4679–4726 CrossRef CAS .
+N. Djilali, Energy, 2007, 32, 269–280 CrossRef CAS .
+R. Jorn and G. A. Voth, J. Phys. Chem. C, 2012, 116, 10476–10489 CAS .
+R. Rocheleau and E. Miller, Int. J. Hydrogen Energy, 1997, 22, 771–782 CrossRef CAS .
+
+          E. Johnson, Electron Devices Meeting, 1981 International,  1981, pp. 2–5 Search PubMed .
+H. Mettee, J. W. Otvos and M. Calvin, Sol. Energy Mater., 1981, 4, 443–453 CrossRef CAS .
+S. Licht, B. Wang, S. Mukerji, T. Soga, M. Umeno and H. Tributsch, J. Phys. Chem. B, 2000, 104, 8920–8924 CrossRef CAS .
+E. S. Smotkin, S. Cervera-March, A. J. Bard, A. Campion, M. A. Fox, T. Mallouk, S. E. Webber and J. M. White, J. Phys. Chem., 1987, 91, 6–8 CrossRef CAS .
+E. Miller, R. Rocheleau and X. Deng, Int. J. Hydrogen Energy, 2003, 28, 615–623 CrossRef CAS .
+B. Parkinson, Sol. Cells, 1982, 6, 177–189 CrossRef .
+J. H. Park and A. J. Bard, Electrochem. Solid-State Lett., 2005, 8, G371–G375 CrossRef CAS .
+
+          J. Newman and K. Thomas-Alyea, Electrochemical Systems, John Wiley & Sons,  2004 Search PubMed .
+
+          S. Whitaker, The Method of Volume Averaging, Theory and Applications of Transport in Porous Media, Kluwer Academic Publisher, Dordrecht,  1999 Search PubMed .
+
+          S. Haussener, Transport Phenomena in Complex Multi-phase Media. A Tomography-based Approach Applied to Solar Fuel Production and Snow Science, SVH Südwestdeutscher Verlag für Hochschulschriften,  2012 Search PubMed .
+
+          E. Cussler, Diffusion: Mass Transfer in Fluid Systems, Cambridge University Press,  1997 Search PubMed .
+
+          J. H. Ferziger and M. Peric, Computational Methods for Fluid Dynamics, Springer-Verlag,  2001 Search PubMed .
+
+          A. J. Bard and L. R. Faulkner, Electrochemical Methods – Fundamentals and Applications, John Wiley & Sons, New York, 2nd edn,  2000 Search PubMed .
+
+          Comsol Inc., Comsol Multiphysics 4.2a,  2011 Search PubMed .
+M. D. Kelzenberg, D. B. Turner-Evans, M. C. Putnam, S. W. Boettcher, R. M. Briggs, J. Y. Baek, N. S. Lewis and H. A. Atwater, Energy Environ. Sci., 2011, 4, 866–871 CAS .
+S. Trasatti, J. Electroanal. Chem. Interfacial Electrochem., 1972, 39, 163–184 CrossRef CAS .
+
+          K. Kinoshita, Electrochemical Oxygen Technology, John Wiley and Sons, Inc.,  1992 Search PubMed .
+G. Lodi, E. Sivieri, A. Battisti and S. Trasatti, J. Appl. Electrochem., 1978, 8, 135–143 CrossRef CAS .
+M. G. Walter, E. L. Warren, J. R. McKone, S. W. Boettcher, Q. Mi, E. A. Santori and N. S. Lewis, Chem. Rev., 2010, 110, 6446–6473 CrossRef CAS .
+E. A. Hernandez-Pagan, N. M. Vargas-Barbosa, T. Wang, Y. Zhao, E. S. Smotkin and T. E. Mallouk, Energy Environ. Sci., 2012, 5, 7582–7589 CAS .
+R. E. Blankenship, D. M. Tiede, J. Barber, G. W. Brudvig, G. Fleming, M. Ghirardi, M. R. Gunner, W. Junge, D. M. Kramer, A. Melis, T. A. Moore, C. C. Moser, D. G. Nocera, A. J. Nozik, D. R. Ort, W. W. Parson, R. C. Prince and R. T. Sayre, Science, 2011, 332, 805–809 CrossRef CAS .
+J. O. M. Bockris, I. A. Ammar and A. K. M. S. Huq, J. Phys. Chem., 1957, 61, 879–886 CrossRef CAS .
+H. F. Mohamed, K. Ito, Y. Kobayashi, N. Takimoto, Y. Takeoka and A. Ohira, Polymer, 2008, 49, 3091–3097 CrossRef CAS .
+H. Ito, T. Maeda, A. Nakano and H. Takenaka, Int. J. Hydrogen Energy, 2011, 36, 10527–10540 CrossRef CAS .
+A. T. Haug and R. E. White, J. Electrochem. Soc., 2000, 147, 980–983 CrossRef CAS .
+S. Ban, C. Huang, X.-Z. Yuan and H. Wang, J. Phys. Chem. B, 2011, 115, 11352–11358 CrossRef CAS .
+D. Bruggeman, Ann. Phys., 1935, 24, 636–679 CrossRef CAS .
+H. Rumpf and A. Gupte, Chem. Ing. Tech., 1971, 43, 367–375 CrossRef CAS .
+H. Kim, C. M. Gilmore, A. Piqué, J. S. Horwitz, H. Mattoussi, H. Murata, Z. H. Kafafi and D. B. Chrisey, J. Appl. Phys., 1999, 86, 6451–6461 CrossRef CAS .
+S. Haussener, P. Coray, W. Lipinski, P. Wyss and A. Steinfeld, J. Heat Transfer, 2010, 132, 023305 CrossRef .
+S. Haussener and A. Steinfeld, Materials, 2012, 5, 192–209 CrossRef CAS .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: 10.1039/c2ee23187eThis journal is © The Royal Society of Chemistry 2012
+Table Content:
+
+Broader context
+Solar energy is the most abundant energy source, but it is distributed and intermittent, thereby necessitating its storage via conversion to a fuel (e.g. hydrogen, methanol, carbohydrates, etc.). A viable low-temperature route for the production of solar fuels is photosynthesis. Artificial photosynthetic devices use light-capturing semiconductors attached to electrodes covered by catalysts that generate hydrogen or hydrocarbons from protons and carbon dioxide, and produce oxygen from water through electrochemical reactions. Although much effort has been devoted to the development of suitable robust and scalable materials for solar-driven electrolysis, relatively little attention has been paid to the electrochemical system-engineering design aspects. These are crucial because the material combinations that provide optimal performance in such a system depend significantly on the architecture and operational conditions of the system itself. The work described herein introduces a validated computational multi-physics numerical model to analyze solar-driven photoelectrochemical devices. From the analysis, design criteria and guidelines can be established that account for the various performance tradeoffs such that practical artificial photosynthetic solar-fuel generators can be realized. The modeling has identified quantifiable gaps that warrant further research at the component level.
+
+4H+ + 4e− → 2H2	(1)
+2H2O → O2 + 4H+ + 4e−	(2)
+
+ 	Fig. 1  Schematics of the two basic designs studied (not to scale), where the modeled unit cell is denoted by the red box. (a) Design A consists of PV devices (violet) with ohmic electrical contacts at the bottom (dark grey), covered with TCO (blue) and catalyst layers (orange and green for the anode and cathode sides, respectively), separated by perpendicularly oriented separators (grey), and immersed in an electrolyte (light blue). (b) Design B consists of PV devices covered with TCO and catalyst layers separated with separators in the plane of the PVs and immersed in an electrolyte.	 
+0 = −∇·Ni + Rr,l	(3)
+Ni = −ziui,eFci∇Φl − Di,e∇ci + uci	(4)
+	(5)
+∇·u = 0	(6)
+	(7)
+	(8)
+	(9)
+	(10)
+is = −σs,e∇Φs	(11)
+∇·is = −∇·i1 = A0iR	(12)
+	(13)
+ηop = Φs − Φl − U0	(14)
+
+ 	Fig. 2  Computational domain and boundary conditions of Design A (a and c) and Design B (b and d) for species and charge conservation (a and b), and mass and momentum conservation (c and d). Concentration boundary conditions (green, red, blue) which account for operational condition options (i) to (iii) are described in the text.	 
+
+
+
+t
+sep
+	0.01, 0.5	
+t
+sep
+	0.01, 0.5
+
+h
+e
+	1, 5, 10, 50	
+h
+e
+	1, 5, 10, 50
+
+l
+el
+	0.01, 0.05, 0.1, 1 to 40 (Δl = 1)	
+l
+el
+	0.01, 0.05, 0.1, 1 to 40 (Δl = 1)
+
+l
+el/ld	0.5, 0.9
+	(15)
+	(16)
+	(17)
+Kinetics	HER exchange current density, i0,HER	10−3 A cm−2
+HER anodic transfer coefficient, αa,HER	1
+HER cathodic transfer coefficient, αc,HER	1
+OER exchange current density, i0,OER	10−8 A cm−2
+OER anodic transfer coefficient, αa,OER	1.7
+OER cathodic transfer coefficient, αc,OER	0.1
+Electrolyte/solution	Initial proton concentration, cH+,ini	1 M (pH = 0)
+Diffusivity H2, DH2	5.11 × 10−5 cm2 s−1
+Diffusivity O2, DO2	2.42 × 10−5 cm2 s−1
+Diffusivity H+, DH+	9.31 × 10−5 cm2 s−1
+Diffusivity HSO4−, DHSO4−	1.38 × 10−5 cm2 s−1
+Membrane	Diffusivity H2, Dm,H2	1.3 × 10−5 cm2 s−1
+Diffusivity O2, Dm,O2	6.1 × 10−6 cm2 s−1
+Diffusivity H+, Dm,H+	2.4 × 10−5 cm2 s−1
+Diffusivity HSO4−, Dm,HSO4−	3.5 × 10−6 cm2 s−1
+Conductivity, κm	10 S m−1
+Porous medium	Characteristic pore diameter, d	10 μm
+TCO	Thickness, tTCO	10 μm
+Sheet resistance, Rs	10 Ω □−1
+Operating conditions	Temperature, T	298 K
+Photocurrent density, ipc	20 mA cm−2
+Saturation concentration H2, cH2,sat	0.78 mol m−3
+Saturation concentration O2, cO2,sat	1.23 mol m−3
+κl,e = κl·ε1.5	(18)
+	(19)
+
+ 	Fig. 3  Average ohmic potential drop as a function of electrode length for different electrolyte heights in Design A (a and b) and Design B (c and d) with TCO (solid lines) and without TCO (dotted lines). For Design A, tsep was varied: 10 μm (a) and 500 μm (b) whereas for Design B, tsep = 10 μm, but lel/ld = 0.5 (c) and lel/ld = 0.9 (d).	 
+
+ 	Fig. 4  Current density distribution along the catalyst layer of the cathode for Design A (separator starts at x/lel/2 = 0.5) with TCO, he = 1 mm, tsep = 10 μm, and for cathode lengths 0.01 mm < lel < 40 mm.	 
+
+ 	Fig. 5  Average (lines) and variation along the electrode (bands around lines) for the total device overpotential (ΔΦs), ohmic losses (ΔΦR), potential losses over separator only (ΔΦR,sep), and anode/cathode reaction overpotentials (ηop,a/c) with TCO (a) and without TCO (b) as a function of lel, for Design A at he = 1 mm and tsep = 10 μm.	 
+
+ 	Fig. 6  Average, minimal and maximal potential drop in the solution for varying scale factor, R, i.e. reactions' exchange current densities, at Rs = 10 Ω □−1 (a), and for varying TCO sheet resistance, Rs, at R = 1012 (b), both for Design A, tsep = 10 μm, he = 1 mm, and lel = 5 mm. The black arrow in panel (a) depicts the reference case for the state-of-the-art catalysts and TCO resistance. The red arrows show the same R-Rs-conditions for the two different figures.	 
+
+ 	Fig. 7  Average (solid lines) and maximum (dotted lines) ohmic potential drop in the solution for Design A with a TCO as a function of electrode length, lel, for different electrolyte heights, he, and for tsep = 10 μm (a) and 500 μm (b).	 
+
+ 	Fig. 8  Average ohmic potential drop in the solution for Design B with a TCO with (a) lel/ld = 0.5 and (b) lel/ld = 0.9 as a function of the electrode length, lel, for various electrolyte heights, he, and for tsep = 10 μm (solid line) and tsep = 500 μm (dotted line).	 
+
+ 	Fig. 9  Average ohmic potential drop of (a) Design A for he = 1 mm and lel = 1 mm (black), he = 1 mm and lel = 10 mm (red), he = 10 mm and lel = 1 mm (green), he = 10 mm and lel = 10 mm (blue); and (b) Design B for he = 1 mm and lel = 1 mm, as a function of separator's effective conductivity for tsep = 10 μm (thin lines) and tsep = 500 μm (thick lines).	 
+
+ 	Fig. 10  Overall cell polarization curves – average cell potential vs. photocurrent density – for Design A (black) and Design B (red) at lel/ld = 0.5 (solid red) and lel/ld = 0.9 (dotted red) for various electrode lengths and electrolyte heights, for (a) tsep = 10 μm and (b) tsep = 500 μm. The black arrows depict the reference position at ipc = 20 mA cm−2 (= 200 A m−2). The curves for lel = 1 mm and he = 1 mm, and lel = 1 mm and he = 10 mm overlap.	 
+
+ 	Fig. 11  Hydrogen collection yield, due to diffusion, of Design A (a and b) and Design B (c and d), for boundary condition option (i): the opposite electrode surface is at zero concentration (a and c) and option (ii): the opposite chamber is at zero concentration (b and d), for various component dimensions.	 
+
+ 	Fig. 12  (a and c) Current efficiency at Δp = 10 mbar as a function of separator porosity at tsep = 10 μm (thin lines) and tsep = 500 μm (thick lines) for various component dimensions in Design A (a), and for he = 1 mm and lel = 1 mm in Design B (c). (b and d) Differential pressure at η = 0.8 (black) and 0.98 (blue) as a function of separator porosity at tsep = 10 μm (thin lines) and tsep = 500 μm (thick lines) for he = 1 mm and lel = 1 mm in Design A (b), and Design B (d), where lel/ld = 0.5 (solid lines) and lel/ld = 0.9 (dotted lines).	 
+
+ 	Fig. 13  Average ohmic potential drop, ΔΦR (solid line), and average ohmic potential drop minus the average potential drop over the separator, ΔΦR − ΔΦR,sep (dotted line), as a function of separator porosity for tsep = 10 μm (thin lines) and tsep = 500 μm (thick lines), for various dimensions of Design A (a) and Design B at he = 1 mm and lel = 1 mm (b).	 
+
+
+t
+sep = 10 μm
+
+η > 0.80	
+l
+el (mm) >	0.97	4.86	9.73	
+48.6
+
+
+η > 0.98	
+l
+el (mm) >	9.73	
+
+	
+
+	
+
+
+ΔΦR,max < 100 mV	
+l
+el (mm) <	10.9	21.6	27.5	33.1
+ΔΦR,mean < 100 mV	
+l
+el (mm) <	13.6	26.4	33.6	42.9
+ 
+
+t
+sep = 500 μm
+
+η > 0.80	
+l
+el (mm) >	0.02	0.10	0.19	0.97
+
+η > 0.98	
+l
+el (mm) >	0.19	0.97	1.95	9.73
+ΔΦR,max < 100 mV	
+l
+el (mm) <	7.82	18.6	24.4	29.7
+ΔΦR,mean < 100 mV	
+l
+el (mm) <	9.04	21.8	29.0	37.2
+ 	
+h
+e (mm)	1	1	10	10
+ 	
+l
+el (mm)	1	10	1	10
+
+t
+sep = 10 μm
+ΔΦR < 100 mV	
+κ
+l,e (S m−1) >	0.011	0.304	0.002	0.016
+
+η
+	 	0.81	0.98	0	0.81
+ 
+
+t
+sep = 500 μm
+ΔΦR < 100 mV	
+κ
+l,e (S m−1) >	0.545	14.3	0.091	0.832
+
+η
+	 	1	1	0.96	1
+ 	
+l
+el/ld	0.5	0.9
+
+t
+sep = 10 μm
+ΔΦR < 100 mV	
+κ
+l,e (S m−1) >	0.021	0.020
+
+η
+	 	0.9	1
+ 
+
+t
+sep = 500 μm
+ΔΦR < 100 mV	
+κ
+l,e (S m−1) >	1.06	9.82
+
+η
+	 	1	1
+ 	
+t
+e (mm)	1	10
+
+t
+sep = 10 μm, lel = 1 mm
+
+η > 0.80	
+ε
+sep ≤	0.16	0.08
+
+η > 0.98	
+ε
+sep ≤	0.08	0.02
+ΔΦR < 100 mV	
+ε
+sep ≥	0	0
+ 
+
+t
+sep = 10 μm, lel = 10 mm
+
+η > 0.80	
+ε
+sep ≤	0.26	0.16
+
+η > 0.98	
+ε
+sep ≤	0.16	0.08
+ΔΦR < 100 mV	
+ε
+sep ≥	0.04	0
+ 
+
+t
+sep = 500 μm, lel = 1 mm
+
+η > 0.80	
+ε
+sep ≤	0.35	0.23
+
+η > 0.98	
+ε
+sep ≤	0.22	0.14
+ΔΦR < 100 mV	
+ε
+sep ≥	0.06	0
+ 
+
+t
+sep = 500 μm, lel = 10 mm
+
+η > 0.80	
+ε
+sep ≤	0.52	0.35
+
+η > 0.98	
+ε
+sep ≤	
+
+	0.22
+ΔΦR < 100 mV	
+ε
+sep ≥	0.50	0.08
+
+
+t
+sep = 10 μm
+
+η > 0.80	
+ε
+sep <	0.188	0.287
+
+η > 0.80	
+ε
+sep <	0.105	0.183
+ΔΦR < 100 mV	
+ε
+sep >	0	0.029
+ 
+
+t
+sep = 500 μm
+
+η > 0.80	
+ε
+sep <	0.391	0.590
+
+η > 0.80	
+ε
+sep <	0.255	
+
+
+ΔΦR < 100 mV	
+ε
+sep >	0.089	0.392
+
+A
+0
+	Specific surface (m−1)
+
+A
+	Surface area (m2)
+
+c
+	Concentration (mol m−3)
+
+D
+	Diffusivity (m2 s−1)
+
+F
+	Faraday's constant (A s mol−1)
+
+h
+	Height (m)
+
+i
+	Current density vector
+
+i
+	Current density (A m−2)
+
+i
+0
+	Exchange current density (A m−2)
+
+k
+	Kozeny constant
+
+K
+	Permeability (m−2)
+
+l
+	Length (m)
+
+
+	Inner unit normal vector
+
+n
+	Number of electrons
+
+N
+	Molar flux vector
+
+N
+	Molar flux (mol s−1 m−2)
+
+p
+	Pressure (Pa)
+R	Roughness factor
+
+R
+	Ideal gas constant (J mol−1 K−1)
+
+R
+s
+	Sheet resistance (Ω □−1)
+
+R
+r
+	Reaction source term (mol m−3 s−1)
+
+t
+	Thickness (m)
+
+T
+	Temperature (K)
+
+u
+	Velocity vector (m s−1)
+
+u
+	Mobility (mol s kg−1)
+
+U
+0
+	Equilibrium potential (V)
+
+z
+	Valence of species
+
+α
+	Transfer coefficient
+
+ε
+	Porosity
+ΔΦR	Averaged ohmic losses in electrolyte (V)
+
+κ
+	Ionic conductivity (S m−1)
+
+μ
+	Viscosity (Pa s)
+
+ρ
+	Density (kg m−3)
+
+σ
+	Conductivity (S m−1)
+
+η
+	Hydrogen collection yield
+
+Φ
+	Potential (V)
+a	Anode
+c	Cathode
+d	Device
+e	Effective, electrolyte
+el	Electrode
+l	Liquid
+m	Membrane
+op	Overpotential
+ox	Oxidation
+pc	Photocurrent
+R	Reaction
+red	Reduction
+s	Solid
+sat	Saturation
+sep	Separator
+x	Crossover
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/c2ee23187e
+
+This journal is © The Royal Society of Chemistry 2012

@@ -1,0 +1,378 @@
+Machine learning assisted identification of the matched energy level of materials for high open circuit voltage in binary organic solar cells   - Molecular Systems Design & Engineering (RSC Publishing) DOI:10.1039/D2ME00265E View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D2ME00265E
+(Paper)
+Mol. Syst. Des. Eng., 2023, 8, 799-809Machine learning assisted identification of the matched energy level of materials for high open circuit voltage in binary organic solar cells†
+
+        
+          
+            Kuo 
+            Wang
+          
+        
+      a, 
+      
+        
+          
+            Chaorong 
+            Guo
+          
+        
+      a, 
+      
+        
+          
+            Zhennan 
+            Li
+          
+        
+      a, 
+      
+        
+          
+            Rui 
+            Zhang
+          
+        
+      a, 
+      
+        
+          
+            Zhimin 
+            Feng
+          
+        
+      a, 
+      
+        
+          
+            Gengkun 
+            Fang
+          
+        
+      a, 
+      
+        
+          
+            Di 
+            Huang
+          
+        
+      *a, 
+      
+        
+          
+            Jiaojiao 
+            Liang
+          
+        
+      *ab, 
+      
+        
+          
+            Ling 
+            Zhao
+          
+        
+      *c and 
+
+        
+          
+            Zicha 
+            Li
+          
+        
+      d
+aHunan University of Technology, College of Railway Transportation, Zhuzhou 412008, China. E-mail: dihuang@hut.edu.cn; liangjiaojiao@hut.edu.cn
+bQinghai Provincial Key Laboratory of Nanomaterials and Nanotechnology, Qinghai Minzu University, Qinghai 810007, China
+cShandong Provincial Key Laboratory of Optical Communication Science and Technology, School of Physical Science and Information Technology, Liaocheng University, Liaocheng 252059, China. E-mail: zhaoling9966@163.com
+dKey Laboratory of Optical Information Detecting and Display Technology, Zhejiang Normal University, Jinhua 321004, China
+Received 
+      8th December 2022
+    , Accepted 7th February 2023First published on 8th February 2023AbstractWith the application of new materials and the optimization of device structure, binary bulk heterojunction organic solar cells (OSCs) have exhibited the outstanding performance in recent years. However, the open-circuit voltage (Voc) of binary OSCs is normally below 1 V and the matched energy levels of the donor, acceptor and transport materials with high Voc in binary OSCs have been rarely proposed. Herein, four different machine learning (ML) algorithms are applied to investigate Voc in binary OSCs according to the energy level of donor, acceptor and transport materials. Among them, the eXtreme Gradient Boosting (XGBoost) model provides the best prediction ability. Its prediction accuracy and root mean square error reach 0.94 and 0.04, respectively. Therefore, SHapley Additive exPlanations of XGBoost is selected and showed that the highest occupied molecular orbital (HOMO) of the donor plays the most important role for the improvement of Voc in all the energy level of donor, acceptor and transport materials. More importantly the energy level matching strategy of binary OSC materials for high Voc is delivered by machine learning, where the HOMO of the donor is about −5.45 ± 0.1 eV, the lowest unoccupied molecular orbital (LUMO) of the acceptor is about −3.80 ± 0.1 eV, and the work functions of the matched electron and hole transport materials are about −3.6 ± 0.2 eV and −5.1 ± 0.1 eV, respectively. In addition, the experimental verification results display that the measured Voc just has a relatively low error compared with the predicted Voc. Likewise, the predicted Voc based on the XGBoost model of PTB7:PC71BM is 0.79 V, and the experimental value is 0.76 V. The relative error is only 3.95%, which indicates the reliability of the ML prediction for high Voc in binary OSCs.
+
+Design, System, Application
+Fabricating high performance organic solar cells (OSCs) with high open-circuit voltage (Voc) usually requires a large amount of time and cost. Here, we use the machine learning (ML) algorithms to establish the prediction model between the materials of OSCs and Vocvia the energy level. These models have high prediction accuracy, where the accuracy and the root mean square error of the Voc are 0.94 and 0.04, respectively. More importantly the matched energy level of binary OSC materials for high Voc is delivered by machine learning, where the HOMO of the donor is about −5.45 ± 0.1 eV, the LUMO of the acceptor is about −3.80 ± 0.1 eV, and the matched work functions of the electron and hole transport materials are about −3.6 ± 0.2 eV and −5.1 ± 0.1 eV, respectively. Moreover, a smaller prediction error has been obtained by experimental verification. Therefore the materials' energy level matching strategy from ML in this report can become a potential guide for designing new donor, acceptor and transport materials in binary OSCs with high Voc.
+
+1. Introduction
+Organic solar cells (OSCs) have received extensive attention in recent years due to their unique advantages of low cost, light weight, large-area fabrication, and flexible devices.1–4 At present, the power conversion efficiency (PCE) of binary OSCs is over 18%,5 and the PCE of ternary OSCs can reach around 20%,6 which are gradually approaching the commercial standard. However the open-circuit voltage (Voc) of OSCs is much smaller than that of perovskite or GaAs solar cells. And the low Voc in OSCs is a significant limitation for further improving the PCE of OSCs. The Voc in OSCs is typically less than half of the optical bandgaps of the photovoltaic materials and is difficult to break through 1.0 V. In this report, we collect a dataset constructed for 400 groups data from 106 literatures reported since 2015, and the Gaussian distribution of Voc in binary OSCs is shown in Fig. 1. It is clear that the average value of Voc is 0.795 V, the median value is 0.80 V, and the standard deviation is 0.10 in binary OSCs. All of these reveal that the Voc of binary OSCs is concentrated around 0.80 V. The statistical results in Fig. 1 also show that the Voc of most binary OSCs is maintained in the range from 0.70 to 0.90 V, while the proportion of over 0.90 V for Voc is just only 14.25%, therefore the energy level matching strategy of binary OSCs with greater than 0.90 V or even more than 1.0 V of Voc has become a critical factor in further improving the performance of OSCs.
+ Fig. 1  The Gaussian distribution of Voc in binary OSCs by 400 data in this dataset. 
+In order to obtain a high Voc in binary OSCs, some factors have been investigated, such as energy level matching and energy loss in the donor (D) and acceptor (A), interfacial contact of D and A, morphology regulation, charge transfer state, carrier density and molecular packing behavior in the active layer, temperature and light intensity of the device,7–12 as shown in Fig. 2. Most studies reported that Voc can be effectively improved by regulating the energy level arrangement of D and A to promote the efficient charge transfer at the interface of D/A.13–15 At the same time, some studies also show that the interface modification methods, including adjusting the work functions of the hole/electron transport layer, can also effectively optimize the Voc in OSCs.16–18 However, the relationship between numerous influencing factors and Voc is still unknown. Therefore, a mathematically oriented learning model becomes an urgent need for constructing a simulation algorithm to further understand the dominant influencing factors of Voc. Furthermore, the data analysis and quantification capabilities of machine learning (ML) methods are well known.19 It can be a good choice to construct a model for quantifying the relationship between the energy level of donor, acceptor and transport materials and photovoltaic parameters.
+ Fig. 2  Impact factors of Voc and the energy level arrangement of D and A in OSCs. 
+ML allows researchers to discover the hidden complex relationships from data and can effectively reduce experimental errors and optimize the experimental procedure for achieving the desired results. What's more, ML methods have rapidly become the ideal tools for predicting photovoltaic performance over recent years. For examples, Wangnan Li's group used Random Forest (RF) and eXtreme Gradient Boosting (XGBoost) algorithms to predict five kinds of undetected low-bandgap perovskites and successfully fabricated perovskite photovoltaic devices with the PCE of 22.5%.20 Wenbo Sun et al. selected 10 new types of donors from 1719 donors for OSCs via multiple ML-algorithm, and verified the reliability of the ML algorithm through experiments.21 Our group also applied ML to predict the champion PCE of ternary OSCs with the best doping ratio of the third material in our previous work.22 All these studies indicate that ML has high application value in the research of OSCs.23–25
+In this work, the ML method is used to analyse the effects of the energy levels of the donor and acceptor and the work function of transport layers on the Voc in binary OSCs. As shown in Fig. 3, this work follows the basic process, which mainly includes the dataset establishment, model selection, feature extraction, model evaluation and interpretation, and experimental verification. And more details are shown in the ESI.† We apply the K-nearest neighbor (KNN), support vector regression (SVR), RF and XGBoost model to verify the correlation between the energy level of materials and Voc, and predict the Voc in binary OSCs. In addition, the guiding principles of the energy level in D and A and work function in transport materials for improving Voc are proposed. Finally, experimental verification is performed to check the prediction accuracy. And the detail of decomposition for the Voc can be interpreted by SHapley Additive exPlanations (SHAP).
+ Fig. 3  The basic process of the ML training model. 
+2. Results and discussion
+To investigate the relationship between Voc and the energy level of materials, the Pearson correlation coefficient (r) is applied to measure the degree of the linear correlation between the input feature and output. And the detail about the Pearson correlation coefficient calculation is displayed in the ESI.† The direction and strength of the linear relationship between variables can be directly reflected by the r value. Fig. 4(a) shows the Pearson correlation coefficient matrix between various electronic features (all energy levels of the active layer and transport layer) and Voc. It is worth noting that the HOMOs of D and A are significantly linearly correlated with Voc (rHOMO(D) = −0.53, rHOMO(A) = 0.59), which means that the influence of the HOMO of D and A should be taken into more consideration in binary OSCs with high Voc. A relatively lower-lying HOMO(D) or higher-lying HOMO(A) is beneficial to reduce the energy loss of the charge transfer state to obtain higher Voc.26,27 In addition, the correlation coefficient matrix between all material parameters and Jsc or PCE is shown in Fig. S1(a and b).† The HOMO(A) is linearly correlated with Jsc, indicating that a higher-lying HOMO(A) can achieve the narrow band gap of A to improve the Jsc. This may suggest that the increased HOMO of A could be considered in the new molecule synthesis for the enhancement of both the Jsc and Voc in OSCs. Moreover, Fig. 4(b) further shows the Pearson correlation coefficient matrix for Voc with the energy level offset between the donor's HOMO and the acceptor's LUMO (|HOMO(D)–LUMO(A)|), the HOMO energy offset between D and A (HOMO(I)), and the LUMO energy offset between D and A (LUMO(I)). Among them, the |HOMO(D)–LUMO(A)| is related to the HOMO(D) and LUMO(A), and the Pearson correlation coefficients are −0.53 and 0.075, respectively. When using two additional features that are not highly correlated as a new input feature can make the ML process more accurate.28 It is not difficult to find that the |HOMO(D)–LUMO(A)| appears to show a linear correlation with Voc in binary OSCs (r|HOMO(D)–LUMO(A)| = 0.44), which reveals that binary OSCs with fullerene or non-fullerene follows the linear dependence on the HOMO(D) and LUMO(A). Compared with the LUMO(I), the HOMO(I) has a greater correlation with Voc in the matrix relationship (rHOMO(I) = −0.66, rLUMO(I) = −0.14), indicating that the different HOMOs between D and A play a significant role in promoting the charge separation to increase the Voc in binary OSCs. This may originate from two reasons. One is that a larger Voc can often be obtained by designing the deeper-lying HOMO of D, meanwhile, the higher-lying HOMO of A is conducive to the construction of an acceptor with the narrow bandgap and the reduction of the energy barrier for charge transfer.29,30 The other is that the formation of an ohmic contact causes the effective charge transport from D to promote effective charge collection, which synergistically affects the Voc.31 Meanwhile, the relatively low correlation (rWFs-HTL = 0.014, rWFs-ETL = 0.083) reveals that the work function of the transport material has a small effect on Voc. When the work function of the transport materials does not match the HOMO(D) or LUMO(A), which will result in the formation of barriers at the contact interface and does not form the ohmic contact between the active layer and electrode, the Voc is limited.32,33 When the well-constructed ohmic contact is formed between transport materials and D and A, the transport materials must well match the LUMO of the A and the HOMO of the D, respectively, which can regulate the Voc in OSCs.32,34,35 The appropriate transport materials should be able to provide an arrangement of energy level matching for the active material to form a good ohmic contact and ensure satisfactory charge collection.36,37
+ Fig. 4  (a) Correlation matrix between Voc and input features (work functions of the hole transport material (WF-HTL), work functions of the electron transport material (WF-ETL), HOMO(D), LUMO(D), HOMO(A), and LUMO(A), and (b) correlation matrix between Voc and energy level offset. 
+In order to verify the model accuracy of prediction for Voc, we use six input variable values to train and predict the results on 400 data of Voc in OSCs. And multiple regression models are established to train and learn the datasets. The performance of four algorithmic models with the root mean square error (RMSE), the mean absolute error (MAE), and the coefficient of determination (R2) is calculated in the ESI† and displayed in Table 1. Among them, R2 analysis is carried out to measure the goodness of fitting from the ML model, the R2 value approaches 1 in the ideal case, and the RMSE and MAE are used as estimators to represent the deviation between the measured Voc and the predicted Voc. In KNN and SVR models, lower R2 values (RKNNtest2 = 0.64, RSVRtest2 = 0.60) and higher errors (RMSEKNNtest = 0.07, RMSESVRtest = 0.07) are obtained. Using the RF model, R2 of the test set is 0.82, and R2 of the cross-validation average was 0.79. Meanwhile, it has a lower RMSE, which is 0.05 and the MAE is 0.03. The prediction accuracy of RF can reach 0.90. More importantly the XGBoost model also shows the best evaluation performance. R2 of the test set is 0.87, and R2 of the cross-validation average is 0.86 in XGBoost. And a lower RMSE and MAE are obtained, which are 0.04 and 0.02, respectively. The prediction accuracy reaches 0.94, which means that the best predictive accuracy in the four model is XGBoost. What's more, Fig. 5(a–d) respectively show the regression relationship between the predicted and tested Voc based on the four ML models. It is clear that the prediction results of RF and XGBoost models are in good agreement with the experimental data, showing a linear regression state. And XGBoost can provide more accurate prediction capabilities for Voc than RF. It worth mentioning that all performances are obtained by randomly shuffling all data points and repeating the experimental process. The randomness can ensure the lower correlation among individual trees and thereby reduces the risk of bias. All in all, the XGBoost model is selected among the four used ML algorithms for the following study. The regression relationship between the predicted and tested Jsc or the PCE based on the XGBoost model is shown in Fig. S1(c and d).†
+Table 1 Performance of different algorithmic models measured by the coefficient of determination (R2), root mean square error (RMSE) and mean absolute error (MAE) indicators
+
+
+
+
+Machine-learning techniques
+
+R
+2 on test/train set
+RMSE on test/train set
+MAE on test/train set
+Accuracy
+Cross validated R2 mean
+
+
+
+
+
+a K-nearest neighbor.
+b Support vector regression.
+c Random forest.
+d eXtreme Gradient Boosting.
+
+
+
+
+
+KNNa
+0.64/0.74
+0.07/0.05
+0.04/0.03
+0.88
+0.61
+
+
+SVRb
+0.60/0.62
+0.07/0.06
+0.06/0.05
+0.84
+0.58
+
+
+RFc
+0.82/0.96
+0.05/0.02
+0.03/0.01
+0.90
+0.79
+
+
+XGBoostd
+0.87/0.98
+0.04/0.01
+0.02/0.01
+0.94
+0.86
+
+
+
+
+ Fig. 5  Correlation regression of the predicted Voc and measured Voc in (a) KNN, (b) SVR, (c) RF, (d) XGBoost models (the red dots represent the training data, green dots represent the testing data, and the blue dash line serves as a visual reference for fitting results). 
+To analyze the importance of input features for Voc, the SHAP method based on the XGBoost model is used to analyze and identify the important features for driving the prediction model. SHAP provides a means of quantifying the feature importance, and shows the contribution degree of each influence feature for Voc. The input feature importance analysis is shown in Fig. 6(a), and the importance of the HOMO(D) feature is the top one in all the input features affecting Voc, which is very important for the model to predict Voc. What's more, the input feature density distribution of SHAP values based on the XGBoost model is shown in Fig. 6(b), and the relative importance of the energy level is listed on the Y-axis and ranked according to the sum of SHAP values in Fig. 6(a). The SHAP value of the blue points with low characteristics for the HOMO(D) is greater than 0, revealing that the deeper-lying HOMO(D) can increase the Voc of OSCs. Meanwhile, SHAP values also show that the HOMO(A) with high characteristics (red points) and the LUMO(A) with high characteristics (red points) are proportional to the Voc. The high LUMO(A) allows the rapid electron transfer from D, and the elevated HOMO(A) is conducive for achieving the narrow optical bandgap for broadening the absorption spectrum of A, which can offer effective charge transport.38 Previous studies have also demonstrated that Voc can be effectively enhanced by designing D with deeper-lying HOMO levels or A with higher-lying LUMO levels,39 which is consistent with the analysis results of our prediction model. For the work function of the hole transport layer (WF-HTL) and work function of the electron transport layer (WF-ETL), most points are concentrated at the SHAP value of 0, which means that these two features are not important factors for Voc.
+ Fig. 6  (a) Input feature importance analysis based on the XGBoost model and (b) scatter plot of the SHAP value characteristic density. Correlation between the predicted and measured Voc using XGBoost (c) based on two relatively important features the HOMO(D) and LUMO(A), (d) based on two non-important features the WF-HTL and WF-ETL, and (e) based on four features the HOMO(D), LUMO(A), WF-HTL and WF-ETL. 
+For emphasizing the regression relationship between the important features and Voc, the HOMO(D) and LUMO(A) are selected to predict and analyze Voc based on the XGBoost model. As shown in Fig. 6(c–e), the highest R2 values of the training and testing sets were 0.77 and 0.58 respectively, and the corresponding RMSE values were 0.05 and 0.07 respectively, which indicates that the prediction of Voc is appropriate and feasible based on the XGBoost model when only using two relatively important features (HOMO(D) and LUMO(A)). When only two features the WF-HTL and WF-ETL are used as the input parameters, the highest R2 values of the training set and testing set are 0.87 and 0.20 respectively, and the corresponding RMSE values are 0.04 and 0.10 respectively, which indicates that although the XGBoost model can better learn training parameters, it obviously does not have the ability to fit more accurate prediction results, because the importance scores of these two features are low. When we apply the four features the HOMO(D), LUMO(A), WF-HTL and WF-ETL to predict Voc, the predictive ability is about equal to the sum of the two types of correlation models between the predicted and measured Voc, which means that the accuracy of model prediction needs to be supported by more influencing factors and relatively important input features play an important role. At the same time, the functional relationship between two important features (HOMO(D) and LUMO(A)), two non-important features (WF-HTL and WF-ETL) and Voc can be visually expressed through scattering interval, as displayed in Fig. S2(a and b).† The scattering distribution of high Voc (0.90 V) is concentrated. In particular, for the electron transport layer, it is still possible to obtain a high Voc at −2.8 eV for the WF-ETL, which comes from the low work function metals (such as Ca and Ba) that can receive both electrons and holes for effectively preventing exciton quenching at the electrode.40,41
+In order to provide the useful energy level matching strategy for the high Voc in binary OSCs, the contour plots for the Voc as a function of the HOMO(D) and LUMO(A) are shown in Fig. 7(a). It is easy to see the Voc change in the range of 0.6 V–1.0 V, which can be appropriately regulated by the HOMO(D) and LUMO(A) energy levels. This suggests that adjusting the HOMO(D) and LUMO(A) arrangement can modify the Voc. Fig. S3(a and b)† respectively show the contour plots for the Voc as a function of the HOMO(D) and WF-HTL and the Voc as a function of the LUMO(A) and WF-ETL. It can be found that the WF-ETL and WF-HTL do not cause a significant change in Voc and must make a combination with the appropriate HOMO(D) or LUMO(A) to effectively adjust the Voc, which indicates that the work function of the matched electron/hole transport materials is only one of the auxiliary factors for changing the Voc. Based on the prediction results of the above ML model, and combined with the functional relationship between Voc and electronic features in Fig. S2† and 6, we further construct the optimized energy level matching strategy of the involved material parameters for improving the Voc as shown in Fig. 7(b). According to the prediction results, the Voc of the binary OSCs can exceed 1.0 V, and the high Voc value corresponds to the HOMO(D) with about −5.45 ± 0.1 eV, LUMO(A) with about −3.80 ± 0.1 eV, WF-ETL with about −3.6 ± 0.2 eV and WF-HTL with −5.1 ± 0.1 eV, respectively. Obviously, the work functions of the transport material do not determine the high Voc. For example, based on PTQ10:IDIC binary OSCs had the high Voc. The HOMO of PTQ10 is −5.54 eV and LUMO of IDIC is −3.91 eV. The PEDOT:PSS (WF = −5.11 eV), PDINO (WF = −3.64 eV), PEDOT:PSS-GO (WF = −5.00 eV), and PDINO-G (WF = −3.86 eV) were used as transport layers, respectively. The PCE of the corresponding cells with PEDOT:PSS and PDINO is 11.56% and the PCE of the device with PEDOT:PSS-GO and PDINO-G is 12.44%, but the Voc of the two kinds of devices are both 0.96 V.42 This is in good agreement with the optimal energy level matching strategy given by ML. Meanwhile, these experimental results once again verify that the energy level shift between D and A determines the regulation of Voc. Tuning the work function of the transport materials can stabilize the electron and hole transfer, maybe can optimize the device performance, but cannot effectively determine the value of Voc.
+ Fig. 7  (a) The contour plot of the predicted Voc depends on the HOMO(D) and LUMO(A) and (b) schematic diagram of the energy level matching strategy for predicting high Voc binary OSCs. 
+3. Experimental verification
+In order to evaluate the prediction results of the XGBoost model on different unknown data, we prepared five types of devices with different active layers, including PTB7:PC71BM, PTB7-Th:PC71BM, PffBT4T-2OD:PC71BM, PM6:Y6, and PM6:ITIC-M to verify the prediction. The fabricated device structure and the energy level of the materials are shown in Fig. S4.† And it is noted that all energy levels of the materials in OSCs for the prediction were obtained in the literature and are shown in Table S2.† For the sake of discussion, we named the different devices to compare their performance. Under 100 mW cm−2 and 1.5G AM conditions, the J–V characteristic curve and photovoltaic parameters are shown in Fig. 8(a and b) and Table 2. It is not difficult to find that the reported Voc values in Table S3† from other research groups and the measured Voc values in Table 2 are comparable. Therefore, the measured results can provide a reliable reference for verifying ML predictions. The Voc of Device3 (PffBT4T-2OD:PC71BM) is 0.80 V, Jsc is 16.78 mA cm−2, FF is 66.42%, and PCE is 8.92%. From Device1 to Device3, it is not difficult to find that the Voc gradually increases from 0.76 V to 0.80 V, which results from the deeper-lying HOMO energy level of the donor (−5.15 eV for PTB7, −5.24 eV for PTB7-Th, and −5.34 eV for PffBT4T-2OD) to reduce the energy offset between D and A, which means that the energy loss can be reduced for enhancing Voc in OSCs.43,44 The predicted Voc based on the XGBoost model of the PTB7:PC71BM device is 0.79 V, which is in good agreement with the experimental value. Meanwhile, the small relative error indicates that the XGBoost model can be extended to predict the performance of OSCs. Two sets of non-fullerene devices are based on PM6 as the donor, where the Voc of Device5 (PM6:ITIC-M) is 1.01 V, which is much higher than the Voc of Device4 (PM6:Y6) which is 0.84 V. However, the Jsc is only 13.3 mA cm−2, resulting in a significantly lower PCE. This is attributed to ITIC-M end-group modification affecting absorption, and the OSCs with ITIC-M exhibit a relatively low Jsc and FF.45 The increase of Voc in the OSCs with ITIC-M can be due to the non-fullerene molecular end-groups, which act as electron-withdrawing units, intensifying intramolecular charge transfer, lead to the efficient charge transfer and extraction and regulate the energy level. In particular the LUMO energy level of D and A is matched (the LUMO of Y6 is −4.10 eV and the LUMO of ITIC-M is −3.98 eV).46,47
+Device1: ITO/PEDOT:PSS/PTB7:PC71BM/LiF/Ag.
+Device2: ITO/PEDOT:PSS/PTB7-Th:PC71BM/LiF/Ag.
+Device3: ITO/PEDOT:PSS/PffBT4T-2OD:PC71BM/LiF/Ag.
+Device4: ITO/PEDOT:PSS/PM6:Y6/PDINO/Ag.
+Device5: ITO/PEDOT:PSS/PM6:ITIC-M/PDINO/Ag.
+Device6: ITO/MoOx/PTB7:PC71BM/LiF/Ag.
+Device7: ITO/ZnO/PTB7:PC71BM/BCP/Ag.
+ Fig. 8  (a) J–V characteristics with different active layers, (b) J–V characteristics based on different transport layers, (c) decomposition force diagram of Voc based on PTB7:PC71BM, and (d) decomposition force diagram based on PM6:Y6. 
+Table 2 The performance of the fabricated OSCs, the predicted values of Voc based on the XGBoost model and the relative error (%) between the predicted and measured Voc, which is calculated as = [(Vocpredicted − Vocmeasured)/Vocmeasured] × 100%, and the average Voc is calculated from 8 devices
+
+
+
+
+Devices
+Measured Voc (V)
+Measured average Voc (V)
+
+J
+sc (mA cm−2)
+FF (%)
+PCE (%)
+Predicted Voc (V) [XGBoost]
+Relative error (%) [XGBoost]
+
+
+
+
+1
+0.76
+0.73
+15.07
+70.50
+8.07
+0.79
+3.95%
+
+
+2
+0.78
+0.76
+14.10
+63.74
+7.01
+0.80
+2.56%
+
+
+3
+0.80
+0.79
+16.78
+66.42
+8.92
+0.82
+2.50%
+
+
+4
+0.84
+0.82
+23.54
+68.64
+13.57
+0.90
+7.14%
+
+
+5
+1.01
+0.98
+13.34
+51.66
+6.96
+0.94
+6.93%
+
+
+6
+0.73
+0.72
+9.14
+59.50
+3.97
+0.75
+2.74%
+
+
+7
+0.71
+0.70
+14.11
+72.20
+7.23
+0.76
+7.04%
+
+
+
+
+Furthermore, for exploring the effect of the work function of the transport layer on Voc, we designed PEDOT:PSS (Device1) and MoOx (Device6) as the HTL for the normal device and ZnO (Device7) as the ETL for the inverted device to verify the prediction results. Compared with Device1, the Voc of Device6 is 0.73 V, and the decrease of Voc can be attributed to the smaller work function of MoOx and the formation of oxygen-containing carbon substances between MoOx and the PTB7 donor, which destroys the original stable structure in the active layer.48 PEDOT:PSS as the HTL in OSCs can help the active layer capture photons more effectively under the same conditions. In Fig. S5(a and b),† in the absorption range of the PTB7:PC71BM film from 300 to 400 nm, the absorption intensity of the PTB7:PC71BM film with PEDOT:PSS is significantly increased compared with that with MoOx, and the transmission intensity also keeps the same trend with the absorption, which explains one of the reasons for the lower Jsc on devices with MoOx. The Voc of devices with the inverted structure is different from that with the normal structure, which may be due to multiple factors such as the charge trap of the ZnO film, and the interface state between the active layer and ZnO layer.17,49,50 In addition, it is worth mentioning that we focused on Voc of OSCs in this work, we did not further optimize the device PCE. More importantly the relative error between the reported Voc and the predicted Voc in Table S3† is similar to the relative error between the measured Voc and the predicted Voc in Table 2, which also reveals that the prediction of Voc from the ML model has certain reliability.
+Moreover, based on the advantages in the visualization of the relationship between the energy level of materials and Voc on the XGBoost model as well as identification of important features driving prediction, we take the OSCs with the PTB7:PC71BM and PM6:Y6 classical blend system as the important examples for the visual prediction, as shown in Fig. 8(c and d). The predicted base value of Voc in Device1 based on PTB7:PC71BM is 0.7987, and the final output value of Voc is 0.79 V. The predicted base value of Voc for Device4 based on PM6:Y6 is 0.7969, and the final output value of Voc is 0.90 V. In Fig. 8(c and d), the red part represents the increase of Voc and the blue part stands for the decrease of Voc. PM6 has a deeper-lying HOMO(D) than PTB7, while Y6 has a smaller band gap than PC71BM. All contributions promote high Voc. The final output of Voc is obtained when the prediction model accounts for the effects of all input features. All prediction results can provide certain optimization ideas for experimental design. Moreover, compared with the predicted results, obviously the experimental results are slightly different. This difference may be related to experimental conditions, material batches, device structures, measuring equipment and other factors.
+4. Conclusion
+In summary, we use ML methods to analyze the complex relationship between Voc and energy level of the donor, acceptor and transport materials in binary OSCs, and quantitatively label and explain the primary and secondary influencing factors for Voc of binary OSCs in all input features. The results of the prediction model show that the tree-based algorithm models (RF and XGBoost models) achieve relatively good learning ability, and their prediction accuracy can reach more than 90%. What's more, the matched energy level arrangement of materials for binary OSCs with high Voc is given, where the HOMO(D) and the LUMO(A) are about −5.45 ± 0.1 eV and −3.80 ± 0.1 eV respectively, and the WF-ETL and WF-HTL are about −3.6 ± 0.2 eV and −5.1 ± 0.1 eV respectively. And the relationship between Voc and the energy level of materials is revealed, where the binary OSCs with fullerene or non-fullerene follow the linear dependence on the HOMO(D) and LUMO(A). Finally, the SHAP of the XGBoost model finds out that the top feature HOMO(D) can control Voc and makes reasonable predictions for the experimental devices. From experimental verification, the small relative error from 2.50% to 7.14% between the predicted Voc and the measured Voc verified that the ML model has certain reliability and analytical power. Therefore, these results can provide the corresponding guidance of ML for the preparation of OSCs with high Voc: (1) the optimal range of material energy level design, (2) the visual relationship between the electronic characteristics of materials and OSCs' performance, and (3) the potential interaction between energy level features in OSCs.
+Author contributions
+Conceptualization, D. H. and L. Z.; investigation, R. Z., Z. F., and G. F.; methodology and formal analysis, K. W., J. L., and Z. L., and C. G.; validation, K. W. and Z. L.; writing – original draft, K. W. and D. H.; writing – review & editing, D. H., J. L., and L. Z.; funding acquisition, D. H., J. L., C. G., and K. W.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+This work is supported by the Natural Science Foundation of Hunan Province (Grant No. 2021JJ40168), the Education Department of Hunan Province (Grant No. 22B0580 and 21B0534), the Open Fund Project of Qinghai Provincial Laboratory of Nanomaterials and Nanotechnology (Grant No. 2022-QHMD-PI-NM-03), the Scientific Research and Innovation Foundation of Hunan University of Technology (Grant No. cx2211), the National Innovation and Entrepreneurship Training Project for College Students (Grant No. 202211535013) and the Provincial Innovation and Entrepreneurship Training Project for College Students in Hunan (Grant No. S202111535035).
+References
+A. Anctil, E. Lee and R. R. Lunt, Net energy and cost benefit of transparent organic solar cells in building-integrated applications, Appl. Energy, 2020, 261, 114429 CrossRef .
+J. Guo and J. Min, A Cost Analysis of Fully Solution-Processed ITO-Free Organic Solar Modules, Adv. Energy Mater., 2019, 93, 1802521 CrossRef .
+Y. Huang and C. K. Luscombe, Towards green synthesis and processing of organic solar cells, Chem. Rec., 2019, 196, 1039–1049 CrossRef PubMed .
+H. Shen, Y. Ren, J. Li, Y. Xu, C. Han, W. Zou, H. Xu, Y. Sun, Y. Kan and K. Gao, Enhanced performance via π-bridge alteration of porphyrin-based donors for all-small-molecule organic solar cells, Chin. J. Chem., 2023, 41, 644–650 CrossRef CAS .
+H. Meng, C. Liao, M. Deng, X. Xu, L. Yu and Q. Peng, 18.77% efficiency organic solar cells promoted by aqueous solution processed cobalt (II) acetate hole transporting layer, Angew. Chem., 2021, 13341, 22728–22735 CrossRef .
+L. Zhu, M. Zhang, J. Xu, C. Li, J. Yan, G. Zhou, W. Zhong, T. Hao, J. Song and X. Xue, Single-junction organic solar cells with over 19% efficiency enabled by a refined double-fibril network morphology, Nat. Mater., 2022, 216, 656–663 CrossRef PubMed .
+J. Wang, H. Yao, Y. Xu, L. Ma and J. Hou, Recent progress in reducing voltage loss in organic photovoltaic cells, Mater. Chem. Front., 2021, 52, 709–722 RSC .
+Z. Zheng, E. He, J. Wang, Z. Qin, T. Niu, F. Guo, S. Gao, Z. Ma, L. Zhao and X. Lu, Revealing the role of solvent additives in morphology and energy loss in benzodifuran polymer-based non-fullerene organic solar cells, J. Mater. Chem. A, 2021, 946, 26105–26112 RSC .
+A. Tang, B. Xiao, Y. Wang, F. Gao, K. Tajima, H. Bin, Z. G. Zhang, Y. Li, Z. Wei and E. Zhou, Simultaneously achieved high open-circuit voltage and efficient charge generation by fine-tuning charge-transfer driving force in nonfullerene polymer solar cells, Adv. Funct. Mater., 2018, 286, 1704507 CrossRef .
+T. Jia, J. Zhang, G. Zhang, C. Liu, H. Tang, K. Zhang and F. Huang, Rationally regulating the terminal unit and copolymerization spacer of polymerized small-molecule acceptors for all-polymer solar cells with high open-circuit voltage over 1.10 V, J. Mater. Chem. A, 2022, 1030, 15932–15940 RSC .
+X. Liu, Y. Peng, Z. Liang, L. Wang, S. Han, Z. Dou, X. Lu, J. Tong, J. Liu and J. Li, Efficient Ternary Organic Photovoltaic Device with Non-halogen Solvent via Synergistic Inhibiting Charge Recombination and Regulating Morphology, J. Mater. Chem. C, 2023, 11, 2871–2879 RSC .
+M. Yang, S. Fu, L. Wang, M. Ren, H. Li, S. Han, X. Lu, F. Lu, J. Tong and J. Li, Efficient organic solar cells by modulating photoactive layer morphology with halogen-free additives, Opt. Mater., 2023, 137, 113503 CrossRef CAS .
+C. He, Y. Pan, Y. Ouyang, Q. Shen, Y. Gao, K. Yan, J. Fang, Y. Chen, C.-Q. Ma and J. Min, Manipulating the D: A interfacial energetics and intermolecular packing for 19.2% efficiency organic photovoltaics, Energy Environ. Sci., 2022, 15, 2537–2544 RSC .
+L.-N. Wu, M.-Y. Sui, S. Xiao, Y.-Z. Xie and G.-Y. Sun, Design of single-porphyrin
+donors toward high open-circuit voltage for organic solar cells via an energy level gradient-distribution screening strategy of fragments: a theoretical study, Phys. Chem. Chem. Phys., 2020, 227, 4015–4022 RSC .
+S.-B. Li, Y.-A. Duan, Y. Geng, H.-Z. Gao, Y.-Q. Qiu and Z.-M. Su, Theoretical design and characterization of pyridalthiadiazole-based chromophores with fast charge transfer at donor/acceptor interface toward small molecule organic photovoltaics, RSC Adv., 2015, 537, 29401–29411 RSC .
+W. Tress, K. Leo and M. Riede, Influence of hole-transport layers and donor materials on open-circuit voltage and shape of I–V curves of organic solar cells, Adv. Funct. Mater., 2011, 2111, 2140–2149 CrossRef .
+R. Sun, D. Deng, J. Guo, Q. Wu, J. Guo, M. Shi, K. Shi, T. Wang, L. Xue and Z. Wei, Spontaneous open-circuit voltage gain of fully fabricated organic solar cells caused by elimination of interfacial energy disorder, Energy Environ. Sci., 2019, 128, 2518–2528 RSC .
+J. Liu, X. Liu, C. Chen, Q. Wang, H. Li, Y. Ren, H. Shen, X. Lu, C. Yang and J. Tong, Self-doping n-type polymer as cathode interface layer enables efficient organic solar cells, Opt. Mater., 2023, 135, 113288 CrossRef CAS .
+G. H. Gu, J. Noh, I. Kim and Y. Jung, Machine learning for renewable energy materials, J. Mater. Chem. A, 2019, 729, 17096–17117 RSC .
+W. Yan, Y. Liu, Y. Zang, J. Cheng, Y. Wang, L. Chu, X. Tan, L. Liu, P. Zhou and W. Li, Machine learning enabled development of unexplored perovskite solar cells with high efficiency, Nano Energy, 2022, 107394 CrossRef CAS .
+W. Sun, Y. Zheng, K. Yang, Q. Zhang, A. A. Shah, Z. Wu, Y. Sun, L. Feng, D. Chen and Z. Xiao, Machine learning–assisted molecular design and efficiency prediction for high-performance organic photovoltaic materials, Sci. Adv., 2019, 511, eaay4275 CrossRef PubMed .
+C. Guo, Z. Li, K. Wang, X. Zhou, D. Huang, J. Liang and L. Zhao, Accelerated exploration of efficient ternary solar cells with PTB7: PC 71 BM: SMPV1 using machine-learning methods, Phys. Chem. Chem. Phys., 2022, 2437, 22538–22545 RSC .
+A. Mahmood and J.-L. Wang, Machine learning for high performance organic solar cells: current scenario and future prospects, Energy Environ. Sci., 2021, 141, 90–105 RSC .
+S. Sun, N. T. Hartono, Z. D. Ren, F. Oviedo, A. M. Buscemi, M. Layurova, D. X. Chen, T. Ogunfunmi, J. Thapa and S. Ramasamy, Accelerated development of perovskite-inspired materials via high-throughput synthesis and machine-learning diagnosis, Joule, 2019, 36, 1437–1451 CrossRef .
+J. Hong, D. Lee, E.-R. Jeong and Y. Yi, Towards the swift prediction of the remaining useful life of lithium-ion batteries with end-to-end deep learning, Appl. Energy, 2020, 278, 115646 CrossRef .
+T. Zhang, C. An, P. Bi, Q. Lv, J. Qin, L. Hong, Y. Cui, S. Zhang and J. Hou, A thiadiazole-based conjugated polymer with ultradeep homo level and strong electroluminescence enables 18.6% efficiency in organic solar cell, Adv. Energy Mater., 2021, 1135, 2101705 CrossRef .
+M. Azzouzi, J. Yan, T. Kirchartz, K. Liu, J. Wang, H. Wu and J. Nelson, Nonradiative energy losses in bulk-heterojunction organic photovoltaics, Phys. Rev. X, 2018, 83, 031055 Search PubMed .
+S. Schefzick, C. Kibbey and M. P. Bradley, Prediction of HPLC conditions using
+QSPR techniques: an effective tool to improve combinatorial library design, J. Comb. Chem., 2004, 66, 916–927 CrossRef PubMed .
+X. Li, X. Duan, Z. Liang, L. Yan, Y. Yang, J. Qiao, X. Hao, C. Zhang, J. Zhang and Y. Li, Benzo [1, 2-b: 4, 5-b'] difuran Based Polymer Donor for High-Efficiency (> 16%) and Stable Organic Solar Cells, Adv. Energy Mater., 2022, 129, 2103684 CrossRef .
+J. Wu, Q. Fan, M. Xiong, Q. Wang, K. Chen, H. Liu, M. Gao, L. Ye, X. Guo and J. Fang, Carboxylate substituted pyrazine: A simple and low-cost building block for novel wide bandgap polymer donor enables 15.3% efficiency in organic solar cells, Nano Energy, 2021, 82, 105679 CrossRef CAS .
+H. Zhang, R. C. Shallcross, N. Li, T. Stubhan, Y. Hou, W. Chen, T. Ameri, M. Turbiez, N. R. Armstrong and C. J. Brabec, Overcoming Electrode-Induced Losses in Organic Solar Cells by Tailoring a Quasi-Ohmic Contact to Fullerenes via Solution-Processed Alkali Hydroxide Layers, Adv. Energy Mater., 2016, 69, 1502195 CrossRef .
+V. Mihailetchi, P. Blom, J. Hummelen and M. Rispens, Cathode dependence of the open-circuit voltage of polymer: fullerene bulk heterojunction solar cells, J. Appl. Phys., 2003, 9410, 6849–6854 CrossRef .
+D. Rauh, A. Wagenpfahl, C. Deibel and V. Dyakonov, Relation of open circuit voltage to charge carrier density in organic bulk heterojunction solar cells, Appl. Phys. Lett., 2011, 9813, 69 Search PubMed .
+J. Blakesley, H. Clubb and N. Greenham, Temperature-dependent electron and hole transport in disordered semiconducting polymers: Analysis of energetic disorder, Phys. Rev. B, 2010, 814, 045210 CrossRef .
+N. K. Elumalai and A. Uddin, Open circuit voltage of organic solar cells: an in-depth review, Energy Environ. Sci., 2016, 92, 391–410 RSC .
+X. Zhang, H. Zhang, Y. Li, S. U. Zafar, S. Yang, J. Chen, H. Zhou and Y. Zhang, Recent Progress in Hole-Transporting Layers of Conventional Organic Solar Cells with p–i–n Structure, Adv. Funct. Mater., 2022, 2205398 CrossRef CAS .
+Y. Dong, R. Yu, B. Zhao, Y. Gong, H. Jia, Z. Ma, H. Gao and Z. A. Tan, Revival of Insulating Polyethylenimine by Creatively Carbonizing with Perylene into Highly Crystallized Carbon Dots as the Cathode Interlayer for High-Performance Organic Solar Cells, ACS Appl. Mater. Interfaces, 2022, 141, 1280–1289 CrossRef PubMed .
+Z. Liang, X. Cheng, Y. Jiang, J. Yu, X. Xu, Z. Peng, L. Bu, Y. Zhang, Z. Tang and M. Li, P3HT-Based Organic Solar Cells with a Photoresponse to 1000 nm Enabled by Narrow Band Gap Nonfullerene Acceptors with High HOMO Levels, ACS Appl. Mater. Interfaces, 2021, 1351, 61487–61495 CrossRef PubMed .
+D. Baran, T. Kirchartz, S. Wheeler, S. Dimitrov, M. Abdelsamie, J. Gorman, R. S. Ashraf, S. Holliday, A. Wadsworth and N. Gasparini, Reduced voltage losses yield 10% efficient fullerene free organic solar cells with> 1 V open circuit voltages, Energy Environ. Sci., 2016, 912, 3783–3793 RSC .
+H. Ju, K. M. Knesting, W. Zhang, X. Pan, C.-H. Wang, Y.-W. Yang, D. S. Ginger and J. Zhu, Interplay between interfacial structures and device performance in organic solar cells: a case study with the low work function metal, calcium, ACS Appl. Mater. Interfaces, 2016, 83, 2125–2131 CrossRef PubMed .
+L. Zeng, L. Wang, J. Qin, Y. Ren, H. Li, X. Lu, F. Lu, J. Tong and J. Li, Applying l-cystine as an electron transport layer toward efficient organic solar cells, Opt. Mater., 2023, 136, 113404 CrossRef CAS .
+F. Pan, C. Sun, Y. Li, D. Tang, Y. Zou, X. Li, S. Bai, X. Wei, M. Lv and X. Chen, Solution-processable n-doped graphene-containing cathode interfacial materials for high-performance organic solar cells, Energy Environ. Sci., 2019, 1211, 3400–3411 RSC .
+L. Zhang, W. Deng, B. Wu, L. Ye, X. Sun, Z. Wang, K. Gao, H. Wu, C. Duan and F. Huang, Reduced Energy Loss in Non-Fullerene Organic Solar Cells with Isomeric Donor Polymers Containing Thiazole π-Spacers, ACS Appl. Mater. Interfaces, 2019, 121, 753–762 Search PubMed .
+P.-P. Sun, Q.-S. Li, S. Feng and Z.-S. Li, Mixed Ge/Pb perovskite light absorbers with an ascendant efficiency explored from theoretical view, Phys. Chem. Chem. Phys., 2016, 1821, 14408–14418 RSC .
+X. Du, T. Heumueller, W. Gruber, A. Classen, T. Unruh, N. Li and C. J. Brabec, Efficient polymer solar cells based on non-fullerene acceptors with potential device lifetime approaching 10 years, Joule, 2019, 31, 215–226 CrossRef .
+L.-H. Wang, X.-J. Chen, D.-N. Ye, H. Liu, Y. Chen, A.-G. Zhong, C.-Z. Li and S.-Y. Liu, Pot-and atom-economic synthesis of oligomeric non-fullerene acceptors via C–H direct arylation, Polym. Chem., 2022, 1316, 2351–2361 RSC .
+H. Wang, T. Liu, J. Zhou, D. Mo, L. Han, H. Lai, H. Chen, N. Zheng, Y. Zhu and Z. Xie, Bromination: An Alternative Strategy for Non-Fullerene Small Molecule Acceptors, Adv. Sci., 2020, 79, 1903784 CrossRef PubMed .
+J. Kettle, H. Waters, Z. Ding, M. Horie and G. C. Smith, Chemical changes in PCPDTBT: PCBM solar cells using XPS and TOF-SIMS and use of inverted device structure for improving lifetime performance, Sol. Energy Mater. Sol. Cells, 2015, 141, 139–147 CrossRef CAS .
+A. Sundqvist, O. J. Sandberg, M. Nyman, J. H. Smått and R. Österbacka, Origin of the S-Shaped JV Curve and the Light-Soaking Issue in Inverted Organic Solar Cells, Adv. Energy Mater., 2016, 66, 1502265 CrossRef .
+W. Xu, R. Xia, T. Ye, L. Zhao, Z. Kan, Y. Mei, C. Yan, X. W. Zhang, W. Y. Lai and P. E. Keivanidis, Understanding the Light Soaking Effects in Inverted Organic Solar Cells Functionalized with Conjugated Macroelectrolyte Electron-Collecting Interlayers, Adv. Sci., 2016, 32, 1500245 CrossRef PubMed .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2me00265eThis journal is © The Royal Society of Chemistry 2023
+Table Content:
+
+Design, System, Application
+Fabricating high performance organic solar cells (OSCs) with high open-circuit voltage (Voc) usually requires a large amount of time and cost. Here, we use the machine learning (ML) algorithms to establish the prediction model between the materials of OSCs and Vocvia the energy level. These models have high prediction accuracy, where the accuracy and the root mean square error of the Voc are 0.94 and 0.04, respectively. More importantly the matched energy level of binary OSC materials for high Voc is delivered by machine learning, where the HOMO of the donor is about −5.45 ± 0.1 eV, the LUMO of the acceptor is about −3.80 ± 0.1 eV, and the matched work functions of the electron and hole transport materials are about −3.6 ± 0.2 eV and −5.1 ± 0.1 eV, respectively. Moreover, a smaller prediction error has been obtained by experimental verification. Therefore the materials' energy level matching strategy from ML in this report can become a potential guide for designing new donor, acceptor and transport materials in binary OSCs with high Voc.
+
+
+ 	Fig. 1  The Gaussian distribution of Voc in binary OSCs by 400 data in this dataset.	 
+
+ 	Fig. 2  Impact factors of Voc and the energy level arrangement of D and A in OSCs.	 
+
+ 	Fig. 3  The basic process of the ML training model.	 
+
+ 	Fig. 4  (a) Correlation matrix between Voc and input features (work functions of the hole transport material (WF-HTL), work functions of the electron transport material (WF-ETL), HOMO(D), LUMO(D), HOMO(A), and LUMO(A), and (b) correlation matrix between Voc and energy level offset.	 
+
+
+KNNa	0.64/0.74	0.07/0.05	0.04/0.03	0.88	0.61
+SVRb	0.60/0.62	0.07/0.06	0.06/0.05	0.84	0.58
+RFc	0.82/0.96	0.05/0.02	0.03/0.01	0.90	0.79
+XGBoostd	0.87/0.98	0.04/0.01	0.02/0.01	0.94	0.86
+
+ 	Fig. 5  Correlation regression of the predicted Voc and measured Voc in (a) KNN, (b) SVR, (c) RF, (d) XGBoost models (the red dots represent the training data, green dots represent the testing data, and the blue dash line serves as a visual reference for fitting results).	 
+
+ 	Fig. 6  (a) Input feature importance analysis based on the XGBoost model and (b) scatter plot of the SHAP value characteristic density. Correlation between the predicted and measured Voc using XGBoost (c) based on two relatively important features the HOMO(D) and LUMO(A), (d) based on two non-important features the WF-HTL and WF-ETL, and (e) based on four features the HOMO(D), LUMO(A), WF-HTL and WF-ETL.	 
+
+ 	Fig. 7  (a) The contour plot of the predicted Voc depends on the HOMO(D) and LUMO(A) and (b) schematic diagram of the energy level matching strategy for predicting high Voc binary OSCs.	 
+
+ 	Fig. 8  (a) J–V characteristics with different active layers, (b) J–V characteristics based on different transport layers, (c) decomposition force diagram of Voc based on PTB7:PC71BM, and (d) decomposition force diagram based on PM6:Y6.	 
+
+1	0.76	0.73	15.07	70.50	8.07	0.79	3.95%
+2	0.78	0.76	14.10	63.74	7.01	0.80	2.56%
+3	0.80	0.79	16.78	66.42	8.92	0.82	2.50%
+4	0.84	0.82	23.54	68.64	13.57	0.90	7.14%
+5	1.01	0.98	13.34	51.66	6.96	0.94	6.93%
+6	0.73	0.72	9.14	59.50	3.97	0.75	2.74%
+7	0.71	0.70	14.11	72.20	7.23	0.76	7.04%
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d2me00265e
+
+This journal is © The Royal Society of Chemistry 2023

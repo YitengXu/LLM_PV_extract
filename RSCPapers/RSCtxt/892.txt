@@ -1,0 +1,265 @@
+Structural convergence properties of amorphous InGaZnO 4 from simulated liquid-quench methods  - Dalton Transactions (RSC Publishing) DOI:10.1039/C7DT02181J View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C7DT02181J
+(Paper)
+Dalton Trans., 2017, 46, 15311-15316Structural convergence properties of amorphous InGaZnO4 from simulated liquid-quench methods
+
+        
+          
+            Jacob C. 
+            Buchanan†
+a, 
+      
+        
+          
+            Dylan B. 
+            Fast†
+a, 
+      
+        
+          
+            Benjamin E. 
+            Hanken
+          
+        
+      a, 
+      
+        
+          
+            Thomas J. L. 
+            Mustard
+          
+        
+      a, 
+      
+        
+          
+            Geneva 
+            Laurita
+          
+        
+      a, 
+      
+        
+          
+            Tsung-Han 
+            Chiang
+          
+        
+      b, 
+      
+        
+          
+            Douglas A. 
+            Keszler
+          
+        
+      a, 
+      
+        
+          
+            Mas A. 
+            Subramanian
+          
+        
+      a, 
+      
+        
+          
+            John F. 
+            Wager
+          
+        
+      b, 
+      
+        
+          
+            Michelle R. 
+            Dolgos
+          
+        
+      a, 
+      
+        
+          
+            James R. 
+            Rustad
+          
+        
+      c and 
+
+        
+          
+            Paul Ha-Yeon 
+            Cheong
+          
+        
+      *a
+aDepartment of Chemistry, Oregon State University, Corvallis, OR 97331-4003, USA. E-mail: paulc@science.oregonstate.edu
+bSchool of EECS, Oregon State University, Corvallis, OR 97331-5501, USA
+cEarth and Planetary Sciences, University of California - Davis, Davis, CA 95616, USA
+Received 
+      15th June 2017
+    , Accepted 2nd October 2017First published on 2nd October 2017AbstractThe study of structural properties of amorphous structures is complicated by the lack of long-range order and necessitates the use of both cutting-edge computer modeling and experimental techniques. With regards to the computer modeling, many questions on convergence arise when trying to assess the accuracy of a simulated system. What cell size maximizes the accuracy while remaining computationally efficient? More importantly, does averaging multiple smaller cells adequately describe features found in bulk amorphous materials? How small is too small? The aims of this work are: (1) to report a newly developed set of pair potentials for InGaZnO4 and (2) to explore the effects of structural parameters such as simulation cell size and numbers on the structural convergence of amorphous InGaZnO4. The total number of formula units considered over all runs is found to be the critical factor in convergence as long as the cell considered contains a minimum of circa fifteen formula units. There is qualitative agreement between these simulations and X-ray total scattering data – peak trends and locations are consistently reproduced while intensities are weaker. These new IGZO pair potentials are a valuable starting point for future structural refinement efforts.
+1 Introduction
+In the last 15 years, amorphous oxide semiconductors (AOSs) have received increasing interest for their potential technological applications. A well-known example of this is the replacement of amorphous hydrogenated silicon transistors in flat panel displays (FPDs) with amorphous InGaZnO4 (a-IGZO). The commercial adoption of a-IGZO has relied on a diverse set of strict synthesis requirements to optimize electrical properties and long term stability. Kamiya, Nomura, and Hosono have previously detailed the evolution of FPD materials and AOS research.1,2 Early research into AOS materials was defined by a seminal structure–property hypothesis that high mobilities in both the crystalline and amorphous form of certain metal oxides were due to the overlap of isotropic s orbitals that were not affected by the disordered structure. Ongoing research suggests that AOS materials have many potential applications, including solar cells or active components for smart glass.3–5 Their ease of synthesis allows for mass production, leading to potentially greater societal impact. Undoubtedly, for each new end-use, both synthesis conditions and composition will need to be adjusted accordingly. Thus, the potential value in developing theoretical methods that can predict AOS materials is clear – such a method may allow for targeted syntheses rather than heuristic exploration. In addition, an accurate method will lead to new structure–property hypotheses linking elemental composition, atomic arrangement, synthetic procedure, and electronic properties.
+Unfortunately, creating physically meaningful structural representations of amorphous materials is a substantial challenge. Several methods have been devised. In their review on materials by design approaches for amorphous solids, Biswas and co-workers identify methods as either “direct” or “indirect”.6 Direct methods are those that employ theoretical interatomic potential calculations for structure generation. Indirect methods, by contrast, rely on experimental data (e.g., electron and neutron scattering) to generate plausible structures through fitting procedures (e.g. reverse Monte Carlo). To date, the most commonly used structure generation algorithm is that of the liquid quench, a direct method.
+The application of direct methods towards AOSs is a common practice to better understand their structure7,8 and underlying electronic properties.9,10 Importantly, potential pitfalls that could arise in such methods are often not discussed or quantified in literature. Many questions remain concerning how to produce reliable data, how best to assess this reliability, and how to achieve this efficiently. Ideally, they will conform not only to fundamental chemical principles, but also to experimental observables. Optimizing a structural generation method is ultimately futile if these simulations do not match reality.
+The aim of this work is to report a direct theoretical method and associated parameters for the prediction of a-IGZO structures. Due to its technological relevance, a-IGZO is well characterized, publications have used liquid-quench methods to generate models of the material,11–13 and can serve as a suitable and timely benchmark for the community. Towards this, we have developed a set of Morse pair potentials for a-IGZO. We go on to describe the structure generation algorithm employed to test these potentials. We evaluate several structural parameters and discuss their convergence as a function of both number of formula units per cell and total number of cells employed. Finally, the models generated are compared to experimental X-ray total scattering data to evaluate the accuracy of the predicted structures.
+2 Methodology
+2.1 a-IGZO pair potentials
+Because our intent is to explore many structural parameters in order to assess their impact in predicting accurate a-IGZO structure, pair potentials enable us to evaluate these with computational efficiency. To that effect, we fitted empirical potentials composed of three terms: (1) pair potentials of the Morse form, (2) a long-range Coulomb potential and (3) a short-range repulsive contribution of 1/r12. Taken together, the resulting potential is:  where r is interatomic distance, Z is atomic charge, Dij is the bond dissociation energy, aij determines the slope of the potential energy well, r0 is the ideal bond distance, and Cij is the van der Waals repulsion term for short range interactions. These pair potentials are based on initial work by Pedone et al.,14 who created the potentials with the intent to model glass systems. The partial charges for In and Ga follow Pedone's procedure of using the Beest–Kramer–Santen potential15 to set oxygen at −1.2e and then referring cations to the oxygen value for self-consistency. The fitting procedure was as follows: (1) optimized structures and elastic constants were computed in CASTEP16 employing Perdew, Becke, and Ernzerhof (PBE) Generalized Gradient Approximation (GGA) functional17 with ultrasoft potentials for binary oxides and crystalline IGZO. (2) These structures and elastic constants were then used as input for relaxed fittings of Morse potentials in the General Utility Lattice Program (GULP).18 GULP fittings were done by randomly sampling the parameter space to identify parameters that best matched the CASTEP optimized structures. The resulting pair potentials are listed in Table 1.
+Table 1 Pair potentials fitted and used in this study. Note that the O–O potential is that of Pedone et al., 200614
+
+
+
+
+ 
+
+D
+
+ij
+ (eV)
+
+a
+
+ij
+ (Å−2)
+
+r
+0 (Å)
+
+C
+
+ij
+ (eV Å12)
+
+
+
+
+O−1.2–O−1.2
+0.042395
+1.379316
+3.618701
+22.0
+
+
+In1.8–O−1.2
+0.072975
+1.934200
+2.824990
+3.0
+
+
+Ga1.8–O−1.2
+0.038263
+2.105200
+2.668100
+0.9
+
+
+Zn1.2–O−1.2
+0.001221
+2.347100
+3.167030
+1.0
+
+
+
+
+2.2 Molecular dynamics
+The amorphous structure generation algorithm employed in this work is a modified liquid-quench method. Stoichiometric numbers of atoms for InGaZnO4 were randomly placed within a cell with checks to prevent atomic overlaps. The cell was given cubic lattice parameters with periodic boundary conditions such that its specific volume was 30% higher than that of its crystalline counterpart. The larger cell volume was to ensure adequate space for structural relaxation. Our algorithm is different from conventional studies which start by melting a crystalline cell and has the advantage that it does not bias the system's initial coordination environments. On the contrary, it begins with purely random ordering and slowly relaxes into a state of preferential ordering, similar to the work of Butler, Lamers, and Weeber.19 After generating the initial cell, molecular dynamics (MD) were run for 30 ps at 4000 K to allow the melt to equilibrate. This was then cooled to 300 K at 100 K ps−1, and subsequently equilibrated for an additional 3 ps. The final structure from MD is then optimized under isotropic and constant pressure conditions. This procedure was repeated with cells containing 5 to 243 formula units. All MD computations were performed in GULP.
+2.3 Sample preparation
+a-IGZO films were created utilizing radio frequency (RF) sputtering in an AJA Orion-5 system. A 2′′ dense ceramic target of InGaZnO4 was used to create the films. Processing gases of Ar and O2 were introduced into the chamber during deposition in Ar/O2 = 9/1 ratio. Processing pressure of 5 mTorr and RF power density of 23.9 W in−2 was maintained throughout the deposition process. Films were deposited to thicknesses of 200 nm at a rate of 2 nm min−1 onto polymethyl methacrylate (PMMA) coated 1 × 1 inch silicon substrates.
+The IGZO films were then lifted from the substrates by submerging the slides in an acetone bath to remove the PMMA and using gentle exfoliation to separate the films from the substrate. The film was then cleaned using several successive rinses with acetone in a Büchner funnel. The now freestanding IGZO film was packed into a small polyimide capillary using quartz wool to hold the sample in place.
+2.4 X-Ray scattering
+X-ray scattering experiments were performed at beamline 11-ID-B at the Advanced Photon Source (APS) user facility operated by Argonne National Laboratory. The sample was measured in a kapton capillary with an inner diameter of 0.0575′′. X-Ray data was collected at 58.66 keV (λ = 0.2114 Å) with 0.5 seconds exposures for 100 sub frames. Data was also collected for an empty kapton capillary prepared and measured in the same way to be used for background subtraction.
+Conversion of the 2D detector data from 11-ID-B to a normal 1D scattering pattern was performed using Fit2D.20 Detector calibration and alignment was performed using a CeO2 standard. To obtain the pair distribution function (PDF), the kapton background is subtracted from the data and corrections for Compton scattering and absorption are done to obtain the structure factor S(Q). A sine Fourier transform of the function F(Q) = Q[S(Q) − 1] was then performed to obtain the G(r) function.
+3 Results and discussion
+3.1 Rate of convergence and cell size
+
+Do smaller cells converge upon the same distributions?. 
+We begin by characterizing the necessary number of cells needed to smoothly sample structural property distributions. To do so, we defined 10 cells of 243 formula units as both sufficiently large and numerous to serve as a “converged” structural reference for calculating the coefficient of determination, R2.
+
+
+Large cells are unnecessary – the total number of formula units sampled dictate convergence. 
+We evaluate the metal–oxygen nearest neighbor distribution. Fig. 1a shows In–O neighbor distributions taken from 10 runs at a variety of cell sizes (5, 10, 243 formula units). Notably, the distributions show clearly differing levels of convergence, which suggest that total “number of runs” is an insufficient convergence criterion. Rather, the convergence of these distributions is guided exclusively by the number of In environments sampled. Fig. 1b shows In–O neighbor distributions recast for a variety of cell sizes and nearly equivalent number of total formula units, circa 2430. These distributions have the same apparent smoothness, suggesting that the aggregate number of times the formula units are sampled is key for “converged” structures. In short, these results reveal that fewer larger cells are needed to converge the simulation than smaller cells – i.e., larger cells sample more In coordination environments per run. This was true so long as the cells contained ≧15 formula units – 15, 20, and 72 all converged similarly, reaching an R2 of 0.99 around 1000 total formula units, as shown in Fig. 2. Cell size of 5, 10, and 12 formula units never approach the R2 of larger cells, regardless of the number of iterations. This suggests that amorphous materials are sufficiently complex that it requires a minimum number of atoms to be considered in a single cell.
+ Fig. 1  In–O bond length distributions for 5, 10, and 243 formula unit cells sampled over (a) 10 cells and (b) approximately 2430 total formula units. 
+ Fig. 2  
+R
+2 for In–O distributions for 5, 10, 12, 15, 20, and 72 formula unit cells as a function of total formula units. R2 is calculated using 10 cells of 243 formula units as reference. 
+
+
+Computational efficiency. 
+To demonstrate the computational efficiency of different cell sizes, Fig. 3 shows the time required to compute 1215–1224 total formula units with cells containing 5 to 243 formula units. It is apparent that cells with 5–20 formula units are much more efficient than the larger cells. 15 formula units is the minimum for good convergence while also taking the least time to run, making it the ideal choice.
+ Fig. 3  Total CPU time to compute 1215–1224 total formula units using 5, 10, 12, 15, 20, or 243 formula unit cells. 
+
+
+Quench rates. 
+To validate the quench rate of 100 K ps−1, samples with quench rates of 0.5, 1, 10, 50, 100, 200, 500, 1000, and 2000 K ps−1 were simulated. The results of the tests showed no large differences in the coordination environments for rates between 100 K ps−1 and 2000 K ps−1. The slowest rate, 0.5 K ps−1, showed the most crystalline characteristics, but was still disordered.
+
+3.2 Do “converged” structures match experimental X-ray scattering data?
+To draw practical insight into the structure of a-IGZO, we compare our work with experimental X-ray scattering, G(r), data gathered at the Advanced Photon Source (APS). Fig. 4 shows this experimental data contrasted with simulated scattering data from 1650 cells containing 12 formula units. These cells were equilibrated for an additional 10 ps. Average atomic positions and their fluctuations during equilibration were used to estimate isotropic atomic displacement parameters for each site, and subsequently translated to X-ray scattering intensities via the Diffpy package.21 Short range peak intensities deviate somewhat from experiments, but the computed and experimental data are in reasonable agreement, reproducing peak trends and locations consistently.
+ Fig. 4  Experimental (black line) and simulated scattering for a-IGZO (grey lines). Best fitting structures (dark grey line) and worst fitting structures (light grey line) are taken from 12 formula unit cells, and averaged over the best and worst 30% (each) of 1650 generated structures. Quality of fit was gauged by R2, as defined in the text. 
+To provide deeper insight, these structures were ranked by how well their simulated scattering fit the experimental data by way of mean-squared displacements. Fig. 4 shows the average scattering of the top and bottom 30th percentiles of structures. Even with “converged” structures, it is clear that some structures may be unrealistic in light of the collected X-ray data. However, because the structures can be sorted by accuracy, we are afforded an opportunity to evaluate the structural features that are inaccurate. We do so by decomposing the total scattering function into partial radial distribution functions and separately considering each metal's neighbor distribution.
+
+Fig. 5 takes the same top and bottom 30th percentile of structures and shows their averaged partial radial distribution functions, gij(r), for all metal–metal interactions. Differences between black and grey lines illustrate the differences between the best and worst fitting structures, respectively. It is clear that there are minor gaps in the metal–metal distributions. By contrast, these structures show an excess of coordination in some of the high and low bond distances. Most notable among these is the In–In coordination, which almost exclusively contributes to the coordination near 4 Å that also appears in Fig. 4. This is a long pair distance, with crystalline IGZO typically exhibiting an In–In pair at 3.3 Å, demonstrating the much wider distribution of possible metal pair arrangements in the amorphous structure.
+ Fig. 5  Average partial radial distribution, gij(r), between cations for the best 30% of structures (black) and worst 30% of structures (gray) from 1650 generated structures, each 12 formula units in size. 
+When partial pair distribution functions of metal–oxygen and oxygen–oxygen distances are evaluated, as shown in Fig. 6, general structural insights are possible. The difference between simulation (Fig. 6) and experiment (Fig. 4) is derived from three different metal–oxygen bonding pairs: (1) the peak near 1.9 Å can be attributed to a combination of Ga–O and Zn–O neighbors; (2) the peak near 2.2 Å can be attributed solely to In–O; and (3) the shoulder around 2.5 Å (2.8 Å in Fig. 6) arises from O–O neighbors. This information also leads to several hypotheses about the origins of the shortcomings in the current potentials and liquid quench method. The first being the current Morse potentials are not adequate by themselves and another potential type may be necessary to reduce the discrepancies between simulated and experimental data. Another possibility is that the scattering intensity may be affected significantly by different isotropic atomic displacement parameters (i.e. changes in bond stiffness), thereby changing the peak broadening and intensity.
+ Fig. 6  Simulated partial pair distribution functions of metal–oxygen and oxygen–oxygen distances. Note that Total includes metal–metal distances, which are not shown are their own. 
+4 Conclusions
+We describe a new pair potential for IGZO along with a divide and conquer approach to modeling structurally complex amorphous oxides that is computationally efficient and robust. It was found that a minimum of 1000 total formula units must be considered with at least 15 formula units per cell for the models to converge well. The data reveals that the number of metal centers being sampled is the critical parameter. Moreover, this method is more time efficient than a single larger simulation. Comparison to X-ray total scattering data shows that while the models are well converged, obvious shortcomings remain, especially in the metal–metal coordination values. This highlights distinct challenges in this area for modern computational techniques in describing amorphous structures and demonstrates the need for improved and extended approaches. This work is meant as a stepping stone towards more thorough discussions of limitations and assumptions made using modern modeling techniques towards the eventual goal of predicting and modifying properties of structurally complex electronic materials such as amorphous IGZO.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+Paul H.-Y. Cheong is the Bert and Emelyn Christensen Professor and gratefully acknowledges financial support from the Stone Family of Oregon State University (OSU). Financial support and computing infrastructure were provided by the NSF Phase-2 CCI, Center for Sustainable Materials Chemistry (CHE-1606982). Dylan B. Fast acknowledges the Provost's Distinguished Graduate Fellowship from OSU. Use of the Advanced Photon Source, an Office of Science User Facility operated for the U.S. Department of Energy (DOE) Office of Science by Argonne National Laboratory, was supported by the U.S. Department of Energy under Contract No. DE-AC02-06CH11357. Data was collected at beamline 11-ID-B under GUP 32686 at the Advanced Photon Source, Argonne National Laboratory. We also thank Karena Chapman and Kevin Beyer for assistance with the PDF experiments.
+Notes and references
+T. Kamiya, K. Nomura and H. Hosono, Sci. Technol. Adv. Mater., 2010, 11, 044305 CrossRef PubMed .
+K. Nomura, H. Ohta, A. Takagi, T. Kamiya, M. Hirano and H. Hosono, Nature, 2004, 432, 488–492 CrossRef CAS PubMed .
+M. Mativenga, M. H. Choi, J. W. Choi and J. Jang, IEEE Electron Device Lett., 2011, 32, 170–172 CrossRef CAS .
+K. Lee, K. Nomura, H. Yanagi, T. Kamiya and H. Hosono, Thin Solid Films, 2012, 520, 3808–3812 CrossRef CAS .
+J. Lee, D. Kim, D. Yang, S. Hong, K. Yoon, P. Hong, C. Jeong, H. Park, S. Y. Kim, S. K. Lim, S. S. Kim, K. Son, T. Kim, J. Kwon and S. Lee, SID Int. Symp. Dig. Tech. Pap., 2008, 39, 625–628 CrossRef CAS .
+P. Biswas, D. N. Tafen, F. Inam, B. Cai and D. A. Drabold, J. Phys.: Condens. Matter, 2009, 21, 084207 CrossRef PubMed .
+D.-Y. Cho, J. Song, K. D. Na, C. S. Hwang, J. H. Jeong, J. K. Jeong and Y.-G. Mo, Appl. Phys. Lett., 2009, 94, 112112 CrossRef .
+K. Nomura, T. Kamiya, H. Ohta, T. Uruga, M. Hirano and H. Hosono, Phys. Rev. B: Condens. Matter, 2007, 75, 035212 CrossRef .
+H.-H. Hsieh, T. Kamiya, K. Nomura, H. Hosono and C.-C. Wu, Appl. Phys. Lett., 2008, 92, 133503 CrossRef .
+K. Ide, K. Nomura, H. Hiramatsu, T. Kamiya and H. Hosono, J. Appl. Phys., 2012, 111, 073513 CrossRef .
+R. Khanal, D. B. Buchholz, R. P. H. Chang and J. E. Medvedeva, Phys. Rev. B: Condens. Matter, 2015, 91, 205203 CrossRef .
+S. Sallis, K. T. Butler, N. F. Quackenbush, D. S. Williams, M. Junda, D. A. Fischer, J. C. Woicik, N. J. Podraza, B. E. White, A. Walsh and L. F. J. Piper, Appl. Phys. Lett., 2015, 104, 232108 CrossRef .
+W. Korner, D. F. Urban and C. Elsasser, J. Appl. Phys., 2013, 114, 163704 CrossRef .
+A. Pedone, G. Malavasi, M. C. Menziani, A. N. Cormack and U. Segre, J. Phys. Chem. B, 2006, 110, 11780–11795 CrossRef CAS PubMed .
+J. Purton, R. Jones, C. R. A. Catlow and M. Leslie, Phys. Chem. Miner., 1993, 19, 392–400 CrossRef CAS .
+S. J. Clark, M. D. Segall, C. J. Pickard, P. J. Hasnip, M. J. Probert, K. Refson and M. C. Payne, Z. Kristallogr., 2005, 220(5–6), 567–570 CAS .
+J. P. Perdew, K. Burke and M. Ernzerhof, Phys. Rev. Lett., 1996, 77, 3865 CrossRef CAS PubMed .
+J. D. Gale, J. Chem. Soc., Faraday Trans., 1997, 93, 629–637 RSC .
+K. T. Butler, M. P. W. E. Lamers, A. W. Weeber and J. H. Harding, J. Appl. Phys., 2011, 110, 124905 CrossRef .
+
+          A. Hammersly
+        , ESRF Intern. Rep., 1997 ESRF97HA02T.
+P. Juhás, C. L. Farrow, X. Yang, K. R. Knox and S. J. L. Billinge, Acta Crystallogr., Sect. A: Found. Adv., 2015, 71, 562–568 Search PubMed .
+
+Footnote† Jacob C. Buchanan and Dylan B. Fast contributed equally to this work.This journal is © The Royal Society of Chemistry 2017
+Table Content:
+
+ 		 
+
+O−1.2–O−1.2	0.042395	1.379316	3.618701	22.0
+In1.8–O−1.2	0.072975	1.934200	2.824990	3.0
+Ga1.8–O−1.2	0.038263	2.105200	2.668100	0.9
+Zn1.2–O−1.2	0.001221	2.347100	3.167030	1.0
+
+ 	Fig. 1  In–O bond length distributions for 5, 10, and 243 formula unit cells sampled over (a) 10 cells and (b) approximately 2430 total formula units.	 
+
+ 	Fig. 2  
+R
+2 for In–O distributions for 5, 10, 12, 15, 20, and 72 formula unit cells as a function of total formula units. R2 is calculated using 10 cells of 243 formula units as reference.	 
+
+ 	Fig. 3  Total CPU time to compute 1215–1224 total formula units using 5, 10, 12, 15, 20, or 243 formula unit cells.	 
+
+ 	Fig. 4  Experimental (black line) and simulated scattering for a-IGZO (grey lines). Best fitting structures (dark grey line) and worst fitting structures (light grey line) are taken from 12 formula unit cells, and averaged over the best and worst 30% (each) of 1650 generated structures. Quality of fit was gauged by R2, as defined in the text.	 
+
+ 	Fig. 5  Average partial radial distribution, gij(r), between cations for the best 30% of structures (black) and worst 30% of structures (gray) from 1650 generated structures, each 12 formula units in size.	 
+
+ 	Fig. 6  Simulated partial pair distribution functions of metal–oxygen and oxygen–oxygen distances. Note that Total includes metal–metal distances, which are not shown are their own.	 
+Footnote
+† Jacob C. Buchanan and Dylan B. Fast contributed equally to this work.
+
+This journal is © The Royal Society of Chemistry 2017

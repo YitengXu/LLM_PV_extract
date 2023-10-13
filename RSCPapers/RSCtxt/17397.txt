@@ -1,0 +1,780 @@
+Towards autonomous high-throughput multiscale modelling of battery interfaces  - Energy & Environmental Science (RSC Publishing) DOI:10.1039/D1EE02324A View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D1EE02324A
+(Perspective)
+Energy Environ. Sci., 2022, 15, 579-594Towards autonomous high-throughput multiscale modelling of battery interfaces
+
+        
+          
+            Zeyu 
+            Deng
+          
+          
+        
+      a, 
+      
+        
+          
+            Vipin 
+            Kumar
+          
+        
+      b, 
+      
+        
+          
+            Felix T. 
+            Bölle
+          
+        
+      c, 
+      
+        
+          
+            Fernando 
+            Caro
+          
+        
+      de, 
+      
+        
+          
+            Alejandro A. 
+            Franco
+          
+        
+      *defg, 
+      
+        
+          
+            Ivano E. 
+            Castelli
+          
+        
+      *c, 
+      
+        
+          
+            Pieremanuele 
+            Canepa
+          
+        
+      *ah and 
+
+        
+          
+            Zhi Wei 
+            Seh
+          
+        
+      *i
+aDepartment of Materials Science and Engineering, National University of Singapore, 9 Engineering Drive 1, 117575, Singapore. E-mail: pcanepa@nus.edu.sg
+bDepartment of Energy Science and Engineering, Indian Institute of Technology Delhi, Hauz Khas, New Delhi, Delhi 110016, India
+cDepartment of Energy Conversion and Storage, Technical University of Denmark, Kgs. Lyngby, DK-2800, Denmark. E-mail: ivca@dtu.dk
+dLaboratoire de Réactivité et Chimie des Solides (LRCS), UMR CNRS 7314, Université de Picardie Jules Verne, Hub de l’Energie, 15 Rue Baudelocque, Amiens Cedex 80039, France. E-mail: alejandro.franco@u-picardie.fr
+eRéseau sur le Stockage Electrochimique de l’Energie (RS2E), FR CNRS 3459, Hub de l’Energie, 15, rue Baudelocque, Amiens Cedex 80039, France
+fALISTORE-European Research Institute, FR CNRS 3104, Hub de l’Energie, 15, rue Baudelocque, Amiens Cedex 80039, France
+gInstitut Universitaire de France, 103 Boulevard Saint Michel, Paris 75005, France
+hDepartment of Chemical and Biomolecular Engineering, National University of Singapore, 4 Engineering Drive 4, 117585, Singapore
+iInstitute of Materials Research and Engineering, Agency for Science, Technology and Research (A*STAR), 2 Fusionopolis Way, Innovis 138634, Singapore. E-mail: sehzw@imre.a-star.edu.sg
+Received 
+      28th July 2021
+    , Accepted 17th November 2021First published on 20th December 2021AbstractTo date, battery research largely follows an “Edisonian” approach based on experimental trial-and-error in contrast to a systematic strategy of design-of-experiments. Battery interfaces are arguably the most important yet the least understood components of energy storage devices. To transform the way we perform battery research, theory and computations can be used simultaneously to understand and guide the design of meaningful and targeted experiments. However, it is well known that modelling of battery interfaces is computationally prohibitive in terms of both resources and time due to the large size of systems to provide realistic and descriptive models. Recently, automated and intelligent in silico tools have been developed to accelerate the description of materials, such as workflows designed to generate, handle and analyse hundreds of thousands of materials data and at different scales. Here, we assess the latest computational strategies, outline unresolved questions, and propose future directions that will guide and drive future developments of interfaces in energy storage devices. The future directions include the development of complementary experimental techniques, such as high-throughput automated materials synthesis, operando characterization, cell assembly and integrated platforms for device testing.
+Pieremanuele Canepa (1st column top), Zeyu Deng (1st column bottom), Ivano E. Castelli (2nd column top), Felix T. Bölle (2nd column bottom), Zhi Wei Seh (3rd column top), Vipin Kumar (3rd column bottom), Alejandro A. Franco (4th column top) and Fernando Caro (4th column bottom)
+Dr Pieremanuele Canepa (1st column top) is an Assistant Professor in the Department of Materials Science and Engineering at the National University of Singapore (NUS).Dr Zeyu Deng (1st column bottom) is currently a Postdoctoral Research Fellow under the supervision of Dr Pieremanuele Canepa.Dr Ivano E. Castelli (2nd column top) is an Associate Professor at the Technical University of Denmark, Department of Energy Conversion and Storage (DTU Energy).Dr Felix T. Bölle (2nd column bottom) is currently a Postdoctoral Researcher under the supervision of Dr Ivano E. Castelli.Dr Zhi Wei Seh (3rd column top) is a Senior Scientist at the Institute of Materials Research and Engineering, A*STAR.Dr Vipin Kumar (3rd column bottom) is an Assistant Professor in the Department of Energy Science and Engineering at the Indian Institute of Technology Delhi (IIT Delhi), India.Dr Alejandro A. Franco (4th column top) is Full Professor at Université de Picardie Jules Verne (Amiens, France) and Honorary Member of the Institut Universitaire de France (Paris).Dr Fernando Caro (4th column bottom) is a CNRS Postdoctoral Researcher under the supervision of Dr Alejandro A. Franco. All authors are interested in designing high-performance battery materials and interfaces using computations and/or experiments.
+
+Broader context
+Interfaces are central to rechargeable batteries as they are the connecting media between electrodes, electrolytes, and current collectors. Despite the crucial role of interfaces in battery devices, the electrochemical and mechanical processes at the interfaces still remain elusive. An autonomous in silico strategy harnessing the power of supercomputers, powerful algorithms, databases, and intelligent workflows, together with the intuition of scientists, can facilitate the screening of thousands of complex interfaces. Provided the specific challenges identified in this perspective are solved, laboratories of the future can envisage a concerted interaction between autonomous computational tools and complementary high-throughput experimental techniques.
+
+Introduction
+Renewable energy resources, including solar, wind, and hydroelectric, are secure and clean ways to harvest the energy required by our society and to tackle pressing global warming issues. Although hydroelectric, photovoltaic and wind-turbine technologies are mature, they are intermittent in nature. Storing and delivering on request large amounts of electricity remains a notable challenge.
+Rechargeable (also termed secondary) batteries appear as one of the viable solutions to this problem. Battery cells based on intercalation or conversion materials transform the chemical energy of bonds into electricity via three main components identified in Fig. 1: (i) the cathode, (ii) the anode (electrodes) and (iii) the electrolyte (liquid or solid).
+ Fig. 1  Multiscale diagram of battery components from the device to the atomic level. The battery components include the anode and the cathode, the (inactive) electrolyte in green, the (inactive) current collectors in grey, the (inactive) protective coating materials on the cathode, and the (inactive) polymer separators in yellow. Highlighted by yellow, grey, and green dots are, respectively, binder materials, carbon black, and electrolyte additives which also form interfaces between the battery components. For solid-state batteries, the interfaces between solid electrolytes and electrodes are shown in the box at the right bottom corner. 
+
+Fig. 1 displays the battery cell components at various length scales: at the device level, meso-structure level, and the atomic scale, respectively. The vital functions of the battery cell are also enabled by other components, such as the current collectors, polymer separator, electrolyte additives, carbon black and binders, as well as various protective coating materials in the electrodes (see Fig. 1). Although these components are vital for the battery cell functions, being inactive they inevitably contribute to the “dead” mass and volume of the battery cell.
+As shown in Fig. 1, all battery components are “interfaced” with each other resulting in the facile exchange of the active ions (Li+, Na+ and even multivalent species) and electrons. These interfaces can be homogeneous, e.g., the interface between two particles of the anode active material, but also heterogeneous in nature, for example, the interface between the cathode material and the protective coating.
+Interfacial degradation as well as loss of contact contributes to several undesired phenomena, for example, the self-discharge of the device over time, a notable drop in performance and eventually battery cell failure. Therefore, preserving the integrity of such interfaces remains a primary task in the development of improved battery devices.
+Until recently,1–8 the battery community has often regarded the “conditioning” and preservation of various interfaces as a mere problem of materials optimization and attention is mostly given at the stages of development and manufacturing of the devices. Indeed, the precious knowledge developed to stabilize and improve interfaces remains in many cases buried in the patent literature. A notable example is the NaSICON-type Ohara-glass-ceramic “LIC-GC” commercialized by Ohara Inc. (Kanagawa, Japan).9–11 While the composition and properties of the Ohara-glass are not fully disclosed,10,11 the accumulated knowhow shows the effectiveness of this glass-ceramic as a protective/stabilizing layer prolonging the stability of the interface between solid electrolytes and electrodes.11 Other similar examples exist in the field.12–14
+Undoubtedly, interfaces are complex in terms of their structures and are dynamic in nature, which make their study challenging, often comprising several length and time scales. One major difficulty in the study of interfaces is their poor direct access by investigation tools (e.g., Raman, infrared, and UV-visible spectroscopy, neutron and X-ray diffraction techniques, electron microscopy, X-ray computed tomography, etc.); such interfaces are said to be “buried”. For example, Lewis et al. have recently unravelled the complex decomposition mechanism of the interfaces of a solid electrolyte (Li10SnP2S12) against Li metal using operando synchrotron X-ray computed microtomography.15 Notwithstanding the advancements brought by this study towards the comprehension of Li-metal/solid-electrolyte interfaces, many unanswered questions still exist.
+To this end, computational materials science is attractive as it can accelerate the discovery of materials and speed up the development of new or improved existing technologies.16 To date, most of the efforts towards autonomous techniques have been focused toward modelling bulk materials efficiently (see examples in Table 1), but these are not sufficient when our understanding of interfaces is crucial to solve specific challenges in battery devices, which entails a wide range of space–time scales. While the ability of analysing thousands of materials simultaneously is important, this analysis also needs to be autonomous and intelligent, to minimize the user intervention and learn from existing data trends (also see more in Table 1).17–22
+Table 1 Selected research initiative where HTC is used to compute, archive, and analyse existing and novel materials for advanced technological applications. The total number of entries is reported and, whenever possible, differentiated by the type of application. The column “Battery” highlights whether the database infrastructure includes dedicated applications (Apps) for the prediction of battery-related quantities. The “Workflow” column presents existing automation tools that pre-process, execute, and analyse each new entry. The availability of application programming interface (API) to interface with the database is also indicated
+
+
+
+
+
+
+Entries
+App
+Battery
+Workflow
+API
+Ref.
+
+
+
+
+Materials Project – https://www.materialsproject.org/ – Provenance: USA
+
+
+Total entries
+711561
+Phase diagram
+—
+Fireworks
+YES
+
+17, 18 and 23–25
+
+
+
+Intercalation electrodes
+4730
+Reaction calculator
+YES
+Automate
+
+26–30
+
+
+
+Conversion electrodes
+16128
+Battery explorer
+
+
+Liquid electrolytes
+49705
+Explore molecule
+YES
+Pymatgen
+
+19, 31 and 32
+
+
+
+Redox flow batteries
+
+
+Bulk interfacial reactivity
+N.A.
+Interface Reaction (Bulk)
+YES
+Custodian
+
+33
+
+
+
+
+
+
+
+The Open Quantum Materials Database – OQMD – http://oqmd.org – Provenance: USA
+
+
+Total entries
+815654
+Phase diagram
+NO
+OQMD
+YES
+
+34 and 35
+
+
+
+
+
+
+
+Automatic FLOW for Materials Discovery – http://www.aflowlib.org – Provenance: USA
+
+
+Total entries
+3482348
+Phase diagram (AFLOW-Chull)
+NO
+AFLOW
+YES
+
+36–39
+
+
+
+
+
+
+
+Novel Materials Discovery – NOMAD – https://nomad-lab.eu/ – Provenance: Germany/EU
+
+
+Total entries
+>11000000
+Artificial intelligence toolkit
+NO
+qmpy
+YES
+
+40
+
+
+
+
+
+
+
+Materials Cloud – https://www.materialscloud.org – Provenance: Switzerland/EU
+
+
+Total entries
+7502686
+—
+YES
+AiiDA
+YES
+
+20 and 41–43
+
+
+
+
+
+
+
+BIG-MAP App Store – https://big-map.github.io/big-map-registry – Provenance: Denmark/EU
+
+
+Total entries
+N.A.
+BattINFO
+YES
+AiiDA
+YES
+
+44
+
+
+
+DFT-Surface
+SimStack
+
+
+
+
+
+
+ARTISTIC Computational Portal – https://www.erc-artistic.eu/computational-portal – Provenance: France/EU
+
+
+Total entries
+>111 (open since July 2021)
+Online manufacturing simulator
+YES
+ARTISTIC
+NO
+
+45–51
+
+
+
+Data explorer
+
+
+INNOV
+
+
+
+
+Although several reviews/perspectives about multiscale modelling of battery interfaces have been published,16,52–54 there is no specific effort devoted to strategies of autonomous high-throughput multiscale modelling of battery interfaces. The complexity of predicting the properties of the interfaces could be achieved if the items in Table 2 are solved.
+Table 2 Challenges and goals that should be overcome and achieved in future
+
+
+
+
+Scale
+Desideratum
+
+
+
+
+Atomistic
+Flexible ontology of the surfaces of electrodes and their interfaces
+
+
+Atomistic
+Ontology of chemical and electrochemical reactions at interfaces
+
+
+Atomistic
+Information about ion migration/diffusion at interfaces
+
+
+Atomistic
+Modularity of atomistic workflows in the form of dedicated tasks for interface related properties and their interactions
+
+
+Atomistic
+Autonomous agents driving complex closed-loop simulations based on existing workflows
+
+
+Mesoscale
+Computational tools incorporating data arising from atomistic calculations
+
+
+Mesoscale
+Development of multifidelity modelling workflows addressing interplays between electrochemistry, transport and mechanics at the mesoscale
+
+
+Continuum/device
+Development of multifidelity workflows simulating performance and aging at the device level
+
+
+Multiscale
+Development of less computational and data intensive algorithms
+
+
+Multiscale
+Data management plans for integration of multiscale computations together with experiments
+
+
+Multiscale
+Estimation of error propagation between different time and length scales
+
+
+
+
+Indeed, as a research community we are still far from understanding the steps towards the automation of methodologies, which are required to fully comprehend interfacial phenomena. This perspective intends to shed light on this topic from high-throughput atomistic modelling, autonomous workflows, multiscale modelling, and high-throughput experiments.
+High-throughput atomistic modelling
+At the atomistic level, high-throughput computational (HTC) materials science leverages advanced electronic-structure methods, predominantly density functional theory,55,56 principles of electrochemistry and thermodynamics together with supercomputers, databases and the ability of powerful algorithms to analyse large computed datasets.
+To date, the field of energy materials has benefited enormously from the application of HTC techniques, which have been of unparalleled use in the identification of new electrocatalysts, materials for photovoltaics and photoelectrochemical water splitting, as well as electrodes for solid oxide fuel cells.23,35,39,57–69
+When the focus goes to battery materials, HTC methodologies have been largely utilized to quickly screen large compositional spaces of novel chemistries for cathode and anode materials, and more recently solid electrolytes. A commonality of all databases listed in Table 1 is that most of the technologically relevant quantities are derived from ground state energies extracted from first-principles calculations of ordered materials, and thus most descriptors revolve around thermodynamic descriptors. Despite this effort of cataloguing the properties of materials, kinetic descriptors are certainly lacking, which is mostly due to the complexity involved in the computations of such properties in an autonomous fashion.70–77
+In this context, specific pre/post-processing tools and modular workflows targeted to the discovery of novel electrode and electrolyte chemistries have been developed within the HTC effort of the Materials Project (see Table 1).17,18,23–25 Other database/repository initiatives shown in Table 1 appear less tailored towards energy storage applications. Within the Materials Project effort, dedicated applications (“Apps”) connect intelligently the computed entries, as well as derive important technological properties, such as (i) the identification of intercalation and conversion electrodes and respective voltages, (ii) the simulation of the electrochemical stability windows of both liquid (molecules) and solid electrolytes, and (iii) other properties. While undoubtedly a powerful “Interface Reaction” App exists in Materials Project, it only identifies the propensities of two bulk phases to mix because of chemical or electrochemical reactions. Therefore, the “Interface Reaction” is to be considered as a bulk approach to tackle the reactivity of solid/solid interfaces.
+The powerful infrastructure developed by various research teams listed in Table 1 could identify simple enough descriptors and specific figures of merit of materials. In the case of battery materials, the Materials Project can provide large datasets of computed intercalation/conversion voltages, gravimetric and volumetric capacities, electrochemical stability windows, band gaps, and many others. The advantage is that all these thermodynamic descriptors are well defined for bulk materials and isolated molecules (for liquid electrolytes). As discussed above, kinetic descriptors are not well defined and represent an active topic of investigation.
+Indeed, these efforts and methodologies and tools play remarkable roles in the optimization of the compositional features of existing materials, but, for example, entirely neglect interfaces between the particles of the active electrode materials, which give rise to solid–solid grain boundaries. In energy storage devices, heterogeneous interfaces are commonplace, for example, the interface between the active materials in the cathode electrode and the protective coating.1,78
+The generalization of these HTC methodologies to tackle the complexity of grain boundary and interfacial structures faces enormous challenges, which are further exacerbated by the sheer difficulties arising from even simpler tasks. An existing problem is the absence of a rigorous systematic nomenclature and classification of such interfaces with simple geometrical descriptors. In contrast, these descriptors are available for the bulk counterpart.
+Assuming such interfacial descriptors are known, the identification of workflow strategies to compute thousands of interfaces and grain boundaries simultaneously does not exist. So what are the steps to be taken to compute realistic, realisable and useful interface datasets?
+If there have been only a handful of attempts towards the computation of heterogeneous solid/solid interfaces,79 solid/liquid interfaces80,81 in batteries are even less explored, let alone the automation of the important steps required to systematically simulate and predict such interfaces. Here, the most pressing challenges relate to the description of the solvent and the concentration of active ions (solutes) near and far from such interfaces. This perspective focuses on the computational modelling and understanding of these electrified interfaces.
+Autonomous workflows
+The implementation of autonomous workflows (WFs) closely follows the development of techniques for the HTC of new materials. For a completely autonomous materials discovery, HTC has been combined with autonomous workflows.18,20,22,25 The general idea behind a workflow is that the code proceeds through a number of necessary calculations in an automatic way, thus concatenating the different steps of the HTC, making “rational” decisions during the execution of these steps, which also includes troubleshooting for errors generated during each step.82 Some of the most significant examples of computational workflows established recently include the identification of new 2D materials obtained by exfoliating 3D structures83,84 or the identification of new catalysts.85,86 Recently, Persson et al.82 demonstrated a fully automated adsorption workflow including exhaustive surface generation algorithms.
+As summarized in Table 3, with respect to battery materials, fully automated and reproducible computational workflows at a density functional theory (DFT) level remain limited to several research groups. Some recent examples of battery workflows published in the last two years focus on calculating the properties of solid-state ion conductors and intercalation batteries.72,87–92
+Table 3 Various methods/programs/software that can be used to calculate the key properties for different workflow applications
+
+
+
+
+Workflow application
+Property
+Method/software used
+Ref.
+
+
+
+
+Bulk – solid
+Ion diffusion
+DFT + nudged-elastic-band method
+
+72
+
+
+
+
+Ab initio molecular dynamics simulations
+
+87
+
+
+
+Interface – metal/vacuum
+Surface energy & Wulff shapes
+Pymatgen/Fireworks/Materials Project
+
+82,93,94
+
+
+
+Interface – bulk/bulk
+Interfacial product
+Interface Reaction (Bulk) App, Table 1
+
+33
+
+
+
+Interface – solid/solid
+Interface structure
+Lattice matching algorithms
+
+95–97
+
+
+
+Electrolyte – vacuum
+SEI components
+Reaction network architecture
+
+98
+
+
+
+
+
+Currently, stability and electronic properties are quite inexpensive to compute, especially at the generalized gradient approximation (GGA) level.23,35 On the other hand, the computations of ion migration properties remain much more time-consuming. For this task, the former workflow87 relies on the so-called pinball setup for performing Ab initio Molecular Dynamics (AIMD) simulations assuming a frozen host lattice for which the charge density of the moving ion is neglected.87,99 The latter,72 instead, uses an accelerated version of the NEB method, which takes into consideration the innate symmetry of a system to reduce the number of images in the computation.100 However, many systems do not have the needed symmetries and this methodology cannot be used. Instead, geometric features, such as the largest-free-sphere along a migration path, can be combined with the workflow to identify the most promising diffusion paths to calculate.101,102 Moreover, artificial intelligence (AI) could also be used to accelerate the calculations of barriers for ion migration and other properties,101,102 but we are still far from an effective implementation of AI into general WFs.101
+Several software tools exist in computational materials science supporting researchers with the task of building WFs. These tools comprise structure manipulation, calculation input generation (e.g. the Atomic Simulation Environment (ASE)103 and Pymatgen),23 automatic error handling (e.g. Custodian),17 and workflow management systems (e.g. Fireworks25 and MyQueue104). Examples of finished workflows can, for instance, be found in the Atomate18 package and in the Atomic Simulation Recipes (ASR).105 Examples that contain the aforementioned software tools in one place are AiiDA49 and AFLOW23,41,106,107 (Table 1). A vital feature of a WF contributing directly to the automation of this process is the implementation of WF specific error handling techniques. We can often predict the most common causes of failure in calculations, such as the time limit or issues inherent to the simulation software, for example, convergence problems in the execution of a band structure calculation. By parsing the simulator outputs, the WF can apply corrective strategies to the input script and resubmit the calculations until the workflow restarts its course. The continuous improvement and development of the tools discussed here forms a solid basis for tackling the creation of complex workflows needed when studying battery materials and their interfaces.
+Nevertheless, the large majority of the WFs implemented so far mostly rely on the simulation of bulk structures, thus leaving the interface for hands-on studies once the novel (bulk) material has been identified/designed. As discussed in the previous section, due to the importance of interfaces in the discovery of new batteries and comprehension of their degradation phenomena, it is necessary to accelerate and (somehow) automate the investigation of interfaces. In general, interfaces are much more complex to treat than the bulk counterpart.
+In addition to a significant increase of the computational cost due to a greater number of atoms required to define an interface compared to their bulk counterpart, we may need to consider not only different types of interfaces but also different compositional aspects. For example, if one studies the interface formed between two grains in a solid electrolyte, the concentration and location of impurity species in the two grains may differ, which can largely impact the electrochemical reactions that happen at the interface formed.108,109 Similarly, the solid/solid interface (e.g.Fig. 2 to the right) requires the investigation of different terminations as well as the comprehension of the role of grain boundaries, lattice mismatch, defects and vacancies.
+ Fig. 2  Formation of different types of the interface between the bulk material (bottom) and liquid electrolyte (left) as well as solid electrolyte (right): solid/liquid (in brown) and solid/solid (in pink) interfaces. The descriptors of their key properties are shown below each figure. The moving active ion is shown as purple circles. 
+Several tools and techniques have been developed to rigorously identify homogeneous and heterogeneous interfaces (Tables 1 and 3). While constructing interfaces is surely a prerequisite, rigorous WFs for interfaces require the definition of a new ontology that is able to classify the type of interfaces, with their domains, and time and length scales, which appears much more difficult than for bulk materials.110 By creating a dictionary of concepts, the ontology helps in defining the structure of the WF, the steps to follow, and their concatenation. This concept is central to accelerate the discovery of materials and is not only limited to in silico experiments and batteries. The European Union, through the European Materials Modelling Ontology (EMMO),111 as well as EU-Horizon 2020 initiatives, such as the BATTERY 2030+ and BIG-MAP with BattINFO,112,113 has established working groups to create a common, standardized ontology behind the study of battery materials. Additionally, data management plans (DMPs) help project partners to keep track of storing data. In detail, DMPs help to tie together existing data infrastructures and ontologies as laid out recently by the partners involved in the BIG-MAP project.114 Since data on interface calculations are scarce, the data management plan available in the BIG-MAP project also defines how the results of calculations can be stored and shared across researchers. BIG-MAP enables a systematic integration between experimental and artificial intelligence data.
+As an example, for the specific case of the Li-ion battery anode, the interface plays a fundamental role in all the complex phenomena involved in the evolution of the solid–electrolyte interface (SEI) layer, from the reduction reactions of the sacrificial electrolyte (near the electrode) happening during the first cycles of the battery through the growth of the SEI itself during standard operation to its aging and degradation at the end of the battery life.115–117
+From the modelling point of view, this complexity is also connected with the dramatic increase of the computational cost of simulations. Some of the properties accessible at the atomic scale level for the solid/solid and solid/liquid interfaces are shown in Fig. 2. At this level of accuracy, an accurate description of interfaces requires the inclusion of defects, as well as many terminations and facets of the solid materials forming interfaces, which can spiral quickly into an untreatable problem. For a realistic description of the phenomena, the electrolyte also needs to be included together with its additives and impurities. This can be done using implicit or explicit solvents.109 Long molecular dynamics simulations might be needed to correctly model the solid/electrolyte structure, which is required to predict and proactively control the electrochemical phenomena at the interface. This could be achieved at different levels from large-scale molecular dynamics118 including various levels of accuracy, e.g., reactive force field (ReaxFF) methods34,118,119 or neural network potentials,52,120 among others.
+Because of this variety of structures and scenarios, a brute force approach does not appear feasible and, at the same time, the implementation of WFs for interfaces able to cover all these phenomena (and its possible integration with AI models) appears a humongous and unmanageable task. One of the main reasons for the success of WFs for bulk materials, i.e., the concatenation of the design steps, is also one of the reasons why WFs for interfaces are so rare. Very often, we do not know how to predict the concatenating steps in the simulation of interfaces. This is because each step strongly depends on the results of previous steps. As an example, to reduce the number of expensive (although more realistic) calculations, we might want to calculate multiple possible reactions pathways in vacuum (i.e., without electrolyte) and for multiple facets. Only the most promising paths on the most stable/relevant facets are then calculated including the electrolyte (i.e., using a more realistic model) using perhaps an Ab initio Molecular Dynamics simulation. Depending on these results, different compositions of the electrolyte, temperatures, etc. are the studied. Reaction pathways are then investigated using a frozen electrolyte approach (at a specific potential/pH), which is based on the structures of the electrolyte studied previously.
+Because of the reasons mentioned above, a unique WF will not be sufficient to generate useful mechanistic models of interfaces, but also too rigid and difficult to reuse for other purposes, and may reduce the impact of our research. Instead of developing a unique WF dedicated to interfaces, the highest impact is assured by implementing smaller workflows, which assess single and simpler tasks. This requires the standardization of how we are dealing with the inputs and outputs of each (small) WF. An example of a simpler task could be the reading of trajectory files and extraction of total energies to more articulated outputs, which include properties beyond thermodynamics. The overall WF has then the key task of running a set of WFs, each corresponding to a specific task, with consistent and standardized parameters, as well as to deal with possible errors encountered during the execution of the simulation. This has the advantage of making WFs interoperable and reusable, beyond what can be done by a comprehensive implementation, which tackles all the tasks in a single WF.
+Smaller WFs to create larger and comprehensive WFs have been recently implemented using the Atomic Simulation Recipes (ASR), which allows the calculation of the structures and electronic properties of bulk materials concatenating simple tasks in a larger WF. The ASR is currently implemented in combination with the MyQueue workflow scheduler, which takes advantage of the ASE library and runs the calculations using the GPAW DFT code.52,120,121 Another example is Atomate, which contains smaller workflows that facilitate NEB calculations if the input structures are provided.18,121
+After automating the calculations in a WF, fully autonomous calculations can be achieved by employing agent-based optimizers. Autonomous agents can help to more efficiently guide the search for new materials by always ensuring to pick the next best candidate, in contrast to choosing a predefined candidate in systematic screening studies.18,122 In detail, Gaussian process regression can be used to obtain a prediction together with an associated uncertainty estimate of the desired property.102,122 This method is an example of addressing the exploration–exploitation problem, when faced with investigating a given structural phase space. Running workflows autonomously has shown great promise for optimization problems in chemistry.102,123 Software packages containing Bayesian optimizers are available off the shelf.123,124 Therefore, the major challenge will be the implementation of robust workflows that can provide the required properties to the autonomous agent in a reasonable amount of time.
+Multiscale modelling
+From a mathematical perspective, multiscale modelling (MSM) provides a consistent procedure to integrate and combine the predictions generated by two or more models that describe relevant features of the same phenomena at different temporal and/or spatial scales.125–127 In the remainder of this perspective, such a procedure will be referred to as a Multiscale Computational Framework (MCF). MCFs aim to solve a system of interconnected equations considering a well-defined hierarchy according to the particular scales (time and space) addressed by the various models involved.128–131 The specific mechanism employed to provide a solution for these equations constitutes the core aspect of a given MCF since it represents the actual mathematical process by which each scale is properly integrated into another one.
+Two main approaches are typically considered when classifying MSM methods. The first one focuses on transferring information from one scale into another,16,132–134 which leads to three main categories:
+(1) Concurrent methods: all the scales established by various models are employed in a simultaneous manner but over independent sections of the physical domain of the phenomena of interest.
+(2) Hierarchical methods: the different scales are employed to model the same subsection of the domain, performing the hierarchical bridging from one scale into another with resampling procedures.
+(3) Hybrid methods: the various scales addressed by the models considered are integrated using a combination of approach no. 1 and 2, as it happens, for instance, with multi-grid and quasi-continuum methods.
+The second classification is based on the algorithmic aspects of the procedure used to solve a set of governing equations considered by a MSM method,16,132–134 leading to the three following classes:
+(1) Sequential methods: the different models involved are used one after the other considering the relative hierarchy that exists among them. In other words, the linking between scales is accomplished by processing the output of a first model to then use it as the input for the next model and at the next scale.
+(2) Iterative methods: in this case, after a series of models have sequentially processed a particular input, the output generated is adjusted and transformed to match the scale of the first model in the series to then be provided again as the input of the whole process. This is repeated until a convergence criterion is satisfied.
+(3) Tightly coupled methods: the models explicitly share a group of common variables among them, which are then used to transfer the information from one model to another and provide a global solution for the system.
+In terms of the algorithmic classification presented above, it is generally assumed that iterative and tightly coupled methods provide results with higher fidelity when compared with their sequential counterparts given their higher degree of flexibility to produce results matching a baseline dataset. Even though such an assumption generally holds, more context, regarding the specific characteristics of the problem to be solved, is always required to select one method over the other alternatives in a consistent manner. For instance, a tightly coupled method will achieve good results only if the common variables that are selected have enough predictive power and relevance within their corresponding models, while in the case of an iterative scheme good performance might be achieved only if the successive application of different models leads to a refinement of the information being processed, but always considering a coherent convergence criterion based on a function that is capable of quantifying the degree of refinement.
+It is also important to highlight that even if iterative methods tend to provide results with higher fidelity than sequential ones, they might not always be the best alternative to tackle a particular problem. In multiple real-life applications, the access to computational resources may be seriously limited, making the use of iterative MCFs not feasible, especially if many iterations are needed to achieve convergence and produce satisfactory results. In such cases, the use of a sequential or a tightly coupled method might be the only possible alternative.
+Another feature that is commonly used to describe a MCF is given by the concept known as autonomy. For instance, when highly complex models are incorporated within a MCF, some user input might be necessary at the moment of bridging two different scales in order to have a swift transition from one to another. In such cases, the MCF will be described as a non-autonomous one. On the other hand, if the bridging process is carried out in a fully automated fashion, then the corresponding MCF will be considered an autonomous one.
+Within the context of battery research, especially in the case of the characterization of battery interfaces, MSM plays a crucial role.16,133–135 Several processes that are of fundamental importance for understanding the operation of a battery, for example, the formation of the SEI, occur at the interface between the electrolyte and the electrodes. Such processes have been extensively studied employing different types of MCFs to describe the relevant phenomena considering various temporal and spatial scales. The main MCF types that are typically discussed in the literature16,133 concern the following:
+(1) A group of sequential methods that are employed to obtain insights on the processes governing the formation of the SEI layer at nanoscale levels for both space (nm) and time (ns). As discussed in the previous sections, Ab initio molecular dynamics (AIMD) and reactive force-field molecular dynamics are two of the most used alternatives to study the composition and decomposition reactions related to the SEI.101,136–139 Over larger spatial scales, classical molecular dynamics is often the preferred method to characterize the mechanical properties along with the transport of ions in the SEI layer.
+(2) Monte Carlo methods adopt a statistical approach to describe the formation of the SEI covering longer timescales than MD simulations, making them the preferred alternative when it is necessary to characterize the degradation process in battery interfaces over longer periods of time. Monte Carlo-based molecular dynamics (which operates in an iterative manner) along with the kinetic Monte Carlo models140 (typically implemented in a sequential manner) represent the most common examples.
+(3) Tightly coupled methods that rely on continuum models are commonly used to describe the growth of the SEI, along with the ion transport that takes place in this layer, as a function of several parameters that can be measured experimentally or estimated through simulations.
+Only recently, multiple upgraded MCFs have been introduced, across different disciplines, based on the use of machine learning, statistical techniques, and diverse data-driven procedures.51 Device level modelling can be performed using numerical models enabled by PyBaMM.141 This is a direct consequence of the fact that the only way of assessing the performance of a MCF is by directly comparing the results produced with the available experimental data. In particular, the widespread access to powerful computational resources has allowed researchers to explore new data-intensive schemes oriented towards developing better MCFs.
+Experimental data represent a central element in the characterization of MCFs. This is because it is not trivial to understand the level of fidelity that can be achieved by a given MCF just by knowing the specific accuracy of its underlying models (in their respective scales). In other words, the combination of two high-fidelity models may not necessarily lead to better results than the combination of two low-fidelity models in the context of a MSM problem, since many factors must be properly analysed before concluding that. The exact procedure by which the different scales are bridged within a MCF plays a fundamental role in this aspect. However, this procedure is highly non-linear and usually does not have a clear analytical expression, meaning that the error propagation along the different models included in a MCF is not a straightforward process and, in many cases, is not even controllable.
+Considering the fundamental role of experimental data in profiling the operation of MCFs, their inclusion in the construction scheme represents an important and logical step forward for the amelioration of MCFs. In this context, data availability and its corresponding degree of veracity become calibration elements that can be exploited in an automated manner to maximize the final accuracy achieved by a given MCF.101,142 Because of this, it is important to keep in mind that the performance of the MCF generated by a data-driven process will be affected by any bias observed in the calibration data. Consequentially, it is also important to stress that external datasets should be always used to validate the performance in a consistent manner.
+From a practical standpoint, the information contained in an experimental dataset can be parametrized by a standard machine learning method in terms of the different parameters considered, within the MCF, by the various models involved at their corresponding scales.124,143 Then, this information can be integrated at multiple levels, simplifying the complex calculations of a particular model, and hence leading to a global speed-up of the whole MCF. The origin of such speed-up lies in the fact that the trained machine is essentially operating as a surrogate model.102,144,145
+Furthermore, in some specific cases where a simple strategy to bridge two models at different scales is not evident, more sophisticated machine learning methods, such as neural networks, can be used to exploit their universal function approximation characteristics and provide a black-box-type solution.114,132,146 This also means that the development of autonomous MCFs, especially in those cases where the bridging process between scales is highly complex, might not be possible without including machine learning components.
+In the future, access to big repositories of experimental data resulting from big projects aimed at characterizing battery interfaces will become the key element required to develop more accurate MCFs. With huge volumes of data at the disposal of scientists that will ideally cover most of the relevant variables in the parameter space with a great deal of detail within the ranges of physical interest, it would be then possible to test all possible combinations of models and therefore predict what is the best suited MCF to address a specific problem with a particular description. In practical terms, this would require profiling the interactions between different models under various circumstances, enabling the development of an optimal selection strategy to then provide, in an automated manner, custom MCFs for each specific problem. Strategies of this kind may be available when all the data generated by large-scale battery research initiatives, such as ARTISTIC135,136,140–143 for battery electrode manufacturing and BIG-MAP113 for battery SEIs, are consistently integrated into massive datasets.
+Another research direction to pursue in the future to improve the global performance of the MCFs consists in employing a hybrid approach when integrating data during the construction process. Until now, only the experimental data, comparable with the final output of a MCF, have been integrated into the process and therefore related to the underlying multi-scale variables present in the various models considered within a particular MCF. However, the information contained in other experimental datasets, and even simulations, could be also integrated into the intermediate points between models, adding in that way more constraints to the whole optimization process that is carried out. Moreover, the generation of big volumes of synthetic data, using to that end the available experimental data, simulations, and data-augmentation techniques, could represent another worthwhile effort aimed at improving the accuracy achieved by a MCF. In line with such a trend, we have seen how the classic approach to study the SEI growth, based on phase-field models that are validated and calibrated using different types of experimental data (e.g., XPS, FTIR, and TEM),147–149 has been progressively replaced by more sophisticated methods where diverse experimental data are incorporated at different scales.16
+From the ideas and concepts discussed above, it is worth noting that MCFs can vary widely in their complexity, not only in terms of the scales covered by their constitutive models, but also due to the specific mechanisms used to bridge these scales and the methods selected to quantify the accuracy (among many other elements). In Fig. 3, four diagrams representing different MCFs are shown following an increasing degree of complexity. Fig. 3a corresponds to the standard non-autonomous MCF, where the bridging between scales requires human input and the performance assessment is done at the end of the whole process by comparing the final output of the MCF with experimental validation data. If the scale bridging process is automated using an analytic method, the resulting configuration is known as an autonomous MCF and is shown in Fig. 3b. The autonomous MCF can also be enhanced by considering a data-driven approach for the bridging process and the performance assessment. If there is access to enough data to build a representative training set at different scale levels, the bridging process can be carried out with machine learning. Such a configuration is shown in Fig. 3c and it is known as a data-driven autonomous MCF. With a significant amount of data, a more sophisticated approach can be considered, where the available data are split into two sets: one is aimed at the training process that allows bridging scales, while the other set is aimed at validating the intermediate outputs produced by the MCF to quantify its intra-scale accuracy. This configuration, known as data-driven autonomous MCF with intermediate performance assessment, is displayed in Fig. 3d.
+ Fig. 3  Schematic representation of four MCF types presented by increasing order of complexity as a function of the specific mechanisms employed to bridge the different scales and assess the performance of the whole modelling process. In that context, the diagram shown in (a) corresponds to a non-autonomous MCF, the one displayed in (b) represents an autonomous MCF, and the one presented in (c) corresponds to a data-driven autonomous MCF. The last diagram, shown in (d), indicates a data-driven autonomous MCF with intermediate performance assessment which represents the most complex MCF in terms of the elements considered. 
+While MSM methods offer a path forward to overcome the scale limitations associated with distinct length and time scale simulation techniques, such as DFT, mesoscale, finite elements, etc., the implementation of MSMs is aggravated by their intensive storage and computing needs. Indeed MSM methods require dedicated high performance computers (HPCs) with specialized storage platforms, which clearly limits the execution of MSMs as routine tools to carry out battery research. Recently, this issue has been addressed by the ARTISTIC project through its “Online Manufacturing Simulator” (see Table 1),150 where a series of multi-scale models (covering different steps of the LIB manufacturing process46–50 can be sequentially integrated) are available to users interested in performing dedicated simulations from an Internet browser in specific computational infrastructures. To our knowledge, this initiative, where users can execute multiscale simulations of LIBs through a graphical user interface accessible through a browser, remains the first of its kind.
+High-throughput experiments
+Complementarily, there has been a recent burgeoning trend in automated, high-throughput experimentation to close the loop for developing next-generation batteries and battery materials. Breakthroughs in materials synthesis, characterization, cell fabrication, and testing are required to accelerate the discovery of high-performance and stable battery interfaces such as the SEI (Fig. 4).151–153
+ Fig. 4  Experimental efforts to develop next-generation batteries and battery materials with stable interfaces, ranging from materials synthesis and characterization to cell fabrication and testing. 
+First, we discuss recent advances and opportunities in high-throughput materials synthesis. In contrast to traditional single-step methods, which are suitable for synthesizing single-composition materials but are often slow and costly,154 high-throughput and combinatorial technologies offer a promising alternative to greatly speed up the discovery and optimization of materials.155–159 A high-throughput and combinatorial experimentation approach is effective and reliable to prepare a huge number of interface materials over a broader compositional region in an appreciably short period of time.155–158 Methods such as post-synthesis array transfer,158 thin-film combinatorial method,160,161 combinatorial robot system, combinatorial magnetron sputtering and pulsed laser deposition,155,162 multi-component additive screening,163 and the sol–gel approach164 allow rapid investigation of different SEI materials as a function of the synthesis parameters. While examples of high-throughput experiments for the synthesis of SEI materials have been discussed in the literature, they are still relatively limited, and more efforts should be devoted to enhancing their scalability. In addition, the compatibility of the preparation route with the battery chemistry needs to be improved and the interface materials should possess physical and chemical structures that are relevant to the battery chemistry. For instance, a fluoride-rich SEI of about 5 to 10 nm is highly favourable for Li-based chemistries, but a similar physio-chemistry is not equally effective for Na-based chemistries.60,165
+Notable progress has also been made recently in developing high-throughput characterization techniques to obtain accurate structural and elemental information of interfaces.157,162,166–168 High-throughput characterization techniques, such as X-ray diffraction,169,170 X-ray absorption,171,172 X-ray fluorescence,173 and other transmission X-ray techniques, have recently been employed for thin-film based research.157 While efforts have been made to develop the aforementioned tools, they require further development to achieve high spatial and temporal resolution, especially for studying interfaces over a large area. In this respect, synchrotron X-ray radiation techniques can provide high spatial resolution and a lower signal-to-noise ratio to meet the requirement of high-throughput experiments.157,171 For example, the technique can measure over 210 samples per hour with an optimized time of about 15 s per sample with a balanced signal-to-noise ratio. For efficient use of beamline facilities and to enhance data collection capabilities, it is also essential to develop a reproducible automated sample changer stage. Besides, data mining and data processing can significantly affect the efficiency of the screening process.174 Through data processing and data mining, tangible and meaningful information of the interfaces can easily be accessed from fragmented information.
+In addition to structural and elemental evaluation, electrochemical screening of the interface materials is essential to ensure long-term cell operation.157,162,166,175 Fabrication of a reliable and reproducible electrochemical setup is the basic requirement to obtain electrochemical information, especially at the development stage of the cell. For a routine electrochemical test, Swagelok, sandwich, coin-cell, and split-cell configurations are used; however, similar cell designs cannot be adopted for high-throughput experiments. The design of the high-throughput cell is of paramount interest and has been widely investigated, which span from jet printed electrodes and multi-probe automated liquid dispensing system to a sputtered array of electrodes.158,164,176,177 Despite the complexity associated with the fabrication route, an array of 64 cells has been developed and tested successfully.146 The high-throughput and combinatorial array approach can be efficiently deployed for electrochemical screening of interface materials at the full-cell level to expedite the screening process significantly. However, the electrode arrays are typically limited to few tens of cells, which might not be enough to cover a broader spectrum of different interfaces. In addition, a transparent substrate to support the array can be used instead, to be optically accessible to perform various operando experiments on the array itself.
+Finally, an accurate early prediction of battery cycle life is essential for high-throughput battery testing.165,174,177–179 Yet, it is immensely challenging due to the complex and typically nonlinear degradation processes in batteries.180 As a result, the available datasets to predict battery cycle life are relatively sparse and limited. Several battery parameters, such as energy efficiency, coulombic efficiency, and capacity degradation, are identified to be the key to early prediction of cycle life.174,177,179 It is worth mentioning that it is the total cycle time, not the cycle count, which contributes significantly to battery inefficiencies or degradation.180,181 Therefore, it has become increasingly relevant to reconsider the model parameters for early prediction of cycle life. The machine learning models that have been developed recently, for instance, deliberate data generation with a data-driven modelling approach,174 are able to predict early the cycle life satisfactorily (using the first 100 cycles). Since batteries lose their capacity over long-term cycling due to diverse aging mechanisms, the proposed model could be less reliable after 100 cycles. Opportunities for improving upon the state-of-the-art prediction models include higher accuracy, earlier prediction, real-time analysis, greater explainability/interpretability, and broader application to a wide range of battery chemistries/cycling conditions. These can potentially be realized by incorporating advanced battery physics and domain knowledge into hybrid machine learning models.182
+The ultimate goal is the integration of all these components into a fully autonomous and continuous process. In this respect, we can envision interconnected robotic platforms that link adjacent process steps and achieve a continuous flow from synthesis to testing. Overall, the combination of high-throughput computations, experiments and machine learning in a closed loop can open the prospect of self-driving laboratories for fully autonomous discovery of new battery materials and interfaces.
+Achieving an autonomous design of interfaces cannot be the effort of a single research group, involving a single set of tools, e.g., a simulation package or experimental techniques. The solution is to define new standards and protocols (input and output data format, compatible computer server infrastructure, databases, etc.), which could be used across different parts of the battery value chain. An API/GUI is then the interface between the user and the computational/experimental workflows. The user can then perform the calculations or experiments without knowing the details of the methodology, the specifics of each code or the experimental technique, requesting new data when needed. The EU-H2020 Marketplace124,143 and the BIG-MAP's App Store44 are initiatives following this direction. If successful, this approach would enable an integration between computational and experimental workflows, thus fully automating and accelerating the discovery process.113
+Conclusions
+In this perspective, we have highlighted the numerous challenges that need to be overcome before a fully autonomous high-throughput multiscale approach for the description of energy storage devices can be performed. For example, most of the existing computational tools and databases target only the bulk phase of materials and lack information regarding interfaces. An apparent challenge is how to connect the properties accessible at different length and time scales, as well as the propagation of errors between scales. These aspects necessitate forging collaborations between different research groups and with expertise in different domains.
+We have summarized the current stages and challenges of high-throughput multiscale modelling to untangle the sheer complexity of interfaces in energy storage devices. A comprehensive guide for the future development of this emerging field has been outlined. A discussion of the existing toolkits and databases that have been widely used for high-throughput atomistic computational modelling and connected workflows has been presented. We have reviewed the current developments of multiscale modelling and proposed four multiscale modelling strategies with increasing complexity, starting from a non-autonomous approach and ending with a fully autonomous workflow, inclusive of data-driven methods plus intermediate stages of assessment. Finally, we discussed the recent advances, opportunities, and progress in high-throughput experiments, which include materials synthesis, structural and elemental evaluation, electrochemical screening of interface materials, as well as early predictions of battery cycle life.
+Our analysis also provides guidelines for the development of fully autonomous processes for developing the high-throughput multiscale modelling of battery interfaces. Altogether these strategies contribute to pave ways to significantly improve the rational design of high-performance batteries and other energy storage devices.
+Author contributions
+All authors contributed to researching data, discussion of content, and writing and reviewing/editing the manuscript.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+Z. W. S. acknowledges the support of the Singapore National Research Foundation (NRF-NRFF2017-04). P. C. is grateful to the ANR-NRF NRF2019-NRF-ANR073 Na-MASTER. P. C. and Z. D. acknowledge funding from the National Research Foundation through his NRF Fellowship NRFF12-2020-0012. F. T. B. and I. E. C. acknowledge support from the Independent Research Fund Denmark (Danish ERC Programme, project “Multiscale Design of Electrochemical Metamaterials” and Green Transition Project 1, project “Reconfigurable Metamaterials for Next Generation High-capacity Batteries” under grant numbers 0227-00001B and 0217-00111B). A. A. F. acknowledges the European Union's Horizon 2020 research and innovation programme for the funding support through the European Research Council (grant agreement 772873, “ARTISTIC” project). A. A. F. acknowledges Institut Universitaire de France for the support. A. A. F., F. C. and I. E. C. acknowledge support from the European Union's Horizon 2020 research and innovation programme under grant agreement no. 957189 (BIG-MAP) and no. 957213 (BATTERY 2030+).
+References
+A. Banerjee, X. Wang, C. Fang, E. A. Wu and Y. S. Meng, Chem. Rev., 2020, 120, 6878–6933 CrossRef CAS PubMed .
+L. Wang, D. Wang, F. Zhang and J. Jin, Nano Lett., 2013, 13, 4206–4211 CrossRef CAS PubMed .
+J. Janek and W. G. Zeier, Nat. Energy, 2016, 1, 16141 CrossRef .
+R. Tatara, P. Karayaylali, Y. Yu, Y. Zhang, L. Giordano, F. Maglia, R. Jung, J. P. Schmidt, I. Lund and Y. Shao-Horn, J. Electrochem. Soc., 2019, 166, A5090–A5098 CrossRef CAS .
+T. Deng, X. Ji, Y. Zhao, L. Cao, S. Li, S. Hwang, C. Luo, P. Wang, H. Jia, X. Fan, X. Lu, D. Su, X. Sun, C. Wang and J. Zhang, Adv. Mater., 2020, 32, 2000030 CrossRef CAS PubMed .
+T. Minato and T. Abe, Prog. Surf. Sci., 2017, 92, 240–280 CrossRef CAS .
+Y. Lei, D. Han, J. Dong, L. Qin, X. Li, D. Zhai, B. Li, Y. Wu and F. Kang, Energy Storage Mater., 2020, 24, 319–328 CrossRef .
+J. Shi, N. Ehteshami, J. Ma, H. Zhang, H. Liu, X. Zhang, J. Li and E. Paillard, J. Power Sources, 2019, 429, 67–74 CrossRef CAS .
+
+          K. Nakajima, T. Katoh, Y. Inda and B. Hoffman, Lithium Ion Conductive Glass Ceramics: Lithium Ion Conductive Glass Ceramics: Properties and Application Properties and Application in Lithium Metal Batteries in Lithium Metal Batteries, http://oharacorp.com/pdf/ohara-presentation-ornl-symposium-10-08-2010.pdf.
+
+          Y. Inda and K. Ohara, Eur. Pat., EP1049188A1, 2000 Search PubMed.
+
+          K. Ogasa, US Pat., US2012/0237834A1, 2012 Search PubMed .
+
+          S. J. Visco, Y. S. Nimon, L. C. De Jonghe, A. Petrov and N. Goncharenko, US Pat., US2013/0045428A1, 2013 Search PubMed.
+
+          S. J. Visco, Y. S. Nimon, L. De Jonghe, B. D. Katz and A. Petrov, US Pat., US9130198B2, 2015 Search PubMed.
+
+          S. J. Visco and Y. S. Nimon, US Pat., US9601779B2, 2017 Search PubMed .
+J. A. Lewis, F. J. Q. Cortes, Y. Liu, J. C. Miers, A. Verma, B. S. Vishnugopi, J. Tippens, D. Prakash, T. S. Marchese, S. Y. Han, C. Lee, P. P. Shetty, H.-W. Lee, P. Shevchenko, F. De Carlo, C. Saldana, P. P. Mukherjee and M. T. McDowell, Nat. Mater., 2021, 20, 503–510 CrossRef CAS PubMed .
+A. A. Franco, A. Rucci, D. Brandell, C. Frayret, M. Gaberscek, P. Jankowski and P. Johansson, Chem. Rev., 2019, 119, 4569–4627 CrossRef CAS PubMed .
+S. P. Ong, W. D. Richards, A. Jain, G. Hautier, M. Kocher, S. Cholia, D. Gunter, V. L. Chevrier, K. A. Persson and G. Ceder, Comput. Mater. Sci., 2013, 68, 314–319 CrossRef CAS .
+K. Mathew, J. H. Montoya, A. Faghaninia, S. Dwarakanath, M. Aykol, H. Tang, I. Chu, T. Smidt, B. Bocklund, M. Horton, J. Dagdelen, B. Wood, Z.-K. Liu, J. Neaton, S. P. Ong, K. Persson and A. Jain, Comput. Mater. Sci., 2017, 139, 140–152 CrossRef .
+L. Cheng, R. S. Assary, X. Qu, A. Jain, S. P. Ong, N. N. Rajput, K. Persson and L. A. Curtiss, J. Phys. Chem. Lett., 2015, 6, 283–291 CrossRef CAS PubMed .
+S. P. Huber, S. Zoupanos, M. Uhrin, L. Talirz, L. Kahle, R. Häuselmann, D. Gresch, T. Müller, A. V. Yakutovich, C. W. Andersen, F. F. Ramirez, C. S. Adorf, F. Gargiulo, S. Kumbhar, E. Passaro, C. Johnston, A. Merkys, A. Cepellotti, N. Mounet, N. Marzari, B. Kozinsky and G. Pizzi, Sci. Data, 2020, 7, 300 CrossRef PubMed .
+A. Jain, Y. Shin and K. A. Persson, Nat. Rev. Mater., 2016, 1, 15004 CrossRef CAS .
+R. H. Taylor, F. Rose, C. Toher, O. Levy, K. Yang, M. Buongiorno Nardelli and S. Curtarolo, Comput. Mater. Sci., 2014, 93, 178–192 CrossRef .
+A. Jain, S. P. Ong, G. Hautier, W. Chen, W. D. Richards, S. Dacek, S. Cholia, D. Gunter, D. Skinner, G. Ceder and K. A. Persson, APL Mater., 2013, 1, 011002 CrossRef .
+S. P. Ong, S. Cholia, A. Jain, M. Brafman, D. Gunter, G. Ceder and K. A. Persson, Comput. Mater. Sci., 2015, 97, 209–215 CrossRef .
+A. Jain, S. P. Ong, W. Chen, B. Medasani, X. Qu, M. Kocher, M. Brafman, G. Petretto, G.-M. Rignanese, G. Hautier, D. Gunter and K. A. Persson, Concurr. Comput. Pract. Exp., 2015, 27, 5037–5059 CrossRef .
+F. Zhou, M. Cococcioni, C. A. Marianetti, D. Morgan and G. Ceder, Phys. Rev. B: Condens. Matter Mater. Phys., 2004, 70, 235121 CrossRef .
+L. Wang, T. Maxisch and G. Ceder, Chem. Mater., 2007, 19, 543–552 CrossRef CAS .
+S. P. Ong, L. Wang, B. Kang and G. Ceder, Chem. Mater., 2008, 20, 1798–1807 CrossRef CAS .
+S. P. Ong, A. Jain, G. Hautier, B. Kang and G. Ceder, Electrochem. Commun., 2010, 12, 427–430 CrossRef CAS .
+A. Jain, G. Hautier, S. P. Ong, C. J. Moore, C. C. Fischer, K. A. Persson and G. Ceder, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 84, 045115 CrossRef .
+X. Qu, A. Jain, N. N. Rajput, L. Cheng, Y. Zhang, S. P. Ong, M. Brafman, E. Maginn, L. A. Curtiss and K. A. Persson, Comput. Mater. Sci., 2015, 103, 56–67 CrossRef CAS .
+R. Dmello, J. D. Milshtein, F. R. Brushett and K. C. Smith, J. Power Sources, 2016, 330, 261–272 CrossRef CAS .
+W. D. Richards, L. J. Miara, Y. Wang, J. C. Kim and G. Ceder, Chem. Mater., 2016, 28, 266–273 CrossRef CAS .
+T. P. Senftle, S. Hong, M. M. Islam, S. B. Kylasa, Y. Zheng, Y. K. Shin, C. Junkermeier, R. Engel-Herbert, M. J. Janik, H. M. Aktulga, T. Verstraelen, A. Grama and A. C. T. van Duin, npj Comput. Mater., 2016, 2, 15011 CrossRef CAS .
+J. E. Saal, S. Kirklin, M. Aykol, B. Meredig and C. Wolverton, JOM, 2013, 65, 1501–1509 CrossRef CAS .
+S. Curtarolo, W. Setyawan, S. Wang, J. Xue, K. Yang, R. H. Taylor, L. J. Nelson, G. L. W. Hart, S. Sanvito, M. Buongiorno-Nardelli, N. Mingo and O. Levy, Comput. Mater. Sci., 2012, 58, 227–235 CrossRef CAS .
+C. E. Calderon, J. J. Plata, C. Toher, C. Oses, O. Levy, M. Fornari, A. Natan, M. J. Mehl, G. Hart, M. Buongiorno Nardelli and S. Curtarolo, Comput. Mater. Sci., 2015, 108, 233–238 CrossRef CAS .
+
+          C. Toher, C. Oses, D. Hicks, E. Gossett, F. Rose, P. Nath, D. Usanmaz, D. C. Ford, E. Perim, C. E. Calderon, J. J. Plata, Y. Lederer, M. Jahnátek, W. Setyawan, S. Wang, J. Xue, K. Rasch, R. V. Chepulskii, R. H. Taylor, G. Gomez, H. Shi, A. R. Supka, R. A. R. Al Orabi, P. Gopal, F. T. Cerasoli, L. Liyanage, H. Wang, I. Siloi, L. A. Agapito, C. Nyshadham, G. L. W. Hart, J. Carrete, F. Legrain, N. Mingo, E. Zurek, O. Isayev, A. Tropsha, S. Sanvito, R. M. Hanson, I. Takeuchi, M. J. Mehl, A. N. Kolmogorov, K. Yang, P. D’Amico, A. Calzolari, M. Costa, R. De Gennaro, M. B. Nardelli, M. Fornari, O. Levy and S. Curtarolo, Handbook of Materials Modeling, Springer International Publishing, Cham,  2019, pp. 1–28 Search PubMed .
+S. Curtarolo, G. L. W. Hart, M. B. Nardelli, N. Mingo, S. Sanvito and O. Levy, Nat. Mater., 2013, 12, 191–201 CrossRef CAS PubMed .
+C. Draxl and M. Scheffler, MRS Bull., 2018, 43, 676–682 CrossRef .
+L. Talirz, S. Kumbhar, E. Passaro, A. V. Yakutovich, V. Granata, F. Gargiulo, M. Borelli, M. Uhrin, S. P. Huber, S. Zoupanos, C. S. Adorf, C. W. Andersen, O. Schütt, C. A. Pignedoli, D. Passerone, J. VandeVondele, T. C. Schulthess, B. Smit, G. Pizzi and N. Marzari, Sci. Data, 2020, 7, 299 CrossRef PubMed .
+G. Pizzi, A. Cepellotti, R. Sabatini, N. Marzari and B. Kozinsky, Comput. Mater. Sci., 2016, 111, 218–230 CrossRef .
+M. Uhrin, S. P. Huber, J. Yu, N. Marzari and G. Pizzi, Comput. Mater. Sci., 2021, 187, 110086 CrossRef .
+BIG-MAP App Store, https://big-map.github.io/big-map-registry/.
+The ARTISTIC Project, https://www.erc-artistic.eu/.
+A. C. Ngandjong, T. Lombardo, E. N. Primo, M. Chouchane, A. Shodiev, O. Arcelus and A. A. Franco, J. Power Sources, 2021, 485, 229320 CrossRef CAS .
+A. Shodiev, E. Primo, O. Arcelus, M. Chouchane, M. Osenberg, A. Hilger, I. Manke, J. Li and A. A. Franco, Energy Storage Mater., 2021, 38, 80–92 CrossRef .
+T. Lombardo, A. C. Ngandjong, A. Belhcen and A. A. Franco, Energy Storage Mater., 2021, 43, 337–347 CrossRef .
+M. Chouchane and A. A. Franco, Batteries Supercaps, 2021, 4, 1375 CrossRef .
+M. Chouchane, A. Rucci, T. Lombardo, A. C. Ngandjong and A. A. Franco, J. Power Sources, 2019, 444, 227285 CrossRef CAS .
+T. Lombardo, M. Duquesnoy, H. El-Bouysidy, F. Årén, A. Gallo-Bueno, P. B. Jørgensen, A. Bhowmik, A. Demortière, E. Ayerbe, F. Alcaide, M. Reynaud, J. Carrasco, A. Grimaud, C. Zhang, T. Vegge, P. Johansson and A. A. Franco, Chem. Rev., 2021 DOI:10.1021/acs.chemrev.1c00108 .
+A. Bhowmik, I. E. Castelli, J. M. Garcia-Lastra, P. B. Jørgensen, O. Winther and T. Vegge, Energy Storage Mater., 2019, 21, 446–456 CrossRef .
+S. N. Steinmann and Z. W. Seh, Nat. Rev. Mater., 2021, 6, 289–291 CrossRef CAS .
+A. Mistry, A. A. Franco, S. J. Cooper, S. A. Roberts and V. Viswanathan, ACS Energy Lett., 2021, 1422–1431 CrossRef CAS PubMed .
+P. Hohenberg and W. Kohn, Phys. Rev., 1964, 136, B864–B871 CrossRef .
+W. Kohn and L. J. Sham, Phys. Rev., 1965, 140, A1133–A1138 CrossRef .
+A. M. Nolan, Y. Zhu, X. He, Q. Bai and Y. Mo, Joule, 2018, 2, 2016–2046 CrossRef CAS .
+I. E. Castelli, F. Hüser, M. Pandey, H. Li, K. S. Thygesen, B. Seger, A. Jain, K. A. Persson, G. Ceder and K. W. Jacobsen, Adv. Energy Mater., 2015, 5, 1400915 CrossRef .
+I. E. Castelli, D. D. Landis, K. S. Thygesen, S. Dahl, I. Chorkendorff, T. F. Jaramillo and K. W. Jacobsen, Energy Environ. Sci., 2012, 5, 9034 RSC .
+S. P. Ong, V. L. Chevrier, G. Hautier, A. Jain, C. Moore, S. Kim, X. Ma and G. Ceder, Energy Environ. Sci., 2011, 4, 3680 RSC .
+M. Liu, Z. Rong, R. Malik, P. Canepa, A. Jain, G. Ceder and K. A. Persson, Energy Environ. Sci., 2015, 8, 964–974 RSC .
+P. Canepa, S.-H. Bo, G. Sai Gautam, B. Key, W. D. Richards, T. Shi, Y. Tian, Y. Wang, J. Li and G. Ceder, Nat. Commun., 2017, 8, 1759 CrossRef PubMed .
+G. Ceder, Y.-M. Chiang, D. R. Sadoway, M. K. Aydinol, Y.-I. Jang and B. Huang, Nature, 1998, 392, 694–696 CrossRef CAS .
+G. Ceder, MRS Bull., 2010, 35, 693–701 CrossRef CAS .
+L. Yu and A. Zunger, Phys. Rev. Lett., 2012, 108, 068701 CrossRef PubMed .
+M. W. Gaultois, T. D. Sparks, C. K. H. Borg, R. Seshadri, W. D. Bonificio and D. R. Clarke, Chem. Mater., 2013, 25, 2911–2920 CrossRef CAS .
+M. Aykol, S. Kim, V. I. Hegde, D. Snydacker, Z. Lu, S. Hao, S. Kirklin, D. Morgan and C. Wolverton, Nat. Commun., 2016, 7, 13779 CrossRef CAS PubMed .
+R. Gautier, X. Zhang, L. Hu, L. Yu, Y. Lin, T. O. L. Sunde, D. Chon, K. R. Poeppelmeier and A. Zunger, Nat. Chem., 2015, 7, 308–316 CrossRef CAS PubMed .
+Y. Xiao, Y. Wang, S.-H. Bo, J. C. Kim, L. J. Miara and G. Ceder, Nat. Rev. Mater., 2020, 5, 105–126 CrossRef CAS .
+Z. Rong, D. Kitchaev, P. Canepa, W. Huang and G. Ceder, J. Chem. Phys., 2016, 145, 074112 CrossRef PubMed .
+F. T. Bölle, A. Bhowmik, T. Vegge, J. Maria García Lastra and I. E. Castelli, Batteries Supercaps, 2021, 4, 1516–1524 CrossRef .
+F. T. Bölle, N. R. Mathiesen, A. J. Nielsen, T. Vegge, J. M. Garcia Lastra and I. E. Castelli, Batteries Supercaps, 2020, 3, 488–498 CrossRef .
+T. Chen, G. Sai Gautam and P. Canepa, Chem. Mater., 2019, 31, 8087–8099 CrossRef CAS .
+L. L. Wong, K. C. Phuah, R. Dai, H. Chen, W. S. Chew and S. Adams, Chem. Mater., 2021, 33, 625–641 CrossRef CAS .
+C. Wang, K. Aoyagi, P. Wisesa and T. Mueller, Chem. Mater., 2020, 32, 3741–3752 CrossRef CAS .
+B. He, S. Chi, A. Ye, P. Mi, L. Zhang, B. Pu, Z. Zou, Y. Ran, Q. Zhao, D. Wang, W. Zhang, J. Zhao, S. Adams, M. Avdeev and S. Shi, Sci. Data, 2020, 7, 151 CrossRef PubMed .
+N. E. R. Zimmermann, D. C. Hannah, Z. Rong, M. Liu, G. Ceder, M. Haranczyk and K. A. Persson, J. Phys. Chem. Lett., 2018, 9, 628–634 CrossRef CAS PubMed .
+K. T. Butler, G. Sai Gautam and P. Canepa, npj Comput. Mater., 2019, 5, 19 CrossRef .
+Y. Xiao, L. J. Miara, Y. Wang and G. Ceder, Joule, 2019, 3, 1252–1275 CrossRef CAS .
+S. Back, K. Tran and Z. W. Ulissi, ACS Appl. Mater. Interfaces, 2020, 12, 38256–38265 CrossRef CAS PubMed .
+J. Yoon and Z. W. Ulissi, Langmuir, 2020, 36, 819–826 CrossRef CAS PubMed .
+O. Andriuc, M. Siron, J. H. Montoya, M. Horton and K. A. Persson, J. Chem. Inf. Model., 2021, 61(8), 3908–3916 CrossRef CAS PubMed .
+N. Mounet, M. Gibertini, P. Schwaller, D. Campi, A. Merkys, A. Marrazzo, T. Sohier, I. E. Castelli, A. Cepellotti, G. Pizzi and N. Marzari, Nat. Nanotechnol., 2018, 13, 246–252 CrossRef CAS PubMed .
+S. Haastrup, M. Strange, M. Pandey, T. Deilmann, P. S. Schmidt, N. F. Hinsche, M. N. Gjerding, D. Torelli, P. M. Larsen, A. C. Riis-Jensen, J. Gath, K. W. Jacobsen, J. Jørgen Mortensen, T. Olsen and K. S. Thygesen, 2D Mater., 2018, 5, 042002 CrossRef CAS .
+K. Tran and Z. W. Ulissi, Nat. Catal., 2018, 1, 696–703 CrossRef CAS .
+A. S. Rosen, J. M. Notestein and R. Q. Snurr, J. Comput. Chem., 2019, 40, 1305–1318 CrossRef CAS PubMed .
+L. Kahle, A. Marcolongo and N. Marzari, Energy Environ. Sci., 2020, 13, 928–948 RSC .
+A. O. Boev, S. S. Fedotov, K. J. Stevenson and D. A. Aksyonov, Comput. Mater. Sci., 2021, 197, 110592 CrossRef CAS .
+I. A. Moses, R. P. Joshi, B. Ozdemir, N. Kumar, J. Eickholt and V. Barone, ACS Appl. Mater. Interfaces, 2021, 13(45), 53355–53362 CrossRef CAS PubMed .
+S. Park, S. Park, P. Young, M. H. Alfaruqi, J.-Y. Hwang and J. Kim, Energy Environ. Sci., 2021, 14(11), 5864–5874 RSC .
+S. Yoshio, K. Hongo, K. Nakano and R. Maezono, J. Phys. Chem. C, 2021, 125(27), 14517–14524 CrossRef CAS .
+R. B. Araujo, V. Thangavel and P. Johansson, Energy Storage Mater., 2021, 39, 89–95 CrossRef .
+R. Tran, Z. Xu, B. Radhakrishnan, D. Winston, W. Sun, K. A. Persson and S. P. Ong, Sci. Data, 2016, 3, 160080 CrossRef CAS PubMed .
+R. Tran, X.-G. Li, J. H. Montoya, D. Winston, K. A. Persson and S. P. Ong, Surf. Sci., 2019, 687, 48–55 CrossRef CAS .
+N. T. Taylor, F. H. Davies, I. E. M. Rudkin, C. J. Price, T. H. Chan and S. P. Hepplestone, Comput. Phys. Commun., 2020, 257, 107515 CrossRef CAS .
+K. Mathew, A. K. Singh, J. J. Gabriel, K. Choudhary, S. B. Sinnott, A. V. Davydov, F. Tavazza and R. G. Hennig, Comput. Mater. Sci., 2016, 122, 183–190 CrossRef CAS .
+
+          S. Moayedpour, D. Dardzinski, S. Yang, A. Hwang and N. Marom, Arxiv, 2021, 2103.13947.
+S. M. Blau, H. D. Patel, E. W. C. Spotte-Smith, X. Xie, S. Dwaraknath and K. A. Persson, Chem. Sci., 2021, 12(13), 4931–4939 RSC .
+L. Kahle, A. Marcolongo and N. Marzari, Phys. Rev. Mater., 2018, 2, 065405 CrossRef .
+N. R. Mathiesen, H. Jónsson, T. Vegge and J. M. García Lastra, J. Chem. Theory Comput., 2019, 15, 3215–3222 CrossRef CAS PubMed .
+R. Jalem, K. Kanamori, I. Takeuchi, M. Nakayama, H. Yamasaki and T. Saito, Sci. Rep., 2018, 8, 5845 CrossRef PubMed .
+J. A. Garrido Torres, P. C. Jennings, M. H. Hansen, J. R. Boes and T. Bligaard, Phys. Rev. Lett., 2019, 122, 156001 CrossRef CAS PubMed .
+A. Hjorth Larsen, J. Jørgen Mortensen, J. Blomqvist, I. E. Castelli, R. Christensen, M. Dułak, J. Friis, M. N. Groves, B. Hammer, C. Hargus, E. D. Hermes, P. C. Jennings, P. Bjerre Jensen, J. Kermode, J. R. Kitchin, E. Leonhard Kolsbjerg, J. Kubal, K. Kaasbjerg, S. Lysgaard, J. Bergmann Maronsson, T. Maxson, T. Olsen, L. Pastewka, A. Peterson, C. Rostgaard, J. Schiøtz, O. Schütt, M. Strange, K. S. Thygesen, T. Vegge, L. Vilhelmsen, M. Walter, Z. Zeng and K. W. Jacobsen, J. Phys.: Condens. Matter, 2017, 29, 273002 CrossRef PubMed .
+J. Mortensen, M. Gjerding and K. Thygesen, J. Open Source Softw., 2020, 5, 1844 CrossRef .
+Atomic Simulation Recipes, https://asr.readthedocs.io.
+S. Curtarolo, W. Setyawan, G. L. W. Hart, M. Jahnatek, R. V. Chepulskii, R. H. Taylor, S. Wang, J. Xue, K. Yang, O. Levy, M. J. Mehl, H. T. Stokes, D. O. Demchenko and D. Morgan, Comput. Mater. Sci., 2012, 58, 218–226 CrossRef CAS .
+Computational Materials Repository, https://cmr.fysik.dtu.dk.
+D. Strmcnik, I. E. Castelli, J. G. Connell, D. Haering, M. Zorko, P. Martins, P. P. Lopes, B. Genorio, T. Østergaard, H. A. Gasteiger, F. Maglia, B. K. Antonopoulos, V. R. Stamenkovic, J. Rossmeisl and N. M. Markovic, Nat. Catal., 2018, 1, 255–262 CrossRef .
+I. E. Castelli, M. Zorko, T. M. Østergaard, P. F. B. D. Martins, P. P. Lopes, B. K. Antonopoulos, F. Maglia, N. M. Markovic, D. Strmcnik and J. Rossmeisl, Chem. Sci., 2020, 11, 3914–3922 RSC .
+T. Ashino, Data Sci. J., 2010, 9, 54–61 CrossRef .
+EMMC, EMMO: an Ontology for Applied Sciences, https://emmc.info/emmo-info/.
+BATTERY 2030+, https://battery2030.eu/.
+The Battery Interface Genome – Materials Acceleration Platform (BIG-MAP) project, https://www.big-map.eu/BatteryInterfaceOntology (BattINFO), https://github.com/BIG-MAP/BattINFO.
+I. E. Castelli, D. J. Arismendi Arrieta, A. Bhowmik, I. Cekic Laskovic, S. Clark, R. Dominko, E. Flores, J. Flowers, K. Ulvskov Frederiksen, J. Friis, A. Grimaud, K. V. Hansen, L. J. Hardwick, K. Hermansson, L. Königer, H. Lauritzen, F. Le Cras, H. Li, S. Lyonnard, H. Lorrmann, N. Marzari, L. Niedzicki, G. Pizzi, F. Rahmanian, H. Stein, M. Uhrin, W. Wenzel, M. Winter, C. Wölke and T. Vegge, Batteries Supercaps, 2021, 4(12), 1803–1812 CrossRef .
+E. Peled and S. Menkin, J. Electrochem. Soc., 2017, 164, A1703–A1719 CrossRef CAS .
+B. Horstmann, F. Single and A. Latz, Curr. Opin. Electrochem., 2019, 13, 61–69 CrossRef CAS .
+A. Wang, S. Kadam, H. Li, S. Shi and Y. Qi, npj Comput. Mater., 2018, 4, 15 CrossRef .
+S. Plimpton, J. Comput. Phys., 1995, 117, 1–19 CrossRef CAS .
+M. M. Islam, V. S. Bryantsev and A. C. T. van Duin, J. Electrochem. Soc., 2014, 161, E3009–E3014 CrossRef CAS .
+H.-X. Li, X.-Y. Zhou, Y.-C. Wang and H. Jiang, Inorg. Chem. Front., 2021, 8, 425–432 RSC .
+J. Enkovaara, C. Rostgaard, J. J. Mortensen, J. Chen, M. Dułak, L. Ferrighi, J. Gavnholt, C. Glinsvad, V. Haikola, H. A. Hansen, H. H. Kristoffersen, M. Kuisma, A. H. Larsen, L. Lehtovaara, M. Ljungberg, O. Lopez-Acevedo, P. G. Moses, J. Ojanen, T. Olsen, V. Petzold, N. A. Romero, J. Stausholm-Møller, M. Strange, G. A. Tritsaris, M. Vanin, M. Walter, B. Hammer, H. Häkkinen, G. K. H. Madsen, R. M. Nieminen, J. K. Nørskov, M. Puska, T. T. Rantala, J. Schiøtz, K. S. Thygesen and K. W. Jacobsen, J. Phys.: Condens. Matter, 2010, 22, 253202 CrossRef CAS PubMed .
+J. H. Montoya, K. T. Winther, R. A. Flores, T. Bligaard, J. S. Hummelshøj and M. Aykol, Chem. Sci., 2020, 11, 8517–8532 RSC .
+B. J. Shields, J. Stevens, J. Li, M. Parasram, F. Damani, J. I. M. Alvarado, J. M. Janey, R. P. Adams and A. G. Doyle, Nature, 2021, 590, 89–96 CrossRef CAS PubMed .
+F. Häse, L. M. Roch, C. Kreisbeck and A. Aspuru-Guzik, ACS Cent. Sci., 2018, 4, 1134–1145 CrossRef PubMed .
+
+          M. F. Horstemeyer, Practical Aspects of Computational Chemistry, Springer Netherlands, Dordrecht,  2009, pp. 87–135 Search PubMed .
+
+          E. Weinan, Principles of multiscale modeling, Cambridge University Press,  2011 Search PubMed .
+R. Radhakrishnan, AIChE J., 2021, 67(3), e17026 CrossRef CAS PubMed .
+J. Walpole, J. A. Papin and S. M. Peirce, Annu. Rev. Biomed. Eng., 2013, 15, 137–154 CrossRef CAS PubMed .
+K. Momeni, Y. Ji, Y. Wang, S. Paul, S. Neshani, D. E. Yilmaz, Y. K. Shin, D. Zhang, J.-W. Jiang, H. S. Park, S. Sinnott, A. van Duin, V. Crespi and L.-Q. Chen, npj Comput. Mater., 2020, 6, 22 CrossRef .
+Y. Zhang, Y. Ding and P. D. Christofides, Chem. Eng. Res. Des., 2019, 147, 529–544 CrossRef CAS .
+Z. Ji, K. Yan, W. Li, H. Hu and X. Zhu, BioMed Res. Int., 2017, 2017, 1–16 Search PubMed .
+K. Matouš, M. G. D. Geers, V. G. Kouznetsova and A. Gillman, J. Comput. Phys., 2017, 330, 192–220 CrossRef .
+A. A. Franco, RSC Adv., 2013, 3, 13027 RSC .
+
+Physical Multiscale Modeling and Numerical Simulation of Electrochemical Devices for Energy Conversion and Storage, ed. A. A. Franco, M. L. Doublet and W. G. Bessler, Springer London, London,  2016 Search PubMed .
+A. Latz and J. Zausch, Beilstein J. Nanotechnol., 2015, 6, 987–1007 CrossRef CAS PubMed .
+K. Leung and J. L. Budzien, Phys. Chem. Chem. Phys., 2010, 12, 6583 RSC .
+A. Muralidharan, M. I. Chaudhari, L. R. Pratt and S. B. Rempe, Sci. Rep., 2018, 8, 10736 CrossRef PubMed .
+Y. Sun, T. Yang, H. Ji, J. Zhou, Z. Wang, T. Qian and C. Yan, Adv. Energy Mater., 2020, 10, 2002373 CrossRef CAS .
+Y. Wang, Y. Liu, Y. Tu and Q. Wang, J. Phys. Chem. C, 2020, 124, 9099–9108 CrossRef CAS .
+R. N. Methekar, P. W. C. Northrop, K. Chen, R. D. Braatz and V. R. Subramanian, J. Electrochem. Soc., 2011, 158, A363 CrossRef CAS .
+V. Sulzer, S. G. Marquis, R. Timms, M. Robinson and S. J. Chapman, J. Open Res. Softw., 2021, 9(1), 14 CrossRef .
+K. Karapiperis, L. Stainier, M. Ortiz and J. E. Andrade, J. Mech. Phys. Solids, 2021, 147, 104239 CrossRef .
+MARKETPLACE – Materials Modelling Marketplace for Increased Industrial Innovation, https://www.the-marketplace-project.eu/.
+V. L. Deringer, J. Phys.: Energy, 2020, 2, 041003 CAS .
+Y. Shao, L. Knijff, F. M. Dietrich, K. Hermansson and C. Zhang, Batteries Supercaps, 2021, 4, 585–595 CrossRef CAS .
+A. J. Smith, J. C. Burns and J. R. Dahn, Electrochem. Solid-State Lett., 2010, 13, A177 CrossRef CAS .
+J. Deng, G. J. Wagner and R. P. Muller, J. Electrochem. Soc., 2013, 160, A487–A496 CrossRef CAS .
+P. Guan, L. Liu and X. Lin, J. Electrochem. Soc., 2015, 162, A1798–A1808 CrossRef CAS .
+V. R. Rikka, S. R. Sahu, A. Chatterjee, P. V. Satyam, R. Prakash, M. S. R. Rao, R. Gopalan and G. Sundararajan, J. Phys. Chem. C, 2018, 122, 28717–28726 CrossRef CAS .
+
+          T. Lombardo, F. Caro, A. C. Ngandjong, J.-B. Hoock, M. Duquesnoy, J. C. Delépine, A. Ponchelet, S. Doison and A. A. Franco, submitted.
+I. G. Clayson, D. Hewitt, M. Hutereau, T. Pope and B. Slater, Adv. Mater., 2020, 32, 2002780 CrossRef CAS PubMed .
+V. Kumar, Y. Wang, A. Y. S. Eng, M.-F. Ng and Z. W. Seh, Cell Rep. Phys. Sci., 2020, 1, 100044 CrossRef .
+V. Kumar, A. Y. S. Eng, Y. Wang, D.-T. Nguyen, M.-F. Ng and Z. W. Seh, Energy Storage Mater., 2020, 29, 1–8 CrossRef .
+R. Borah, F. R. Hughson, J. Johnston and T. Nann, Mater. Today Adv., 2020, 6, 100046 CrossRef .
+S. Maruyama, O. Kubokawa, K. Nanbu, K. Fujimoto and Y. Matsumoto, ACS Comb. Sci., 2016, 18, 343–348 CrossRef CAS PubMed .
+P. Liu, B. Guo, T. An, H. Fang, G. Zhu, C. Jiang and X. Jiang, J. Materiomics, 2017, 3, 202–208 CrossRef .
+Y. Lyu, Y. Liu, T. Cheng and B. Guo, J. Materiomics, 2017, 3, 221–229 CrossRef .
+M. Roberts and J. Owen, ACS Comb. Sci., 2011, 13, 126–134 CrossRef CAS PubMed .
+J. Meng, H. Guo, C. Niu, Y. Zhao, L. Xu, Q. Li and L. Mai, Joule, 2017, 1, 522–547 CrossRef CAS .
+X.-D. Xiang, X. Sun, G. Briceno, Y. Lou, K.-A. Wang, H. Chang, W. G. Wallace-Freedman, S.-W. Chen and P. G. Schultz, Science, 1995, 268, 1738–1740 CrossRef CAS PubMed .
+A. Kafizas and I. P. Parkin, Chem. Soc. Rev., 2012, 41, 738–781 RSC .
+D. Kim, H. C. Shim, T. G. Yun, S. Hyun and S. M. Han, Extreme Mech. Lett., 2016, 9, 439–448 CrossRef .
+S. Matsuda, K. Nishioka and S. Nakanishi, Sci. Rep., 2019, 9, 6211 CrossRef PubMed .
+T. Adhikari, A. Hebert, M. Adamič, J. Yao, K. Potts and E. McCalla, ACS Comb. Sci., 2020, 22, 311–318 CrossRef CAS PubMed .
+R. Dugas, J. D. Forero-Saboya and A. Ponrouch, Chem. Mater., 2019, 31, 8613–8628 CrossRef CAS PubMed .
+R. L. Sacci, N. J. Dudney, K. L. More, L. R. Parent, I. Arslan, N. D. Browning and R. R. Unocic, Chem. Commun., 2014, 50, 2104 RSC .
+S. Vogt, Y. S. Chu, A. Tkachuk, P. Ilinski, D. A. Walko and F. Tsui, Appl. Surf. Sci., 2004, 223, 214–219 CrossRef CAS .
+B. Singh, Z. Wang, S. Park, G. S. Gautam, J.-N. Chotard, L. Croguennec, D. Carlier, A. K. Cheetham, C. Masquelier and P. Canepa, J. Mater. Chem. A, 2021, 9, 281–292 RSC .
+M. Ohtani, M. Lippmaa, T. Ohnishi and M. Kawasaki, Rev. Sci. Instrum., 2005, 76, 062218 CrossRef .
+C. Yada, C. E. Lee, D. Laughman, L. Hannah, H. Iba and B. E. Hayden, J. Electrochem. Soc., 2015, 162, A722–A726 CrossRef CAS .
+Y. Lyu, N. Zhao, E. Hu, R. Xiao, X. Yu, L. Gu, X.-Q. Yang and H. Li, Chem. Mater., 2015, 27, 5238–5252 CrossRef CAS .
+J. Sottmann, R. Homs-Regojo, D. S. Wragg, H. Fjellvåg, S. Margadonna and H. Emerich, J. Appl. Crystallogr., 2016, 49, 1972–1981 CrossRef CAS .
+H. Eba and K. Sakurai, Appl. Surf. Sci., 2006, 252, 2608–2614 CrossRef CAS .
+K. A. Severson, P. M. Attia, N. Jin, N. Perkins, B. Jiang, Z. Yang, M. H. Chen, M. Aykol, P. K. Herring, D. Fraggedakis, M. Z. Bazant, S. J. Harris, W. C. Chueh and R. D. Braatz, Nat. Energy, 2019, 4, 383–391 CrossRef .
+M. A. Modestino, D. Fernandez Rivas, S. M. H. Hashemi, J. G. E. Gardeniers and D. Psaltis, Energy Environ. Sci., 2016, 9, 3381–3391 RSC .
+H. Duan, C. C. Yuan, N. Becerra, L. J. Small, A. Chang, J. M. Gregoire and R. B. van Dover, ACS Comb. Sci., 2013, 15, 273–277 CrossRef CAS PubMed .
+J. W. Lee, M.-A. Goulet and E. Kjeang, Lab Chip, 2013, 13, 2504 RSC .
+A. Eftekhari, Sustainable Energy Fuels, 2017, 1, 2053–2060 RSC .
+F. Yang, D. Wang, Y. Zhao, K.-L. Tsui and S. J. Bae, Energy, 2018, 145, 486–495 CrossRef .
+C. R. Birkl, M. R. Roberts, E. McTurk, P. G. Bruce and D. A. Howey, J. Power Sources, 2017, 341, 373–386 CrossRef CAS .
+M. R. Palacín, Chem. Soc. Rev., 2018, 47, 4924–4933 RSC .
+M.-F. Ng, J. Zhao, Q. Yan, G. J. Conduit and Z. W. Seh, Nat. Mach. Intell., 2020, 2, 161–170 CrossRef .
+
+This journal is © The Royal Society of Chemistry 2022
+Table Content:
+
+Pieremanuele Canepa (1st column top), Zeyu Deng (1st column bottom), Ivano E. Castelli (2nd column top), Felix T. Bölle (2nd column bottom), Zhi Wei Seh (3rd column top), Vipin Kumar (3rd column bottom), Alejandro A. Franco (4th column top) and Fernando Caro (4th column bottom)
+	Dr Pieremanuele Canepa (1st column top) is an Assistant Professor in the Department of Materials Science and Engineering at the National University of Singapore (NUS).Dr Zeyu Deng (1st column bottom) is currently a Postdoctoral Research Fellow under the supervision of Dr Pieremanuele Canepa.Dr Ivano E. Castelli (2nd column top) is an Associate Professor at the Technical University of Denmark, Department of Energy Conversion and Storage (DTU Energy).Dr Felix T. Bölle (2nd column bottom) is currently a Postdoctoral Researcher under the supervision of Dr Ivano E. Castelli.Dr Zhi Wei Seh (3rd column top) is a Senior Scientist at the Institute of Materials Research and Engineering, A*STAR.Dr Vipin Kumar (3rd column bottom) is an Assistant Professor in the Department of Energy Science and Engineering at the Indian Institute of Technology Delhi (IIT Delhi), India.Dr Alejandro A. Franco (4th column top) is Full Professor at Université de Picardie Jules Verne (Amiens, France) and Honorary Member of the Institut Universitaire de France (Paris).Dr Fernando Caro (4th column bottom) is a CNRS Postdoctoral Researcher under the supervision of Dr Alejandro A. Franco. All authors are interested in designing high-performance battery materials and interfaces using computations and/or experiments.
+
+Broader context
+Interfaces are central to rechargeable batteries as they are the connecting media between electrodes, electrolytes, and current collectors. Despite the crucial role of interfaces in battery devices, the electrochemical and mechanical processes at the interfaces still remain elusive. An autonomous in silico strategy harnessing the power of supercomputers, powerful algorithms, databases, and intelligent workflows, together with the intuition of scientists, can facilitate the screening of thousands of complex interfaces. Provided the specific challenges identified in this perspective are solved, laboratories of the future can envisage a concerted interaction between autonomous computational tools and complementary high-throughput experimental techniques.
+
+
+ 	Fig. 1  Multiscale diagram of battery components from the device to the atomic level. The battery components include the anode and the cathode, the (inactive) electrolyte in green, the (inactive) current collectors in grey, the (inactive) protective coating materials on the cathode, and the (inactive) polymer separators in yellow. Highlighted by yellow, grey, and green dots are, respectively, binder materials, carbon black, and electrolyte additives which also form interfaces between the battery components. For solid-state batteries, the interfaces between solid electrolytes and electrodes are shown in the box at the right bottom corner.	 
+
+Materials Project – https://www.materialsproject.org/ – Provenance: USA
+Total entries	711561	Phase diagram	—	Fireworks	YES	
+17, 18 and 23–25
+
+Intercalation electrodes	4730	Reaction calculator	YES	Automate	
+26–30
+
+Conversion electrodes	16128	Battery explorer
+Liquid electrolytes	49705	Explore molecule	YES	Pymatgen	
+19, 31 and 32
+
+Redox flow batteries
+Bulk interfacial reactivity	N.A.	Interface Reaction (Bulk)	YES	Custodian	
+33
+
+
+
+The Open Quantum Materials Database – OQMD – http://oqmd.org – Provenance: USA
+Total entries	815654	Phase diagram	NO	OQMD	YES	
+34 and 35
+
+
+
+Automatic FLOW for Materials Discovery – http://www.aflowlib.org – Provenance: USA
+Total entries	3482348	Phase diagram (AFLOW-Chull)	NO	AFLOW	YES	
+36–39
+
+
+
+Novel Materials Discovery – NOMAD – https://nomad-lab.eu/ – Provenance: Germany/EU
+Total entries	>11000000	Artificial intelligence toolkit	NO	qmpy	YES	
+40
+
+
+
+Materials Cloud – https://www.materialscloud.org – Provenance: Switzerland/EU
+Total entries	7502686	—	YES	AiiDA	YES	
+20 and 41–43
+
+
+
+BIG-MAP App Store – https://big-map.github.io/big-map-registry – Provenance: Denmark/EU
+Total entries	N.A.	BattINFO	YES	AiiDA	YES	
+44
+
+DFT-Surface	SimStack
+
+
+ARTISTIC Computational Portal – https://www.erc-artistic.eu/computational-portal – Provenance: France/EU
+Total entries	>111 (open since July 2021)	Online manufacturing simulator	YES	ARTISTIC	NO	
+45–51
+
+Data explorer
+INNOV
+
+Atomistic	Flexible ontology of the surfaces of electrodes and their interfaces
+Atomistic	Ontology of chemical and electrochemical reactions at interfaces
+Atomistic	Information about ion migration/diffusion at interfaces
+Atomistic	Modularity of atomistic workflows in the form of dedicated tasks for interface related properties and their interactions
+Atomistic	Autonomous agents driving complex closed-loop simulations based on existing workflows
+Mesoscale	Computational tools incorporating data arising from atomistic calculations
+Mesoscale	Development of multifidelity modelling workflows addressing interplays between electrochemistry, transport and mechanics at the mesoscale
+Continuum/device	Development of multifidelity workflows simulating performance and aging at the device level
+Multiscale	Development of less computational and data intensive algorithms
+Multiscale	Data management plans for integration of multiscale computations together with experiments
+Multiscale	Estimation of error propagation between different time and length scales
+
+Bulk – solid	Ion diffusion	DFT + nudged-elastic-band method	
+72
+
+
+Ab initio molecular dynamics simulations	
+87
+
+Interface – metal/vacuum	Surface energy & Wulff shapes	Pymatgen/Fireworks/Materials Project	
+82,93,94
+
+Interface – bulk/bulk	Interfacial product	Interface Reaction (Bulk) App, Table 1	
+33
+
+Interface – solid/solid	Interface structure	Lattice matching algorithms	
+95–97
+
+Electrolyte – vacuum	SEI components	Reaction network architecture	
+98
+
+
+ 	Fig. 2  Formation of different types of the interface between the bulk material (bottom) and liquid electrolyte (left) as well as solid electrolyte (right): solid/liquid (in brown) and solid/solid (in pink) interfaces. The descriptors of their key properties are shown below each figure. The moving active ion is shown as purple circles.	 
+
+ 	Fig. 3  Schematic representation of four MCF types presented by increasing order of complexity as a function of the specific mechanisms employed to bridge the different scales and assess the performance of the whole modelling process. In that context, the diagram shown in (a) corresponds to a non-autonomous MCF, the one displayed in (b) represents an autonomous MCF, and the one presented in (c) corresponds to a data-driven autonomous MCF. The last diagram, shown in (d), indicates a data-driven autonomous MCF with intermediate performance assessment which represents the most complex MCF in terms of the elements considered.	 
+
+ 	Fig. 4  Experimental efforts to develop next-generation batteries and battery materials with stable interfaces, ranging from materials synthesis and characterization to cell fabrication and testing.	 
+
+This journal is © The Royal Society of Chemistry 2022

@@ -1,0 +1,494 @@
+Towards predicting the power conversion efficiencies of organic solar cells from donor and acceptor molecule structures   - Journal of Materials Chemistry C (RSC Publishing) DOI:10.1039/C7TC05290A View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C7TC05290A
+(Paper)
+J. Mater. Chem. C, 2018, 6, 3276-3287Towards predicting the power conversion efficiencies of organic solar cells from donor and acceptor molecule structures†
+
+        
+          
+            Yecheng 
+            Zhou‡
+*a, 
+      
+        
+          
+            Guankui 
+            Long‡
+b, 
+      
+        
+          
+            Ailin 
+            Li
+          
+        
+      c, 
+      
+        
+          
+            Angus 
+            Gray-Weale
+          
+        
+      a, 
+      
+        
+          
+            Yongsheng 
+            Chen
+          
+        
+      b and 
+
+        
+          
+            Tianying 
+            Yan
+          
+        
+      c
+aSchool of Chemistry, The University of Melbourne, Parkville, VIC 3010, Australia. E-mail: zhouych87@gmail.com
+bKey Laboratory of Functional Polymer Materials, College of Chemistry, Nankai University, Tianjin 300071, China
+cCollege of Materials Science and Engineering, National Institute of Advanced Materials, Nankai University, Tianjin 300071, China
+Received 
+      19th November 2017
+    , Accepted 2nd January 2018First published on 4th January 2018AbstractIn this study, we developed a multiscale simulation framework to estimate the power conversion efficiencies of bulk heterojunction organic solar cells based on the molecular structures of the donor and acceptor. Firstly, we proposed a way to estimate the density of states (DOS) of the highest occupied molecular orbitals (HOMOs) and lowest unoccupied molecular orbitals (LUMOs) in organic thin films based on quantum calculations, and verified the Gaussian-like DOS in the organic semiconductors. Secondly, the electronic couplings in these thin films were calculated. By adding PC71BM molecules, although the donor–donor couplings are not altered significantly, the charge mobility is enhanced via additional donor–acceptor and acceptor–acceptor couplings. Thirdly, random walk simulations were performed to estimate the charge carrier mobilities. Finally, by incorporating the calculated energy levels, mobilities and DOS of these bulk heterojunctions into the numerical model developed, we obtained the working curves and power conversion efficiencies, which are in general consistence with experiment results. This study builds the foundation for the computation of power conversion efficiencies of organic solar cells using fully atomistic simulations.
+1 Introduction
+Organic solar cells (OSCs) have received wide research interest in the past two decades due their tremendous advantages such as low-cost fabrication and environmental friendliness. Since traditional organic materials exhibit poor charge transfer (CT) properties, the power conversion efficiency (PCE) of OSCs is relatively low. Until now, although the efficiency of the OSCs has reached 15%,1 the efficiency record of single-junction OSCs could only reach 13%,2–4 which is far behind the traditional silicon solar cells and the recently developed perovskite solar cells. The bottlenecks for OSCs are the large exciton binding energy and poor CT mobility. The CT property is usually characterized by the diffusion length , where τ is the charge carrier lifetime and D is the diffusion coefficient. In principle, the organic active layer must be thin enough to ensure efficient charge transportation to electrodes. On the other hand, the thinner active layer means less light absorption, which causes poor short circuit current. To solve this dilemma, bulk heterojunction (BHJ) solar cells have been invented. In BHJ solar cells, the electron donor and acceptor materials are blended and phase separated. Theoretically, photogenerated excitons are split at the interface between the donor and acceptor phases, and then the electrons go to the acceptor phase and the holes go to the donor phase.5–8 However, this hypothesis has not been clearly confirmed in quantum theory because the phase-separated disordered thin films have to be simulated by very large models, which may be up to several tens of nanometres in thickness.1,9
+Phase-separations in OSCs have been observed in experiments2,10,11 and confirmed by computer simulations.7,9,12,13 The interfacial charge separation has also been theoretically studied,6,14–16 but few studies have focused on how the separated charges are transferred in BHJs. The Ising model and other similar models have been employed to study the charge transfer in BHJ solar cells,7,17–19 which helped the understanding of the general CT but are too abstract to study how charges transfer in BHJ solar cells. Lee et al. analyzed the nanoscale morphologies and the correlations of the nanoscale organizations of BHJ solar cells by performing a series of multiscale, coarse-grained molecular simulations.1,9 Their work has deepened the understanding of BHJ structures and the correlation of components.
+In order to achieve quantitative descriptions of the CT processes in BHJ solar cells, quantum simulations are greatly needed. There are several quantum studies for the CT in disordered organic thin films with one component.20–23 But full quantum studies of the CT in disordered multi-component thin films haven't yet been done, and this is the most important process in BHJ OSCs at current stage.
+It was assumed that the orbital energy levels of molecules in disordered thin films follow Gaussian distributions.24 This Gaussian distribution of energy levels produces a Gaussian density of states (DOS), which is widely accepted and used to discuss and explain the CT behaviors in organic films, such as the field and temperature dependence of mobilities,25 the generalized Einstein relation for disordered organic semiconductors26 and the optimum thickness of a device.27 However, this Gaussian distribution of site energies has not been verified by quantum calculations. Additionally, the DOS is a crucial factor that influences the performance of solar cells.28–30 In OSCs, it has been found that high DOS lead to a low open-circuit voltage (Voc).31–33 Fischer et al. employed impedance spectroscopy to measure the DOS in organic semiconductor devices,34 but the estimation of DOS by theoretical calculation hasn't been reported yet.
+Previously, we have built atomistic BHJ solar cell models from donor and acceptor molecular structures.13 In addition, we have also built very large coarse-grained (CG) models to discuss the molecule distributions and donor and acceptor phase domains.35 It was observed that fullerene prefers to aggregate, which may facilitate the electron delocalization and efficient charge separation at interfaces.36 Here, we are going to investigate the CT in DRCN5T:PC71BM, DRCN7T:PC71BM and DERHD7T:PC71BM based BHJ solar cells, which have realized high PCEs.37,38 The structures of these molecules are shown in Fig. 1. The thin film structures that we have used in this paper are based on fully atomistic models. The details of the molecular dynamics (MD) simulations of the atomistic thin film structures have been described in ref. 13.
+ Fig. 1  Chemical structures of the molecules used in this simulation. 
+In this work, we proposed a workflow, shown in Fig. 2, to predict the photovoltaic performance of small molecule OSCs based on donor and acceptor molecular structures. By studying the DRCN5T:PC71BM, DRCN7T:PC71BM and DERHD7T:PC71BM solar cells, we achieved the following three goals. Firstly, we calculated the electronic properties of these molecules, such as energy levels and reorganization energies, and analyzed the distribution of site energies, and then estimated the DOS of the CT states. We confirmed the Gaussian-like DOS in thin films, which is a basic assumption and widely used to study the CT in disordered molecular semiconductors.25–27 Secondly, we estimated the mobilities of the charge carriers from kinetic Monte Carlo (KMC) simulations based on the cross reaction Marcus theory. Electronic couplings among molecules in BHJ thin films were calculated in this step. The efficient CT paths in these blended systems were clearly visualized. Finally, by incorporating the calculated energy levels, effective DOSs, mobilities, and experimental charge carrier lifetimes and absorption coefficients into the numerical model, we obtained the current–voltage characteristics of the respective OSCs. To obtain direct comparisons, disordered PC71BM, DRCN5T, DRCN7T and DERHD7T pure thin films are also studied.
+ Fig. 2  Flowchart of the multi-scaled model in this study. Based on molecular structures, the theoretical processes are shown in green. Three parameters from experiments are listed in the blue frame. Outputs are shown in the yellow frame. 
+2 Models and methods
+2.1 Multi-scaled model
+Given the donor and acceptor molecular structures, we calculated the reorganization energies and free energies by using the GAUSSIAN 09 package.39 We can also fit the force field parameters from this calculation. These force field parameters will be used in the mesoscopic MD simulations. Second, we insert the donor and acceptor according to experimental ratios into a 10 nm × 10 nm × 10 nm box with periodic boundary conditions (PBC). We perform MD simulations using GROMACS.40 Third, we use the home-made code gfilm to split the thin film models into molecules and dimers, which are then converted to the Gaussian input files. At the same time, the geometric center of the molecules, connection information and a script named “run” to call the Gaussian and calv are generated. The Gaussian calculations output the HOMO, LUMO and molecular orbitals. Then calv reads the Gaussian output log file and calculates the electronic couplings. These calculated couplings together with the calculated free energies and reorganization energies are implemented into Marcus theory to estimate the CT rate between every dimer. Using the calculated CT rates and thin film geometry information, we perform random walk (RW) simulations, in which we obtain the electron and hole diffusion coefficients (D). The corresponding mobilities are calculated by the Einstein relation  in which e denotes the elementary electron charge. Inputting these calculated diffusion coefficients and mobilities of the electrons and holes, the band gap, effective density states of the “conduction band” and “valence band”, and three experimental parameters (α, τ and ε) into the numerical model, we obtain the J–V curve of the solar cell. PCEs, FF, Voc and Jsc are read from the J–V curve. The overall processes of this multi-scale model agree with the protocol outlined in ref. 41. All of our codes and illustrations will be available on Github: http://https://github.com/zhouych87/.
+2.2 Quantum CT rate
+CT in organic materials is reckoned as the charge hopping between molecules. The CT rate between two molecules of the same kind can be estimated by Marcus theory:42–44 (1)where V is the electron transfer coupling of the two molecules orbitals and λ is the reorganization energy (RE), T is the temperature in Kelvin, ħ and kB are the reduced Plank constant and the Boltzmann constant, respectively, ΔG is the free energy change of the CT reaction. The CT RE includes two parts. The most important part is the inner-sphere contribution, which is due to the relaxation of molecular geometry. Another part comes from the surrounding medium, the outer-sphere reorganization. This outer-sphere RE is neglected in this study because it is commonly small compared to the inner-sphere RE21,45–47 and also because it is difficult to quantify the relevant dielectric response on the time scale of CT.23
+The inner-sphere RE for CT is calculated by: λ = E+,0 − E0,0 + E0,+ − E+,+(2)in which, E+,0 is the energy of the charged molecule in its neutral geometry; E0,0 is the energy of the neutral molecule in its neutral geometry; E+,+ is the energy of the charged molecule in its charged geometry; E0,+ is the energy of the neutral molecule in its charged geometry. It is worth noting that in BHJ thin films, molecular geometries are different due to the different environment of neighbours, which makes it too complex to calculate the REs. In this paper, we estimated the reorganization at their gas phase.
+The electron-transfer coupling is calculated according to the method proposed in ref. 48. It is written as V = 〈ψ1HOMO|F|ψ2HOMO〉(3)where ψ1HOMO and ψ2HOMO are the highest occupied molecular orbitals (HOMOs) of two neighbouring molecules. F is the Fock operator for the dimer, it is calculated from F = SCεC−1. S is the inter-molecular overlap matrix, C and ε are the dimer Kohn–Sham orbital's coefficients and energies, respectively.
+Considering the large number of atoms in the molecules and also the large number of molecules and their dimers in thin films, the electron-transfer coupling of each dimer should be performed as fast as possible without losing much accuracy. We have carried out the electron transfer integral calculation based on various basis sets. As shown in Table S1 (ESI†), B3LYP/6-31G has a relatively accurate integral and a short calculation time. The B3LYP functional with a 6-31G basis set is employed to calculate the electron-transfer couplings.49 Reorganization energies are estimated though DFT calculations under the B3LYP/6-31G* level. The reason for choosing these basis sets is on the basis of accuracy and speed. All the quantum calculations are carried out with the GAUSSIAN 09 package.39
+2.3 Cross reactions and their correction
+Although the Marcus equation has been proved and is widely used in the theoretical study of organic semiconductors, we have to note that the Marcus equation is a classical limit and subjected to four conditions: (1) the harmonic oscillator reaction potential, (2) the Born–Oppenheimer approximation, (3) slow CT on the vibrational time scale, and (4) the same force constant before and after CT.50 Among these four conditions, the first three conditions are usually satisfied, while, the last is satisfied under certain cases, for example, the CT in organic single crystals. For CT in hetero-molecule thin films, the force constant is normally not equal before and after CT. In this case, cross reactions are needed. The cross reaction rate for M+1 + M2 = M1 + M+2 can be expressed as51–53 (4)where k12 is the CT rate between molecule 1 (M1) and molecule 2 (M2), k11 and k22 are the charge self-exchange rates. K12 is the reaction equilibrium constant, which can be estimated by K12 = exp[−(ΔG12/RT)].54f12 is close to 1 if the electronic coupling is weak.53 Substituting eqn (1) into eqn (4), and considering that the free energy change is zero for the self-exchange reaction and kB = R/NA, the cross reaction becomes (5) (6)As the electron-transfer coupling is determined by the integral of electron orbitals, which depends on the electron orbitals and the distance between the two molecules, the coupling (V11V22) in eqn (5) loses its true meaning. The real electronic coupling is estimated directly by eqn (3).
+2.4 DOS determination
+According to the definition of quasi-Fermi energy levels, the output voltage of a solar cell is expressed by30,55–57 (7)where EFp and FFn are the quasi Fermi level for the hole and electron, respectively; Eg is the band gap of the semiconductors; e is the elementary charge; Nc and Nv are the effective DOS of the conduction band and the valence band, respectively; nx=0 and px=d are the electron density at one end and the hole density at the other end, respectively.
+DOS are essential for the numerical simulation of CT in solar cells. However, we haven't found a theoretical method to estimate them for OSCs without any empirical or experimental parameters. Here we put forward a method to estimate the DOS in OSCs. We assumed that each orbital can be occupied by two electrons, then DOS(E) can be calculated by , where  is the summation over the degenerated HOMOs whose energies are E. The DOS(E) should be Gaussian-like due to the Gaussian distribution of HOMOs. The charge occupation in the semiconductor obeys the Fermi–Dirac distribution, hence, the charge density of the OSCs is given by: (8)where Ec and Ef are the conduction band minimum (the LUMO energy level of PC71BM) and the Fermi energy level, respectively. Since only LUMOs can be filled, E − Ef is in the order of 0.1 eV which is several times higher than kBT. The exponential term in the Fermi–Dirac distribution is much larger than 1, then . Therefore, the DOS of the conduction band can be expressed as: (9)
+2.5 Charge transport model
+The charge movement is considered as independent charge hopping between molecules. The diffusion coefficient can be obtained from RW simulations23,44,48 (10)in which t is the simulation time and 〈l(t)2〉 is the mean square displacement of charges. l(t) is obtained by RW simulations.
+If molecule i has N neighboring molecules, the hopping rate between this molecule i and its neighboring molecule j (0 < j < N) is kij, which is calculated by eqn (1) or (5). The hopping probability for the charge carrier from i to j is . Accordingly, the RW simulation evolves by t = t′ + 1/kij and l(t) = l(t) + rij, where rij is the displacement between these two molecules. t′ and l(t′) are the time and total displacement, respectively. The charge movement is visualized in the animations in the ESI.†
+The RW simulations run 10 μs, which is much longer than the time for each hopping (range from 10−7 to 10−12 s). In these RW simulations, the charge carriers hop randomly, hence, many simulations are needed in order to get a stable and converged D. For the CT in organic semiconductor crystals, it converges when the amount of simulations is over 2000.48 For the sake of the symmetry being broken and the existence of very small CT rates, 2000 simulations are not enough to obtain smooth lines. In our RW calculations, all results are the averages of 20000 simulations.
+2.6 Numerical simulation model
+In this work, the CT and photon absorption are assumed to be uniform. A photon is absorbed by donors, and an electron is excited across band gap (Eagap) of the donors. The output voltage is determined by the two boundaries. Electrons are collected at the electrode through PC71BM molecules, hence, the quasi Fermi level at the end is determined by the Nc and the energy level of the LUMO of PC71BM molecules. Similarly, the quasi Fermi level at the other end is determined by the Nv and the energy level of the HOMO of donors.
+The charge transport follows the diffusion equations, (11)where Jp is the flux of holes, e is the elementary charge, F is the electric field, Dp is the hole diffusion coefficient, p is the hole density, and μp is the hole mobility. In this paper, the mobilities and diffusion coefficients are calculated from RW simulations with parameters calculated from quantum simulation. For electron transfer, we have (12)where Jn is the flux of electrons, n is the electron density and Dn is the diffusion coefficient of the electron.
+Continuity equation for the electron is (13)For the hole, we have (14)where G is the generation rate, which can be calculated from the absorption coefficient (α) and Eagap; R is the recombination rate, which can be estimated by the charge carrier lifetime (τ). The electric field is obtained by solving the Poisson equation, (15)The output voltage is given by: (16)
+These equations are solved numerically according to ‘Two Point Boundary Value Problems’ in the Numerical Recipes in FORTRAN.58 The details are shown in ref. 56. There are twelve parameters in these equations, i.e., α, τ, ε, De, μe, Dp, μp, Nc(acceptor), Nv(donor), ELUMO(acceptor), EHOMO(donor) and ELUMO(donor). In this work, nine of them are calculated based on the acceptor and donor molecule structures, while the other three, α, τ and ε (dielectric constant) are taken from experiments. The parameters we used in the simulation are given in Tables S10–S12 (ESI†).
+3 Results and discussion
+3.1 Atomistic structures of BHJs
+To build the thin films, molecules are randomly inserted into a periodic box, and then MD simulations were carried out with the GROMACS program (version 4.5.5).40,59,60 DERHD7T:PC71BM and DRCN7T:PC71BM BHJs consist of 257 PC71BM molecules and 332 DERHD7T molecules, and 257 PC71BM molecules and 320 DRCN7T molecules, respectively. The DRCN5T:PC71BM BHJ consists of 432 DRCN5T molecules and 266 PC71BM molecules. All these donor/acceptor ratios are consistent with the experimental mole ratios.37 444, 428, 584 and 512 molecules were used to construct the single-component DERHD7T, DRCN7T, DRCN5T and PC71BM thin films, respectively. All these BHJs and single-component thin films are annealed from 400 K down to 300 K gradually. Both the single-component and blend systems reached equilibrium in the isothermal–isobaric (NPT) ensemble, coupled to a Berendsen barostat at a pressure of 1 atm and a Berendsen thermostat at a temperature of 300 K. The production run lasted 100 ns after an equilibration run of 100 ns. During the MD process, the atoms in the thin films are fully relaxed. Fig. 3 shows two snapshots taken from the end of the MD simulations, and we can clearly see that the PC71BM molecules are aggregated. The domain size of the separated PC71BM phase is about 3 nm, while the domain size of the donor phase is about 4–6 nm. For more MD details and geometrical analysis, please refer to ref. 13.
+ Fig. 3  The DRCN5T:PC71BM (A) and DRCN7T:PC71BM (B) thin films. The VDW surfaces of the DRCN7T and DRCN7T molecules are shown in green and the PC71BM VDW surface is colored in red. The DERHD7T:PC71BM thin film is given in Fig. S1 (ESI†). 
+3.2 Reorganization energies and free energies
+The CT rates between two molecules can be estimated from the Marcus equation (eqn (1)). RE and the free energy change (ΔG) are two important parameters for CT. Here, RE and ΔG are calculated by Gaussian 09 with B3LYP under the level of 6-31G*. As shown in Table 1, for the self-exchange reactions, the consistent REs of DRCN7T and DERHD7T for electron transfer are approximately 0.16 eV, while the RE of DRCN5T for the electron is about 25% higher. It is suggested that the longer carbon chain can efficiently decrease the RE for electron transfer. The REs of DRCN5T and DRCN7T for hole transfer are similar and approximately 0.21 eV, which are lower than that of DERHD7T. Thus, the dicyanomethylene ((NC)2C) group could decrease the RE for hole transfer compared to the thio (S) group. Among these three donors, DRCN5T shows more balanced ΔG for the electron and hole transfer from donor to acceptor.
+Table 1 Reorganization energies and free energy change for the self-exchange reaction and the donor to acceptor reaction, calculated with uB3LYP/6-31G.a The unit is eV
+
+
+
+
+Molecules
+Self exchange reaction
+Da + A → D + Aa reaction
+
+
+
+λ
+e
+
+
+λ
+h
+
+ΔGe
+ΔGh
+
+
+
+
+
+a For electron or hole.
+
+
+
+
+
+PC71BM
+0.307
+0.137
+
+
+
+
+
+
+DRCN5T
+0.226
+0.216
+0.415
+0.661
+
+
+DRCN7T
+0.160
+0.212
+0.369
+1.019
+
+
+DERHD7T
+0.165
+0.234
+0.124
+1.020
+
+
+
+
+3.3 Distributions and densities of states of frontier orbitals
+The orbital energy levels of molecules in disordered organic thin films are assumed to follow Gaussian distributions, which produce a Gaussian-like DOS(E).24 Although this hypothesis is widely accepted,25–27 it hasn't been verified by theory. We have split the thin films into single molecules and then calculated their site energies. Fig. 4 shows the distributions of the HOMO energy levels of the donors in both the blend and single-component films. The highest HOMO level of DRCN5T molecules in the DRCN5T:PC71BM film is −5.18 eV, and its lowest level is −5.91 eV. The corresponding distribution width is 0.74 eV. This width is 0.05 eV larger than the width of the HOMOs of the DRCN5T molecules in their single-component films. Based on the ab initio calculations, the widths of the HOMO and LUMO of donors in blend films are not altered in a significant manner. Under the level of 6-31G*, the calculated average energy levels of the HOMO of DRCN7T molecules in the blend and the single-component films are both −5.26 eV, which is 0.3 eV lower than that of its HOMO in the gas phase of −4.93 eV calculated at the same level. However, they are close to the HOMO (−5.09 eV) in the gas phase calculated at the level of 6-311G**. Other distributions of HOMOs and LUMOs in the blend and single-component films are shown in Fig. S2–S4 (ESI†). All of them follow Gaussian distributions. The detailed parameters are shown in Tables S2–S5 (ESI†).
+ Fig. 4  Distributions of HOMO energy levels. (A) HOMOs of DRCN5T molecules in DRCN5T:PC71BM film; (B) HOMOs of DRCN7T molecules in DRCN7T:PC71BM film; (C) HOMOs of DERHD7T molecules in DERHD7T:PC71BM film; (D) HOMOs of DRCN5T molecules in pure DRCN5T film; (E) HOMOs of DRCN7T molecules in pure DRCN7T film; (F) HOMOs of DERHD7T molecules in pure DERHD7T film. Blue lines are the fitted Gaussian distributions. 
+Since DOSs are crucial parameters that influence the performance of solar cells, we put forward a strategy to estimate the DOSs of OSCs as shown in the Methods section. Table 2 shows the DOSs of each component separately. These calculated DOSs are in the range of 2.93 × 1018 to 1.42 × 1019 cm−3, which are consistent with the DOSs of the organic semiconductors reported in experiments, such as in the pentacene thin films,61 the ZnPc:C60 blend film34 and the P3HT:PCBM film.62 As the energy of the LUMO of the PC71BM molecules is lower than that of the donors, the electrons are believed to be transferred into the LUMO of the PC71BM molecules. Hence, the DOS of the conduction band for the electron (Nc) in the blend film is the DOS of the LUMOs of the PC71BM molecules. The Nc values of these films are similar. Similarly, the DOSs of the valence band for the hole (Nv) in the blend films are the DOSs of the HOMOs in the donors. The Nv of the DRCN7T:PC71BM film is much larger than others, which suggests a larger Voc deficit according to experiments.31–33 The improvement is about kTln(3) 28 meV.
+Table 2 Quasi-DOSs of the conduction and valence band of each component in OSCs
+
+
+
+
+Components
+Donor (1018 cm−3)
+Acceptor (1018 cm−3)
+
+
+Films
+
+N
+v
+
+
+N
+c
+
+
+N
+v
+
+
+N
+c
+
+
+
+
+
+DRCN5T:PC71BM
+3.39
+6.87
+6.66
+3.20
+
+
+DRCN7T:PC71BM
+9.38
+14.20
+3.02
+2.93
+
+
+DERHD7T:PC71BM
+3.71
+10.90
+4.77
+2.95
+
+
+
+
+3.4 Electronic couplings
+According to Marcus theory,42–44eqn (1), the CT rates are proportional to the square of the electronic coupling between two orbitals. Zero coupling means no CT. As the electronic coupling between the two molecules' orbitals decreases dramatically with their distance, the CT rate should be very small or even zero when their distance is larger than a certain distance. On the basis of this consideration, we have set the cut-off distance as the distance where the couplings become approximately zero (<1 meV and >−1 meV). As shown in Fig. 5A, the couplings between the two molecules decay very slightly, even the distance between the two molecules geometry centers reaches 1.5 nm. This is because they are still close to each other even the distance between their geometry centers is large due to their large volume. As the number of neighboring molecules is proportional to r3 under a certain density, a large cutoff distance means a huge amount of dimers need to be calculated. This will significantly increase the computation time. As illustrated in Fig. 5B, we found that the couplings become weak when the nearest atom distance increases. It goes to zero when the nearest atom distance of the dimer is larger than 2.7 Å for single-component DERHD7T thin films. However, in DERHD7T:PC71BM BHJ models, the cutoff distance increases to 4.2 Å. This phenomenon suggests the existence of PC71BM increases the overall π conjugation of BHJs. To be safe, the cutoff distance between the nearest atoms was set as 5 Å.
+ Fig. 5  Calculated electronic couplings of dimers in the DERHD7T thin film. (A) Electronic couplings between the two molecules versus distances between the two molecules geometry centers; (B) electronic couplings between the two molecules versus the nearest atom distances of the two molecules. The electronic coupling of the DERHD7T:PC71BM blend film and couplings of other investigated systems are available in the ESI.† 
+In single-component donor thin films, the electronic couplings become approximately zero when the nearest atom distance is larger than 3 Å, as shown in Fig. S5 (ESI†). In the blend thin films, shown in the first row in Fig. S6 (ESI†), there are significant electronic couplings at a distance of 3 Å to 4 Å. To have a clear understanding, we separated the electronic couplings into three groups: the couplings between donor and donor, couplings between donor and acceptor, and couplings between acceptor and acceptor. As shown in Fig. S6 (ESI†), the donor–donor coupling, donor–acceptor coupling, and acceptor–acceptor coupling of blend films are shown in the second, third and fourth row respectively. For the convenience of viewing, the scales of the Y-axis in all figures are set the same. Although the overall couplings of the blend films are stronger than the couplings of single-component donor films at a long distance, donor–donor couplings in the blend films show almost the same distance dependence as the couplings of single-component donor films. The couplings of single-component films are shown in Fig. S5 (ESI†). Donor–donor couplings decay rapidly with the nearest-atom distance increasing. This indicates that the addition of PC71BM does not increase the charge delocalization of donor molecules. The strong couplings at a long distance are the couplings of donor–acceptor and the couplings of acceptor–acceptor (Fig. 7). These strong acceptor–acceptor couplings are verified in Fig. S5 (ESI†), which shows the coupling in pure PC71BM thin films.
+Besides the effect of the PC71BM, we also found that the packing structure of the donor and PC71BM has a significant impact on their electronic coupling. Combining experiment and theoretical studies, we have illustrated that molecular packing could induce a transition between ambipolar and unipolar behavior.63 Additionally, lots of studies done with the Brédas group have shown that the molecular packing has a strong impact on the electronic polarization in organic crystals,64–66 and this polarization alters the charge-transport parameters in molecular organic semiconductors.67 In this simulation, we abstracted dimers with three typical molecular packings, which have strong Vh (electronic couplings for hole transfer), strong Ve (electronic couplings for electron transfer), and weak electronic couplings for both hole and electron. Surprisingly, it is found that the dimer cannot have strong couplings for both electron and hole transfer at the same time. The dimer with strong Vh, will show weak Ve, while, the dimer with strong Ve shows weak Vh. We attribute this phenomenon to the distribution of the HOMO and LUMO on donor molecules and the location of PC71BM. The dimer of the PC71BM landing on the conjugation center of the DRCN7T molecule shows strong Vh. This is because the HOMO of the DRCN7T molecule is mainly delocalized on the conjugation center, while the LUMO occupies the two ends of the DRCN7T molecule. More details and discussions will be published elsewhere.
+3.5 CT paths
+As the hopping rate of the CT is proportional to the square of the electronic coupling,42–44 we next employ the mean square of the electronic coupling to illustrate the CT properties. Tables S6–S9 (ESI†) show the mean square of the electronic couplings of different components and films. It is observed that single-component donor films have stronger couplings than those of the blend films. This is because in single-component films the molecules with a short distance are larger than those in blend films. This suggests that higher mean square of electronic couplings may not lead to a higher charge carrier mobility.
+It is possible that most of the electronic couplings are small, and only some of them are very large and form CT paths. If this occurs, small overall couplings could also bring large charge carrier mobility. Thus, plotting the electronic couplings together with film geometry is a reasonable strategy. Here, we plot the 3D diagrams to elucidate how the CT paths are formed. It would be useful if we could show the width proportional to the square of the coupling as the hopping rate is proportional to the square of couplings. But if we do so, some rods are too large, and will cover other coupling rods, while others are too small to be seen. Therefore, we decided to plot the width of the rod between molecules as proportional to the square root of the absolute value of their coupling. Fig. 6 shows the HOMO–HOMO couplings of the DRCN5T:PC71BM, DRCN7T:PC71BM, DRCN5T, DRCN7T thin films. Donors are shown in green, and acceptors are shown in orange. Couplings between two molecules larger than 9 meV or smaller than −9 meV are lined with red. Yellow lines are for weak couplings. It is obvious that the blend thin films display higher densities of large couplings (red rods). Most of the large couplings are between donor–acceptor or acceptor–acceptor, which is consistent with the discovery we made in Fig. S5, ESI.†
+ Fig. 6  Hole transfer paths. HOMO–HOMO couplings: (A) for the DRCN5T:PC71BM thin film; (B) for DRCN7T:PC71BM thin film; (C) for the DRCN5T single-component thin film; (D) for the DRCN7T single-component thin film. Donor molecules are shown in green spheres, PC71BM molecules are shown in orange. The width of the rod shows the electronic coupling strength of the dimer, which shows the possibility of CT between the connected molecules. Red rods are couplings larger than 9 meV or smaller than −9 meV. Yellow lines are weak couplings. Hence, red rods denote an efficient CT path. These figures were visualized by vPython 2.7. 
+ Fig. 7  Simulated output J–V curves compared to experiments. (A) The performance of DRCN5T:PC71BM OSC; (B) the performance of DRCN7T:PC71BM OSC; (C) the performance of DERHD7T:PC71BM OSC. Red lines are working J–V curves predicted from theory and green lines are those measured in experiments. 
+3.6 Charge carrier mobilities
+Mobility is one of the most important parameters for a semiconductor. A device with higher mobility is expected to have a better performance. Once we get the charge carrier diffusion coefficients from RW simulation, the mobilities can be obtained through the Einstein relation. Here, we tested our model by comparing our theoretical mobilities to the experimental mobilities. As shown in Table 3, both the electron and hole mobilities are estimated in singular component thin films. The simulated PC71BM film has high mobilities of 9.11× 10−3 cm2 V−1 s−1 and 6.12× 10−2 cm2 V−1 s−1 for the electron and hole, respectively. The electron mobility is in the experimental range of 2.0 × 10−7 to 0.2 cm2 V−1 s−1 for PCBM thin films.68–70 Among these investigated films, PC71BM shows the highest electron and hole mobilities. The sequence of hole and electron mobilities is in the order of PC71BM > DRCN5T > DRCN7T > DERHD7T. The hole mobilities of DRCN7T and DERHD7T are 1.13 × 10−4 cm2 V−1 s−1 and 7.75 × 10−5 cm2 V−1 s−1, which are about half of the respective experimental values of 2.15 × 10−4 cm2 V−1 s−1 and 1.34 × 10−4 cm2 V−1 s−1.37
+Table 3 Simulated electron and hole mobilities of single-component thin films. The unit is cm2 V−1 s−1
+
+
+
+
+Molecules
+
+μ
+h
+
+
+μ
+e
+
+Experiment μh37
+
+
+
+
+PC71BM
+6.12 × 10−2
+9.11 × 10−3
+
+
+
+
+DRCN5T
+5.65 × 10−4
+4.05 × 10−4
+
+
+
+
+DRCN7T
+1.13 × 10−4
+1.63 × 10−5
+2.15 × 10−4
+
+
+DERHD7T
+7.75 × 10−5
+1.65 × 10−5
+1.34 × 10−4
+
+
+
+
+
+Table 4 shows theoretical and experimental mobilities of blend thin films. The ratios of μh/μe for DRCN5T and DRCN7T are 1.80 and 4.66, respectively, which are comparable to 2.58 and 4.62 in experiments.37,38 The electron mobility for DRCN5T is 5.68× 10−5 cm2 V−1 s−1, comparable to the experimental value of 2.53 × 10−5 cm2 V−1 s−1. Most theoretical mobilities are about one quarter of that of the experiment. This underestimation is due to the limits of theory. Coropceanu and Nan et al. have showed that the fluctuation of coupling (σ) can be two times larger than its mean value ().71,72 As the hopping rate is proportional to the coupling square, the average hopping rate should be proportional to the average of the mean-square coupling . Since , thermal fluctuation increases the CT rate and then increases the mobility.73 As we have shown in ref. 73, mobilities calculated by the method of ‘FGR-KMC-MDG’ can be 155 times (electron) and 60 times (hole) higher than those calculated by the method of ‘Marcus-SH-V’ that we used here. Therefore, the mobilities we used to mimic the OSCs are set as 100 times (electron) higher and 55 times (hole) higher than those of their original value. 100 and 55 times are the average enhancement of the electron and hole mobility, respectively, in ref. 73.
+Table 4 Simulated and experimental blend thin film electron and hole mobilities, and their ratios. The unit of mobility is cm2 V−1 s−1. The method we used here underestimates the mobility since it does not include the tunneling charge and thermal fluctuations according to ref. 37, 38 and 73
+
+
+
+
+Films
+Theory
+Experiment
+
+
+
+μ
+h
+
+
+μ
+e
+
+
+μ
+h/μe
+
+μ
+h
+
+
+μ
+e
+
+
+μ
+h/μe
+
+
+
+
+DRCN5T:PC71BM
+1.02 × 10−4
+5.68 × 10−5
+1.80
+6.54 × 10−4
+2.53 × 10−4
+2.58
+
+
+DRCN7T:PC71BM
+1.05 × 10−5
+2.25 × 10−6
+4.66
+5.91 × 10−4
+1.28 × 10−4
+4.62
+
+
+DERHD7T:PC71BM
+1.81 × 10−5
+7.32 × 10−5
+0.25
+1.18 × 10−4
+1.04 × 10−5
+11.35
+
+
+
+
+3.7 Power conversion performance
+The ultimate aim of our work is to predict the performance of the solar cell from basic atomistic and molecular information without empirical parameters. In this work, except the charge carrier lifetime, absorption coefficient and dielectric constant, all other parameters are calculated based on basic atomistic and molecular information. For experimental parameters, we set them as the typical values of an organic semiconductor. The lifetime of the charge carrier is 3 μs, which is the lifetime of a DRCN5T:PC71BM thin film in experiments at room temperature.74 The absorption and dielectric constant are set as 1.5 × 106 cm−1 and 4, which are reported by the experiments in ref. 75, 76 and 77 respectively. Here, we assume that the OSC thin films are uniform, the AM 1.5 standard spectrum was used as incident light. The recombination of the charge carriers follows the SRH mechanism, as a large amount of defects are present in the OSCs.
+These simulated Jsc values for DRCN5T:PC71BM, DRCN7T:PC71BM, DERHD7T:PC71BM solar cells are 13.94 mA cm−2, 12.27 mA cm−2 and 11.45 mA cm−2 respectively. Their order is the same as experimental values of 15.66 mA cm−2, 14.87 mA cm−2 and 9.49 mA cm−2. In experiments, the Voc values of these solar cells are 0.92 V, 0.91 eV and 0.89 V. However, the predicted Voc varies significantly. They are 0.95 V, 0.74 V and 0.65 V for DRCN5T:PC71BM, DRCN7T:PC71BM, DERHD7T:PC71BM solar cells. The significant difference between Vocs in theory is due to the difference in the energy levels of the frontier orbitals of these molecules. The predicted PCE of these OSCs are 10.79%, 7.46% and 5.92%, which are in general consistent with their average PCEs in experiments of 9.80%, 9.05% and 5.88%.
+4 Conclusion
+For the first time, we have theoretically confirmed the Gaussian-like distribution of frontier orbital energy levels, which produce a Gaussian-like DOS(E). This Gaussian-like DOS(E) is widely used to investigate the CT behaviors in organic semiconductors. It is found that the addition of PC71BM increases the overall coupling between molecules, but does not increase the coupling between donor and donor. This addition makes the coupling “nets” denser, which forms efficient CT paths.
+Based on the molecular structures of the donor and acceptor, we have developed a systematic framework for predicting the power conversion performance of OSCs through combining quantum calculations, molecular dynamics simulations, RW simulations and numerical simulations. This framework includes four steps. The first step is the construction of the atomistic BHJs of solar cells. Then, molecular dynamics simulations are performed until equilibrium is reached. The second step is the quantum calculations. The investigated system is split into dimers. Quantum calculations are performed to calculate the HOMOs, LUMOs, DOSs, the RE and the electronic coupling in each dimer. The hopping rates between each dimer are then calculated through Marcus CT theory. The third step is the estimation of the diffusion coefficient. Hopping rates with their geometry information are used to carry out RW simulations, which give the diffusion coefficient. The last step is the numerical simulations. Inputting the calculated De, Dh, μe, μh, Nc, Nv, EdonorHOMO, EdonorLUMO and EacceptorLUMO, together with the experimental parameters τ, α and ε into the numerical model, the working J–V curves and power conversion efficiencies were obtained, which are in good agreement with experiments. The model and methods shown and tested here provide a framework for predicting the solar cell power conversion efficiency only based on molecular structures. The success in predicting the power conversion efficiencies may accelerate the development of new materials for OSCs.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+We thank National Supercomputing Center of Tianjin, China for providing computing nodes of the Tianhe-1A system. Y. Z. acknowledges the Melbourne International Research Scholarship (MIRS), and the David Hay Postgraduate Writing Up Award for financial support after graduation. G. L. acknowledges the International Postdoctoral Exchange Fellowship Program by the Office of China Postdoctoral Council. T. Y. acknowledges NSFC support (21573112).
+References
+C.-K. Lee, C.-W. Pao and C.-W. Chen, Energy Environ. Sci., 2013, 6, 307 CAS .
+Y. Liu, J. Zhao, Z. Li, C. Mu, W. Ma, H. Hu, K. Jiang, H. Lin, H. Ade and H. Yan, Nat. Commun., 2014, 5, 5293 CrossRef CAS PubMed .
+J. Zhao, Y. Li, G. Yang, K. Jiang, H. Lin, H. Ade, W. Ma and H. Yan, Nat. Energy, 2016, 1, 15027 CrossRef CAS .
+W. Zhao, S. Li, H. Yao, S. Zhang, Y. Zhang, B. Yang and J. Hou, J. Am. Chem. Soc., 2017, 139, 7148–7151 CrossRef CAS PubMed .
+A. Mishra and P. Bäuerle, Angew. Chem., Int. Ed., 2012, 51, 2020–2067 CrossRef CAS PubMed .
+C. Deibel, T. Strobel and V. Dyakonov, Adv. Mater., 2010, 22, 4097–4111 CrossRef CAS PubMed .
+F. Yang and S. R. Forrest, ACS Nano, 2008, 2, 1022–1032 CrossRef CAS PubMed .
+J.-L. Brédas, J. E. Norton, J. Cornil and V. Coropceanu, Acc. Chem. Res., 2009, 42, 1691–1699 CrossRef PubMed .
+C.-K. Lee, C.-W. Pao and C.-W. Chu, Energy Environ. Sci., 2011, 4, 4124 CAS .
+H. Yan, B. a. Collins, E. Gann, C. Wang, H. Ade and C. R. McNeill, ACS Nano, 2012, 6, 677–688 CrossRef CAS PubMed .
+B. Walker, A. B. Tamayo, X.-D. Dang, P. Zalar, J. H. Seo, A. Garcia, M. Tantiwiwat and T.-Q. Nguyen, Adv. Funct. Mater., 2009, 19, 3063–3069 CrossRef CAS .
+P. K. Watkins, A. B. Walker and G. L. B. Verschoor, Nano Lett., 2005, 5, 1814–1818 CrossRef CAS PubMed .
+G. Long, A. Li, R. Shi, Y.-C. Zhou, X. Yang, Y. Zuo, W.-R. Wu, U.-S. Jeng, Y. Wang, X. Wan, P. Shen, H.-L. Zhang, T. Yan and Y. Chen, Adv. Electron. Mater., 2015, 1, 1500217 CrossRef .
+G. D. Avino, S. Mothy, L. Muccioli, C. Zannoni, L. Wang, J. Cornil, D. Beljonne and F. Castet, J. Phys. Chem. C, 2013, 117, 12981–12990 Search PubMed .
+T. Liu, D. L. Cheung and A. Troisi, Phys. Chem. Chem. Phys., 2011, 13, 21461–21470 RSC .
+Y.-T. Fu, D. A. da Silva Filho, G. Sini, A. M. Asiri, S. G. Aziz, C. Risko and J.-L. Brédas, Adv. Funct. Mater., 2014, 24, 3790–3798 CrossRef CAS .
+J. a. Anta, Energy Environ. Sci., 2009, 2, 387 CAS .
+A. Pershin, S. Donets and S. A. Baeurle, J. Chem. Phys., 2012, 136, 194102 CrossRef PubMed .
+M. Casalegno, A. Bernardi and G. Raos, J. Chem. Phys., 2013, 139, 024706 CrossRef PubMed .
+M. Schrader, C. Körner, C. Elschner and D. Andrienko, J. Mater. Chem., 2012, 22, 22258 RSC .
+V. Ruhle, A. Lukyanov, F. May, M. Schrader, T. Vehoff, J. Kirkpatrick, B. Baumeier and D. Andrienko, J. Chem. Theory Comput., 2011, 7, 3335–3345 CrossRef PubMed .
+J. J. Kwiatkowski, J. Nelson, H. Li, J. L. Bredas, W. Wenzel and C. Lennartz, Phys. Chem. Chem. Phys., 2008, 10, 1852–1858 RSC .
+J. Nelson, J. J. Kwiatkowski, J. Kirkpatrick and J. M. Frost, Acc. Chem. Res., 2009, 42, 1768–1778 CrossRef CAS PubMed .
+H. Bässler, Phys. Status Solidi B, 1981, 107, 9–54 CrossRef .
+M. Van der Auweraer, F. C. De Schryver, P. M. Borsenberger and H. Bässler, Adv. Mater., 1994, 6, 199–213 CrossRef CAS .
+Y. Roichman and N. Tessler, Appl. Phys. Lett., 2002, 80, 1948–1950 CrossRef CAS .
+H. S. Kim, J. S. Park, H. K. Jeong, K. S. Son, T. S. Kim, J. B. Seon, E. Lee, J. G. Chung, D. H. Kim, M. Ryu and S. Y. Lee, ACS Appl. Mater. Interfaces, 2012, 4, 5416–5421 CAS .
+C.-H. M. Chuang, A. Maurano, R. E. Brandt, G. W. Hwang, J. Jean, T. Buonassisi, V. Bulović and M. G. Bawendi, Nano Lett., 2015, 15, 3286–3294 CrossRef CAS PubMed .
+J. C. Blakesley and D. Neher, Phys. Rev. B: Condens. Matter Mater. Phys., 2011, 84, 075210 CrossRef .
+Y. Zhou and G. Long, J. Phys. Chem. C, 2017, 121, 1455–1462 CAS .
+G. Garcia-Belmonte, P. P. Boix, J. Bisquert, M. Lenes, H. J. Bolink, A. La Rosa, S. Filippone and N. Martín, J. Phys. Chem. Lett., 2010, 1, 2566–2571 CrossRef CAS .
+D. B. Sulas, K. Yao, J. J. Intemann, S. T. Williams, C.-Z. Li, C.-C. Chueh, J. J. Richards, Y. Xi, L. D. Pozzo, C. W. Schlenker, A. K.-Y. Jen and D. S. Ginger, Chem. Mater., 2015, 27, 6583–6591 CrossRef CAS .
+S. D. Collins, C. M. Proctor, N. A. Ran and T.-Q. Nguyen, Adv. Energy Mater., 2016, 6, 1501721 CrossRef .
+J. Fischer, D. Ray, H. Kleemann, P. Pahner, M. Schwarze, C. Koerner, K. Vandewal and K. Leo, J. Appl. Phys., 2015, 117, 245501 CrossRef .
+G. Long, R. Shi, Y. Zhou, A. Li, B. Kan, W.-R. Wu, U.-S. Jeng, T. Xu, T. Yan, M. Zhang, X. Yang, X. Ke, L. Sun, A. Gray-Weale, X. Wan, H. Zhang, C. Li, Y. Wang and Y. Chen, J. Phys. Chem. C, 2017, 121, 5864–5870 CAS .
+B. Liu, R.-Q. Png, L.-H. Zhao, L.-L. Chua, R. H. Friend and P. K. Ho, Nat. Commun., 2012, 3, 1321 CrossRef PubMed .
+Q. Zhang, B. Kan, F. Liu, G. Long, X. Wan, X. Chen, Y. Zuo, W. Ni, H. Zhang, M. Li, Z. Hu, F. Huang, Y. Cao, Z. Liang, M. Zhang, T. P. Russell and Y. Chen, Nat. Photonics, 2014, 9, 35–41 CrossRef .
+B. Kan, M. Li, Q. Zhang, F. Liu, X. Wan, Y. Wang, W. Ni, G. Long, X. Yang, H. Feng, Y. Zuo, M. Zhang, F. Huang, Y. Cao, T. P. Russell and Y. Chen, J. Am. Chem. Soc., 2015, 137, 3886–3893 CrossRef CAS PubMed .
+
+          M. J. Frisch, G. W. Trucks, H. B. Schlegel, G. E. Scuseria, M. A. Robb, J. R. Cheeseman, G. Scalmani, V. Barone, B. Mennucci, G. A. Petersson, H. Nakatsuji, M. Caricato, X. Li, H. P. Hratchian, A. F. Izmaylov, J. Bloino, G. Zheng, J. L. Sonnenberg, M. Hada, M. Ehara, K. Toyota, R. Fukuda, J. Hasegawa, M. Ishida, T. Nakajima, Y. Honda, O. Kitao, H. Nakai, T. Vreven, J. A. Montgomery, Jr., J. E. Peralta, F. Ogliaro, M. Bearpark, J. J. Heyd, E. Brothers, K. N. Kudin, V. N. Staroverov, R. Kobayashi, J. Normand, K. Raghavachari, A. Rendell, J. C. Burant, S. S. Iyengar, J. Tomasi, M. Cossi, N. Rega, J. M. Millam, M. Klene, J. E. Knox, J. B. Cross, V. Bakken, C. Adamo, J. Jaramillo, R. Gomperts, R. E. Stratmann, O. Yazyev, A. J. Austin, R. Cammi, C. Pomelli, J. W. Ochterski, R. L. Martin, K. Morokuma, V. G. Zakrzewski, G. A. Voth, P. Salvador, J. J. Dannenberg, S. Dapprich, A. D. Daniels, Ö. Farkas, J. B. Foresman, J. V. Ortiz, J. Cioslowski and D. J. Fox, Gaussian 09 Revision A.1, Gaussian Inc., Wallingford CT,  2009 Search PubMed .
+D. Van Der Spoel, E. Lindahl, B. Hess, G. Groenhof, A. E. Mark and H. J. C. Berendsen, J. Comput. Chem., 2005, 26, 1701–1718 CrossRef CAS PubMed .
+K. Do, M. K. Ravva, T. Wang and J.-L. Brédas, Chem. Mater., 2017, 29, 346–354 CrossRef CAS .
+R. A. Marcus, J. Chem. Phys., 1956, 24, 966 CrossRef CAS .
+N. S. Hush, J. Chem. Phys., 1958, 28, 962–972 CrossRef CAS .
+W. Q. Deng and W. A. Goddard, J. Phys. Chem. B, 2004, 108, 8614–8621 CrossRef CAS .
+J. E. Norton and J.-L. Brédas, J. Am. Chem. Soc., 2008, 130, 12377–12384 CrossRef CAS PubMed .
+D. P. McMahon and A. Troisi, J. Phys. Chem. Lett., 2010, 1, 941–946 CrossRef CAS .
+N. G. Martinelli, J. Idé, R. S. Sánchez-Carrera, V. Coropceanu, J.-L. Brédas, L. Ducasse, F. Castet, J. Cornil and D. Beljonne, J. Phys. Chem. C, 2010, 114, 20678–20685 CAS .
+G. Nan, X. Yang, L. Wang, Z. Shuai and Y. Zhao, Phys. Rev. B: Condens. Matter Mater. Phys., 2009, 79, 115203 CrossRef .
+A. D. Becke, J. Chem. Phys., 1996, 104, 1040 CrossRef CAS .
+
+          T. J. Meyer, Excited-State Electron Transfer, John Wiley & Sons, Inc., Hoboken, NJ, USA,  1983, vol. 30, pp. 394–395 Search PubMed .
+R. A. Marcus, J. Phys. Chem., 1968, 72, 891–899 CrossRef CAS .
+R. A. Marcus and N. Sutin, Inorg. Chem., 1975, 14, 213–216 CrossRef CAS .
+
+          N. Sutin, Theory of Electron Transfer Reactions: Insights and Hindsights, John Wiley & Sons, Inc., Hoboken, NJ, USA,  1983, vol. 30, pp. 442–498 Search PubMed .
+
+          T. J. Meyer, Excited-State Electron Transfer, John Wiley & Sons, Inc., Hoboken, NJ, USA,  1983, vol. 30, p. 411 Search PubMed .
+J. Bisquert, D. Cahen, G. Hodes, S. Rühle and A. Zaban, J. Phys. Chem. B, 2004, 108, 8106–8118 CrossRef CAS .
+Y. Zhou and A. Gray-Weale, Phys. Chem. Chem. Phys., 2016, 18, 4476–4486 RSC .
+D. Rauh, A. Wagenpfahl, C. Deibel and V. Dyakonov, Appl. Phys. Lett., 2011, 98, 133301 CrossRef .
+
+          W. Press, S. Teukolsky, W. Vetterling and B. Flannery, Numerical Recipes in FORTRAN, Cambridge University Press, New York, 2nd edn,  1992, vol. 1 Search PubMed .
+B. Hess, C. Kutzner, D. van der Spoel and E. Lindahl, J. Chem. Theory Comput., 2008, 4, 435–447 CrossRef CAS PubMed .
+M. J. Abraham, T. Murtola, R. Schulz, S. Páll, J. C. Smith, B. Hess and E. Lindahl, SoftwareX, 2015, 1–2, 19–25 CrossRef .
+J. Puigdollers, A. Marsal, S. Cheylan, C. Voz and R. Alcubilla, Org. Electron., 2010, 11, 1333–1337 CrossRef CAS .
+G. Garcia-Belmonte, P. P. Boix, J. Bisquert, M. Sessolo and H. J. Bolink, Sol. Energy Mater. Sol. Cells, 2010, 94, 366–375 CrossRef CAS .
+H. Xu, Y.-C. Zhou, X.-Y. Zhou, K. Liu, L.-Y. Cao, Y. Ai, Z.-P. Fan and H.-L. Zhang, Adv. Funct. Mater., 2014, 24, 2907–2915 CrossRef CAS .
+S. M. Ryno, C. Risko and J. L. Brédas, J. Am. Chem. Soc., 2014, 136, 6421–6427 CrossRef CAS PubMed .
+S. M. Ryno, C. Risko and J. L. Brédas, ACS Appl. Mater. Interfaces, 2016, 8, 14053–14062 CAS .
+T. Wang, M. K. Ravva and J. L. Brédas, Adv. Funct. Mater., 2016, 26, 5913–5921 CrossRef CAS .
+E. F. Valeev, V. Coropceanu, D. A. da Silva Filho, S. Salman and J.-L. Brédas, J. Am. Chem. Soc., 2006, 128, 9882–9886 CrossRef CAS PubMed .
+V. Mihailetchi, J. van Duren, P. Blom, J. Hummelen, R. Janssen, J. Kroon, M. Rispens, W. Verhees and M. Wienk, Adv. Funct. Mater., 2003, 13, 43–46 CrossRef CAS .
+C. Vijila, S. P. Singh, E. Williams, P. Sonar, A. Pivrikas, B. Philippa, R. White, E. Naveen Kumar, S. Gomathy Sandhya, S. Gorelik, J. Hobley, A. Furube, H. Matsuzaki and R. Katoh, J. Appl. Phys., 2013, 114, 184503 CrossRef .
+T. B. Singh, N. Marjanovi, P. Stadler, M. Auinger, G. J. Matt, S. Günes, N. S. Sariciftci, R. Schwödiauer and S. Bauer, J. Appl. Phys., 2005, 97, 083714 CrossRef .
+V. Coropceanu, R. S. Sanchez-Carrera, P. Paramonov, G. M. Day and J.-L. Bredas, J. Phys. Chem. C, 2009, 113, 4679–4686 CAS .
+G. Nan and Z. Li, J. Mater. Chem. C, 2014, 2, 1447 RSC .
+Y. Zhou, W.-Q. Deng and H.-L. Zhang, J. Chem. Phys., 2016, 145, 104108 CrossRef PubMed .
+G. Long, B. Wu, A. Solanki, X. Yang, B. Kan, X. Liu, D. Wu, Z. Xu, W.-R. Wu, U.-S. Jeng, J. Lin, M. Li, Y. Wang, X. Wan, T. C. Sum and Y. Chen, Adv. Energy Mater., 2016, 6, 1600961 CrossRef .
+H. Hoppe and N. S. Sariciftci, J. Mater. Res., 2004, 19, 1924–1945 CrossRef CAS .
+S. Torabi, F. Jahani, I. Van Severen, C. Kanimozhi, S. Patil, R. W. A. Havenith, R. C. Chiechi, L. Lutsen, D. J. M. Vanderzande, T. J. Cleij, J. C. Hummelen and L. J. A. Koster, Adv. Funct. Mater., 2015, 25, 150–157 CrossRef CAS .
+A. Armin, D. M. Stoltzfus, J. E. Donaghey, A. J. Clulow, R. C. R. Nagiri, P. L. Burn, I. R. Gentle and P. Meredith, J. Mater. Chem. C, 2017, 5, 3736–3747 RSC .
+
+Footnotes† Electronic supplementary information (ESI) available: Tables with all calculation results. See DOI: 10.1039/c7tc05290a‡ These authors contributed equally to this work.This journal is © The Royal Society of Chemistry 2018
+Table Content:
+
+ 	Fig. 1  Chemical structures of the molecules used in this simulation.	 
+
+ 	Fig. 2  Flowchart of the multi-scaled model in this study. Based on molecular structures, the theoretical processes are shown in green. Three parameters from experiments are listed in the blue frame. Outputs are shown in the yellow frame.	 
+	(1)
+λ = E+,0 − E0,0 + E0,+ − E+,+	(2)
+V = 〈ψ1HOMO|F|ψ2HOMO〉	(3)
+	(4)
+	(5)
+	(6)
+	(7)
+	(8)
+	(9)
+	(10)
+	(11)
+	(12)
+	(13)
+	(14)
+	(15)
+	(16)
+
+ 	Fig. 3  The DRCN5T:PC71BM (A) and DRCN7T:PC71BM (B) thin films. The VDW surfaces of the DRCN7T and DRCN7T molecules are shown in green and the PC71BM VDW surface is colored in red. The DERHD7T:PC71BM thin film is given in Fig. S1 (ESI†).	 
+
+
+
+PC71BM	0.307	0.137	
+	
+
+DRCN5T	0.226	0.216	0.415	0.661
+DRCN7T	0.160	0.212	0.369	1.019
+DERHD7T	0.165	0.234	0.124	1.020
+
+ 	Fig. 4  Distributions of HOMO energy levels. (A) HOMOs of DRCN5T molecules in DRCN5T:PC71BM film; (B) HOMOs of DRCN7T molecules in DRCN7T:PC71BM film; (C) HOMOs of DERHD7T molecules in DERHD7T:PC71BM film; (D) HOMOs of DRCN5T molecules in pure DRCN5T film; (E) HOMOs of DRCN7T molecules in pure DRCN7T film; (F) HOMOs of DERHD7T molecules in pure DERHD7T film. Blue lines are the fitted Gaussian distributions.	 
+
+
+DRCN5T:PC71BM	3.39	6.87	6.66	3.20
+DRCN7T:PC71BM	9.38	14.20	3.02	2.93
+DERHD7T:PC71BM	3.71	10.90	4.77	2.95
+
+ 	Fig. 5  Calculated electronic couplings of dimers in the DERHD7T thin film. (A) Electronic couplings between the two molecules versus distances between the two molecules geometry centers; (B) electronic couplings between the two molecules versus the nearest atom distances of the two molecules. The electronic coupling of the DERHD7T:PC71BM blend film and couplings of other investigated systems are available in the ESI.†	 
+
+ 	Fig. 6  Hole transfer paths. HOMO–HOMO couplings: (A) for the DRCN5T:PC71BM thin film; (B) for DRCN7T:PC71BM thin film; (C) for the DRCN5T single-component thin film; (D) for the DRCN7T single-component thin film. Donor molecules are shown in green spheres, PC71BM molecules are shown in orange. The width of the rod shows the electronic coupling strength of the dimer, which shows the possibility of CT between the connected molecules. Red rods are couplings larger than 9 meV or smaller than −9 meV. Yellow lines are weak couplings. Hence, red rods denote an efficient CT path. These figures were visualized by vPython 2.7.	 
+
+ 	Fig. 7  Simulated output J–V curves compared to experiments. (A) The performance of DRCN5T:PC71BM OSC; (B) the performance of DRCN7T:PC71BM OSC; (C) the performance of DERHD7T:PC71BM OSC. Red lines are working J–V curves predicted from theory and green lines are those measured in experiments.	 
+
+PC71BM	6.12 × 10−2	9.11 × 10−3	
+
+DRCN5T	5.65 × 10−4	4.05 × 10−4	
+
+DRCN7T	1.13 × 10−4	1.63 × 10−5	2.15 × 10−4
+DERHD7T	7.75 × 10−5	1.65 × 10−5	1.34 × 10−4
+
+
+DRCN5T:PC71BM	1.02 × 10−4	5.68 × 10−5	1.80	6.54 × 10−4	2.53 × 10−4	2.58
+DRCN7T:PC71BM	1.05 × 10−5	2.25 × 10−6	4.66	5.91 × 10−4	1.28 × 10−4	4.62
+DERHD7T:PC71BM	1.81 × 10−5	7.32 × 10−5	0.25	1.18 × 10−4	1.04 × 10−5	11.35
+Footnotes
+† Electronic supplementary information (ESI) available: Tables with all calculation results. See DOI: 10.1039/c7tc05290a
+‡ These authors contributed equally to this work.
+
+This journal is © The Royal Society of Chemistry 2018

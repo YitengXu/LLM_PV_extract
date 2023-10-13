@@ -1,0 +1,432 @@
+Molecular dynamics simulations of the solvent - and thermal history-dependent structure of the PCBM fullerene derivative   - Journal of Materials Chemistry (RSC Publishing) DOI:10.1039/C2JM16142G View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/C2JM16142G
+(Paper)
+J. Mater. Chem., 2012, 22, 5434-5443Show CompoundsShow Chemical TermsMolecular dynamics simulations of the solvent- and thermal history-dependent structure of the PCBM fullerene derivative†
+
+        
+          
+            Francesco 
+            Frigerio‡
+a, 
+      
+        
+          
+            Mosè 
+            Casalegno‡
+b, 
+      
+        
+          
+            Chiara 
+            Carbonera
+          
+        
+      c, 
+      
+        
+          
+            Tommaso 
+            Nicolini
+          
+        
+      b, 
+      
+        
+          
+            Stefano Valdo 
+            Meille
+          
+        
+      *b and 
+
+        
+          
+            Guido 
+            Raos
+          
+        
+      *b
+aENI Refining and Marketing, via Maritano 26, I-20097, San Donato Milanese (MI), Italy. E-mail: francesco.frigerio@eni.com
+bDipartimento di Chimica, Materiali e Ingegneria Chimica “G. Natta”, Politecnico di Milano, via Mancinelli 7, I-20131, Milano (MI), Italy. E-mail: mose.casalegno@chem.polimi.it; guido.raos@polimi.it; valdo.meille@polimi.it; tommaso.nicolini@chem.polimi.it
+cResearch Centre for Non-Conventional Energies, ENI Istituto Donegani, Via Fauser 4, I-28100, Novara (NO), Italy. E-mail: chiara.carbonera@eni.com
+Received 
+      24th November 2011
+    , Accepted 5th January 2012First published on 7th February 2012AbstractThe fullerene derivative PCBM ([6,6]phenyl-C61-butyric acid methyl ester) is one of the best electron acceptors used so far in solution-processed organic photovoltaic devices. The reasons for this success depend partly on its favourable electronic properties, partly on its solubility in common organic solvents and plausibly also on the possibility to optimize its structure and morphology by post-deposition treatments (solvent or thermal annealing). The latter feature is still largely a matter of speculation, as experimentally validated structural models of PCBM molecular organization within the devices are still unavailable. This structural characterization is non-trivial, given that poorly ordered PCBM nanocrystals and amorphous domains appear to often coexist in bulk-heterojunction films based on this system. Here we address some of these issues using molecular dynamics (MD) simulations. Our starting points are the only two published PCBM crystal structures, which were obtained by crystallization from oDCB (ortho-dichlorobenzene) and MCB (monochlorobenzene). Both contain guest molecules of the specific solvent. We simulated their thermal behavior, from room temperature up to their apparent melting points. Additional MD simulations involved model crystals obtained by removing solvent molecules from these co-crystal structures. Models that can apply to the amorphous phase or to nanocrystalline samples have been obtained by cooling molten PCBM, after removing the solvent at different stages in the simulation. Their densities are close to the experimental values and they present a well interconnected network of fullerene moieties, where each of them has an average of seven close neighbours available for charge hopping. Pre- and post-melting structural features such as intermolecular pair distribution functions are discussed in the framework of organic solar cell production and host–guest system dynamics.
+Introduction
+Organic materials have been actively investigated for over a decade as promising substitutes of silicon and other inorganic semiconductors in next-generation photovoltaic devices.1,2 The current record in power conversion efficiency (PCE) is at 6–7% for peer-reviewed papers,3 but according to recent press releases several companies have now reached 8–9% PCEs.4 These impressive results have been obtained with “bulk heterojunction” (BHJ) photoactive layers.5 Here, an electron acceptor A and an electron donor D (respectively, organic n-type and p-type semiconductors) are blended together to form a bicontinuous, intimately interpenetrated network of two phases. Ongoing research efforts attempt to identify optimal D/A combinations for BHJ cells. This is a complex task, for the optimization process must take into account several competing factors.6 First of all, the overall PCE of the device depends on different physical processes, such as light absorption, exciton dissociation into free positive and negative charges (holes and electrons, respectively), charge transport and collection at the two electrodes. Optimizing one at the expense of the other would not be very productive. Secondly, it is desirable that the materials have some solubility in common organic solvents, so as to be deposited by simple and cheap methods such as spin-coating (laboratory scale) or printing technologies (industrial scale). Finally, once a blend with good PCE and processability has been identified, it should retain its performance for several years. This requires long-term stability against both chemical degradation processes and physical changes in the active layer morphology.
+The first prototypes of organic BHJ cells were made of poly(p-phenylene vinylene) derivatives (PPVs) as donors and fullerenes as acceptors, in particular the [6,6]-phenyl-C61-butyric acid methyl ester (PCBM). Unlike C60, this compound is soluble in common solvents such as toluene (TOL), monochlorobenzene (MCB), ortho-dichlorobenzene (oDCB) and dichloromethane (DCM). Significant performance improvements have been obtained by changing the donor material, initially using semicrystalline thiophene-based polymers such as poly(3-hexylthiophene) (P3HT) and more recently using low band-gap copolymers, e.g. those incorporating carbazole or benzothiazole units. The control of blend morphology through deposition and post-deposition treatments (high-boiling additives, thermal and solvent annealing, etc.) has also proven to be extremely important.7 By contrast, no substantial performance improvements have been observed so far by replacing PCBM with similar compounds or other n-type materials. Naturally, significant research effort has been aimed at the identification of the key factors which are responsible for the success of PCBM. It is unnecessary to discuss extensively the different attempts, many of which have been reviewed elsewhere.5–7 In order to set the stage for our work, we will simply mention some experimental studies of the PCBM structure and phase behaviour (either as a pure material or in blends with P3HT, which still represents the most important system for fundamental studies) and comment on recent molecular modelling work.
+At least three groups have undertaken systematic investigations of the PCBM–P3HT phase behavior.8–10 One important conclusion is that PCBM is partially soluble in the amorphous fraction of P3HT, and in fact it may diffuse quickly through it.11 Above its solubility limit, a PCBM-rich phase is formed. Typical sizes of the PCBM crystals developing from blends with P3HT were estimated to be at most 10–20 nm after thermal annealing at 150 °C and even smaller without such treatments.8,12 This indicates that PCBM has considerable difficulties in crystallizing,10 which is understandable considering its combination of low symmetry and strong intermolecular interactions, favouring the fast and irreversible formation of disordered aggregates in place of well developed crystals. Indeed, PCBM can also form an amorphous phase, with a glass transition temperature Tg ≅ 131 °C.10 This partly explains the need of heating the films up to 140–150 °C, in thermal treatments of PBCM–P3HT blends. Notice that these annealing temperatures are well below the melting point of PCBM, which is around 290 °C. Diffraction data8 indicate that, after a typical annealing cycle at 150 °C, an important fraction of PCBM is still amorphous. Annealing enhances the phase separation of PCBM and P3HT and improves the organization within P3HT crystalline domains,8,12 even though a significant fraction of PCBM remains dissolved in amorphous P3HT.13 One research group has also provided evidence for the possible co-crystallization of PCBM (and of the related compound derived from C70) with some thiophene-based polymers.14 The latter however present some significant structural differences from P3HT.
+A complementary line of research has concerned the determination of crystal structures adopted by PCBM, either in the pure form or in the PCBM-rich phase of the blends. Using extremely slow solvent evaporation conditions and maintaining a solvent saturated atmosphere, Rispens et al.15 succeeded in growing PCBM single crystals suitable for X-ray diffraction and solved the only two PCBM crystal structures reported so far in the literature. Both are in fact co-crystals of PCBM with the solvent molecules oDCB and MCB (respectively, denoted by EKOZOT and EKOZUZ in the CSD Database16). Henceforth, we shall denote these structures by the shorthand names of P1D1 (because it contains PCBM and oDCB in 1:1 ratio) and P2M1 (because it contains PCBM and MCB in 2:1 ratio). Subsequently, Yang et al.12a investigated the structure of PCBM films deposited under conditions resembling those used for photovoltaic cells, using transmission electron microscopy (TEM) in both bright field and selected-area electron diffraction (SAED) modes. Depending on the solvent evaporation rates, both crystalline and amorphous films were obtained, but in all cases the solvent was absent under the high vacuum conditions implied by TEM. SAED data were not analyzed in detail but, in the case of films obtained by slow solvent evaporation, the observed single-crystal diffraction patterns indicate structures different from those described in ref. 15. When the PCBM films gave amorphous SAED patterns, these could be interpreted as overlapping broadened crystalline diffraction spots, consistent with the possible formation of nm-sized, randomly oriented crystallites.12 Further TEM studies on pristine and annealed blends with P3HT or MDMO–PPV12b,c,17–21 confirm the occurrence of different organizations of PBCM, ranging from largely amorphous 8,12c to highly crystalline.12b Again, the SAED patterns show that when PCBM crystallizes in blends, its crystal structure differs from those characterized by Rispens et al.15 Based on electron diffraction evidence of PCBM:P3HT blends, and in analogy to the C60 fullerene, an idealized, orientationally disordered compact cubic structure has been suggested for PCBM,18 with a lattice constant of 1.42 nm. This proposal is not viable, as it would imply a density of about 2.11 Mg m−3, which is 20–30% higher than the values of 1.68 Mg m−3 found for C60, the values of 1.67 and 1.65 Mg m−3 for the two PCBM co-crystals15 and the value of 1.50 Mg m−3 reported for amorphous PCBM films22 and confirmed by us (see ESI†).
+In summary, the organization of PCBM in photoactive blends ranges from largely amorphous, to nanocrystalline, to highly crystalline structures, in all of which the solvent is thought to be present at most as an impurity, at variance with the available crystal structures. In some cases PCBM is also found dispersed in the amorphous polymer phase. Developing detailed structural models in all the above instances represents a difficult but essential task that is now beginning to be tackled, with an increasingly important role being played by molecular simulation approaches. The structural organization of PCBM and its consequences on the electronic properties have been studied by computational methods in ref. 23 and 24. We shall comment on these below. For completeness, we also mention a modelling study of charge transport in a series of fullerene derivatives bearing linear alkyl side chains of increasing length.25 Other authors have developed coarse-grained models of PCBM, to be used jointly with coarse-grained models of P3HT in simulations of BHJ blend morphologies.26 At the other extreme, it is possible to model the structure and electronic properties of individual fullerene-based molecules (equilibrium geometries, thermochemistry, ionization and excitation energies, vibrational spectra, etc.) using ab initio density functional calculations.27 Here, achieving high accuracy requires the use of extensive basis sets and relatively sophisticated functionals. This currently prevents their usage in the study of long-time dynamics in condensed phases, which is one of the main issues in our work.
+In the first modelling study of PCBM,23 a series of plane-wave ab initio density functional calculations were carried out on highly idealized structures, containing a single independent molecule and derived from the classical packings of spherical objects (i.e., body-centered cubic, face-centered cubic, etc.). The paper23 supports the idea that close contacts of the fullerene moiety are the essential supermolecular features determining the band gap of the crystalline system. Unfortunately, with the exception of the “simple cubic” model which shows a plausible density of 1.56 Mg m−3, the other PCBM models have densities that are 10–20% lower than this value, casting doubts on the validity of some of the more detailed conclusions of this paper. On the other hand, Cheung and Trosi24 started their simulations from the monoclinic structure of Rispens et al.15 (P1D1), from which the oDCB molecules were removed, and then carried out a series of molecular dynamics (MD) simulations with an empirical force field. The authors indicate that the structure remains similar to the experimental crystal structure determined at 90 K, which is characterized by alternating fullerene-rich and alkyl-rich layers. This structural stability persists even at 500 K. The electron transport properties of PCBM are then discussed using the snapshots extracted from the MD trajectories to calculate a series of quantities such as the energies and the degrees of localization/delocalization of the electronic states. The results obtained by these authors are interesting, in that they challenge many of the common assumptions used in the calculation of charge hopping rates for organic materials. However, even in this case it is doubtful that the PCBM model is appropriately relaxed. For example, the triclinic P2M1 structure has a density of 1.56 Mg m−3 after solvent removal is taken into account. This is about 8% higher than the value of the model used in ref. 24 (1.44 Mg m−3 at 300 K), indicating that more stable packings of PCBM are indeed likely to exist and that they should be, plausibly, readily accessible.
+The main purpose of the present paper is to establish whether sensible and hopefully reliable models of PCBM organization can be obtained by MD simulations with an appropriate force field. The quality of our simulations will be judged by comparison with the available co-crystal structures15 and, for the important case of solvent-less systems, with the experimental densities of amorphous and crystalline PCBM. Some density measurements were carried out for this specific purpose and are reported in the ESI†. We will discuss the sensitivity of our MD results to the starting conditions and analyze the main structural features of the resulting models. In particular, we shall characterize the network of contacts among the fullerenic component of the PCBM molecules, as this represents an important indicator of the electron transport properties of a particular phase.
+Computational models and methods
+The starting models for our simulations come from the crystal structures of PCBM from monochlorobenzene (MCB) and ortho-dichlorobenzene (oDCB).15 The asymmetric units of both crystal structures are shown in Fig. 1. The crystal structure obtained from oDCB is monoclinic with a P21/n space group symmetry. Crystallization from MCB results in a P triclinic structure. Lattice parameters are reported in Table 1, respectively, under the headings of P1D1 and P2M1. Their values are at the temperature of 90 K, at which the X-ray data were collected. In both cases, each unit cell contains 4 PCBM molecules, together with 4 oDCB molecules in P1D1 or 2 MCB molecules in P2M1.28 For each structure, 2 × 2 × 2 supercells comprising 32 PCBM molecules were then used as input for the MD simulations. Three views of both cells are shown in Fig. 2. These structures were then simulated at different temperatures, either in their complete form or after removing the solvent molecules at different stages of the simulations. Further details are given below.
+ Fig. 1  Asymmetric units of the PCBM crystals obtained by crystallization from oDCB (1, P1D1 structure) and MCB (2, P2M1). In the second structure, the MCB molecules have an occupation number of 0.5. 
+Table 1 Comparison of the experimental and simulated lattice parameters of the crystalline systems. In the MD simulations, the values of a, b and c have been obtained by dividing the supercell lengths by 2
+
+
+
+
+ 
+
+                  P1D1 (exp. 90 K)
+
+                  P1D1 (sim. 400 K)a
+P1D1−S (sim. 400 K)b
+
+                  P2M1 (exp. 90 K)
+
+                  P2M1 (sim. 400 K)a
+P2M1−S (sim. 400 K)b
+
+
+
+
+
+a The % variations are calculated with respect to the experimental parameters at 90 K.
+b The % variations are calculated with respect to the simulations of the solvent-containing systems at 400 K.
+
+
+
+
+
+
+a/nm−1
+1.376
+1.46 (+6.1%)
+1.35 (−7.5%)
+1.383
+1.40 (+1.2%)
+1.37 (−2.1%)
+
+
+
+b/nm−1
+1.663
+1.64 (−1.4%)
+1.66 (+1.2%)
+1.529
+1.56 (+2.0%)
+1.47 (−5.8%)
+
+
+
+c/nm−1
+1.908
+1.91 (+0.1%)
+1.89 (−1.0%)
+1.925
+1.93 (+0.3%)
+1.94 (+0.5%)
+
+
+α/°
+90.00
+89.4 (−0.7%)
+96.6 (+8.1%)
+80.26
+79.5 (−0.9%)
+80.2 (+0.9%)
+
+
+β/°
+105.29
+108.4 (+3.0%)
+109.5 (+1.0%)
+78.56
+79.5 (+1.2%)
+80.4 (+1.1%)
+
+
+γ/°
+90.00
+90.1 (+0.1%)
+84.8 (−5.9%)
+80.41
+80.0 (−0.5%)
+89.8 (+12.%)
+
+
+
+V/nm−3
+4.211
+4.34 (+3.0%)
+3.96 (−8.7%)
+3.895
+4.03 (+3.5%)
+3.80 (−5.9%)
+
+
+
+
+ Fig. 2  Crystal packing of PCBM 2 × 2 × 2 supercells. Views along the three lattice vectors of the P1D1 (1a, 1b, 1c) and the P2M1 (2a, 2b, 2c) structures. 
+The atomistic force field used in this work was developed from the OPLS-AA model,29 which formed the basis also for the MD simulations of ref. 24. Standard OPLS-AA parameters were used for bonded and non-bonded interactions, except for the Lennard-Jones (LJ) parameters associated with fullerene aromatic carbons, for which Girifalco's values were adopted.30,31 Electrostatic interactions were calculated using the Particle-Mesh-Ewald (PME) method32 with a real space cutoff of 12 Å. The same cutoff was used also for the truncation of the LJ interactions.
+All simulations were performed with the GROMACS4 molecular dynamics simulation package.33 Typically, a preliminary short equilibration run (1 ns) was performed on each system at constant volume and temperature (NVT, for short). This was followed by a 20–50 ns run at constant temperature and pressure (NPT, for short) to allow volume relaxation in response to temperature changes or solvent removal. This is a critical step in the simulations, as the system's final density is an important parameter (probably the most important one, within the present work) for their validation against experiment. The ESI† contains some representative plots, showing convergence of this quantity with respect to simulation time (after allowing for the natural thermal fluctuations). Finally, we performed one long NVT production run (10–20 ns) to collect relevant averages. We used the Nose–Hoover thermostat for temperature control (coupling constant τT = 0.1 ps) and the Parrinello–Rahman method for pressure control (coupling constant τP = 1.0 ps).34 The compressibility value was set equal to that of C60 in the solid phase, 7 × 10−6bar−1.35 A time step of 1 fs was used in all simulations.
+Results
+For clarity and conciseness, we shall use the following shorthand notation for our simulated systems:
+■ P1D1: simulation of crystalline PCBM containing oDCB solvent molecules in 1:1 ratio, starting from the corresponding crystal structure;15
+■ P1D1−S: simulation of crystalline PCBM, after removal of oDCB solvent molecules from P1D1;
+■ P1D1−S+M: simulation of amorphous PCBM, after removal of oDCB from the crystal (P1D1−S) and subsequent melting at high temperature;
+■ P1D1+M−S: simulation of amorphous PCBM, after melting of P1D1 and subsequent removal of oDCB;
+■ P2M1: simulation of crystalline PCBM containing MCB solvent molecules in 2:1 ratio, starting from the corresponding crystal structure;15
+■ P2M1−S: simulation of crystalline PCBM, after removal of MCB solvent molecules from P2M1;
+■ P2M1−S+M: simulation of amorphous PCBM, after removal of MCB from the crystal (P2M1−S) and subsequent melting;
+■ P2M1+M−S: simulation of amorphous PCBM, after melting of P2M1 and subsequent removal of MCB.
+Each of the above codes actually represents a family of simulations, which were typically carried out at several different temperatures, from 300 K up to (in one case) 800 K. Unless explicitly stated otherwise, we shall concentrate on the discussion of the simulation results at 400 K (127 °C). This was selected as the most significant temperature, for at least two reasons. First of all, at 400 K the PCBM molecules retain at least some mobility, whereas at room temperature they would be frozen in a glassy phase, making proper sample equilibration even more difficult to achieve. Secondly, 400 K is close to the typical annealing temperatures in bulk-heterojunction cells. Any structural arrangement achieved at this temperature is therefore likely to persist also at room temperature, possibly as a metastable state.
+Regardless of the starting crystal structure, with or without the included solvent molecules, no major changes in the crystal packing of PCBM were observed in the preliminary runs in the range from 300 to 500 K. The upper temperature limit mentioned above (800 K) was reached for the P2M1−S system, as this is the value which was actually required in order to see substantial disordering (melting) within the time scale of the simulation (70 ns). The other systems disordered at lower temperatures, typically between 550 and 700 K (see below). In any case, these should not be interpreted as the equilibrium melting temperatures of our PCBM models. Indeed, we are very likely overestimating them36 and experimental DSC studies8,10 indicate that the melting point for pure PCBM is around 560 K.37 Finally, these systems were brought back to 400 K to obtain the final amorphous models.
+Overall, there is good agreement between the experimental and simulated lattice parameters of the P1D1 and P2M1 systems (see Table 1). In both cases, there is a 3–4% increase in the cell volume, which is appropriate considering the temperature difference between the experiments (90 K) and the simulations (400 K). This volume expansion is fairly isotropic in P2M1. As for P1D1, it is concentrated along the a-axis, while the b-axis shows in fact a slight contraction. We take these results as an indication of the validity of our force field.
+
+Fig. 3 and 4 show simulation snapshots of P1D1 and P2M1 at some representative temperatures, chosen to span the interval over which melting appears to occur. For P1D1 (Fig. 3), the final configuration at 540 K (not shown) still resembled that at 400 K, which in turn resembles the low-temperature crystallographic structure (see Fig. 2, panel 1a). At 550 K, the oDCB solvent molecules are substantially displaced, while the PCBM molecules retain their average positions. The full melting transition was observed on further increasing the temperature to 560 K. Here the achievement of structural disorder is essentially complete, as can be perceived by comparison with analogous snapshots taken at higher temperatures. A qualitatively similar picture emerges from the P2M1 simulations (Fig. 4), but shifted to higher temperatures by about 70 K.
+ Fig. 3  MD snapshots of the P1D1 system at different temperatures, viewed along the a axis (see Fig. 2, 1a for comparison). 
+ Fig. 4  MD snapshots of the P2M1 system at different temperatures, viewed along the a axis (see Fig. 2, a for comparison). 
+The different apparent thermal stabilities of the P1D1 and P2M1 crystal forms reflect their very different packing modes. In order to make this explicit, Fig. 5 compares the radial distribution functions gXY(r), calculated from the centres-of-mass of the alkyl (X, Y = A) or fullerene (X, Y = F) moieties. We also plot the “running coordination numbers” CXY(r), calculated from these distribution functions by integration from zero to r:  where n is the PCBM number density. Judging from the positions of their maxima, the nearest-neighbour peaks of gFF(r) appear to be rather similar. On closer inspection, it can be seen that the peak of P2M1 is less symmetric and decays more slowly to the right of the maximum, indicating a more dynamic structure allowing larger fluctuations of the fullerene–fullerene distances. An even stronger difference emerges by calculating the FF coordination numbers. Taking 1.1 nm as the upper limit of integration (i.e., immediately to the right of the first gFF peak), we see that each fullerene is surrounded by six other fullerenes in P1D1, and seven in P2M1. The six-fold coordination in P1D1 is derived from the formation of alternating layers of fullerenes and alkyls + solvent, which are clearly visible in Fig. 2(1b). Here the alkyls are arranged in well-defined nearest-neighbour pairs: see the unit value of the first “step” of the CAA(r) function. The P2M1 structure has a slightly lower density, but individual fullerenes are better interconnected in three dimensions. This produces superior electron transport properties in this particular crystal polymorph, as discussed in ref. 15. In P1D1 the alkyls seem to be arranged in triplets and quartets, rather than pairs as in P2M1.
+ Fig. 5  
+Fullerene–fullerene (FF) and alkyl–alkyl (AA) radial distribution functions and coordination numbers, calculated from the MD simulations at 400 K of the original P1D1 and P2M1 crystal structures. The values of gFF(r) at the first peak maximum are also indicated. 
+It is interesting to analyze the pre-melting phenomena occurring in these two systems, in particular by following the rotational dynamics of the individual molecules. This can be quantified by the orientational autocorrelation functions:RX(t) = 〈uXi(t0 + t)uXi(t0)〉where X indicates the molecular species (PCBM, oDCB or MCB), uXi(t) is a unit vector oriented along two atoms specifying the orientation of the ithX molecule at a given time (this vector is oriented from the fullerene centre to the point of attachment of the alkyl in PCBM, it lies within the molecular plane in oDCB and MCB), and 〈…〉 indicates an average over all X molecules and time origins t0. The results are given in Fig. 6 and 7. In the case of P1D1, we see that the crystal structure is essentially static at 400 K, while the oDCB molecule acquires some rotational freedom a few degrees (10–20 K, say) below our estimated melting point (see the plots at 550 K). Rotation of the larger PCBM molecules sets in only after the full melting transition, around 560 K. In contrast, the P2M1 system melts at much higher temperatures, but now the rotation of the MCB molecules is already active at 400 K, about 230 K below our apparent melting point. In fact, simple visual inspection of our simulation shows that, within a few nanoseconds, some MCB molecules undergo full 180° “flips” in their orientation. This remarkable rotational freedom agrees with the directional disorder of the MCB molecules, at both of their different sites, in the published crystal structure.15 The higher (apparent) melting temperature of the P2M1 crystals may be associated with the entropic stabilization provided by MCB rotation, in addition to the enthalpic contribution arising from its closer and more extensive fullerene–fullerene contacts.
+ Fig. 6  Orientational time-correlation functions for PCBM (left) and oDCB (right) in P1D1 at different temperatures. Time is in ps on the x-axis. 
+ Fig. 7  Orientational time-correlation functions for PCBM (left) and MCB (right) in P2M1 at different temperatures. Time is in ps on the x-axis. 
+We now turn to the discussion of the solvent-less systems, both crystalline and amorphous. The importance of these systems has already been highlighted in the Introduction. A few key questions may be readily identified. Can we obtain reasonable models of solvent-less crystalline PCBM simply by removing the solvent molecules from P1D1 and P2M1? Do these crystal models retain the distinctive packing mode of the solvent-containing systems? Similarly, can we establish a model for the amorphous PCBM phase? Does its short-range order resemble that of any of the previously identified crystal phases? Is there perhaps more than one amorphous PCBM phase, depending on the thermal history of the samples (“polyamorphism”)?
+
+Table 1 allows us to compare the lattice parameters of the two solvent-free “crystalline” systems with those of the solvent-containing crystals (at 400 K, for consistency). We observe that P1D1−S has larger volume contraction, consistent with the fact that it originally contained one oDCB molecule per PCBM. This contraction is anisotropic and is concentrated along the a-axis, the same which had expanded in the P1D1 system upon heating from 90 to 400 K. Similarly, the (smaller) contraction of the P2M1−S system is concentrated along the two axes which had undergone the main thermal expansion in P2M1. At 1.60 Mg m−3 (see Table 2), the final density of P2M1−S is 5% higher than that of P1D1−S and it is close to that measured by us for a solvent-free, crystalline PCBM sample.
+Table 2 Densities (d), volume per PCBM molecule (V*) and coordination numbers (CXY, evaluated at r = 1.10 nm) for the simulated systems at 400 K
+
+
+
+
+ 
+
+                  P1D1
+                
+P1D1−S
+P1D1−S+M
+
+                  P1D1+M−S
+
+                  P2M1
+                
+P2M1−S
+P2M1−S+M
+
+                  P2M1+M−S
+
+
+
+
+
+a These densities do not include the contribution of the solvent molecules.
+
+
+
+
+
+
+d/Mg m−3
+1.625 (1.399a)
+1.523
+1.510
+1.536
+1.585 (1.493a)
+1.600
+1.529
+1.534
+
+
+
+V*
+                  /nm−3
+1.081
+0.993
+1.001
+0.985
+1.013
+0.945
+0.989
+0.986
+
+
+
+C
+AA
+
+3.96
+3.81
+4.04
+4.86
+4.42
+5.18
+4.88
+4.42
+
+
+
+C
+AF
+
+5.85
+6.54
+6.55
+6.35
+6.97
+6.77
+6.29
+6.35
+
+
+
+C
+FF
+
+6.00
+6.62
+6.70
+6.79
+7.00
+7.45
+7.01
+7.05
+
+
+
+
+Despite potentially disruptive solvent removal, the P2M1−S system appears to retain much of its original order. The well-defined peaks in its pair distribution functions and the more stepwise increase in the coordination numbers are the clearest indication of this (Fig. 8). Instead, the distribution functions and coordination numbers of P1D1−S bear very little resemblance to those of P1D1. The P2M1−S model has a well-developed network of fullerene–fullerene contacts, with an average coordination number of 7.5 at 1.1 nm (see also Table 2), which increases to 8.0 if we carry out the integration up to 1.2 nm. These values are higher than those of any other PCBM model. The P2M1−S model has also sharper and more structured peaks in gAA, representing alkyl–alkyl correlations. Consequently, also the CAA coordination numbers (taking again 1.1 nm as a conventional upper cutoff) are higher in this case. We conclude that, in addition to being denser, P2M1−S is characterized by a more pronounced segregation of the alkyl and fullerene moieties.
+ Fig. 8  
+Fullerene–fullerene (FF) and alkyl–alkyl (AA) radial distribution functions and coordination numbers for the six solvent-free systems at T = 400 K. 
+We may summarize the previous discussion by saying that the solvent molecules are in essence interstitial in P2M1, since they seem to occupy (subject to some minor lattice deformation) the voids left within a well interconnected and inherently stable PCBM-only framework. Instead, the solvent molecules represent an essential element of the co-crystal scaffold in P1D1, since this undergoes significant disordering once they are taken away. This disordering does not amount to full-scale melting, however. In fact, P1D1−S tends to retain some of its initial “layered” structure, as observed also by Cheung and Trosi.24 Its CFF coordination number of 6.6 is lower than that of any other solvent-free structure.
+We now need to discuss the four models of the amorphous solvent-free systems. We do not consider amorphous solvent-containing models, as the experimental boiling temperatures of MCB and oDCB (131 and 180 °C, respectively) are well below the final melting point of PCBM. Table 2 and Fig. 8 collect our results for their densities, pair distribution functions and coordination numbers. Fig. 9 shows two representative snapshots. Among our four models for amorphous solvent-less PCBM, one (P1D1+M−S) has a density approaching the experimental value of 1.50 Mg m−3. The other three have a slightly higher value (1.53 on average), comparable to that of P1D1−S but much smaller than P2M1−S. All these amorphous structures are characterized by a broad distribution of nearest-neighbour alkyl–alkyl contracts, again in analogy with P1D1−S. Somewhat surprisingly, the fullerene–fullerene contacts in these systems are slightly better developed than in the P1D1−S systems (see the CFF values in Table 2). The actual plots of these coordination numbers and the corresponding gFF functions are rather similar, the only exception being perhaps represented by P2M1−S+M. However the limited size of our simulated systems prevents us from identifying this as a clearly distinct amorphous structure.
+ Fig. 9  Examples of amorphous PCBM structures: P1D1+M−S (left) and P2M1+M−S (right). Fullerene moieties are shown in gray, alkyl moieties in green. 
+The relatively high CFF coordination numbers, which are comprised between 6.7 and 7.0 in all our amorphous models, indicate that PCBM may in fact be a better electron-transporting material in the amorphous state than in some (but not all) crystalline structures, even if the former has a lower macroscopic density.
+We conclude the discussion by commenting briefly on the powder diffraction patterns calculated from the coordinates of the final MD simulation frames (reported in the ESI†). Taking the four solvent-less systems at 400 K, and assuming the crystallite size in the 3–8 nm range, we obtain rather good agreement between the calculated and experimental diffraction data, for amorphous8,37 and nanocrystalline12a PCBM. Although the calculated intensity of the peak at lower angle is somewhat overestimated, the positions of the main diffraction maxima show very good correspondence, especially if we take into account that the calculated models are equilibrated at 130 °C. These are indeed additional indications that these models represent reasonable proposals for the structure of amorphous and nanocrystalline PCBM.
+Summary and conclusions
+We have presented the results of molecular dynamics simulations of the PCBM fullerene derivative, a material of paramount importance for organic photovoltaic applications. Our simulations had the primary objective of characterizing the possible modes of structural arrangement of this compound in the solid state, which may be amorphous or nanocrystalline in typical photoactive films. The experimental characterization of this solid-state organization has proven to be difficult. The only existing well-defined models of PCBM are in fact the structures of its co-crystals with two solvents (MCB and oDCB), grown under conditions which happen to be quite far from those employed in the preparation of photoactive films.15 We took these crystal structures as a starting point for our work, which has developed along three main directions: structure and dynamics within the co-crystals, structure of the solvent-free crystals, and structure of amorphous PCBM.
+The good agreement between the experimental and simulated structures of the PCBM co-crystals provides a convincing validation of our force field. The 2:1 co-crystal with MCB has a well-developed 3D network of fullerene moieties (coordination number 7), in contrast to the 1:1 system with oDCB which is characterized by essentially 2D “layers,” which are unfavourable for electron transport. The former system has been predicted to have a significantly higher melting point (about 280 °C for MCB and 350 °C for oDCB). In addition, our simulations highlight the remarkable rotational freedom of MCB within its co-crystal, whereas the motion of oDCB is essentially frozen up to a few degrees below the observed melting point. This agrees with the orientational disorder of MCB in the published crystal structure.
+The co-crystal with MCB has been shown to provide a reasonable starting model for solvent-free crystalline PCBM. This crystal structure is disordered to a limited extent by removing the solvent molecules and its density is close to that measured by us on a crystalline, solvent-free PCBM sample (1.61 Mg m−3). Its network of fullerene–fullerene contacts appears to be tighter than that in the original co-crystals, with coordination numbers of 7.5–8.0, depending on the precise value of the cutoff used in the definition of such contacts. By contrast, the oDCB co-crystal disorders much more after removal of the solvent molecules, losing much of its original 2D layer structure. This points against the formation of layered crystalline or mesomorphic (smectic) solvent-free PCBM structures, which were proposed on the basis of ab initio calculations in ref. 23.
+Our amorphous solvent-free PCBM models have densities in the range of 1.51–1.53 Mg m−3, sufficiently close to the experimental value of 1.50–1.52 Mg m−3 (depending on the quenching rate). The fact that our amorphous densities are slightly but systematically higher than the experimental value might mean that there is a slight overestimation of intermolecular interactions.31 The fullerene–fullerene coordination numbers are around 7.0 in these models. This robustness or “resilience” of the 3D fullerene network in amorphous PCBM may partly explain the success of this molecular material in solar cell applications, despite the noted difficulty in growing well-developed single crystals from it. It also suggests that various amorphous structures might actually be obtained using different experimental procedures.
+The problem of simulating effectively the structural arrangement of PCBM in the active layer of organic bulk-heterojunction solar cells remains extremely challenging. New experimental evidence (see e.g.refs. 38 and 39) is constantly highlighting the relevance of issues like solvent-evaporation-dependent PCBM cluster formation and evolution, molecular organization at the interfaces specifically with the donor material, and depletion phenomena, not to speak of the role of structural organization in amorphous phases in which the donor and the acceptor moieties coexist. We believe that an important role in understanding and optimizing such features will be played by our ability to simulate key model systems. The results in the present paper are a significant step forward, showing that molecular dynamics approaches supply realistic atomistic structural models of crystalline and amorphous PCBM systems. The models we devised will represent the starting point for the simulation of interphases, on one hand, and for modeling electronic phenomena in PCBM in a more detailed and hopefully accurate way than presently possible, on the other hand.
+Finally, at a more technical level, our work demonstrates once more the importance of carrying out fairly long (50 ns on average, for each system) MD simulations on suitably large systems in order to have a reliable description of the complex organic materials which are currently employed in electronic and photovoltaic applications. Atomistic force fields can deliver these, given adequate computational investment, but of course they are also limited due to the lack of an explicit description of the electron distribution and the empirical nature of the force field parameters. Ab initio density functional calculations do not suffer from these problems, but they are limited in the system sizes and time scales which can be treated presently. The solution certainly lies in multi-scale approaches integrating these and other methods, such as semiempirical electronic structure and coarse-grained simulations.40–42
+References
+C. J. Brabec, N. S. Sariciftci and J. C. Hummelen, Plastic solar cells, Adv. Funct. Mater., 2001, 11, 15–26 CrossRef CAS .
+B. Kippelen and J. L. Brédas, Organic photovoltaics, Energy Environ. Sci., 2009, 2, 251–261 CAS .
+
+  (a) S. H. Park, A. Roy, S. Beaupré, S. Cho, N. Coates, J. S. Moon, D. Moses, M. Leclerc, K. Lee and A. J. Heeger, Bulk heterojunction solar cells with internal quantum efficiency approaching 100%, Nat. Photonics, 2009, 3, 297–303 CrossRef CAS ; 
+  (b) H.-Y. Chen, J. Hou, S. Zhang, Y. Liang, G. Yang, Y. Yang, L. Yu, Y. Wu and G. Li, Polymer solar cells with enhanced open-circuit voltage and efficiency, Nat. Photonics, 2009, 3, 649–653 CrossRef CAS ; 
+  (c) S. C. Price, A. C. Stuart, L. Yang, H. Zhou and W. You, Fluorine substituted conjugated polymer of edium band gap yields 7% efficiency in polymer–fullerene solar cells, J. Am. Chem. Soc., 2011, 133, 4625–4631 CrossRef CAS .
+R. F. Service, Outlook brightens for plastic solar cells, Science, 2011, 332, 293 CrossRef CAS .
+
+  (a) S. Günes, H. Neugebauer and N. S. Sariciftci, Conjugated polymer-based organic solar cells, Chem. Rev., 2007, 107, 1324–1338 CrossRef ; 
+  (b) P. W. M. Blom, V. D. Mihailetchi, L. J. A. Koster and D. E. Markov, Device physics of polymer:fullerene bulk heterojunction solar cells, Adv. Mater., 2007, 19, 1551–1566 CrossRef CAS ; 
+  (c) B. C. Thompson and J. M. J. Fréchet, Polymer–fullerene composite solar cells, Angew. Chem., Int. Ed., 2008, 47, 58–77 CrossRef CAS .
+G. Dennler, M. C. Scharber and C. J. Brabec, Polymer–fullerene bulk-heterojunction solar cells, Adv. Mater., 2009, 21, 1323–1338 CrossRef CAS .
+
+  (a) L.-M. Chen, Z. Hong, G. Li and Y. Yang, Recent progress in polymer solar cells: manipulation of polymer:fullerene morphology and the formation of efficient inverted polymer solar cells, Adv. Mater., 2009, 21, 1434–1449 CrossRef CAS ; 
+  (b) S. S. van Bavel and J. Loos, Volume organization of polymer and hybrid solar cells as revealed by electron tomography, Adv. Funct. Mater., 2010, 20, 3217–3234 CrossRef CAS .
+J. Y. Kim and C. D. Frisbie, Correlation of phase behavior and charge transport in conjugated polymer/fullerene blends, J. Phys. Chem. C, 2008, 112, 17726–17736 CAS .
+C. Müller, T. A. M. Ferenczi, M. Campoy-Quiles, J. M. Frost, D. D. C. Bradley, P. Smith, N. Stingelin-Stutzmann and J. Nelson, Binary organic photovoltaic blends: a simple rationale for optimum compositions, Adv. Mater., 2008, 20, 3510–3515 CrossRef .
+J. Zhao, A. Swinnen, G. Van Assche, J. Manca, D. Vanderzande and B. Van Mele, Phase diagram of P3HT/PCBM blends and its implication for the stability of morphology, J. Phys. Chem. B, 2009, 113, 1587–1591 CrossRef CAS .
+N. D. Treat, M. A. Brady, G. Smith, M. F. Toney, E. J. Kramer, C. J. Hawker and M. L. Chabinyc, Interdiffusion of PCBM and P3HT reveals miscibility in a photovoltaic active blend, Adv. Energy Mater., 2011, 1, 82–89 CrossRef CAS .
+
+  (a) X. Yang, J. K. J. van Duren, M. T. Rispens, J. C. Hummelen, R. A. J. Janssen, M. A. J. Michels and J. Loos, Crystalline organization of a methanofullerene as used of plastic solar-cell applications, Adv. Mater., 2004, 16, 802–806 CrossRef CAS ; 
+  (b) X. Yang, A. Alexeev, M. A. J. Michels and J. Loos, Effect of spatial confinement on the morphology evolution
+of thin poly(p-phenyninylene)/methanofullerene composite films, Macromolecules, 2005, 38, 4289–4295 CrossRef CAS ; 
+  (c) X. Yang, J. Loos, S. C. Veenstra, W. J. H. Verhees, M. M. Wienk, J. M. Kroon, M. A. J. Michels and R. A. J. Janssen, Nanoscale morphology of high-performance polymer solar cells, Nano Lett., 2005, 5, 579–583 CrossRef CAS .
+B. A. Collins, E. Gann, L. Guignard, X. He, C. R. McNeill and H. Ade, Molecular miscibility of polymer–fullerene blends, J. Phys. Chem. Lett., 2010, 1, 3160–3166 CrossRef CAS .
+A. C. Mayer, M. F. Toney, S. R. Scully, J. Rivnay, C. J. Brabec, M. Scharber, M. Koppe, M. Heeney, I. McCulloch and M. D. McGehee, Bimolecular crystals of fullerenes in conjugated polymers and the implications of molecular mixing for solar cells, Adv. Funct. Mater., 2009, 19, 1173–1179 CrossRef CAS .
+M. T. Rispens, A. Meetsma, R. Rittberger, C. J. Brabec, N. S. Sariciftci and J. C. Hummelen, Influence of the solvent on the crystal structure of PCBM and the efficiency of MDMO-PPV: PCBM ‘plastic’ solar cells, Chem. Commun., 2003, 2116–2118 RSC .
+F. H. Allen, The cambridge structural database: a quarter of a million crystal structures and rising, Acta Crystallogr., Sect. B: Struct. Sci., 2002, 58, 380–388 CrossRef .
+L. Li, G. Lu, S. Li, H. Tang and X. Yang, Epitaxy-assisted creation of PCBM nanocrystals and its application in constructing optimized morphology for bulk-heterojucntion polymer solar cells, J. Phys. Chem. B, 2008, 112, 15651–15658 CrossRef CAS .
+Y. Kim, J. Nelson, T. Zhang, S. Cook, J. R. Durrand, H. Kim, J. Park, M. Shin, S. Nam, M. Heeney, I. McCulloch, C.-S. Ha and D. D. C. Bradley, Distorted asymmetric cubic nanostructure of soluble fullerene crystals in efficient polymer:fullerene solar cells, ACS Nano, 2009, 3, 2557–2562 CrossRef CAS .
+H. Hoppe, M. Drees, W. Schwinger, F. Schäffle and N. S. Sariciftci, Nanocrystalline fullerene phases in polymer/fullerene bulk-heterojunction solar cells: a transmission electron microscopy study, Synth. Met., 2005, 152, 117–120 CrossRef CAS .
+R. M. Beal, A. Stavrinadis, J. H. Warner, J. M. Smith, H. E. Assender and A. A. R. Watt, The molecular structure of polymer–fullerene composite solar cells and its influence on device performance, Macromolecules, 2010, 43, 2343–2348 CrossRef CAS .
+T. A. Bull, L. S. C. Pingree, S. A. Jenekhe, D. S. Ginger and C. K. Luscombe, The role of mesoscopic PCBM crystallites in solvent vapor annealed copolymer solar cells, ACS Nano, 2009, 3, 627–636 CrossRef CAS .
+C. W. T. Bulle-Lieuwma, W. J. H. van Gennip, J. K. J. van Duren, P. Jonkheijm, R. A. J. Janssen and J. W. Niemantsverdriet, Characterization of polymer solar cells by TOF-SIMS depth profiling, Appl. Surf. Sci., 2003, 203–204, 547–550 CrossRef CAS .
+J. M. Nápoles-Duarte, M. Reyes-Reyes, J. L. Ricardo-Chavez, R. Garibay-Alonso and R. López-Sandoval, Effect of packing on the cohesive and electronic properties of methanofullerene crystals, Phys. Rev. B: Condens. Matter Mater. Phys., 2008, 78, 035425 CrossRef .
+D. L. Cheung and A. Troisi, Theoretical study of the organic photovoltaic electron acceptor PCBM: morphology, electronic structure, and charge localization, J. Phys. Chem. C, 2010, 114, 20479–20488 CAS .
+R. C. I. MacKenzie, J. M. Frost and J. Nelson, A numerical study of mobility in thin films of fullerene derivatives, J. Chem. Phys., 2010, 132, 064904 CrossRef .
+
+  (a) D. M. Huang, R. Faller, K. Do and A. J. Moulé, Coarse-grained computer simulations of polymer/fullerene bulk heterojunctions for organic
+photovoltaic applications, J. Chem. Theory Comput., 2010, 6, 526–537 CrossRef CAS ; 
+  (b) C.-K. Lee, C.-W. Pao and C.-W. Chu, Multiscale molecular simulations of the nanoscale morphologies of P3HT:PCBM blends for bulk heterojunction organic photovoltaic cells, Energy Environ. Sci., 2011, 4, 4124–4132 RSC .
+
+  (a) P. Morvillo and E. Bobeico, Tuning the LUMO level of the acceptor to increase the open-circuit voltage of polymer–fullerene solar cells: a quantum chemical study, Sol. Energy Mater. Sol. Cells, 2008, 92, 1192–1198 CrossRef CAS ; 
+  (b) Q. Wei, K. Tajima, Y. Tong, S. Ye and K. Hashimoto, Surface-segregated monolayers: a new type of ordered monolayer for surface modification of organic semiconductors, J. Am. Chem. Soc., 2009, 131, 17597–17604 CrossRef CAS ; 
+  (c) J. M. Frost, M. A. Faist and J. Nelson, Energetic disorder in higher fullerene adducts: a quantum chemical and voltammetric study, Adv. Mater., 2010, 22, 4881–4884 CrossRef CAS .
+In the P2M1 unit cell, there are in fact 4 MCB molecules with 0.5 occupancies, which are related to each other in pairs by inversion symmetry. This is done to model orientational disorder of these molecules. As a preliminary step, before running any MD simulations, half of these solvent molecules were deleted manually from the crystal structure.
+W. L. Jorgensen, D. S. Maxwell and J. Tirado-Rives, Development and testing of the OPLS all-atom force field on conformational energetics and properties of organic liquids, J. Am. Chem. Soc., 1996, 118, 11225–11236 CrossRef CAS .
+L. A. Girifalco, Molecular properties of fullerene in the gas and solid phases, J. Phys. Chem., 1992, 96, 858–861 CrossRef CAS .
+The standard OPLS-AA parameters for LJ interactions among aromatic carbons are: ε = 0.3305 kJ mol−1, σ = 0.355 nm. By comparison, Girifalco's values for the C–C interactions are: ε = 0.2764 kJ mol−1, σ = 0.347 nm. Notice the very different well depths. Taking the latter to be essentially correct, we infer that the simulation of a fullerene such as C60 or PCBM with OPLS-AA would significantly overestimate quantities such as it sublimation enthalpy and melting point.
+T. Darden, D. York and L. Pedersen, Particle mesh Ewald: an Nlog(N) method for Ewald sums in large systems, J. Chem. Phys., 1993, 98, 10089–10092 CrossRef CAS .
+B. Hess, K. Kutzner, D. van der Spoel and E. Lindahl, GROMACS 4: algorithms for highly efficient, load-balanced, and scalable molecular simulation, J. Chem. Theory Comput., 2008, 4, 435–447 CrossRef CAS .
+
+          M. Tuckerman, Statistical Mechanics: Theory and Molecular Simulation, Oxford University Press, Oxford and New York,  2010 Search PubMed .
+J. E. Fisher, P. A. Heiney, A. R. McGhie, W. J. Romanow, A. M. Denenstein, J. P. McCauley, Jr and A. B. Smith, III, Compressibility of solid C60, Science, 1991, 252, 1288–1290 Search PubMed .
+Since melting is a first order-phase transition, there is a free energy barrier for nucleation events, leading to crystal superheating unless measures are explicitly taken to avoid it. The determination of the equilibrium melting temperature would require the full simulation of the coexistence between the crystal and liquid phases, with the associated interface. This has been done for simple monoatomic fluids (rare gases and metals), not yet for a system nearly as complex as PCBM.
+Note, however, that it is not absolutely clear from these DSC studies if any solvent was present or not within the PCBM crystals.
+F. Piersimoni, S. Chambon, K. Vandewal, R. Mens, T. Boonen, A. Gadisa, M. Izquierdo, S. Filippone, B. Ruttens, J. D'Haen, N. Martin, L. Lutsen, D. Vanderzande, P. Adriaensens and J. V. Manca, Influence of fullerene ordering on the energy of the charge-transfer state and open-circuit voltage in polymer:fullerene solar cells, J. Phys. Chem. C, 2011, 115, 10873–10880 CAS .
+M. A. Ruderer, S. Guo, R. Meier, H.-Y. Chiang, V. Körstgens, J. Wiedersich, J. Perlich, S. V. Roth and P. Müller-Buschbaum, Solvent-induced morphology in polymer-based systems for organic photovoltaics, Adv. Funct. Mater., 2011, 21, 3382–3391 CrossRef CAS .
+
+  (a) V. Rühle, C. Junghans, A. Lukyanov, K. Kremer and D. Andrienko, Versatile object-oriented toolkit for coarse-graining applications, J. Chem. Theory Comput., 2009, 5, 3211–3223 CrossRef ; 
+  (b) V. Rühle, A. Lukyanov, F. May, M. Schrader, T. Verhoff, J. Kirkpatrick, B. Maumeier and D. Andrienko, Mesoscopic simulations of charge transport in disordered organic semiconductors, J. Chem. Theory Comput., 2011, 7, 3335–3345 CrossRef .
+S. Difley, L.-P. Wang, S. Yeganeh, S. R. Yost and T. Van Voorhis, Electronic properties of disordered organic semiconductors via QM/MM simulations, Acc. Chem. Res., 2010, 43, 995–1004 CrossRef CAS .
+M. J. Field, The pDynamo program for molecular simulations using hybrid quantum chemical and molecular mechanical potentials, J. Chem. Theory Comput., 2008, 4, 1151–1161 CrossRef CAS .
+
+Footnotes† Electronic supplementary information (ESI) available. See DOI: 10.1039/c2jm16142g‡ These authors contributed equally to this work.This journal is © The Royal Society of Chemistry 2012
+Table Content:
+
+ 	Fig. 1  Asymmetric units of the PCBM crystals obtained by crystallization from oDCB (1, P1D1 structure) and MCB (2, P2M1). In the second structure, the MCB molecules have an occupation number of 0.5.	 
+
+
+
+a/nm−1	1.376	1.46 (+6.1%)	1.35 (−7.5%)	1.383	1.40 (+1.2%)	1.37 (−2.1%)
+
+b/nm−1	1.663	1.64 (−1.4%)	1.66 (+1.2%)	1.529	1.56 (+2.0%)	1.47 (−5.8%)
+
+c/nm−1	1.908	1.91 (+0.1%)	1.89 (−1.0%)	1.925	1.93 (+0.3%)	1.94 (+0.5%)
+α/°	90.00	89.4 (−0.7%)	96.6 (+8.1%)	80.26	79.5 (−0.9%)	80.2 (+0.9%)
+β/°	105.29	108.4 (+3.0%)	109.5 (+1.0%)	78.56	79.5 (+1.2%)	80.4 (+1.1%)
+γ/°	90.00	90.1 (+0.1%)	84.8 (−5.9%)	80.41	80.0 (−0.5%)	89.8 (+12.%)
+
+V/nm−3	4.211	4.34 (+3.0%)	3.96 (−8.7%)	3.895	4.03 (+3.5%)	3.80 (−5.9%)
+
+ 	Fig. 2  Crystal packing of PCBM 2 × 2 × 2 supercells. Views along the three lattice vectors of the P1D1 (1a, 1b, 1c) and the P2M1 (2a, 2b, 2c) structures.	 
+
+ 	Fig. 3  MD snapshots of the P1D1 system at different temperatures, viewed along the a axis (see Fig. 2, 1a for comparison).	 
+
+ 	Fig. 4  MD snapshots of the P2M1 system at different temperatures, viewed along the a axis (see Fig. 2, a for comparison).	 
+
+ 		 
+
+ 	Fig. 5  
+Fullerene–fullerene (FF) and alkyl–alkyl (AA) radial distribution functions and coordination numbers, calculated from the MD simulations at 400 K of the original P1D1 and P2M1 crystal structures. The values of gFF(r) at the first peak maximum are also indicated.	 
+RX(t) = 〈uXi(t0 + t)uXi(t0)〉
+
+ 	Fig. 6  Orientational time-correlation functions for PCBM (left) and oDCB (right) in P1D1 at different temperatures. Time is in ps on the x-axis.	 
+
+ 	Fig. 7  Orientational time-correlation functions for PCBM (left) and MCB (right) in P2M1 at different temperatures. Time is in ps on the x-axis.	 
+
+
+
+d/Mg m−3	1.625 (1.399a)	1.523	1.510	1.536	1.585 (1.493a)	1.600	1.529	1.534
+
+V*
+                  /nm−3	1.081	0.993	1.001	0.985	1.013	0.945	0.989	0.986
+
+C
+AA
+	3.96	3.81	4.04	4.86	4.42	5.18	4.88	4.42
+
+C
+AF
+	5.85	6.54	6.55	6.35	6.97	6.77	6.29	6.35
+
+C
+FF
+	6.00	6.62	6.70	6.79	7.00	7.45	7.01	7.05
+
+ 	Fig. 8  
+Fullerene–fullerene (FF) and alkyl–alkyl (AA) radial distribution functions and coordination numbers for the six solvent-free systems at T = 400 K.	 
+
+ 	Fig. 9  Examples of amorphous PCBM structures: P1D1+M−S (left) and P2M1+M−S (right). Fullerene moieties are shown in gray, alkyl moieties in green.	 
+Footnotes
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/c2jm16142g
+‡ These authors contributed equally to this work.
+
+This journal is © The Royal Society of Chemistry 2012

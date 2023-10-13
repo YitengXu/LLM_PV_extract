@@ -1,0 +1,445 @@
+ DOI: 10.1039/C5CP04624F
+(Paper)
+Phys. Chem. Chem. Phys., 2015, 17, 27672-27682
+
+
+Vishwesh
+Venkatraman
+,
+
+Sailesh
+Abburu
+ and 
+
+Bjørn Kåre
+Alsberg
+*
+
+Department of Chemistry, Norwegian University of Science and Technology (NTNU), 7491 Trondheim, Norway. E-mail: bjorn.k.alsberg@ntnu.no
+
+Received
+5th August 2015
+, Accepted 15th September 2015
+First published on 18th September 2015
+The design and discovery of novel molecular structures with optimal properties has been an ongoing effort for materials scientists. This field has in general been dominated by experiment driven trial-and-error approaches that are often expensive and time-consuming. Here, we investigate if a de novo computational design methodology can be applied to the design of coumarin-based dye sensitizers with improved properties for use in Grätzel solar cells. To address the issue of synthetic accessibility of the designed compounds, a fragment-based assembly is employed, wherein the combination of chemical motifs (derived from the existing databases of structures) is carried out with respect to user-adaptable set of rules. Rather than using computationally intensive density functional theory (DFT)/ab initio methods to screen candidate dyes, we employ quantitative structure–property relationship (QSPR) models (calibrated from empirical data) for rapid estimation of the property of interest, which in this case is the product of short circuit current (Jsc) and open circuit voltage (Voc). Since QSPR models have limited validity, pre-determined applicability domain criteria are used to prevent unacceptable extrapolation. DFT analysis of the top-ranked structures provides supporting evidence of their potential for dye sensitized solar cell applications.
+
+The direct exploitation of the abundant solar energy resources has been a long, on-going research effort. In the search for low-cost and commercially viable alternatives to silicon-based counterparts, dye-sensitized solar cells (DSSCs) have received widespread attention. The typical device architecture contains a transparent conducting oxide (fluorine-doped tin oxide), a semiconductor film (e.g. TiO2, ZnO) that is dyed with a sensitizer (adsorbed onto the surface), an electrolyte solution with a redox mediator (e.g. iodide/tri-iodide (I−/I3−, cobalt(II/III))) and a counter-electrode. When the sensitizing dye (an organic or inorganic transition metal complex) absorbs a photon, an electron is injected into the conduction band (CB) of the nanocrystalline semiconductor and is then transferred to the counter-electrode (generally platinum-based) while passing through the transparent electrode and the external load. The oxidized dye is restored to the ground state by the redox mediator, which in turn is regenerated at the counter-electrode. The DSSC is thus essentially modular with functions such as light absorption (dye) and electron (oxide) and hole (electrolyte) transport performed by different components that interact with each other.
+
+With the highest reported solar energy to current conversion efficiency of only 12% (for a zinc–porphyrin dye combined with a cobalt based redox mediator), more needs to be done to improve the efficiency and stability of DSSCs. With this aim in view, research has focused on optimizing the different components ranging from electrodes to electrolytes and dyes. In contrast to other materials used in the DSSC, the properties of the dyes (light harvesting efficiency, stability etc.) are more easily adjusted by making subtle changes to their chemical composition. Thus, a variety of organic dyes such as triphenylamines, perylenes, and inorganic ruthenium-based and zinc–porphyrin dyes have been explored. Although ruthenium-based dyes have traditionally shown good efficiencies (up to 11%), organic metal-free dyes too are slowly catching up with recent estimates closely matching the inorganic counterparts discussed above. Furthermore, factors such as high molar extinction coefficients, structural diversity, environment friendliness, and availability of materials have resulted in increased interest in organic sensitizers.
+With the dye sensitizer controlling the key aspects of photovoltaic performance such as the light harvesting capacity, device stability and charge transfer efficiency, focus is on engineering them with specific properties suited for their applications. Though most dyes typically possess a donor–π bridge–acceptor (D–π–A) architecture, other forms such as D–A–π–A have also been reported. The principal means of improving the DSSC efficiency has been to make molecular modifications (systematic variation of the π-spacer and anchoring groups) to existing dyes which have been shown to be promising. Given that the costs associated with these experiment-driven approaches tend to be quite high, the approach is limited to investigating a rather small number of candidate dyes.
+A better understanding of the relationship between the molecular structure and the photovoltaic performance would certainly facilitate a faster and more rational design of dyes. While a majority of this effort has been through experiments, there is a rising trend towards using computational methods, in particular quantitative structure–property relationship (QSPR) models. These methods, however, are not limited to dyes. For instance, machine learning and data mining tools have been used to model the solar cell properties of metal oxides and for other photovoltaic applications. Taking this a step further, in a recent article, the QSPR models were used to guide the evolutionary de novo design of phenothiazine dyes. The results showed that an increase of around 2% (in the estimated power conversion efficiency (PCE)) could be achieved for the proposed structures. The advantage of the approach lies in its ability to identify novel molecules and rapidly assess potential high-performance dyes while filtering out the less promising ones.
+Until now, the highest reported efficiencies (PCE) for the coumarin dyes have been around 7–8%. With the aim of improving cell performance, a number of theoretical studies have been reported where the existing coumarin dyes have been modified by introducing different substituent groups. In this contribution, we investigate the use of an efficient, computational screening scheme based on artificial evolution for the automated in silico design of coumarin-based dyes. Starting with a set of fragments (a single atom or groups of atoms) that are combined in a synthetically tractable manner, the algorithm explores the molecular space by iteratively refining the existing scaffold structures. The Darwinian operators of selection, mutation and crossover are used to create small changes in the geometric and electronic properties of the dye structure. Promising coumarin dyes emerging from these simulations are validated using quantum chemical calculations.
+
+
+Fig. 1 provides a general overview of the de novo methodology being used and is only discussed here briefly. Readers are referred to previous articles for additional details of the procedure. At the core of the computational procedure is a genetic algorithm (GA) that explores different combinations of small fragments (building blocks), while taking into account the aspects of synthetic accessibility of the proposed structures and the need for high performance. In the GA, the molecules are encoded as trees whose nodes represent fragments that are connected by edges i.e. bonds. The mechanisms driving the evolution towards better solutions are mainly crossover and mutation, which are applied so that the genetic material in the form of fragments is either exchanged or substituted.
+
+To maximize the probability of being able to synthesize the new structures, we have employed the concept of a fragment compatibility matrix (coded as a lookup table) that defines the connection rules between fragments. Each building block (fragment) stores information about the sites (atoms to which other fragments may be connected) called attachment points and the type of substituents that can be bound (see Fig. 2). To create the relevant building blocks for the molecular assembly, dyes reported in the literature were subjected to a pseudo-retrosynthetic decomposition. Attachment point annotation is therefore based on the type of substituents existing on each side of the cleaved bond. Over 100 such fragments containing moieties such as benzothiadiazole, thienopyrazine etc. that are found in several dyes were extracted. A second list of fragments consisting of coumarin scaffolds (different attachment points, chemical structure) was additionally identified (see the bottom part of Fig. 2) following a similar procedure.
+Molecular assembly is carried out by selecting a coumarin scaffold (randomly from the list) and then looping through the available attachment points, adding fragments according to the linkage rules. Over a number of cycles, the GA modifies each structure (using crossover and mutation) in an attempt to improve its fitness, which here corresponds to a measure of the desired level of a given property. Both crossover and mutation are also subject to the fragment compatibility rules, thus ensuring realistic structures. The de novo simulations were carried out using in-house software written in Java.
+Optimizing the efficiency of the DSSC requires a delicate balance between several processes. Although some of these procedures can be modelled theoretically, only a few properties can be predicted (e.g. absorption wavelength, injection efficiency) reliably using quantum chemical methods. In addition, such properties also tend to be only weakly correlated with the PCE. For a typical GA run, where thousands of structures need to be assessed, the use of DFT/TDDFT level electronic structure methods becomes computationally prohibitive given the computational costs. A more rapid estimation is afforded by QSPR methods which are now being increasingly used in computational chemistry to approximate the properties of interest.
+
+The overall solar-to-electrical energy conversion efficiency, PCE, is given by the following equation:
+
+(1)
+where FF is the fill factor (FF),
+Jsc the short circuit current (measured in mA cm−2) and Voc the open circuit voltage (measured in mV). While the FF has been shown to be influenced by external factors such as electrode thickness and composition of the electrolyte, the Jsc and to some extent the Voc are more directly influenced by the dye. Since the short circuit current and the open circuit voltage largely depend on the molecular properties of the donor and acceptor moieties in the dye, we have chosen to model the product Jsc × Voc.
+
+The experimental data on the photovoltaic properties of 49 coumarin dyes were taken from the literature where the PCE values of the molecules range from 0.3% to 7.7% (see Table S1 in the ESI). Previous studies have demonstrated the use of vibrational frequency based eigenvalue (EVA) descriptors for defining structure–property models for coumarin and phenothiazine dyes. Here, we extend the approach to additionally include molecular orbital energies (eigenvalues of the Schrödinger equation). Unlike comparative molecular field analysis (CoMFA)-type methods, both EVA and electronic eigenvalue (EEVA) do not require any 3D molecular alignment and are physically sound representations of the intrinsic electronic and physicochemical properties of molecules.
+The molecules in the data set were constructed using MarvinSketch and energy-minimized using the Dreiding force field. The structures were then geometry optimized using the AM1 Hamiltonian in MOPAC. For each molecule, the vibrational frequencies (fi) and molecular orbital energies (ei) from the semi-empirical calculation are projected onto a bounded scale: 1–4000 cm1 for the EVA and −45–10 eV for the EEVA. For a chosen sampling interval L, a Gaussian smoothing function of fixed standard deviation σ is applied to each frequency (energy) value and the EVA (EEVA) descriptor (Dx) at each point x of the scale is calculated as:
+(2)
+(3)
+where
+A is the number of atoms in the molecule and N is the number of energy values. For the success of the method there is a need to identify the optimal set of σ and L values. σ and L were, therefore, varied as follows: σ = {0.025, 0.050, 0.075, 0.100, 0.200} and L = {0.025, 0.050, 0.100} for the EEVA and σ = {2, 4, 6, 8, 10} and L = {1, 2, 5, 8, 10} for the EVA.
+
+Due to the efficiency in treating a large number of descriptors, partial least squares regression (PLSR) was used to predict the photovoltaic properties. The predictive power of the models was assessed with respect to independent training (80%) and test sets (20%) that were created using the Kennard–Stone algorithm. Prior to modelling, all variables were autoscaled to zero mean and unit variance. The optimal number of latent variables (LVs) was determined using 10-fold cross-validation (CV), repeated 50 times, thus producing different sets of CV folds (500 total resamples). The number of LVs corresponding to the lowest root mean square error (RMSE) was then taken as the optimal value. The predictive ability of the model was evaluated in terms of the cross-validated correlation coefficient (Rcv2) and the RMSE that are given by:
+(4)
+(5)
+where
+ is the predicted value of the excluded (cross-validated) ith compound, yobs,i is the corresponding experimental value and  is the mean of the experimental values. Variable selection was performed using the variable importance on projection (VIP) scores that take into account the explained variance of each PLSR dimension. Here, we have chosen to include only those variables with VIP scores greater than 1. Furthermore, to guard against overfitting, y-randomization tests (repeated 1000 times) were also carried out. Using the above-described approach, multiple PLSR models were computed by varying σ and L, and the combination yielding the best Rcv2 was then used in further analysis. The PLSR modelling was carried out using the PLS package available in the R.
+
+
+Although QSPR models can rapidly predict quantities of interest, given the finite size of their applicability domain (AD), the reliability of the predictions needs to be evaluated. Here, we have employed two such diagnostics. For both measures, high values suggest that the predictions should be treated with caution.
+
+1. The leveragehi = ti′(T′T)−1ti where ti is the score vector for the ith compound and T is the model score matrix. The warning leverage threshold is typically set to  where Ncomp is the number of PLSR components (LVs) in the model and Ntrain the number of compounds in the training set.
+2. The uncertainty associated with each prediction  is calculated using a bootstrapping technique. In this work, 500 bootstrap models were created and the standard deviation of the predictions was taken as a measure of the uncertainty.
+
+In order to identify the best combination of EVA and EEVA descriptors, over 500 models were computed. The settings of σ = 8 (σ = 0.050) and L = 10 (L = 0.025) for the descriptors were found to yield the best models. For the calibration set containing 49 structures, a 3-component PLSR model with Rcv2 = 0.83 and RMSE = 1.25 (mA V cm−2) was obtained. The corresponding figures of merit for the test set (9 compounds) were Rtest2 = 0.89 and RMSEtest = 1.21 which is suggestive of a fairly predictive model despite the structural diversity of the molecules in the dataset. Table 1 summarizes the results regarding the QSPR model calculated for Jsc × Voc. The scatter plot in Fig. 3 further shows the linear relationship between experimental and predicted values for both training and test set data. Furthermore, examination of the score plot (see Fig. F1 in the ESI) clearly shows a separation between low (<2% PCE) and high efficiency structures. For the predicted Jsc × Voc, the applicability domain estimates in the form of leverage values (hi) are well within the warning threshold of 0.225 with maximum uncertainties of up to ±2 mA V cm−2.
+
+Molecule
+
+J
+sc × Voc
+QSPR
+
+h
+
+i
+
+
+Molecule
+
+J
+sc × Voc
+QSPR
+
+h
+
+i
+
+
+C01
+1.68
+2.59 ± 0.77
+0.06
+C26
+0.92
+1.21 ± 0.71
+0.07
+C02
+1.20
+2.50 ± 1.01
+0.06
+C27
+1.71
+1.94 ± 0.59
+0.06
+C03
+8.52
+8.46 ± 0.46
+0.03
+C28
+7.00
+4.86 ± 1.57
+0.05
+C04
+6.51
+7.65 ± 0.97
+0.02
+C29
+7.10
+7.98 ± 0.61
+0.04
+C05
+7.58
+8.60 ± 0.88
+0.03
+C30
+7.99
+7.94 ± 0.50
+0.03
+C06
+8.29
+8.29 ± 0.34
+0.02
+C31
+8.64
+8.15 ± 0.42
+0.03
+C07
+7.45
+7.02 ± 0.49
+0.01
+C32
+10.30
+8.22 ± 0.43
+0.03
+C08
+1.21
+1.08 ± 0.43
+0.07
+C33
+10.01
+9.66 ± 0.63
+0.05
+C09
+1.04
+1.23 ± 0.37
+0.06
+C34
+9.30
+9.05 ± 0.60
+0.05
+C10
+0.54
+1.90 ± 0.49
+0.04
+C35
+9.66
+8.77 ± 1.06
+0.04
+C11
+0.77
+1.14 ± 0.52
+0.07
+C36
+7.30
+8.14 ± 0.62
+0.04
+C12
+0.46
+0.39 ± 0.47
+0.08
+C37
+9.96
+10.00 ± 0.42
+0.08
+C13
+0.90
+0.41 ± 0.49
+0.09
+C38
+7.20
+6.13 ± 1.08
+0.07
+C14
+7.12
+6.51 ± 0.63
+0.04
+C39
+8.48
+7.05 ± 1.20
+0.10
+C15
+6.14
+6.86 ± 0.66
+0.06
+C40
+8.95
+9.25 ± 0.91
+0.17
+C16
+6.32
+7.07 ± 0.88
+0.08
+C41
+3.72
+3.29 ± 0.47
+0.04
+C17
+8.22
+8.68 ± 0.46
+0.04
+C42
+1.93
+2.60 ± 0.88
+0.03
+C18
+5.89
+6.91 ± 0.98
+0.07
+C43
+4.00
+3.90 ± 0.54
+0.01
+C19
+3.87
+5.24 ± 1.04
+0.00
+C44
+2.42
+2.00 ± 0.56
+0.07
+C20
+3.68
+5.03 ± 1.11
+0.01
+C45
+5.10
+4.24 ± 0.65
+0.01
+C21
+8.36
+6.48 ± 0.52
+0.02
+C46
+1.91
+0.98 ± 0.78
+0.10
+C22
+4.70
+5.22 ± 0.42
+0.02
+C47
+5.14
+5.11 ± 0.69
+0.02
+C23
+6.45
+6.27 ± 0.52
+0.04
+C48
+7.62
+6.44 ± 1.22
+0.02
+C24
+6.14
+6.98 ± 0.55
+0.02
+C49
+9.89
+7.29 ± 2.00
+0.04
+C25
+5.66
+5.88 ± 0.78
+0.02
+
+The GA experiments were carried out using population sizes of 100–200 molecules with 5 offsprings produced during each generation (100–500 cycles). For each proposed molecule, the QSPR model was used to rapidly assess the Jsc × Voc. Both crossover and mutation probabilities were set to 0.50. During the runs, structures that violated the warning leverage threshold were discarded. Over 6000 unique dye molecules were generated with predicted Jsc × Voc ranging between 2 and 12 mA V cm−2, an increase of up to 2 units with respect to the calibration set data. Although very few structures violated the leverage threshold, prediction uncertainties can rise up to ±20 mA V cm−2. In addition to the commonly occurring D–π–A configuration, other molecular architectures containing double donors (D–D–π–A) and multiple π–A and D–π–A–π based systems were also observed. The top ranking structures (see dyes M01–M06 in Table 2) contained electron donating substituents such as furan, and auxiliary acceptors such as quinoxaline and benzothiazole. Dyes containing secondary electron donors such as fluorene and triphenylethylene have also been explored. While on one hand they can enhance photoinduced intramolecular charge transfer, owing to their twisted non-planar structure, these moieties have been shown to slow down electron recombination kinetics and lengthen the electron lifetimes. Additionally, the presence of such bulky groups can also limit aggregation through steric hindrance. While the carboxylic acid based anchoring group occurred in a majority of dyes, some molecules instead contained a nitro group as an alternative anchoring group which has been shown to increase the electron injection ability.
+
+Dye
+
+J
+sc × Voc
+Structure
+HOMO
+LUMO
+M01
+12.09 ± 2.43
+M02
+11.98 ± 3.47
+M03
+11.12 ± 3.24
+M04
+11.02 ± 3.16
+M05
+11.68 ± 4.00
+M06
+11.51 ± 4.00
+
+Selected promising structures (see Table 2) emerging from the GA runs were subjected to additional calculations at the DFT level of theory. Solvation effects were included by means of the conductor-like polarizable continuum model (CPCM). The analysis focuses on important features such as the UV-Vis spectra and reorganization energy. All calculations were carried out using the Gaussian software.
+
+
+Preliminary examination of the ground state isodensity plots (computed at the B3LYP/6-31G(d,p) level) in Table 2 shows that the orbitals are well distributed over the linker conjugation. While the HOMO is generally localized over the coumarin scaffold (donor), the LUMO is distributed around the acceptor and anchoring groups. This localization is expected to be advantageous to charge separation and electron injection.
+
+
+In addition to high light harvesting efficiency (LHE), with reference to eqn (1), the short circuit current Jsc is defined as:
+
+(6)
+where LHE(
+λ) is the light harvesting efficiency at wavelength λ, ϕinj is the electron injection efficiency and ηcol is the charge collection efficiency. Since the cells only differ in the dyes being used, it is reasonable to assume that ηcol is constant. Thus, the two main factors influencing Jsc are the LHE and ϕinj. The LHE of the dye is calculated as LHE(λ) = 1–10−f(λ) where f(λ) is the oscillator strength of the dye at absorption wavelength (λ). In order to model the absorption spectra, we have employed time-dependent density functional theory. Since the choice of the functional affects the accuracy of the DFT calculated spectral properties, we analysed a number of hybrid functionals. Among those tested, the CAM-B3LYP functional with a DGDZVP basis set was found to provide the best agreement between theoretical and experimental data (see Table S2 in the ESI). For the proposed coumarin dyes, the computed maximum absorption wavelengths λmax (in ethanol), oscillator strengths (fmax) and the light harvesting efficiency LHE are listed in Table 3.
+
+Dye
+Absorption spectra
+
+λ
+max (nm eV−1)
+
+f
+
+LHE
+Major transitions
+M01
+471 (2.63)
+2.28
+0.994
+H−1 → L (26%), H → L (50%), H → L+1 (10%)
+M02
+454 (2.73)
+1.12
+0.924
+H−1 → L (20%), H → L (64%)
+M03
+439 (2.49)
+2.59
+0.997
+H−2 → L (28%), H → L (42%), H → L+1 (18%)
+M04
+492 (2.51)
+2.04
+0.990
+H−1 → L (19%), H → L (68%)
+M05
+483 (2.57)
+1.73
+0.981
+H−1 → L (27%), H → L (40%), H → L+1 (16%)
+M06
+457 (2.71)
+1.04
+0.908
+H−1 → L (37%), H−1 → L+1 (24%), H → L (17%)
+
+For dyes containing the carboxylic acid anchoring group (M01–M04), the optical response after adsorption onto the TiO2 surface was also studied. Assuming a bidentate chelating configuration, TDDFT calculations were performed for dyes bound to a (TiO2)9 cluster, which has been shown to reproduce electronic absorption spectra with reasonable accuracy. Here, the geometry optimizations were carried out using the B3LYP functional and the 6-31G(d,p) basis set for the C, H, O, N, and S atoms and the effective core potential (ECP) LANL2DZ basis set for the Ti atom. With the exception of dye M01 (for which convergence could not be achieved), all three dyes tested (M02–M04) show only a marginal decrease (∼10 nm) in the λmax (see Table 4).
+
+Mol
+Spectra
+
+λ
+max (nm eV−1)
+
+f
+
+M02
+440 (2.81)
+1.42
+M03
+447 (2.86)
+2.04
+M04
+488 (2.54)
+2.03
+
+In order to maximize the photocurrent (Jsc), the electron injection efficiency ϕinj also needs to be enhanced. Since ϕinj is related to the thermodynamic driving force of electron injection (ΔGinj) i.e. the free energy change (in eV), it can be expressed as:
+
+(7)
+where
+Edye* = Edyeox − λmax is the oxidation potential of the dye in the excited state and ECB is the reduction potential of the conduction band of the semiconductor (experimental value of −4.0 eV vs. vacuum is used in ref. 99). The excited-state oxidation potential is calculated from the redox potential of the ground-state dye and the absorption energy corresponding to the λmax:
+
+Edye* = Edyeox − λmax
+(8)
+Another important requirement is that of low reorganization energies to ensure rapid electron transfer during regeneration.
+ Here, we focus on the inner-sphere reorganization energy λi which is calculated as:
+
+λi = [E0(G+) + E+(G0)] − [E+(G+) + E0(G0)]
+(9)
+where
+Ej is the energy of the system in the charge state j, Gk is the geometry of the system in the charge state k, while 0 and + correspond to the neutral and cationic charge states respectively. Table 5 lists the injection efficiencies and reorganization energies for the 6 dyes analyzed. The driving force for the electron injection (ΔGinj) decreases in the order M03 > M04 > M05 > M01 > M06 > M02. The corresponding trends for the calculated reorganization energies proceed as M01 > M04 > M06 > M02 > M05 > M03. Among these, dye M03 containing both fluorene and tetraphenylethylene units possesses the highest ΔGinj that favours electron injection from the dye excited state into the TiO2 conduction band edge. In addition a low reorganization energy should also support rapid electron transfer. In dye M04, the presence of methine moieties can increase the conjugation length as reflected in the spectral response (see Table 3). However, larger values of λi may result in slower injection kinetics. Furthermore, the stronger electron localization in rhodanine-3-acetic acid acceptor moiety that is present in M04 can cause the lowest unoccupied molecular orbital (LUMO) to be shifted from the anchoring group, thus impeding electron injection into the conduction band of TiO2. For the dye M01, which contains alternating electron withdrawing-π conjugation groups, the impact of removing these substituents was studied. The existing molecular architecture of D–A–π–A was modified manually by either rearranging or replacing the moieties. A significant decrease of up to 5 units in the predicted Jsc × Voc values is observed for the modified dyes, although associated uncertainties are much smaller (see Table S4 in the ESI). Two dyes (M05 and M06) contain a nitro group as the acceptor/anchoring group that has been shown to improve dye/TiO2 coupling and facilitate electron transfer.
+
+Dye
+HOMO
+LUMO
+ΔGinj (eV)
+
+λ
+
+i
+ (eV)
+M01
+−4.94
+−2.51
+−1.71
+0.206
+M02
+−4.97
+−2.35
+−1.89
+0.149
+M03
+−5.18
+−2.59
+−1.40
+0.097
+M04
+−5.22
+−2.91
+−1.55
+0.202
+M05
+−5.07
+−2.91
+−1.69
+0.148
+M06
+−5.04
+−2.92
+−1.81
+0.150
+The present work makes use of a QSPR-driven evolutionary molecular design approach that allows for the estimation of Jsc × Voc in a matter of minutes (2–3 minutes on an Intel Core i5-2400 CPU @ 3.10 GHz). This can be easily integrated into a virtual high-throughput screening framework where large libraries of dyes can be analyzed by using theoretical techniques. Although the EVA/EEVA descriptors are not easily amenable to interpretation, their use is purely motivated by the prospect of performing accelerated dye discovery. Furthermore, the existing model does not account for the interactions between the cell components (dye–electrolyte, dye–dye, and dye–TiO2). Predictive models applied in this study that are based solely on the dye can therefore be limited in practice. Attention must also be drawn to the experimental variability and their impact on the DSSC performance indicators. While it is desirable to obtain data measured according to recommended practices, we do observe differences in the procedures for the preparation (different electrolyte compositions, TiO2 layer thickness) and evaluation (different active areas, use of additives such as tert-butyl pyridine, deoxycholic acid in different concentrations, lack of stability tests) of cells. From a QSPR perspective, the variability in the measurement protocols introduces greater uncertainty in the models. In this respect, data generated by combinatorial chemistry based approaches emerging from a single lab (thus avoiding inter-lab variations) would be an promising alternative.
+
+In this article, we have investigated the feasibility of using a fully automated de novo approach based on artificial evolution to design new and promising coumarin dye sensitizers with improved properties. Underlying the approach is a QSPR model built from experimental data which enables fast estimation of the property being optimized i.e. Jsc × Voc. The scheme has been able to propose a diverse set of dyes with different molecular architectures (D–π–A, D–A–π–A, D–D–π–A etc.) and anchoring groups. The analyzed dyes contained substituents such as fluorene and tetraphenylethylene which not only limit the aggregation but also act as additional electron donors. DFT verification of the new coumarin dyes makes them promising candidates for future experimental testing.
+
+
+The Norwegian Research Council (NFR) is acknowledged for financial support from the eVITA (Grant No. 205273) and the CLIMIT (Grant No. 233776) and for CPU resources granted through the NOTUR supercomputing programme. We also thank ChemAxon (http://www.chemaxon.com) for free academic use of the Marvin package.
+
+
+† Electronic supplementary information (ESI) available: Structures and properties of the dye molecules, additional plots and tables. See DOI: 10.1039/c5cp04624f
+This journal is © the Owner Societies 2015

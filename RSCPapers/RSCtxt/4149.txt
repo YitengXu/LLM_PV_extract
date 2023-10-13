@@ -1,0 +1,1093 @@
+Impact of grid connectivity on cost and location of green ammonia production: Australia as a case study  - Energy & Environmental Science (RSC Publishing) DOI:10.1039/D1EE02582A View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D1EE02582A
+(Paper)
+Energy Environ. Sci., 2021, 14, 6655-6671Impact of grid connectivity on cost and location of green ammonia production: Australia as a case study
+
+        
+          
+            Nicholas 
+            Salmon
+          
+        
+       and 
+
+        
+          
+            René 
+            Bañares-Alcántara
+          
+        
+      *
+      University of Oxford, Department of Engineering Science, Parks Road, Oxford, OX1 3PJ, UK. E-mail: rene.banares@eng.ox.ac.uk
+Received 
+      19th August 2021
+    , Accepted 22nd November 2021First published on 24th November 2021AbstractGreen ammonia is a promising derivative of hydrogen with the capability to decarbonise the fertiliser and maritime industries, and to supplement clean energy supply in nations where renewable energy potential cannot satisfy demand. However, green ammonia production requires significant hydrogen and electricity storage infrastructure in order to convert variable renewable energy supply into a stable production process, which can meaningfully increase project costs. Here, we explore how a connection to the electricity grid may reduce these additional infrastructure costs. While previous authors have considered green ammonia plant optimisation without a grid connection (islanded production), or a grid connection with a fixed electricity price, this work considers the possibility of using both variable renewable energy and variably priced grid electricity for a large number of locations. Using Australia as a case study, we use a MILP model to optimise the production cost of green ammonia at a 1° spatial resolution, where the model can both buy and sell electricity from the grid if the connection costs are economically justified. The minimum Levelised Cost of Ammonia (LCOA) achievable when a grid connection is possible is almost 11% lower than if no grid connection is used, which amounts to savings of 2.5 USD GJ−1. Benefits from the grid are most significant in the state of Tasmania; although it does not have the cheapest power on average, it provides the best opportunity for green ammonia plants to exploit low prices when they occur. We demonstrate that where an ammonia plant is both a consumer from and supplier to the national electricity network, it is robust to price fluctuation in the grid. Although no Australian electricity market is yet decarbonised, only a small fraction of total power supply for green ammonia production (<15%) comes from the grid, meaning that production using a semi-islanded approach can still be considered green in most Australian locations; in some cases, where power is sold back to the grid, the emissions avoided from electricity sale may be larger than the emissions generated from electricity purchase.
+
+Broader context
+Green ammonia is a chemical energy vector with broad application, including as a fertiliser, marine fuel, hydrogen carrier, or for energy transport. A flurry of green ammonia projects have been announced around the world in the last two years, but the levelised cost of production from those projects is likely to exceed that of conventional ammonia. This paper explores the use of the electricity network to reduce the cost of ammonia production, since grid connections eliminate the need for electrical storage equipment, and enable the plant to sell excess energy, rather than curtailing it. Using Australian data as a case study, we demonstrate that for sites that are close to the electricity grid, cost reductions of >10% are possible. In the short term, this is an important finding which may help financially enable first-mover projects; in the longer term, it provides a basis for significant sector coupling between the hydrogen/ammonia industry and the electricity network, which is likely to reduce overall costs.
+
+1 Introduction
+The energy systems of many nations require large scale transport of fossil fuels to supply primary demand. As these nations transition towards net zero carbon emissions by the middle of the century, there may be some trend towards local energy generation; however, to a significant extent, importing of energy will remain necessary to continue to meet local demand in some countries.1,2 Green ammonia is well-positioned to act as a vector which can supply this demand – because it is significantly more energy dense than green hydrogen and other forms of energy storage, it enables renewable fuel to be shipped large distances at comparatively low cost.3,4
+For those reasons, many countries with a high-quality renewable resource are investigating the establishment of very large green ammonia facilities for international export. Australia is one such nation: it has (i) a reliable wind and solar resource, (ii) an abundance of available land, and (iii) is strategically located close to Japan and Korea, who have flagged their intention to import green fuels like ammonia. However, the nascent Australian industry faces competition from other global green ammonia producers such as Morocco, which may be able to produce at a lower cost because of a superior resource,5 and lower project costs.6
+One previously unexplored strategic advantage for Australia's green ammonia industry is its access to a reliable electricity network. Green ammonia production requires significant energy storage investment in order to maintain stable operation of the Haber–Bosch ammonia synthesis loop, which can increase costs by up to 40%;6 it may be possible to reduce the size of that energy storage if a grid connection can be exploited to supply back-up power when needed. This ‘semi-islanded’ approach therefore has the capacity to both reduce costs and reduce the operating risks posed by relying on batteries or hydrogen fuel cells for back-up supply. By contrast, ‘islanded’ production must rely on only solar and wind energy for power supply, which may pose challenges during extended periods of cloudy or still weather.
+Many authors have estimated the cost of green ammonia or hydrogen production, although the optimisation approach used is not always rigorous. For instance, the Hydrogen Economic Fairways Tool developed by Geoscience Australia7,8 estimates the NPV of producing green hydrogen at all locations in Australia, and considers the role of other infrastructure in the cost estimation. However, it simplifies the renewable energy profile down to a simple estimation of load factor, rather than optimising the size of all equipment based on the time-varying profile of the renewable source.
+For authors who had a more robust approach, in the case of islanded production, techniques for optimisation include brute-force optimisation9 and genetic algorithms,6 although the most common approach is a mixed-integer linear program (MILP) model which was used to design islanded green ammonia plants by Osman et al.10 and Fasihi et al.5 Palys and Daoutidis11 used an MILP model to optimise the design of energy systems in 15 US cities; however, the model was designed to use ammonia and other technologies to supply demand for electricity grids, as opposed to understanding how variable grid electricity prices could minimise the production costs of ammonia. Similarly, Beerbühl et al.12 used the electricity grid to power ammonia production, but used only grid electricity, and did not also consider the role of on-site renewables or power storage. Pan et al.13 also consider the use of the grid for green hydrogen production in China; however, their model does not include wind energy, ammonia generation, variance in renewable energy potential at different locations within the provinces they model, or an option for the plant to both buy and sell grid electricity.
+This research also uses an MILP model; however, it extends on previous work by including consideration of (i) the capital costs of grid connection at a large number of locations in Australia, and (ii) the variable retail price of electricity which can be used to supplement onsite power generation.
+Connecting a green ammonia plant to the grid is not only useful as a cost reduction strategy; in the future, sector coupling between a green ammonia export industry and domestic electricity markets may simplify the challenge of achieving local grid stability. Green ammonia plants must typically curtail some electricity because renewable equipment is oversized during the design process; if peak grid demand coincides with periods when those ammonia plants have an oversupply of power, it would be better to supply the grid with the excess electricity, rather than curtailing. We explore this opportunity in the model by allowing the ammonia plant to act as both consumer and supplier in the national electricity market.
+Wang et al.14 report that if a carbon-intense electricity grid is used to produce electrolytic ammonia, then its associated emissions may exceed those of steam methane reforming. However, they did not consider a case in which electricity grids provide back-up power, and therefore only represent a small fraction of total project electricity. Additionally, some Australian states have electricity grids with very low carbon intensity. We include consideration of effective carbon emissions in our assessment of semi-islanded production.
+2 Methodology
+This section outlines the development of a model that optimises the production of green ammonia, including a grid connection where appropriate. The key inputs to the model, the model variables, the list of sets and the list of parameters are provided in the Appendix in Tables 3–6.
+The goal of the optimisation model is to minimise the levelised cost of ammonia. The levelised cost of ammonia is the price at which ammonia must be sold in order to achieve a net present value of zero for a given plant lifetime and discount rate. It is calculated from: (1)where SC and SO are the set of all plant components with a CAPEX and OPEX requirement, and F is the annual production of ammonia in tonnes. For the general case of this model, F is set to 1 MMTPA, which is the size of existing large industrial ammonia plants. CRF is the capital recovery factor, calculated from: (2)where i is the discount rate and PL is the plant lifetime. A default value of 7.5% is used for the discount rate in this work, consistent with modelling from CSIRO.15 A plant lifetime of 30 years is assumed. Unless otherwise specified, all costs in this analysis are reported in USD; where data is provided in AUD, a conversion rate of 0.7 AUD/USD is assumed, which is the approximate long-term average value.16
+The model inputs and operation are summarised in Fig. 1. The model imports power data from two sources: weather data is obtained using the ERA5 database, and grid data is available from the Australian Energy Market Operator (AEMO). The model then compiles the data into a useful format, which also requires information relating to equipment CAPEX and performance. The optimisation model itself then designs an operating green ammonia plant. Green ammonia production has been described in detail in a number of publications,3,17–19 which should be consulted for a detailed explanation of each system component. The plant considered here uses electricity from any of the three power sources to (i) run a water electrolyser which produces hydrogen, (ii) charge a battery, and/or (iii) operate the Haber–Bosch (HB) loop and air separation unit (ASU), which together produce nitrogen and then react it with the hydrogen from the electrolyser to produce ammonia. In order to maintain stable operation of the Haber–Bosch loop, the model includes hydrogen storage and back-up power, which can be supplied by discharging the battery, or from a hydrogen fuel cell. The optimised solution at a given location will sometimes exclude one or more of these components depending on the input data.
+ Fig. 1  Schematic demonstrating operation of ammonia production model. Boxes in dark blue represent input data to the model; boxes in orange represent processes carried out by the model; the green box is the model output. 
+2.1 Input power data
+Wind and solar data is sourced from the ERA5 database, which estimates a range of parameters relating to historical weather data at hourly frequency on a 30 km grid.20 For this study, only locations on land were considered with a spatial resolution of 1 degree. Using the Python PVLib and the curve for a Vestas 3MW wind turbine, these weather data were transformed into hourly energy production in MWh per installed MW of solar PV module and wind turbine respectively. The model imports weather data from the same year as the grid data which it is considering. Because hydrogen electrolysers typically use DC power, the DC power output from solar cells was used, which is more efficient; the potential CAPEX implications of doing so are discussed in Section 2.2.
+Australia has six major electricity markets. The East Coast markets – which include South Australia (SA), Victoria (Vic), Tasmania (Tas), New South Wales (NSW) and Queensland (QLD) – are correlated by virtue of interconnectors between these markets. The West Coast market – which includes only Western Australia (WA) – is entirely independent. AEMO provides historical data describing the demand and retail price of grid electricity in each of these markets on a half hourly basis;21 these prices and demands were averaged in order to convert the data to an hourly frequency, so that it would match the weather data.
+In order to select the most suitable grid connection point, the minimum distance between a nominated location and Australia's electricity grid was calculated. GeoPandas data listing all major Australian electricity transmission lines was obtained from the Australian Government.22,23 Transmission lines that are not part of major electricity grids were excluded (e.g. microgrids which supply power to rural mines, and the Darwin–Katherine interconnection); it was assumed they would not have the capacity to supply an adequate amount of demand to green ammonia plants. The minimum distance is always used in the model, even if it causes a location to connect to a grid which is in a different state; if that occurs, the model uses the electricity price from the state in which there is a connection to the grid, rather than the state in which the plant is located. While it is possible that the optimum price may sometimes be obtained by connecting to a more distant electricity grid in a state with a more complementary power profile, it is expected that this will be a very rare occurrence given the cost and inefficiencies of long-distance electricity transport. Allowing the model the flexibility to select the optimal electricity grid would have significantly increased solving time, and thus this option was discarded.
+In addition to the retail price, electricity consumers will typically need to pay Transmission Use of System (TUOS) and Distribution Use of System (DUOS) charges. DUOS charges are neglected in this analysis; because the proposed designs connect directly to the transmission system, and include the cost of power line construction and maintenance, they do not rely on power distribution systems. TUOS charges are set each year by state grid operators based on the costs required to maintain the electricity grid. Different users are charged in different ways depending on the nature of the grid contract. On an energy basis, charges are typically in the order of 10 AUD MW−1 h−1;24–26 however, site specific costs can be negotiated with state grid operators. The cost allocation is driven both by average supply and peak demand. Green ammonia plants face two advantages in negotating low TUOS costs: firstly, they will typically only draw power from the system during periods of low demand (when it is affordable to do so), and they do not therefore contribute to peak demand. Secondly, new green ammonia plants represent an emerging Australian industry and therefore may merit government support. It is therefore reasonable to expect that lower TUOS prices may be negotiable. A conservative estimate of 10 AUD MW−1 h−1 is therefore used in this analysis, but sensitivity testing is performed in which it is as low as 5 AUD MW−1 h−1.
+Electricity can be transmitted at low or high voltage (LV or HV), and as a DC or an AC current. In general, power losses in wires are lesser for high voltages and DC currents; however, these also have increased capital costs due to the additional transformers required. In the context of green ammonia production, there are also advantages to DC transmission, since electrolysers use DC power. In the model, efficiency losses in the line manifest themselves as an increase in the price of delivered electricity. That is, if the losses in transmission reduce the power to the site by a factor of ε, then additional power needs to be purchased to make up for those losses, and the cost of power increases by a factor of ε−1.
+The model is run over a single year of operation at a time (considering more than one year is possible, but the time taken for the optimal result to be found becomes very large as more data is added). The majority of analysis in this report uses 2019 as a base consideration, as it represents average grid behaviour.
+2.2 Equipment CAPEX
+Much of the equipment included in green ammonia plants is relatively new technology, and as such, cost estimation can be challenging. Solar and wind costs, for instance, are falling rapidly as technologies improve and economies of mass production develop. Where possible, recent costs were sourced for major equipment, and sensitivity testing is included to understand how cost variability may impact results. The costs of all equipment are linearised (i.e. are not a function of equipment size), as required by the MILP model. This is reasonable for the majority of components in a green ammonia plant, which are typically modular and therefore do not benefit from economies of scale. The exceptions are the HB loop and ASU; however, at very large scales (i.e. 1 MMTPA and greater) required for export, economies of scale are unlikely to make significant contributions to the cost of these components, because they are approaching the size of the largest individual units globally,27 meaning duplication is required to increase production. We have provided a more detailed justification for the linearisation of ammonia production costs available in earlier work.28 The costs of all equipment are listed in the Appendix.
+Solar PV and Wind costs were sourced from the IRENA database,29 which takes historical data from a large number of projects in order to form estimates. Solar costs are provided explicitly for Australia; wind data is provided for the region of Oceania. The sensitivity modifications applied to solar are larger than those applied to wind (±30% as opposed to ±10%), because (i) the price of solar panels is falling more rapidly than the price of wind turbines, and (ii) the removal of the inverter from the solar plant may enable savings that have not otherwise been considered here.
+Previous techno-economic analyses of green ammonia production have used a wide range in costs of electrolyser modules; even international bodies such as Bloomberg30 and the IEA31 differ significantly in their estimates of electrolyser CAPEX. However, the majority of authors use estimates between 600 and 1000 USD kW−1 of installed capacity.3 Here, we use an estimate of 700 USD kW−1,6 and a large sensitivity range of ±30%. Similar uncertainties surround hydrogen storage and fuel cells; again, a large sensitivity range is used to understand the impact of these parameters.
+Cost estimation for batteries is complicated by the need to estimate both the costs of energy storage in kW h and power output in kW. Most authors specify costs independently for both equipment types,5,32 although typically the power to energy ratio may constrain design (since very fast discharge is not possible). Because this model is on an hourly time scale, the maximum value of the power-energy ratio allowable in the model is 1 W W−1 h−1 (i.e. the fastest a battery can discharge completely is one hour). Smaller power-to-energy ratios tend to be easier to achieve in battery design, so it is not expected that the batteries in this design will be constrained by their power-to-energy ratio.33 The power and energy components in this model can therefore be estimated separately. The cost of the power component (here referred to as the interface) is estimated from Cesaro et al.34 The cost of the energy storage component is then back-estimated from the actual cost of a recent very large battery installation in South Australia.35
+The two phases of this South Australian battery project had significantly different costs; the first phase cost only 300 USD kW−1 h−1, whereas the second required 700 USD kW−1 h−1 (at the same power-to-energy ratio). The first phase was the subject of significant media attention – at the time it was the largest battery ever built – which may explain its unusually low price. For this model, a cost of 500 USD kW−1 h−1 is used as the base cost, but the range observed by the actual installed battery (i.e. 300–700 USD kW−1 h−1) is used for sensitivities.
+The costs of transformers and wires were provided by CSIRO,15 and their efficiency of transmission is estimated from EU36 and IEA37 resources. In general, the CSIRO estimates that LV AC is the cheapest form of transmission for short distances, HV AC is cheapest for medium distances, and HV DC is best over longer ranges. The disadvantage of HV DC is that rectification and inversion are required at the supply and demand sites respectively, in order to take AC power from the grid and return AC power to users. However, since the demand site uses mainly DC power, this disadvantage is comparatively small, as inversion is not required at the terminus of the transmission line, and a rectifier is required at some point in the electricity transmission, regardless of the technology used (note that, particularly if the plant makes dominant use of solar, a small inverter may be required to supply AC power to the Haber–Bosch synthesis loop and ASU, regardless of whether the grid connection is used; however, since these represent around 3% of installed plant power capacity, the associated costs are likely to be negligible). When the costs of inversion are excluded, there is very little difference in the costs of HV DC compared to HV AC in the medium distance, as shown in Fig. 2, which assumes that 7.5% of power used to produce ammonia comes from the grid at an average price of 50 USD MW−1 h−1 (this usage and price are averages from the base case). For that reason, the model will use a LV AC connection for distances of 30 km or less, and a HV DC connection at long ranges.
+ Fig. 2  Schematic showing the increase to the LCOA as a function of the electricity transmission distance in different wires, for an electricity price of 50 USD MW−1 h−1. 
+One possible benefit of HV DC which is not utilised in this model is that HV DC lines tend to have higher capacities than LV AC. The LV AC lines considered here have a maximum capacity of 175 MW, which is fairly small compared to most HV DC lines.15 Larger capacities can also be used for LV AC lines, but at increased cost. In this model, imported power is capped at 175 MW, which could theoretically supply around 12% of a plant's power if utilised at all times. Higher capacities are not allowed for two reasons. Firstly, supplying more than 12% of a plant's power from the electricity grid, which is not entirely decarbonised, may increase the emissions associated during production beyond the minimum threshold at which ammonia can be considered green. Secondly, at demands greater than 175 MW, ammonia plants would begin to become very significant consumers of grid electricity. In Tasmania, the smallest electricity grid, average demand on the entire grid is only around 1125 MW (this does not include electricity exported to Victoria). This 175 MW limit on the grid is discussed further in Section 3.3.1.
+2.3 Ammonia plant optimisation
+The optimisation model is implemented in Python using the pyomo package. The Gurobi solver is used, which is available for free under academic license.
+There are twelve constraints imposed on the optimisation problem. These fall into two groups: capacity constraints and balance constraints. Capacity constraints ensure that equipment is sufficiently large to handle the power and material flows they receive. Balance constraints enforce energy and mass conservation around various units in the model.
+There are eight capacity constraints: π(C,D,t) + β(C,D,t) + γ(C,D,t) ≤ σC(C) ∀C∈SC, D∈SD,t∈St(3) κ(SC,D,t) ≤ σSC(SC) ∀SC∈SSC, D∈SD,t∈St(4) (5) (6) π(HB + ASU,D,t) + β(HB + ASU,D,t) + γ(HB + ASU,D,t) ≥ GHBMin·σC(HB + ASU) ∀D∈SD,t∈St(7) (8) (9) (10)
+
+Eqn (3) requires that the installed capacity of each component be larger than the total power provided to it at all times. Eqn (4) requires that, for each storage component, the capacity available for storage be large enough to contain the capacity demanded by the model at that time. Eqn (5) and (6) ensure that the total power provided by the battery and fuel cell respectively is less than their capacity. Eqn (5) is rarely constraining to the model, as due to inefficiencies the power flowing into the battery is typically larger than that leaving it (already constrained by eqn (3)), but it is possible that at some times the demand on the battery will exceed what it has the capacity to supply, and the constraint is therefore necessary.
+
+Eqn (7) and (8) account for the limited flexibility of the Haber–Bosch plant. The former ensures that at least a fraction of the total power is provided at all times; enforcing a minimum power requirement also imposes a minimum hydrogen supply through the hydrogen balance constraint (eqn (14) below). The latter prevents very rapid ramping of the ammonia plant; different maximum rates are imposed on the ramp-down and the ramp-up, since ammonia plants can typically ramp down more quickly than they ramp up (as per Fasihi et al.5). Note that in eqn (8), t − 1 is used to indicate the previous time step; if t = 1, then the previous time step is actually given by D − 1 and t = 24, which the model will use to define the constraint. Similarly, when D = 1 and t = 1, the previous time step is the last day of the year with t = 24; this eliminates the need to provide an arbitrary initial condition.
+
+Eqn (9) and (10) enforce sensible behaviour of the grid connection. The first requires that the maximum electricity curtailed at any given time be less than the total energy produced from renewable electricity; without this limit, the model will tend to import very large amounts of electricity from the grid when the cost of grid electricity is negative; in reality this imported grid electricity cannot be curtailed. The second equation switches on the binary grid connection variable xGrid if any electricity is imported from or exported to the grid; the denominator in the fraction is used to scale the total electricity import so that it must be between 0 and 1, where ηin(UB) and ηout(UB) are the upper bound on the values of those variables at every time step. Since switching xGrid on increases the plant CAPEX, the model will only switch this variable on if the benefits from electricity purchase or sale outweigh the grid connection costs.
+There are four balance equations; this is one fewer than the total number of elements in the set of flows, as the power from the fuel cell is incorporated into the hydrogen balance. The balance equations are shown below: (11) (12) (13) (14)
+
+Eqn (11) is a simple sum of all ammonia produced; it must equal the target production. It includes a factor of  this is equal to the fraction of uptime available to the plant, accounting for some time off due to maintenance. This is a conservative estimate; actual plants will typically schedule downtime for an optimum period based on high grid prices or poor outlook for renewable production, when production would be either low, or comparatively expensive.
+
+Eqn (12) is the power balancing equation; it requires that the total input power (from the renewables plus the grid minus curtailment) equals the total power to each of the components plus any power sold back to the grid. Eqn (13) and (14) are the balances for the battery and the hydrogen storage unit respectively. In both cases, the current storage on day D at time t is given by the storage in the previous time step, plus any flows in minus any flows out. As for the Haber–Bosch ramping constraint – eqn (8) – the previous time step is represented by t − 1 in this equation, but the model will look to the previous day, or to the last hour of the last day in the dataset, as required, to maintain continuity.
+Material flows of ammonia and hydrogen are represented in tons, and energy flows are represented in MW. Suitable conversion factors CF are used to convert units between flows as appropriate. In the case of power to material flows, the conversion factor represents the amount of product produced from 1 MW h of electricity (or vice versa for material to power flows). For material to material flows, the conversion factor is the stoichiometric ratio (e.g. 17/3 for H2 to NH3). For power to power flows, the conversion factor represents efficiency losses. In the case of the battery, a self-discharge factor is also included to represent losses which occur from the battery over time.
+2.4 CAPEX and OPEX calculations
+Having sized the plant equipment, the model estimates the CAPEX according to: (15)where CostGrid is the cost of a grid connection, equal to the connection fee (which includes transformers and substations) plus the wire cost, which depends linearly on the distance between the grid and the plant.
+The OPEX is calculated according to: (16)
+There are three terms in the above expression. The first accounts for the cost of buying electricity, and the revenue from selling it back to the grid. The second term includes the cost of water, which is estimated on a per tonne basis assuming desalinated water is required for such large productions. This model does not factor in a variable water cost at different locations, although it should be noted that water costs are a very small contribution of total LCOA, and factoring in that variability is unlikely to meaningfully impact results.3 The final term is an operating and maintenance cost that is estimated as a fraction of the CAPEX.
+3 Results and discussion
+The model was run in three regimes: without any grid connection (i.e. where ηin = ηout = 0 for all times); with a grid connection that could only draw from the grid (the consumer-only case, where ηout = 0 for all times); and with a grid connection that could both buy and sell electricity from the grid (the consumer-supplier case, where the maximum constraint on ηin and ηout is dictated by constraints on the transmission lines).
+3.1 Consumer-only case
+A heat map showing the LCOA at each location, as well as the fractions of grid electricity and wind electricity used in each location, is shown in Fig. 3. The results are shown for the base case year, which is 2019.
+ Fig. 3  Heatmaps showing LCOA at all locations within Australia. Transmission lines are shown in red. (a) Top left: LCOA in USD t−1. (b) Top right: Fraction of renewable energy provided by wind as a percentage. (c) Bottom left: Reduction in LCOA compared to a no-grid case. (d) Bottom right: Fraction of total power provided to the ammonia plant from grid. Note for (c) and (d), locations without colour are not connected to the grid. 
+An electricity grid connection is included in slightly more than 40% of cases. Whether a site includes a grid connection is a strong function of its distance from a major transmission line. At distances less than 150 km, all sites included a grid connection, while above 400 km, no sites included a grid connection; between 150 and 400 km is a transition region. Compared to the average site, grid-connected locations use more solar PV, because the majority of Australia's electricity grid is concentrated on the east coast, which has a solar-dominated renewable energy profile. However, a considerable number of sites with wind-dominated profiles (in Western Australia, South Australia and Tasmania) also connect to the grid.
+The main role of the grid is energy supply when not enough wind and solar power are available. Because of the maximum capacity constraint on the imported electricity discussed in Section 2.2, the grid cannot be the main supplier of electricity to the plant. This predominantly causes a reduction in the size of energy storage equipment. Fig. 4 demonstrates this point – comparing the cases with no grid to the cases with a grid connection, the majority of the equipment in the plant is unchanged, or changes only by a small proportion; however, the cases with a grid connection eliminate batteries entirely, and require about 25% less hydrogen storage.
+ Fig. 4  Comparison of equipment size in grid and non-grid cases. The series of only grid connected sites excludes the 60% of locations that are too distant from the grid for a connection to be economically efficient. 
+The best site in Australia for ammonia production (both with and without a grid connection) is in Tasmania – the grid connection enables a 3.3% reduction in its LCOA. On average, the sites which included a grid connection in the consumer-only mode reduced their LCOA by 4.7%. A summary of the results by state is included in Table 1.
+Table 1 Summary of results by state for 2019. All data is grouped according to the state in which the grid connection is made (or would be made, if the site does not have a connection), not the state in which the site is actually located
+
+
+
+
+State
+Average LCOA without grid (USD t−1)
+Average LCOA with grid (USD t−1)
+Average absolute reduction in LCOAa (USD t−1)
+Average relative reduction in LCOAa (%)
+Average grid power price (AUD MW−1 h−1)
+Number of hours Y(D,t) < 40 AUD MW−1 h−1
+Average distance to transmission linea (km)
+
+
+
+
+
+a Only grid connected sites included.
+
+
+
+
+
+NSW
+921
+880
+50
+4.9
+85
+378
+61
+
+
+QLD
+864
+845
+46
+4.6
+72
+828
+97
+
+
+SA
+726
+718
+27
+3.4
+99
+1098
+78
+
+
+TAS
+801
+750
+51
+6.0
+94
+1047
+37
+
+
+VIC
+913
+860
+53
+5.6
+109
+680
+24
+
+
+WA
+712
+701
+40
+5.3
+46
+3638
+98
+
+
+
+
+Somewhat counter-intuitively, the impact of the grid in Western Australia is the second smallest, even though the power price in Western Australia is around half that of other states. By contrast, Victoria, which has the highest power price, sees the largest fall in its absolute LCOA from connecting to the grid. There are two reasons for this behaviour. Firstly, Victoria's electricity grid is much denser than Western Australia's; while locations in Western Australia reach around 100 km to connect to the grid, the average distance required by a site in Victoria is around one quarter that distance. As per Fig. 2, increasing the transmission distance from 24 km to 98 km increases the LCOA by around 10 USD t−1. Secondly, Victoria is one of the worst performing states without the grid, meaning that even its comparatively expensive grid may be better than its wind and solar electricity.
+This unexpected impact of the grid may also be caused by the relationship between periods of good renewable energy generation and low grid demand. In general, a grid connection will be more profitable if these two parameters are anti-correlated, because the ammonia plant can use the grid cheaply when its on-site production is low. On the flipside, it does not need to pay for expensive electricity when the grid is congested, as on-site production is good at those times. Evidence of this behaviour is seen in the difference between Tasmania and South Australia's grid connections. Although the ammonia plants in both states are wind-dominated, and they have similar electricity prices, and a similar number of hours per year in which the electricity is cheap (see Table 1), the price reduction achievable with the grid in South Australia is much less than that achievable in Tasmania. Even if only sites within 50 km of the grid are considered (in order to prevent sites far from the grid in South Australia affecting the result), the cost reduction in Tasmania is about 40% more than the reduction in South Australia. This indicates that the synergies between the Tasmanian grid and its local renewable energy profile are better than those in South Australia.
+To some extent, those synergies depend on the demand electricity profile, but they also depend on the supply mix in the electricity grid. Tasmania's electricity network is predominantly (>80%) supplied by hydropower, which is dispatchable as required. In contrast, South Australia's network is transitioning towards a wind-battery mix, with some solar plants. All coal plants in that state have been retired, and gas is used for dispatchable power to meet demand.38 This suggests that (i) as decarbonisation continues, and grids themselves become more renewable, the benefits of ammonia plants connecting to the grid may reduce, and (ii) the largest benefit from grid connection will come from sites whose renewable profile is distinct from that which dictates the local electricity grid. However, if significant grid energy storage is available, and the cost of grid electricity is dictated by demand, rather than supply, the grid connection may continue to be useful even if the renewable profile onsite is similar to the renewable profile which drives the local grid.
+
+Fig. 5 provides a more detailed picture of the relationship between the grid and the ammonia plant. Panel (b) shows that the role of the grid is different in different states based on their local energy profiles. However, in general, for each state, higher grid consumption means higher electricity costs, and hence higher LCOAs; although the grid replaces batteries, it has associated marginal costs and should be used as little as possible. In Western Australia, if a grid connection is made, relatively large amounts of grid electricity (10–12%) can be used without significantly increasing the LCOA, because the local electricity cost is so low. Therefore, if a site makes the expensive decision to construct a transmission line in that large state, it will have high utilisation. Queensland and NSW also have high grid electricity consumption at their sites; because these states are solar dominated as per Fig. 5(a), they require more back-up power than the wind-dominated states. In Tasmania, even though the grid meaningfully reduces the LCOA, the fraction of electricity used from the grid is comparatively small. For the sites in those states, the wind energy is reliable, meaning the utilisation of installed back-up power will be low. Given those conditions, it is better to use a low-CAPEX, high-OPEX grid solution than a high-CAPEX, low-OPEX battery that will have a low load factor.
+ Fig. 5  Relationship between energy source and LCOA for different states in 2019. (a) Top left: LCOA against fraction of wind energy installed, by state. (b) Top right: LCOA against fraction of grid electricity used, by state. (c) Bottom left: LCOA reduction compared to a non-grid connection case, as a function of grid demand. (d) LCOA reduction as a function of distance. 
+However, even though more electricity use tends to indicate that the LCOA will be higher, once a grid connection has been made, there is almost no relationship between how much grid electricity is used and how much the LCOA falls compared to a non-grid case, as shown by Fig. 5(c); panel (d) of that Figure indicates the relationship depends much more strongly on distance between a site and the grid. The main reason for cost reduction is the replacement of the battery; there is relatively little relationship between the extent of grid electricity use and the reduction in the LCOA because the battery represents a similar fraction of the total investment cost across all locations in a no-grid scenario.
+In general, wind-dominated sites have lower LCOAs than solar-dominated sites, which is observable for both sites which are grid-connected and sites which are not grid connected. Consequently, the majority of locations use mostly wind turbines rather than solar PV for power generation. This is contrary to the forecast of Fasihi et al.,5 whose estimation using 2020 data predicted that Australia's optimal ammonia production sites would be dominated by solar PV, not wind. There are several points of difference between the analyses. Firstly, that work considered a global analysis, and did not differentiate costs of equipment in different countries. Their CAPEX/kW for wind was almost double that used for solar. In contrast, the costs used in this analysis are specific to Australia, based off information in the IRENA database; they forecast a comparatively small difference per kW in the installed price of those two technologies. Secondly, that work used a very low price for battery storage – around 280 USD kW−1 h−1; as discussed in Section 2.2, this is significantly cheaper than has been observed in Australia. Cheap batteries are an enabler of solar PV dominated ammonia production, since they enable continued operation through the night. Thirdly, that work used weather data from NASA; it may make different predictions to the ERA5 data considered in this analysis. Comparison between the results from these data sources would be a useful area of further work. The significant use of wind in this analysis is not unexpected, for two reasons: not only does wind electricity based on this input data have a lower LCOE (levelised cost of electricity) in most locations compared to solar, but it tends to be more evenly distributed (i.e. it is available during the day and night), meaning higher utilisation of the electrolyser is possible.
+3.2 Consumer-supplier case
+Allowing the model to sell electricity back to the grid, as well as importing electricity, enables further cost reductions. Electricity which might otherwise have been curtailed can instead be sold back to the grid. In general, this makes grid connection more favourable: an extra 42 sites achieve their minimum LCOA by connecting to the grid compared to a case in which electricity can only be purchased from the grid. At the best site for ammonia production, the cost of production fell by 11% compared to a no-grid case, or 8% compared to a consumer-only model. In total this reduces the LCOA from around 520 USD t−1 to 460 USD t−1, at which value the ammonia would have been competitive on a global spot market for about 3 years in the last decade, compared to for about 1 year at the LCOA achievable without the grid.5
+This mode of operation changes the sites which are best for ammonia production. 15 of the best 20 sites for ammonia production use a grid connection; only 6 of these sites are in the top 20 if they do not use a grid connection at all. The site in northern Tasmania which sees the largest reduction in its LCOA becomes the sixth best site in the country when it can sell electricity; it is 104th with no grid connection. A number of the new best sites are better suited for ammonia export than their competitors, because their location is close to the coast (where the grid is concentrated), meaning costs for ammonia pipelines and desalinated water will not accrue. Of the top 20 sites, 8 are coastal without a grid connection, and 12 are coastal with a grid connection. The average distance to the coast for sites in the top 20 drops from 300 km to around 150 km.
+There are two changes to plant operation and design in the consumer-supplier mode: curtailment reduction and renewable capacity increase. The curtailment of renewable plants falls by 40%, from an average of 5% to an average of 3% at the sites which have a grid connection. Even though the plant can sell electricity to the grid, there are several occasions on which it may still need to curtail: (i) if the total energy produced from the renewables exceeds the total capacity of the plant plus the capacity of the electricity wires, which is set here to 175 MW – this is particularly common in hybrid plants with both wind and solar installations; (ii) if the total energy produced from the renewables exceeds the total capacity of the plant, and the electricity price is negative; or (iii) if the renewables are exporting to the grid at capacity, but the hydrogen storage is full, and the ammonia plant is below its operating limit (because of its slow ramp-up rate), meaning limited power can be redirected to the plant.
+Secondly, the size of the renewable equipment tends to increase slightly for grid connected sites compared to the consumer-only model, as shown in Fig. 6; there is an increase of 23 MW on average for solar, and 68 MW on average for wind. Noting that the maximum rate at which electricity can be exported is 175 MW, this represents slightly over 50% of the plant's total capacity to export.
+ Fig. 6  Comparison of equipment capacities for no grid, consumer-only, and consumer-supplier cases. Consumer-only and consumer-supplier data are provided for the sites at which there is a grid connection in the consumer-only case. Sites which only have a connection in the consumer-supplier case are excluded from the averaging to avoid skewing the data. 
+There is a relationship between how a plant produces the electricity which it sells and the size of the reduction in the LCOA, which is shown in Fig. 7. In general, sites which install more wind capacity see a larger reduction in their LCOA than sites which simply curtail less electricity (see panels (a) and (c)). This trend is particularly observable in Tasmania and Victoria, where some sites install significantly more wind in the consumer-supplier case compared to the consumer-only case – in two cases, more than 200 MW of additional capacity is installed, even though only 175 MW can be sold along the transmission wires (although wind turbines rarely produce at their maximum capacity). In those sites, sale of green electricity is a profitable venture, independent of the presence of an ammonia plant; they could be considered to be two separate sites where the sale of wind electricity subsidises the green ammonia (although there are still some synergies – the consumer-supplier model allows a smaller electrolyser that operates with a higher load factor).
+ Fig. 7  Relationship between the change in plant design and LCOA reduction when the model changes from consumer-only to consumer-supplier mode. (a) Top left: Change in wind capacity (only for sites with wind installed in the consumer-only case); (b) Top right: Change in solar capacity (only for sites with solar installed in the consumer-only case); (c) change in curtailment (absolute difference between the percentage of electricity curtailed at all sites); (d) change in total installed renewable capacity (all sites). 
+At other sites in Tasmania and Victoria, and in other states like Western Australia, the potential for profit from a wind farm is smaller (either because the times at which the wind farm generates power at those sites do not correlate with high grid prices, or because the grid is generally low cost). In those cases, there is little benefit to increasing the size of a wind farm – instead the electricity which is sold is simply electricity which would otherwise have been curtailed in a consumer-only design. This approach still reduces the LCOA compared to the consumer-only case, but the benefits realised are comparatively small. Most sites will therefore adopt a balance of the curtailment reduction approach and the increased wind capacity approach, with every site increasing its capacity to some extent (as per panel (d) of Fig. 7).
+The relationship between increasing the capacity of a solar farm and the LCOA reduction is not clear (see panel (b) of Fig. 7). In some sites in Queensland and New South Wales, solar capacity is removed and replaced by wind power; in others, additional solar capacity is profitable. South Australia's behaviour is unique – the consumer-supplier case almost always installs additional solar capacity, which in some locations even replaces wind. This behaviour is related to the nature of the South Australian grid – as discussed in Section 3.1, that grid relies heavily on wind power and has comparatively little solar electricity, causing high daytime prices which can be exploited by a solar farm.
+3.3 Grid power constraints
+The model in this report is strongly constrained by the limit applied to power imported from the grid, which is 175 MW. As described in Section 3.1, this constraint forces the grid to adopt the role of energy storage, replacing the battery. However, based on the trend in Fig. 5(b), an increasing fraction of grid electricity consumption will tend to drive up costs, suggesting that few sites in the consumer-only model would change their behaviour if more electricity import from the grid were available.
+For the consumer-supplier model, the impact of this constraint depends on the site. For sites which tend to reduce curtailment (rather than building extra equipment), the constraint on power export is not as significant, as these sites are less likely to be constrained by this limit (since they are constrained by the power available at a given time). On the other hand, for sites which install additional renewable capacity, the constraint on power export is very limiting; at those sites, the construction of wind and solar farms is independently profitable, and if grid export is unconstrained then the model will construct very large renewable energy facilities which mostly sell electricity to the grid (effectively creating a second business which subsidises the green ammonia plant). In practice, there are many limitations which would prohibit such operation: land may not be available in very large quantities; very large upfront capital expenditures would be required; and there are market risks associated with being a very large contributor to Australia's electricity grid, which is finite in size.
+In general, the ammonia plant in consumer-supplier mode will stabilise the operation of the national grid, by buying electricity when the price is low, and selling it while the price is high. In 90% of cases, the cost of electricity sold to the grid is greater than the cost purchased on a per MWh basis; assuming that the price is reflective of the grid demand, this will have a stabilising effect. Most of the remaining 10% of cases were in Western Australia, whose grid is already far more stable than the other states. Even in those locations, if the TUOS costs and efficiency losses are factored in, the levelised cost of electricity sold exceeds the levelised cost of electricity purchased. However, the ammonia plants do represent a large additional load on electricity grids; only in about 5% of cases did an ammonia plant sell more electricity than it produced.
+
+3.3.1 Emissions constraints. 
+The suitability of using the grid as a back-up power supply is limited by the Scope 2 emissions associated with the production of grid electricity,39 which may impact the accreditation of ammonia as ‘green’. In the very short term, some consumers may be willing to accept ammonia with a moderate carbon intensity in order to establish supply chains; however, the demand for green ammonia will soon require low or zero carbon emissions intensity. There are few agreed-upon standards for what constitutes ‘low-carbon’ ammonia; the best which is available comes from CertifHy,40 who require that the emissions associated with green hydrogen be less than 36 g of CO2-eq per MJ of fuel (which is equivalent to approximately one third of the emissions associated with conventional ammonia production). The same limit is applied here to ammonia.
+
+Fig. 8 shows the LCOA as a function of the carbon intensity at each site with a grid connection, calculated for the consumer-supplier case. The carbon intensity calculation neglects emissions associated with plant construction, and considers solar and wind electricity to be entirely carbon neutral. The carbon intensity from the grid on a given day is obtained from AEMO;21 daily data is not available for Western Australia, so an average annual rate is used instead. In general, the carbon intensity of the grid in all states is consistent over the course of the year; the exception is Tasmania, which relies mostly on hydro power, but which turns to dispatchable hydrocarbons during dry seasons.
+ Fig. 8  LCOA at consumer-supplier sites as a function of fuel carbon intensity. (a) Top: Carbon intensity considering only electricity imported. (b) Bottom: Carbon intensity assuming carbon credits are available for electricity sold. 
+There are clear differences between different states evident in Fig. 8(a). Tasmania, South Australia, and, to a lesser extent, Western Australia, have relatively low grid carbon intensities, meaning the vast majority of sites in those states fall below the CertifHy limit, independent of grid energy consumption. On the other hand, nearly every site in Queensland and New South Wales will produce ammonia with a carbon intensity which cannot be considered green, although those sites also tend to be significantly more expensive because of their substantial reliance on the grid, and were therefore poor candidates for ammonia sites regardless of their emissions.
+Panel (b) of Fig. 8 assumes that sites are able to claim a carbon credit for the green electricity which they export to the grid. This carbon accounting may be considered acceptable by potential consumers, particularly if it can be shown that the green input to the grid has displaced a fossil-fuel electricity producer. In that mode, 75% of sites produce ammonia with an acceptable carbon intensity; in some cases, the avoided emissions may even exceed the emissions associated with consuming grid electricity. In two sites, the avoided emissions are much larger than the emissions from the grid; both sell into the Victorian electricity grid, which is carbon intensive, and anti-correlated in price with the wind resources used at those two sites.
+
+3.4 Sensitivities
+
+3.4.1 Annual variation. 
+The analysis so far has focussed on data from 2019. In different years, both the renewable power available and the cost of grid electricity fluctuates significantly. The difference caused by annual variation in electricity market behaviour is much more substantial than the difference caused by annual variation in renewable power; using nationwide average costs for electricity, the difference between the cheapest and most expensive year is around 75% of the median price between 2013 and 2020; even larger fluctuations are observable in individual states.
+Because of this significant cost variation, it is important that ammonia plants which are designed to rely on semi-islanded operation are robust to different grid behaviour. For that reason, a sensitivity analysis was performed by re-solving the model using data from both 2016 and 2017 to understand the impact of this variation. In general, the electricity price in 2016 was cheap (averaging 67 AUD MW−1 h−1), and 2017 was expensive (averaging 92 AUD MW−1 h−1), compared to 2019 (averaging 84 AUD MW−1 h−1); however, because each state has a slightly different trajectory in grid electricity costs over time, results are reported on the basis of the local average electricity price, rather than the year for which the analysis was performed.
+In order to minimise the impact of interannual variation of in situ renewable electricity production from this analysis of the electricity grid's impact on green ammonia costs, the basis for the reported results is the improvement enabled by the grid. That is, grid performance is measured by taking the difference at each site between the LCOA with the grid and without the grid (assuming that in situ variation in renewable production impacts both grid and non-grid cases equally, and therefore cancels out). Results are displayed in Fig. 9.
+ Fig. 9  Improvement in LCOA as a function of average levelised cost of electricity for each state in that year. Averages are taken only over sites that connected to the grid in the consumer-only case for 2019. (a) Left: Consumer-Only results; (b) Right: Consumer-Supplier results. 
+In panel (a), which shows results for the consumer-only case, there is a consistent and unsurprising trend observable in all states: as the electricity price becomes cheaper, connecting to the grid becomes a better proposition. However, in panel (b), which shows the consumer-supplier case, this trend is not observable. Instead, in the three largest states (NSW, QLD and Victoria), as well as in the national average, there is a local minima in the data: although very cheap electricity is still preferable, ammonia producers which sell electricity back to the grid can exploit high prices, which in some cases will offset the increased costs of drawing electricity from a more expensive grid. Although this is not observable in the three smaller states, the trend in WA is much flatter for the consumer-supplier case than the consumer-only case, and Tasmania and South Australia are decarbonising relatively quickly compared to the rest of the country, so there may be other factors at play in those states.
+While this analysis would be improved by being run over more years of data, there is evidence that across multiple states, adopting a consumer-supplier model will make green ammonia production more robust to variable grid behaviour.
+
+
+3.4.2 Sensitivity variations. 
+A number of additional sensitivities were also considered in order to understand the impact of a number of key parameters on the conclusions drawn in this analysis. The Appendix summarises which parameters are modified, and the size of the modification. Results are summarised in Table 2.
+Table 2 Sensitivity results
+
+
+
+
+
+
+Consumer only
+Consumer-supplier
+
+
+Cheap
+Expensive
+Cheap
+Expensive
+
+
+
+
+LCOA (USD t−1)
+(Base = 775)
+(Base = 769)
+
+
+Finance
+634
+928
+627
+922
+
+
+Electricity
+692
+846
+683
+835
+
+
+Electrolyser
+733
+822
+723
+815
+
+
+Grid
+773
+780
+767
+774
+
+
+Storage
+769
+781
+763
+774
+
+
+Average fraction of renewable electricity from wind (%)
+(Base = 77)
+(Base = 77)
+
+
+Finance
+77
+77
+77
+77
+
+
+Electricity
+54
+87
+56
+87
+
+
+Electrolyser
+78
+74
+80
+74
+
+
+Grid
+77
+76
+77
+76
+
+
+Storage
+78
+76
+78
+76
+
+
+Fraction of sites with grid connection (%)
+(Base = 42)
+(Base = 48)
+
+
+Finance
+38
+45
+48
+49
+
+
+Electricity
+37
+46
+44
+50
+
+
+Electrolyser
+42
+44
+46
+49
+
+
+Grid
+43
+41
+49
+47
+
+
+Storage
+39
+44
+45
+50
+
+
+
+
+Reducing the cost of finance can have a substantial impact on the LCOA, because such a significant portion of the project costs are CAPEX. However, cheaper project finance will typically make a grid connection less desirable, because the grid connection is a comparatively low CAPEX, high OPEX investment. This effect is only significant in the consumer-only mode; in the consumer-supplier mode, since the grid connection often pays for itself through additional sales, the impact of finance is relatively small.
+Unsurprisingly, cheaper electrical equipment can also have a meaningful impact on the LCOA. Because the cheap production scenario assumes a much larger drop in the price of solar than wind (30% compared to 10%) in line with technology cost curves. Like cheap finance, cheap production also makes a grid connection less favourable, as onsite electricity can be generated more cheaply compared to grid electricity. However, it should be noted that a significant drop in the price of solar or wind is likely to correlate with a drop in the price of grid electricity which may be powered by those renewables, meaning the grid may still be competitive as prices fall. Even in the cheap electricity scenario, a substantial number (>40%) of sites still use a grid connection in the consumer-supplier mode.
+Electrolyser and grid sensitivities were included because of the uncertainties associated with those parameters. Although the electrolyser case had a moderate impact on the LCOA, neither case caused a substantial variation in the fraction of wind used (which is indicative of the optimum plant design), or in the number of sites which connected to the grid; this suggests that the results of this analysis are robust to the uncertainties in those parameters. The impact of energy storage costs on both the LCOA and the fraction of wind energy used is fairly small. However, there remains a moderate impact on the number of sites which connect to the grid (comparable in size to the impact from cheaper project finance). This is further evidence for the behaviour described in Section 3.1, which indicated that the grid substituted energy storage equipment; if there is a significant fall in the price of that energy storage equipment, then it will become preferable to the grid.
+
+4 Conclusions
+This paper has outlined the development of an optimisation model that minimises the cost of green ammonia for the purposes of international energy export. The model demonstrates that a connection to an electricity grid can meaningfully reduce the cost of ammonia production if a site is located nearby to that grid; those benefits are even larger where there is opportunity to participate in the electricity market as both a producer and a generator. Even at sites that can produce cheap ammonia in islanded operation, a grid connection can enable a reduction in the LCOA of more than 10%. Importantly, sensitivity analysis demonstrated operating as a consumer-supplier can enable the plant to be robust to fluctuations in grid electricity price. Despite carbon emissions associated with the use of the grid, the majority of sites would still meet international standards associated with 'green' hydrogen; in some cases, where electricity is sold back to the grid, the avoided emissions from those sales may be larger than the emissions from grid electricity which is consumed.
+This research demonstrates that the there are significant synergies between future Australian large scale industries and its national electricity grid. In the short term, this can provide a spring board for first-mover projects to reduce the production cost of renewable fuels, and therefore to establish global supply chains of green ammonia; in the longer term, it represents a blueprint for an energy system that can supply both domestic and international consumers with sustainable power. Further research should expand the scope of this work by examining how the national grid will transform in the future, and seek to understand how ammonia production for international export could be integrated into a wholly renewable power system (including the possible domestic use of that ammonia as long-term energy storage).
+Beyond the expansion of scope into an energy-system wide analysis, there are two additional areas which should be explored in the future. Firstly, Australia has been selected as a case-study because it has well-published data on its electricity grid, multiple different electricity markets, and a stated intention to export green hydrogen and ammonia. The opportunity to integrate grid electricity into green ammonia should be considered for other countries where similar price reductions may be achievable. Secondly, AEMO offers financial bonuses to companies which participate in frequency ancillary services (FCAS). Some frequency ancillary services involve smoothing very short term fluctuations, which may be within the range of operation of some electrolyser designs; there are further opportunities to profit from grid connection in providing these services which should be explored.
+List of acronyms
+
+AEMOAustralian energy market operator
+ASUAir separation unit
+AUDAustralian dollars
+CAPEXCapital expenditures
+DUOSDistribution use of system
+HBHaber–Bosch
+LCOALevelised cost of ammonia
+MILPMixed integer linear program
+MMTPAMillion metric tonnes per annum
+NPVNet present value
+OPEXOperating expenditures
+TUOSTransmission use of system
+USDUS dollars
+
+Conflicts of interest
+There are no conflicts of interest to declare.
+A Appendix
+The model defines six sets: renewables (solar and wind); components (electrolyser, HB + ASU, battery), storage components (battery, hydrogen storage), flows (power from renewables, power from battery, power from fuel cell, hydrogen and ammonia), times (hours of the day), and days (the total days considered in the dataset). The battery is included as both a component to size its power (in MW), and as a storage component to size its energy storage capacity (in MWh). Although a hydrogen fuel cell is included in the model, because it does not behave like any other element of the ammonia production process, it is treated uniquely and not as a set with any other piece of equipment (Tables 3–6).
+Table 3 Equipment costs
+
+
+
+
+Equipment
+CAPEX
+Sensitivity
+
+
+
+
+Solar PV
+1250 USD kW−129
+±30% (Electricity)
+
+
+Wind
+1550 USD kW−129
+±10% (Electricity)
+
+
+Electrolyser
+700 USD kW−16
+±30% (Electrolyser)
+
+
+HB CAPEX
+7444 USD kW−16
+—
+
+
+Hydrogen storage
+500 USD t−16
+±20% (Storage)
+
+
+Battery interface
+271 USD kW−134
+±20% (Electricity)
+
+
+Battery storage
+500 USD kW−1h−135
+±200 USD MW−1 h−1 (Storage)
+
+
+Fuel cell
+960 USD kW−16
+±20% (Storage)
+
+
+TUOS fee
+10 AUD MW−1 h−124
+±5 AUD MW−1 h−1 (Grid)
+
+
+HV connection fee
+55 million AUD15
+—
+
+
+LV connection fee
+23 million AUD15
+—
+
+
+HV DC wire cost
+2.1 million AUD km−115
+—
+
+
+HV AC wire cost
+1.8 million USD km−115
+—
+
+
+LV wire cost
+0.4 million AUD km−115
+—
+
+
+HV transformer efficiency
+0.9636
+—
+
+
+LV transformer efficiency
+0.9936
+—
+
+
+HVDC wire efficiency
+3% loss/1000 km37
+—
+
+
+HVAC wire efficiency
+4% loss/100 km37
+—
+
+
+LV wire efficiency
+30% loss/100 km37
+—
+
+
+
+
+Table 4 Variables used in the model
+
+
+
+
+Model variables
+
+
+
+
+
+σ
+
+R
+(Renewables)
+The installed capacity of the renewable energy source (in MW)
+
+
+
+σ
+
+C
+(Component)
+The installed capacity of the plant component (in MW)
+
+
+
+σ
+SC(Storage component)
+The installed capacity of the storage component (battery in MWh; hydrogen in t)
+
+
+
+σ
+FC
+
+The installed capacity of the fuel cell (in MW)
+
+
+
+π(C,D,t)
+The power flow directly from input power to the specified component (in MWh) at each time on each day
+
+
+
+β(C,D,t)
+The power flow from the battery to the specified component (in MWh) at each time on each day
+
+
+
+γ(C,D,t)
+The power flow from the fuel cell to the specified component (in MWh) at each time on each day
+
+
+
+κ(SC,D,time)
+The amount of electrical energy or hydrogen stored in the storage component (in MWh for batteries, tons for hydrogen) at each time on each day
+
+
+
+η
+in(D,t)
+The amount of electricity imported from the grid at each time on each day (in MWh)
+
+
+
+η
+out(D,t)
+The amount of electricity sold to the grid at each time on each day (in MWh)
+
+
+
+ζ(D,t)
+The amount of electricity curtailed at each time on each day (in MWh)
+
+
+
+x
+Grid
+
+Binary variable indicating if the grid is active
+
+
+
+
+Table 5 List of sets in the model
+
+
+
+
+Set
+Symbol
+Elements
+
+
+
+
+Renewables
+
+S
+
+R
+
+
+Solar, wind
+
+
+Components
+
+S
+
+C
+
+
+Electrolyser, battery, Haber–Bosch + air separation (HB + ASU)
+
+
+Storage components
+
+S
+SC
+
+Battery, hydrogen storage
+
+
+Flows
+
+S
+
+F
+
+
+Power from renewables (π), power from batteries (β), power from fuel cell (γ), hydrogen (H2), ammonia (NH3)
+
+
+Times
+
+S
+
+t
+
+
+One for each time step – 24 for hourly data
+
+
+Days
+
+S
+
+D
+
+
+One for each day in the data set – 365 for one non-leap year
+
+
+
+
+Table 6 List of parameters used in the model and their meaning
+
+
+
+
+Parameter
+Sets
+Symbol
+Meaning
+Data source
+
+
+
+
+Power supply
+Renewables, days, time
+
+Z(R,D,t)
+The power provided by each renewable at a given time for each time (fraction between 0 and 1; 1 corresponds to the installed power of the equipment)
+Transformed ERA5 data
+
+
+Grid electricity cost
+Days, time
+
+Y(D,t)
+The cost of electricity provided by the grid for each time (in AUD)
+AEMO21
+
+
+Renewable installation cost
+Renewables
+CostR
+Installed cost of 1 MW of renewable capacity
+See Table 3
+
+
+Component cost
+Components
+CostC
+Installed cost of 1 MW of the nominated component
+See Table 3
+
+
+Storage cost
+Storage components
+CostSC
+Installed cost of 1 MW of the nominated storage component
+See Table 3
+
+
+Fuel cell cost
+None
+CostFC
+Installed cost of 1 MW of fuel cell
+See Table 3
+
+
+Conversion factors
+Flows, flows
+CF
+Amount of Flow 1 required to produce one unit of Flow 2
+50 kW h kg−1 (hydrogen from electricity);6
+
+
+
+
+
+
+
+
+1.61 kW h kg−1 (HB + ASU operation from electricity);6
+
+
+
+
+
+
+
+
+0.98 kW h kW−1 h−1 (Power out of battery from power into battery)34
+
+
+Total days
+None
+
+G
+Days
+
+The total number of days in the data set
+Dependent on number of years modelled
+
+
+Battery self-discharge
+None
+
+G
+Discharge
+
+The fraction of energy lost by the battery each hour
+Assumed 5% per month
+
+
+Annual hours
+None
+
+G
+Hours
+
+The number of operating hours per year
+8,424 (14 days offline year−1)6
+
+
+HB minimum capacity
+None
+
+G
+HBMin
+
+The minimum operating rate of the Haber–Bosch plant as a fraction of its rated operation
+0.212
+
+
+HB Ramp down rate
+None
+
+G
+HBRamp down
+
+The maximum rate at which the Haber–Bosch plant can ramp down as a fraction of its rated operation
+0.25
+
+
+HB Ramp up rate
+None
+
+G
+HBRamp up
+
+The maximum rate at which the Haber–Bosch plant can ramp up as a fraction of its rated operation
+0.025
+
+
+Annual production
+None
+F
+The mass of ammonia produced per year
+1 MMTPA
+
+
+Water cost
+None
+CostW
+The cost per t of water
+2 USD t−13
+
+
+Operating and maintenance costs
+None
+CostOM
+The operating and maintenance costs as a fraction of CAPEX
+2%6
+
+
+
+
+These sets are used as the basis to define the model variables, parameters and constraints. There are twelve variables, all of which are constrained to be ≥0. The variables can be grouped into three categories: equipment capacities (3 continuous variables for the sets of renewables, components, storage components, plus an extra continuous variable for the fuel cell, and a binary variable for the grid), power flows (6 variables), and storage capacity (standalone). Each variable is defined over one or more sets; the model will select a suitable value of the variable for each element of the set or sets over which it is defined. All equipment capacities are measured in installed MW capacity, except for the storage components, which are measured in MWh (for the battery) and tonnes of hydrogen (for the hydrogen storage). The power flows are all defined over at least two sets: time and day. There is also an extra variable specifying the destination component for electricity from (i) renewables (the sum of solar and wind), (ii) the battery, and (iii) the fuel cell. All power flows are measured in MW, and since the time resolution of the model is one hour, this is numerically equivalent to the energy flow in MWh. Storage capacity is defined over three sets: time, day, and storage component. It refers to the amount of hydrogen or power stored in that component at any given time on any given day.
+The parameters, like the variables, are defined over sets; they are summarised in Table 6.
+Acknowledgements
+The work here was supported financially by the Rhodes Trust. The use of Gurobi was under a free academic license.
+References
+J. Schmidt, K. Gruber, M. Klingler, C. Klöckl, L. Ramirez Camargo, P. Regner, O. Turkovska, S. Wehrle and E. Wetterlund, Energy Environ. Sci., 2019, 12, 2022–2029 RSC .
+IEEJ, IEEJ Outlook 2019, 2019, https://eneken.ieej.or.jp/data/8122.pdf.
+N. Salmon and R. Bañares-Alcántara, Sustainable Energy Fuels, 2021, 5, 2814–2839 RSC .
+C. Hank, A. Sternberg, N. Köppel, M. Holst, T. Smolinka, A. Schaadt, C. Hebling and H.-M. Henning, Sustainable Energy Fuels, 2020, 4, 2256–2273 RSC .
+M. Fasihi, R. Weiss, J. Savolainen and C. Breyer, Appl. Energy, 2021, 294, 116170 CrossRef CAS .
+R. Nayak-Luke and R. Bañares-Alcántara, Energy Environ. Sci., 2020, 13, 2957–2966 RSC .
+
+          L. Easton and A. Feitz, Mapping Australias hydrogen future - release of the Hydrogen Economic Fairways Tool, 2021, https://www.ga.gov.au/news-events/events/public-talks/public-talks-archive/mapping-australias-hydrogen-future.
+S. Walsh, L. Easton, Z. Weng, C. Wang, J. Moloney and A. Feitz, Evaluating the economic fairways for hydrogen production in Australia, Int. J. Hydrog. Energy, 2021, 46(73), 35985–35996,  DOI:10.1016/j.ijhydene.2021.08.142 .
+J. Armijo and C. Philibert, Int. J. Hydrogen Energy, 2020, 45, 1541–1558 CrossRef CAS .
+O. Osman, S. Sgouridis and A. Sleptchenko, J. Cleaner Prod., 2020, 271, 121627 CrossRef CAS .
+M. Palys and P. Daoutidis, Using hydrogen and ammonia for renewable energy storage: A geographically comprehensive techno-economic study, Comput. Chem. Eng., 2020, 136, 106785,  DOI:10.1016/j.compchemeng.2020.106785 .
+S. Beerbühl, M. Fröhling and F. Schultmann, Eur. J. Operational Res., 2015, 241, 851–862 CrossRef .
+G. Pan, W. Gu, Q. Hu, J. Wang, F. Teng and G. Strbac, Cost and low-carbon competitiveness of electrolytic hydrogen in China, Energy Environ. Sci., 2021, 14, 4868–4881,  10.1039/D1EE01840J .
+M. Wang, M. A. Khan, I. Mohsin, J. Wicks, A. H. Ip, K. Z. Sumon, C.-T. Dinh, E. H. Sargent, I. D. Gates and M. G. Kibria, Energy Environ. Sci., 2021, 14, 2535–2548 RSC .
+
+          T. Brinsmead, J. Hayward and P. Graham, Australian Electricity Market Analysis report to 2020 and 2030, 2014, https://arena.gov.au/assets/2017/02/CSIRO-Electricity-market-analysis-for-IGEG.pdf.
+Bloomberg, AUD USD Exchange Rate, 2021, https://www.bloomberg.com/quote/AUDUSD:CUR.
+
+          R. Nayak-Luke, C. Forbes, Z. Cesaro, R. Banares-Alcantara and K. Rowenhurst, Techno-economic aspects of production, storage, and distribution of ammonia, Elsevier, London,  2020, ch. 8, pp. 191–209 Search PubMed .
+S. Beerbühl, B. Kolbe, C. Roosen and F. Schultmann, Chem. Ing. Tech., 2014, 86, 649–657 CrossRef .
+D. MacFarlane, P. Cherepanov, J. Choi, B. R. Suryanto, R. Hodgetts, J. Bakker, F. Ferrero Vallana and A. Simonov, Joule, 2020, 4, 1186–1205 CrossRef CAS .
+European Centre for Medium-Range Weather Forecasts, ERA5, 2021, https://www.ecmwf.int/en/forecasts/datasets/reanalysis-datasets/era5.
+Australian Energy Market Operator, Aggregated price and demand data, 2020, https://aemo.com.au/energy-systems/electricity/national-electricity-market-nem/data-nem/aggregated-data.
+Government of Australia, Electricity transmission lines, 2021, https://data.gov.au/dataset/ds-ga-1185c97c-c042-be90-e053-12a3070a969b/details?q=.
+
+          K. Jordahl, J. V. den Bossche, M. Fleischmann, J. Wasserman, J. McBride, J. Gerard, J. Tratner, M. Perry, A. Garcia Badaracco, C. Farmer, G. A. Hjelle, A. D. Snow, M. Cochran, S. Gillies, L. Culbertson, M. Bartos, N. Eubank, M. Albert, A. Bilogur, S. Rey, C. Ren, D. Arribas-Bel, L. Wasser, L. J. Wolf, M. Journois, J. Wilson, A. Greenhall, C. Holdgraf and F. Leblanc,  geopandas/geopandas: v0.8.1,  2020, https://doi.org/10.5281/zenodo.3946761.
+TasNetworks, Prescribed Transmission Services Prices for 2021-22, 2021, https://www.tasnetworks.com.au/config/getattachment/64d81498-67a5-4ae1-a1c1-dab70ae96d7e/2021-22-prescribed-transmission-services-prices.pdf.
+Powerlink Queensland, Pricing and Revenue, 2021, https://www.powerlink.com.au/pricing-and-revenue.
+Australian Energy Market Operator, Shared Transmission Network Services Prices in Victoria - 1 July 2020 to 30 June 2021, 2020, https://aemo.com.au/-/media/files/electricity/nem/participant_information/fees/2020/electricity-transmission-use-of-system-prices-1-july-2020--30-june-2021.pdf?1a=en.
+
+          A. Vasquez and B. Hapes, Europes Largest Single-Train Ammonia Plant Successfully Started Up with KBR Technology, 2019, https://www.kbr.com/en/insights-events/press-release/europes-largest-single-train-ammonia-plant-successfully-started-kbr.
+N. Salmon, R. Bañares-Alcántara and R. Nayak-Luke, iScience, 2021, 24, 102903 CrossRef PubMed .
+IRENA, Renewable Power Generation Costs in 2019, International Renewable Energy Agency, Abu Dhabi, 2019.
+Bloomberg NEF, Hydrogen economy outlook, 2020, https://data.bloomberglp.com/professional/sites/24/BNEF-Hydrogen-Economy-Outlook-Key-Messages-30-Mar-2020.pdf.
+International Energy Agency, 2020, https://www.iea.org/reports/hydrogen.
+J. A. Dowling, K. Z. Rinaldi, T. H. Ruggles, S. J. Davis, M. Yuan, F. Tong, N. S. Lewis and K. Caldeira, Joule, 2020, 4, 1907–1928 CrossRef .
+
+          A. Sakti, R. Miller and F. Brushett, What's cost got to do with it? 2015, https://energy.mit.edu/news/whats-cost-got-to-do-with-it/.
+Z. Cesaro, M. Ives, R. Nayak-Luke, M. Mason and R. Bañares-Alcántara, Appl. Energy, 2021, 282, 116009 CrossRef CAS .
+
+          G. Parkinson, Tesla big battery adds new capacity and services on march to 100pct renewables grid, 2019, https://reneweconomy.com.au/tesla-big-battery-adds-new-capacity-and-services-on-march-to-100pct-renewables-grid-55121/.
+
+          M. Pirolli, Sustainable Energy Handbook, 2021, https://europa.eu/capacity4dev/public-energy/wiki/sustainable-energy-handbook.
+
+          K. Vaillancourt, Electricity Transmission and Distribution, 2014, https://iea-etsap.org/E-TechDS/PDF/E12_el-td_KV_Apr2014_GSOK.pdf.
+Australian Energy Market Commission, Changing generation mix, 2021, https://www.aemc.gov.au/energy-system/electricity/changing-generation-mix.
+International Energy Agency, World Energy Investment 2020, 2020, https://webstore.iea.org/download/direct/3003.
+CertifyHy, SD Hydrogen Criteria, 2020, https://www.certifhy.eu/images/media/files/CertifHy_2_deliverables/CertifHy_H2-criteria-definition_V1-1_2019-03-13_clean_endorsed.pdf.
+
+This journal is © The Royal Society of Chemistry 2021
+Table Content:
+
+Broader context
+Green ammonia is a chemical energy vector with broad application, including as a fertiliser, marine fuel, hydrogen carrier, or for energy transport. A flurry of green ammonia projects have been announced around the world in the last two years, but the levelised cost of production from those projects is likely to exceed that of conventional ammonia. This paper explores the use of the electricity network to reduce the cost of ammonia production, since grid connections eliminate the need for electrical storage equipment, and enable the plant to sell excess energy, rather than curtailing it. Using Australian data as a case study, we demonstrate that for sites that are close to the electricity grid, cost reductions of >10% are possible. In the short term, this is an important finding which may help financially enable first-mover projects; in the longer term, it provides a basis for significant sector coupling between the hydrogen/ammonia industry and the electricity network, which is likely to reduce overall costs.
+
+	(1)
+	(2)
+
+ 	Fig. 1  Schematic demonstrating operation of ammonia production model. Boxes in dark blue represent input data to the model; boxes in orange represent processes carried out by the model; the green box is the model output.	 
+
+ 	Fig. 2  Schematic showing the increase to the LCOA as a function of the electricity transmission distance in different wires, for an electricity price of 50 USD MW−1 h−1.	 
+π(C,D,t) + β(C,D,t) + γ(C,D,t) ≤ σC(C) ∀C∈SC, D∈SD,t∈St	(3)
+κ(SC,D,t) ≤ σSC(SC) ∀SC∈SSC, D∈SD,t∈St	(4)
+	(5)
+	(6)
+π(HB + ASU,D,t) + β(HB + ASU,D,t) + γ(HB + ASU,D,t) ≥ GHBMin·σC(HB + ASU) ∀D∈SD,t∈St	(7)
+	(8)
+	(9)
+	(10)
+	(11)
+	(12)
+	(13)
+	(14)
+	(15)
+	(16)
+
+ 	Fig. 3  Heatmaps showing LCOA at all locations within Australia. Transmission lines are shown in red. (a) Top left: LCOA in USD t−1. (b) Top right: Fraction of renewable energy provided by wind as a percentage. (c) Bottom left: Reduction in LCOA compared to a no-grid case. (d) Bottom right: Fraction of total power provided to the ammonia plant from grid. Note for (c) and (d), locations without colour are not connected to the grid.	 
+
+ 	Fig. 4  Comparison of equipment size in grid and non-grid cases. The series of only grid connected sites excludes the 60% of locations that are too distant from the grid for a connection to be economically efficient.	 
+
+
+NSW	921	880	50	4.9	85	378	61
+QLD	864	845	46	4.6	72	828	97
+SA	726	718	27	3.4	99	1098	78
+TAS	801	750	51	6.0	94	1047	37
+VIC	913	860	53	5.6	109	680	24
+WA	712	701	40	5.3	46	3638	98
+
+ 	Fig. 5  Relationship between energy source and LCOA for different states in 2019. (a) Top left: LCOA against fraction of wind energy installed, by state. (b) Top right: LCOA against fraction of grid electricity used, by state. (c) Bottom left: LCOA reduction compared to a non-grid connection case, as a function of grid demand. (d) LCOA reduction as a function of distance.	 
+
+ 	Fig. 6  Comparison of equipment capacities for no grid, consumer-only, and consumer-supplier cases. Consumer-only and consumer-supplier data are provided for the sites at which there is a grid connection in the consumer-only case. Sites which only have a connection in the consumer-supplier case are excluded from the averaging to avoid skewing the data.	 
+
+ 	Fig. 7  Relationship between the change in plant design and LCOA reduction when the model changes from consumer-only to consumer-supplier mode. (a) Top left: Change in wind capacity (only for sites with wind installed in the consumer-only case); (b) Top right: Change in solar capacity (only for sites with solar installed in the consumer-only case); (c) change in curtailment (absolute difference between the percentage of electricity curtailed at all sites); (d) change in total installed renewable capacity (all sites).	 
+
+ 	Fig. 8  LCOA at consumer-supplier sites as a function of fuel carbon intensity. (a) Top: Carbon intensity considering only electricity imported. (b) Bottom: Carbon intensity assuming carbon credits are available for electricity sold.	 
+
+ 	Fig. 9  Improvement in LCOA as a function of average levelised cost of electricity for each state in that year. Averages are taken only over sites that connected to the grid in the consumer-only case for 2019. (a) Left: Consumer-Only results; (b) Right: Consumer-Supplier results.	 
+
+
+LCOA (USD t−1)	(Base = 775)	(Base = 769)
+Finance	634	928	627	922
+Electricity	692	846	683	835
+Electrolyser	733	822	723	815
+Grid	773	780	767	774
+Storage	769	781	763	774
+Average fraction of renewable electricity from wind (%)	(Base = 77)	(Base = 77)
+Finance	77	77	77	77
+Electricity	54	87	56	87
+Electrolyser	78	74	80	74
+Grid	77	76	77	76
+Storage	78	76	78	76
+Fraction of sites with grid connection (%)	(Base = 42)	(Base = 48)
+Finance	38	45	48	49
+Electricity	37	46	44	50
+Electrolyser	42	44	46	49
+Grid	43	41	49	47
+Storage	39	44	45	50
+AEMO	Australian energy market operator
+ASU	Air separation unit
+AUD	Australian dollars
+CAPEX	Capital expenditures
+DUOS	Distribution use of system
+HB	Haber–Bosch
+LCOA	Levelised cost of ammonia
+MILP	Mixed integer linear program
+MMTPA	Million metric tonnes per annum
+NPV	Net present value
+OPEX	Operating expenditures
+TUOS	Transmission use of system
+USD	US dollars
+
+Solar PV	1250 USD kW−129	±30% (Electricity)
+Wind	1550 USD kW−129	±10% (Electricity)
+Electrolyser	700 USD kW−16	±30% (Electrolyser)
+HB CAPEX	7444 USD kW−16	—
+Hydrogen storage	500 USD t−16	±20% (Storage)
+Battery interface	271 USD kW−134	±20% (Electricity)
+Battery storage	500 USD kW−1h−135	±200 USD MW−1 h−1 (Storage)
+Fuel cell	960 USD kW−16	±20% (Storage)
+TUOS fee	10 AUD MW−1 h−124	±5 AUD MW−1 h−1 (Grid)
+HV connection fee	55 million AUD15	—
+LV connection fee	23 million AUD15	—
+HV DC wire cost	2.1 million AUD km−115	—
+HV AC wire cost	1.8 million USD km−115	—
+LV wire cost	0.4 million AUD km−115	—
+HV transformer efficiency	0.9636	—
+LV transformer efficiency	0.9936	—
+HVDC wire efficiency	3% loss/1000 km37	—
+HVAC wire efficiency	4% loss/100 km37	—
+LV wire efficiency	30% loss/100 km37	—
+
+
+σ
+
+R
+(Renewables)	The installed capacity of the renewable energy source (in MW)
+
+σ
+
+C
+(Component)	The installed capacity of the plant component (in MW)
+
+σ
+SC(Storage component)	The installed capacity of the storage component (battery in MWh; hydrogen in t)
+
+σ
+FC
+	The installed capacity of the fuel cell (in MW)
+
+π(C,D,t)	The power flow directly from input power to the specified component (in MWh) at each time on each day
+
+β(C,D,t)	The power flow from the battery to the specified component (in MWh) at each time on each day
+
+γ(C,D,t)	The power flow from the fuel cell to the specified component (in MWh) at each time on each day
+
+κ(SC,D,time)	The amount of electrical energy or hydrogen stored in the storage component (in MWh for batteries, tons for hydrogen) at each time on each day
+
+η
+in(D,t)	The amount of electricity imported from the grid at each time on each day (in MWh)
+
+η
+out(D,t)	The amount of electricity sold to the grid at each time on each day (in MWh)
+
+ζ(D,t)	The amount of electricity curtailed at each time on each day (in MWh)
+
+x
+Grid
+	Binary variable indicating if the grid is active
+
+Renewables	
+S
+
+R
+
+	Solar, wind
+Components	
+S
+
+C
+
+	Electrolyser, battery, Haber–Bosch + air separation (HB + ASU)
+Storage components	
+S
+SC
+	Battery, hydrogen storage
+Flows	
+S
+
+F
+
+	Power from renewables (π), power from batteries (β), power from fuel cell (γ), hydrogen (H2), ammonia (NH3)
+Times	
+S
+
+t
+
+	One for each time step – 24 for hourly data
+Days	
+S
+
+D
+
+	One for each day in the data set – 365 for one non-leap year
+
+Power supply	Renewables, days, time	
+Z(R,D,t)	The power provided by each renewable at a given time for each time (fraction between 0 and 1; 1 corresponds to the installed power of the equipment)	Transformed ERA5 data
+Grid electricity cost	Days, time	
+Y(D,t)	The cost of electricity provided by the grid for each time (in AUD)	AEMO21
+Renewable installation cost	Renewables	CostR	Installed cost of 1 MW of renewable capacity	See Table 3
+Component cost	Components	CostC	Installed cost of 1 MW of the nominated component	See Table 3
+Storage cost	Storage components	CostSC	Installed cost of 1 MW of the nominated storage component	See Table 3
+Fuel cell cost	None	CostFC	Installed cost of 1 MW of fuel cell	See Table 3
+Conversion factors	Flows, flows	CF	Amount of Flow 1 required to produce one unit of Flow 2	50 kW h kg−1 (hydrogen from electricity);6
+
+	
+	
+	1.61 kW h kg−1 (HB + ASU operation from electricity);6
+
+	
+	
+	0.98 kW h kW−1 h−1 (Power out of battery from power into battery)34
+Total days	None	
+G
+Days
+	The total number of days in the data set	Dependent on number of years modelled
+Battery self-discharge	None	
+G
+Discharge
+	The fraction of energy lost by the battery each hour	Assumed 5% per month
+Annual hours	None	
+G
+Hours
+	The number of operating hours per year	8,424 (14 days offline year−1)6
+HB minimum capacity	None	
+G
+HBMin
+	The minimum operating rate of the Haber–Bosch plant as a fraction of its rated operation	0.212
+HB Ramp down rate	None	
+G
+HBRamp down
+	The maximum rate at which the Haber–Bosch plant can ramp down as a fraction of its rated operation	0.25
+HB Ramp up rate	None	
+G
+HBRamp up
+	The maximum rate at which the Haber–Bosch plant can ramp up as a fraction of its rated operation	0.025
+Annual production	None	F	The mass of ammonia produced per year	1 MMTPA
+Water cost	None	CostW	The cost per t of water	2 USD t−13
+Operating and maintenance costs	None	CostOM	The operating and maintenance costs as a fraction of CAPEX	2%6
+
+This journal is © The Royal Society of Chemistry 2021

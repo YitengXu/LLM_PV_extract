@@ -1,0 +1,357 @@
+Emerging indoor photovoltaics for self-powered and self-aware IoT towards sustainable energy management   - Chemical Science (RSC Publishing) DOI:10.1039/D3SC00659J View PDF VersionPrevious ArticleNext Article Open Access Article
+This Open Access Article is licensed under a Creative Commons Attribution-Non Commercial 3.0 Unported Licence DOI: 10.1039/D3SC00659J
+(Edge Article)
+Chem. Sci., 2023, 14, 5350-5360Emerging indoor photovoltaics for self-powered and self-aware IoT towards sustainable energy management†
+
+        
+          
+            Hannes 
+            Michaels‡
+a, 
+      
+        
+          
+            Michael 
+            Rinderle‡
+b, 
+      
+        
+          
+            Iacopo 
+            Benesperi
+          
+        
+      a, 
+      
+        
+          
+            Richard 
+            Freitag
+          
+        
+      bc, 
+      
+        
+          
+            Alessio 
+            Gagliardi
+          
+        
+      b and 
+
+        
+          
+            Marina 
+            Freitag
+          
+        
+      *a
+aSchool of Natural and Environmental Science, Bedson Building, Newcastle University, NE1 7RU, Newcastle upon Tyne, UK. E-mail: marina.freitag@newcastle.ac.uk
+bTUM School of Computation, Information and Technology, Technical University of Munich, Hans-Piloty-Straße 1, 85748, Garching, Germany
+cSwedish University Network (Sunet), Tulegatan 11, 113 53 Stockholm, Sweden
+Received 
+      6th February 2023
+    , Accepted 21st March 2023First published on 13th April 2023AbstractAs the number of Internet of Things devices is rapidly increasing, there is an urgent need for sustainable and efficient energy sources and management practices in ambient environments. In response, we developed a high-efficiency ambient photovoltaic based on sustainable non-toxic materials and present a full implementation of a long short-term memory (LSTM) based energy management using on-device prediction on IoT sensors solely powered by ambient light harvesters. The power is supplied by dye-sensitised photovoltaic cells based on a copper(II/I) electrolyte with an unprecedented power conversion efficiency at 38% and 1.0 V open-circuit voltage at 1000 lux (fluorescent lamp). The on-device LSTM predicts changing deployment environments and adapts the devices' computational load accordingly to perpetually operate the energy-harvesting circuit and avoid power losses or brownouts. Merging ambient light harvesting with artificial intelligence presents the possibility of developing fully autonomous, self-powered sensor devices that can be utilized across industries, health care, home environments, and smart cities.
+Many applications of emerging technologies are designed to maximise potential benefits, while their own impact on environmental sustainability is often overlooked. Artificial intelligence and the Internet of Things (IoT) have become pivotal technologies in the advance of innovation, resource efficiency and human interaction.1–4 IoT technology, encompassing the growing number of electronic devices connected to the internet, will create energy savings of more than 1.6 petawatt-hours (PWh) each year—equalling the electricity needed to power more than 136.5 million homes.5 Nonetheless, the devices themselves will raise the worldwide energy demand by 34 terawatt-hours (TWh) by 2030. It is therefore crucial to (i) employ local energy harvesters for continuous power supply, (ii) reduce electronic waste by using sustainable materials and avoiding batteries and (iii) minimise the energy cost of computation and data transfer. In the present work, we demonstrate a novel architecture for IoT devices where all three points are matched: (i) and (ii) by using highly-efficient dye-sensitized photovoltaic cells to power the sensors and (iii) by minimizing the operational energy cost by implementing machine learning algorithms to process the data and dynamically adapt to the predicted energy availability.
+Traditional IoT devices relying on power from unsustainable batteries, which supply only limited power, require frequent replacement and are therefore bound to limitations regarding deployment and scale.6,7 Contrarily, utilising the surrounding ambient light as power source marks a paradigm shift for the design of IoT.8–11 The devices operate autonomously and do not require elaborate maintenance, as summarised in Fig. 1.12–17 Energy-autonomous IoT can be deployed in places and amounts previously not feasible due to cost of maintenance. The three main deployment scenarios for this new type of IoT devices including their illumination profiles are depicted: factories, office (or e.g. retail) spaces, and homes. The smart IoT devices utilise on-device machine learning algorithms to predict the energy-availability in their (changing) environment, and adaptively execute computational workloads: homes can have open-window-sensors installed around buildings and communicate state changes. In offices, air quality can be monitored and detect human presence recognised. Factories could implement monitoring sensors for inventory tracking or quality management auditing of certain processes.
+ Fig. 1  Harvesting energy from ambient light and artificial intelligence revolutionise the Internet of Things. Based on smart and adaptive operation, the energy consumption of sensor devices is reduced, and battery waste is avoided. Credit: Ella Marushchenko – Ella Maru Studio. 
+In the last couple of years, several emerging photovoltaic technologies showed promise for indoor applications, including amorphous silicon, organic photovoltaics, colloidal quantum dots, perovskite solar cells and dye-sensitised solar cells all reaching indoor photovoltaic efficiencies around or above 30%.18–23 Notably, there are currently no standardised methods for assessing the efficiency of indoor light to power conversion, though we do adhere to several standard measures, such as reporting the light source, light source spectrum, light intensity at the photovoltaic, as well as characterisation at various light intensities categorised for indoor environments.11
+The most-efficient ambient photovoltaic technology is the dye-sensitised solar cell (DSC), as its photoresponse is precisely tunable to most ambient settings by selecting from a broad library of molecular dyes.24–28 In consequence, DSCs outperform silicon-as well as GaAs-based photovoltaics in ambient conditions.29–32 Optimal utilisation of the available energy is crucial for the development of light-powered devices. The IoT devices need to account for all currently available energy as well as the energy consumption of the computation workload to schedule tasks.33 Additionally, wireless network communication accounts for a large share of the energy consumed in sensor networks.34 Herein, IoT devices greatly benefit from the implementation of artificial intelligence, in particular, machine learning (ML) algorithms: through artificial neural networks, the sensors directly infer or categories information about their surroundings, rather than communicating large amounts of unprocessed information through wireless networks.35,36 Being able to infer the current device state autonomously and predict the available energy in the near future improves workload scheduling and enables the device to adapt to changing conditions. The sensor devices operate at greater energy efficiency and productivity, as the AI makes complex decisions and automates manual tasks.37 ML allows opportunistic exploitation of the available energy, as the most expensive power consumption is distributed according to the energy abundance.
+Herein, we report on ambient-light-powered IoT devices dynamically adapting their energy usage using artificial neural networks. An array of seven 3.2 cm2 (total area 22.4 cm2) dye-sensitised solar cells is used to power IoT sensors based on the FireBeetle ESP32 microcontroller. The devices dynamically recognise recurring patterns in illuminance by comparing real-time data to pre-trained artificial neural networks. The sensors dynamically decide on the execution of computational tasks to operate the energy harvesting circuit at high efficiency. The dye-sensitised solar cells convert ambient light at 38% power conversion efficiency and 1.0 V open-circuit voltage at 1000 lux (fluorescent tube). Transient photovoltage/-current and electrochemical impedance tests high light the importance of the electrolyte composition to suppress recombination across the TiO2|dye|electrolyte interface. Light-powered intelligent electronic devices—employing real-time machine learning—appear poised to make the next generation of IoT more sustainable.
+Results and discussion
+Machine learning and the Internet of Things
+IoT devices are embedded sensor systems, many of them with the ability to communicate via the internet. They have applications in industry and automation,38 traffic monitoring and smart cities,39 and health care e.g., to support patients or elderly people.40 IoT systems are today often powered by batteries that supply limited amounts of energy and require frequent replacement. Utilizing ambient light as an energy source is beneficial to reduce manual maintenance tasks and to make IoT devices autonomous. Smart light-powered IoT sensors dynamically adapt their workload using scenario inference from machine learning.
+We powered FireBeetle ESP32 microcontrollers with arrays of 3.2 cm2 ambient photovoltaic cells (total area 22.4 cm2). The circuit was equipped with two 1.5 F supercapacitors and a diode to avoid discharging the energy buffer during dark intervals. At the maximum power point, the cell array supplied 1.87 mW. The computational performance of the microcontroller under full load was quantified with an adapted version of the Dhrystone benchmark.41 An execution of 750000 Dhrystone iterations in 2.31 s runtime at 240 MHz consumed 0.14 J of energy, resulting in a 0.31 V potential loss on the supercapacitors, and gave 183.9 VAX MIPS (million instructions per second). The VAX 11/780 is used as the reference computer in Dhrystone benchmarks. The required energy for a single Dhrystone iteration, 0.19 μJ, is harvested in 100 μs by a 22.4 cm2 cell array at the maximum power point.
+Powered by ambient light, the microcontroller collected environmental data with an onboard lux meter as well as monitored a cell's photocurrent in regular intervals, between which the microcontroller entered deep sleep. The measurements were initially stored in flash memory and bundled for transmission via a WPA-encrypted wireless local area network. A perpetually powered wireless receiver continuously deserialised and logged incoming data packages.
+The light-powered sensors were deployed in three example use cases:
+(1) A factory, where the illumination was constantly 1000 lux
+(2) An office, where the illumination switched between 1000 lux and darkness; and
+(3) A home, where the illumination was influenced by natural light on top of artificial lighting.
+In the factory and home deployment, the settings were strictly controlled to assess our model, while the home scenario was designed with a degree of unforseeability: this was purposely implemented to test the robustness of our model and the neural network algorithm. The received data from the different deployment locations are compared in Fig. 2. The operating voltage of the sensor deployed in the factory was stable, and the only dips occurred when sending WiFi packages in regular intervals (green). In contrast, the office sensor experienced voltage drains up to 0.6 V during dark periods (blue). The largest operating voltage fluctuations are observed in the home scenario, owed to varying illumination levels between different days (black).
+ Fig. 2  Data time series of light-powered IoT sensor devices deployed into different settings over the course of twelve days. Variable recurring or intermittent patterns in illumination (top) govern the operating voltage of the microcontroller (middle). The device dynamically infers its deployment scenario based on real-time acquired illumination data (bottom). 
+The data from the IoT devices were collected, and an artificial neural network was trained to infer the deployment scenario. The network was based on long short-term memory (LSTM) units, which is a neural network architecture suitable for learning time-series data. The network was trained to infer the deployment scenario by analyzing illumination data collected within the previous twelve-hour timeframe. Weights and biases were extracted from the pre-trained model and passed to a custom implementation of the machine learning model to run on the FireBeetle ESP32 microcontroller hardware. Based on the pre-trained artificial neural network, the IoT devices categorised their deployment dynamically, based on periodically acquired illumination data from the previous twelve hours (Fig. 2, bottom plot). The sensor in the factory correctly recognised its deployment scenario at all data points (prediction accuracy 100%), followed by the office sensor (99.8%). The home sensor had the lowest categorisation accuracy (93.5%); especially days of comparably lower illumination (e.g. day six) appeared to lead to deviating categorisation.
+Dynamic workload adaptation
+The energy-harvesting circuit of ambient-light-powered electronic devices should be kept within a certain voltage region to operate at optimal efficiency (in the demonstrated case around 4 V). This originates from a compromise of the operating voltage of the microcontroller (3.3 V–5.0 V), the maximum voltage of the supercapacitor (5.0 V), and maximum potential obtained from the photovoltaic cell array (depending on the illumination ca. 4.5 V–6.5 V): the lower the capacitor voltage, the more energy can be charged from the photovoltaic cells, additionally, the microcontroller operates more energy-efficiently at lower voltages. At the same time, sufficient energy should be kept as a buffer for dark periods. Real-time energy availability forecasting using artificial neural networks enables to adjust the operating voltage of the microcontroller through dynamic scheduling of computational tasks. Through direct inference of information about their surroundings, the sensors are able to forecast whether or not, and for what duration, dark intervals will occur in their respective deployment. In turn, the computational load is dynamically increased or decreased to maintain device operation at high energy efficiency.
+In consequence, we demonstrate dynamic workload management of the IoT sensors. Based on the LSTM-inferred deployment categorisation, a custom workload is executed in each deployment scenario. This was implemented through repeated multiplication of large arbitrary matrices or by adapting the intervals between Dhrystone benchmark runs. Fig. 3 shows a microcontroller immediately after deployment into the factory setting. The location is recognised after twelve hours of real-time data collection and analysis. Consequently, the workload is adjusted in real-time such that the operating voltage of the device approaches the target voltage just above 4 V, as no dark intervals are imminent in the identified setting.
+ Fig. 3  Dynamic workload adaptation on light-powered IoT sensor nodes. Based on the recognition of the deployment scenario and a forecast of the available energy, the microcontroller adopts tailored operation protocols in real-time. Such dynamic on-loading ensures the operation of the microcontroller and the energy-harvesting circuit at the optimal potential and saves energy owing to reduced communication through wireless networks. 
+By executing the Dhrystone benchmark depending on the energy availability in each deployment scenario, the effective VAX MIPS were calculated by factoring in the idle periods of the CPU (Table 1). Without any further workload, 0.560 effective VAX MIPS of computation were reached with the FireBeetle ESP32 microcontroller. We note here that this marks a significant improvement over our previous prototype based on an ATmega328P microcontroller, which operated at 0.413 effective VAX MIPS.31 0.537 effective VAX MIPS were available in the factory setting of constant 1000 lux illumination, and 0.287 effective VAX MIPS in the office. Our pilot implementation paves the way for a variety of dynamic operational schemes for light-powered IoT devices.
+Table 1 Computational power available on an ESP32 FireBeetle powered by 22.4 cm2 indoor photovoltaic cells, by deployment scenario. The computational power and run time were benchmarked with a microcontroller-adapted Dhrystone code
+
+
+
+
+
+
+0.14 J workload every Nth minute
+Effective VAX MIPS
+Effective run time (%)
+
+
+
+
+Without classification
+12.5
+0.560
+0.31
+
+
+Factory
+13.0
+0.537
+0.30
+
+
+Office
+24.5
+0.287
+0.16
+
+
+
+
+Ambient photovoltaics
+The conversion of light in dye-sensitised solar cells (DSCs) is based on molecular sensitisers attached to a mesoporous semiconductor.28 We employ co-sensitised DSCs based on the organic dyes XY1 and L1 with a Cu(tmby)2 electrolyte.31,42 At low light intensities, the suppression of recombination is of vital importance, given the low carrier density in the semiconductor.43–45 Especially the concentration of the oxidised CuII(tmby)2 species is critical to transport charges to the counter electrode and complete the redox cycle in the electrolyte; however it simultaneously dictates the recombination kinetics in the device.30,32 An overview of the electrolyte compositions employed hereinafter is provided in Table S2.† Under full sunlight illumination, a large CuII concentration of 0.1 M is desirable for optimal charge transport (Fig. 4a, red line); series resistance becomes visible in particular in the flatter slope (=1/R) of open-circuit voltage intersect for the devices with less concentration of the oxidised species (yellow and black line). In contrast, under ambient conditions, the photocurrent density is within the diffusion limit in the redox electrolyte, and in turn near-independent of the CuII concentration (Fig. 4b). On the other hand, larger CuII concentrations cause increased electronic recombination and lead to deficiencies in open-circuit voltage. Around 100 mV of open-circuit voltage are lost in the device with the largest CuII concentration. At moderate concentrations of 0.06 M CuII, the cells exhibited a maximum of 37.5% power conversion efficiency and 1.00 V open-circuit voltage (Table 2). Thus, the photovoltaic cells with lower (0.06 M) CuII concentration now performed better than the cells optimised for full sunlight operation (0.1 M) CuII concentration. The mass-transport limitations of lower oxidised species concentration do not impact the cell performance as significantly at low illumination, whereas electronic recombination across the TiO2|dye|electrolyte interface affects a larger share of the fewer injected electrons at low light intensity. This behavior will further be illustrated below through photovoltage transient measurements. Cells with a CuII concentration as low as 0.02 M showed charge collection losses around the maximum power point (35.1%, Fig. 4b, yellow). The full parameters from cell characterisation at 1 sun, 0.5 sun and 0.14 sun as well as 1000 lux ambient light are attached in Tables S3 to S6 and Fig. S4 to S7.†
+ Fig. 4  
+J–V sweeps of XY1:L1-sensitised photovoltaic cells (a) 0.384 cm2 cells by electrolyte composition at one-sun AM 1.5G irradiation. (b) and (c) 0.384 cm2 cells by electrolyte composition at 1000 lux ambient illumination (fluorescent lamp). (d) 3.2 cm2 cells by illumination level. 
+Table 2 Performance metrics of XY1:L1-sensitised photovoltaic cells at 1000 lux illumination (fluorescent lamp) by electrolyte composition
+
+
+
+
+
+
+
+V
+OC (V)
+
+J
+sc (μA cm−2)
+FF
+PCE (%)
+
+
+
+
+
+a 0.384 cm2 cell.
+b 3.2 cm2 cell.
+
+
+
+
+
+0.1 M CuIIa
+0.916
+147
+0.808
+36.0
+
+
+
+
+0.915 ± 0.006
+Levelised
+0.801 ± 0.008
+35.7 ± 0.34
+
+
+0.06 M CuIIa
+0.995
+147
+0.778
+38.0
+
+
+
+
+0.974 ± 0.014
+Levelised
+0.790 ± 0.002
+36.9 ± 0.47
+
+
+0.02 M CuIIa
+1.00
+145
+0.726
+35.1
+
+
+
+
+1.00 ± 0.02
+145 ± 1
+0.730 ± 0.004
+34.8 ± 0.60
+
+
+1000 luxb (303.6 μW cm−2)
+0.984
+141
+0.811
+37.1
+
+
+500 luxb (151.8 μW cm−2)
+0.950
+69.7
+0.800
+34.8
+
+
+200 luxb (60.7 μW cm−2)
+0.919
+27.6
+0.812
+33.7
+
+
+
+
+The J–V sweeps of the presented DSCs did not exhibit hysteresis at full 1 sun illumination (Fig. S8a and Table S7†). In contrast, under ambient conditions, forward and reverse scan differ even for the champion devices, however especially at low CuII concentration (Fig. S8b and c, Tables S8 to S9†).
+The addition of a Lewis base is important to upshift the TiO2 conduction band and elevate the built-in voltage of the DSC,46 however, may alter recombination kinetics as well as charge transfers and transport.47–49 In accordance with previous reports,30,32 we found that N-methyl benzimidazole (NMBI) in the redox electrolyte allows larger photovoltages (1.00 V, 37.5%) than 4-tert-butylpyridine (tBP, 0.95 V, 36.0%, Fig. 4c) under ambient conditions, however seemed to impede charge transport under simulated sunlight (9.5% with NMBI, vs. 10.4% with tBP, Fig. S4†).
+DSCs employing the [Cu(dmby)2]2+/+ with an even more positive redox potential 42 than [Cu(tmby)2]2+/+ should formally increase the cell performance further, however did not exhibit a greater power conversion efficiency (34.1%, Fig. 4c). Strikingly, photoinduced absorption spectroscopy showed that the [Cu(dmby)2]2+/+ electrolyte regenerates even the XY1 dye (formal  0.98 V vs. SHE, Fig. S11†) efficiently, despite nominally near-zero driving force. In turn, the deficiencies in photocurrent, especially at high light intensities, counterintuitively have to be attributed to transport losses, despite the formally smaller ion sizes of the [Cu(dmby)2]2+/+ couple.
+The performance at different levels of ambient illumination was tested with larger solar cells of 3.2 cm2 area (Fig. 4d, S1a and Table S11†). The photocurrent scaled linearly with the light intensity and the larger cell converted light at 37.1% (113 μW cm−2), 34.8% (53 μW cm−2) and 33.7% (21 μW cm−2) power conversion efficiency at 1000 lux, 500 lux and 200 lux, respectively. The short-circuit current density was cross-referenced with a quantum efficiency measurement (Fig. S2†) and found in excellent agreement. The 3.2 cm2 cell showed the same power conversion efficiency as the smaller devices (37.1%, reverse scan), however more significant fill factor losses are observed in the forward scan (30.8%, Fig. S8d and Table S10†). Maximum power point tracking shows the power output expected from the DSC under bias (30.3%, Fig. S9a†); the power output at load conditions was 92 μW cm−2, or 294 μW.
+A serial array of seven 3.2 cm2 cells (Fig. S1b†) attained an open-circuit voltage of 6.39 V. The power conversion efficiency at 1000 lux was 32.5%/29.1% from J–V sweeps and at 27.5% (1.87 mW) at 1000 lux during maximum power point tracking (Fig. S9b, c and Table S12†). At 1000 lux illumination under load, the cells converted 2.41 × 1018 of the available 8.77 × 1018 photons s−1 cm−2, equalling 85.0 of 303.6 μW cm−2.
+Interfacial recombination
+The coordination of Lewis bases governs the thermodynamics and kinetics of electron transfers of the metal complex redox mediators, in line with Marcus' description.50,51 This may alter recombination pathways in the device, commonly indicated by the solar cell's ideality factor.32,52 When measuring the open-circuit voltage versus light intensity, all DSC devices, despite the differences in the electrolyte composition, exhibited a similar slope, corresponding to similar ideality factors of around 1.25–1.33 (Fig. 5a).
+ Fig. 5  Characterisation of XY1:L1-sensitised solar cells by electrolyte composition. (a) Ideality factor from open-circuit voltage versus light intensity. (b) Electron recombination lifetime from transient photovoltage (enlarged with errorbars in Fig. S10†) and (c) electron transport time from transient photocurrent versus charge carrier density. (d) Transport and recombination resistance from electrochemical impedance spectroscopy. 
+The electron transport and recombination kinetics in the DSC devices were investigated with transient photovoltage measurements versus charge carrier density (Fig. 5b). For all investigated solar cells, faster electron recombination at larger carrier densities was visible through faster open-circuit voltage decay traces (see Fig. S10†). In accordance with the results from the J–V sweeps, the DSCs comprising the Cu(tmby)2 redox couple and NMBI as Lewis base exhibited the longest electron recombination lifetime. The devices further showed the highest carrier densities in the TiO2 photoanode. The rate constant of electron recombination was significantly larger in the redox electrolytes containing the NMBI base compared to those with tBP; however, intriguingly, it appeared to be nearly independent of the copper coordination complexes themselves. The slope of log(recombination lifetime) vs. log(carrier density) was comparable across all redox electrolytes, confirming that the pathway of (the likely trap-assisted) recombination remained unaltered. The electron transport (Fig. 5c) time was significantly shorter than the recombination lifetime extrapolated to similar charge carrier densities, indicating good charge extraction.
+Electron transport and recombination were further investigated with electrochemical impedance spectroscopy. The champion Cu(tmby)2/NMBI cells showed the largest recombination resistance and densities of states, indicating the best protection of electrons in the semiconductor. The transport resistance was around two orders of magnitude lower and confirms efficient charge collection.
+Materials and methods
+Fabrication of photovoltaic cells
+On cleaned (RBS solution, water, ethanol, UV–ozone) Nippon sheet glass (Pilkington, St. Helens, UK, 10 Ω sheet resistance), a dense TiO2 layer was deposited via spray pyrolysis at 450 °C from a 0.2 M titanium bis(isopropoxide)bis(acetylacetonate) solution in isopropanol (prepared initially in inert atmosphere from a 75 wt% isopropanol solution, Sigma). Subsequently, 0.384 cm2 (7 mm diameter circles) or 3.2 cm2 (0.8 cm × 4 cm rectangles) TiO2 photoanodes were screen-printed (screen meshes by Seritec Services SA, Corseaux, Switzerland) from DSL 30 NRD-T (Dyesol/GreatCellSolar, Queanbeyan, Australia) colloidal (30 nm) TiO2 paste (4 μm). After brief drying at 120 °C, a scattering layer (Dyesol/GreatCellSolar WER2-0, 400 nm) was screen-printed onto of the mesoporous film (4 μm), followed by gradual heating towards a 30 minutes sintering step at 500 °C. The substrates were post-treated with a 13 mM aqueous TiCl4 solution (99.99%) for 30 min at 70 °C and then sintered again at 450 °C for 30 min. After cooling, the titania films were immersed into the sensitizer solution consisting of one part 0.5 mM L1 dye in acetonitrile 1:1 tert-butanol, and two parts 0.1 mM XY1, 5 mM chenodeoxycholic acid (Sigma) in chloroform 3:7 ethanol for 16 hours (both dyes from Dyenamo, Stockholm, Sweden). PEDOT counter electrodes were manufactured via electro-polymerization of 3,4-ethylenedioxythiophene (Sigma) from a 0.01 mM aqueous solution with 0.1 M sodium dodecyl sulphate.53 The redox electrolyte solutions for the ambient-DSCs were prepared with 0.2 M Cu(tmby)2TFSI and 0.06 M Cu(tmby)2TFSI2 (tmby: 4,4′,6,6′-tetramethyl-2,2′-bipyridine; TFSI: bis(trifluoromethanesulfonyl)imide; both coordination complexes purchased from Dyenamo, Sweden), 0.1 M lithium bis(trifluoromethanesulfonyl)imide (99.95%, Sigma) and 0.6 M N-methyl benzimidazole (99%) in acetonitrile (anhydrous); or as noted throughout the paper. For photovoltaic cells powering IoT devices, 3-methoxypropionitrile served as electrolyte solvent. All cells were assembled using ThreeBond (Düsseldorf, Germany) 3035B UV glue and cured with a CS2010 UV-source (Thorlabs, Newton, NJ, USA). The electrolyte was injected through a hole in the counter electrode, which was then sealed with additional UV glue.
+Characterization of photovoltaic cells
+Current–voltage measurements under AM 1.5G illumination were carried out in ambient air using a HelioSim-CL60 solar simulator (Voss electronic GmbH). The irradiance was calibrated with a certified silicon diode (Fraunhofer). An X200 source meter (Ossila, Sheffield, UK) was used to assess the solar cell performance (scan speed 25 mV s−1, 5 mV step size). A circular mask was employed to confine the active solar cell area to 0.196 cm2. Shown device performance metrics represent averages of eight to twelve cells at all times, pending reasonable error margins of the manual cell fabrication. Ambient light characterization was carried out with a Warm White 930 18 W florescent tube (OSRAM, Munich, Germany) inside an otherwise light-proof box. The lamp spectrum is characterized in Fig. S2.† A detailed description of the assessment of ambient or indoor light sources, their calibration, and the conversion of emission spectra, illuminance and power density is provided in our recent perspective article.11 The stabilised light intensity was calibrated with a commercial lux-meter (RS components). Values of illumination intensity were cross-checked with lux meters from different manufacturers. The entire active photovoltaic area of the devices was used during ambient characterization to mimic diffuse light conditions. Maximum-power-point tracking was executed with the same source meter with a perturb-and-observe technique.
+Incident-photon-to-current conversion efficiency
+IPCE spectra were recorded with an ASB-XE-175 xenon light source (10 mW cm−2) (Spectral Products, Putnam, CT, USA) and a CM110 monochromator (Spectral Products, Putnam, CT, USA). The photocurrent was measured with a U6 digital acquisition board (LabJack, Lakewood, CO, USA). The setup was calibrated with a certified silicon reference cell (Fraunhofer ISE, Munich, Germany). Photocurrents were integrated based on the spectral distribution of sunlight AM 1.5G,54 or the spectrum of the OSRAM light tube.
+Transient photovoltage and charge collection measurements
+Electron recombination lifetimes were investigated using the dye-sensitised solar cell Toolbox (Dyenamo, Sweden). The solar cell was illuminated with a 1 W white LED. Kinetics in the solar cell were probed by applying slow 10 Hz square-wave modulations on top of a base light intensity (Fig. S10a†). The solar cell voltage response was tracked in real time; the measurement was repeated until a noise threshold was met; at which point the traces were fitted with first-order kinetic models and a single decay time constant from the compiled traces was extracted. The measurements were run across a range of light intensities.
+The accumulated charge in the photoanodes of the DSC devices was measured by illuminating the cells at different light intensities at open circuit; then, the light was turned off, the potential simultaneously switched to short circuit and the current integrated over time. The collected charge was converted to charge density assuming a 6 mm diameter of the circular aperture, 4 μm anode thickness and 0.63 porosity.
+Electrochemical impedance spectroscopy
+Electrochemical impedance spectra were recorded using a PGSTAT12 potentiostat (Autolab) in the frequency range from 100 kHz to 0.1 Hz at different DC bias potentials around the maximum power point, modulating the voltage by 10 mV. The DSC devices were illuminated with a white LED for impedance analysis and fitted to Bisquert's transmission-recombination line55 with an adapted version of the impedance fitting tool available on MATLAB file exchange.56 The real capacitance C was converted from the constant phase elements Q through a projection of the phase angle C = (RQ)(1/β)/R, where R is the resistance in parallel to the capacitor and β the exponent of the constant phase element. The total capacitance concerning electronic recombination was calculated as Ctot = Cel + Crec.57 The density of electronic states D(V) (in cm−3 V−1) was then obtained as D(V) = C(V)/(ed(1 − p)) with the elementary charge e, film thickness d and porosity p, following the description by Durrant and co-workers.58
+Photoinduced absorption spectroscopy
+PIA spectra were recorded using a ASB-W-030 white light (spectral products) as probe source. The sample was excited with blue laser light (405 nm, 3 mW, Thorlabs), which was chopped into 20 Hz square-modulation with a Signal Recovery 650 Chopper. Behind the sample, the light was monochromated with a Digikröm CM110 and detected on a circular photodiode (Thorlabs). The signal was amplified and split into AC- and DC-components with a 5182 pre-amplifier and recorded with a 7225 lock-in amplifier (both Signal Recovery).
+Light-powered devices
+The energy harvesting sensor system was based on the FireBeetle ESP32 microcontroller. The microcontroller was powered by seven serial 3.2 cm2 photovoltaic cells (total area 22.4 cm2). Two 5.0 V 1.5 F supercapacitors were used as an energy buffer to operate the microcontroller within its operational voltage range. No voltage regulator was used to limit energy losses introduced by additional buck-converters. A schematic of the sensor system is depcited in Fig. S12.† We used PlatformIO with the Espressif 32 platform package and the Arduino framework as our development environment. The microcontroller was configured to run at its maximum clock speed of 240 MHz. Benchmarks with the offered modes at 160 MHz and 80 MHz showed that the reduced energy consumption due to reduced clock speed and the longer execution time for a defined workload ultimately lead to the same net consumption.
+The microcontroller regularly collected environmental data, e.g. with a lux meter (BH1750) as well as monitoring a cell's photocurrent and the capacitor voltage in intervals of five minutes, between which the microcontroller entered deep sleep. The measurements were initially stored in flash memory; every three hours the WiFi module was switched on and the collected data were transmitted via a WPA-encrypted wireless local area network (WLAN). The wireless receiver side was based on a Jetson Nano and running continuously, deserialising and logging the incoming data packages into a database for visualization and data analysis using python scripts. The tested deployment scenarios were as follows; (a) the factory, where the illumination was constant at 1000 lux (b) the office, where the illumination was switched off for 90 minutes every twelve hours and (c) the home, where the sensor experienced day-to-day varying illumination levels on top of a constant base light intensity of ca. 750 lux. To clarify, scenario (a) and (b) were carried out in a controlled setup, illustrated in Fig. S1b,† with altering patterns of illuminance, while the device in scenario (c) was positioned near a window of the laboratory and exposed to natural lighting. The key parameters of the employed scenarios are listed in Table S1.†
+Dhrystone computational benchmark
+The Dhrystone benchmark was based on version 2.1 of the original Dhrystone code, with modifications to allow execution on the FireBeetle ESP32 platform. The benchmark was executed in bundles of 750000 runs to ensure a runtime longer than 2 s. The effective MIPS (million instructions per second) were calculated based on the time the microcontroller was going to sleep. While the workload was always executed at the configured speed of 240 MHz, longer sleep times lead to lower average performance values.
+Dynamic energy adaptation with machine learning
+The sensor system was deployed in three test scenarios as described in the article. The system collected environmental data for 10–12 days each. Based on the illumination data, an artificial neural network was trained to infer the scenario. The artificial neural network consist of 32 LSTM units followed by a dense neural network layer with three units using a softmax activation function to classify the three test scenarios. The network infers the scenario based on 24 equidistant measured data points from the past twelve hours. The data processing and model training was implemented in python using TensorFlow. We used the categorical crossentropy loss function, a batch size of 64 and trained the model for 100 epochs. The trained model was saved to extract weights and biases. A custom C-implementation of the network together with the pre-trained network weights was deployed to the FireBeetle microcontrollers. Ultimately, a computational workload was scheduled based on repetitions of the multiplication of large arbitrary matrices, or by adapting the intervals between Dhrystone benchmark runs.
+Conclusion
+Artificial intelligence and the Internet of Things offer to improve the resource and energy efficiency of many facets of life—provided the sensor devices themselves are powered and operated sustainably. A 22.4 cm2 array of photovoltaic cells is used to power intelligent IoT sensor prototypes based on the ESP32 FireBeetle. The microcontrollers predict energy availability in different deployment scenarios based on artificial neural networks. To operate the energy harvesting circuit at optimal efficiency, the computational load on the microcontrollers is dynamically increased or decreased. We have demonstrated efficient ambient dye-sensitised photovoltaic cells at 37.5%, 34.8% and 33.7% power conversion efficiency at 1000 lux, 500 lux and 200 lux, respectively. Recombination across the TiO2|dye|electrolyte interface is minimised through judicious tuning of the redox electrolyte.
+Our demonstration of dynamic energy management on light-powered wireless sensors paves the way for a multitude of device implementations. The sensors devices could, pending sufficient energy availability, pre-process sensed data and infer conclusions; therein, the energy required for network communication can be reduced. The synergy of artificial intelligence and ambient light as power source appear is poised to enable the next generation of IoT devices.
+Data availability
+The reported accuracies of the machine learning algorithms can be reproduced using the source code available from GitHub.59
+Author contributions
+H. M. designed, assembled and characterised the photovoltaic cells. M. R. developed the program code with aid from R. F. H. M. and I. B. collected the microcontroller time series data. M. F. conceptualised the project together with A. G.
+Conflicts of interest
+There are no competing interests to declare.
+Acknowledgements
+The authors appreciate fruitful discussions with Natalie Flores Diaz (Newcastle). M. F. acknowledges the support by the Royal Society University Research Fellowship (URF\R1\191286), Research Grant 2021 (RGS\R1\211321), Göran Gustafsson Young Researcher Prize and EPSRC New Investigator Award (EP/V035819/1). H. M. acknowledges support from the European KIT InnoEnergy PhD program. We thank Reinhold P. Weicker for developing code that is older than some of the authors and still produces meaningful results.
+Notes and references
+J. Gubbi, R. Buyya, S. Marusic and M. Palaniswami, Future Gener. Comput. Syst., 2013, 29, 1645–1660 CrossRef.
+M. Mohammadi and A. Al-Fuqaha, IEEE Commun. Mag., 2018, 56, 94–101 Search PubMed.
+L. Jour, A. Whitmore, A. Agarwal and L. Da Xu, Inf. Syst. Front., 2015, 17, 261–274 CrossRef.
+Z. Liouane, T. Lemlouma, P. Roose, F. Weis and H. Messaoud, Appl. Intell., 2018, 48, 2017–2030 CrossRef.
+
+          IoTNews, IoT technology will save eight times the energy it consumes by 2030, new report shows,  2022, https://iottechnews.com/news/2021/apr/21/iot-technology-will-save-eight-times-the-energy-it-consumes-by-2030-new-report-shows/ Search PubMed.
+G. Gajardo and S. Redón, Conserv. Sci. Pract., 2019, 1, e94 Search PubMed.
+
+          Eurostat, Waste statistics: Recycling of batteries and accumulators,  2020, https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Waste_statistics_-_recycling_of_batteries_and_accumulators Search PubMed.
+H. Sharma, A. Haque and Z. A. Jaffery, J. Renewable Sustainable Energy, 2018, 10, 23704 CrossRef.
+P. D. Antunez, D. M. Bishop, Y. Luo and R. Haight, Nat. Energy, 2017, 2, 884–890 CrossRef CAS.
+I. Mathews, S. N. Kantareddy, T. Buonassisi and I. M. Peters, Joule, 2019, 3, 1415–1426 CrossRef CAS.
+H. Michaels, I. Benesperi and M. Freitag, Chem. Sci., 2021, 12, 5002–5015 RSC.
+I. Mathews, P. J. King, F. Stafford and R. Frizzell, IEEE J. Photovolt., 2016, 6, 230–235 Search PubMed.
+I. Mathews, S. N. R. Kantareddy, S. Sun, M. Layurova, J. Thapa, J.-P. Correa-Baena, R. Bhattacharyya, T. Buonassisi, S. Sarma and I. M. Peters, Adv. Funct. Mater., 2019, 29, 1904072 CrossRef CAS.
+H. K. H. Lee, J. Wu, J. Barbé, S. M. Jain, S. Wood, E. M. Speller, Z. Li, F. A. Castro, J. R. Durrant and W. C. Tsoi, J. Mater. Chem. A, 2018, 6, 5618–5626 RSC.
+H. Yin, S. Chen, S. H. Cheung, H. W. Li, Y. Xie, S. W. Tsang, X. Zhu and S. K. So, J. Mater. Chem. C, 2018, 6, 9111–9118 RSC.
+H. K. H. Lee, J. Barbé, S. M. P. Meroni, T. Du, C.-T. Lin, A. Pockett, J. Troughton, S. M. Jain, F. De Rossi, J. Baker, M. J. Carnie, M. A. McLachlan, T. M. Watson, J. R. Durrant and W. C. Tsoi, Sol. RRL, 2019, 3, 1800207 CrossRef.
+H. Zheng, D. Li, C. Ran, Q. Zhong, L. Song, Y. Chen, P. Müller-Buschbaum and W. Huang, Sol. RRL, 2021, 5, 2100042 CrossRef CAS.
+H. Águas, T. Mateus, A. Vicente, D. Gaspar, M. J. Mendes, W. A. Schmidt, L. Pereira, E. Fortunato and R. Martins, Adv. Funct. Mater., 2015, 25, 3592–3598 CrossRef.
+M.-J. Wu, C.-C. Kuo, L.-S. Jhuang, P.-H. Chen, Y.-F. Lai and F.-C. Chen, Adv. Energy Mater., 2019, 9, 1901863 CrossRef CAS.
+B. Hou, B.-S. Kim, H. K. H. Lee, Y. Cho, P. Giraud, M. Liu, J. Zhang, M. L. Davies, J. R. Durrant, W. C. Tsoi, Z. Li, S. D. Dimitrov, J. I. Sohn, S. Cha and J. M. Kim, Adv. Funct. Mater., 2020, 30, 2004563 CrossRef CAS.
+D. Lübke, P. Hartnagel, J. Angona and T. Kirchartz, Adv. Energy Mater., 2021, 11, 2101474 CrossRef.
+C. Lee, J.-H. Lee, H. H. Lee, M. Nam and D.-H. Ko, Adv. Energy Mater., 2022, 12, 2200275 CrossRef CAS.
+C.-C. Chen, V. S. Nguyen, H.-C. Chiu, Y.-D. Chen, T.-C. Wei and C.-Y. Yeh, Adv. Energy Mater., 2022, 12, 2270080 CrossRef.
+B. O'Regan and M. Grätzel, Nature, 1991, 353, 737–740 CrossRef.
+K. Kakiage, Y. Aoyama, T. Yano, K. Oya, J.-i. Fujisawa and M. Hanaya, Chem. Commun., 2015, 51, 15894–15897 RSC.
+J.-M. Ji, H. Zhou, Y. K. Eom, C. H. Kim and H. K. Kim, Adv. Energy Mater., 2020, 10, 2000124 CrossRef CAS.
+Q. Huaulmé, V. M. Mwalukuku, D. Joly, J. Liotier, Y. Kervella, P. Maldivi, S. Narbey, F. Oswald, A. J. Riquelme, J. A. Anta and R. Demadrille, Nat. Energy, 2020, 5, 468–477 CrossRef PubMed.
+A. B. Muñoz-García, I. Benesperi, G. Boschloo, J. J. Concepcion, J. H. Delcamp, E. A. Gibson, G. J. Meyer, M. Pavone, H. Pettersson, A. Hagfeldt and M. Freitag, Chem. Soc. Rev., 2021, 50, 12450–12550 RSC.
+M. Freitag, J. Teuscher, Y. Saygili, X. Zhang, F. Giordano, P. Liska, J. Hua, S. M. Zakeeruddin, J. E. Moser, M. Grätzel and A. Hagfeldt, Nat. Photonics, 2017, 11, 372–378 CrossRef CAS.
+Y. Cao, Y. Liu, S. M. Zakeeruddin, A. Hagfeldt and M. Grätzel, Joule, 2018, 2, 1108–1117 CrossRef CAS.
+H. Michaels, M. Rinderle, R. Freitag, I. Benesperi, T. Edvinsson, R. Socher, A. Gagliardi and M. Freitag, Chem. Sci., 2020, 11, 2895–2906 RSC.
+D. Zhang, M. Stojanovic, Y. Ren, Y. Cao, F. T. Eickemeyer, E. Socie, N. Vlachopoulos, J.-E. Moser, S. M. Zakeeruddin, A. Hagfeldt and M. Grätzel, Nat. Commun., 2021, 12, 1777 CrossRef CAS PubMed.
+K. Georgiou, S. Xavier-de Souza and K. Eder, IEEE Embed. Syst. Lett., 2017, 10, 53–56 Search PubMed.
+
+          M. Shirvanimoghaddam, K. Shirvanimoghaddam, M. M. Abolhasani, M. Farhangi, V. Z. Barsari, H. Liu, M. Dohler and M. Naebe, Paving the Path to a Green and Self-Powered Internet of Things, arxiv,  2017, preprint,  DOI:10.48550/arXiv.1712.02277.
+R. Haight, W. Haensch and D. Friedman, Science, 2016, 353, 124–125 CrossRef CAS PubMed.
+F. Samie, L. Bauer and J. Henkel, IEEE Internet Things J., 2019, 6, 4921–4934 Search PubMed.
+B. Politi, A. Foucaran and N. Camara, Energies, 2022, 15, 1144 CrossRef CAS.
+
+          H. P. Breivold and K. Sandström, 2015 IEEE International Conference on Data Science and Data Intensive Systems,  2015, pp. 532–539 Search PubMed.
+Y. Huang, L. Wang, Y. Hou, W. Zhang and Y. Zhang, Int. J. Pavement Res. Technol., 2018, 11, 146–152 CrossRef.
+S. Selvaraj and S. Sundaravaradhan, SN Appl. Sci., 2020, 2, 1–8 Search PubMed.
+R. P. Weicker, Commun. ACM, 1984, 27, 1013–1030 CrossRef.
+Y. Saygili, M. Söderberg, N. Pellet, F. Giordano, Y. Cao, A. B. Muñoz-García, S. M. Zakeeruddin, N. Vlachopoulos, M. Pavone, G. Boschloo, L. Kavan, J.-E. Moser, M. Grätzel, A. Hagfeldt and M. Freitag, J. Am. Chem. Soc., 2016, 138, 15087–15096 CrossRef CAS PubMed.
+S. R. Raga, E. M. Barea and F. Fabregat-Santiago, J. Phys. Chem. Lett., 2012, 3, 1629–1634 CrossRef CAS PubMed.
+P. R. F. Barnes, A. Y. Anderson, J. R. Durrant and B. C. O'Regan, Phys. Chem. Chem. Phys., 2011, 13, 5798–5816 RSC.
+C.-Y. Chen, Z.-H. Jian, S.-H. Huang, K.-M. Lee, M.-H. Kao, C.-H. Shen, J.-M. Shieh, C.-L. Wang, C.-W. Chang, B.-Z. Lin, C.-Y. Lin, T.-K. Chang, Y. Chi, C.-Y. Chi, W.-T. Wang, Y. Tai, M.-D. Lu, Y.-L. Tung, P.-T. Chou, W.-T. Wu, T. J. Chow, P. Chen, X.-H. Luo, Y.-L. Lee, C.-C. Wu, C.-M. Chen, C.-Y. Yeh, M.-S. Fan, J.-D. Peng, K.-C. Ho, Y.-N. Liu, H.-Y. Lee, C.-Y. Chen, H.-W. Lin, C.-T. Yen, Y.-C. Huang, C.-S. Tsao, Y.-C. Ting, T.-C. Wei and C.-G. Wu, J. Phys. Chem. Lett., 2017, 8, 1824–1830 CrossRef CAS PubMed.
+S. Nakade, T. Kanzaki, W. Kubo, T. Kitamura, Y. Wada and S. Yanagida, J. Phys. Chem. B, 2005, 109, 3480–3487 CrossRef CAS PubMed.
+Y. Saygili, M. Stojanovic, H. Michaels, J. Tiepelt, J. Teuscher, A. Massaro, M. Pavone, F. Giordano, S. M. Zakeeruddin, G. Boschloo, J.-E. Moser, M. Grätzel, A. B. Muñoz-García, A. Hagfeldt and M. Freitag, ACS Appl. Energy Mater., 2018, 1, 4950–4962 CrossRef CAS.
+P. Ferdowsi, Y. Saygili, S. M. Zakeeruddin, J. Mokhtari, M. Grätzel, A. Hagfeldt and L. Kavan, Electrochim. Acta, 2018, 265, 194–201 CrossRef CAS.
+Y. Wang and T. W. Hamann, Chem. Commun., 2018, 54, 12361–12364 RSC.
+R. A. Marcus, J. Chem. Phys., 1956, 24, 966–978 CrossRef CAS.
+S. O. Fürer, R. A. Milhuisen, M. K. Kashif, S. R. Raga, S. S. Acharya, C. Forsyth, M. Liu, L. Frazer, N. W. Duffy, C. A. Ohlin, A. M. Funston, Y. Tachibana and U. Bach, Adv. Energy Mater., 2020, 10, 2002067 CrossRef.
+
+          T. Markvart, A. McEvoy and L. Castaer, Practical Handbook of Photovoltaics: Fundamentals and Applications, Elsevier Science,  2003 Search PubMed.
+H. Ellis, N. Vlachopoulos, L. Häggman, C. Perruchot, M. Jouini, G. Boschloo and A. Hagfeldt, Electrochim. Acta, 2013, 107, 45–51 CrossRef CAS.
+
+          NREL, Solar Spectral Irradiance: Air Mass 1.5,  1999, http://rredc.nrel.gov/solar/spectra/am1.5/ Search PubMed.
+J. Bisquert, M. Grätzel, Q. Wang and F. Fabregat-Santiago, J. Phys. Chem. B, 2006, 110, 11284–11290 CrossRef CAS PubMed.
+
+          J.-L. Dellis, MATLAB Zfit curve fitting tool, https://se.mathworks.com/matlabcentral/fileexchange/19460-zfit, acessed  2018-10-18 Search PubMed.
+S. Sarker, A. J. S. Ahammad, H. W. Seo and D. M. Kim, Int. J. Photoenergy, 2014, 2014, 851705 CrossRef.
+B. C. O'Regan, K. Bakker, J. Kroeze, H. Smit, P. Sommeling and J. R. Durrant, J. Phys. Chem. B, 2006, 110, 17155–17160 CrossRef PubMed.
+
+          M. Freitag, A. Gagliardi, M. Rinderle, H. Michaels, I. Benesperi and R. Freitag, LSTM Energy Management v1.0,  2023,  DOI:10.5281/zenodo.6542144.
+
+Footnotes† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d3sc00659j‡ These authors contributed equally.This journal is © The Royal Society of Chemistry 2023
+Table Content:
+
+ 	Fig. 1  Harvesting energy from ambient light and artificial intelligence revolutionise the Internet of Things. Based on smart and adaptive operation, the energy consumption of sensor devices is reduced, and battery waste is avoided. Credit: Ella Marushchenko – Ella Maru Studio.	 
+
+ 	Fig. 2  Data time series of light-powered IoT sensor devices deployed into different settings over the course of twelve days. Variable recurring or intermittent patterns in illumination (top) govern the operating voltage of the microcontroller (middle). The device dynamically infers its deployment scenario based on real-time acquired illumination data (bottom).	 
+
+ 	Fig. 3  Dynamic workload adaptation on light-powered IoT sensor nodes. Based on the recognition of the deployment scenario and a forecast of the available energy, the microcontroller adopts tailored operation protocols in real-time. Such dynamic on-loading ensures the operation of the microcontroller and the energy-harvesting circuit at the optimal potential and saves energy owing to reduced communication through wireless networks.	 
+
+Without classification	12.5	0.560	0.31
+Factory	13.0	0.537	0.30
+Office	24.5	0.287	0.16
+
+ 	Fig. 4  
+J–V sweeps of XY1:L1-sensitised photovoltaic cells (a) 0.384 cm2 cells by electrolyte composition at one-sun AM 1.5G irradiation. (b) and (c) 0.384 cm2 cells by electrolyte composition at 1000 lux ambient illumination (fluorescent lamp). (d) 3.2 cm2 cells by illumination level.	 
+
+
+0.1 M CuIIa	0.916	147	0.808	36.0
+
+	0.915 ± 0.006	Levelised	0.801 ± 0.008	35.7 ± 0.34
+0.06 M CuIIa	0.995	147	0.778	38.0
+
+	0.974 ± 0.014	Levelised	0.790 ± 0.002	36.9 ± 0.47
+0.02 M CuIIa	1.00	145	0.726	35.1
+
+	1.00 ± 0.02	145 ± 1	0.730 ± 0.004	34.8 ± 0.60
+1000 luxb (303.6 μW cm−2)	0.984	141	0.811	37.1
+500 luxb (151.8 μW cm−2)	0.950	69.7	0.800	34.8
+200 luxb (60.7 μW cm−2)	0.919	27.6	0.812	33.7
+
+ 	Fig. 5  Characterisation of XY1:L1-sensitised solar cells by electrolyte composition. (a) Ideality factor from open-circuit voltage versus light intensity. (b) Electron recombination lifetime from transient photovoltage (enlarged with errorbars in Fig. S10†) and (c) electron transport time from transient photocurrent versus charge carrier density. (d) Transport and recombination resistance from electrochemical impedance spectroscopy.	 
+Footnotes
+† Electronic supplementary information (ESI) available. See DOI: https://doi.org/10.1039/d3sc00659j
+‡ These authors contributed equally.
+
+This journal is © The Royal Society of Chemistry 2023

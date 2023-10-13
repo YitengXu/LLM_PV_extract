@@ -1,0 +1,505 @@
+High-throughput computational search for high carrier lifetime, defect-tolerant solar absorbers   - Energy & Environmental Science (RSC Publishing) DOI:10.1039/D1EE00801C View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D1EE00801C
+(Paper)
+Energy Environ. Sci., 2021, 14, 5057-5073High-throughput computational search for high carrier lifetime, defect-tolerant solar absorbers†
+
+        
+          
+            Diana 
+            Dahliah
+          
+        
+      a, 
+      
+        
+          
+            Guillaume 
+            Brunin
+          
+        
+      a, 
+      
+        
+          
+            Janine 
+            George
+          
+        
+      a, 
+      
+        
+          
+            Viet-Anh 
+            Ha
+          
+        
+      ab, 
+      
+        
+          
+            Gian-Marco 
+            Rignanese
+          
+        
+      a and 
+
+        
+          
+            Geoffroy 
+            Hautier
+          
+        
+      *ac
+aUCLouvain, Institute of Condensed Matter and Nanosciences (IMCN), Chemin des Étoiles 8, B-1348 Louvain-la-Neuve, Belgium. E-mail: geoffroy.hautier@dartmouth.edu
+bOden Institute for Computational Engineering and Sciences, University of Texas at Austin, 201 E. 24th Street, Austin, TX 78712, USA
+cThayer School of Engineering, Dartmouth College, Hanover, New Hampshire 03755, USA
+Received 
+      16th March 2021
+    , Accepted 27th July 2021First published on 27th July 2021AbstractThe solar absorber is a key component in a solar cell as it captures photons and converts them into electron–hole pairs. Its efficiency is driven by the carrier lifetime and the latter is controlled by Shockley–Read–Hall non-radiative processes, which involve defects. Here, we present an ab initio high-throughput screening approach to search for new high-efficiency photovoltaic absorbers taking into account carrier lifetime and recombination through defects. We first show that our methodology can distinguish poor and highly efficient solar absorbers. We then use our approach to identify a handful of defect-tolerant, high carrier lifetime, absorbers among more than 7000 Cu-based known materials. We highlight K3Cu3P2 and Na2CuP as they combine earth-abundance and the potential for high efficiency. Further analysis of our data articulates two challenges in discovering Cu-based solar absorbers: deep anti-site defects lowering the carrier lifetime and low formation-energy copper vacancies leading to metallic behavior. The alkali copper phosphides and pnictides offer unique chemistries that tackle these two issues.
+
+Broader context
+Thin-film photovoltaics could grow as an important source of sustainable energy both in itself or in tandem with silicon solar cells. New absorber materials for thin-film solar cells are needed to tackle the limitations from current technology in terms of toxicity, earth-abundance and long-term stability. Identifying new absorbers purely experimentally is a very time-consuming process involving complex synthesis and characterization. Here, we use first-principles high-throughput computations to accelerate the search for new absorbers. For the first time, we include in our materials screening, through defect computations, the estimate of carrier lifetime which is paramount to high efficiency in solar cells. Among 7000 known copper-based compounds, we identify a few unsuspected solar absorber candidates combining a potential for high efficiency and earth-abundance. This approach offers a new avenue to search rapidly for new solar absorbers and highlights new promising chemistries especially alkali-based phosphides to be targeted by future solar cell research.
+
+1 Introduction
+The current climate crisis calls for environmentally-friendly energy sources that will sustain the growing worldwide energy needs while reducing carbon emission.1 The availability of a vast amount of solar energy makes photovoltaic (PV) cells a particularly appealing source of renewable energy.2–4 The power conversion efficiency of solar cells and their production cost are key parameters to gauge the competitiveness of PV technology in electricity markets.2,5 The vast majority of current PV production is originating from solar cells based on single-crystal silicon absorbers. The alternative thin-film technologies based on highly absorbing compound semiconductors only represent a small but growing fraction of the PV market.2,6,7 Thin-film technologies have inherent advantages compared to crystalline silicon including mechanical flexibility or a potentially smaller carbon footprint associated with their manufacturing.8,9 More importantly, thin-film materials with a higher band gap than silicon could be combined with silicon solar cells to form tandem cells that would capture a much larger fraction of the solar spectrum while still relying on the mature silicon technology.2,10–13 Any new thin-film technology can only be cost competitive if it reaches a high conversion efficiency.14,15 Such a high efficiency has been achieved in different thin-film technologies from the polycrystalline Cu(In,Ga)Se2-based (CIGS) PV cells (23.35%) to CdTe (22.1%) and InP (22.1%) cells.15–19 More recently, methylammonium lead halide perovskite (MAPI3) cells have also rapidly improved and now reach a power conversion similar to CIGS after only 5 years of development.5,7,20–24 However, despite their attractive efficiencies, all these thin-film technologies suffer from different issues from the use of scarce (e.g., In, Ga or Te) or toxic (e.g., Cd or Pb) elements2,7,25,26 to long-term stability problems (e.g., for halide perovskites).21
+Therefore, the search for new earth-abundant solar absorbers that will lead to high-efficiency thin-film or tandem solar cells is still ongoing. As with many materials discovery processes, searching for new materials purely experimentally is lengthy as the growth and characterization of potential solar absorber candidates is very time consuming. During the last decade, computational materials screening and high-throughput (HT) approaches have emerged as an efficient way to accelerate materials discovery, including PV absorbers.5,27–33 These previous studies all focused on bulk properties such as thermodynamic stability, band gap, effective masses and optical absorption. Indeed, since the seminal work of Shockley and Queisser (SQ), we know that an adequate band gap (from 1 to 2.5 eV) is essential to absorb visible light efficiently.34 However, constraints on the band gap alone lead to an abundance of candidate materials, among which most do not achieve convincing conversion efficiency. It is now clear that a high carrier lifetime (above 100 ns) is essential to achieve high efficiency in solar cells.2,4,5,35–39 In fact, many promising materials in terms of band gap and absorption coefficients (e.g., Cu2ZnSnS4 (CZTS) and SnS) did not reach a high efficiency because of their low carrier lifetime.40–44 At carrier concentrations typically used in solar absorbers, the bulk lifetime is mainly driven by nonradiative processes following the Shockley–Read–Hall (SRH) recombination mechanism.45 Its physics is well known: it involves a defect state that helps the recombination of the carriers through phonons. SRH processes are thus driven by the position of defects in the band gap and by their capture cross section. Deep defects, as they offer high recombination rates for both electrons and holes, are the most detrimental to nonradiative lifetime. The success of MAPI3 has been hypothesized to result from its low deep-defects concentration.5,20,46 These considerations suggest that defect-based properties, especially the position of the transition states of defects within the band gap, should be taken into account when searching for new solar absorbers. In fact, a good amount of studies have recently framed the search for high-performance solar absorbers as the quest for “defect-tolerant” materials.22,47–50
+In this work, we present an ab initio HT screening approach for potential high-performance PV absorbers which includes for the first time carrier lifetime estimates. In addition to the traditional bulk properties (band gap, effective masses, optical absorption), our screening procedure includes an assessment of the nonradiative carrier lifetime. The lifetime is estimated using the SRH recombination model and first-principles point-defect computations. We first benchmark our approach on several materials that have already been extensively studied as solar absorbers, demonstrating that our methodology is able to identify known high- and low-efficiency solar absorbers. We then use our approach to search among all Cu-based semiconductors present in the Materials Project (MP) database.51 We identify a series of promising candidates showing a potential for high lifetime combined with adequate band gap, absorption coefficient, carrier transport and earth abundance. We discuss the inherent chemical reason for the non-detrimental defects present in these materials and propose new data-driven design principles for the search of new solar absorbers.
+2 Results
+2.1 Efficiency model including lifetimes and validation
+The first model developed to link the solar-cell efficiency to the properties of the solar absorber is the SQ model. In this model, the solar-cell efficiency is directly related to the band gap while other properties (optical absorption, carrier transport and lifetime) are considered ideal. The SQ model can be improved by including the optical absorption, leading to the “spectroscopic limited maximum efficiency (SMLE)” model.30 Here, we go further and use a model taking into account nonradiative lifetimes through SRH recombinations. The model is presented extensively in the Methods section (Section 5) and uses concepts developed by Kirchartz et al.52 and Kim et al.53 Based on density-functional theory (DFT), our model provides a theoretical efficiency from the knowledge of the band gap, the absorption coefficient and the point-defects properties (formation energies, transition levels, and capture cross sections). As capture cross sections are very expensive to compute ab initio, we do not consider them at an early stage of our screening.54,55 Instead, we first assume that all defects have the same capture cross section set at 10−15 cm2, which is a value comparable to the average of deep defect states,54–56 and refine this assumption further in the screening process. Thus, the nonradiative lifetime in our model depends on the defect transition levels and the formation energy. We neglect effects related to interfaces or grain boundaries that could be important in a practical device. For this reason, our computed efficiency should be regarded as an upper bound to a true efficiency that could be reduced by other processes.
+To validate our model and its assumption (i.e., bulk lifetime only, unique capture cross section, use of ab initio computed quantities), we compute the upper theoretical efficiencies for a series of known materials whose experimental efficiencies are available in the literature. Our data sample includes very high-efficiency materials as well as materials that have only shown low efficiency despite sometimes important research efforts.20,42,48,57–65 The band gap and the defect properties are computed using the Heyd–Scuseria–Ernzerhof (HSE) hybrid exchange–correlation (XC) functional which has been demonstrated to be more accurate than standard (local or semi-local) ones.66 We extract the formation energies and defect concentrations from the literature for most of the selected materials. More details are available in the ESI.† Absorption coefficients are computed using the independent-particle approximation within DFT. The charge carrier lifetime is estimated using the SRH model for the dominant deep defects. Such deep defects are defined as having transition levels Et such that Ec − Et > 0.2 eV or Et − Ev > 0.2 eV, with Ec and Ev the conduction band minimum (CBM) and the valence band maximum (VBM), respectively. We compute the carrier lifetime for all possible growth conditions (i.e., different chemical potentials) assuming that the material is p-type with a hole concentration of 1016 cm−3. This assumption is motivated by the p-type character of most thin-film solar absorbers used in p–n junctions. As there is a range of growth conditions, we obtain a range of efficiencies. Fig. 1(a) compares the theoretical efficiencies obtained with our model and HSE quantities with the best experimental efficiencies reported in the literature. In some systems, such as CdTe and GaAs, the theoretical efficiency presents a very broad range of possible values. Indeed, the dominant defect concentration (i.e., TeCd, AsGa) largely varies depending on growth conditions. In other cases, such as SnS or Sb2Se3, the dominant defects (VS, VSe, and SeSb) have very low formation energies for all growth conditions, and their concentrations do not vary as much. Our model is able to differentiate from first principles materials that never reached high experimental efficiencies (e.g., SnS, Sb2S3, Sb2Se3 or Cu2O) from high-efficiency materials such as InP, MAPI3, GaAs, CdTe, CuGaSe2, CuInSe2 and Si. We note that taking into account defects and nonradiative lifetime is essential here as the band gap of all these materials is in line with the needs of the SQ model. We also note that our model predicts high efficiencies for three materials that have never performed well experimentally: CZTS, CuSbS2 and ZnSnP2. The experimental low efficiency of CZTS has been the focus of much debates with a strong focus on the effect of disorder which is not taken into account here.67,68 We note that Kim et al. recently estimated an upper bound of 20% conversion efficiency for CZTS using a model similar to ours.53 For the other two materials (CuSbS2 and ZnSnP2), we hypothesize that the low experimental efficiency is mainly due to contact resistances and not the absorber itself.60,69–72 Our results motivate further experimental studies on these two solar absorbers which could show high efficiency if the issues with contact resistance and band alignment are solved. Very importantly, our model captures all materials that have shown high efficiency experimentally.
+ Fig. 1  (a) Theoretical efficiency computed within HSE for selected materials compared with their best experimental efficiency. The bar for the theoretical efficiency corresponds the range of values obtained for different growing conditions, and hence for different defects present in each material. The middle of the range is indicated by white circles. The green regions, indicating efficiencies lower (resp. larger) than 15%, correspond to correctly predicted low- (resp. high-) efficiency materials. The red regions correspond to false positives (upper left) and negatives (lower right). Overlapping points have been slightly shifted for the sake of clarity. (b) Schematic representation of our HT screening. Each step gives the number of tested materials (upper left corner) together with the computed properties. The style and color of the border around each box correspond to the DFT formalism employed: dashed blue lines for PBE, dash-dotted cyan lines for PBE + HSE, and solid green lines for full HSE computations. 
+For the defects computations, our benchmark relied on the HSE hybrid XC functional, which is currently the state-of-the-art. Unfortunately, this is computationally expensive and, hence, cannot be scaled up to a large-scale screening procedure. To overcome this computational burden, we resort to defect computations relying on semilocal XC functionals (e.g., PBE) which are less computationally demanding. These are not as accurate as those based on HSE but they can already provide good insight into the physics of materials defects. Indeed, while such functionals underestimate the band gap and lead to errors in defect transition levels (as they can make truly deep defects appear shallow), the predicted defect formation energies are reasonably accurate.73–76 Moreover, while defects predicted to be shallow within PBE could be deep within HSE, the contrary is very unlikely. We thus take advantage of this systematic tendency,76 by ignoring defects predicted to be shallow within PBE (these could be deep in reality). We move the band edges computed within PBE to their values obtained within HSE (based on a bulk computation, which is computationally affordable) to account for the band gap underestimation (this will be referred to PBE + HSE in what follows). Then, we use the defects predicted to be deep within PBE taking the band edge correction into account to estimate the lifetime and the efficiency within our model. As we could be neglecting defects that are deep within full HSE computations (though they are shallow within PBE), this approach only provides an upper bound to the efficiency one would obtain using full HSE. Our approach is therefore useful as a first screening to detect materials that will not be of interest. To put it simply, if a material shows poor efficiency using our PBE + HSE approach, it would not show a higher efficiency if an accurate full HSE computation was performed. Applying this screening method to our set of known materials, we confirm that the approach efficiently removes materials with low efficiency (more details about computations and results are in the ESI†). Full HSE defect computations would only be needed for the most promising results, as a final confirmation.
+2.2 High-throughput screening of p-type PV absorbers
+We now use our efficiency model to perform a search for new solar absorbers. We will target p-type materials as typical thin-film solar cells (e.g., CIGS, CZTS, CdTe) are based on a p–n junction consisting of a p-type solar absorber in contact with an n-type buffer layer (often CdS) connected to an n-type transparent conducting layer. Any change to that configuration towards n-type solar absorbers would be difficult at the device level. It would require to use a collecting layer made of p-type transparent conducting materials which show much worse performances nowadays than their n-type counterparts.77–81 Taking this into account, Cu-based chemistries are ideal to search for solar absorbers. Indeed, Cu-based materials (oxides, sulfides, selenides,…) are very often p-type and have already had some success as PV absorbers with, for instance, CIGS or CZTS that reach efficiencies of 23.35 and 12%, respectively.17,40,42,59,82–86
+We start our screening using the 7999 Cu-containing semiconductors from the Materials Project.51 The different steps of the screening are represented in Fig. 1(b), together with the number of candidates remaining after each step. The first step focuses on stability, band gap and electron and hole effective masses. A structure is considered as potentially synthesizable if its energy above hull is below 100 meV per atom. Then, according to the SQ model, the band gap should be between 1 and 2.5 eV for a PV absorber to be sufficiently efficient. The band gap from the MP, obtained with PBE, is used as a first estimate in this step. Semilocal functionals such as PBE underestimate the band gap. Therefore, it is useful to rapidly screen potential candidates based on adapted thresholds taking into account this underestimation. At this stage of the screening, we retain materials for which the PBE band gap is between 0.3 and 2 eV. Furthermore, we only keep materials with an indirect gap smaller than their direct gap by at most 0.15 eV in order to maximize their absorption. Indeed, the latter is greatly affected by the character (direct or indirect) of the band gap. Finally, the minority charge carriers must have a large diffusion length in order to be more easily collected. In other words, they must have a sufficiently high mobility. Since computing the mobility from first principles is an expensive task, we first use the effective mass as a proxy: the lower the carrier effective mass, the higher its mobility. This offers a quick estimate of the mobility that has been successfully used in many HT studies searching for high mobility materials.80,87 We filter out materials with a minority carrier (electrons) effective mass (all the diagonal eigenvalues of the tensor) larger than 1 (in units of electron mass me), and a majority carrier (holes) effective mass larger than 10. Only 74 Cu-based semiconductors remain after these first steps of our HT screening (a list of these materials is given in the ESI†).
+Even though the PBE band gap offers a quick estimate, more precise values are necessary to estimate the efficiency of PV absorbers. The next step of the screening focuses on obtaining the direct and indirect gaps of the remaining candidates using HSE. Keeping materials with a HSE band gap within the 1 to 2.5 eV range (according to SQ) leads to 25 candidates.
+For our next screening step, we use our nonradiative SQ model. Following this model, we analyze the absorption coefficient first and then the intrinsic point-defect formation energies. The 25 remaining materials all have an absorption coefficient in the same range (104–105 cm−1) as highly-efficient PV thin-film absorbers. This analysis does not allow to eliminate any material.
+We use the PBE + HSE defect approach to evaluate the theoretical upper limit efficiency of the 25 candidates. Among these compounds we discard 9 materials showing a conversion efficiency smaller than 10%. Due to the highly concentrated deep defects in these materials, the estimated SRH lifetime is less than 1 ns. For the remaining 14 materials, we examine the behavior of the shallow dominant defect state conducting a full HSE computations. If the dominant shallow defect moves towards the center of the band gap and becomes a deep defect, this transition state becomes harmful to the lifetime of the charge carriers and thus extensively reduces the conversion efficiency of the material. At this stage, the structures whose shallow defect become deep when computed in HSE are eliminated (e.g., Al5CuSe8, BaCu2S2, BaCu2Se2, CdCu2GeS4). The remaining 9 materials (i.e., Na2CuP, K2CuP, Na2CuAs, K3Cu3P2, K3Cu3As2, BaCu2SnSe4, Sr6Cu3N5, KCuTe, NaCuTe, LiCuS) are kept as promising candidates. More details about defect formation energies, SRH lifetime, and conversion efficiency ranges of the 25 compounds are given in the ESI.† We will not discuss further the two arsenide compounds (K3Cu3As2 and Na2CuAs) as they are isostructural to the phosphides (K3Cu3P2 and Na2CuP) and present very similar properties. As for BaCu2SnSe4, it has been proposed as a solar absorber and experimental results are already available.88 We now delve deeper into our most promising 6 selected materials (K3Cu3P2 and Na2CuP, Sr6Cu3N5, KCuTe, NaCuTe, LiCuS). We stress that a synthesis route and crystal structure have been reported for all these materials.89–93 As far as we know, none of these materials have been considered as solar absorbers and no carrier lifetime or PV efficiency has been measured. For those 6 materials, we perform full HSE defects computations.
+All the computed properties of these 6 most promising candidates are presented in Table 1. Following the same procedure as in the validation step, we can estimate an upper bound to the efficiency for these 6 materials. Their efficiencies range between 10 and 33% confirming that these materials are good solar absorber candidates. The 6 materials belong to two categories: truly defect-tolerant materials which show no deep intrinsic defects (i.e., KCuTe, NaCuTe, LiCuS) and materials exhibiting deep defects but all with high formation energies (Na2CuP, K3Cu3P2, Sr6Cu3N5).
+Table 1 Detailed properties of the 6 candidates: MP identification number (mp-id), space group (SG), energy above hull (Ehull), HSE fundamental (Eg) and direct gaps (Edg), electron and hole effective masses tensors ([m1,m2,m3], where mi are the principal values of the tensor), theoretical lifetime (τ), theoretical efficiency (ηth), and lower dopability limit (LDL)
+
+
+
+
+
+
+KCuTe
+NaCuTe
+LiCuS
+Na2CuP
+K3Cu3P2
+Sr6Cu3N5
+
+
+
+
+mp-id
+7436
+7434
+753826
+7639
+7439
+29136
+
+
+SG
+
+P63/mmc
+
+P4/nmm
+
+Pnma
+
+
+Cmcm
+
+
+Rm
+
+P42mc
+
+
+
+E
+hull (meV per atom)
+0.00
+9.62
+26.00
+0
+0.00
+0.00
+
+
+
+E
+g (eV)
+1.63
+1.43
+2.29
+1.35
+2.10
+1.52
+
+
+
+E
+dg (eV)
+1.63
+1.43
+2.30
+1.49
+2.14
+1.65
+
+
+[mn1,mn2,mn3]
+[0.093,0.093,0.432]
+[0.113,0.113,0.133]
+[0.244,0.246,0.298]
+[0.1,0.852,0.898]
+[0.392,0.392,0.705]
+[0.422,0.607,0.607]
+
+
+[mh1,mh2,mh3]
+[0.338,0.338,6.601]
+[0.425,0.425,1.526]
+[0.419,1.208,1.312]
+[0.619,0.731,1.545]
+[1.236,1.236,2.144]
+[1.525,5.859,5.859]
+
+
+
+τ (s)
+≫1
+≫1
+10−9–8 × 10−7
+3.4 × 10−9–3.4 × 10−6
+4.4 × 10−8–1.2 × 10−5
+3 × 10−6–7.2 × 10−7
+
+
+
+η
+th (%)
+30.2
+32.9
+10.2–13
+11.6–22.3
+13.9–17.3
+20.0
+
+
+LDP
+[−1.6 to −1.2]
+[−0.8 to −0.7]
+[−0.1 to 0]
+[−0.7 to −0.2]
+[−0.85 to −0.2]
+[0.2–0.5]
+
+
+
+
+
+Fig. 2 shows the band structure and defect formation energy versus Fermi level for the three truly defect-tolerant materials (NaCuTe, KCuTe, LiCuS). No defects with deep transition levels are present in these materials, making their SRH recombination rate very low and promoting very high carrier lifetime. However, low energy shallow defects (e.g., the Cu vacancy) are present in all growth conditions. While the shallow nature of the defects helps the SRH recombination rate, it leads to high carrier concentrations. We estimate the carrier concentration to be greater than 1017 cm−3 and 1019 cm−3 in NaCuTe and KCuTe respectively. The defect formation energies at all possible growth condition are given in the ESI.† Such high carrier concentrations will be detrimental to the functioning of the p–n junction. A way to circumvent this problem would be to dope these materials with donors to reduce the conductivity. This avenue could be investigated experimentally or from first principles in future work. LiCuS shows lower carrier concentration but has a larger band gap and a smaller absorption coefficient compared to KCuTe and NaCuTe, making it less interesting.
+ Fig. 2  (a, d and g) Band structure, (b, e and h) absorption coefficient spectrum and (c, f and i) HSE intrinsic defect formation energies as a function of the Fermi energy for KCuTe (a–c), NaCuTe (d–f), and LiCuS (g–i). The zero in the Fermi energy corresponds to the VBM as evidenced by a vertical dashed line, and the CBM is indicated with a second vertical dashed line. The formation energies have been obtained in Cu-rich conditions. 
+The second category of promising high-performance absorbers are materials for which the vast majority of defects are shallow with one deep defect at relatively high energy. Fig. 3 shows the band structure and defect formation energies for Na2CuP, K3Cu3P2 and Sr6Cu3N5. The three compounds show Cu vacancies with transition states lying 0.5, 0.8 and 0.54 eV above the VBM, respectively. While these deep defects lead to SRH recombination, their formation energy is high enough (larger than 1 eV) to make their concentration low (within certain growth conditions). This is why these materials were still selected by our screening.
+ Fig. 3  (a, d and g) Band structure, (b, e and h) absorption coefficient spectrum and (c, f and i) HSE intrinsic defect formation energies as a function of the Fermi energy for Na2CuP (a–c), K3Cu3P2 (d–f) and Sr6Cu3N5 (g–i). The zero in the Fermi energy corresponds to the VBM as evidenced by a vertical dashed line, and the CBM is indicated with a second vertical dashed line. The formation energies have been obtained in Cu-poor (anion rich) conditions. 
+The solar absorber should ideally not be strongly n-type. A n-type solar absorber will be difficult to integrate within current thin-film devices either in a p–n or p–i–n configuration. While p-type doping can be achieved intrinsically but also extrinsically, certain materials will have intrinsic defects preventing p-type doping because of compensation from hole-killing defects. A measure of the potential for p-type doping is the lower dopability limit (LDL). The lower dopability limit is the Fermi level value at which the formation energy of the donor lowest in energy becomes negative (preventing p-type doping). The LDL has a range depending on growth conditions. With the valence band maximum set at zero energy, a negative LDL indicates a p-type dopable material.76 All materials but Sr6Cu3N5 have a negative LDL (below the VBM), which is a good sign for p-type dobability. For Sr6Cu3N5, the LDL is between 0.2 and 0.5 eV above the VBM set by the nitrogen vacancy. The likely n-type nature of Sr6Cu3N5 makes it of lower interest as the entire solar cell design would have to be modified. We note that other nitrides proposed as solar absorbers such as ZnSnN2 face the same doping issue.94,95
+In order to further quantify the effect of these deep states on the performance of Na2CuP and K3Cu3P2 as PV absorbers, we compute the carrier capture coefficients, which describe the capture of a carrier at the band edge onto a defect state. We follow the approach of ref. 54 and 55. The wavefunction associated with a deep defect is localized on the defect itself or on its neighboring atoms. The presence of the defect induces a rearrangement of the atoms surrounding it. This coupling of the defect electronic state and the atomic structure can be described by a one-dimensional configuration coordination (1D cc) diagram. For a given charge state of a defect, such a diagram describes the change in the energy as a function of a generalized atomic coordinate. It can be used to understand and compute the nonradiative capture of carriers.
+The 1D cc diagrams for the electron and hole captures for the Cu vacancy defect in both Na2CuP and K3Cu3P2 are presented in Fig. 4.
+ Fig. 4  1D configuration coordinate diagram for electron and hole captures at the VacCu defect in (a) Na2CuP and (b) K3Cu3P2. The black circles indicate the results explicitly calculated while the lines correspond to their quadratic fits. ΔEb is the energy barrier for each nonradiative process. ΔQ is the displacement between the excited and ground states. 
+The ground state (green) corresponds to Cu vacancy in its neutral state, while the excited state (blue) corresponds to its negatively charged state due to the creation of a hole in the VB. A third state, in which an electron–hole pair is created by the absorption of a photon and thus the Cu vacancy is not charged, is represented in red. Following the Franck–Condon principle, the ions are considered fixed during the photon absorption so that this state is only shifted upwards with respect to the ground state. The vertical shift corresponds to the electron–hole pair binding energy. We set Q = 0 amu1/2 Å for the ground-state configuration. The minimum of the excited state (negatively charged defect) is offset by ΔQ = 2.2 and ΔQ = 1.5 amu1/2 Å in Na2CuP and K3Cu3P2, respectively. The largest contribution to these ΔQ comes from the outward relaxation of the nearest neighbors (P atoms) around the defect. The minimum of the excited state is located at the transition level above the VBM, see Fig. 3. The energy barrier for the nonradiative transitions for the electron (ΔEeb) and hole (ΔEhb) can be obtained from the 1D cc diagram. These energy barriers are relatively large (>0.5 eV) in all cases, and even tend to infinity for the hole capture in K3Cu3P2. Following the methodology proposed by Alkauskas et al. to compute the carrier carrier capture coefficients,54,55 we can evaluate carrier cross section from the 1D cc diagram and the energy barriers (see Methods). We obtain a carrier capture cross section lower than 10−15 cm3 s−1. To put this number in context, the SnZn and the complex defect SnZn–CuZn in CZTS have computed carrier capture coefficients of 1.19 × 10−7 cm3 s−1 and 1.47 × 10−6 cm3 s−1, respectively.53 This indicates that the only deep defect in Na2CuP and K3Cu3P2, the Cu vacancy, combines a high formation energy with a small capture cross section. The conversion efficiency of Na2CuP and K3Cu3P2 reaches their SQ limit (33% and 20.4% respectively) by using the computed capture-cross section to calculate the SRH lifetime. This makes these two materials very attractive PV absorber candidates. Finally, we perform carrier mobility computations including scattering by phonons. The same methodology has been applied on Si and GaAs with good results compared to experimental data.96,97 The computed electron mobility tensor of Na2CuP and K3Cu3P2 is [82,75,496] and [48,89,87] cm2 V−1 s−1 respectively. More details on the mobility computations are presented in the ESI.† The two materials show good mobilities in comparison to the electron mobility of the widely used n-type buffer layer CdS (335 cm2 V−1 s−1)98 and compared to the mobilities in typical PV materials. For instance, the electron mobility varies from 1.74 to 150 cm2 V−1 s−1 in CIS (CuInSe2),99,100 and from 1 to 10 cm2 V−1 s−1 in MAPbI3.101,102
+Showing high performances is not a sufficient condition for a potential PV absorber to be viable for large scale deployment. For PV to have a true global impact, the PV absorber should be made of chemical elements that are earth-abundant, and not concentrated in only a few geographical regions of the planet. Large scale production of a PV technology is also affected by how the elements are produced and if they are mined directly or as by-products of the mining of other elements.103 Toxicity is also an issue to keep in mind. Different metrics have been developed to take these issues into account. Here, we use the HHI (Herfindahl–Hirschman index) which indicates the geographical production concentration of an element,104 and the metal companionality which is proportional to the probability of finding the element only as by-products of other metals.103 A large HHI is related to a dense geographical concentration of the element production: a HHI larger than 2500 represents a production in mainly 5 countries or less for instance. A large metal companionality indicates that the elements composing the material are mainly mined as a by-products of other elements extractions. This is an issue as large increase in production will not be possible without important increase in the element price.103
+
+Fig. 5 shows the computed efficiency (following our methodology) for the 6 PV absorber candidates outlined in our study versus their productive HHI (the conversion efficiency vs. HHI reserved concentration plot is given in the ESI†). Different important bounds in HHI are delimited by colored zones (blue, green, yellow, red).
+ Fig. 5  Theoretical efficiency of typical PV absorbers and our outlined candidates versus their productive HHI. The different colored regions correspond to typical limits. The color of the circles indicates the metal companionality (M.C.) in %. 
+The color of the markers represents the metal companionality for each PV absorber. For comparison, we also added previously considered PV absorbers. In addition, to the problem of being metallic, NaCuTe and KCuTe show major issues with companionality since Te is recovered as a by-product from a limited number of geopolitically concentrated ore deposits. Most Te supplies (90%) are associated with Cu. This would rise concerns regarding their availability and their response to the rapid deployment and demand.103 LiCuS is more attractive but with a lower efficiency. Finally, Na2CuP and K3Cu3P2 show a very attractive combination of low HHI, high efficiency and low companionality making them prime candidates for a earth-abundant, low-cost, sustainable solar absorbers. We note that the lower efficiency of K3Cu3P2 comes from its higher band gap (2.1 eV vs. 1.35 eV for Na2CuP). However, its higher band gap combined with its high lifetime makes this material a very interesting candidate for a tandem solar cell. A simple tandem solar cell model indicates that combined with silicon, K3Cu3P2 could reach 29% efficiency for the overall tandem cell.10
+Our work focuses on the bulk properties that a good solar absorber requires, and does not take into account many additional requirements. Interfaces and band alignments are not addressed but could be further considered for our most promising candidates.105–108 More complex defects could also be computed for further investigation. Long-term stability is also something difficult to estimate computationally so that it will need to be considered experimentally down the road. This is a major issue of the otherwise extremely promising halide perovskite technology.109,110 The properties considered in our screening procedure are nevertheless necessary conditions. Our work thus suggests a methodology to narrow down the space of possibilities in the challenging task of discovering a new solar absorber.
+3 Discussion
+We have identified a series of promising earth-abundant Cu-based PV absorbers highlighting especially Na2CuP and K3Cu3P2. We will now discuss why these materials were identified by our screening and what we can learn about the design of new solar absorbers.
+First of all, all candidates are arsenides, selenides, sulfides, phosphides or tellurides. No attractive solar absorber was found in oxides and fluorides despite their large share of the database (more than half of the copper-containing compounds in the MP database are oxides). This comes from the statistically higher band gaps present in oxides and fluorides which tend to be unfavorable for visible light absorption.111
+Previous computational works targeting the design of defect-tolerant materials have focused on cation and anion vacancies.33,50 While this is an important first step, our results show that SRH-limited lifetime in ternary and quaternary compounds is often set by anti-site defects. In our study, 15 of the 25 materials for which defects were computed show deep anti-site defects. The importance of such defects has already been suggested by several authors especially with respect to CZTS-related absorbers.55,86,112 While using ternary and quaternary compounds offers opportunities for instance in band gap tuning, it also leads to more possibilities to form detrimental anti-site defects. A natural strategy to avoid these detrimental anti-site defects has been to work with materials containing elements with very different ionic radii. This approach motivates the recent work on chalcogenide compounds mixing Ba (which has a large ionic radius) with Cu.113 The expectation is that substitutional anti-site defects will be more difficult to form if the ions have very different ionic radii.112 Our data set can be used to test that common-sense principle. Fig. 6 shows a plot of the (neutral) defect formation energy as a function of the ratio between the ionic radii. The lack of correlation is striking yet surprising even when considering the (dis)similarity of the chemical environments. Our results indicate that ionic radius arguments are too simple to be predictive for the defect formation energies and that full defect computations or more elaborated models would need to be used to control the formation energy of anti-site defects. The latter defects are also difficult to avoid as moving in certain conditions, such as Cu-rich to avoid a CuX defect, will naturally lower the formation energy of the related XCu defect. All of our 6 most promising candidates (i.e., NaCuTe, KCuTe, LiCuS, Sr6Cu3N5, K3Cu3P2, and Na2CuP) show anti-site defects without any deep level in the band gap (see Fig. 2 and 3). They are all ternary chalcogenides containing Cu and an alkali element. More than the ionic radius, it is the common +1 oxidation state for Cu and the alkali metals that is the origin for their anti-site defect-tolerance. To put it simply, replacing Cu1+ by an element favoring a +1 oxidation state does not lead to any transition level in the band gap. The effect of the oxidation state and the ionic radii ratio on the transition state position of Cu substitutional defects are presented in Fig. 7 for our whole database. The ions sharing the same oxidation state do not form deep defects. We note that Cu is very commonly +1 and that not many other elements besides alkali are stable in a +1 oxidation state. The only other elements forming +1 oxidation states in chalcogenides and pnictides are Ag and Tl but they are either expensive or toxic. Our work clearly shows that the field of alkali copper ternary chalcogenides and pnictides should be prone to promising solar absorbers by favoring harmless copper-alkali anti-site defects.
+ Fig. 6  Formation energy of the neutral cation antisites AB as a function of the ratio between the ionic radii of cations A and B. The vertical lines correspond to the range of formation energy at different growth conditions. The data points have been split according to the similarity of the interchanged cations: blue squares and red diamonds indicate similar and different chemical environments, respectively. 
+ Fig. 7  Transition states for Cu antisites of the 25 PV candidates as a function of the difference between the oxidation state of the cation X and the one of Cu. The transitions states have been obtained with PBE + HSE. They are reported relative to the band gap Eg, 0% being the VBM and 100% the CBM. The color of the data points shows the ratio between the ionic radius of the cation X and the one of Cu. 
+The question remaining is why these two ternary phosphides (Na2CuP and K3Cu3P2) do not form low energy shallow Cu vacancies that will turn them into metals. Fig. 8 shows that the nature of the anion drives the Cu vacancy formation energy. Pnictides (N, P, As, Sb) (in red) tend to have Cu vacancies with higher formation energy and deeper transition state than chalcogenides (O, S, Se, Te) (in blue). A deeper insight into this chemical trend can be obtained through a bonding COHP analysis for a few representative alkali Cu materials.114Fig. 9 shows the crystal structure and COHP results for the phosphide (K3Cu3P2) with high Cu vacancy formation energy and for the tellurides (KCuTe and NaCuTe) with low Cu vacancy formation energy. The COHP indicates the nature of the bonding in the material. A positive or negative value of -COHP is respectively the sign of a bonding or anti-bonding character. All 3 compounds show an anti-bonding Cu-d/X-p character for the valence band. However, the copper phosphides also show an important bonding Cu-s/X-p character. The bonding character present in phosphide and absent from the tellurides explains the higher formation energy for the Cu vacancy as it leads to a stronger Cu–P bond. Fig. 10 shows that this relationship between the Cu-s/X-p bonding (measured by the integrated COHP, ICOHP) and the Cu vacancy formation energy is general across all alkali copper materials. The Cu-s character is also linked to the Cu coordination environment and higher Cu-s mixing comes with a lower coordination environment.115 The copper alkali phosphides show linear environments for the Cu atom, while the akali copper tellurides show higher coordinations such as trigonal and tetrahedral environments.
+ Fig. 8  Formation energy of the Cu vacancy as a function of the relative position of its transition state within the PBE band gap. The vertical lines correspond to the range of formation energy at different growth conditions. The pnictides (N, P, As, Sb) are represented in red, while chalcogenides (O, S, Se, Te) are indicated in blue. 
+ Fig. 9  COHP analysis for averaged cation–anion interactions in pure bulk for (a) K3Cu3P2, (b) KCuTe, and (c) NaCuTe. The VBM is represented by an horizontal dashed black line. The corresponding local environments for the Cu vacancy (colored in light grey) are also depicted: (d) linear in K3Cu3P2, (e) trigonal in KCuTe, and (f) tetrahedral in NaCuTe. 
+ Fig. 10  Formation energy of the neutral Cu-vacancy versus integrated COHP (ICOHP) in the range of [−2,0] eV from VBM for alkali-Cu based candidates (structures without defect). The vertical lines correspond to the range of formation energy at different growth conditions. 
+Cu-based alkali chalcogenides and pnictides offer a combination of adequate band gap, transport properties and absence of anti-site deep defects. Moreover, they can be based on geographically well distributed, earth-abundant elements with a potential for low-cost deployment. Our work motivates further investigation of these chemistries. We note, however, that the Cu vacancy can be problematic since it is often low in formation energy and shallow. Indeed, low energy shallow Cu vacancies will lead to highly metallic materials which cannot be used as solar absorber in a p–n junction. Among Cu-based alkali materials, the pnictides and especially phosphides offer a way to overcome this limitation as the Cu-s/X-p bonding character of their valence band makes the Cu vacancies more difficult to form.
+4 Conclusion
+We have developed a first-principles HT screening approach for finding high-performance PV absorbers including defect properties and nonradiative recombinations. We validate our approach on several well-known materials that have already been examined experimentally and theoretically. Using our methodology, we are able to differentiate high-performance absorbers such as Si and GaAs from low-efficiency materials. Focusing on p-type absorbers and Cu-containing materials, we search for potential solar absorbers among 7999 materials using a HT approach. We find a series of 8 materials (KCuTe, NaCuTe, LiCuS, Sr6Cu3N5, Na2CuP, K3Cu3P2, Na2CuAs, K3Cu3As2) showing a potential for exceptional lifetime due to their absence of low-lying deep defects. Among them, the most promising ones are the copper alkali phosphides which offer adequate p-type doping, high efficiency, non-toxicity and earth-abundance of their elements. We have also used the generated data to understand the fundamental reasons for the selection of these materials, hinting at two materials design principles. To avoid the formation of anti-site defects, we suggest to focus on chemistries mixing copper and alkali. Indeed, the common +1 oxidation state leads to the absence of defect energy levels within the band gap. Additionally, we identify the presence of low energy shallow copper vacancy as a common issue in many Cu-based potential solar absorbers as they lead to metallic behavior. Among alkali copper materials, copper pnictides show stronger Cu-anion bonding and higher Cu-vacancy formation energies. The new chemistries highlighted in this work offer new avenues for earth-abundant solar absorbers. Additionally, our study shows that materials screening including defect physics and carrier lifetime are within reach. Our methodology can be easily extended to further chemistries beyond Cu-based materials. We expect that these findings will accelerate the challenging task of searching for new solar absorbers.
+5 Methods
+5.1 Power conversion efficiency and nonradiative lifetime
+The power conversion efficiency of a solar cell relates to the percentage of electron–hole pairs effectively extracted out of the absorber layer. In this work, we use an extended nonradiative SQ model to quantify the efficiency of the absorber, as developed by Kirchartz et al.34,52 In addition to the band gap, the model also considers the optical and defect-related properties such as the effects of nonradiative recombination. Formally, the power delivered by a PV cell is given by JV, with J the net current density and V the net voltage across the cell. If ϕsun(E) is the incident number of photons of energy E per units of area, time and energy (we consider a standard AM1.5 solar spectrum) then the maximum power conversion efficiency is given by (1)
+Assuming a classical Lambertian light-trapping scheme in an absorber layer of thickness d and absorption coefficient α(E),116,117 with a good antireflection coating on the front side and a perfect reflector on the back side (hence the presence of the factor 2), the short-circuit current density generated under illumination is (2)with e the elementary charge and Eg the band gap of the absorber. Note that the integration of the solar spectrum starts at Eg because it corresponds to the onset of interband transitions and, therefore, of the absorption spectrum.
+This current density is not fully extracted from the PV cell. Indeed, different recombination mechanisms occur in the absorber and decrease the ability to extract the electron–hole pairs and the efficiency of the cell. The three main mechanisms are Auger, radiative and nonradiative recombinations.117 The Auger recombination is only significant at high injection levels in direct band gap semiconductors and will be ignored in the following.118,119 Radiative recombination is an intrinsic process that cannot be avoided and can be important, particularly for direct band gap semiconductors. However, it can be counterbalanced by engineering the system so that the radiated light is optimally reabsorbed by the PV cell. In addition to the short-circuit current density, further contributions come from the radiative and nonradiative recombination mechanisms. A current density can be associated to each of these processes. In the following, we assume highly mobile electron–hole pairs and neglect scattering mechanisms at interfaces. Let us first consider radiative processes. Following the Shockley diode equation, the radiative current density generated by reabsorbing the emitted photons can be estimated by:52 (3) (4)where ϕrad(E) is the black-body radiation associated to the radiative process (we consider a 300 K black-body), kB is the Boltzmann constant and T is the temperature.52
+The second recombination process is nonradiative. In this nonradiative SQ model, two limiting cases are considered.52 First, in low-level injection conditions, one type of carriers is present in excess and the nonradiative current density is given by52 (5) (6)where τ is the nonradiative recombination lifetime, Nc (Nv) is the effective density of states in the conduction (valence) band and Nt is the defect density. On the other hand, in case of high injection, both carrier types are present in similar concentrations. In this case, the nonradiative current density is52 (7) (8)
+Finally, the net current in the PV cell is given by J = Jsc − Jrad − Jnonrad(9)where the nonradiative current depends on the injection level and, therefore, on n and p, the electron and hole concentrations in operating conditions (under illumination). The maximum conversion efficiency of the PV cell can be obtained by solving eqn (1), provided we know the band gap, the absorption spectrum, the band structure, the carrier lifetime, the doping density and the thickness of the absorber layer. It should be noted that, if nonradiative recombinations occur in the material, the net efficiency reaches a maximum for a given thickness. Indeed, increasing the thickness enhances the absorption mechanisms, thereby increasing the efficiency. However, the short-circuit current will saturate for too large thicknesses (see eqn (2)), while the nonradiative-recombination current will keep increasing (see eqn (6) and (8)). The efficiency will then start to decrease. Comparing different materials for their efficiency as absorbers should, for this reason, be done using their particular optimal thickness: most of the time, comparing materials of the same thickness is meaningless because they have different intrinsic properties. For instance, the optimal thickness of Si is around 200 μm while it is two orders of magnitude lower in GaAs. This is explained by the much smaller absorption coefficient of Si compared with GaAs, and the fact that charge carriers in Si have a longer lifetime (∼10−3 s) compared to charge carriers in GaAs (∼10−6 s).4,37–39
+Let us now provide an expression for the nonradiative lifetime τ. As we have already mentioned, radiative recombinations can be counterbalanced and nonradiative processes are the most detrimental in a PV cell. The nonradiative recombination is enhanced by the presence of deep defects in the band gap of the absorber.120 The SRH model describes the recombination rate for electron–hole pairs through a trapping state within the band gap.45,121 In general, electrons can be more easily captured by a defect state close to the CBM (Ec), but it will be much more difficult to trap a hole with the same defect state. Similarly, hole trapping is easier but electron capturing is difficult in case of a defect state close to the VBM (Ev). Therefore, the electron–hole recombination at a defect state is significantly enhanced when the defect energy (Et) is closer to the middle of the band gap, leading to a general avoidance of materials naturally presenting such deep defects. Following the SRH model, the recombination rate Rt associated to a single trapping state t is given by45 (10)where n0 (p0) is the electron (hole) concentration at thermal equilibrium (without illumination), and τn0 (τp0) is the electron (hole) capture time constant that is related to the electron (hole) capture coefficient Cn (Cp) of the trapping states by (a similar expression holds for holes) (11)
+It can also be seen as the minimum electron (hole) lifetime, obtained when the recombination rate is maximum. The total recombination rate R is the sum of the rates associated to all the defects in the crystal. Finally, the carrier lifetime is given by (12)in the case of electrons, where Δn = n − n0 is the change in electron density due to illumination (Δp = p − p0 for holes).
+5.2 Ground-state calculations
+We retrieve the relaxed crystal structures and their electronic band structures from the Materials Project.51 These have been previously obtained with VASP,122,123 using the generalized gradient approximation (GGA) with the Perdew–Burke–Ernzerhof (PBE) XC functional124 within the projector-augmented wave (PAW) framework.125 We also obtain the thermal stability, the PBE band gap and the electron and hole effective masses from the Materials Project. The stability for a given structure is quantified by its energy above hull: the larger this energy, the less stable the structure.126,127 The effective mass tensor has already been computed within the semiclassical Boltzmann transport formalism and stored in the Materials Project for a large number of compounds.128 For selected materials, more precise values of the gaps need to be computed. We use the HSE hybrid functional to that purpose.66,129 As a prior step, their structure is relaxed using the PBEsol functional as it leads to similar structures at a lower computational cost.130
+5.3 Absorption coefficient
+We evaluate the imaginary part of the dielectric constant within the independent-particle approximation with the PBE functional. The real part is computed using Kramers–Kronig relations. The absorption spectrum is shifted rigidly to fit the absorption onset to the band gap obtained from HSE computations.131
+5.4 Defect computations
+The presence of transition defect states within the band gap of the material affects its conductivity and the lifetime of minority charge carriers. The position of point-defect levels and their concentration are assessed by computing the defect formation energies. The intrinsic point defects (vacancies and antisites) are investigated using a supercell approach.132 They are created in multiple charge states using PyCDT.133 In each case, the supercell size is chosen such that the distance between the defect and its periodic images is larger than 10 Å in order to reduce the spurious interactions, that occur within distances of 5–10 Å.132 The Brillouin zone is sampled using a 2 × 2 × 2 k-point mesh. Spin-polarized calculations are performed and all supercells are relaxed at fixed volume until the forces on the ions are smaller than 0.01 eV Å−1. The formation energy of each charged-defect state is computed as a function of the Fermi level Ef as134,135 (13)where Etot[Xq] and Ebulktot are the total energies of the defect-containing supercell (for a given defect X in the charge state q) and the bulk, respectively. The third term represents the energy needed to exchange atoms with thermodynamic reservoirs where ni indicates the number of atoms of species i removed or added to create the defect, and μi their corresponding chemical potential. The fourth term represents the energy to exchange electrons with the host material through the electronic chemical potential given by the Fermi level. Finally, the last term is a correction accounting for spurious image-charge Coulomb interactions due to finite supercell size, as well as potential-alignment corrections to restore the position of the pure bulk VBM in charged-defect calculations due to the presence of the compensating background charge density.136,137
+In the first steps of our HT screening, we limit ourselves to the use of the semilocal PBE functional in point-defect computations because hybrid functionals are very demanding in terms of computational resources and unfit for a HT screening. However, semilocal functionals generally underestimate the band gap of semiconductors, which leads to errors in determining the defect transition states within the band gap as they could go into the valence or conduction band.73 We thus use an alternative approach to overcome the underestimation of the band gap by moving PBE band edges to their values obtained with HSE. We assume that the defect levels follow the HSE corrections to the band edges. This has been demonstrated to work very well for deep transition levels.74,75 As the deep defects are the most problematic for the carrier lifetime, our approach can be effective to eliminate the poorly-efficient absorbers. For selected candidates, we also perform full HSE point-defect computations to better describe the intrinsic defects and their transition states.
+5.5 Carrier lifetime
+The lifetime is estimated using point-defect computations and the SRH model. We make a few assumptions to use this model. First, unless explicitly computed, electrons and holes are considered to have the same capture cross section (10−15 cm2), a value comparable to the average of deep defect states.54–56 The carrier capture coefficient is related to the capture cross section σ and the thermal velocity v through C = σv, and the thermal velocity is directly obtained from the temperature and the carrier effective mass. Moreover, the electron and hole densities generated from illumination are fixed to Δn = Δp = 1015 cm−3, a typical value for PV materials such as CZTS and CdTe.42,138 Higher carrier densities would require a careful treatment of the Auger recombination mechanism. We assume that the materials are synthesized at high temperature (900 K) and then quenched to room temperature. This mimics experimental conditions and allows to reach larger defect densities and hence carrier concentrations. The charge carrier lifetime is estimated using the SRH model for the dominant deep defects. Deep defects are defined as having transition levels Et such that Ec − Et > 0.2 eV or Et − Ev > 0.2 eV, with Ec and Ev the conduction band minimum (CBM) and the valence band maximum (VBM), respectively. We compute the carrier lifetime for all possible growth conditions (i.e., different chemical potentials) assuming that the material is p-type with a hole concentration of 1016 cm−3. This assumption is linked to the p-type character of most thin-film solar absorbers.
+5.6 Intrinsic mobility
+The carrier mobility in a semiconductor depends on many factors, including the temperature, the purity and structure of the crystal, and the carrier concentration. In this work, and for selected candidates, we compute the intrinsic mobility, which is the mobility of the pure crystal without any defect with a low carrier concentration. It is limited by the scattering of electrons by the phonons in the material. This phonon-limited mobility is an upper bound for the reachable mobility of a material and it allows to directly compare materials. Different approaches exist for computing the mobility. We use the Boltzmann formalism within the momentum relaxation time approximation (MRTA). In this context, the electron mobility is given by (a similar expression holds for holes)96,97,139,140 (14)where Vuc is the unit-cell volume, VBZ is the volume of the Brillouin zone, vbk,α is the α-th component of the velocity operator, γbk is the electron scattering rate, f is the Fermi–Dirac occupation function and Ebk is the electronic energy in band b and wavevector k. The scattering rates γbk are the phonon-dependent ingredients and are given by96,97,141,142 (15)where q is the phonon wavevector and ν its mode, gmnν(k,q) are the electron–phonon coupling matrix elements and ñqν is the Bose–Einstein occupation function. The electron–phonon matrix elements are obtained from density-functional perturbation theory (DFPT).143,144 As converging eqn (15) with respect to the q mesh and eqn (14) with respect to the k mesh requires very dense samplings, a direct computation using DFPT is not possible. To circumvent this issue, we use a Fourier interpolation algorithm developed in Abinit.96,97,145,146 The long-range interactions are problematic for this kind of interpolation, and we use the Fröhlich model (up to dipole terms) to stabilize the interpolation, as commonly used in state-of-the-art first-principles electron–phonon computations.141 The effect of dynamical quadrupoles is negligible in the systems investigated here.96,97 The starting phonons have been extracted from the Materials Project and we used the same parameters and norm-conserving pseudopotentials for the mobility computations.147 Convergence studies for the mobility can be found in the ESI.†
+5.7 Carrier capture coefficient
+The carrier capture coefficient C for deep defect states in selected materials are examined within the multiphonon approach.54 We represent the atomic configuration with a one-dimensional configuration coordinate (1D cc) Q.54,55 We use the static-coupling theory for the electron–phonon coupling matrix elements.148,149 Following this approach, the carrier capture coefficient is given by: (16)where V is the supercell volume, g is the degeneracy factor, Wif is the electron–phonon overlap between the initial delocalized bulk-like i and final localized defect f states, wm is the thermal occupation for the mth phonon state, 〈ξim|Q|ξfn〉 is the overlap of the vibrational wavefunctions ξ. Ωi is the frequency of the effective vibration Q in the initial state considered and is obtained by solving the one-dimensional Schrödinger equation for the potential energy surface around the equilibrium geometry. ΔE = Ef − Ei is the difference of energy between the initial and final states, or the ionization energy. Following the methodology proposed by Alkauskas et al. and the open-source CarrierCapture code (version 0.1) developed by Kim et al.150 to compute the carrier capture coefficients,54,55 we first solve the 1D Schrödinger equation for the potential energy surfaces around the equilibrium geometry of the ground and excited states (obtained using the HSE functional), and we find the associated vibrational wavefunctions and their eigenstates. Then we compute the overlap of the vibrational wavefunctions 〈ξim|Q|ξfn〉, and the electron phonon overlap term Wif by evaluating the gradient change of the overlap of Kohn–Sham orbitals of the delocalized bulk-like and localized defect states in the configuration coordinates.150 Finally, we obtain the carrier capture coefficient of selected materials.
+5.8 Crystal orbital Hamilton population
+We use the Crystal Orbital Hamilton Population (COHP) analysis on a few selected materials for a better understanding of the chemical environment and its role in the defect properties.151 For these computations, we use the LOBSTER code152 with the pbeVaspFit2015 basis set together with PBE results for the pure bulk and defect supercells in different charge states to quantify the bonding or antibonding behavior of different states by projecting them on localized atomic basis sets.152–155 For the correlation plot in Fig. 10, we focused on the cation–anion bonds around the cation that builds the defect and we show the sum of the integrated COHP values of all these cation–anion interactions. We only integrate the COHPs in the range from Ef − 2 eV to Ef to only capture the states close to the Fermi level. We performed the DFT calculations based on the relaxed structures from the Materials Project with the help of an automatic workflow for Lobster152 and VASP122,123 calculations as recently implemented by some of us in the Python packages atomate,156 custodian,157 and pymatgen157. The DFT calculations were performed with the help of the the projector augmented-wave method,125 with a plane-wave cutoff of 520 eV, the PBE functional,124 and a convergence criterion of 10−7 for the energy. The kpoint density was set to 6000 k-points × atoms. We included data for the materials with the following IDs from the Materials Project: mp-10428, mp-1225835, mp-13982, mp-14012, mp-15895, mp-16179, mp-17916, mp-1933, mp-1966, mp-29136, mp-361, mp-5546, mp-557225, mp-7463, mp-766447. This data is available via the DOI provided in ref. 114.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+D. D. was financed by the Conseil de l’action internationale (CAI) through a doctorate grant “Coopération au Développment”. G. M. R., and G. B. are grateful to the F. R. S.-FNRS (Belgium) for financial support. J. G. acknowledges funding from the European Unions Horizon 2020 research and innovation program under the Marie Skłodowska-Curie grant agreement no. 837910. V.-A. H. was funded through a grant from the FRIA. GH aknowledges support from the U.S. Department of Energy, Office of Science, Office of Basic Energy Sciences, Materials Sciences and Engineering Division, under Contract DE-AC02-05-CH11231: Materials Project program KC23MP. The present research benefited from computational resources made available on the Tier-1 supercomputer of the Fédération Wallonie-Bruxelles, infrastructure funded by the Walloon Region under the grant agreement no. 1117545. Computational resources have been provided by the supercomputing facilities of the Université catholique de Louvain (CISM/UCL) and the Consortium des Équipements de Calcul Intensif en Fédération Wallonie Bruxelles (CÉCI) funded by the Fond de la Recherche Scientifique de Belgique (F. R. S.-FNRS) under convention 2.5020.11 and by the Walloon Region.
+References
+O. Ellabban, H. Abu-Rub and F. Blaabjerg, Renewable Sustainable Energy Rev., 2014, 39, 748–764 CrossRef .
+A. Polman, M. Knight, E. C. Garnett, B. Ehrler and W. C. Sinke, Science, 2016, 352, aad4424 CrossRef PubMed .
+B. Parida, S. Iniyan and R. Goic, Renewable Sustainable Energy Rev., 2011, 15, 1625–1636 CrossRef CAS .
+M. A. Green, Nat. Energy, 2016, 1, 23–34 Search PubMed .
+Y.-T. Huang, S. R. Kavanagh, D. O. Scanlon, A. Walsh and R. L. Hoye, Nanotechnology, 2021, 32, 132004 CrossRef CAS PubMed .
+P. Jackson, D. Hariskos, R. Wuerz, O. Kiowski, A. Bauer, T. M. Friedlmeier and M. Powalla, Phys. Status Solidi RRL, 2015, 9, 28–31 CrossRef CAS .
+A. G. Martin, E. Keith, H. Yoshihiro, W. Wilhelm and D. D. Ewan, Prog. Photovoltaics Res. Appl., 2012, 20, 12–20 CrossRef .
+D. D. Hsu, P. O’Donoughue, V. Fthenakis, G. A. Heath, H. C. Kim, P. Sawyer, J.-K. Choi and D. E. Turney, J. Ind. Ecol., 2012, 16, S122–S135 CrossRef CAS .
+
+          A. Jäger-Waldau, Institute for Energy and Transport, Renewable Energy Unit, 2013, 55.
+T. P. White, N. N. Lal and K. R. Catchpole, IEEE J. Photovolt., 2013, 4, 208–214 Search PubMed .
+B. Chen, Y. Bai, Z. Yu, T. Li, X. Zheng, Q. Dong, L. Shen, M. Boccard, A. Gruverman, Z. Holman and J. Huang, Adv. Energy Mater., 2016, 6, 1601128 CrossRef .
+S. Siebentritt, Nat. Energy, 2017, 2, 840–841 CrossRef .
+J. Y. Kim, K. Lee, N. E. Coates, D. Moses, T.-Q. Nguyen, M. Dante and A. J. Heeger, Science, 2007, 317, 222–225 CrossRef CAS PubMed .
+D. M. Powell, R. Fu, K. Horowitz, P. A. Basore, M. Woodhouse and T. Buonassisi, Energy Environ. Sci., 2015, 8, 3395–3408 RSC .
+P. A. Basore, IEEE J. Photovolt., 2014, 4, 1477–1482 Search PubMed .
+
+          I. L. Repins, W. K. Metzger, C. L. Perkins, J. V. Li and M. A. Contreras, 2009 34th IEEE Photovoltaic Specialists Conference (PVSC), 2009, pp. 000978–000983.
+M. Nakamura, K. Yamaguchi, Y. Kimoto, Y. Yasaki, T. Kato and H. Sugimoto, IEEE J. Photovolt., 2019, 9, 1863–1867 Search PubMed .
+A. Romeo and E. Artegiani, Energies, 2021, 14, 1684 CrossRef CAS .
+N. T. Energy, Best research-cell efficiency chart, 2020, https://www.nrel.gov/pv/cell-efficiency.html.
+D. Meggiolaro and F. De Angelis, ACS Energy Lett., 2018, 3, 2206–2222 CrossRef CAS .
+C. Kalaiselvi, N. Muthukumarasamy, D. Velauthapillai, M. Kang and T. Senthil, Mater. Lett., 2018, 219, 198–200 CrossRef CAS .
+J. Kang and L.-W. Wang, J. Phys. Chem. Lett., 2017, 8, 489–493 CrossRef CAS PubMed .
+L. M. Herz, ACS Energy Lett., 2017, 2, 1539–1548 CrossRef CAS .
+M. H. Du, J. Mater. Chem. A, 2014, 2, 9091–9098 RSC .
+S. Eyderman, A. Deinega and S. John, J. Mater. Chem. A, 2014, 2, 761–769 RSC .
+S. D. Stranks, G. E. Eperon, G. Grancini, C. Menelaou, M. J. Alcocer, T. Leijtens, L. M. Herz, A. Petrozza and H. J. Snaith, Science, 2013, 342, 341–344 CrossRef CAS PubMed .
+M. Pandey, K. Kuhar and K. W. Jacobsen, J. Phys. Chem. C, 2017, 121, 17780–17786 CrossRef CAS .
+L. Yu and A. Zunger, Phys. Rev. Lett., 2012, 108, 068701 CrossRef PubMed .
+M. Bercx, N. Sarmadian, R. Saniz, B. Partoens and D. Lamoen, Phys. Chem. Chem. Phys., 2016, 18, 20542–20549 RSC .
+L. Yu and A. Zunger, Phys. Rev. Lett., 2012, 108, 068701 CrossRef PubMed .
+L. Yu, R. S. Kokenyesi, D. A. Keszler and A. Zunger, Adv. Energy Mater., 2013, 3, 43–48 CrossRef CAS .
+D. H. Fabini, M. Koerner and R. Seshadri, Chem. Mater., 2019, 31, 1561–1574 CrossRef CAS .
+K. Kuhar, M. Pandey, K. S. Thygesen and K. W. Jacobsen, ACS Energy Lett., 2018, 3, 436–446 CrossRef CAS .
+W. Shockley and H. J. Queisser, J. Appl. Phys., 1961, 32, 510–519 CrossRef CAS .
+J. S. Park, S. Kim, Z. Xie and A. Walsh, Nat. Rev. Mater., 2018, 3, 194–210 CrossRef CAS .
+R. Jaramillo, M.-J. Sher, B. K. Ofori-Okai, V. Steinmann, C. Yang, K. Hartman, K. A. Nelson, A. M. Lindenberg, R. G. Gordon and T. Buonassisi, J. Appl. Phys., 2016, 119, 035101 CrossRef .
+S. Tiwari and S. L. Wright, Appl. Phys. Lett., 1990, 56, 563–565 CrossRef CAS .
+M. Sharmin, S. Choudhury, N. Akhtar and T. Begum, J. Bangladesh Acad. Sci., 2012, 36, 97–107 CrossRef CAS .
+A. Richter, M. Hermle and S. W. Glunz, IEEE J. Photovolt., 2013, 3, 1184–1191 Search PubMed .
+T. P. Dhakal, C.-Y. Peng, R. R. Tobias, R. Dasharathy and C. R. Westgate, Sol. Energy, 2014, 100, 23–30 CrossRef CAS .
+S. Chen, J.-H. Yang, X.-G. Gong, A. Walsh and S.-H. Wei, Phys. Rev. B: Condens. Matter Mater. Phys., 2010, 81, 245204 CrossRef .
+S. Kim, J.-S. Park, S. N. Hood and A. Walsh, J. Mater. Chem. A, 2019, 7, 2686–2693 RSC .
+S. Wang, W. Wang, W. Fong, Y. Yu and C. Surya, Sci. Rep., 2017, 7, 39704 CrossRef CAS PubMed .
+B. D. Malone, A. Gali and E. Kaxiras, Phys. Chem. Chem. Phys., 2014, 16, 26176–26183 RSC .
+W. Shockley and W. Read Jr, Phys. Rev., 1952, 87, 835 CrossRef CAS .
+D. Han, C. Dai and S. Chen, J. Semicond., 2017, 38, 011006 CrossRef .
+A. Walsh and A. Zunger, Nat. Mater., 2017, 16, 964–967 CrossRef CAS PubMed .
+R. C. Kurchin, P. Gorai, T. Buonassisi and V. Stevanovic, Chem. Mater., 2018, 30, 5583–5592 CrossRef CAS .
+R. E. Brandt, J. R. Poindexter, P. Gorai, R. C. Kurchin, R. L. Hoye, L. Nienhaus, M. W. Wilson, J. A. Polizzotti, R. Sereika, R. Žaltauskas, L. C. Lee, J. L. MacManus-Driscoll, M. Bawendi, V. Stevanović and T. Buonassisi, Chem. Mater., 2017, 29, 4667–4674 CrossRef CAS .
+R. E. Brandt, V. Stevanović, D. S. Ginley and T. Buonassisi, MRS Commun., 2015, 5, 265–275 CrossRef CAS .
+A. Jain, S. P. Ong, G. Hautier, W. Chen, W. D. Richards, S. Dacek, S. Cholia, D. Gunter, D. Skinner, G. Ceder and K. A. Persson, APL Mater., 2013, 1, 011002 CrossRef .
+T. Kirchartz and U. Rau, Adv. Energy Mater., 2018, 8, 1703385 CrossRef .
+S. Kim, J. A. Márquez, T. Unold and A. Walsh, Energy Environ. Sci., 2020, 13, 1481–1491 RSC .
+A. Alkauskas, Q. Yan and C. G. Van de Walle, Phys. Rev. B: Condens. Matter Mater. Phys., 2014, 90, 075202 CrossRef CAS .
+S. Kim, J.-S. Park and A. Walsh, ACS Energy Lett., 2018, 3, 496–500 CrossRef CAS .
+L. Shi and L.-W. Wang, Phys. Rev. Lett., 2012, 109, 245501 CrossRef PubMed .
+P. Śpiewak and K. J. Kurzydłowski, Phys. Rev. B: Condens. Matter Mater. Phys., 2013, 88, 195204 CrossRef .
+J.-H. Yang, L. Shi, L.-W. Wang and S.-H. Wei, Sci. Rep., 2016, 6, 21712 CrossRef CAS PubMed .
+B. Huang, S. Chen, H.-X. Deng, L.-W. Wang, M. A. Contreras, R. Noufi and S.-H. Wei, IEEE J. Photovolt., 2013, 4, 477–482 Search PubMed .
+Y. Kumagai, M. Choi, Y. Nose and F. Oba, Phys. Rev. B: Condens. Matter Mater. Phys., 2014, 90, 125202 CrossRef .
+L. Guo, B. Zhang, S. Li, Q. Zhang, M. Buettner, L. Li, X. Qian and F. Yan, APL Mater., 2019, 7, 041105 CrossRef .
+X. Liu, X. Xiao, Y. Yang, D.-J. Xue, D.-B. Li, C. Chen, S. Lu, L. Gao, Y. He, M. C. Beard, G. Wang, S. Chen and J. Tang, Prog. Photovoltaics Res. Appl., 2017, 25, 861–870 CrossRef CAS .
+A. Polizzotti, A. Faghaninia, J. R. Poindexter, L. Nienhaus, V. Steinmann, R. L. Hoye, A. Felten, A. Deyine, N. M. Mangan, J. P. Correa-Baena, S. Sik Shin, S. Jaffer, M. G. Bawendi, C. Lo and T. Buonassisi, J. Phys. Chem. Lett., 2017, 8, 3661–3667 CrossRef CAS PubMed .
+B. Yang, L. Wang, J. Han, Y. Zhou, H. Song, S. Chen, J. Zhong, L. Lv, D. Niu and J. Tang, Chem. Mater., 2014, 26, 3135–3143 CrossRef CAS .
+D. O. Scanlon, B. J. Morgan, G. W. Watson and A. Walsh, Phys. Rev. Lett., 2009, 103, 096405 CrossRef PubMed .
+J. Heyd, G. E. Scuseria and M. Ernzerhof, J. Chem. Phys., 2003, 118, 8207–8215 CrossRef CAS .
+S. Ramkumar, A. Miglio, M. van Setten, D. Waroquiers, G. Hautier and G.-M. Rignanese, Phys. Rev. Mater., 2018, 2, 085403 CrossRef .
+L. L. Baranowski, P. Zawadzki, S. Lany, E. S. Toberer and A. Zakutayev, Semicond. Sci. Technol., 2016, 31, 123004 CrossRef .
+S. Akari, J. Chantana, S. Nakatsuka, Y. Nose and T. Minemoto, Sol. Energy Mater. Sol. Cells, 2018, 174, 412–417 CrossRef CAS .
+T. Yokoyama, F. Oba, A. Seko, H. Hayashi, Y. Nose and I. Tanaka, Appl. Phys. Express, 2013, 6, 061201 CrossRef .
+A. W. Welch, L. L. Baranowski, P. Zawadzki, C. DeHart, S. Johnston, S. Lany, C. A. Wolden and A. Zakutayev, Prog. Photovoltaics Res. Appl., 2016, 24, 929–939 CrossRef CAS .
+F. W. de Souza Lucas, A. W. Welch, L. L. Baranowski, P. C. Dippo, H. Hempel, T. Unold, R. Eichberger, B. Blank, U. Rau, L. H. Mascaro and A. Zakutayev, J. Phys. Chem. C, 2016, 120, 18377–18385 CrossRef CAS .
+S. Lany and A. Zunger, Modell. Simul. Mater. Sci. Eng., 2009, 17, 084002 CrossRef .
+A. Alkauskas, P. Broqvist and A. Pasquarello, Phys. Rev. Lett., 2008, 101, 046405 CrossRef PubMed .
+A. Alkauskas, P. Broqvist and A. Pasquarello, Phys. Status Solidi B, 2011, 248, 775–789 CrossRef CAS .
+
+          D. Broberg, K. Bystrom, S. Srivastava, D. Dahliah, B. A. D. Williamson, L. Weston, D. O. Scanlon, G.-M. Rignanese, S. Dwaraknath, J. Varley, K. Persson, M. Asta and G. Hautier, submitted.
+T. Minami, MRS Bull., 2000, 25, 38–44 CrossRef CAS .
+S. C. Dixon, D. O. Scanlon, C. J. Carmalt and I. P. Parkin, J. Mater. Chem. C, 2016, 4, 6946–6961 RSC .
+H. Kawazoe, H. Yanagi, K. Ueda and H. Hosono, MRS Bull., 2000, 25, 28–36 CrossRef CAS .
+G. Hautier, A. Miglio, G. Ceder, G.-M. Rignanese and X. Gonze, Nat. Commun., 2013, 4, 2292–2299 CrossRef PubMed .
+G. Hautier, A. Miglio, D. Waroquiers, G.-M. Rignanese and X. Gonze, Chem. Mater., 2014, 26, 5447–5458 CrossRef CAS .
+
+          J. Song, T. Anderson and S. S. Li, 2008 33rd IEEE Photovoltaic Specialists Conference, 2008, pp. 1–4.
+M. A. M. Bhuiyan, M. S. Islam and A. J. Datta, Int. J. Comput. Appl., 2012, 57, 26–30 Search PubMed .
+
+          M. Fathil, M. M. Arshad, U. Hashim, A. Ruslinda, R. Ayub, A. Azman, M. Nurfaiz, M. Kamarudin, M. Aminuddin and A. Munir, 2014 IEEE International Conference on Semiconductor Electronics (ICSE2014), 2014, pp. 24–27.
+S. Chen, J.-H. Yang, X.-G. Gong, A. Walsh and S.-H. Wei, Phys. Rev. B: Condens. Matter Mater. Phys., 2010, 81, 245204 CrossRef .
+A. Walsh, S. Chen, S.-H. Wei and X.-G. Gong, Adv. Energy Mater., 2012, 2, 400–409 CrossRef CAS .
+G. Brunin, F. Ricci, V.-A. Ha, G.-M. Rignanese and G. Hautier, npj Comput. Mater., 2019, 5, 63 CrossRef .
+D. Shin, B. Saparov, T. Zhu, W. P. Huhn, V. Blum and D. B. Mitzi, Chem. Mater., 2016, 28, 4771–4780 CrossRef CAS .
+G. Savelsberg, Z. Naturforsch. B, 1978, 33, 370–373 CrossRef .
+G. Savelsberg and H. Schäfer, Z. Naturforsch. B, 1977, 32, 745–748 CrossRef .
+G. Savelsberg and H. Schaefer, Z. Naturforsch., B: Anorg. Chem., Org. Chem., 1978, 33, 590–592 CrossRef .
+F. DiSalvo, S. Trail, H. Yamane and N. Brese, J. Alloys Compd., 1997, 255, 122–129 CrossRef CAS .
+A. Beleanu, J. Kiss, M. Baenitz, M. Majumder, A. Senyshyn, G. Kreiner and C. Felser, Solid State Sci., 2016, 55, 83–87 CrossRef CAS .
+T. D. Veal, N. Feldberg, N. F. Quackenbush, W. M. Linhart, D. O. Scanlon, L. F. Piper and S. M. Durbin, Adv. Energy Mater., 2015, 5, 1501462 CrossRef .
+I. S. Khan, K. N. Heinselman and A. Zakutayev, J. Phys.: Energy, 2020, 2, 032007 CAS .
+G. Brunin, H. P. C. Miranda, M. Giantomassi, M. Royo, M. Stengel, M. J. Verstraete, X. Gonze, G.-M. Rignanese and G. Hautier, Phys. Rev. Lett., 2020, 125, 136601 CrossRef CAS PubMed .
+G. Brunin, H. P. C. Miranda, M. Giantomassi, M. Royo, M. Stengel, M. J. Verstraete, X. Gonze, G.-M. Rignanese and G. Hautier, Phys. Rev. B, 2020, 102, 094308 CrossRef CAS .
+N. Sankar, C. Sanjeeviraja and K. Ramachandran, J. Cryst. Grow., 2002, 243, 117–123 CrossRef CAS .
+S. F. Hasan, M. Subhan and K. M. Mannan, Opt. Mater., 2000, 14, 329–336 CrossRef .
+J. C. Park, M. Al-Jassim, S. W. Shin, J. H. Kim and T. W. Kim, Ceram. Int., 2019, 45, 4424–4430 CrossRef CAS .
+B. Maynard, Q. Long, E. A. Schiff, M. Yang, K. Zhu, R. Kottokkaran, H. Abbas and V. L. Dalal, Appl. Phys. Lett., 2016, 108, 173505 CrossRef .
+C. Motta, F. El-Mellouhi and S. Sanvito, Sci. Rep., 2015, 5, 1–8 Search PubMed .
+N. T. Nassar, T. E. Graedel and E. Harper, Sci. Adv., 2015, 1, e1400180 CrossRef CAS PubMed .
+M. W. Gaultois, T. D. Sparks, C. K. Borg, R. Seshadri, W. D. Bonificio and D. R. Clarke, Chem. Mater., 2013, 25, 2911–2920 CrossRef CAS .
+L. Weinhardt, D. Hauschild and C. Heske, Adv. Mater., 2019, 31, 1806660 CrossRef PubMed .
+H. Zhou, Q. Chen, G. Li, S. Luo, T.-B. Song, H.-S. Duan, Z. Hong, J. You, Y. Liu and Y. Yang, Science, 2014, 345, 542–546 CrossRef CAS PubMed .
+
+          T. Kato, H. Hiroi, N. Sakai and H. Sugimoto, 28th European Photovoltaic Solar Energy Conference, 2013, pp. 2125–2127.
+A. Klein, J. Phys.: Condens. Matter, 2015, 27, 134201 CrossRef PubMed .
+N.-G. Park, M. Grätzel, T. Miyasaka, K. Zhu and K. Emery, Nat. Energy, 2016, 1, 1–8 Search PubMed .
+R. Wang, M. Mujahid, Y. Duan, Z.-K. Wang, J. Xue and Y. Yang, Adv. Funct. Mater., 2019, 29, 1808843 CrossRef CAS .
+J. B. Varley, A. Miglio, V.-A. Ha, M. J. van Setten, G.-M. Rignanese and G. Hautier, Chem. Mater., 2017, 29, 2568–2573 CrossRef CAS .
+D. Shin, B. Saparov and D. B. Mitzi, Adv. Energy Mater., 2017, 7, 1602366 CrossRef .
+A. Le Donne, V. Trifiletti and S. Binetti, Front. Chem., 2019, 7, 297 CrossRef CAS PubMed .
+J. George, Lobster data for the publication “High-throughput computational search for high carrier lifetime, defect-tolerant solar absorbers”, 2021 DOI:10.5281/zenodo.4729601 .
+E. Gaudin, F. Boucher and M. Evain, J. Solid State Chem., 2001, 160, 212–221 CrossRef CAS .
+M. A. Green, Prog. Photovoltaics Res. Appl., 2002, 10, 235–241 CrossRef CAS .
+B. Blank, T. Kirchartz, S. Lany and U. Rau, Phys. Rev. Appl., 2017, 8, 024032 CrossRef .
+W. Metzger, M. Wanlass, R. Ellingson, R. Ahrenkiel and J. Carapella, Appl. Phys. Lett., 2001, 79, 3272–3274 CrossRef CAS .
+J. D. Puksec, Automatika, 2002, 43, 47–53 Search PubMed .
+
+          J. Nelson, The physics of solar cells, World Scientific Publishing Company,  2003 Search PubMed .
+T. Goudon, V. Miljanović and C. Schmeiser, SIAM J. Appl. Math., 2007, 67, 1183–1201 CrossRef .
+G. Kresse and J. Furthmüller, Phys. Rev. B: Condens. Matter Mater. Phys., 1996, 54, 11169 CrossRef CAS PubMed .
+G. Kresse and J. Furthmüller, Comput. Mater. Sci., 1996, 6, 15–50 CrossRef CAS .
+J. P. Perdew, K. Burke and M. Ernzerhof, Phys. Rev. Lett., 1996, 77, 3865 CrossRef CAS PubMed .
+P. E. Blöchl, Phys. Rev. B: Condens. Matter Mater. Phys., 1994, 50, 17953 CrossRef PubMed .
+S. P. Ong, L. Wang, B. Kang and G. Ceder, Chem. Mater., 2008, 20, 1798–1807 CrossRef CAS .
+A. Jain, S. P. Ong, G. Hautier, W. Chen, W. D. Richards, S. Dacek, S. Cholia, D. Gunter, D. Skinner, G. Ceder and K. A. Persson, APL Mater., 2013, 1, 011002 CrossRef .
+F. Ricci, W. Chen, U. Aydemir, G. J. Snyder, G.-M. Rignanese, A. Jain and G. Hautier, Sci. Data, 2017, 4, 170085 CrossRef CAS PubMed .
+J. L. Lyons and C. G. Van de Walle, npj Comput. Mater., 2017, 3, 12 CrossRef .
+J. P. Perdew, A. Ruzsinszky, G. I. Csonka, O. A. Vydrov, G. E. Scuseria, L. A. Constantin, X. Zhou and K. Burke, Phys. Rev. Lett., 2008, 100, 136406 CrossRef PubMed .
+R. Del Sole and R. Girlanda, Phys. Rev. B: Condens. Matter Mater. Phys., 1993, 48, 11789 CrossRef CAS PubMed .
+C. Freysoldt, B. Grabowski, T. Hickel, J. Neugebauer, G. Kresse, A. Janotti and C. G. Van de Walle, Rev. Mod. Phys., 2014, 86, 253 CrossRef .
+D. Broberg, B. Medasani, N. E. Zimmermann, G. Yu, A. Canning, M. Haranczyk, M. Asta and G. Hautier, Comput. Phys. Commun., 2018, 226, 165–179 CrossRef CAS .
+S. Zhang and J. E. Northrup, Phys. Rev. Lett., 1991, 67, 2339 CrossRef CAS PubMed .
+H.-P. Komsa, T. T. Rantala and A. Pasquarello, Phys. Rev. B: Condens. Matter Mater. Phys., 2012, 86, 045112 CrossRef .
+C. Freysoldt, J. Neugebauer and C. G. Van de Walle, Phys. Status Solidi B, 2011, 248, 1067–1076 CrossRef CAS .
+Y. Kumagai and F. Oba, Phys. Rev. B: Condens. Matter Mater. Phys., 2014, 89, 195205 CrossRef .
+J.-H. Yang, L. Shi, L.-W. Wang and S.-H. Wei, Sci. Rep., 2016, 6, 21712 CrossRef CAS PubMed .
+G. K. H. Madsen, J. Carrete and M. J. Verstraete, Comput. Phys. Commun., 2018, 231, 140–145 CrossRef CAS .
+S. Poncé, E. R. Margine and F. Giustino, Phys. Rev. B, 2018, 97, 121201 CrossRef .
+F. Giustino, Rev. Mod. Phys., 2017, 89, 015003 CrossRef .
+J. Ma, A. S. Nissimagoudar and W. Li, Phys. Rev. B, 2018, 97, 045201 CrossRef CAS .
+X. Gonze, Phys. Rev. B: Condens. Matter Mater. Phys., 1997, 55, 10337–10354 CrossRef CAS .
+X. Gonze and C. Lee, Phys. Rev. B: Condens. Matter Mater. Phys., 1997, 55, 10355 CrossRef CAS .
+X. Gonze, B. Amadon, G. Antonius, F. Arnardi, L. Baguet, J.-M. Beuken, J. Bieder, F. Bottin, J. Bouchet and E. Bousquet, 
+            et al.
+          , Comput. Phys. Commun., 2020, 248, 107042 CrossRef CAS .
+A. H. Romero, D. C. Allan, B. Amadon, G. Antonius, T. Applencourt, L. Baguet, J. Bieder, F. Bottin, J. Bouchet and E. Bousquet, 
+            et al.
+          , J. Chem. Phys., 2020, 152, 124102 CrossRef CAS PubMed .
+G. Petretto, S. Dwaraknath, H. P. Miranda, D. Winston, M. Giantomassi, M. J. Van Setten, X. Gonze, K. A. Persson, G. Hautier and G.-M. Rignanese, Sci. Data, 2018, 5, 180065 CrossRef CAS PubMed .
+L. Shi, K. Xu and L.-W. Wang, Phys. Rev. B: Condens. Matter Mater. Phys., 2015, 91, 205315 CrossRef .
+R. Pässler, Phys. Status Solidi B, 1975, 68, 69–79 CrossRef .
+S. Kim, S. Hood, P. van Gerwen, L. Whalley and A. Walsh, J. Open Source Softw., 2020, 5, 2102 CrossRef .
+R. Dronskowski and P. E. Blöchl, J. Phys. Chem., 1993, 97, 8617–8624 CrossRef CAS .
+S. Maintz, V. L. Deringer, A. L. Tchougréeff and R. Dronskowski, J. Comput. Chem., 2016, 37, 1030–1035 CrossRef CAS PubMed .
+V. L. Deringer, A. L. Tchougréeff and R. Dronskowski, J. Phys. Chem. A, 2011, 115, 5461–5466 CrossRef CAS PubMed .
+S. Maintz, V. L. Deringer, A. L. Tchougréeff and R. Dronskowski, J. Comput. Chem., 2013, 34, 2557–2567 CrossRef CAS PubMed .
+R. Nelson, C. Ertural, J. George, V. L. Deringer, G. Hautier and R. Dronskowski, J. Comput. Chem., 2020, 41, 1931–1940 CrossRef CAS PubMed .
+K. Mathew, J. H. Montoya, A. Faghaninia, S. Dwarakanath, M. Aykol, H. Tang, I.-H. Chu, T. Smidt, B. Bocklund, M. Horton, J. Dagdelen, B. Wood, Z.-K. Liu, J. Neaton, S. P. Ong, K. Persson and A. Jain, Comput. Mater. Sci., 2017, 139, 140–152 CrossRef .
+S. P. Ong, W. D. Richards, A. Jain, G. Hautier, M. Kocher, S. Cholia, D. Gunter, V. L. Chevrier, K. A. Persson and G. Ceder, Comput. Mater. Sci., 2013, 68, 314 CrossRef CAS .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1ee00801cThis journal is © The Royal Society of Chemistry 2021
+Table Content:
+
+Broader context
+Thin-film photovoltaics could grow as an important source of sustainable energy both in itself or in tandem with silicon solar cells. New absorber materials for thin-film solar cells are needed to tackle the limitations from current technology in terms of toxicity, earth-abundance and long-term stability. Identifying new absorbers purely experimentally is a very time-consuming process involving complex synthesis and characterization. Here, we use first-principles high-throughput computations to accelerate the search for new absorbers. For the first time, we include in our materials screening, through defect computations, the estimate of carrier lifetime which is paramount to high efficiency in solar cells. Among 7000 known copper-based compounds, we identify a few unsuspected solar absorber candidates combining a potential for high efficiency and earth-abundance. This approach offers a new avenue to search rapidly for new solar absorbers and highlights new promising chemistries especially alkali-based phosphides to be targeted by future solar cell research.
+
+
+ 	Fig. 1  (a) Theoretical efficiency computed within HSE for selected materials compared with their best experimental efficiency. The bar for the theoretical efficiency corresponds the range of values obtained for different growing conditions, and hence for different defects present in each material. The middle of the range is indicated by white circles. The green regions, indicating efficiencies lower (resp. larger) than 15%, correspond to correctly predicted low- (resp. high-) efficiency materials. The red regions correspond to false positives (upper left) and negatives (lower right). Overlapping points have been slightly shifted for the sake of clarity. (b) Schematic representation of our HT screening. Each step gives the number of tested materials (upper left corner) together with the computed properties. The style and color of the border around each box correspond to the DFT formalism employed: dashed blue lines for PBE, dash-dotted cyan lines for PBE + HSE, and solid green lines for full HSE computations.	 
+
+mp-id	7436	7434	753826	7639	7439	29136
+SG	
+P63/mmc	
+P4/nmm	
+Pnma
+	
+Cmcm
+	
+Rm	
+P42mc
+
+E
+hull (meV per atom)	0.00	9.62	26.00	0	0.00	0.00
+
+E
+g (eV)	1.63	1.43	2.29	1.35	2.10	1.52
+
+E
+dg (eV)	1.63	1.43	2.30	1.49	2.14	1.65
+[mn1,mn2,mn3]	[0.093,0.093,0.432]	[0.113,0.113,0.133]	[0.244,0.246,0.298]	[0.1,0.852,0.898]	[0.392,0.392,0.705]	[0.422,0.607,0.607]
+[mh1,mh2,mh3]	[0.338,0.338,6.601]	[0.425,0.425,1.526]	[0.419,1.208,1.312]	[0.619,0.731,1.545]	[1.236,1.236,2.144]	[1.525,5.859,5.859]
+
+τ (s)	≫1	≫1	10−9–8 × 10−7	3.4 × 10−9–3.4 × 10−6	4.4 × 10−8–1.2 × 10−5	3 × 10−6–7.2 × 10−7
+
+η
+th (%)	30.2	32.9	10.2–13	11.6–22.3	13.9–17.3	20.0
+LDP	[−1.6 to −1.2]	[−0.8 to −0.7]	[−0.1 to 0]	[−0.7 to −0.2]	[−0.85 to −0.2]	[0.2–0.5]
+
+ 	Fig. 2  (a, d and g) Band structure, (b, e and h) absorption coefficient spectrum and (c, f and i) HSE intrinsic defect formation energies as a function of the Fermi energy for KCuTe (a–c), NaCuTe (d–f), and LiCuS (g–i). The zero in the Fermi energy corresponds to the VBM as evidenced by a vertical dashed line, and the CBM is indicated with a second vertical dashed line. The formation energies have been obtained in Cu-rich conditions.	 
+
+ 	Fig. 3  (a, d and g) Band structure, (b, e and h) absorption coefficient spectrum and (c, f and i) HSE intrinsic defect formation energies as a function of the Fermi energy for Na2CuP (a–c), K3Cu3P2 (d–f) and Sr6Cu3N5 (g–i). The zero in the Fermi energy corresponds to the VBM as evidenced by a vertical dashed line, and the CBM is indicated with a second vertical dashed line. The formation energies have been obtained in Cu-poor (anion rich) conditions.	 
+
+ 	Fig. 4  1D configuration coordinate diagram for electron and hole captures at the VacCu defect in (a) Na2CuP and (b) K3Cu3P2. The black circles indicate the results explicitly calculated while the lines correspond to their quadratic fits. ΔEb is the energy barrier for each nonradiative process. ΔQ is the displacement between the excited and ground states.	 
+
+ 	Fig. 5  Theoretical efficiency of typical PV absorbers and our outlined candidates versus their productive HHI. The different colored regions correspond to typical limits. The color of the circles indicates the metal companionality (M.C.) in %.	 
+
+ 	Fig. 6  Formation energy of the neutral cation antisites AB as a function of the ratio between the ionic radii of cations A and B. The vertical lines correspond to the range of formation energy at different growth conditions. The data points have been split according to the similarity of the interchanged cations: blue squares and red diamonds indicate similar and different chemical environments, respectively.	 
+
+ 	Fig. 7  Transition states for Cu antisites of the 25 PV candidates as a function of the difference between the oxidation state of the cation X and the one of Cu. The transitions states have been obtained with PBE + HSE. They are reported relative to the band gap Eg, 0% being the VBM and 100% the CBM. The color of the data points shows the ratio between the ionic radius of the cation X and the one of Cu.	 
+
+ 	Fig. 8  Formation energy of the Cu vacancy as a function of the relative position of its transition state within the PBE band gap. The vertical lines correspond to the range of formation energy at different growth conditions. The pnictides (N, P, As, Sb) are represented in red, while chalcogenides (O, S, Se, Te) are indicated in blue.	 
+
+ 	Fig. 9  COHP analysis for averaged cation–anion interactions in pure bulk for (a) K3Cu3P2, (b) KCuTe, and (c) NaCuTe. The VBM is represented by an horizontal dashed black line. The corresponding local environments for the Cu vacancy (colored in light grey) are also depicted: (d) linear in K3Cu3P2, (e) trigonal in KCuTe, and (f) tetrahedral in NaCuTe.	 
+
+ 	Fig. 10  Formation energy of the neutral Cu-vacancy versus integrated COHP (ICOHP) in the range of [−2,0] eV from VBM for alkali-Cu based candidates (structures without defect). The vertical lines correspond to the range of formation energy at different growth conditions.	 
+	(1)
+	(2)
+	(3)
+	(4)
+	(5)
+	(6)
+	(7)
+	(8)
+J = Jsc − Jrad − Jnonrad	(9)
+	(10)
+	(11)
+	(12)
+	(13)
+	(14)
+	(15)
+	(16)
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1ee00801c
+
+This journal is © The Royal Society of Chemistry 2021

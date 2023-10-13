@@ -1,0 +1,360 @@
+Accelerated design of promising mixed lead-free double halide organic–inorganic perovskites for photovoltaics using machine learning   - Nanoscale (RSC Publishing) DOI:10.1039/D1NR01117K View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D1NR01117K
+(Paper)
+Nanoscale, 2021, 13, 12250-12259Accelerated design of promising mixed lead-free double halide organic–inorganic perovskites for photovoltaics using machine learning†
+
+        
+          
+            Yilei 
+            Wu‡
+, 
+      
+        
+          
+            Shuaihua 
+            Lu‡
+, 
+      
+        
+          
+            Ming-Gang 
+            Ju
+          
+        
+      *, 
+      
+        
+          
+            Qionghua 
+            Zhou
+          
+        
+      * and 
+
+        
+          
+            Jinlan 
+            Wang
+          
+        
+      *
+      School of Physics, Southeast University, Nanjing 211189, China. E-mail: jlwang@seu.edu.cn; qh.zhou@seu.edu.cn; juming@seu.edu.cn
+Received 
+      19th February 2021
+    , Accepted 31st May 2021First published on 4th June 2021AbstractMixed double halide organic–inorganic perovskites (MDHOIPs) exhibit both good stability and high power conversion efficiency and have been regarded as attractive photovoltaic materials. Nevertheless, due to the complexity of structures, large-scale screening of thousands of possible candidates remains a great challenge. In this work, advanced machine learning (ML) techniques and first-principles calculations were combined to achieve a rapid screening of MDHOIPs for solar cells. Successfully, 204 stable lead-free MDHOIPs with optimal bandgaps were selected out of 11370 candidates. The accuracy of ML models for perovskite structure formability and bandgap is over 94% and 97%, respectively. Moreover, representative MDHOIP candidates, MA2GeSnI4Br2 and MA2InBiI2Br4, stand out with suitable direct bandgaps, light carrier effective masses, small exciton binding energies, strong visible light absorption, and good stability against decomposition.
+Introduction
+Hybrid organic–inorganic perovskites (HOIPs) are receiving worldwide attention because of their excellent optoelectronic properties, such as tunable bandgap and high carrier mobility.1,2 Currently, the power conversion efficiency (PCE) of single-junction CH3NH3PbI3 (MAPbI3) based solar cells reaches as high as 25.5%.3 Nevertheless, toxicity due to the Pb element in MAPbI3 is a major obstacle to their commercial application.4,5 The direct way to solve the toxicity problem is by replacing Pb with other non-toxic elements. Double HOIPs (DHOIPs) with a chemical formula of A2BB′X6 have been recently explored to replace Pb with two different non-toxic metal cations.6,7 Compared to MAPbI3, DHOIPs not only possibly avoid toxic Pb but also exhibit improved stability and high carrier mobility, which are beneficial for photovoltaic applications.8–10 However, most DHOIPs possess inappropriate bandgaps for absorbing visible light, resulting in their relatively poor performance as solar cells.11,12
+A promising solution to adjust the bandgap of DHOIPs is mixing the X-site halogen.13 Earlier attempts have shown that mixing X-site anions can shift the absorption peak of DHOIPs from the ultraviolet region to the visible region of the spectrum and extend the absorption edge to the lower energy range.14 Meanwhile, mixing X-site anions can improve the environmental stability of HOIPs as well, possibly derived from suppressed halide segregation by reducing lattice strain between different halogen-rich domains.15–17 For instance, mixed DHOIPs (MDHOIPs) such as MA2PbSnI4.8Br1.2 showed improved stability and the MA2PbSnI4.8Br1.2 based solar cells maintained 92% of the initial PCE even after 30 days under inert conditions.18 Not only that, available experimental studies revealed that MDHOIP-based devices could achieve a PCE of 17.63% and that they exhibit fairly good optical properties such as tunable bandgaps and low nonradiative recombination states.18–20 Hence, MDHOIPs, A2BB′X2X′2X′′2, might be an alternative choice to solve the toxicity problem in HOIPs and to maintain the optical performance at the same time. However, a mixture of multiple elements in complex structures constitutes a huge component space, which brings a great challenge for the rapid discovery of materials with target properties, even for relatively cheap high-throughput calculations.
+In the past few years, machine learning (ML) techniques have received more and more attention in the field of material design.21,22 The main advantage of ML methods is that instead of solving the time-consuming quantum mechanical equations, it learns the underlying structure–property relationships from a large amount of material data. To date, ML methods have been successfully applied in many systems such as rechargeable alkali-ion batteries,23,24 photovoltaics,25–28 catalysts,29,30 thermoelectrics,31,32 piezoelectrics,33,34 and superconductors.35–37 For example, Attia et al. developed an ML strategy to optimize charging protocols for lithium-ion batteries and identified charging protocols with high cycle life from 224 candidates in 16 days, which is much faster than using an exhaustive search method (500 days).38 In terms of perovskites, due to the relatively vast chemical space, ML techniques are very useful to accelerate the prediction of new materials.25,27–30,33,34,39–41 Very recently, by employing target-driven ML methods, our group successfully screened out a number of stable perovskites as promising solar cell materials.28,42
+In this work, we expand a multistep screening framework to accelerate the discovery of stable MDHOIPs for solar cells by combining ML techniques with first-principles calculations. The framework is shown in Fig. 1, in which three ML models (structure formability classification, bandgap classification, and bandgap regression) are trained from reported 2274 DHOIPs data and then applied on 11370 new compositions. As a result, 204 stable lead-free MDHOIPs with suitable bandgaps to visible light are successfully screened out. Further exploration of the structure–property relationship unravels that B and B′-site cations are closely associated with the bandgap of perovskites, and replacing X-site anions can tune bandgap values appropriately. To better understand the ML results, an additional quantitative analysis called SHapley Additive exPlanations (SHAP) is applied. In the end, 10 lead-free MDHOIPs with different bandgap values are selected out for further first-principles calculations, and two stable direct bandgap semiconductors, MA2GeSnI4Br2 and MA2InBiI2Br4, with suitable electronic and superior optical properties hold great potential for solar cells.
+ Fig. 1  Multistep machine learning (ML)-based screening framework for mixed double halide organic–inorganic perovskites (MDHOIPs). (1) Construction of a dataset. (2) Formability classification model for distinguishing perovskites and non-perovskites. (3) Bandgap classification model for identifying perovskites with bandgaps larger than 0.2 eV. (4) Bandgap regression model for predicting bandgap values. (5) Density functional theory (DFT) validation for stability and electronic properties. The structure of double halide organic–inorganic perovskites (DHOIPs) is constituted with 2 possible A-site molecules, 40 possible B/B′-site elements and 3 possible X-site elements (grey box). 
+Results and discussion
+Data preparation
+As a data-driven approach, the performance of ML models heavily relies on the training and test sets. Herein, 2274 DHOIPs with a chemical formula of A2BB′X6 were collected from previous high-throughput first-principles calculations.43 The crystal structure of DHOIPs is shown in Fig. 1, in which the halogen elements (X = Cl, Br, and I) occupy the corners of BX6 octahedra, B/B′-site elements occupy the centers of octahedra and the A-site organic molecules (A = MA and FA) fill the intervals formed by adjacent octahedra, respectively. It is noted that the B-site and B′-site of DHOIPs are equivalent. For the three ML models, all of the DHOIPs in the training and test sets were labelled ‘perovskite’ or ‘non-perovskite’ (see details in Note S2†), and Perdew–Burke–Ernzerhof (PBE) bandgap values were also included. To validate the reliability of the database, we randomly selected five DHOIPs from the database and calculated their band structures. The bandgaps from the database agree well with our DFT results (the errors are within 0.12 eV), which establishes the reliability of the database (Table S4†).
+The prediction dataset was constructed by replacing the X-site of DHOIPs in the training and test sets with mixed halogen elements X, X′ and X′′. For example, the iodine of A2BB′I6 is partially replaced by bromide and chloride. Thus, each DHOIP will have five possible MDHOIP compositions, i.e. A2BB′I4Br2, A2BB′I2Br4, A2BB′I4Cl2, A2BB′I2Cl4, and A2BB′I2Br2Cl2. Different replacing positions of bromide and chloride in the BX6 octahedra were considered and 11 possible structures were obtained (Fig. S1†). Similar calculations were performed for A2BB′Br6 and A2BB′Cl6 DHOIPs. Ultimately, duplicate compounds were removed and the prediction set eventually contained 11370 candidates in this work.
+A feature set is a major factor that affects the performance of ML models. In general, the features should have a strong correlation with the target property so that a clear structure–property relationship can be built up. Our previous work revealed that ionic radii and electronegativity play the most important roles in determining the formability and bandgaps of perovskites.28,41 Hence 87 initial features associated with ionic radii, electronegativity, and ionic polarizability were used to describe DHOIPs (see details in Table S2 and Note S1†).
+Although the feature set should describe materials in the training and test sets comprehensively, excessive features often bring the curse of dimensionality, leading to long training time and overfitting.28 Therefore, reducing the number of features to a reasonable range is required. A “last-place elimination” algorithm28,41 was introduced into ML algorithms to remove those least important features,44 which was successfully applied in our previous studies. The optimized feature set for different ML models was obtained using this approach, and the framework of the feature selection procedure is given in Fig. S2a.† The detailed results of the feature engineering for different ML models are given in relevant paragraphs.
+Classification model for perovskite structure formability
+A classification model is first constructed for distinguishing perovskite structures from non-perovskite structures. Based on the relative importance ranking obtained from feature engineering (Fig. S2a†), the model score for perovskite structure formability classification increases with the number of features and remains unchanged when the number is greater than 16 (Fig. S2b†). Therefore, the optimized feature set consists of the top 16 features. The ionic radii show a significant impact on the formability of DHOIPs (Fig. 2a). In detail, the three most important features are IRB+B′, IRB+X2, and IRA/B. The formability of perovskites is closely associated with the ionic packing in the perovskite structure and the degree of inclination and distortion of octahedra. Both of them are geometrically related to the radii of the ions at different positions and their relative size. Then we analyzed the formability range of DHOIPs using the rigid sphere model (Note S3†). In this model, three generalized Goldschmidt's parameters are important for the formability of perovskites: (i) the average octahedron factor  = (IRB + IRB′)/2IRX, (ii) the octahedron mismatch Δμ = (IRB − IRB′)/2IRX, and (iii) the generalized tolerance factor:45  
+ Fig. 2  Relative importance ranking of the optimized feature sets and performance of ML models. (a) Relative importance ranking of 16 selected features and (d) receiver operating characteristic (ROC) curve and confusion matrix for perovskite structure formability classification. (b) Relative importance ranking of 7 selected features and (e) ROC curve and confusion matrix for bandgap classification. (c) Relative importance ranking of 8 selected features and (f) fitting results of the test bandgap values EPBEg and the ML-predicted bandgap values EMLg for bandgap regression. The area under the ROC curve (AUC), coefficient of determination (R2) and mean square error (MSE) stand for the prediction ability of models (see details in the ESI Methods†). 
+To make A-site cations stably occupy the cavity formed by adjacent octahedra, the geometric boundary t ≤ 1 is obtained (Fig. S3c†). When t > 1, A-site cations are too large to maintain a three-dimensional perovskite structure, and thus perovskites are likely to form low dimensional structures. The formability of octahedra is also considered, corresponding to the condition  − Δμ ≥ (√2 − 1) (Fig. S3d†). If  − Δμ < (√2 − 1), the B/B′-site ions cannot be tangent with six adjacent X-site ions, causing the instability of octahedra. The geometry boundaries reveal that the relative size of different site ions must be reasonable, complementing the physical insights provided by the optimized feature set in detail.
+Then the optimized feature set and training and test sets are applied to train the gradient boosting classifier (GBC) model (see model selection in the ESI Methods and Fig. S4†). The receiver operating characteristic (ROC) curve and confusion matrix are used to measure the accuracy and errors of the GBC model respectively.46,47 Generally, we employ the area under the ROC curve (AUC) to evaluate the performance of ML classification models, which is positively correlated with the accuracy of models (see details in the ESI Methods†). The calculated AUC value for perovskite structure formability classification in this work is as high as 94.3%. Meanwhile, the confusion matrix reveals that only about 9.4% of perovskites are incorrectly classified by the ML model (see Fig. 2d). Apparently, the trained GBC model here can give a reliable result in distinguishing between perovskites and non-perovskites.
+After determining the feature set and building up the classification model, the perovskite structure formability of 11370 candidates in the prediction set is predicted. 7490 MDHOIPs with stable perovskite structures are screened out, and the distribution of all candidates in the (IRB+B′, IRA/B) plane is shown in Fig. 3a. Perovskites (red dots) and non-perovskites (blue dots) are well classified, and compounds in the dotted box region are more likely to form stable double perovskite structures. It implies that IRB+B′ in the range of [1.75, 3] Å and IRA/B in the range of [1.25, 4.5] favor the formation of a stable perovskite structure. Furthermore, to explore what combination of B- and B′-site ions is more likely to form a double perovskite structure, the proportion of perovskites in candidates based on the different combinations is analyzed (Fig. S5†). Almost all of the MDHOIPs containing elements like Ag, In, Bi, Tl, Pb, Ba, Sn, and Cd can form perovskite structures. It is worth mentioning that DHOIPs containing these elements are also frequently reported experimentally.48–51 Meanwhile, MDHOIPs containing Be, B, and N cannot form a double perovskite structure, the major reason being that the ionic radii of these elements are too small to maintain a perovskite structure. The structure–property relationships derived here are instructive for the design of new MDHOIPs.
+ Fig. 3  ML-predicted results. (a) Perovskite structure formability range of MDHOIPs in the prediction set. The most suitable region for the sum of ionic radii of B- and B′-site ions IRB+B′ and the ratio between ionic radii of A- and B-site ions IRA/B is marked by a dashed box, the red and blue plots correspond to perovskites and non-perovskites, respectively. (b) Bandgap values of DHOIPs and MDHOIPs versus the sum of electronegativity of B- and B′-site ions, χB+B′. Green and dark green represent training and test sets and prediction set, respectively. (c) Bandgap values of MDHOIPs in the prediction set with X-site average ionic radii versus χB+B′. (d) Number of predicted MDHOIPs based on lead-free combinations of B- and B′-site ions. 
+Classification and regression model for bandgap
+To find possible perovskites with suitable bandgaps for solar cells, two ML models are performed in terms of the electronic property. First, an ML classification model is trained to remove perovskites with bandgaps smaller than 0.2 eV because they are not good for solar absorption. Only stable DHOIPs that are labelled as ‘perovskite’ in the above formability classification model are selected as training and test sets (Fig. S6†). The training and test sets contain 525 DHOIPs with bandgaps larger than 0.2 eV and 916 DHOIPs with bandgaps smaller than 0.2 eV, respectively. All of the 87 features are ranked by similar feature engineering mentioned above, and 7 critical features are chosen as the optimized feature set for the bandgap classification model. The top 4 most important features are ionic radii and electronegativity of B/B′-site ions (Fig. 2b and Fig. S2c†). The AUC value is up to 97.8% and the confusion matrix indicates that only about 5.7% of DHOIPs with bandgaps larger than 0.2 eV in the test set are misclassified (Fig. 2e), which establishes the reliability of the bandgap classification model. The trained bandgap classification model is then applied to 7490 MDHOIPs, which are predicted to be stable perovskites. As a result, 2863 MDHOIPs with bandgaps larger than 0.2 eV are screened out.
+To get the accurate bandgap values, a regression model is then built. The new training and test sets comprise 525 stable DHOIPs with bandgaps larger than 0.2 eV (Fig. S6†). The optimized feature set of the bandgap regression model contains the 8 most important features (Fig. 2c and Fig. S2d†). The performance of the gradient boosting regression (GBR) model is shown in Fig. 2f, in which the accuracy defined by the coefficient of determination (R2) is up to 97.4%. The mean square error (MSE) of the prediction results is only 0.06 eV, which shows the good generalization ability of our ML model. Clearly, by performing the ML classification model in advance, the ML regression model achieves very good performance for predicting bandgap values.
+The feature engineering results of ML models for bandgap reveal the major factors affecting the bandgaps of DHOIPs. The optimized feature set of the bandgap classification model is only related to the B/B′-site elements. Similarly, all of the 8 most important features for the bandgap regression model are related to the B/B′-site ions. In addition, the relationship between the B/B′-site ions and the X-site ions also has an influence on the bandgap value. In fact, replacing X-site ions has been verified as an effective method to modulate the electronic properties of DHOIPs.13
+The bandgap values of selected 2863 MDHOIPs from the bandgap classification model are further predicted by the trained bandgap regression model. The prediction results in Fig. 3b show a positive correlation between χB+B′ and bandgap values. The distribution of bandgap values of MDHOIPs in the prediction set (dark green dots) is consistent with that of the training and test sets (green circles), which also confirms the reliability of our ML model. Based on the above element replacement process, the effect of average ionic radii of the X-site ions on the bandgap values is further studied (Fig. 3c). The bandgap values of MDHOIPs increase overall as the average ionic radii of the X-site ions decrease. It might derive from the negativity correlation between ionic radii and electronegativity of halogen ions.52
+To be a potential solar cell material, the optimal bandgap value should be in the range of 0.9–1.6 eV according to the Shockley–Queisser limit.53,54 It is known that for semiconductors and insulators, PBE calculations generally underestimate bandgaps by about 20%–40%.55–57 Since the ML-predicted bandgaps of MDHOIPs are based on the PBE results, we set the bandgap selection range for MDHOIPs as potential solar cell materials to be between 0.8 and 1.2 eV in this work. As a result, 472 MDHOIPs with 53 combinations of B- and B′-site cations are obtained (Fig. S9†). After filtering out toxic elements (Pb, Hg, Cd, As, and Tl), a total of 204 lead-free MDHOIPs with 26 combinations of B- and B′-site cations are finally screened out (Fig. 3d). It is noteworthy that DHOIPs with 4 combinations (Ag&In, Ag&Sb, Cu&Bi, and Ge&Sn) have been synthesized by experiments and have good optical performance.50,51,58
+ML models are often regarded as “black box” which lacks the interpretability of their results. To better understand our ML models, SHAP analysis59 is applied to quantificationally explain how the selected features affect the model predictions (see details in the ESI Methods†). The SHAP value indicates the quantitative contribution of current features to the prediction results. For example, in Fig. 4a, the sum of the ionic radii of B- and B′-site ions is proportional to the SHAP value, which means larger IRB+B′ is beneficial for the formation of the perovskite structure. On the other hand, the difference between ionic radii of A- and B-site ions is inversely proportional to the SHAP value (namely the perovskite structure formability) and its contribution is less than IRB+B′ since the slope in Fig. 4b is smaller. The SHAP values in different figures (i.e.Fig. 4a and b) are comparable, which helps us to quantify the contribution of different features. Similar analysis can be applied to the bandgap regression model; in Fig. 4c, the χB+B′ values are directly proportional to the SHAP values (bandgap values). In detail, χB+B′ values larger than −3.4 drive the DHOIPs and MDHOIPs toward insulators, and smaller χB+B′ values narrow the bandgap. The SHAP analysis shows good agreement with previous ML-predicted results in Fig. 3. Fig. 4d shows a similar trend between χB′−X2 and bandgap values. The big electronegativity difference between metal cations and halogen anions leads to strong ionic bonds, resulting in the increased bandgap, which has been revealed in previous studies.60 In general, SHAP analysis is a new quantitative tool to help us open the “black box” of ML models and capture the physical significance hidden in the data.
+ Fig. 4  Quantitative contributions (described by SHapley Additive exPlanations (SHAP) values) to ML models from different features. SHAP values for (a) the sum of ionic radii of B- and B′-site ions IRB+B′ and (b) the difference between A- and B-site ions IRA–B of the formability classification model. SHAP values for (c) the sum of electronegativity of B- and B′-site ions χB+B′ and (d) the difference between B′- and X2-site ions χB′−X2 of the bandgap regression model. Orange circles and gray plots represent data in the training and test sets and the prediction set, respectively. The black line represents the trend in the relationship between the feature values and the SHAP values. 
+DFT validation
+Considering the experimental conditions of previously synthesized lead-free DHOIPs, 10 lead-free MDHOIPs were selected for DFT calculations to validate the reliability of our ML models50,51,58,61 (Fig. 4 and Fig. S10†). The differences between ML-predicted and DFT-calculated bandgaps were all less than 0.17 eV, and most of the MDHOIPs had errors within 0.1 eV. Moreover, 3 of 10 lead-free MDHOIPs were randomly picked up to test their thermal stability by ab initio molecular dynamics (AIMD) simulations, and all of them showed robust room-temperature stability (Fig. S10†). This means our ML models can quickly select out stable MDHOIPs and well reproduce the bandgap values of MDHOIPs with mixed halogen elements (Table 1 and Table S3†).
+Table 1 ML-predicted and DFT-calculated results
+
+
+
+
+System
+
+E
+MLga (eV)
+
+E
+DFTga (eV)
+
+E
+g typea
+
+b
+
+b
+
+E
+bc (meV)
+
+
+
+
+
+a 
+E
+MLg and EDFTg represent the ML-predicted bandgap values and the DFT-calculated bandgap values, respectively. Eg type represents the DFT-calculated bandgap type.
+b   and  represent effective masses of electrons and holes, respectively. m0 stands for the electron rest mass.
+c 
+E
+b refers to the exciton binding energy.
+
+
+
+
+
+MAPbI3
+—
+1.736
+Direct
+0.22 (0.3262)
+0.28 (0.3662)
+55.61
+
+
+MA2GeSnI4Br2
+1.220
+1.053
+Direct
+0.35
+0.18
+34.07
+
+
+MA2InBiI2Br4
+1.128
+1.151
+Direct
+0.20
+0.18
+40.50
+
+
+FA2InSbBr2Cl4
+1.013
+0.985
+Direct
+0.29
+0.12
+36.31
+
+
+MA2AgInBr4Cl2
+0.860
+0.949
+Direct
+0.43
+0.82
+232.84
+
+
+MA2AuInBr4Cl2
+1.609
+1.757
+Direct
+1.03
+1.43
+615.10
+
+
+FA2AgBiBr4Cl2
+1.477
+1.495
+Indirect
+0.35
+0.43
+128.28
+
+
+MA2AgBiI2Cl4
+2.252
+2.242
+Indirect
+0.41
+1.63
+269.99
+
+
+MA2AgBiI4Br2
+1.220
+1.247
+Indirect
+0.47
+0.39
+90.50
+
+
+MA2AgSbBr4Cl2
+1.316
+1.214
+Indirect
+0.39
+0.52
+133.28
+
+
+MA2AlInI2Br4
+2.242
+2.114
+Indirect
+0.47
+1.06
+287.91
+
+
+
+
+We further compute the band structures and partial density of states (PDOS) of 10 selected MDHOIPs as displayed in Fig. 5 and Fig. S11.† Five MDHOIPs (MA2GeSnI4Br2, MA2InBiI2Br4, FA2InSbBr2Cl4, MA2AgInBr4Cl2, and MA2AuInBr4Cl2) have direct bandgaps with the valence band maximum (VBM) and conduction band minimum (CBM) located at the gamma (Γ) point. The remaining five MDHOIPs (FA2AgBiBr4Cl2, MA2AgBiBr4Cl2, MA2AgBiI2Cl4, MA2AgSbBr4Cl2, and MA2AlInI2Br4) all possess indirect bandgaps. It is well known that indirect bandgap semiconductors need thicker layers to harvest enough sunlight, leading to the high cost of solar cells. Therefore, 4 MDHOIPs with direct bandgaps between 0.8 eV and 1.2 eV stand out, i.e. MA2GeSnI4Br2 (1.053 eV), MA2InBiI2Br4 (1.151 eV), FA2InSbBr2Cl4 (0.985 eV), and MA2AgInBr4Cl2 (0.949 eV).
+ Fig. 5  DFT-calculated band structures and partial density of states (PDOS) of (a) MA2GeSnI4Br2, (b) MA2InBiI2Br4, (c) FA2InSbBr2Cl4, and (d) MA2AgInBr4Cl2. 
+Furthermore, PDOS shows that CBMs of all these 10 MDHOIPs are mainly contributed by s, p and d orbitals of the B and B′-site elements and p orbitals of the halogen elements. More specifically, when the B/B′-site elements are main group elements, their CBMs are dominated by s or p orbitals of the main group elements. If the B/B′-site elements are Ag or Au, their CBMs are dominated by s orbitals of Ag and d orbitals of Au. Interestingly, CBMs of all indirect bandgap MDHOIPs are derived from the hybridization of s orbitals of B-site elements and p orbitals of B′-site elements. Differently, VBMs of these 10 MDHOIPs are primarily contributed by s orbitals of main group elements or d orbitals of Ag/Au and p orbitals of halogen elements. In particular, for MA2GeSnI4Br2, MA2InBiI2Br4, and FA2InSbBr2Cl4, the anti-bond hybridization of ns2 lone pair orbitals contributed from B and B′-site elements and p orbitals of halogen elements can shift up the VBM. As a result, the deep defect states originally located in the forbidden zone of MDHOIPs will be closer to the valence band and become the shallow levels. This means these three MDHOIPs might exhibit good defect tolerance in terms of electronic properties. Analogous to MAPbI3, A-site organic cations have no contribution to the VBM and CBM. However, different sizes and irregular radii of organic cations lead to tilting of octahedra, which indirectly influences the electronic properties of MDHOIPs.
+In addition to the appropriate bandgap, high carrier (hole and electron) mobility is also desirable for photovoltaic applications.4,56,63 It is known that carrier mobility is highly correlated to carrier effective mass, in general, light (heavy) effective mass corresponds to high (low) carrier mobility. Meanwhile, balanced carrier effective mass brings ambipolar conductivity, which is advantageous to p-i-n junction solar cells.56 The effective masses of 10 selected MDHOIPs are calculated, and MAPbI3 is also included for comparison (Table 1). Clearly, for MDHOIPs containing Ag/Au, the existence of localized d orbitals of Ag/Au leads to heavy carrier effective masses. MA2GeSnI4Br2, MA2InBiI2Br4, and FA2InSbBr2Cl4 exhibit not only comparable carrier effective masses with MAPbI3 but also balanced carrier effective masses, indicating that these MDHOIPs are capable of high carrier mobility and ambipolar conductivity.
+Weakly bound electron–hole pairs (excitons) can quickly be separated into free carriers, resulting in large photocurrent and superior photovoltaic performance.64 The binding strength of excitons in semiconductors is assessed by exciton binding energy, and thus exciton binding energies of 10 selected MDHOIPs are calculated according to the Wannier exciton model.65 The exciton binding energy is defined as Eb = μe4/2ħ2ε∞2, where ε∞ and μ refer to the high-frequency dielectric constant and reduced effective mass, respectively, and . Interestingly, direct bandgap MDHOIPs tend to possess smaller exciton binding energy than indirect bandgap MDHOIPs, possibly arising from the light carrier effective masses of direct bandgap MDHOIPs. Besides, MDHOIPs containing Ag/Au possess large exciton binding energies in a range between 90.5 and 615.1 meV, which might limit the performance of solar cells due to difficult carrier extraction. Moreover, compared with the exciton binding energy of MAPbI3 (55.6 meV), MA2GeSnI4Br2, MA2InBiI2Br4, and FA2InSbBr2Cl4 exhibit much smaller exciton binding energies of 34.1, 40.5, and 36.3 meV, respectively. The effective separation of photo-excited electron–hole pairs makes these three MDHOIPs very promising solar cell candidates.
+To evaluate the optical absorption performance of photovoltaic materials, optical absorption spectra of 4 selected direct bandgap MDHOIPs are calculated. The absorption coefficient can be derived from ,66 where ε1 and ε2 are the real part and imaginary part of dielectric function respectively. As clearly shown in Fig. 6, MA2GeSnI4Br2 exhibits the highest absorption coefficient up to 1.5 × 105 cm−1 among these four MDHOIPs, which is slightly smaller than that of MAPbI3. Besides, MA2InBiI2Br4 and FA2InSbBr2Cl4 also expose good absorption in the visible light region, and the absorption coefficient of MA2AgInBr4Cl2 is lower than others.
+ Fig. 6  Optical absorption spectra at the PBE level of 4 selected direct bandgap MDHOIPs and MAPbI3. The photon energy of the visible light range (1.59 eV to 3.26 eV) is highlighted as the light yellow vertical bar. 
+On the basis of systematic investigation, we conclude that MA2GeSnI4Br2, MA2InBiI2Br4, and FA2InSbBr2Cl4 have suitable electronic and optical properties for photovoltaic application. To evaluate the thermodynamic stability of these MDHOIPs, we calculated the decomposition energy (ΔH) along the representative decomposition pathways. The ΔH is defined as the difference between the total energies of decomposition products and that of target perovskites. The conventional decomposition pathway is the decomposition of perovskites into corresponding binary compounds. In addition, we considered the redox decomposition pathway for MA2InBiI2Br4 and FA2InSbBr2Cl4 in advance, since the redox mechanism of In is crucial for In(I)-based perovskites (see details in Note S5†).67,68 Fig. S12† shows the positive ΔH for MA2GeSnI4Br2 and MA2InBiI2Br4, indicating that these compounds hold the potential to be synthesized. On the other hand, FA2InSbBr2Cl4 exhibits the negative ΔH along the redox decomposition pathways, implying that this compound tends to spontaneously decompose even if it is synthesized. Although MA2GeSnI4Br2 and MA2InBiI2Br4 show good stability against decomposition, the oxidation problem of Sn(II) is indeed a concern that impacts the stability of Sn(II)-based perovskites. Fortunately, this serious problem might be mitigated by mixing Ge and Sn in the mixed Sn–Ge halide perovskites.65,69–71 Recently, Liu et al. proved that the existence of Ge can reduce the formation of Sn(IV) in CsSn0.6Ge0.4I3 nanocrystals by measuring the temperature-dependent PL spectrum and X-ray photoelectron spectroscopy.71 Therefore, considering using strategies to reduce exposure to oxygen and/or water, such as encapsulation and interface engineering, MA2GeSnI4Br2 and MA2InBiI2Br4 might be utilized as promising solar cell materials.
+Conclusions
+In summary, we have developed a multistep screening framework by combining ML techniques with DFT calculations for the rapid discovery of MDHOIPs for solar cells. Successfully, 204 lead-free MDHOIPs with ideal bandgaps were selected out of 11370 candidates. A high accuracy above 94% was achieved in all of our ML classification/regression models. Structure–property relationships revealed by feature engineering show that B- and B′-site cations are important for the bandgaps of DHOIPs, and replacing X-site ions can tune bandgap values properly. SHAP analysis reveals that a large ionic radius of B/B′-site metals is beneficial for the formation of perovskite structures and that electronegativity of B/B′-site metals is directly proportional to the bandgap values. More importantly, MA2GeSnI4Br2 and MA2InBiI2Br4 are identified as promising solar cell materials owing to their good stability and favorable electronic and optical properties, such as suitable direct bandgap, light carrier effective masses, small exciton binding energies, and strong visible light absorption. This study not only provides a practical way for rapid screening of new functional materials in a vast composition space but also provides a large amount of optimal MDHOIPs for photovoltaic and other applications.
+Computational methods
+Gradient boosting
+In this work, we employed a gradient boosting algorithm44,72 in the open-source sci-kit-learn package73 for all the ML models involved in our multistep screening framework. Both GBC and GBR models use the decision tree algorithm as the base learner h(x). The goal of the gradient boosting algorithm is to seek an approximation F(x), which can approach the minimum of the average value of the loss function on the training set {(x1, y1), … (xn, yn)}, where x, y, and n represent the input value, the observed value, and the number of samples in the training set, respectively.
+In the first step, an initial model is built with a constant, (1)where ρ refers to the gradient descent step. For each stage m (0 < m ≤ M) of gradient boosting, the base learner hm(x) can be fitted in light of the negative gradient −gm(xi) of the loss function, (2)
+At the same time, the optimal ρ is computed by solving the following problem, (3)
+Then the model is updated: Fm(x) = Fm−1(x) + ρmhm(x)(4)
+After executing M times, the final model FM(x) is applied for prediction.
+SHapley Additive exPlanations (SHAP) analysis
+To further understand how the selected features influence the target property, the SHAP analysis is performed.59 The SHAP analysis applies the additive feature importance method to measure the contribution of current features to the model output. For the formability classification model and the bandgap regression model, SHAP values of the optimized feature set obtained from feature engineering are calculated. The SHAP values can be obtained as follows: (5)
+Here Φi is the SHAP value of feature i and the feature set S is the subset of the whole feature set F. xS and fS represent the values of the input features in the feature set S and the trained model with the feature set S, respectively. By calculating the change of the model output when the feature i is added to the feature set S, the contribution of the feature i to the model output can be quantitatively determined.
+Density functional theory
+Structure optimization and electronic structure calculations of 10 selected MDHOIPs were performed by DFT calculations. The initial structures of selected MDHOIPs were constructed by replacing atoms of the optimized MAPbI3 structure. We used the projector-augmented wave method74 with the generalized gradient approximation of the PBE exchange–correlation functional75 implemented in the Vienna Ab initio Simulation Package76 for both structure optimization and electronic structure calculations. The cut-off energy of the plane wave was set to be 520 eV. The thresholds for the energy convergence and force are 10−5 eV and 0.01 eV Å−1, respectively. The Monkhorst–Pack k-point mesh of 4 × 4 × 4 was adopted for Brillouin zone integration for structure optimization. The band structures were calculated along the path Γ (0, 0, 0) → X (0, 0.5, 0) → M (0.5, 0.5, 0) → Γ (0, 0, 0) → Z (0, 0, 0.5) → R (0, 0.5, 0.5) → A (0.5, 0.5, 0.5) → Z (0, 0, 0.5) → X (0, 0.5, 0) → R (0, 0.5, 0.5) → M (0.5, 0.5, 0) → A (0.5, 0.5, 0.5) (Fig. S11a†). The calculations of effective masses of electrons and holes were based on band structures of perovskites and the formula m* = ħ/(∂2E/∂k2), where ħ represents the Planck's constant h divided by 2π (ħ = h/2π), k is the wave vector, and m* refers to the carrier effective mass. The carrier effective masses at CBM and VBM were calculated along the [100], [010], and [001] directions, and then the values of harmonic average are utilized as the effective mass values.77 The optical absorption spectra were calculated at the PBE level. AIMD simulations78,79 were applied to study the thermal stability of selected MDHOIPs using a supercell of 2√2 × 2√2 × 4. The temperature was set at 300 K using the Nosé–Hoover thermostat, and the simulations for each structure lasted for 5 ps with a time step of 1.0 fs.
+Conflicts of interest
+There are no conflicts to declare.
+Acknowledgements
+This work is supported by the National Key Research and Development Program of China (2017YFA0204800), the Natural Science Foundation of China (22033002, 22003009), the National Natural Science Foundation of Jiangsu (BK20180353), the Fundamental Research Funds for the Central Universities of China (2242021k10009), and the Postgraduate Research and Practice Innovation Program of Jiangsu Province (KYCX20_0075) in China. The authors thank the computational resources at the SEU and the National Supercomputing Center in Tianjin.
+References
+M. Saliba, T. Matsui, K. Domanski, J.-Y. Seo, A. Ummadisingu, S. M. Zakeeruddin, J.-P. Correa-Baena, W. R. Tress, A. Abate, A. Hagfeldt and M. Grätzel, Science, 2016, 354, 206–209 CrossRef CAS PubMed .
+S. S. Shin, E. J. Yeom, W. S. Yang, S. Hur, M. G. Kim, J. Im, J. Seo, J. H. Noh and S. I. Seok, Science, 2017, 356, 167–171 CrossRef CAS PubMed .
+NREL. https://www.nrel.gov/pv/cell-efficiency.html.
+Z. Xiao, Z. Song and Y. Yan, Adv. Mater., 2019, 31, 1803792 CrossRef CAS PubMed .
+Z. Xiao and Y. Yan, Adv. Energy Mater., 2017, 7, 1701136 CrossRef .
+F. Igbari, Z.-K. Wang and L.-S. Liao, Adv. Energy Mater., 2019, 9, 1803150 CrossRef .
+J. Luo, X. Wang, S. Li, J. Liu, Y. Guo, G. Niu, L. Yao, Y. Fu, L. Gao, Q. Dong, C. Zhao, M. Leng, F. Ma, W. Liang, L. Wang, S. Jin, J. Han, L. Zhang, J. Etheridge, J. Wang, Y. Yan, E. H. Sargent and J. Tang, Nature, 2018, 563, 541–545 CrossRef CAS PubMed .
+G. Volonakis, M. R. Filip, A. A. Haghighirad, N. Sakai, B. Wenger, H. J. Snaith and F. Giustino, J. Phys. Chem. Lett., 2016, 7, 1254–1259 CrossRef CAS PubMed .
+E. Greul, M. L. Petrus, A. Binek, P. Docampo and T. Bein, J. Mater. Chem. A, 2017, 5, 19972–19981 RSC .
+X. Zhao, J. Yang, Y. Fu, D. Yang, Q. Xu, L. Yu, S. Wei and L. Zhang, J. Am. Chem. Soc., 2017, 139, 2630–2638 CrossRef CAS PubMed .
+M. Wang, P. Zeng, Z. Wang and M. Liu, Adv. Sci., 2020, 7, 1903662 CrossRef CAS PubMed .
+C. Dai, T. Zhang, Y. Wu and S. Chen, Adv. Funct. Mater., 2020, 30, 2000653 CrossRef CAS .
+X. Zhang, L. Li, Z. Sun and J. Luo, Chem. Soc. Rev., 2019, 48, 517–539 RSC .
+S. E. Creutz, E. N. Crites, M. C. De Siena and D. R. Gamelin, Nano Lett., 2018, 18, 1118–1123 CrossRef CAS PubMed .
+W. Rehman, D. P. McMeekin, J. B. Patel, R. L. Milot, M. B. Johnston, H. J. Snaith and L. M. Herz, Energy Environ. Sci., 2017, 10, 361–369 RSC .
+J. H. Noh, S. H. Im, J. H. Heo, T. N. Mandal and S. I. Seok, Nano Lett., 2013, 13, 1764–1769 CrossRef CAS PubMed .
+D. P. McMeekin, G. Sadoughi, W. Rehman, G. E. Eperon, M. Saliba, M. T. Hörantner, A. Haghighirad, N. Sakai, L. Korte, B. Rech, M. B. Johnston, L. M. Herz and H. J. Snaith, Science, 2016, 351, 151–155 CrossRef CAS PubMed .
+Z. Yang, A. Rajagopal and A. K. Jen, Adv. Mater., 2017, 29, 1704418 CrossRef PubMed .
+Z. Yang, A. Rajagopal, S. B. Jo, C. C. Chueh, S. Williams, C. C. Huang, J. K. Katahara, H. W. Hillhouse and A. K. Jen, Nano Lett., 2016, 16, 7739–7747 CrossRef CAS PubMed .
+M. S. G. Hamed and G. T. Mola, Crit. Rev. Solid State Mater. Sci., 2019, 45, 85–112 CrossRef .
+S. Lu, Q. Zhou, Y. Guo, Y. Zhang, Y. Wu and J. Wang, Adv. Mater., 2020, 32, 2002658 CrossRef CAS PubMed .
+Q. Zhou, S. Lu, Y. Wu and J. Wang, J. Phys. Chem. Lett., 2020, 11, 3920–3927 CrossRef CAS PubMed .
+Y. Zhang, Q. Tang, Y. Zhang, J. Wang, U. Stimming and A. A. Lee, Nat. Commun., 2020, 11, 1706 CrossRef CAS PubMed .
+Y. Zhang, X. He, Z. Chen, Q. Bai, A. M. Nolan, C. A. Roberts, D. Banerjee, T. Matsunaga, Y. Mo and C. Ling, Nat. Commun., 2019, 10, 5260 CrossRef PubMed .
+C. J. Bartel, C. Sutton, B. R. Goldsmith, R. Ouyang, C. B. Musgrave, L. M. Ghiringhelli and M. Scheffler, Sci. Adv., 2019, 5, eaav0693 CrossRef CAS PubMed .
+W. Ye, C. Chen, Z. Wang, I.-H. Chu and S. P. Ong, Nat. Commun., 2018, 9, 3800 CrossRef PubMed .
+J. Li, B. Pradhan, S. Gaur and J. Thomas, Adv. Energy Mater., 2019, 9, 1901891 CrossRef CAS .
+S. Lu, Q. Zhou, Y. Ouyang, Y. Guo, Q. Li and J. Wang, Nat. Commun., 2018, 9, 3405 CrossRef PubMed .
+Z. Li, L. E. K. Achenie and H. Xin, ACS Catal., 2020, 10, 4377–4384 CrossRef CAS .
+B. Weng, Z. Song, R. Zhu, Q. Yan, Q. Sun, C. G. Grice, Y. Yan and W. Yin, Nat. Commun., 2020, 11, 3513 CrossRef CAS PubMed .
+T. Wang, C. Zhang, H. Snoussi and G. Zhang, Adv. Funct. Mater., 2020, 30, 1906041 CrossRef CAS .
+Y. Iwasaki, R. Sawada, V. Stanev, M. Ishida, A. Kirihara, Y. Omori, H. Someya, I. Takeuchi, E. Saitoh and S. Yorozu, npj Comput. Mater., 2019, 5, 103 CrossRef .
+D. Xue, P. V. Balachandran, R. Yuan, T. Hu, X. Qian, E. R. Dougherty and T. Lookman, Proc. Natl. Acad. Sci. U. S. A., 2016, 113, 13301–13306 CrossRef CAS PubMed .
+R. Yuan, Z. Liu, P. V. Balachandran, D. Xue, Y. Zhou, X. Ding, J. Sun, D. Xue and T. Lookman, Adv. Mater., 2018, 30, 1702884 CrossRef PubMed .
+X. Zheng, P. Zheng and R. Zhang, Chem. Sci., 2018, 9, 8426–8432 RSC .
+V. Stanev, C. Oses, A. G. Kusne, E. Rodriguez, J. Paglione, S. Curtarolo and I. Takeuchi, npj Comput. Mater., 2018, 4, 29 CrossRef .
+M. J. Hutcheon, A. M. Shipley and R. J. Needs, Phys. Rev. B, 2020, 101, 144505 CrossRef CAS .
+P. M. Attia, A. Grover, N. Jin, K. A. Severson, T. M. Markov, Y.-H. Liao, M. H. Chen, B. P. N. Cheong, Z. Yang, P. K. Herring, M. Aykol, S. J. Harris, R. D. Braatz, S. Ermon and W. C. Chueh, Nature, 2020, 578, 397–402 CrossRef CAS PubMed .
+J. Kirman, A. Johnston, D. A. Kuntz, M. Askerka, Y. Gao, P. Todorovic, D. Ma, G. G. Prive and E. H. Sargent, Matter, 2020, 2, 938–947 CrossRef .
+H. Choubisa, M. Askerka, K. Ryczko, O. Voznyy, K. Mills, I. Tamblyn and E. H. Sargent, Matter, 2020, 3, 433–448 CrossRef .
+S. Lu, Q. Zhou, L. Ma, Y. Guo and J. Wang, Small Methods, 2019, 3, 1900360 CrossRef CAS .
+G. P. P. Pun, R. Batra, R. Ramprasad and Y. Mishin, Nat. Commun., 2019, 10, 2339 CrossRef PubMed .
+T. Nakajima and K. Sawada, J. Phys. Chem. Lett., 2017, 8, 4826–4831 CrossRef CAS PubMed .
+J. H. Friedman, Comput. Stat. Data Anal., 2002, 38, 367–378 CrossRef .
+M. R. Filip and F. Giustino, Proc. Natl. Acad. Sci. U. S. A., 2018, 115, 5397–5402 CrossRef CAS PubMed .
+J. Huang and C. Ling, IEEE Trans. Knowl. Data Eng., 2005, 17, 299–310 Search PubMed .
+A. P. Bradley, Pattern Recognit., 1997, 30, 1145–1159 CrossRef .
+A. H. Slavney, T. Hu, A. M. Lindenberg and H. I. Karunadasa, J. Am. Chem. Soc., 2016, 138, 2138–2141 CrossRef CAS PubMed .
+Y. Liu, X. Rong, M. Li, M. S. Molokeev, J. Zhao and Z. Xia, Angew. Chem., 2020, 59, 2–9 CrossRef .
+F. Wei, Z. Deng, S. Sun, N. T. P. Hartono, H. L. Seng, T. Buonassisi, P. D. Bristowe and A. K. Cheetham, Chem. Commun., 2019, 55, 3721–3724 RSC .
+L. Bi, Y. Hu, M. Li, T. Hu, H. Zhang, X. Yin, W. Que, M. S. Lassoued and Y. Zheng, J. Mater. Chem. A, 2019, 7, 19662–19667 RSC .
+L. Huang and W. R. L. Lambrecht, Phys. Rev. B, 2016, 93, 195211 CrossRef .
+W. Shockley and H. J. Queisser, J. Appl. Phys., 1961, 32, 510–519 CrossRef CAS .
+Q. Sun, J. Wang, W. Yin and Y. Yan, Adv. Mater., 2018, 30, 1705901 CrossRef PubMed .
+J. P. Perdew, Int. J. Quantum Chem., 1985, 28, 497–523 CrossRef .
+W. Yin, J. Yang, J. Kang, Y. Yan and S. Wei, J. Mater. Chem. A, 2015, 3, 8926–8942 RSC .
+P.-P. Sun, Q.-S. Li, L.-N. Yang and Z.-S. Li, Nanoscale, 2016, 8, 1503–1512 RSC .
+N. Ito, M. A. Kamarudin, D. Hirotani, Y. Zhang, Q. Shen, Y. Ogomi, S. Iikubo, T. Minemoto, K. Yoshino and S. Hayase, J. Phys. Chem. Lett., 2018, 9, 1682–1688 CrossRef CAS PubMed .
+
+          S. M. Lundberg and S. I. Lee, Advances in Neural Information Processing Systems,  2017 Search PubMed .
+M. Pazoki and T. Edvinsson, Sustainable Energy Fuels, 2018, 2, 1430–1445 RSC .
+J. Breternitz, S. Levcenko, H. Hempel, G. Gurieva, A. Franz, A. Hoser and S. Schorr, J. Phys.: Energy, 2019, 1, 025003 CAS .
+G. Giorgi, J.-I. Fujisawa, H. Segawa and K. Yamashita, J. Phys. Chem. Lett., 2013, 4, 4213–4216 CrossRef CAS PubMed .
+J. Kim, J.-W. Lee, H. S. Jung, H. Shin and N.-G. Park, Chem. Rev., 2020, 120, 7867–7918 CrossRef CAS PubMed .
+J.-P. Correa-Baena, L. Nienhaus, R. C. Kurchin, S. S. Shin, S. Wieghold, N. T. Putri Hartono, M. Layurova, N. D. Klein, J. R. Poindexter, A. Polizzotti, S. Sun, M. G. Bawendi and T. Buonassisi, Chem. Mater., 2018, 30, 3734–3742 CrossRef CAS .
+M. Ju, J. Dai, L. Ma and X. Zeng, J. Am. Chem. Soc., 2017, 139, 8038–8043 CrossRef CAS PubMed .
+M. Ju, J. Dai, L. Ma, Y. Zhou and X. Zeng, J. Am. Chem. Soc., 2018, 140, 10456–10463 CrossRef CAS PubMed .
+Z. Xiao, K. Du, W. Meng, J. Wang, D. B. Mitzi and Y. Yan, J. Am. Chem. Soc., 2017, 139, 6054–6057 CrossRef CAS PubMed .
+G. Volonakis, A. A. Haghighirad, H. J. Snaith and F. Giustino, J. Phys. Chem. Lett., 2017, 8, 3917–3924 CrossRef CAS PubMed .
+M. Chen, M.-G. Ju, H. F. Garces, A. D. Carl, L. K. Ono, Z. Hawash, Y. Zhang, T. Shen, Y. Qi, R. L. Grimm, D. Pacifici, X. C. Zeng, Y. Zhou and N. P. Padture, Nat. Commun., 2019, 10, 16 CrossRef CAS PubMed .
+C. H. Ng, K. Nishimura, N. Ito, K. Hamada, D. Hirotani, Z. Wang, F. Yang, S. Likubo, Q. Shen, K. Yoshino, T. Minemoto and S. Hayase, Nano Energy, 2019, 58, 130–137 CrossRef CAS .
+M. Liu, H. Pasanen, H. Ali-Loytty, A. Hiltunen, K. Lahtonen, S. Qudsia, J. H. Smatt, M. Valden, N. V. Tkachenko and P. Vivo, Angew. Chem., 2020, 59, 22117–22125 CrossRef CAS PubMed .
+J. H. Friedman, Ann. Stat., 2001, 29, 1189–1232 Search PubMed .
+F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer, R. Weiss, V. Dubourg, J. Vanderplas, A. Passos, D. Cournapeau, M. Brucher, M. Perrot and E. Duchesnay, J. Mach. Learn. Res., 2011, 12, 2825–2830 Search PubMed .
+P. E. Blöchl, Phys. Rev. B: Condens. Matter Mater. Phys., 1994, 50, 17953–17979 CrossRef PubMed .
+J. P. Perdew, K. Burke and M. Ernzerhof, Phys. Rev. Lett., 1996, 77, 3865 CrossRef CAS PubMed .
+G. Kresse and J. Furthmuller, Comput. Mater. Sci., 1996, 6, 15–50 CrossRef CAS .
+
+          A. Fonari and C. Sutton, https://github.com/afonari/emc.
+S. Nosé, J. Chem. Phys., 1984, 81, 511–519 CrossRef .
+W. G. Hoover, Phys. Rev. A: At., Mol., Opt. Phys., 1985, 31, 1695–1697 CrossRef PubMed .
+
+Footnotes† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1nr01117k‡ These authors contributed equally to this work.This journal is © The Royal Society of Chemistry 2021
+Table Content:
+
+ 	Fig. 1  Multistep machine learning (ML)-based screening framework for mixed double halide organic–inorganic perovskites (MDHOIPs). (1) Construction of a dataset. (2) Formability classification model for distinguishing perovskites and non-perovskites. (3) Bandgap classification model for identifying perovskites with bandgaps larger than 0.2 eV. (4) Bandgap regression model for predicting bandgap values. (5) Density functional theory (DFT) validation for stability and electronic properties. The structure of double halide organic–inorganic perovskites (DHOIPs) is constituted with 2 possible A-site molecules, 40 possible B/B′-site elements and 3 possible X-site elements (grey box).	 
+
+ 		 
+
+ 	Fig. 2  Relative importance ranking of the optimized feature sets and performance of ML models. (a) Relative importance ranking of 16 selected features and (d) receiver operating characteristic (ROC) curve and confusion matrix for perovskite structure formability classification. (b) Relative importance ranking of 7 selected features and (e) ROC curve and confusion matrix for bandgap classification. (c) Relative importance ranking of 8 selected features and (f) fitting results of the test bandgap values EPBEg and the ML-predicted bandgap values EMLg for bandgap regression. The area under the ROC curve (AUC), coefficient of determination (R2) and mean square error (MSE) stand for the prediction ability of models (see details in the ESI Methods†).	 
+
+ 	Fig. 3  ML-predicted results. (a) Perovskite structure formability range of MDHOIPs in the prediction set. The most suitable region for the sum of ionic radii of B- and B′-site ions IRB+B′ and the ratio between ionic radii of A- and B-site ions IRA/B is marked by a dashed box, the red and blue plots correspond to perovskites and non-perovskites, respectively. (b) Bandgap values of DHOIPs and MDHOIPs versus the sum of electronegativity of B- and B′-site ions, χB+B′. Green and dark green represent training and test sets and prediction set, respectively. (c) Bandgap values of MDHOIPs in the prediction set with X-site average ionic radii versus χB+B′. (d) Number of predicted MDHOIPs based on lead-free combinations of B- and B′-site ions.	 
+
+ 	Fig. 4  Quantitative contributions (described by SHapley Additive exPlanations (SHAP) values) to ML models from different features. SHAP values for (a) the sum of ionic radii of B- and B′-site ions IRB+B′ and (b) the difference between A- and B-site ions IRA–B of the formability classification model. SHAP values for (c) the sum of electronegativity of B- and B′-site ions χB+B′ and (d) the difference between B′- and X2-site ions χB′−X2 of the bandgap regression model. Orange circles and gray plots represent data in the training and test sets and the prediction set, respectively. The black line represents the trend in the relationship between the feature values and the SHAP values.	 
+
+
+MAPbI3	—	1.736	Direct	0.22 (0.3262)	0.28 (0.3662)	55.61
+MA2GeSnI4Br2	1.220	1.053	Direct	0.35	0.18	34.07
+MA2InBiI2Br4	1.128	1.151	Direct	0.20	0.18	40.50
+FA2InSbBr2Cl4	1.013	0.985	Direct	0.29	0.12	36.31
+MA2AgInBr4Cl2	0.860	0.949	Direct	0.43	0.82	232.84
+MA2AuInBr4Cl2	1.609	1.757	Direct	1.03	1.43	615.10
+FA2AgBiBr4Cl2	1.477	1.495	Indirect	0.35	0.43	128.28
+MA2AgBiI2Cl4	2.252	2.242	Indirect	0.41	1.63	269.99
+MA2AgBiI4Br2	1.220	1.247	Indirect	0.47	0.39	90.50
+MA2AgSbBr4Cl2	1.316	1.214	Indirect	0.39	0.52	133.28
+MA2AlInI2Br4	2.242	2.114	Indirect	0.47	1.06	287.91
+
+ 	Fig. 5  DFT-calculated band structures and partial density of states (PDOS) of (a) MA2GeSnI4Br2, (b) MA2InBiI2Br4, (c) FA2InSbBr2Cl4, and (d) MA2AgInBr4Cl2.	 
+
+ 	Fig. 6  Optical absorption spectra at the PBE level of 4 selected direct bandgap MDHOIPs and MAPbI3. The photon energy of the visible light range (1.59 eV to 3.26 eV) is highlighted as the light yellow vertical bar.	 
+	(1)
+	(2)
+	(3)
+Fm(x) = Fm−1(x) + ρmhm(x)	(4)
+	(5)
+Footnotes
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1nr01117k
+‡ These authors contributed equally to this work.
+
+This journal is © The Royal Society of Chemistry 2021

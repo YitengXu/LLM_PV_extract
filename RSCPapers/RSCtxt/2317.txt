@@ -1,0 +1,640 @@
+Δ-Machine learning-driven discovery of double hybrid organic–inorganic perovskites   - Journal of Materials Chemistry A (RSC Publishing) DOI:10.1039/D1TA09911F View PDF VersionPrevious ArticleNext Article  DOI: 10.1039/D1TA09911F
+(Paper)
+J. Mater. Chem. A, 2022, 10, 1402-1413Δ-Machine learning-driven discovery of double hybrid organic–inorganic perovskites†
+
+        
+          
+            Jialu 
+            Chen
+          
+        
+      a, 
+      
+        
+          
+            Wenjun 
+            Xu
+          
+        
+      a and 
+
+        
+          
+            Ruiqin 
+            Zhang
+          
+        
+      *ab
+aDepartment of Physics, City University of Hong Kong, Hong Kong SAR, People's Republic of China. E-mail: aprqz@cityu.edu.hk;   Tel: +852-34427849
+bBeijing Computational Science Research Center, Beijing 100193, People's Republic of China
+Received 
+      19th November 2021
+    , Accepted 12th December 2021First published on 13th December 2021AbstractDouble hybrid organic–inorganic perovskites (DHOIPs) with excellent optoelectronic properties and low production costs are promising in photovoltaic applications. However, DHOIPs still have not been investigated thoroughly, due to their structural complexities. In this work, an accelerated discovery of DHOIPs has been realized by combining machine learning (ML) techniques, high-throughput screening, and density functional theory calculations. Different from the previous works, the anisotropy of organic cations of DHOIPs was first considered, and Δ-machine learning (Δ-ML), which uses low-level calculations as a baseline to predict properties of high-level methods, was used in high-throughput of DHOIPs to further improve the accuracy of ML models. 19 promising DHOIPs with appropriate bandgaps for solar cells were screened out from 78400 DHOIPs and verified by performing HSE06 calculations. This work demonstrates an effective method for predicting and discovering hidden novel photovoltaic materials.
+1. Introduction
+Discovering new materials with target properties is of paramount importance in industry innovation and economic growth. The traditional material discovery is usually based on trial-and-error methods, by which the synthesis of new materials and their performance testing under different conditions are costly and time-consuming. Fortunately, with the development of supercomputers, density functional theory (DFT) calculations based on quantum mechanics have become an effective tool for predicting the properties of materials. They are crucial in providing quantitative guidance for designing materials with target properties. Meanwhile, high-throughput screenings based on DFT calculations have been widely used to make experiments cost-effective.1–5 Moreover, machine learning (ML) methods have been extensively applied in materials science to extract useful information and discover the hidden trends between properties and compositions from data.6,7 ML methods have shown considerable benefits as a valuable tool for screening materials with great potential in further applications.
+Recently, the research community has been charmed by metal halide perovskites because of their excellent performances in optronics,8 especially for the hybrid organic–inorganic perovskites (HOIPs), which have excellent optoelectronic properties and low production costs.9–12 HOIPs, which can be presented as ABX3, have a variety of diversity since they could be composed of different kinds of organic cations (A-site), metallic cations (B-site), and anions (X-site). In 2009, Kojima et al. first applied organometal halide perovskites to synthesize thin-film for solar cells, exhibiting a 3.8% power conversion efficiency (PCE).13 With the continuous improvement in recent years, the PCE of HOIPs solar cells has been increased to 25.5%.14 The search for stable HOIPs structures with high PCE is always an important but challenging project owing to the composition diversity of HOIPs.
+Although ML methods have been widely used in designing inorganic perovskites,15–19 designing double hybrid organic–inorganic perovskites (DHOIPs) by ML methods has been less explored. In fact, applications in optoelectronics require design of DHOIPs with desired bandgaps using highly accurate methods which are however time-consuming. Thanks to the ML methods, some properties of materials, including bandgaps, can be predicted directly by the elemental composition. Zhuo et al. utilized the elemental composition and experimental bandgaps for training an ML model, which could predict bandgaps significantly closer to the experimental values than PBE-level bandgaps.20
+High-throughput screenings of HOIPs were performed using ML models and density functional theory (DFT) calculations in previous studies,21–24 with various types of ions in A-site, B-site, and X-site explored. Wu and Wang22 screened HOIPs with three kinds of anions in X-site, and Nakajima and Sawada25 performed high-throughput DFT calculations of DHOIPs, A2BB′X6 (A = CH3NH3 or HC(NH2)2). However, some promising DHOIPs containing other organic cations are still undiscovered. Some researches6,24–26 also showed that perovskites with mixtures of ions at one site are more stable and efficient. Therefore, it is indispensable to uncover stable and efficient DHOIPs by tuning the composition of B-site cations. Here, more cations were considered in this work by merging two datasets containing different types of A-site and B-site cations for data enrichment.
+Similar to feature engineering in previous studies,21,22 properties of elements such as atomic and ionic radii, ionization energy and electron affinity, and electronegativity were also used as initial features for our ML models. Unlike the previous works, we considered the geometric shape of A-site organic cations as a cuboid instead of a sphere. The shape of organic cations is irregular and cannot be described as a simple object. A cuboid with three parameters (the length, width, and height) is more appropriate than a sphere with only one parameter (the radius) to describe the geometry of organic cations. HOMO–LUMO gaps and rotational temperatures of A-site cations were also introduced to increase the model accuracy. In addition, for the ML model, we introduced the so-called Δ-machine learning (Δ-ML) method,26 which has been applied successfully in predicting chemical shielding27 or bandgaps28 and constructing potential energy surfaces.29 Δ-ML predicts the gap between low-level and high-level calculations rather than direct predictions. The model accuracy can be improved significantly by the Δ-ML method.
+In this work, 78400 DHOIPs were screened by charge neutrality, stability, non-toxicity, and appropriate bandgaps (1.5–3.0 eV) predicted by our ML models. Our screening strategy with improved ML models was proven to predict bandgaps more accurately. Finally, 117 DHOIPs were chosen for further DFT calculations, and 19 of them were screened out as promising photovoltaic materials for further experimental synthesis and applications in solar cells.
+2. Method
+2.1 Data preprocessing for datasets
+Two datasets with various DHOIPs were chosen for training ML models. The first dataset contains 11025 compositions of perovskites in ABX3 or A2BB′X6 with three types of A-sites (2 organic cations and Cs), 49 different B or B′ elements, and three halogen elements (Cl, Br, I).25 Most structures in this dataset belong to metals (with a bandgap of 0 eV). The second dataset consists of 1346 HOIPs with 136 different elemental compositions, including 16 organic cations for A-sites, three group-IV cations for B-sites, and four halide anions.30 Detailed elemental compositions of these two datasets are shown in Fig. 1.
+ Fig. 1  The illustration of the two datasets used in this work. 
+The first dataset contains many combinations of B-site cations but only three types of A-site cations among 11025 optimized structures. In the dataset, the authors excluded metals and insulators in PBE calculations for further HSE06 calculations to reduce computational costs. PBE can accurately determine whether a material is non-metal. For 472 experimental bandgaps of semiconductors and insulators, only 6.6% are calculated to be metals incorrectly by PBE.31 In other words, semiconductors are less likely to have a zero bandgap, according to PBE calculations. Excluding metals based on PBE can significantly reduce computational costs (from 11025 to 2143). In addition, the PBE method tends to underestimate bandgaps compared with the HSE method. Therefore, it is also necessary to exclude insulator cases. Finally, the HSE bandgaps of 1923 structures in this dataset were calculated. By contrast, the second dataset involves 16 organic cations but only three group-IV cations for B-sites. Neither of these two datasets is enough for considering various compositions of DHOIPs. Some ML studies used a small size (∼200) of data from a single source.21,22 They searched HOIPs made up of many B-site metals, which were not included in their training data. It is questionable whether their ML models can generate reliable predictions for extrapolation in high-throughput screenings. Therefore, we merged two datasets to capture more features of DHOIPs. The non-spherical shapes of organic cations with flexible orientation allow several crystals exist with the same elemental composition. As a result, bandgaps of structures with the same compositions were averaged, and finally, we obtained 192 chemically distinct data from the second dataset.
+Calculations of bandgaps using pure and hybrid DFT methods were performed by Vienna Ab initio Simulation Package (VASP)32–34 in both datasets. The PBE35 and HSE12 (ref. 36) density functionals with DFT-D3 dispersion correction37 were used in the first dataset. The vdW-DF2 (ref. 38) and HSE06 (ref. 39) density functionals were used in the second dataset. The bandgaps of the same chemical compositions in both datasets (shown in Table S1†) are not consistent because of different calculation parameters. In order to utilize both datasets, we used linear regression, which could transform the bandgaps from the second dataset to the bandgaps in the first dataset (shown in Fig. S1†) to fit their bandgaps.
+2.2 Feature engineering
+Feature engineering, which constructs valuable features for the datasets to achieve better predictions, is a crucial step in ML training. As seen in Table 1, 26 initial features were constructed for training our ML models. Feature selection will be discussed in detail in Section 3.1. It should be noted that for the DHOIPs (A2BB′X6), the properties of the B-site were averaged by B and B′. Elemental properties were obtained by a Python package called “Mendeleev”.40 Different from the feature engineering in previous studies,19,20 we further considered the anisotropy of organic cations according to their geometries (length, breadth, and height), HOMO–LUMO gaps, and rotational temperatures of A-site cations in three directions. DFT calculations with D3 dispersion correction37 were performed by Gaussian 09 software41 in order to capture these basic features of organic cations. The B3LYP42 functional with the def2-TZVP43 basis set was used for geometry optimizations and frequencies calculations. Rotational temperatures and HOMO–LUMO gaps of A-site cations were directly obtained from DFT calculations. The length, breadth, height, and effective radius of organic cations were estimated by the position of boundary atoms and vdW radii proposed by Bondi.44 These calculations were performed by using the Multiwfn45 code. In addition, to identify correlations between pairs of features, the Pearson correlation coefficient (PCC) was calculated and visualized by Seaborn46 and Matplotlib47 packages.
+Table 1 26 initial features with description. Ionic radii IRB and crystal radii CRB were averaged by 6-coordinated B ions. The number of s, p, d, or orbital valence electrons is counted by excluding the number of electrons of the noble gas element in the last period
+
+
+
+
+Number
+Features
+Description
+
+
+
+
+1–3
+
+L
+a, Lb, and Lc
+Lengths, breadths, heights of A-site cations (La ≥ Lb ≥ Lc)
+
+
+4
+IRA
+Ionic radii of A-site cations
+
+
+5
+Gap
+HOMO–LUMO gaps of A-site cations
+
+
+6–8
+RotA, RotB and RotC
+Rotational temperatures of A-site cations in three directions (RotA ≥ RotB ≥ RotC)
+
+
+9
+
+R
+B
+
+Atomic radii of B-site atoms
+
+
+10, 11
+IE1_B, IE2_B
+First and second ionization energies of B-site atoms
+
+
+12
+EA_B
+Electron affinity of B-site atoms
+
+
+13
+EN_B
+Pauling electronegativity of B-site atoms
+
+
+14
+IRB
+Ionic radii of B-site cations
+
+
+15
+CRB
+Crystal radii of B-site cations
+
+
+16–19
+s, p, d and f
+The number of s, p, d, or orbital valence electrons
+
+
+20
+
+R
+X
+
+Atomic radii of X-site atoms
+
+
+21
+IE1_X
+The first ionization energy of X-site atoms
+
+
+22
+EA_X
+Electron affinity of X-site atoms
+
+
+23
+EN_X
+Pauling electronegativity of X-site atoms
+
+
+24
+IRX
+Ionic radii of X-site anions
+
+
+25
+
+T
+f
+
+Tolerance factor defined as (IRA + IRX)/ /(IRB + IRX)
+
+
+26
+
+O
+f
+
+Octahedral factor defined by IRB/IRX
+
+
+
+
+2.3 Machine learning model
+We used the gradient boosting regression (GBR)48 to distinguish important features from the initial ones for predicting bandgaps. In this work, GBR models were implemented by the Scikit-learn49 package, and it was trained to calculate impurity-based and permutation feature importance. In our GBR models, the “least squares” function was used as the loss function. The test set's mean absolute error (MAE), mean squared error (MSE) and coefficient of determination (R2) were calculated to evaluate model accuracy. Their definitions can be found in the ESI.† The hyperparameters, including the number of boosting stages, learning rate, maximum depth of nodes, and minimum number to split an internal node, were optimized by combining grid searching and cross-validation methods to achieve better performance. The cross-validation results can be found in the ESI.† In training our models, the mean decrease in impurity (MDI), and permutation importance50 of the test set were calculated to identify critical features related to bandgaps. The MDI is the average node impurity by randomly labeling a feature based on the distribution of the feature values in a dataset. The permutation importance is the reduction in the model's score by randomly shuffling a feature value, which can be calculated in the test set to find important features for generalization in the current model.
+In addition, we introduced the Δ-ML26 strategy to predict HSE bandgaps more accurately. The concept of Δ-ML was first proposed in quantum chemistry calculations. The highly time-consuming task in an accurate method corresponds to a minor fraction of the total energy, since the most relevant physics can be considered by approximate methods such as semiempirical theory and Hartree–Fock. Low-level properties can provide important information to Δ-ML, so the accuracy of predicting high-level properties can be improved. In detail, the targeted property Pt at a high level can be estimated by correcting the baseline property Pt at a low level, as shown in eqn (1). Pt = Pb + ΔML(1)
+Δ-ML predicts the gap ΔML between low-level and high-level calculations rather than direct predictions at the high level. More specifically, the HSE06 bandgap EHSE06g of a DHOIP can be predicted in Δ-GBR model by summing the PBE bandgap EPBEg to ΔGBR (the output of GBR using Δ-ML) as shown in eqn (2) below. Δ-ML has demonstrated its advantages in predicting bandgaps,29 with low cost and significantly improved model accuracy. EHSE06g = EPBEg + ΔGBR(2)
+2.4 Material screening framework
+The screening framework of this work is shown in Fig. 2. More details of the framework will be discussed in Section 3.3. After defining the datasets and selecting the suitable features from the feature engineering, 78400 DHOIPs with 16 A-site and 49 B-site cations, and four X-site anions were screened based on charge neutrality, stability, non-toxicity, and suitable bandgaps (1.5–3.0 eV) predicted by our ML models. Only Br-containing DHOIPs were chosen for further screening by DFT calculations because of their stability in solar cell operations and limited computational resources. DFT calculations of these candidates were performed by the VASP32–34 with the projector augmented wave method.51 The GPU port of VASP was used in PBE calculations,52,53 and the CPU version was used in HSE06 calculations. The comparison of bandgaps calculated by CPU and GPU versions is shown in Table S10,† and no significant difference was found. The VASPKIT package54 was used to generate input files and analyze outputs of VASP. In DFT calculations, the cells of these candidates were first optimized by the PBE functional35 with D3 dispersion correction.37 The kinetic energy cutoff of plane-wave expansion of electron wavefunctions was set to be 520 eV. The Brillouin zone integration was performed using a Monkhorst–Pack k-point mesh of 4 × 4 × 4. The structure optimization process stopped after reaching convergence threshed on the energy of 10−6 eV and forces of 0.01 eV Å−1, correspondingly. In addition, the HSE06 calculations were further performed for promising candidates to predict bandgaps accurately in order to screen out the final candidates.
+ Fig. 2  The framework for screening DHOIPs with combining ML models and DFT calculations. 
+3. Results and discussion
+3.1 Feature selection
+It is important to identify crucial features which can significantly influence the target properties.55 Similar to feature construction in previous studies,21,22 some properties of constituent elements such as atomic and ionic radii, ionization energy, electron affinity, and electronegativity were used to describe perovskites. However, these properties of organic cations are not well-defined and unavailable from experiments. Fortunately, for DHOIPs, some features of organic cations can be obtained from DFT calculations. Compared with atoms in B-site or X-site, higher-dimensional features are required for describing A-site cations owing to the complexity of these organic cations. Some lower-dimensional features of organic cations in A-site were used in previous ML models.21,22 We think that selecting more appropriate features of A-site to describe DHOIPs can further improve the model accuracy. Many descriptors have been proved to be efficient in predicting molecular or materials properties, such as the Coulomb matrix (CM),56 smooth overlap of atomic positions (SOAP),57 permutationally invariant polynomial (PIP),58–60 and spectrum of London and Axilrod-Teller-Muto (SLATM)61 methods. A tiny error (less than 40 meV) can be achieved with these descriptors, which guarantee systems' translation, rotational, and permutation symmetry. Although these descriptors can describe the A-site accurately, their dimensions are much higher than those of the B-site or X-site based on elementary properties. For example, the dimension of the PIP descriptor for a four-atom system N4 is far more than twenty.62 Another drawback of these descriptors is that they are not straightforward. An excellent descriptor for materials design should have unique characterization, be sensitive to target properties, and be easily obtainable.63 Therefore, it is necessary to find some simple features to decrease the dimension of inputs and capture critical information.64
+Here, we treated organic cations as cuboids rather than spheres to describe their shapes since the geometries of many organic cations are far from spheres. For instance, the imidazolium cation is planar, and amines are chainlike. Three geometric parameters (the length, width, and height) for some organic cations are listed in Table S2.† The diameters for these organic cations are close to the length La and much larger than height Lc. Notably, for some planar cations such as HC(NH2)2+ and C(NH2)3+, La is two times more than Lc. Therefore, it is more accurate to treat organic cations as cuboids to describe their geometry. The radii of organic cations were also calculated as a feature since it is required in predicting stability factors, as can be seen in Table S2.† Crystallography data from perovskite-like structures can be used to estimate effective radii for organic cations.65 Specifically, the radii from isolated cations by DFT calculations were scaled by multiplying a factor of 0.82 to fit those reported results by Kieslich et al. (listed in Table S3†). In addition, we used the HOMO–LUMO gap instead of using both energies of HOMO and LUMO as one feature relative to light adsorption. Rotational temperatures were also added as additional features presenting the geometry of organic cations. After the feature construction for organic cations, the properties of B-site and X-site elements were considered, as shown in Table 1. Finally, the Goldschmidt tolerance factor (Tf) and octahedral factor (Of), which are commonly used to predict the stability of perovskites, were also included in the initial features. These factors elucidate an essential property (stability) of ABX3 structures and present the interaction between different sites according to the combination of ionic radii. They have also been verified to be the important features from feature engineering in previous studies.21,22
+Highly correlated or redundant features should be removed for materials design if possible.66 Therefore, we calculated the PCCs of pairs of the 26 initial features to identify highly correlated features, as shown in Fig. 3. The positive and negative correlations are presented by red and blue lattices, respectively. The lattices colored with white indicate that no correlation exists in the current pair of features. Fig. 3 shows that the coefficients of most pairs are around zero since the properties of the same site are relative, and non-zero coefficients are mainly located around the diagonal. The reason is that properties of the same site (A, B or X) are relative, and properties of different sites are highly unrelative. The Tf (the 25th feature), calculated with ionic radii of all sites, is almost relative to all features. Similarly, the Of (the 26th feature) is relative to B-site and X-site properties because of its definition. A pair of features can be taken to be strongly correlated with an absolute value of PCC larger than 0.9. For instance, the ionic radii of A-site (the fourth feature) and La (the first feature) are in strong correlation since the ionic radii are close to half of La in the A-site.
+ Fig. 3  The heat map of the Pearson correlation coefficient (PCC) matrix among 26 initial features of the first (a) and second (b) datasets. 
+Three subsets of the initial features are shown in the first dataset (Fig. 3(a)), and each pair from three subsets is found to be strongly correlated. The first subset includes the first, second, fourth, and fifth features. The correlation of these features can be explained that La and Lb of methylammonium and formamidinium are very close, and Cs+ is a sphere with equivalent La and Lb in the dataset. The second subset includes the sixth, seventh and eighth features. Rotational temperatures of these two organic cations are accidentally correlated while there are no rotational modes in Cs+.
+Interestingly, the HOMO–LUMO gap negatively correlates with the cation size (La, Lb, and IRA). The third subset is made of features from the 20th to 24th. It can be ascribed to strongly correlated properties of halogens. The second dataset (Fig. 3(b)) shows similar trends to the first dataset. The PCCs of s, p, d, or f electrons are undefined because Ge, Sn, and Pb have the same electron configuration. Two subsets are strongly pairwise correlated. The first subset includes the 9th and 12th∼15th features, and the second subset consists of the 20th, 21st, 23rd, and 24th. They are originated from correlated properties of the carbon group and halogens. The PCCs of the combined dataset are close to the trend in the first dataset because most data come from the first dataset, as shown in Fig. S2.†
+After calculating the PCCs, we trained several GBR models on 26 initial features for feature selection, and the hyperparameters of these models are shown in Table S4.† First, we trained the pure functional bandgaps of the total dataset by GBR because the amount of data is more than HSE bandgaps. The deviance with the boosting iteration for this GBR model is shown in Fig. S3(a).† The deviation of the training set and test set decreases slowly after 100 iterations, so the number of boosting stages is large enough. We achieved a small MAE and large R2 even with a large number of data up to 11217. The MDI results for this training model are also shown in Fig. S3(b),† which indicates that the numbers of p and d electrons in B-sites play the most critical role in determining bandgaps. It can be explained that p and d electrons present bonding features of main group elements and transition metals, respectively. The second ionization energy of B-site cations is also crucial since their valences in ABX3 perovskite are two. Fig. S3(b)† also shows that the ionic radius and the electron affinity are the most important among features of A-site and X-site, respectively.
+Additionally, as shown in Fig. S3,† the results of permutation importance are similar to MDI. The number of d electrons becomes the most important feature, followed by the number of p electrons. Therefore, the bonding features of the B-site are determinable in predicting bandgaps. Fig. S3(b) and (c)† show that the properties of the B-site are dominant in predicting bandgaps because the top six important features are all from B-site.
+However, the importance of features from the A-site is not shown in Fig. S3.† A few types of A-site cations in the first dataset may cause this result. In order to improve the influence of the A-site, we increased the fitting weight of structures from the second dataset to 100 times that of the first dataset. The convergence of model deviance, MDI, and permutation importance results for this training model are shown in Fig. S4.† Compared with the last model, model deviance converges faster, while the MAE and R2 are almost constant. The MDI result (Fig. S4(b)†) shows that the first ionization energy of the X-site becomes the second important feature, but properties of the A-site are still not influential. The ranking of top features of permutation importance is less affected than MDI by adjusting the fitting weight. Compared with La and Lb, which have very low permutation importance (shown in Fig. S4(c)†), the height Lc can be kept since it is more important than all properties of the X-site.
+In order to find more important features of the A-site, we fitted a model only with the second dataset, and its corresponding results are shown in Fig. S5.† The accuracy for this training model is very high, with an MSE of 0.015 eV2, MAE of 0.09 eV, and R2 of 0.98 (shown in Fig. S5(a)†). The ranking of feature importance becomes utterly different because of the limited type of B-site. The IE1_X is the most important, and the top five features are relative to the X-site in MDI results, as shown in Fig. S5(b).† Although there are only four types of halogens in X-sites, their properties are crucial in determining bandgaps. The feature importance of A-site is improved significantly, and the gap and Lc are two vital features of A-site. Based on the above results from the PCCs and feature importance, we excluded the length La for A-sites and the number of f electrons of B-sites, which have low significance in all training models.
+3.2 Model predictions
+The comparison between the bandgaps calculated by DFT and predicted by our ML models is shown in Fig. 4. The result shows that our ML models provide reliable predictions for both the PBE and HSE06 bandgaps. Most points are distributed around the red line where the predicted values are equal to calculated values by DFT. For predicting PBE bandgaps by the direct GBR model (shown in Fig. 4(a)), some points are located in the x-axis or y-axis, which means direct predictions by GBR misclassify some metals and semiconductors. Nevertheless, a relatively smaller MAE (0.139 eV) can still be maintained because the number of misclassified DHOIPs is far less than the total number. By contrast, as shown in Fig. 4(b), few points are away from the red line with the Δ-GBR model. Its distribution is more uniform than the direct GBR model, with a smaller MSE. Therefore, the Δ-GBR model is proved to be effective in predicting the HSE06 bandgaps by using the PBE bandgaps as the baseline. It should be noted that most DHOIPs in Fig. 4(b) have an HSE06 bandgap larger than 1.5 eV, which means our ML models are less reliable in predicting DHOIPs with small bandgaps due to the limitation of training data.
+ Fig. 4  The comparison between the calculated bandgaps by the PBE and HSE06 functionals, and their corresponding predicted values obtained by the direct GBR model (a) and the Δ-GBR model (b). All points are from test sets. 
+The comparison of the performance of our five models (“Model1”, “Model2”, “Model3”, “Model4”, and “Model5”) with previous work is shown in Table 2. In Model1, we used the same dataset (196 data points) as Wu and Wang's model,22 and got the much smaller MSE and MAE, even if we used a tiny training set size (20%). The lower accuracy of Wu and Wang's model may be explained that only two features of A-sites, namely the mass and radii, were chosen. The mass cannot present the interaction between atoms, and isotope substitution of cations may also influence the model's predictions. Moreover, the radii of many organic cations are very close to each other, which causes ambiguity. For example, CH3(CH2)2NH3+ and (CH3)2CHNH3+ have the same mass and almost the same radii. The indistinguishability of organic cations may cause a high error in predicting bandgaps. To validate this assumption, we constructed the Model2, which only kept the ionic radius and gap of A-sites in comparison with the Model1. In other words, we removed Lb, Lc, and three rotational constants in training Model2. The other settings, including the splitting of training and test sets, were the same in both models. The training result of Model2 shows that the MSE and MAE increase, and R2 decreases, which verifies our assumption. These results provide further evidence that model accuracy can be improved by considering the anisotropy of organic cations.
+Table 2 The comparison of our GBR models in predicting bandgaps with previous work. The numbers of A-site, B-site cations, X-site anion, data points, features, and the training set size are listed. The model accuracy is compared by MSE, MAE, and R2. Bandgaps calculated by pure functionals were fitted in Model1, Model2, and Model3, while bandgaps calculated by the HSE functional were fitted in Model4 and Model5. The Δ-ML method was used for predicting HSE bandgaps in Model5
+
+
+
+
+Model
+Lu et al.21
+Wu and Wang22
+Model1
+Model2
+Model3
+Model4
+Model5
+
+
+
+
+A-site
+11
+16
+16
+16
+17
+17
+17
+
+
+B-site
+32
+3
+3
+3
+49
+49
+49
+
+
+X-site
+4
+4
+4
+4
+4
+4
+4
+
+
+Data points
+212
+196
+196
+196
+11161
+2113
+2113
+
+
+Training set size
+80%
+90%
+20%
+20%
+80%
+80%
+80%
+
+
+Features
+14
+16
+24
+19
+24
+24
+24
+
+
+MSE (eV2)
+0.085
+0.201
+0.066
+0.081
+0.090
+0.285
+0.047
+
+
+MAE (eV)
+—
+0.377
+0.190
+0.213
+0.139
+0.361
+0.141
+
+
+
+R
+2
+
+0.969
+0.827
+0.908
+0.887
+0.876
+0.769
+0.791
+
+
+
+
+Next, we used the whole dataset (11161 data points) to construct Model3. The training result shows that the MSE of Model3 is slightly lower than the model of Lu et al.,21 even if our dataset size is 50 times more than Lu's model. Their feature construction found that the ionic polarizability, HOMO, and LUMO energies are important features of A-site, and neglected the ionic radius of A-site. However, these three features cannot reveal the anisotropy of organic cations. In addition, more accurate bandgaps calculated by the HSE functional were used in Model4 and Model5 to predict bandgaps better. Fig. S6† shows the linear regression result for fitting the two datasets' low-fidelity and high-fidelity bandgaps correspondingly. The linear correlation in the first dataset was poor, while HSE bandgaps in the second dataset can be well fitted by linear regression, which is consistent with previous findings.22
+Then, we fitted the Model4 by using the HSE bandgaps from the two datasets (1923 data points from the first dataset and the entire second dataset). However, the error is more significant compared with Model3. Thus, the Δ-ML method was further used in Model5 to improve accuracy in predicting HSE bandgaps. As introduced in Section 2.3, in Δ-ML, low-level properties can provide important information for predicting high-level properties. Thus, for a structure, the major fraction of its HSE bandgap can be provided by its PBE bandgap, and Δ-ML only needs to predict the minor fraction. Δ-ML method has been applied successfully in predicting bandgaps of perovskites by combining high-fidelity HSE06 bandgaps with low-fidelity PBE bandgaps.28 Similarly, it was used to predict gaps between HSE and low-level methods in Model5. After implementing the Δ-ML method, the MAE decreases by ∼0.2 eV compared with the Model4. In conclusion, bandgaps of DHOIPs can be predicted by combining Model3 and Model5. Compared with Model1, Model2, and Model3, Model5 has lower MSE and higher R2. It can be explained by the definition of R2 in eqn (S4),† the variance (in the denominator) can affect the R2 value, as shown in the ESI.† Model1, Model2, and Model3 fitted PBE bandgaps with a larger variance due to the inclusion of metals and insulators. On the other hand, Model5 fitted HSE06 bandgaps with a smaller variance. As a result, the value  of Model5 is higher, so R2 value is lower.
+3.3 Material screening
+The screening framework of this work is shown in Fig. 4. 78400 DHOIPs with 16, 49, and 4 types of A-sites, B-sites, and X-sites were considered for screening. Among them, 7528 types have been explored in the datasets we used, and 70872 were further screened in this work. In the screening, the structures that do not satisfy charge neutrality will be removed first. Charge neutrality was also the criterion because non-neutral structures cannot be synthesized. In A2BB′X6 perovskites, the valences of A-site and X-site are +1 and −1, respectively. Therefore, the average valence of the B-site is +2, which means that there will be two possible combinations of B and B′. Both have a valence of +2, or one with the valence of +1 and the other with +3. Thus, only the B-site with the valence in the range of +1 to +3 will be considered, and the screening for charge neutrality could be based on the data of common valences of B-site cations, as shown in Table S6.† In addition, the tolerance factor Tf and octahedral factor Of were used to exclude unstable structures. The range of Tf of stable perovskites should be 0.8–1.2 while the suitable range of Of is between 0.2 to 0.7 for solar cells.21,22 The range of Of should be shortened to 0.4–0.7 after considering stability.21,22 Then bandgaps of remaining structures were predicted by our Model3 and Model5. A reliable HSE bandgap was obtained by summing the low-fidelity bandgap predicted by Model3, and the gap between high-fidelity and low-fidelity methods predicted by Model5. Here, we considered DHOIPs candidates with predicted bandgaps in the range between 1.5 and 3 eV, which are appropriate for photovoltaic applications.23 Non-toxic and environment-friendly are also crucial for commercial applications, so we excluded DHOIPs containing toxic heavy metals, including Cd, Cr, Hg, Pb, and As. 117 Br-containing DHOIPs were chosen for further screening by DFT calculations because they are more stable in solar cell operations and limited computational resources.67 The bandgaps of these DHOIPs were calculated by the PBE functional after geometry optimization. DHOIPs with PBE bandgaps in the range of 0.2 and 2.0 eV were further considered because the PBE functional underestimates bandgaps than the HSE06 functional.
+Finally, we obtained 17 DHOIPs candidates with HSE06 bandgaps in the range between 1.5 and 3.0 eV, as shown in Table 3. In addition, (CH3NH3)2TlTlBr6 and ((CH3)2NH2)2TlTlBr6 were found to have smaller bandgaps of 0.76 and 1.44 eV, respectively, so they were also selected as promising candidates. The complete list of calculated bandgaps of 117 DHOIPs is available in Table S7.† We found that almost all candidates contain the Tl elements, and Tl even occupies both B and B′ sites for most of the DHOIPs listed in Table 3. Similar to our results, Cai et al. have found that 4 of 11 promising perovskites as solar adsorbers contain Tl, including Cs2TlAsBr6, Cs2TlAsI6, Cs2TlSbBr6, and Cs2TlTlBr6 by DFT calculations of 1000 A2MM′X6.68 They also found that the Tl-containing perovskites have a relatively small bandgap. In addition, from the perspective of charge neutrality, the Tl element has the valence of +1 and +3, which are suitable as an A-site or B-site cation in perovskites. The substituting of Tl into the Ag+ or Bi3+ sites of Cs2AgBiBr6 can reduce its bandgap by 0.1–0.8 eV.69 Thus, substituting Tl+ or Tl3+ in a perovskite is likely to lead to a smaller bandgap, which supports the results of Tl-containing DHOIPs in our screening.
+Table 3 The DHOIPs (A2BB′Br6) with HSE06 bandgaps in the range between 1.5 and 3.0 eV
+
+
+
+
+Identification
+A
+B
+B′
+
+E
+PBEg (eV)
+
+E
+HSE06g (eV)
+
+
+
+
+20
+NH4+
+Rh
+Tl
+1.15
+2.69
+
+
+24
+NH4+
+Tl
+Tl
+1.4
+2.22
+
+
+45
+(CH3)3NH+
+Tl
+Tl
+0.94
+1.71
+
+
+51
+(CH3)4N+
+Tl
+Tl
+1.17
+2.08
+
+
+58
+CH3CH2CH2NH3+
+Tl
+Tl
+1.2
+2.04
+
+
+63
+(CH3)2CHNH3+
+Tl
+Tl
+1.19
+2.04
+
+
+64
+CH3CH2CH2CH2NH3+
+Tl
+Tl
+1.33
+2.22
+
+
+74
+OHNH3+
+Tl
+Tl
+1.36
+2.3
+
+
+80
+HC(NH2)2+
+In
+Tl
+1.72
+2.63
+
+
+81
+HC(NH2)2+
+Tl
+Tl
+1.41
+2.25
+
+
+87
+CH3C(NH2)2+
+Tl
+Tl
+1.07
+1.82
+
+
+89
+NH2NH3+
+Al
+Tl
+1.32
+2.67
+
+
+102
+C(NH2)3+
+Tl
+Tl
+1.4
+2.24
+
+
+107
+C3H8N+
+Ge
+Ag
+0.86
+1.75
+
+
+110
+C3H8N+
+Tl
+Tl
+0.88
+1.62
+
+
+112
+C3H5N2+
+Co
+Tl
+0.86
+2.99
+
+
+117
+C3H5N2+
+Tl
+Tl
+0.9
+1.74
+
+
+
+
+However, the study of Tl-containing perovskites is highly insufficient, and few perovskites with Tl in A-site or B-site have been synthesized. The synthesized TlPbI3 (ref. 70 and 71) can be applied to optical trigger and ionizing radiation detection.72 For Tl in a B-site, CsTlF3 and CsTlCl3 have been synthesized, and the mixed-valence Tl+/Tl3+ has been confirmed by XAS and Raman spectroscopy.73 In addition, RbTlX3 and CsTlX3 with X = F, Cl, and Br are predicted to be superconducting with appropriate doping like BaBiO3.74 Double perovskites Cs2AgTlCl6 and Cs2AgTlBr6 were also synthesized, and their corresponding bandgaps are 2.0 and 0.95 eV, 1 eV lower than similar perovskites.75 Except for inorganic perovskites, a Tl-containing DHOIP, (CH3NH3)2TlBiBr6 with a bandgap of ∼2.0 eV has been synthesized.76 The Tl-containing perovskites have shown their promising potential, but only a few Tl-containing perovskites have been successfully synthesized, which may come from less attention on these systems. In addition, the MAE of HSE06 is around 0.5 eV compared with the experimental value in the recent benchmark test of bandgaps calculations for 472 materials.31 Therefore, there may still be some inaccuracy in our calculations of bandgaps. Synthesis and characterization of our screening DHOIPs are still required. We expect that our results can stimulate more experiments of Tl-containing perovskites.
+In order to mine the hidden trends between bandgaps and elemental properties, the data visualization of PBE bandgaps of 117 screening DHOIPs is shown in Fig. 5. These metallic DHOIPs have ionic radii of B-site elements between 0.8 and 1.0 Å in Fig. 5(b). DHOIPs with larger ionic radii of B-sites are more likely to be appropriate for photovoltaic applications because almost all candidates have a PBE bandgap smaller than 1.7 eV when their IRB reaches 1.2 Å. As shown in Fig. 5(c), the range of PBE bandgaps increases with the HOMO–LUMO gaps. The HOMO–LUMO gap of a fragment in a system is relative to the bandgap of some systems. For example, the fit between the HOMO–LUMO gap and the number of repeating monomer units can be extrapolated to predict the bandgap of its corresponding polymer.77 The errors of predicting experimental bandgaps of polythiophene and polyselenophene are within 0.1–0.2 eV by using the method.78Fig. 5(d) shows that the PBE bandgap is larger than 3 eV when the second ionization energy of B-site atoms is lower than 14 eV. The ionization energy has been found to influence the properties of HOIPs. For example, stability is affected by the sum of ionization energies of A+ and [BX3]− based on analysis of the Born–Haber cycle.79
+ Fig. 5  Data visualization of PBE bandgaps of 117 screening DHOIPs with (a) effective radii of A-site cations, (b) average ionic radii of B-site atoms, (c) HOMO–LUMO gaps of A-site cations, (d) the second ionization energies of B-site atoms, (e) the number of p valence electrons, (f) the number of d valence electrons, (g) tolerance factor, and (h) octahedral factor. 
+In Fig. 5(e), the bandgaps are lower than 20 eV with p valence electrons less than one. That is to say, screening DHOIPs without group IV and V elements is less effective since these elements have 2 and 3 p valence electrons. In addition, DHOIPs with half-filled or fully filled d-electron orbitals are less likely to have a small bandgap, as shown in Fig. 5(f). Thus, the transition metals can be introduced for effective screening. It also should be noted that the distribution of Of is the same as IRB because we only calculated Br-containing DHOIPs. Fig. 5(g) and (h) show that metallic DHOIPs have a narrow range, with Tf around 0.9 and Of in the range of 0.45 to 0.55.
+Data visualization of HSE06 bandgaps of 24 further screening DHOIPs is shown in Fig. S7.† The distributions are similar to those of PBE bandgaps but with a more noticeable trend. In Fig. S7(a) and (b),† bandgaps are smaller than 3.0 eV when the IRA and IRB are larger than 2.0 and 1.2 Å, correspondingly, which means large cations in A-site and B-site are more likely to have appropriate bandgaps. In addition, Fig. S7(d)† shows that the HSE06 bandgap is smaller for second ionization energy higher than 20 eV.
+4. Conclusion
+In this work, we implemented a screening framework for discovering promising photovoltaic materials from 78400 DHOIPs, by combining ML methods and DFT calculations. New features, the anisotropy of A-site organic cations, were introduced into the descriptors for training ML models to predict the bandgaps better. The Δ-ML was also introduced to improve the accuracy of the HSE06 bandgap prediction. These improvements have been proved to be effective by constructing five models for comparison with the previous works.
+Based on the screening criterion of charge neural, stability, non-toxicity, and suitable bandgaps, 117 Br-containing structures were screened out from 78400 DHOIPs for further screening by DFT calculations. The bandgaps of 24 DHOIPs were further calculated by the HSE06 density functionals. Finally, 19 promising DHOPIs with suitable bandgaps were screened out. 17 of them have a bandgap in the range between 1.5 and 3.0 eV, and 2 have smaller bandgaps of 0.76 and 1.44 eV. The result also indicates that the Tl-containing DHOIPs, which are less studied, are more likely to have an appropriate bandgap. Although our results still need to be verified, consideration of anisotropy and implementation of Δ-ML can further enhance the performance of ML for discovering DHOIPs. Our work not only provides a practical strategy for rapidly predicting the properties of complicated materials but also guides the discovery of promising DHOIPs for further experimental synthesis and photovoltaic applications.
+Conflicts of interest
+The authors declared that they have no conflicts of interest in this work.
+Acknowledgements
+This work was supported by the NSAF (U1930402) and National Natural Science Foundation of China (11874081). This work was carried out using the computational facilities, CityU Burgundy, managed and provided by the Computing Services Centre at City University of Hong Kong (https://www.cityu.edu.hk/).
+References
+J. Greeley, T. F. Jaramillo, J. Bonde, I. Chorkendorff and J. K. Nørskov, Nat. Mater., 2006, 5, 909–913 CrossRef CAS .
+Y. T. Liu, X. B. Li, H. Zheng, N. K. Chen, X. P. Wang, X. L. Zhang, H. B. Sun and S. Zhang, Adv. Funct. Mater., 2021, 31, 2009803 CrossRef CAS .
+R. L. Martin, C. M. Simon, B. Smit and M. Haranczyk, J. Am. Chem. Soc., 2014, 136, 5006–5022 CrossRef CAS PubMed .
+H. Zhu, G. Hautier, U. Aydemir, Z. M. Gibbs, G. Li, S. Bajaj, J.-H. Pöhls, D. Broberg, W. Chen and A. Jain, J. Mater. Chem. C, 2015, 3, 10554–10565 RSC .
+L. Cheng, R. S. Assary, X. Qu, A. Jain, S. P. Ong, N. N. Rajput, K. Persson and L. A. Curtiss, J. Phys. Chem. Lett., 2015, 6, 283–291 CrossRef CAS .
+L. Chen, X. Zhang, A. Chen, S. Yao, X. Hu and Z. Zhou, Chin. J. Catal., 2022, 43, 11–32 CrossRef CAS .
+A. Chen, X. Zhang and Z. Zhou, InfoMat, 2020, 2, 553–576 CrossRef CAS .
+H. J. Snaith, Nat. Mater., 2018, 17, 372–376 CrossRef CAS PubMed .
+F. F. Targhi, Y. S. Jalili and F. Kanjouri, Results Phys., 2018, 10, 616–627 CrossRef .
+C. Xie, C. K. Liu, H. L. Loi and F. Yan, Adv. Funct. Mater., 2020, 30, 1903907 CrossRef CAS .
+W. Tian, H. Zhou and L. Li, Small, 2017, 13, 1702107 CrossRef .
+H. Huang, H. Yuan, K. P. Janssen, G. Solis-Fernandez, Y. Wang, C. Y. Tan, D. Jonckheere, E. Debroye, J. Long and J. Hendrix, ACS Energy Lett., 2018, 3, 755–759 CrossRef CAS .
+A. Kojima, K. Teshima, Y. Shirai and T. Miyasaka, J. Am. Chem. Soc., 2009, 131, 6050–6051 CrossRef CAS PubMed .
+
+          National Renewable Energy Laboratory, Best Research-Cell Efficiency Chart, https://www.nrel.gov/pv/cell-efficiency.html, accessed June, 2021 Search PubMed.
+H. Liu, J. Cheng, H. Dong, J. Feng, B. Pang, Z. Tian, S. Ma, F. Xia, C. Zhang and L. Dong, Comput. Mater. Sci., 2020, 177, 109614 CrossRef CAS .
+C. Kim, G. Pilania and R. Ramprasad, J. Phys. Chem. C, 2016, 120, 14575–14580 CrossRef CAS .
+A. Halder, A. Ghosh and T. S. Dasgupta, Phys. Rev. Mater., 2019, 3, 084418 CrossRef CAS .
+D. Jain, S. Chaube, P. Khullar, S. G. Srinivasan and B. Rai, Phys. Chem. Chem. Phys., 2019, 21, 19423–19436 RSC .
+J. Li, B. Pradhan, S. Gaur and J. Thomas, Adv. Energy Mater., 2019, 9, 1901891 CrossRef CAS .
+Y. Zhuo, A. Mansouri Tehrani and J. Brgoch, J. Phys. Chem. Lett., 2018, 9, 1668–1673 CrossRef CAS PubMed .
+S. Lu, Q. Zhou, Y. Ouyang, Y. Guo, Q. Li and J. Wang, Nat. Commun., 2018, 9, 3405 CrossRef PubMed .
+T. Wu and J. Wang, Nano Energy, 2019, 66, 104070 CrossRef CAS .
+Ç. Odabaşı and R. Yıldırım, Nano Energy, 2019, 56, 770–791 CrossRef .
+T. Wu and J. Wang, ACS Appl. Mater. Interfaces, 2020, 12, 57821–57831 CrossRef CAS .
+T. Nakajima and K. Sawada, J. Phys. Chem. Lett., 2017, 8, 4826–4831 CrossRef CAS .
+R. Ramakrishnan, P. O. Dral, M. Rupp and O. A. von Lilienfeld, J. Chem. Theory Comput., 2015, 11, 2087–2096 CrossRef CAS PubMed .
+P. A. Unzueta, C. S. Greenwell and G. J. Beran, J. Chem. Theory Comput., 2021, 17, 826–840 CrossRef CAS .
+G. Pilania, J. E. Gubernatis and T. Lookman, Comput. Mater. Sci., 2017, 129, 156–163 CrossRef CAS .
+A. Nandi, C. Qu, P. L. Houston, R. Conte and J. M. Bowman, J. Chem. Phys., 2021, 154, 051102 CrossRef CAS PubMed .
+C. Kim, T. D. Huan, S. Krishnan and R. Ramprasad, Sci. Data, 2017, 4, 170057 CrossRef PubMed .
+P. Borlido, T. Aull, A. W. Huran, F. Tran, M. A. L. Marques and S. Botti, J. Chem. Theory Comput., 2019, 15, 5069–5079 CrossRef CAS PubMed .
+G. Kresse and J. Hafner, Phys. Rev. B: Condens. Matter Mater. Phys., 1994, 49, 14251 CrossRef CAS PubMed .
+G. Kresse and J. Hafner, Phys. Rev. B: Condens. Matter Mater. Phys., 1993, 47, 558 CrossRef CAS .
+G. Kresse and J. Furthmüller, Comput. Mater. Sci., 1996, 6, 15–50 CrossRef CAS .
+J. P. Perdew, K. Burke and M. Ernzerhof, Phys. Rev. Lett., 1996, 77, 3865 CrossRef CAS PubMed .
+J. E. Moussa, P. A. Schultz and J. R. Chelikowsky, J. Chem. Phys., 2012, 136, 204117 CrossRef .
+S. Grimme, J. Antony, S. Ehrlich and H. Krieg, J. Chem. Phys., 2010, 132, 154104 CrossRef PubMed .
+É. D. Murray, K. Lee and D. C. Langreth, J. Chem. Theory Comput., 2009, 5, 2754–2762 CrossRef PubMed .
+J. Heyd, G. E. Scuseria and M. Ernzerhof, J. Chem. Phys., 2003, 118, 8207–8215 CrossRef CAS .
+
+          L. M. Mentel, Mendeleev - A Python resource for properties of chemical elements, ions and isotopes,  2014. Available at: https://github.com/lmmentel/mendeleev Search PubMed .
+
+          M. Frisch, G. Trucks, H. B. Schlegel, G. E. Scuseria, M. A. Robb, J. R. Cheeseman, G. Scalmani, V. Barone, B. Mennucci and G. Petersson, Gaussian 09,  2009, 201 Search PubMed .
+C. Lee, W. Yang and R. G. Parr, Phys. Rev. B: Condens. Matter Mater. Phys., 1988, 37, 785 CrossRef CAS PubMed .
+F. Weigend and R. Ahlrichs, Phys. Chem. Chem. Phys., 2005, 7, 3297–3305 RSC .
+A. V. Bondi, J. Phys. Chem., 1964, 68, 441–451 CrossRef CAS .
+L. Ruddigkeit, R. Van Deursen, L. C. Blum and J.-L. Reymond, J. Chem. Inf. Model., 2012, 52, 2864–2875 CrossRef CAS PubMed .
+M. L. Waskom, J. Open Source Softw., 2021, 6, 3021 CrossRef .
+J. D. Hunter, IEEE Ann. Hist. Comput., 2007, 9, 90–95 Search PubMed .
+J. H. Friedman, Ann. Stat., 2001, 1189–1232 Search PubMed .
+F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, P. Prettenhofer, R. Weiss and V. Dubourg, J. Mach. Learn. Res., 2011, 12, 2825–2830 Search PubMed .
+L. Breiman, Mach. Learn., 2001, 45, 5–32 CrossRef .
+G. Kresse and D. Joubert, Phys. Rev. B: Condens. Matter Mater. Phys., 1999, 59, 1758 CrossRef CAS .
+M. Hutchinson and M. Widom, Comput. Phys. Commun., 2012, 183, 1422–1426 CrossRef CAS .
+M. Hacene, A. Anciaux-Sedrakian, X. Rozanska, D. Klahr, T. Guignon and P. Fleurat-Lessard, J. Comput. Chem., 2012, 33, 2581–2589 CrossRef CAS PubMed .
+V. Wang, N. Xu, J.-C. Liu, G. Tang and W.-T. Geng, Comput. Phys. Commun., 2021, 108033 CrossRef CAS .
+R. Ramprasad, R. Batra, G. Pilania, A. Mannodi-Kanakkithodi and C. Kim, npj Comput. Mater., 2017, 3, 1–13 CrossRef .
+M. Rupp, A. Tkatchenko, K.-R. Müller and O. A. Von Lilienfeld, Phys. Rev. Lett., 2012, 108, 058301 CrossRef PubMed .
+A. P. Bartók, S. De, C. Poelking, N. Bernstein, J. R. Kermode, G. Csányi and M. Ceriotti, Sci. Adv., 2017, 3, e1701816 CrossRef PubMed .
+J. Li, B. Jiang and H. Guo, J. Chem. Phys., 2013, 139, 204103 CrossRef .
+B. Jiang and H. Guo, J. Chem. Phys., 2013, 139, 054112 Search PubMed .
+Z. Xie and J. M. Bowman, J. Chem. Theory Comput., 2010, 6, 26–34 CrossRef CAS .
+B. Huang and O. A. von Lilienfeld, Nat. Chem., 2020, 12, 945–951 CrossRef CAS .
+J. Li, Z. Varga, D. G. Truhlar and H. Guo, J. Chem. Theory Comput., 2020, 16, 4822–4832 CrossRef CAS PubMed .
+T. Zhou, Z. Song and K. Sundmacher, Engineering, 2019, 5, 1017–1026 CrossRef CAS .
+Q. Tao, P. Xu, M. Li and W. Lu, npj Comput. Mater., 2021, 7(1), 1–18 CrossRef .
+G. Kieslich, S. Sun and A. K. Cheetham, Chem. Sci., 2014, 5, 4712–4715 RSC .
+C. Chen, Y. Zuo, W. Ye, X. Li, Z. Deng and S. P. Ong, Adv. Energy Mater., 2020, 10, 1903242 CrossRef CAS .
+J. Huang, Y. Yuan, Y. Shao and Y. Yan, Nat. Rev. Mater., 2017, 2, 1–19 Search PubMed .
+Y. Cai, W. Xie, Y. T. Teng, P. C. Harikesh, B. Ghosh, P. Huck, K. A. Persson, N. Mathews, S. G. Mhaisalkar, M. Sherburne and M. Asta, Chem. Mater., 2019, 31, 5392–5401 CrossRef CAS .
+A. H. Slavney, L. Leppert, D. Bartesaghi, A. Gold-Parker, M. F. Toney, T. J. Savenije, J. B. Neaton and H. I. Karunadasa, J. Am. Chem. Soc., 2017, 139, 5015–5018 CrossRef CAS PubMed .
+P. Vashishtha, D. Z. Metin, M. E. Cryer, K. Chen, J. M. Hodgkiss, N. Gaston and J. E. Halpert, Chem. Mater., 2018, 30, 2973–2982 CrossRef CAS .
+O. Khyzhun, P. Fochuk, I. Kityk, M. Piasecki, S. Levkovets, A. Fedorchuk and O. Parasyuk, Mater. Chem. Phys., 2016, 172, 165–172 CrossRef CAS .
+W. Lin, J. He, K. M. McCall, C. C. Stoumpos, Z. Liu, I. Hadar, S. Das, H. H. Wang, B. X. Wang and D. Y. Chung, Adv. Funct. Mater., 2021, 31, 2006635 CrossRef CAS .
+M. Retuerto, T. Emge, J. Hadermann, P. W. Stephens, M. R. Li, Z. P. Yin, M. Croft, A. Ignatov, S. J. Zhang, Z. Yuan, C. Jin, J. W. Simonson, M. C. Aronson, A. Pan, D. N. Basov, G. Kotliar and M. Greenblatt, Chem. Mater., 2013, 25, 4071–4079 CrossRef CAS .
+L. M. Schoop, L. Muchler, C. Felser and R. J. Cava, Inorg. Chem., 2013, 52, 5479–5483 CrossRef CAS PubMed .
+A. H. Slavney, L. Leppert, A. Saldivar Valdes, D. Bartesaghi, T. J. Savenije, J. B. Neaton and H. I. Karunadasa, Angew. Chem., Int. Ed., 2018, 57, 12765–12770 CrossRef CAS PubMed .
+Z. Deng, F. Wei, S. Sun, G. Kieslich, A. K. Cheetham and P. D. Bristowe, J. Mater. Chem. A, 2016, 4, 12025–12029 RSC .
+S. Yang, P. Olishevski and M. Kertesz, Synth. Met., 2004, 141, 171–177 CrossRef CAS .
+S. S. Zade and M. Bendikov, Org. Lett., 2006, 8, 5243–5246 CrossRef CAS PubMed .
+C. Zheng and O. Rubel, J. Phys. Chem. C, 2017, 121, 11977–11984 CrossRef CAS .
+
+Footnote† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1ta09911fThis journal is © The Royal Society of Chemistry 2022
+Table Content:
+
+ 	Fig. 1  The illustration of the two datasets used in this work.	 
+
+1–3	
+L
+a, Lb, and Lc	Lengths, breadths, heights of A-site cations (La ≥ Lb ≥ Lc)
+4	IRA	Ionic radii of A-site cations
+5	Gap	HOMO–LUMO gaps of A-site cations
+6–8	RotA, RotB and RotC	Rotational temperatures of A-site cations in three directions (RotA ≥ RotB ≥ RotC)
+9	
+R
+B
+	Atomic radii of B-site atoms
+10, 11	IE1_B, IE2_B	First and second ionization energies of B-site atoms
+12	EA_B	Electron affinity of B-site atoms
+13	EN_B	Pauling electronegativity of B-site atoms
+14	IRB	Ionic radii of B-site cations
+15	CRB	Crystal radii of B-site cations
+16–19	s, p, d and f	The number of s, p, d, or orbital valence electrons
+20	
+R
+X
+	Atomic radii of X-site atoms
+21	IE1_X	The first ionization energy of X-site atoms
+22	EA_X	Electron affinity of X-site atoms
+23	EN_X	Pauling electronegativity of X-site atoms
+24	IRX	Ionic radii of X-site anions
+25	
+T
+f
+	Tolerance factor defined as (IRA + IRX)/ /(IRB + IRX)
+26	
+O
+f
+	Octahedral factor defined by IRB/IRX
+Pt = Pb + ΔML	(1)
+EHSE06g = EPBEg + ΔGBR	(2)
+
+ 	Fig. 2  The framework for screening DHOIPs with combining ML models and DFT calculations.	 
+
+ 	Fig. 3  The heat map of the Pearson correlation coefficient (PCC) matrix among 26 initial features of the first (a) and second (b) datasets.	 
+
+ 	Fig. 4  The comparison between the calculated bandgaps by the PBE and HSE06 functionals, and their corresponding predicted values obtained by the direct GBR model (a) and the Δ-GBR model (b). All points are from test sets.	 
+
+A-site	11	16	16	16	17	17	17
+B-site	32	3	3	3	49	49	49
+X-site	4	4	4	4	4	4	4
+Data points	212	196	196	196	11161	2113	2113
+Training set size	80%	90%	20%	20%	80%	80%	80%
+Features	14	16	24	19	24	24	24
+MSE (eV2)	0.085	0.201	0.066	0.081	0.090	0.285	0.047
+MAE (eV)	—	0.377	0.190	0.213	0.139	0.361	0.141
+
+R
+2
+	0.969	0.827	0.908	0.887	0.876	0.769	0.791
+
+20	NH4+	Rh	Tl	1.15	2.69
+24	NH4+	Tl	Tl	1.4	2.22
+45	(CH3)3NH+	Tl	Tl	0.94	1.71
+51	(CH3)4N+	Tl	Tl	1.17	2.08
+58	CH3CH2CH2NH3+	Tl	Tl	1.2	2.04
+63	(CH3)2CHNH3+	Tl	Tl	1.19	2.04
+64	CH3CH2CH2CH2NH3+	Tl	Tl	1.33	2.22
+74	OHNH3+	Tl	Tl	1.36	2.3
+80	HC(NH2)2+	In	Tl	1.72	2.63
+81	HC(NH2)2+	Tl	Tl	1.41	2.25
+87	CH3C(NH2)2+	Tl	Tl	1.07	1.82
+89	NH2NH3+	Al	Tl	1.32	2.67
+102	C(NH2)3+	Tl	Tl	1.4	2.24
+107	C3H8N+	Ge	Ag	0.86	1.75
+110	C3H8N+	Tl	Tl	0.88	1.62
+112	C3H5N2+	Co	Tl	0.86	2.99
+117	C3H5N2+	Tl	Tl	0.9	1.74
+
+ 	Fig. 5  Data visualization of PBE bandgaps of 117 screening DHOIPs with (a) effective radii of A-site cations, (b) average ionic radii of B-site atoms, (c) HOMO–LUMO gaps of A-site cations, (d) the second ionization energies of B-site atoms, (e) the number of p valence electrons, (f) the number of d valence electrons, (g) tolerance factor, and (h) octahedral factor.	 
+Footnote
+† Electronic supplementary information (ESI) available. See DOI: 10.1039/d1ta09911f
+
+This journal is © The Royal Society of Chemistry 2022
